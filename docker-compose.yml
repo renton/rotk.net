@@ -5,7 +5,7 @@ services:
     networks:
       - vswitch0
     ports:
-      - "5000:5000"
+      - "80:5000"
     env_file: .env     
     restart: unless-stopped
     volumes:
@@ -18,8 +18,6 @@ services:
       - "32000:3306"
     env_file: .env-mysql
     restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./db-data:/var/lib/mysql      
       - ./db-confs:/etc/mysql/conf.d

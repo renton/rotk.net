@@ -1,9 +1,9 @@
 import re
 from flask import render_template, abort
-from app.models import Chapter
+from app.models import Chapter, Character
 from . import main
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/', methods=['GET'])
 def index():
     chapters = Chapter.query.all()
 
@@ -12,7 +12,7 @@ def index():
         chapters=chapters
     )
 
-@main.route('/chapter/<int:chapter_num>', methods=['GET', 'POST'])
+@main.route('/chapter/<int:chapter_num>', methods=['GET'])
 def chapter(chapter_num):
 
     chapter = Chapter.query.filter(Chapter.chapter_num == chapter_num).first()
@@ -27,4 +27,14 @@ def chapter(chapter_num):
         'chapter.html',
         title=title,
         chapter=chapter,
+    )
+
+@main.route('/characters', methods=['GET'])
+def characters():
+
+    characters = Character.query.all()
+
+    return render_template(
+        'characters.html',
+        characters=characters
     )

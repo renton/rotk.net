@@ -9,5 +9,5 @@ while true; do
     sleep 5
 done
 
-#exec gunicorn -b :5000 --access-logfile - --error-logfile - --reload infralens:app
+#exec gunicorn -b :5000 --access-logfile - --error-logfile - --reload rotk:app
 flask run

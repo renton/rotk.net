@@ -8,8 +8,9 @@ if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path, override=True)
 
 import click
+from sqlalchemy.exc import IntegrityError
 from app import create_app, db
-from tools.scraper import scrape_rotk_book
+from tools.scraper import scrape_rotk_book, scrape_rotk_characters
 from flask import render_template, request, jsonify
 
 # COV = None
@@ -20,12 +21,13 @@ from flask import render_template, request, jsonify
 
 # from flask_migrate import Migrate, upgrade
 from app.models import \
-    Chapter
+    Chapter, Character, Faction, Role
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 # migrate = Migrate(app, db)
 
+# TODO build the model in the scraper
 @app.cli.command()
 def scrape_book():
     chapters = scrape_rotk_book()
@@ -43,6 +45,71 @@ def scrape_book():
             db.session.commit()
         except Exception as e:
             print(e)
+            db.session.rollback()
+
+@app.cli.command()
+def scrape_characters():
+    characters, factions, roles = scrape_rotk_characters()
+
+    # add factions
+    for i, faction in enumerate(factions):
+        try:
+            new_faction = Faction(
+                name=faction
+            )
+            db.session.add(new_faction)    
+            db.session.commit()
+        except Exception as e:
+            print(f"Duplicate key error for faction {faction}")
+            db.session.rollback()
+
+    # add roles
+    for role in roles:
+        try:
+            new_role = Role(
+                name=role
+            )
+            db.session.add(new_role)
+            db.session.commit()
+
+        except IntegrityError as e:
+            print(f"Duplicate key error for role {role}")
+            db.session.rollback()
+
+    # get faction index
+    faction_index = {faction.name: faction for faction in Faction.query.all()}
+
+    # get role index
+    role_index = {role.name: role for role in Role.query.all()}
+
+    # add characters
+    for character in characters:
+        try:
+            faction_objs = []
+            for faction in character['factions']:
+                if faction in faction_index:
+                    faction_objs.append(faction_index[faction])
+
+
+            role_objs = []
+            for role in character['roles']:
+                if role in role_index:
+                    role_objs.append(role_index[role])
+
+            character['factions'] = faction_objs
+            character['roles'] = role_objs
+
+            print(character)
+
+            new_character = Character(
+                **character
+            )
+            db.session.add(new_character)
+
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            db.session.rollback()
 
 @app.cli.command()
 def create_all():

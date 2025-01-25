@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Infralens{% endblock %}
+
+{% block page_content %}
+
+<table class="table table-striped mt-4">
+    <thead>
+        <th>Name</th>
+        <th>Courtesy Name</th>
+        <th>Birth Year</th>
+        <th>Death Year</th>
+        <th>Ancestral Home</th>
+        <th>Roles</th>
+        <th>Factions</th>
+    </thead>
+    <tbody>
+        {% for character in characters %}
+            <tr>                
+                <td>
+                    <div>
+                        {{ character.name }}
+                    </div>
+                    <div>
+                        {{ character.chinese_name }}
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        {{ character.courtesty_name }}
+                    </div>
+                    <div>
+                        {{ character.chinese_courtesty_name }}
+                    </div>
+                </td>
+                <td>{{ character.birth_date }}</td>
+                <td>{{ character.death_date }}</td>
+                <td>{{ character.ancestral_home }}</td>
+                <td>
+                    {% for role in character.roles %}
+                        <div>
+                            {{ role.name }}
+                        </div>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for faction in character.factions %}
+                        <div>
+                            {{ faction.name }}
+                        </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
