@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  app:
+    build: .
+    networks:
+      - vswitch0
+    ports:
+      - "5000:5000"
+    env_file: .env     
+    restart: unless-stopped
+    volumes:
+      - .:/rotk.net
+  db:
+    image: "mysql:8.4"
+    networks:
+      - vswitch0
+    ports:
+      - "32000:3306"
+    env_file: .env-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db-data:/var/lib/mysql      
+      - ./db-confs:/etc/mysql/conf.d
+
+networks:
+  vswitch0:
+    driver: bridge

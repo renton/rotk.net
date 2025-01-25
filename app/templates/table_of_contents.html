@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Infralens{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header mt-4 mb-4">
+    <h2>Romance of the Three Kingdoms</h2>
+    <div>Written by <strong>Luo Guanzhong</strong></div>
+    <div>Translated by <strong>C. H. Brewitt-Taylor</strong></div>
+    <div>Edited by <strong>Khang Nguyen</strong></div>
+    <div>Online fifth edition <a href="https://threekingdoms.com/">(https://threekingdoms.com/)</a></div>
+</div>
+
+<table class="table table-striped mt-4">
+    <tbody>
+        {% for chapter in chapters %}
+            <tr>                
+                <th scope="row">{{ chapter.chapter_num | string }}</th>
+                <td><a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.title }}</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
