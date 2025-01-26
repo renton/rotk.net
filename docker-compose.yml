@@ -6,10 +6,13 @@ services:
       - vswitch0
     ports:
       - "80:5000"
+      - "443:5000"
     env_file: .env     
     restart: unless-stopped
     volumes:
       - .:/rotk.net
+      - /etc/letsencrypt/live/rotk.net:/etc/letsencrypt/live/rotk.net:ro
+      - /etc/letsencrypt/archive/rotk.net:/etc/letsencrypt/archive/rotk.net:ro
   db:
     image: "mysql:8.4"
     networks:
