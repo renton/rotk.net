@@ -11,7 +11,7 @@ import click
 from sqlalchemy.exc import IntegrityError
 from app import create_app, db
 from tools.scraper import scrape_rotk_book, scrape_rotk_characters
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, Response
 
 # COV = None
 # if os.environ.get('FLASK_COVERAGE'):
@@ -26,6 +26,15 @@ from app.models import \
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
 # migrate = Migrate(app, db)
+
+@app.after_request
+def set_csp_header(response: Response):
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' https://cdn.jsdelivr.net; "
+        "style-src 'self' https://cdn.jsdelivr.net;"
+    )
+    return response
 
 # TODO build the model in the scraper
 @app.cli.command()

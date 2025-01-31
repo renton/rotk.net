@@ -24,7 +24,15 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    Talisman(app)
+    # Define custom CSP
+    csp = {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "https://cdn.jsdelivr.net"],
+        "style-src": ["'self'", "https://cdn.jsdelivr.net"],
+    }
+    # Apply Talisman with the custom CSP
+
+    Talisman(app, content_security_policy=csp, force_https=True)
 
     bootstrap.init_app(app)
     #mail.init_app(app)

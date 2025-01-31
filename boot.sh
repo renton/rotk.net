@@ -9,12 +9,14 @@ while true; do
     sleep 5
 done
 
-exec gunicorn rotk:app
-    --bind 0.0.0.0:5000
-    --certfile=/etc/letsencrypt/live/rotk.net/fullchain.pem
-    --keyfile=/etc/letsencrypt/live/rotk.net/privkey.pem
-    --access-logfile -
-    --error-logfile -
-    --reload
+# exec gunicorn rotk:app \
+#     -b :5000 \
+#     # --certfile=/etc/letsencrypt/live/rotk.net/fullchain.pem \
+#     # --keyfile=/etc/letsencrypt/live/rotk.net/privkey.pem \
+#     --access-logfile - \
+#     --error-logfile - \
+#     --timeout 240 \
+#     --workers 3 \
+#     --reload
 
-#flask run
+flask run

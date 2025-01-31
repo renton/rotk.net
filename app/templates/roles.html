@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<table class="table table-striped mt-4">
+    <thead>
+        <th>Name</th>
+    </thead>
+    <tbody>
+        {% for role in roles %}
+            <tr>                
+                <td>
+                    <div>
+                        {{ role.name }}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}

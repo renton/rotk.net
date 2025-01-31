@@ -98,7 +98,7 @@ def scrape_rotk_characters():
     factions = set()
     roles = set()
 
-    for letter in ['A']: #list(string.ascii_uppercase):
+    for letter in list(string.ascii_uppercase):
         page_characters, page_factions, page_roles = scrape_rotk_character_page(letter)
 
         characters.extend(page_characters)
