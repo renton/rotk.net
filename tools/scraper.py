@@ -85,7 +85,7 @@ def scrape_chapter(chapter_number):
             chapter_content += f"{re.sub("<p> ", "<p>", str(paragraph))}\n"            
 
         return(
-            clean_text(chapter_title.get_text()),
+            clean_text(chapter_title.get_text()).replace(";","; <br>"),
             chapter_content
         )
 

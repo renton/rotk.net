@@ -3,7 +3,6 @@ WORKDIR /rotk.net
 
 ENV FLASK_APP rotk.py
 ENV FLASK_RUN_HOST 0.0.0.0
-ENV FLASK_CONFIG production
 
 RUN sed -i -E 's/MinProtocol[=\ ]+.*/MinProtocol = TLSv1.0/g' /etc/ssl/openssl.cnf
 

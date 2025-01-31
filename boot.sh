@@ -9,12 +9,16 @@ while true; do
     sleep 5
 done
 
-exec gunicorn rotk:app \
-    -b :5000 \
-    --access-logfile - \
-    --error-logfile - \
-    --timeout 240 \
-    --workers 3 \
-    --reload
-
-#flask run
+if [ "$FLASK_ENV" == "development" ]; then
+    echo "*** Running in development mode ***"
+    flask run
+elif [ "$FLASK_ENV" == "production" ]; then
+    echo "*** Running in production mode ***"
+    exec gunicorn rotk:app \
+        -b :5000 \
+        --access-logfile - \
+        --error-logfile - \
+        --timeout 240 \
+        --workers 3 \
+        --reload
+fi

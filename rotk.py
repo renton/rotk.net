@@ -23,7 +23,7 @@ from flask import render_template, request, jsonify, Response
 from app.models import \
     Chapter, Character, Faction, Role
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+app = create_app(os.getenv('FLASK_ENV') or 'default')
 
 # migrate = Migrate(app, db)
 

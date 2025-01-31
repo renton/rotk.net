@@ -4,11 +4,12 @@ services:
     build: .
     networks:
       - vswitch0
+    expose:
+      - "5000"
     env_file: .env
     environment:
-      FLASK_ENV: 'development'
-    ports:
-      - "80:5000"
+      FLASK_ENV: 'production'
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000"]
       interval: 10s
@@ -16,13 +17,29 @@ services:
       start_period: 1s
     volumes:
       - .:/rotk.net
-  db:
-    image: "mysql:8.4"
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
     env_file: .env
     networks:
       - vswitch0
     ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/letsencrypt:/etc/nginx/certs:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+  db:
+    image: "mysql:8.4"
+    networks:
+      - vswitch0
+    ports:
       - "32000:3306"
+    env_file: .env
     restart: unless-stopped
     volumes:
       - ./db-data:/var/lib/mysql      
