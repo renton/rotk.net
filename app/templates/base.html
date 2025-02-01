@@ -63,15 +63,14 @@
     {% block page_content %}
     
     {% block page_header %}
-    <div class="page- mb-4">
-      <h1>Hello, User2!</h1>
-    </div>
     {% endblock %}
 
     {% block main_form %}
+    {% if form is defined %}
     <div class="mb-4">
       {{ render_form(form) }}
     </div>
+    {% endif %}
     {% endblock %}
 
     {% endblock %}

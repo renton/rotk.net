@@ -11,6 +11,7 @@ import click
 from sqlalchemy.exc import IntegrityError
 from app import create_app, db
 from tools.scraper import scrape_rotk_book, scrape_rotk_characters
+from tools.book_parser import get_characters_for_chapter
 from flask import render_template, request, jsonify, Response
 
 # COV = None
@@ -36,7 +37,13 @@ def set_csp_header(response: Response):
     )
     return response
 
-# TODO build the model in the scraper
+@app.cli.command()
+def build_chapter_characters():
+
+    print(get_characters_for_chapter(1))
+
+
+
 @app.cli.command()
 def scrape_book():
     chapters = scrape_rotk_book()

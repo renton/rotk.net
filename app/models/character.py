@@ -1,5 +1,7 @@
 from app import db
 from app.models.abstract import AbstractObject, AbstractTag
+from sqlalchemy.ext.hybrid import hybrid_property
+
 
 class Character(AbstractObject):
     is_fictional = db.Column(db.Boolean, default=False)
@@ -60,6 +62,24 @@ class Character(AbstractObject):
 
     def __repr__(self):
         return f'<Character {self.name}>'
+
+    @hybrid_property
+    def latest_faction(self):
+        if len(list(self.factions)):
+            return self.factions[0]
+        else:
+            return None
+
+    def get_all_name_labels(self):
+        labels = [self.name]
+        if self.courtesty_name != "":
+            labels.append(self.courtesty_name)
+
+        for alias in self.aliases.split(','):
+            if alias != "":
+                labels.append(alias)
+
+        return labels
 
 class Link(AbstractObject):
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=False)

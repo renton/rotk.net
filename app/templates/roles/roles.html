@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block page_content %}
+
+<table class="table table-striped mt-4">
+    <thead>
+        <th>Name</th>
+        <th>Preview</th>
+        <th>Count</th>
+    </thead>
+    <tbody>
+        {% for role in roles %}
+            <tr>                
+                <td>
+                    {% if current_user.is_authenticated and current_user.is_administrator %}
+                        <a href="{{ url_for('main.edit_role', id=role.id) }}">{{ role.name }}</a>
+                    {% else %}
+                        {{ role.name }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ macros.badge_widget(role) }}
+                </td>
+                <td> {{ role.characters | length }} </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}

@@ -27,6 +27,8 @@ def clean_text(text):
         # Normalize Unicode, remove non-ASCII characters, strip whitespace
         text = text.replace('\r', '').replace('\n', '').replace('\t', '')
         text = ' '.join(text.split())  # Collapse multiple spaces
+        text = text.lstrip()
+        text = text.rstrip()
         return text
     return ""
 
@@ -161,7 +163,6 @@ def scrape_rotk_character_page(letter):
             'factions' : []
         }       
 
-        # TODO if / in name, need to save rest as aliases
         for i, td in enumerate(character_row.find_all('td')):
             if i == 0:
                 # name
@@ -170,10 +171,13 @@ def scrape_rotk_character_page(letter):
                 if len(name_sections) > 0:
                     name_parts = remove_html_tags(clean_text(name_sections[0])).split('/')
 
-                    new_character_data['name'] = name_parts[0]
+                    new_character_data['name'] = clean_text(name_parts[0])
 
-                    if len(name_parts) > 0:
-                        new_character_data['aliases'] = ', '.join(name_parts[1:])
+                    if len(name_parts) > 0:                        
+                        raw_aliases = []
+                        for name_part in name_parts[1:]:
+                            raw_aliases.append(clean_text(name_part))
+                        new_character_data['aliases'] = ', '.join(raw_aliases)
 
                 if len(name_sections) > 1:
                     new_character_data['chinese_name'] = remove_html_tags(clean_text(name_sections[1]))

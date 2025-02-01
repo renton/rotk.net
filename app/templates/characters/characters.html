@@ -19,7 +19,11 @@
             <tr>                
                 <td>
                     <div>
-                        {{ character.name }}
+                        {% if current_user.is_authenticated and current_user.is_administrator %}
+                            <a href="{{ url_for('main.edit_character', id=character.id) }}">{{ character.name }}</a>
+                        {% else %}
+                            {{ character.name }}
+                        {% endif %}
                     </div>
                     <div>
                         {{ character.chinese_name }}
@@ -47,7 +51,7 @@
                 <td>
                     {% for faction in character.factions %}
                         <div>
-                            <span class="badge rounded-pill bg-primary">{{ faction.name }}</span>
+                            {{ macros.badge_widget(faction) }}
                         </div>
                     {% endfor %}
                 </td>

@@ -33,11 +33,15 @@ class AbstractTag(AbstractObject):
     __abstract__ = True
 
     name = mapped_column(db.String(255), default="", nullable=False, sort_order=-1, unique=True)
-    font_colour = db.Column(db.String(7), default="")
-    bg_colour = db.Column(db.String(7), default="")
-    border_colour = db.Column(db.String(7), default="")
+    font_colour = db.Column(db.String(7), default="#ffffff")
+    bg_colour = db.Column(db.String(7), default="#ffffff")
+    border_colour = db.Column(db.String(7), default="#ffffff")
     icon = db.Column(db.String(80), default="")
     is_hidden = db.Column(db.Boolean, default=False, nullable=False)
+
+    @hybrid_property
+    def default_colour(self):
+        return "#ffffff"
 
     def __repr__(self):
         return f'<AbstractTag {self.display_name}>'

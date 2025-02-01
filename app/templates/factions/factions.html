@@ -1,17 +1,26 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
 
 {% block page_content %}
 
 <table class="table table-striped mt-4">
     <thead>
         <th>Name</th>
+        <th>Preview</th>
         <th>Count</th>
     </thead>
     <tbody>
         {% for faction in factions %}
             <tr>                
                 <td>
+                    {% if current_user.is_authenticated and current_user.is_administrator %}
+                    <a href="{{ url_for('main.edit_faction', id=faction.id) }}">{{ faction.name }}</a>
+                    {% else %}
                         {{ faction.name }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ macros.badge_widget(faction) }}
                 </td>
                 <td>
                         {{ faction.characters | length }}
@@ -20,7 +29,6 @@
         {% endfor %}
     </tbody>
 </table>
-
 
 {% endblock %}
 

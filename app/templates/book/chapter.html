@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block page_content %}
+
+<div class="page-header mt-4 mb-4">
+    <h2>{{ chapter.title | safe }}</h2>
+</div>
+
+<hr>
+
+<div class="page-copy mt-4">
+    <div class="row">
+        <div class="col-9">
+            {{ chapter.content | safe }}
+        </div>
+        <div class="col" style="position:sticky; height:fit-content; top:0;">
+
+          <div class="accordion" id="sidebar-accordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-character-info">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Character Info
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  {% for character in characters %}
+                    <div class="character-panel" id="character-panel-{{ character.id }}" class="mb-4" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                      {{ character.name }}
+                      <div>
+                        <img src="{{ url_for('static', filename='test.webp') }}">
+                      </div>
+                      {% for role in character.roles %}
+                        <div>
+                          {{ macros.badge_widget(role) }}
+                        </div>
+                      {% endfor %}
+        
+                      Factions:
+                      {% for faction in character.factions %}
+                        <div>
+                          {{ macros.badge_widget(faction) }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-map">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Map
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-characters">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Chapter Characters
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <table class="table table-striped mt-4">
+                    <tbody>
+                        {% for character in characters %}
+                            <tr>                
+                                <td scope="row">{{ character.name }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+        </div>
+      </div>    
+</div>
+
+<script>
+  // Function to toggle the visibility of the div
+  function show_character(character_id) {
+    var divs = document.querySelectorAll('div.character-panel');
+    divs.forEach(function(div) {
+      div.style.display = 'none';
+    });
+
+    var div = document.getElementById('character-panel-'+character_id);
+    console.log(div)
+    if (div.style.display === 'none' || div.style.display === '') {
+      div.style.display = 'block';  // Show the div
+    } else {
+      div.style.display = 'none';  // Hide the div
+    }
+
+    collapseElement = document.getElementById('collapseOne');
+
+    // Check if it's collapsed (i.e., doesn't have the 'show' class)
+    if (!collapseElement.classList.contains('show')) {
+      // Select the accordion button
+      var accordionButton = document.querySelector('#sidebar-character-info .accordion-button');
+
+      // Trigger the click event programmatically
+      accordionButton.click();
+    }
+
+  }
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
