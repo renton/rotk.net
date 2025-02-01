@@ -1,5 +1,5 @@
 import re
-from flask import render_template, abort
+from flask import render_template, abort, request, current_app
 from flask_login import login_user, logout_user, login_required, current_user
 from app.models import Chapter, Character, Faction, Role
 from . import main
@@ -30,11 +30,21 @@ def chapter(chapter_num):
 @main.route('/characters', methods=['GET'])
 def characters():
 
-    characters = Character.query.all()
+    page = request.args.get('page', 1, type=int)
+
+    pagination = Character.query.order_by(Character.name).paginate(
+        page=page,
+        per_page=current_app.config['CHARACTERS_PER_PAGE'],
+        error_out=False
+    )
+
+    characters = pagination.items
 
     return render_template(
         'characters.html',
-        characters=characters
+        characters=characters,
+        pagination=pagination,
+        page=page
     )
 
 @main.route('/factions', methods=['GET'])

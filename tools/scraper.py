@@ -37,7 +37,7 @@ def remove_html_tags(text):
 def scrape_rotk_book():
     chapters = []
 
-    for chapter in range(10):
+    for chapter in range(ROTK_NUM_CHAPTERS):
         chapters.append(scrape_chapter(chapter+1))
 
     return chapters
@@ -99,7 +99,7 @@ def scrape_rotk_characters():
     factions = set()
     roles = set()
 
-    for letter in ['B']: #list(string.ascii_uppercase):
+    for letter in list(string.ascii_uppercase):
         page_characters, page_factions, page_roles = scrape_rotk_character_page(letter)
 
         characters.extend(page_characters)
