@@ -1,6 +1,9 @@
 # rotk.net
 rotk.net
 
+docker-compose -f docker-compose.prod.yml up
+docker-compose -f docker-compose.prod.yml down
+
 # let's encrypt setup
 apt install certbot
 /etc/letsencrypt/live

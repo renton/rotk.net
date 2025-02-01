@@ -6,7 +6,7 @@ from flask_bootstrap import Bootstrap5
 # from flask_mail import Mail
 # from flask_moment import Moment
 
-# from flask_login import LoginManager
+from flask_login import LoginManager
 # from flask_pagedown import PageDown
 from config import config
 
@@ -16,8 +16,8 @@ bootstrap = Bootstrap5()
 db = SQLAlchemy()
 # pagedown = PageDown()
 
-# login_manager = LoginManager()
-# login_manager.login_view = 'auth.login'
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -27,8 +27,9 @@ def create_app(config_name):
     # Define custom CSP
     csp = {
         "default-src": ["'self'"],
-        "script-src": ["'self'", "https://cdn.jsdelivr.net"],
-        "style-src": ["'self'", "https://cdn.jsdelivr.net"],
+        "img-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org", "data:"],
+        "script-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org"],
+        "style-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org"],
     }
     # Apply Talisman with the custom CSP
 
@@ -38,7 +39,7 @@ def create_app(config_name):
     #mail.init_app(app)
     #moment.init_app(app)
     db.init_app(app)
-    #login_manager.init_app(app)
+    login_manager.init_app(app)
     #pagedown.init_app(app)
 
     #if app.config['SSL_REDIRECT']:
@@ -48,8 +49,8 @@ def create_app(config_name):
     from app.blueprints.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
-    #from .auth import auth as auth_blueprint
-    #app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    from app.blueprints.auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     #from .api import api as api_blueprint
     #app.register_blueprint(api_blueprint, url_prefix='/api/v1')

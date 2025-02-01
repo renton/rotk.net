@@ -48,6 +48,7 @@ def build_chapter_url(chapter_number):
 
 def scrape_chapter(chapter_number):
     chapter_url = build_chapter_url(chapter_number)
+    print(f">>> {chapter_url}")
 
     response = requests.get(chapter_url)
 
@@ -98,7 +99,7 @@ def scrape_rotk_characters():
     factions = set()
     roles = set()
 
-    for letter in list(string.ascii_uppercase):
+    for letter in ['B']: #list(string.ascii_uppercase):
         page_characters, page_factions, page_roles = scrape_rotk_character_page(letter)
 
         characters.extend(page_characters)
@@ -142,7 +143,7 @@ def scrape_rotk_character_page(letter):
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    print("*******************", letter)
+    print(f">>> {letter}")
     table = soup.find('table', class_='wikitable')
     if not table:
         return [], [], []
@@ -167,7 +168,12 @@ def scrape_rotk_character_page(letter):
                 name_sections = split_cell_sections(td)
                 
                 if len(name_sections) > 0:
-                    new_character_data['name'] = remove_html_tags(clean_text(name_sections[0]))
+                    name_parts = remove_html_tags(clean_text(name_sections[0])).split('/')
+
+                    new_character_data['name'] = name_parts[0]
+
+                    if len(name_parts) > 0:
+                        new_character_data['aliases'] = ', '.join(name_parts[1:])
 
                 if len(name_sections) > 1:
                     new_character_data['chinese_name'] = remove_html_tags(clean_text(name_sections[1]))

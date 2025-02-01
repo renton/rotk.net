@@ -11,28 +11,59 @@
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ url_for('main.index') }}">rotk.net</a>
+      <a class="navbar-brand" href="{{ url_for('main.index') }}">rotk.net </a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('main.characters') }}">Characters</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.factions') }}">Factions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Map</a>
+          </li>
+        </ul>
+
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ current_user.username }}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
+                  <li><a class="dropdown-item" href="#">Users</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Log Out</a></li>
+              </ul>    
+            </li>       
+        </ul>
+        {% endif %}
+
+      </div>
     </div>
 </nav>
 
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-4">
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endfor %}
 
     {% block page_content %}
     
     {% block page_header %}
-    <div class="page-header">
+    <div class="page- mb-4">
       <h1>Hello, User2!</h1>
     </div>
     {% endblock %}

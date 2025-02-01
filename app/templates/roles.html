@@ -5,15 +5,13 @@
 <table class="table table-striped mt-4">
     <thead>
         <th>Name</th>
+        <th>Count</th>
     </thead>
     <tbody>
         {% for role in roles %}
             <tr>                
-                <td>
-                    <div>
-                        {{ role.name }}
-                    </div>
-                </td>
+                <td> {{ role.name }} </td>
+                <td> {{ role.characters | length }} </td>
             </tr>
         {% endfor %}
     </tbody>

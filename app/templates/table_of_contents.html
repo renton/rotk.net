@@ -15,7 +15,7 @@
         {% for chapter in chapters %}
             <tr>                
                 <th scope="row">{{ chapter.chapter_num | string }}</th>
-                <td><a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.title }}</a></td>
+                <td><a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.title | safe }}</a></td>
             </tr>
         {% endfor %}
     </tbody>

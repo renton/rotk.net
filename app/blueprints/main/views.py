@@ -1,5 +1,6 @@
 import re
 from flask import render_template, abort
+from flask_login import login_user, logout_user, login_required, current_user
 from app.models import Chapter, Character, Faction, Role
 from . import main
 
@@ -21,11 +22,8 @@ def chapter(chapter_num):
     if not chapter:
         abort(404)
 
-    title = re.sub(";", ";<br>", chapter.title)
-
     return render_template(
         'chapter.html',
-        title=title,
         chapter=chapter,
     )
 
@@ -42,7 +40,7 @@ def characters():
 @main.route('/factions', methods=['GET'])
 def factions():
 
-    factions = Faction.query.all()
+    factions = Faction.query.order_by(Faction.name).all()
 
     return render_template(
         'factions.html',
@@ -52,7 +50,7 @@ def factions():
 @main.route('/roles', methods=['GET'])
 def roles():
 
-    roles = Role.query.all()
+    roles = Role.query.order_by(Role.name).all()
 
     return render_template(
         'roles.html',

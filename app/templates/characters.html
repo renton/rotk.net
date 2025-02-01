@@ -6,6 +6,7 @@
     <thead>
         <th>Name</th>
         <th>Courtesy Name</th>
+        <th>Aliases</th>
         <th>Birth Year</th>
         <th>Death Year</th>
         <th>Ancestral Home</th>
@@ -31,20 +32,21 @@
                         {{ character.chinese_courtesty_name }}
                     </div>
                 </td>
+                <td>{{ character.aliases }}</td>
                 <td>{{ character.birth_date }}</td>
                 <td>{{ character.death_date }}</td>
                 <td>{{ character.ancestral_home }}</td>
                 <td>
                     {% for role in character.roles %}
                         <div>
-                            {{ role.name }}
+                            <span class="badge rounded-pill bg-primary">{{ role.name }}</span>
                         </div>
                     {% endfor %}
                 </td>
                 <td>
                     {% for faction in character.factions %}
                         <div>
-                            {{ faction.name }}
+                            <span class="badge rounded-pill bg-primary">{{ faction.name }}</span>
                         </div>
                     {% endfor %}
                 </td>

@@ -91,9 +91,15 @@ def scrape_characters():
     # get role index
     role_index = {role.name: role for role in Role.query.all()}
 
+    print(faction_index)
+
     # add characters
     for character in characters:
         try:
+            if ('empress (cao mao)' in character['roles']):
+                print("\n\n!!!!!!!!!!!!!!HERERERE1111!!\n\n\n")
+                print(character['roles'])
+
             faction_objs = []
             for faction in character['factions']:
                 if faction in faction_index:
@@ -108,7 +114,9 @@ def scrape_characters():
             character['factions'] = faction_objs
             character['roles'] = role_objs
 
-            print(character)
+            if ('empress (cao mao)' in character['roles']):
+                print("\n\n!!!!!!!!!!!!!!HERERERE!!\n\n\n")
+                print(character['roles'])
 
             new_character = Character(
                 **character
