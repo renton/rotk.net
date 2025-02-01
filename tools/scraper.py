@@ -231,9 +231,16 @@ def scrape_rotk_character_page(letter):
 
                 for row_faction in row_factions:
                     if row_faction != "":
-                        faction_string = clean_text(row_faction)
+                        faction_string = clean_text(row_faction).lower()
                         page_factions.add(faction_string)
                         new_character_data['factions'].append(faction_string)
+                
+                # latest faction
+                if i == 6:
+                    if len(row_factions) and row_factions[0] != "":
+                        new_character_data['latest_faction'] = clean_text(row_factions[0]).lower()
+                    else:
+                        new_character_data['latest_faction'] = None
 
         page_characters.append(new_character_data)
 

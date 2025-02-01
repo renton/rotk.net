@@ -12,7 +12,8 @@ class AbstractObject(db.Model):
     chinese_name = mapped_column(db.String(255), default="", sort_order=-1)
     aliases = mapped_column(db.String(255), default="", sort_order=-1)
     created_at = mapped_column(db.DateTime, default=db.func.now(), sort_order=-1)
-    updated_at = mapped_column(db.DateTime, onupdate=db.func.now(), sort_order=-1)   
+    #updated_at = mapped_column(db.DateTime, onupdate=db.func.now(), sort_order=-1)   
+    updated_at = mapped_column(db.DateTime, sort_order=-1)
     is_deleted = mapped_column(db.Boolean, default=False, nullable=False, sort_order=-1)
     
     notes = db.Column(db.Text, default="")

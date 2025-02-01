@@ -40,6 +40,9 @@ class Character(AbstractObject):
         lazy='dynamic'
     )
 
+    latest_faction_id = db.Column(db.Integer, db.ForeignKey("faction.id"), default=None, nullable=True)
+    latest_faction = db.relationship("Faction", foreign_keys=[latest_faction_id])
+
     # Association table for many-to-many relationship
     chapter_character = db.Table('chapter_character',
         db.Column('chapter_id', db.Integer, db.ForeignKey('chapter.id'), primary_key=True),
@@ -62,13 +65,6 @@ class Character(AbstractObject):
 
     def __repr__(self):
         return f'<Character {self.name}>'
-
-    @hybrid_property
-    def latest_faction(self):
-        if len(list(self.factions)):
-            return self.factions[0]
-        else:
-            return None
 
     def get_all_name_labels(self):
         labels = [self.name]

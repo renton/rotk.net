@@ -98,20 +98,21 @@ def scrape_characters():
     # get role index
     role_index = {role.name: role for role in Role.query.all()}
 
-    print(faction_index)
-
+    bad_eggs = []
     # add characters
     for character in characters:
         try:
-            if ('empress (cao mao)' in character['roles']):
-                print("\n\n!!!!!!!!!!!!!!HERERERE1111!!\n\n\n")
-                print(character['roles'])
+
+            if character['latest_faction'] and character['latest_faction'] in faction_index:
+                character['latest_faction_id'] = faction_index[character['latest_faction']].id
+            else:
+                character['latest_faction_id'] = None
+            del character['latest_faction']
 
             faction_objs = []
             for faction in character['factions']:
                 if faction in faction_index:
                     faction_objs.append(faction_index[faction])
-
 
             role_objs = []
             for role in character['roles']:
@@ -121,10 +122,6 @@ def scrape_characters():
             character['factions'] = faction_objs
             character['roles'] = role_objs
 
-            if ('empress (cao mao)' in character['roles']):
-                print("\n\n!!!!!!!!!!!!!!HERERERE!!\n\n\n")
-                print(character['roles'])
-
             new_character = Character(
                 **character
             )
@@ -133,7 +130,12 @@ def scrape_characters():
             db.session.commit()
         except Exception as e:
             print(e)
+            bad_eggs.append((e, character))
             db.session.rollback()
+
+    print("\n==========")
+    for egg in bad_eggs:
+        print(egg)
 
 @app.cli.command()
 def create_all():
