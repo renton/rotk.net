@@ -8,9 +8,10 @@ class AbstractObject(db.Model):
 
     # mapped_column + sorted_order ensure columns get added to furthest most left in table when inherited
     id = mapped_column(db.Integer, primary_key=True, sort_order=-1)
-    name = mapped_column(db.String(255), default="", nullable=False, sort_order=-1)
+    # collation='utf8mb4_bin' used so that similar characters are treated uniquely (ie. U, u, ü)
+    name = mapped_column(db.String(255, collation='utf8mb4_bin'), default="", nullable=False, sort_order=-1)
     chinese_name = mapped_column(db.String(255), default="", sort_order=-1)
-    aliases = mapped_column(db.String(255), default="", sort_order=-1)
+    aliases = mapped_column(db.String(255, collation='utf8mb4_bin'), default="", sort_order=-1)
     created_at = mapped_column(db.DateTime, default=db.func.now(), sort_order=-1)
     #updated_at = mapped_column(db.DateTime, onupdate=db.func.now(), sort_order=-1)   
     updated_at = mapped_column(db.DateTime, sort_order=-1)
@@ -33,7 +34,7 @@ class AbstractObject(db.Model):
 class AbstractTag(AbstractObject):
     __abstract__ = True
 
-    name = mapped_column(db.String(255), default="", nullable=False, sort_order=-1, unique=True)
+    name = mapped_column(db.String(255, collation='utf8mb4_bin'), default="", nullable=False, sort_order=-1, unique=True)
     font_colour = db.Column(db.String(7), default="#ffffff")
     bg_colour = db.Column(db.String(7), default="#ffffff")
     border_colour = db.Column(db.String(7), default="#ffffff")
