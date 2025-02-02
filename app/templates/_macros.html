@@ -32,7 +32,7 @@
 
 <span class="badge {% if rounded %}rounded-pill{% endif %}" 
     style="color:{{ tag.font_colour }} !important;
-    background-color:{{ tag.bg_colour }} !important;
+    {% if tag.bg_colour == tag.default_colour %}background-color:rgba(var(--bs-primary-rgb));{% else %}background-color:{{ tag.bg_colour }} !important;{% endif %}
     {% if tag.border_colour == tag.default_colour %}{% else %}border:{{ border_size }}px solid {{ tag.border_colour }} !important;{% endif %}">
     {{ tag.name }}
 </span>

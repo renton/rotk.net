@@ -32,8 +32,10 @@ def build_name_ref_html(character):
         html_output += f"data-faction-id='{ character.latest_faction.id }'"
 
         html_output += f" style='"
-        if character.latest_faction.bg_colour:
+        if character.latest_faction.bg_colour not in ["", character.latest_faction.default_colour]:
             html_output += f"background-color:{character.latest_faction.bg_colour};"
+        else:
+            html_output += f"background-color:#000;"
         
         if character.latest_faction.font_colour:
             html_output += f"color:{character.latest_faction.font_colour};"
