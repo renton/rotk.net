@@ -1,12 +1,35 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField, IntegerField
-from wtforms_sqlalchemy.fields import QuerySelectMultipleField
+from wtforms_sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
 from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from tools.validators import validate_colour
 
 from app.models import Faction, Role
+
+class CharacterFilterForm(FlaskForm):
+    role = QuerySelectField(
+        "Role", 
+        query_factory=lambda: Role.query.order_by(Role.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='--- Select a role ---',
+        blank_value=""
+
+    )
+    faction = QuerySelectField(
+        "Faction", 
+        query_factory=lambda: Faction.query.order_by(Faction.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='--- Select a faction ---',
+        blank_value=""
+    )
+
+    search_past_factions = BooleanField("Search past factions", default=True)
+
+    submit = SubmitField('Filter')
 
 class EditCharacterForm(FlaskForm):
     name = StringField("Name *", validators=[DataRequired()])

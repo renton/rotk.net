@@ -3,16 +3,51 @@
 
 {% block page_content %}
 
+<fieldset class="border p-3">
+<form method="GET" class="mb-4">
+    <div class="row mb-3">
+        <div class="col">
+            <label for="faction">Filter Faction:</label>
+            {{ form.faction(class="form-control") }}
+        </div>
+        <div class="col">
+            <label for="role">Filter Role:</label>
+            {{ form.role(class="form-control") }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div>
+            {{ form.search_past_factions(class="form-check-input") }}
+            <label for="search_past_factions"> Search past factions</label>
+
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+    <a href="{{ url_for('main.characters') }}" class="btn btn-primary">Clear</a>
+</form>
+</fieldset>
+
+
+<ul class="nav nav-tabs">
+    {% for display_letter in alphabet %}
+        <li class="nav-item">
+            <a class="nav-link {% if display_letter == letter %}active{% endif %}" aria-current="page" href="{{ url_for('main.characters', page=page, letter=display_letter, role=form.role.data.id, faction=form.faction.data.id) }}">{{ display_letter }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
 <table class="table table-striped mt-4">
     <thead>
         <th>Name</th>
         <th>Courtesy Name</th>
         <th>Aliases</th>
-        <th>Birth Year</th>
-        <th>Death Year</th>
+        <th>Birth</th>
+        <th>Death</th>
         <th>Ancestral Home</th>
         <th>Roles</th>
-        <th>Factions</th>
+        <th>Faction</th>
+        <th>Past Factions</th>
     </thead>
     <tbody>
         {% for character in characters %}
@@ -49,6 +84,11 @@
                     {% endfor %}
                 </td>
                 <td>
+                    {% if character.latest_faction %}
+                        {{ macros.badge_widget(character.latest_faction) }}
+                    {% endif %}
+                </td>
+                <td>
                     {% for faction in character.factions %}
                         <div>
                             {{ macros.badge_widget(faction) }}
@@ -62,7 +102,7 @@
 
 {% if pagination %}
 <div class="pagination">
-    {{ macros.pagination_widget(pagination, 'main.characters') }}
+    {{ macros.pagination_widget(pagination, 'main.characters', letter=letter, role=form.role.data.id, faction=form.faction.data.id) }}
 </div>
 {% endif %}
 

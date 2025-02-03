@@ -1,10 +1,10 @@
-import re
+import re, string
 from flask import render_template, abort, request, current_app, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
 from app import db
 from app.models import Chapter, Character, Faction, Role
 from . import main
-from .forms import EditCharacterForm, EditFactionForm, EditRoleForm
+from .forms import EditCharacterForm, EditFactionForm, EditRoleForm,CharacterFilterForm
 
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html
@@ -54,24 +54,50 @@ def chapter(chapter_num):
             characters=characters,
         )
 
-@main.route('/characters', methods=['GET'])
+@main.route('/characters', methods=['GET', 'POST'])
 def characters():
 
+    letter = request.args.get("letter", "").upper()
+    alphabet = alphabet = list(string.ascii_uppercase)
     page = request.args.get('page', 1, type=int)
 
-    pagination = Character.query.order_by(Character.name).paginate(
+    form = CharacterFilterForm(request.args)
+
+    # Start with the base query
+    query = Character.query
+
+    # Apply filtering if a letter is selected
+    if letter:
+        query = query.filter(Character.name.startswith(letter))
+
+    # Apply role filter
+    if form.role.data:
+        query = query.filter(Character.roles.any(Role.id == form.role.data.id))
+
+    # Apply faction filter
+    if form.faction.data:
+        if form.search_past_factions.data == True:
+            query = query.filter(Character.factions.any(Faction.id == form.faction.data.id))
+        else:
+            query = query.filter(Character.latest_faction == form.faction.data)
+
+    # Apply pagination after filtering
+    pagination = query.order_by(Character.name).paginate(
         page=page,
         per_page=current_app.config['CHARACTERS_PER_PAGE'],
         error_out=False
     )
 
-    characters = pagination.items
+    characters = pagination.items  # Get current page items
 
     return render_template(
         'characters/characters.html',
         characters=characters,
         pagination=pagination,
-        page=page
+        page=page,
+        alphabet=alphabet,
+        form=form,
+        letter=letter
     )
 
 @main.route('/characters/edit/<int:id>', methods=['GET', 'POST'])
