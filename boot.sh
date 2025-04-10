@@ -15,7 +15,7 @@ if [ "$FLASK_ENV" == "development" ]; then
 elif [ "$FLASK_ENV" == "production" ]; then
     echo "*** Running in production mode ***"
     exec gunicorn rotk:app \
-        -b :5000 \
+        -b :8081 \
         --access-logfile - \
         --error-logfile - \
         --timeout 240 \

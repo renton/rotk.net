@@ -2,22 +2,15 @@ version: '3.7'
 services:
   app:
     build: .
-    networks:
-      - vswitch0
-    expose:
-      - "5000"
+    network_mode: host
+    ports:
+      - "127.0.0.1:8081:8081"
     env_file: .env
     environment:
-      FLASK_ENV: 'ambrose'
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000"]
-      interval: 10s
-      retries: 5
-      start_period: 1s
+      FLASK_ENV: 'production'
     volumes:
       - .:/rotk.net
 
-networks:
-  vswitch0:
-    driver: bridge
+#networks:
+#  vswitch0:
+#    driver: bridge

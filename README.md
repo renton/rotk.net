@@ -13,3 +13,4 @@ systemctl cat certbot.timer
 /etc/letsencrypt/renewal/
 sudo certbot renew --dry-run
 sudo certbot renew --force-renewal
+certbot --nginx -d rotk.net
