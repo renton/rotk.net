@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer as Serializer
@@ -13,8 +13,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(256))
     confirmed = db.Column(db.Boolean, default=False)
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    member_since = db.Column(db.DateTime(), default=lambda: datetime.now(timezone.utc))
+    last_seen = db.Column(db.DateTime(), default=lambda: datetime.now(timezone.utc))
     avatar_hash = db.Column(db.String(32))
 
     def __init__(self, **kwargs):
@@ -91,7 +91,7 @@ class User(UserMixin, db.Model):
         return True
 
     def ping(self):
-        self.last_seen = datetime.utcnow()
+        self.last_seen = datetime.now(timezone.utc)
         db.session.add(self)
 
     def gravatar_hash(self):
