@@ -134,6 +134,41 @@ def split_cell_sections(td):
     return name_sections
     
 
+# Maps a lowercased Wikipedia header substring to the logical column we
+# care about. Order matters — first match wins, so put more specific keys
+# (e.g. "ancestral") before more general ones (e.g. "home").
+COLUMN_MATCHERS = [
+    ('name', 'name'),
+    ('courtesy', 'courtesy_name'),
+    ('born', 'birth_date'),
+    ('birth', 'birth_date'),
+    ('died', 'death_date'),
+    ('death', 'death_date'),
+    ('ancestral', 'ancestral_home'),
+    ('home', 'ancestral_home'),
+    ('role', 'role'),
+    ('allegiance', 'faction'),
+    ('faction', 'faction'),
+]
+
+
+def _classify_header(text):
+    lower = text.lower()
+    for needle, kind in COLUMN_MATCHERS:
+        if needle in lower:
+            return kind
+    return None
+
+
+def _parse_table_headers(table):
+    """Return a list of logical column kinds in order. Indexes line up with
+    the `<td>` cells in each data row. Unknown columns get None."""
+    header_row = table.find('tr')
+    if header_row is None:
+        return []
+    return [_classify_header(clean_text(th.get_text())) for th in header_row.find_all('th')]
+
+
 def scrape_rotk_character_page(letter):
     page_url = build_page_url(letter)
 
@@ -150,97 +185,83 @@ def scrape_rotk_character_page(letter):
     if not table:
         return [], [], []
 
+    column_kinds = _parse_table_headers(table)
+    if not column_kinds:
+        print(f"!!! {letter}: could not parse column headers")
+        return [], [], []
+
     character_rows = table.find_all('tr')
 
     for character_row in character_rows:
 
-        # skip header row
-        if len(character_row.find_all('th')) > 0:
+        # skip header rows
+        if character_row.find_all('th'):
             continue
 
         new_character_data = {
-            'roles' : [],
-            'factions' : []
-        }       
+            'roles': [],
+            'factions': [],
+            'aliases': '',
+            'chinese_name': '',
+            'courtesty_name': '',
+            'chinese_courtesty_name': '',
+            'birth_date': '',
+            'death_date': '',
+            'ancestral_home': '',
+            'latest_faction': None,
+        }
 
-        for i, td in enumerate(character_row.find_all('td')):
-            if i == 0:
-                # name
+        cells = character_row.find_all('td')
+        seen_faction_column = False
+
+        for i, td in enumerate(cells):
+            kind = column_kinds[i] if i < len(column_kinds) else None
+            if kind is None:
+                continue
+
+            if kind == 'name':
                 name_sections = split_cell_sections(td)
-                
-                if len(name_sections) > 0:
+                if name_sections:
                     name_parts = remove_html_tags(clean_text(name_sections[0])).split('/')
-
                     new_character_data['name'] = clean_text(name_parts[0])
-
-                    if len(name_parts) > 0:                        
-                        raw_aliases = []
-                        for name_part in name_parts[1:]:
-                            raw_aliases.append(clean_text(name_part))
-                        new_character_data['aliases'] = ', '.join(raw_aliases)
-
+                    if len(name_parts) > 1:
+                        new_character_data['aliases'] = ', '.join(clean_text(p) for p in name_parts[1:])
                 if len(name_sections) > 1:
                     new_character_data['chinese_name'] = remove_html_tags(clean_text(name_sections[1]))
-                else:
-                    new_character_data['chinese_name'] = ""
-                
-            elif i == 1:
-                # courtesty name
-                name_sections = split_cell_sections(td)
-                
-                if len(name_sections) > 0:
-                    new_character_data['courtesty_name'] = remove_html_tags(clean_text(name_sections[0]))
-                else:
-                    new_character_data['courtesty_name'] = ""
 
+            elif kind == 'courtesy_name':
+                name_sections = split_cell_sections(td)
+                if name_sections:
+                    new_character_data['courtesty_name'] = remove_html_tags(clean_text(name_sections[0]))
                 if len(name_sections) > 1:
                     new_character_data['chinese_courtesty_name'] = remove_html_tags(clean_text(name_sections[1]))
-                else:
-                    new_character_data['chinese_courtesty_name'] = ""
 
-            elif i == 2:
-                # birth date
-                birth_date_text = clean_text(td.text)
-                if birth_date_text == "":
-                    new_character_data['birth_date'] = ""
-                else:
-                    new_character_data['birth_date'] = birth_date_text
-            elif i == 3:
-                # death date
-                death_date_text = clean_text(td.text)
-                if death_date_text == "":
-                    new_character_data['death_date'] = ""
-                else:
-                    new_character_data['death_date'] = death_date_text
-            elif i == 4:
-                # ancestral home
+            elif kind == 'birth_date':
+                new_character_data['birth_date'] = clean_text(td.text)
+
+            elif kind == 'death_date':
+                new_character_data['death_date'] = clean_text(td.text)
+
+            elif kind == 'ancestral_home':
                 new_character_data['ancestral_home'] = clean_text(td.text)
-            elif i == 5:
-                # role
-                row_roles = clean_text(td.text).split(",")
 
-                for row_role in row_roles:
-                    if row_role != "":
-                        role_string = clean_text(row_role.lower())
+            elif kind == 'role':
+                for row_role in clean_text(td.text).split(','):
+                    role_string = clean_text(row_role.lower())
+                    if role_string:
                         page_roles.add(role_string)
                         new_character_data['roles'].append(role_string)
 
-            elif i == 6 or i == 7:
-                # faction
-                row_factions = clean_text(td.text).split(",")
-
-                for row_faction in row_factions:
-                    if row_faction != "":
-                        faction_string = clean_text(row_faction)
-                        page_factions.add(faction_string)
-                        new_character_data['factions'].append(faction_string)
-                
-                # latest faction
-                if i == 6:
-                    if len(row_factions) and row_factions[0] != "":
-                        new_character_data['latest_faction'] = clean_text(row_factions[0])
-                    else:
-                        new_character_data['latest_faction'] = None
+            elif kind == 'faction':
+                row_factions = [clean_text(f) for f in clean_text(td.text).split(',')]
+                row_factions = [f for f in row_factions if f]
+                for faction_string in row_factions:
+                    page_factions.add(faction_string)
+                    new_character_data['factions'].append(faction_string)
+                # First faction column on the row is treated as "current".
+                if not seen_faction_column and row_factions:
+                    new_character_data['latest_faction'] = row_factions[0]
+                seen_faction_column = True
 
         page_characters.append(new_character_data)
 
