@@ -42,8 +42,9 @@ services:
     env_file: .env
     restart: unless-stopped
     volumes:
-      - ./db-data:/var/lib/mysql      
+      - ./db-data:/var/lib/mysql
       - ./db-confs:/etc/mysql/conf.d
+      - ./db-init:/docker-entrypoint-initdb.d:ro
 
 networks:
   vswitch0:

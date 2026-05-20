@@ -63,12 +63,14 @@ db-data/                 # MySQL data volume (gitignored)
 ### Dev
 
 ```bash
-cp .env.example .env       # fill in MYSQL_ROOT_PASSWORD and SECRET_KEY
+cp .env.example .env       # fill in SECRET_KEY, MYSQL_ROOT_PASSWORD, MYSQL_APP_PASSWORD
 docker-compose up          # serves on http://localhost:80
-docker-compose exec app flask create-all
+docker-compose exec -e MYSQL_USE_ROOT=1 app flask create-all   # DDL needs root
 docker-compose exec app flask scrape-book        # ~120 HTTP fetches
 docker-compose exec app flask scrape-characters  # ~26 HTTP fetches
 ```
+
+The app connects as the least-privileged `rotk_app` user; pass `MYSQL_USE_ROOT=1` to any CLI command that needs DDL (currently just `create-all`).
 
 Notes:
 - `FLASK_ENV=development` is set in `docker-compose.yml`. CSRF is disabled in dev (`WTF_CSRF_ENABLED = False`).

@@ -16,7 +16,7 @@ Live at [rotk.net](https://rotk.net).
 
 ```bash
 cp .env.example .env
-# Edit .env and set MYSQL_ROOT_PASSWORD and SECRET_KEY
+# Edit .env and set SECRET_KEY, MYSQL_ROOT_PASSWORD, MYSQL_APP_PASSWORD
 ```
 
 Bring it up:
@@ -25,10 +25,10 @@ Bring it up:
 docker-compose up
 ```
 
-The app is served at `http://localhost`. On first boot the database is empty — populate it with:
+The app is served at `http://localhost`. On first boot the database container runs `db-init/01-create-app-user.sh` which creates the `rotk.net` schema and a least-privileged `rotk_app` user. The Flask app connects as `rotk_app`. DDL commands need root, so populate the empty DB like this:
 
 ```bash
-docker-compose exec app flask create-all
+docker-compose exec -e MYSQL_USE_ROOT=1 app flask create-all
 docker-compose exec app flask scrape-book          # ~120 chapter fetches from threekingdoms.com
 docker-compose exec app flask scrape-characters    # ~26 alphabetised pages from Wikipedia
 ```

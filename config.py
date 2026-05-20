@@ -2,10 +2,23 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
+def _database_uri():
+    # Use the least-privileged app user at runtime. Root is reserved for
+    # DDL (create-all, migrations) — invoke those with MYSQL_USE_ROOT=1.
+    if os.environ.get("MYSQL_USE_ROOT") == "1":
+        user = "root"
+        password = os.environ.get("MYSQL_ROOT_PASSWORD", "")
+    else:
+        user = os.environ.get("MYSQL_APP_USER", "rotk_app")
+        password = os.environ.get("MYSQL_APP_PASSWORD", "")
+    host = os.environ.get("MYSQL_HOST", "db")
+    return f"mysql+mysqldb://{user}:{password}@{host}/rotk.net"
+
+
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     CHARACTERS_PER_PAGE = 50
-    SQLALCHEMY_DATABASE_URI = f"mysql+mysqldb://root:{os.environ.get('MYSQL_ROOT_PASSWORD')}@db/rotk.net"
+    SQLALCHEMY_DATABASE_URI = _database_uri()
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
 
@@ -32,4 +45,5 @@ class ProductionConfig(Config):
 config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
+    'default': DevelopmentConfig,
 }
