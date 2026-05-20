@@ -2,10 +2,12 @@ from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_user, logout_user, login_required
 from app.blueprints.auth.forms import LoginForm
 
+from app import limiter
 from app.models import User
 from . import auth
 
 @auth.route('/login', methods=['GET', 'POST'])
+@limiter.limit("10 per minute; 50 per hour", methods=["POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():

@@ -3,6 +3,8 @@ from flask import Flask, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_talisman import Talisman
 from flask_bootstrap import Bootstrap5
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from tools.dbm import DbManager
 
 # from flask_mail import Mail
@@ -21,6 +23,8 @@ dbm = DbManager(db)
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+
+limiter = Limiter(key_func=get_remote_address, default_limits=[])
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -41,6 +45,7 @@ def create_app(config_name):
     #moment.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+    limiter.init_app(app)
     #pagedown.init_app(app)
 
     #if app.config['SSL_REDIRECT']:
