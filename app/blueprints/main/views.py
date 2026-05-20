@@ -146,7 +146,7 @@ def edit_faction(id):
         db.session.add(faction)
         db.session.commit()
         flash('The faction has been updated.')
-        return redirect(url_for("main.factions", id=faction.id))
+        return redirect(url_for("main.factions"))
 
     return render_template(
         'factions/faction_edit.html',
@@ -175,7 +175,7 @@ def edit_role(id):
         db.session.add(role)
         db.session.commit()
         flash('The role has been updated.')
-        return redirect(url_for("main.roles", id=role.id))
+        return redirect(url_for("main.roles"))
 
     return render_template(
         'roles/role_edit.html',
