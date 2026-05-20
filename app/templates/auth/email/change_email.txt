@@ -1,0 +1,11 @@
+Hi {{ user.username }},
+
+You asked to change your rotk.net email address to this one. Confirm the change by visiting:
+
+{{ url_for('auth.change_email_confirm', token=token, _external=True) }}
+
+This link expires in 1 hour.
+
+If you didn't request this change, you can ignore this email — your old address stays on the account.
+
+— rotk.net

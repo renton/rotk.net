@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}rotk.net - Change email{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Change email</h1>
+</div>
+<div class="col-md-6">
+    <p>Current email: <strong>{{ current_user.email }}</strong></p>
+    <p>We'll send a confirmation link to the new address. The change only takes effect once you click it.</p>
+    {{ render_form(form) }}
+</div>
+{% endblock %}

@@ -8,6 +8,8 @@ from app.blueprints.auth.forms import (
     RegistrationForm,
     ForgotPasswordForm,
     ResetPasswordForm,
+    ChangePasswordForm,
+    ChangeEmailForm,
 )
 from app.blueprints.auth.emails import send_email
 from . import auth
@@ -133,6 +135,56 @@ def forgot_password():
         return redirect(url_for('auth.login'))
 
     return render_template('auth/forgot_password.html', form=form)
+
+
+@auth.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if not current_user.verify_password(form.old_password.data):
+            flash('Current password is incorrect.')
+        else:
+            current_user.password = form.password.data
+            db.session.add(current_user)
+            db.session.commit()
+            flash('Your password has been updated.')
+            return redirect(url_for('main.index'))
+    return render_template('auth/change_password.html', form=form)
+
+
+@auth.route('/change-email', methods=['GET', 'POST'])
+@login_required
+def change_email_request():
+    form = ChangeEmailForm()
+    if form.validate_on_submit():
+        if not current_user.verify_password(form.password.data):
+            flash('Password is incorrect.')
+        else:
+            new_email = form.email.data.lower()
+            token = current_user.generate_email_change_token(new_email)
+            send_email(
+                to=new_email,
+                subject='Confirm your new email',
+                template='auth/email/change_email',
+                user=current_user,
+                token=token,
+            )
+            flash('A confirmation link has been sent to the new email address.')
+            return redirect(url_for('main.index'))
+    return render_template('auth/change_email.html', form=form)
+
+
+@auth.route('/change-email/<token>')
+@login_required
+def change_email_confirm(token):
+    expiration = current_app.config['EMAIL_CHANGE_TOKEN_TTL']
+    if current_user.change_email(token, expiration=expiration):
+        db.session.commit()
+        flash('Your email address has been updated.')
+    else:
+        flash('That email-change link is invalid or has expired.')
+    return redirect(url_for('main.index'))
 
 
 @auth.route('/reset-password/<token>', methods=['GET', 'POST'])
