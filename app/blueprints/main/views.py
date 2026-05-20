@@ -21,38 +21,33 @@ def index():
 @main.route('/chapter/<int:chapter_num>', methods=['GET'])
 def chapter(chapter_num):
 
-    with db.session.no_autoflush:
-        chapter = Chapter.query.filter(Chapter.chapter_num == chapter_num).first()
+    chapter = Chapter.query.filter(Chapter.chapter_num == chapter_num).first()
 
-        if not chapter:
-            abort(404)
+    if not chapter:
+        abort(404)
 
-        # TODO sort alphabetically
-        characters = get_characters_for_chapter(chapter.id)
-        characters.sort(key=lambda x: x.name)
+    characters = get_characters_for_chapter(chapter.id)
+    characters.sort(key=lambda x: x.name)
 
-        replacements = {}
+    replacements = {}
 
-        for character in characters:
-            for name_needle in character.get_all_name_labels():            
-                replacements[name_needle] = build_name_ref_html(character)
-        # Create a regex pattern that matches any of the needles
-        pattern = build_needle_pattern(list(replacements.keys()))
+    for character in characters:
+        for name_needle in character.get_all_name_labels():
+            replacements[name_needle] = build_name_ref_html(character)
 
-        # Function to replace the found needle with the replacement
-        def replace_match(match):
-            return replacements[match.group(0)]
+    pattern = build_needle_pattern(list(replacements.keys()))
 
-        # Perform the find-and-replace in a single pass
-        modified_text = pattern.sub(replace_match, chapter.content)
+    def replace_match(match):
+        return replacements[match.group(0)]
 
-        chapter.content = modified_text
+    rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
 
-        return render_template(
-            'book/chapter.html',
-            chapter=chapter,
-            characters=characters,
-        )
+    return render_template(
+        'book/chapter.html',
+        chapter=chapter,
+        chapter_content=rendered_content,
+        characters=characters,
+    )
 
 @main.route('/characters', methods=['GET', 'POST'])
 def characters():
