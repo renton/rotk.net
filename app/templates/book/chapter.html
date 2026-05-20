@@ -36,13 +36,24 @@
                           {{ macros.badge_widget(role) }}
                         </div>
                       {% endfor %}
-        
-                      Factions:
-                      {% for faction in character.factions %}
+
+                      {% if character.latest_faction %}
+                      
+                        Faction:
                         <div>
-                          {{ macros.badge_widget(faction) }}
+                          {{ macros.badge_widget(character.latest_faction) }}
                         </div>
-                      {% endfor %}
+
+                      {% endif %}
+        
+                      {% if character.factions %}
+                        Past Factions:
+                        {% for faction in character.factions %}
+                          <div>
+                            {{ macros.badge_widget(faction) }}
+                          </div>
+                        {% endfor %}
+                      {% endif %}
                     </div>
                   {% endfor %}
                 </div>

@@ -7,6 +7,12 @@
 <form method="GET" class="mb-4">
     <div class="row mb-3">
         <div class="col">
+            <label for="faction">Search:</label>
+            {{ form.search_query(class="form-control") }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
             <label for="faction">Filter Faction:</label>
             {{ form.faction(class="form-control") }}
         </div>
@@ -32,7 +38,7 @@
 <ul class="nav nav-tabs">
     {% for display_letter in alphabet %}
         <li class="nav-item">
-            <a class="nav-link {% if display_letter == letter %}active{% endif %}" aria-current="page" href="{{ url_for('main.characters', page=page, letter=display_letter, role=form.role.data.id, faction=form.faction.data.id) }}">{{ display_letter }}</a>
+            <a class="nav-link {% if display_letter == letter %}active{% endif %}" aria-current="page" href="{{ url_for('main.characters', page=page, letter=display_letter, role=form.role.data.id, faction=form.faction.data.id, search_query=form.search_query.data) }}">{{ display_letter }}</a>
         </li>
     {% endfor %}
 </ul>
@@ -102,7 +108,7 @@
 
 {% if pagination %}
 <div class="pagination">
-    {{ macros.pagination_widget(pagination, 'main.characters', letter=letter, role=form.role.data.id, faction=form.faction.data.id) }}
+    {{ macros.pagination_widget(pagination, 'main.characters', letter=letter, role=form.role.data.id, faction=form.faction.data.id, search_query=form.search_query.data) }}
 </div>
 {% endif %}
 

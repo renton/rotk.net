@@ -66,11 +66,11 @@
     {% endblock %}
 
     {% block main_form %}
-    {% if form is defined %}
-    <div class="mb-4">
-      {{ render_form(form) }}
-    </div>
-    {% endif %}
+      {% if form is defined %}
+      <div class="mb-4">
+        {{ render_form(form) }}
+      </div>
+      {% endif %}
     {% endblock %}
 
     {% endblock %}

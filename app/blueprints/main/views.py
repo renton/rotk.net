@@ -81,6 +81,10 @@ def characters():
         else:
             query = query.filter(Character.latest_faction == form.faction.data)
 
+    if form.search_query.data:
+        search_term = f"%{form.search_query.data}%"
+        query = query.filter(Character.name.ilike(search_term))
+
     # Apply pagination after filtering
     pagination = query.order_by(Character.name).paginate(
         page=page,
