@@ -34,14 +34,14 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def generate_confirmation_token(self, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'confirm': self.id}).decode('utf-8')
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'confirm': self.id})
 
-    def confirm(self, token):
+    def confirm(self, token, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token.encode('utf-8'))
-        except:
+            data = s.loads(token, max_age=expiration)
+        except Exception:
             return False
         if data.get('confirm') != self.id:
             return False
@@ -50,17 +50,17 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_reset_token(self, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'reset': self.id}).decode('utf-8')
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'reset': self.id})
 
     @staticmethod
-    def reset_password(token, new_password):
+    def reset_password(token, new_password, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token.encode('utf-8'))
-        except:
+            data = s.loads(token, max_age=expiration)
+        except Exception:
             return False
-        user = User.query.get(data.get('reset'))
+        user = db.session.get(User, data.get('reset'))
         if user is None:
             return False
         user.password = new_password
@@ -68,15 +68,14 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_email_change_token(self, new_email, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps(
-            {'change_email': self.id, 'new_email': new_email}).decode('utf-8')
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'change_email': self.id, 'new_email': new_email})
 
-    def change_email(self, token):
+    def change_email(self, token, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token.encode('utf-8'))
-        except:
+            data = s.loads(token, max_age=expiration)
+        except Exception:
             return False
         if data.get('change_email') != self.id:
             return False
@@ -105,18 +104,17 @@ class User(UserMixin, db.Model):
 
 
     def generate_auth_token(self, expiration):
-        s = Serializer(current_app.config['SECRET_KEY'],
-                       expires_in=expiration)
-        return s.dumps({'id': self.id}).decode('utf-8')
+        s = Serializer(current_app.config['SECRET_KEY'])
+        return s.dumps({'id': self.id})
 
     @staticmethod
-    def verify_auth_token(token):
+    def verify_auth_token(token, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
-            data = s.loads(token)
-        except:
+            data = s.loads(token, max_age=expiration)
+        except Exception:
             return None
-        return User.query.get(data['id'])
+        return db.session.get(User, data['id'])
 
     def __repr__(self):
         return '<User %r>' % self.username
