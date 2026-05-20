@@ -101,4 +101,4 @@ class Portrait(AbstractObject):
     character = db.relationship('Character', back_populates='portraits', lazy='select')
 
     def __repr__(self):
-        return f'<Link {self.name}>'
+        return f'<Portrait {self.name}>'
