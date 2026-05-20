@@ -83,6 +83,7 @@ To force a renewal:
 
 ```bash
 sudo certbot renew --force-renewal
+<<<<<<< HEAD
 ```
 
 ## CLI commands
@@ -144,3 +145,4 @@ See [ISSUES.md](./ISSUES.md) for the running list of design notes. Highlights st
 - No Flask-Migrate / Alembic — schema changes require manual SQL or drop/recreate
 - "courtesty" is misspelled throughout (model fields, forms, templates)
 - No tests
+certbot --nginx -d rotk.net
