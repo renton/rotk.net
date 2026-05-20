@@ -12,7 +12,7 @@ from sqlalchemy.exc import IntegrityError
 from app import create_app, db
 from tools.scraper import scrape_rotk_book, scrape_rotk_characters
 from tools.book_parser import get_characters_for_chapter
-from flask import render_template, request, jsonify, Response
+from flask import render_template, request, jsonify
 
 # COV = None
 # if os.environ.get('FLASK_COVERAGE'):
@@ -27,15 +27,6 @@ from app.models import \
 app = create_app(os.getenv('FLASK_ENV') or 'default')
 
 # migrate = Migrate(app, db)
-
-@app.after_request
-def set_csp_header(response: Response):
-    response.headers["Content-Security-Policy"] = (
-        "default-src 'self'; "
-        "script-src 'self' https://cdn.jsdelivr.net; "
-        "style-src 'self' https://cdn.jsdelivr.net;"
-    )
-    return response
 
 @app.cli.command()
 def build_chapter_characters():

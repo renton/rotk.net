@@ -97,38 +97,9 @@
       </div>    
 </div>
 
-<script>
-  // Function to toggle the visibility of the div
-  function show_character(character_id) {
-    var divs = document.querySelectorAll('div.character-panel');
-    divs.forEach(function(div) {
-      div.style.display = 'none';
-    });
-
-    var div = document.getElementById('character-panel-'+character_id);
-    console.log(div)
-    if (div.style.display === 'none' || div.style.display === '') {
-      div.style.display = 'block';  // Show the div
-    } else {
-      div.style.display = 'none';  // Hide the div
-    }
-
-    collapseElement = document.getElementById('collapseOne');
-
-    // Check if it's collapsed (i.e., doesn't have the 'show' class)
-    if (!collapseElement.classList.contains('show')) {
-      // Select the accordion button
-      var accordionButton = document.querySelector('#sidebar-character-info .accordion-button');
-
-      // Trigger the click event programmatically
-      accordionButton.click();
-    }
-
-  }
-</script>
-
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
+<script src="{{ url_for('static', filename='js/chapter.js') }}"></script>
 {% endblock %}

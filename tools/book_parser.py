@@ -26,7 +26,7 @@ def build_needle_pattern(name_needles):
     return re.compile(r'\b(' + '|'.join(map(re.escape, name_needles)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
 
 def build_name_ref_html(character):
-    html_output = f"<span onclick=\"show_character({ character.id })\" class='character-ref badge rounded-pill' data-character-id='{ character.id }' "
+    html_output = f"<span class='character-ref badge rounded-pill' data-character-id='{ character.id }' "
 
     if character.latest_faction is not None:
         html_output += f"data-faction-id='{ character.latest_faction.id }'"

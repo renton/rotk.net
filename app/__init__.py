@@ -27,15 +27,12 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    nonce = os.urandom(16).hex()
-    # Define custom CSP
     csp = {
         "default-src": ["'self'"],
         "img-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org", "data:"],
-        "script-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org", "'unsafe-inline'"],
-        "style-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org", "'unsafe-inline'"],
+        "script-src": ["'self'", "https://cdn.jsdelivr.net"],
+        "style-src": ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"],
     }
-    # Apply Talisman with the custom CSP
 
     Talisman(app, content_security_policy=csp, force_https=True)
 
