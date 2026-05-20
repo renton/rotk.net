@@ -1,3 +1,5 @@
+from sqlalchemy import inspect
+
 
 class DbManager:
     def __init__(self, db):
@@ -11,24 +13,24 @@ class DbManager:
 
     def add_row(self, model, data):
         row = model(**data)
-        try:            
+        try:
             self.db.session.add(row)
             self.db.session.commit()
             return row
-        except Exception as e:          
+        except Exception as e:
             print("!!!!!!", (e.args))
             self.db.session.rollback()
             return None
 
     def update_row(self, model, instance, data):
-        for k,v in data.items():
+        for k, v in data.items():
             setattr(instance, k, v)
         try:
             self.db.session.commit()
             return instance
         except Exception as e:
             print(e)
-            db.session.rollback()
+            self.db.session.rollback()
             return None
 
     def delete_all(self, model):
@@ -36,5 +38,5 @@ class DbManager:
             self.db.session.query(model).delete()
             self.db.session.commit()
         except Exception as e:
-            db.session.rollback()
+            self.db.session.rollback()
             print(f"Error deleting records: {str(e)}")
