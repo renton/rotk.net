@@ -4,19 +4,28 @@ from app.models import \
     Chapter, Character
 
 def get_characters_for_chapter(chapter_id):
-
-    all_characters = Character.query.all()
-
     chapter = Chapter.query.get_or_404(chapter_id)
 
+    # Prefer the precomputed M2M (populated by `flask build-chapter-character-association`).
+    cached = list(chapter.characters)
+    if cached:
+        return cached
+
+    return scan_chapter_for_characters(chapter)
+
+
+def scan_chapter_for_characters(chapter):
+    """Regex-scan the chapter text against every character's names/aliases.
+
+    Slow — O(N_characters) regex compilations + scans per chapter. Used as
+    a fallback when the chapter_character association table is empty.
+    """
+    all_characters = Character.query.all()
     chapter_characters = set()
 
     for character in all_characters:
         name_needles = character.get_all_name_labels()
-
         pattern = build_needle_pattern(name_needles)
-
-        # Perform a single pass to check if any needle exists in the text
         if pattern.search(chapter.content):
             chapter_characters.add(character)
 

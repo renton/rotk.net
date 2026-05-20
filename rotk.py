@@ -11,7 +11,7 @@ import click
 from sqlalchemy.exc import IntegrityError
 from app import create_app, db
 from tools.scraper import scrape_rotk_book, scrape_rotk_characters
-from tools.book_parser import get_characters_for_chapter
+from tools.book_parser import get_characters_for_chapter, scan_chapter_for_characters
 from flask import render_template, request, jsonify
 
 # COV = None
@@ -29,10 +29,18 @@ app = create_app(os.getenv('FLASK_ENV') or 'default')
 # migrate = Migrate(app, db)
 
 @app.cli.command()
-def build_chapter_characters():
-
-    print(get_characters_for_chapter(1))
-
+def build_chapter_character_association():
+    """Populate the chapter_character table by regex-scanning every chapter
+    for every character's names/aliases. Idempotent — clears existing rows
+    for each chapter before refilling so reruns reflect current data."""
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    total = 0
+    for chapter in chapters:
+        chapter.characters = scan_chapter_for_characters(chapter)
+        total += len(chapter.characters)
+        print(f"chapter {chapter.chapter_num}: {len(chapter.characters)} characters")
+        db.session.commit()
+    print(f"\nDone. {total} character/chapter rows.")
 
 
 @app.cli.command()

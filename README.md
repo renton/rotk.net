@@ -29,8 +29,9 @@ The app is served at `http://localhost`. On first boot the database container ru
 
 ```bash
 docker-compose exec -e MYSQL_USE_ROOT=1 app flask create-all
-docker-compose exec app flask scrape-book          # ~120 chapter fetches from threekingdoms.com
-docker-compose exec app flask scrape-characters    # ~26 alphabetised pages from Wikipedia
+docker-compose exec app flask scrape-book                         # ~120 chapter fetches from threekingdoms.com
+docker-compose exec app flask scrape-characters                   # ~26 alphabetised pages from Wikipedia
+docker-compose exec app flask build-chapter-character-association # precomputes which characters appear in which chapter
 ```
 
 Then visit `http://localhost/` for the table of contents.
@@ -86,7 +87,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `create-all` | Run `db.create_all()` to create all tables from the current model definitions |
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
-| `build-chapter-characters` | Debug helper — prints the characters found in chapter 1 |
+| `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
 ## Project layout

@@ -55,7 +55,7 @@ db-data/                 # MySQL data volume (gitignored)
 ## How data flows
 
 1. **Bootstrap:** `flask create-all` creates schema, then `flask scrape-book` and `flask scrape-characters` populate from the web.
-2. **Character ↔ Chapter linking is implicit, not stored.** `get_characters_for_chapter()` scans the chapter text for every character's name/aliases/courtesy-name on every render. There is a `chapter_character` association table defined but it is never written to (and never queried for membership).
+2. **Character ↔ Chapter linking is materialised by a CLI command.** Run `flask build-chapter-character-association` after scraping. `get_characters_for_chapter()` reads from the populated `chapter_character` table; if the table is empty, it falls back to regex-scanning every character against the chapter text on the fly.
 3. **Inline tagging** (`build_name_ref_html`) replaces matched names in the chapter HTML with a `<span class="character-ref">` that has an `onclick` to a global JS `show_character()`.
 
 ## Running it
@@ -92,7 +92,7 @@ Requires Let's Encrypt certs on the host at `/etc/letsencrypt/live/rotk.net/`. n
 | `flask create-all` | `db.create_all()` — create schema |
 | `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
-| `flask build-chapter-characters` | Currently just prints characters for chapter 1 (debug stub) |
+| `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
 
 ## Conventions worth knowing
