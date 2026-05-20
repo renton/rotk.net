@@ -11,7 +11,7 @@ from tools.book_parser import get_characters_for_chapter, build_needle_pattern, 
 
 @main.route('/', methods=['GET'])
 def index():
-    chapters = Chapter.query.all()
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
 
     return render_template(
         'book/table_of_contents.html',
