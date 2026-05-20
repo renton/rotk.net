@@ -66,6 +66,22 @@ class Character(AbstractObject):
     def __repr__(self):
         return f'<Character {self.name}>'
 
+    def set_current_faction(self, faction):
+        # Keep `latest_faction` (FK) and the `factions` M2M consistent.
+        # Caller should add `faction` to `factions` themselves if the
+        # instance isn't yet persisted (the dynamic relationship can't
+        # be queried for transient rows).
+        if faction is None:
+            self.latest_faction = None
+            return
+        self.latest_faction = faction
+        try:
+            if faction not in self.factions.all():
+                self.factions.append(faction)
+        except Exception:
+            # Transient instance or detached session — caller maintains M2M.
+            pass
+
     def get_all_name_labels(self):
         labels = [self.name]
         if self.courtesty_name != "":
