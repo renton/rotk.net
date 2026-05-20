@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Confirm your account{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Hi, {{ current_user.username }}.</h1>
+</div>
+<p>We just sent a confirmation link to <strong>{{ current_user.email }}</strong>.</p>
+<p>You can keep using the site, but you'll need to confirm your email before you can access admin features.</p>
+<p>
+    Didn't get it?
+    <a href="{{ url_for('auth.resend_confirmation') }}">Resend the confirmation email</a>.
+</p>
+{% endblock %}

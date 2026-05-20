@@ -122,6 +122,7 @@ class User(UserMixin, db.Model):
 
 class AnonymousUser(AnonymousUserMixin):
     is_administrator = False
+    confirmed = False
 
 login_manager.anonymous_user = AnonymousUser
 

@@ -1,0 +1,11 @@
+Hi {{ user.username }},
+
+Confirm your rotk.net account by visiting the link below:
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+This link expires in 24 hours.
+
+If you didn't sign up for an account, you can ignore this email.
+
+— rotk.net
