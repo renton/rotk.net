@@ -4,6 +4,8 @@ A catalogue of things I'd push back on after a first read of the codebase: bugs,
 
 Ordered loosely by impact within each section.
 
+**Resolved so far:** 1–18 (security bugs, correctness bugs, scraper headers). See git log for the corresponding commits. Items 19–48 are still open.
+
 ---
 
 ## Security bugs

@@ -22,7 +22,7 @@ from flask import render_template, request, jsonify
 
 # from flask_migrate import Migrate, upgrade
 from app.models import \
-    Chapter, Character, Faction, Role
+    Chapter, Character, Faction, Role, User
 
 app = create_app(os.getenv('FLASK_ENV') or 'default')
 
@@ -127,6 +127,49 @@ def scrape_characters():
 @app.cli.command()
 def create_all():
     db.create_all()
+
+
+@app.cli.command()
+@click.argument('email')
+def make_admin(email):
+    """Promote the user with the given email to administrator (and mark
+    them confirmed). Useful for bootstrapping the first admin."""
+    user = User.query.filter_by(email=email.lower()).first()
+    if user is None:
+        print(f"No user with email {email!r}.")
+        sys.exit(1)
+    user.is_administrator = True
+    user.confirmed = True
+    db.session.add(user)
+    db.session.commit()
+    print(f"Promoted {user.username} ({user.email}) to admin.")
+
+
+@app.cli.command()
+@click.argument('email')
+@click.argument('username')
+@click.option('--password', prompt=True, hide_input=True, confirmation_prompt=True,
+              help='Password for the new user (prompted if not provided).')
+@click.option('--admin/--no-admin', default=False, help='Mark the user as administrator.')
+def create_user(email, username, password, admin):
+    """Create a new user (mainly for bootstrapping the first admin)."""
+    if User.query.filter_by(email=email.lower()).first():
+        print(f"Email {email!r} is already registered.")
+        sys.exit(1)
+    if User.query.filter_by(username=username).first():
+        print(f"Username {username!r} is already in use.")
+        sys.exit(1)
+
+    user = User(
+        email=email.lower(),
+        username=username,
+        confirmed=True,
+        is_administrator=admin,
+    )
+    user.password = password
+    db.session.add(user)
+    db.session.commit()
+    print(f"Created {user.username} ({user.email})" + (" [admin]" if admin else "") + ".")
 
 @app.cli.command()
 def deploy():

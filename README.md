@@ -38,19 +38,26 @@ Then visit `http://localhost/` for the table of contents.
 
 > **Note:** `Talisman(force_https=True)` is on unconditionally, so your browser may HSTS-upgrade `http://localhost` after the first visit. If you hit a redirect loop, use a fresh incognito window or clear HSTS for `localhost`.
 
-### Creating an admin user
+### Creating the first admin
 
-There is currently no registration view. Insert a user manually and flip `is_administrator`:
+Users register through `/auth/register`. The first admin needs to be promoted from the command line:
 
 ```bash
-docker-compose exec db mysql -uroot -p rotk.net
-```
-```sql
-INSERT INTO user (email, username, password_hash, confirmed, is_administrator)
-VALUES ('you@example.com', 'you', '<werkzeug-hash>', 1, 1);
+docker-compose exec app flask make-admin you@example.com
 ```
 
-(Generate the hash with `python -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('yourpassword'))"`.)
+You can also create a user directly (handy if SMTP isn't set up yet and you just want to log in):
+
+```bash
+docker-compose exec app flask create-user you@example.com you --admin
+# prompts for password
+```
+
+After that, additional admins can be promoted via the **Users** page in the navbar dropdown (visible only to confirmed admins).
+
+### Sending email
+
+The auth flow sends confirmation and password-reset emails. Set the `MAIL_*` variables in `.env` to any SMTP provider — see `.env.example` for Mailgun/SendGrid/SES/Gmail examples. If `MAIL_SERVER` is left blank, outbound mail is suppressed and each message body is logged to stderr instead, which is enough for local dev.
 
 ## Production
 
@@ -88,6 +95,8 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
+| `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
+| `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
 ## Project layout
@@ -105,9 +114,10 @@ app/
   __init__.py            Flask app factory; extensions; blueprint registration
   models/                SQLAlchemy models (Character, Chapter, Faction, Role, User, ...)
   blueprints/main/       Public routes: TOC, chapter view, character/faction/role listings + admin edits
-  blueprints/auth/       Login/logout (registration form exists but no view yet)
+  blueprints/auth/       Login, register, confirm, forgot/reset password, change password/email
+  blueprints/admin/      Admin-only routes (user listing, promote/demote)
   templates/             Jinja2 templates
-  static/                styles.css, favicon, placeholder portrait
+  static/                styles.css, favicon, placeholder portrait, chapter.js
 
 tools/
   scraper.py             Web scrapers for the book text and character index
@@ -123,15 +133,14 @@ tools/
 - **Chapter view** at `/chapter/<n>` rendering the chapter text with clickable character badges. Sidebar shows character details + faction colour-coding.
 - **Character browser** at `/characters` with alphabet tabs, search, and faction/role filters (incl. "search past factions" toggle)
 - **Faction and Role pages** at `/factions` and `/roles` showing each tag, its colour preview, and member count
-- **Admin editing** for characters / factions / roles (auth-gated)
-- **Login** at `/auth/login`
+- **User accounts** — `/auth/register`, `/auth/login`, `/auth/forgot-password`, `/auth/change-password`, `/auth/change-email`, all with email confirmation.
+- **Admin panel** at `/admin/users` — confirmed admins can promote or demote any user (you can't demote yourself or the last remaining admin)
+- **Admin editing** for characters / factions / roles (gated to confirmed admins)
 
 ## Limitations and known issues
 
-See [ISSUES.md](./ISSUES.md) for a detailed list. Highlights:
+See [ISSUES.md](./ISSUES.md) for the running list of design notes. Highlights still relevant:
 
-- `@admin_required` does not currently block anonymous users
 - No Flask-Migrate / Alembic — schema changes require manual SQL or drop/recreate
-- Character ↔ Chapter linking is recomputed by regex on every page view
 - "courtesty" is misspelled throughout (model fields, forms, templates)
 - No tests

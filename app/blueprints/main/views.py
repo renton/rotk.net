@@ -131,6 +131,7 @@ def factions():
 
 @main.route('/factions/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def edit_faction(id):
     faction = Faction.query.get_or_404(id)
     form = EditFactionForm(obj=faction)
@@ -160,6 +161,7 @@ def roles():
 
 @main.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def edit_role(id):
     role = Role.query.get_or_404(id)
     form = EditRoleForm(obj=role)

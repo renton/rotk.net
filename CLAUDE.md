@@ -34,8 +34,10 @@ app/
   blueprints/
     main/views.py        # Index (TOC), chapter view, character listing/edit, faction/role listing/edit
     main/forms.py        # CharacterFilterForm, EditCharacterForm, EditFactionForm, EditRoleForm
-    auth/views.py        # login, logout only (register/reset views NOT implemented; forms exist)
-    auth/forms.py        # Login, Registration, ChangePassword, PasswordReset*, ChangeEmail forms
+    auth/views.py        # login, logout, register, confirm, forgot/reset password, change password/email
+    auth/forms.py        # Login, Registration, ForgotPassword, ResetPassword, ChangePassword, ChangeEmail
+    auth/emails.py       # send_email() helper (multipart .txt + .html; suppresses send when SMTP not configured)
+    admin/views.py       # /admin/users + toggle-admin (admin_required)
   templates/             # Jinja2: book/, characters/, factions/, roles/, auth/, errors/
   static/                # styles.css (1 rule), favicon, placeholder portrait
 
@@ -93,6 +95,8 @@ Requires Let's Encrypt certs on the host at `/etc/letsencrypt/live/rotk.net/`. n
 | `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
+| `flask make-admin EMAIL` | Promote a user to admin (also marks them confirmed) |
+| `flask create-user EMAIL USERNAME [--admin]` | Create a user directly; prompts for the password |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
 
 ## Conventions worth knowing
@@ -101,7 +105,8 @@ Requires Let's Encrypt certs on the host at `/etc/letsencrypt/live/rotk.net/`. n
 - **Case-sensitive name matching** is intentional — `name`/`aliases` columns use `utf8mb4_bin` collation so `Cao` and `cao` are distinct. This is why `flask scrape-characters` lowercases roles but NOT factions.
 - **`sort_order=-1` on `mapped_column`** is used to keep inherited columns to the left in the physical table layout.
 - **No Flask-Migrate.** Schema changes today require dropping/recreating. Re-enabling Alembic is on the wishlist (see ISSUES.md).
-- **Admin gate** is `is_administrator` (a column on `User`). There is currently no UI to set it — flip the bit in the DB directly.
+- **Admin gate** is `is_administrator` AND `confirmed` (both columns on `User`), enforced by `@admin_required`. First admin is bootstrapped via `flask make-admin <email>` or `flask create-user <email> <username> --admin`. After that the admin/users page promotes/demotes other users.
+- **Email** is via Flask-Mail over SMTP. With no `MAIL_SERVER` configured, outbound mail is logged to stderr instead — dev works out of the box.
 
 ## Known landmines
 
