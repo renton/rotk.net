@@ -6,6 +6,8 @@ from app.models import User
 from app.blueprints.auth.forms import (
     LoginForm,
     RegistrationForm,
+    ForgotPasswordForm,
+    ResetPasswordForm,
 )
 from app.blueprints.auth.emails import send_email
 from . import auth
@@ -104,3 +106,48 @@ def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
     return render_template('auth/unconfirmed.html')
+
+
+@auth.route('/forgot-password', methods=['GET', 'POST'])
+@limiter.limit("5 per hour; 20 per day", methods=["POST"])
+def forgot_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+
+    form = ForgotPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if user is not None:
+            token = user.generate_reset_token()
+            send_email(
+                to=user.email,
+                subject='Reset your password',
+                template='auth/email/reset_password',
+                user=user,
+                token=token,
+            )
+        # Always show the same response, whether or not the email matched a
+        # registered user. Leaking that distinction would help account
+        # enumeration.
+        flash('If that email is registered, a reset link has been sent.')
+        return redirect(url_for('auth.login'))
+
+    return render_template('auth/forgot_password.html', form=form)
+
+
+@auth.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        expiration = current_app.config['RESET_TOKEN_TTL']
+        if User.reset_password(token, form.password.data, expiration=expiration):
+            db.session.commit()
+            flash('Your password has been updated. You can log in now.')
+            return redirect(url_for('auth.login'))
+        flash('That reset link is invalid or has expired.')
+        return redirect(url_for('auth.forgot_password'))
+
+    return render_template('auth/reset_password.html', form=form)
