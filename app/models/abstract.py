@@ -21,7 +21,7 @@ class AbstractObject(db.Model):
 
     @hybrid_property
     def cleaned_name(self):
-        cleaned_name = ''.join(c for c in self.display_name if c not in '(){}<>/')
+        cleaned_name = ''.join(c for c in (self.name or "") if c not in '(){}<>/')
         return cleaned_name.replace(' ', '_').replace('-','_')
 
     @classmethod
@@ -29,7 +29,7 @@ class AbstractObject(db.Model):
         return cls.query.filter(cls.is_deleted == False).order_by(cls.name.asc()).all()
 
     def __repr__(self):
-        return f'<AbstractObject {self.display_name}>'
+        return f'<AbstractObject {self.name}>'
 
 class AbstractTag(AbstractObject):
     __abstract__ = True
@@ -46,4 +46,4 @@ class AbstractTag(AbstractObject):
         return "#ffffff"
 
     def __repr__(self):
-        return f'<AbstractTag {self.display_name}>'
+        return f'<AbstractTag {self.name}>'
