@@ -9,7 +9,7 @@ Ordered loosely by impact within each section.
 - ✅ = fixed (see git log for the commit)
 - ⬜ = open
 
-**Progress:** 19 / 48 resolved.
+**Progress:** 22 / 48 resolved.
 
 ---
 
@@ -191,10 +191,12 @@ No `tests/` directory. `rotk.py` has commented-out scaffolding for `unittest` + 
 ### 26. ⬜ No Alembic / Flask-Migrate
 Schema changes today are "drop tables, change models, `flask create-all`, re-scrape". With ~150 HTTP fetches per scrape that's slow, brittle, and lossy (you lose any admin edits). Wire up Flask-Migrate with a baseline migration of the current schema.
 
-### 27. ⬜ `Talisman(force_https=True)` unconditionally
+### 27. ✅ `Talisman(force_https=True)` unconditionally
 **File:** `app/__init__.py:40`
 
 Forces HSTS even in dev. After the first browser visit to `http://localhost`, the browser caches HSTS and forces HTTPS for `localhost`, which the dev server doesn't speak. Drive this from config: `force_https` in `ProductionConfig` only.
+
+*(Resolved by dropping Talisman entirely once the `stateful_boilerplate` Caddy started handling HSTS / HTTPS redirect / security headers at the edge.)*
 
 ### 28. ⬜ `SQLALCHEMY_ECHO = True` in base config
 **File:** `config.py:10`
@@ -214,12 +216,14 @@ Every SQL statement is logged in *prod* as well as dev. Move to `DevelopmentConf
 ### 31. ⬜ `dominate` and `visitor` in requirements look unused
 Grep doesn't show them being imported. They're transitive remnants from Flask-Bootstrap (3.x). Confirm and remove.
 
-### 32. ⬜ `boot.sh` runs `flask deploy` on every start, but `deploy` is a `pass`
+### 32. ✅ `boot.sh` runs `flask deploy` on every start, but `deploy` is a `pass`
 **Files:** `boot.sh:4`, `rotk.py:144-148`
 
 Either implement `deploy` (run migrations, seed admin user, etc.) or remove the loop. Currently every container restart does ~one extra round-trip through `pass`.
 
-### 33. ⬜ `--reload` in gunicorn production command
+*(Resolved: dropped the retry loop from boot.sh. The `flask deploy` command itself stays as a no-op stub for when migrations land.)*
+
+### 33. ✅ `--reload` in gunicorn production command
 **File:** `boot.sh:23`
 
 `--reload` is for dev. In prod it makes gunicorn watch files and restart workers — wasted CPU and a potential foot-gun on a production volume mount. Drop it from the prod path.

@@ -20,7 +20,7 @@ The site is single-tenant (one book), small-traffic, and most of the surface is 
 ## Architecture
 
 ```
-rotk.py                  # Entry point: app instance, CLI commands, global error handlers, after_request CSP
+rotk.py                  # Entry point: app instance, CLI commands, global error handlers
 config.py                # Config classes (Development, Production); reads .env via python-dotenv
 
 app/
@@ -44,9 +44,9 @@ app/
 tools/
   scraper.py             # scrape_rotk_book() + scrape_rotk_characters()
   book_parser.py         # get_characters_for_chapter(), build_needle_pattern(), build_name_ref_html()
-  dbm.py                 # DbManager helper (mostly unused; has bugs — see ISSUES.md)
+  dbm.py                 # DbManager helper (mostly unused)
   validators.py          # Hex colour validator
-  decorators.py          # admin_required (BROKEN — see ISSUES.md)
+  decorators.py          # admin_required (authenticated + is_administrator + confirmed)
 
 migrations/              # Empty. Flask-Migrate is imported but commented out.
 db-data/                 # Postgres data volume for local dev (gitignored)
@@ -74,9 +74,9 @@ docker-compose exec app flask build-chapter-character-association
 The app connects as the `rotk_app` role, which owns the `rotk_net` database and thus has DDL privileges on it. No separate root/app distinction needed (unlike the previous MySQL setup).
 
 Notes:
-- `FLASK_ENV=development` is set in `docker-compose.yml`. CSRF is disabled in dev (`WTF_CSRF_ENABLED = False`).
-- `Talisman(force_https=True)` is applied unconditionally — local HTTP will get HSTS-upgraded by the browser after the first visit. Use an incognito window if you hit redirect loops.
-- `SQLALCHEMY_ECHO = True` is on in the base config, so dev logs include every SQL statement.
+- `FLASK_ENV=development` is set in `docker-compose.yml`. CSRF is on (Flask-WTF default).
+- TLS, HTTP→HTTPS redirect, HSTS, and the rest of the standard security headers come from the boilerplate's Caddy in production. The app sets CSP via a small `after_request` hook in `app/__init__.py` and otherwise emits plain HTTP.
+- `SQLALCHEMY_ECHO = True` is on in the base config, so dev logs include every SQL statement (and prod logs do too — open issue, see ISSUES.md #28).
 
 ### Prod
 
@@ -112,14 +112,11 @@ Full walkthrough in `README.md`.
 
 ## Known landmines
 
-These are flagged in detail in `ISSUES.md`. The short list:
+See `ISSUES.md` for the full running list. Highlights still open:
 
-- `tools/decorators.py::admin_required` lets **anonymous users through** — `current_user.is_administrator` is a column on `User` (bool) but a *method* on `AnonymousUser`; `not <bound method>` is always `False`. Treat all `@admin_required` routes as effectively unprotected until fixed.
-- `tools/dbm.py` has two import/scope bugs (`inspect` not imported; bare `db` used instead of `self.db`).
-- `AbstractObject.cleaned_name` and `__repr__` reference `self.display_name` which doesn't exist.
-- `rotk.py` adds its own CSP via `@app.after_request` that overrides the (looser) one set by Talisman in `create_app`. The stricter one drops `'unsafe-inline'` for scripts, which kills the inline `onclick` used by the character-ref spans. Both CSPs end up in the response — the after_request one wins for the listed directives.
-- Character name fields are typo'd as `courtesty_name` (and `chinese_courtesty_name`) throughout models, forms, and templates. Renaming is a coordinated change.
-- `app/templates/auth/register.html` imports `bootstrap/wtf.html` (Flask-Bootstrap 3 path); the app uses Bootstrap-Flask 5 which exposes `bootstrap5/form.html`. The register template will 500 — but no route renders it, so it doesn't bite yet.
+- Character name fields are typo'd as `courtesty_name` (and `chinese_courtesty_name`) throughout models, forms, and templates. Renaming is a coordinated change (#19).
+- Birth/death dates are stored as `String(4)` and can't represent BC years or be range-queried (#20).
+- No tests, no Alembic — schema changes still require drop/recreate + re-scrape (#25, #26).
 
 ## Things to ask before doing
 
