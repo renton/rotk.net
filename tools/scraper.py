@@ -19,6 +19,16 @@ ROTK_NUM_CHAPTERS = 120
 
 ROTK_CHARACTER_PATH = "https://en.wikipedia.org/wiki/List_of_people_of_the_Three_Kingdoms"
 
+# Wikipedia (and many other sites) reject the default "python-requests/X.Y"
+# user agent string. They return a blocked / short error body instead of
+# real HTML, which makes the parser silently produce nothing. Identify
+# ourselves so the fetch goes through.
+USER_AGENT = (
+    "rotk.net-scraper/1.0 "
+    "(+https://rotk.net; an annotated Romance of the Three Kingdoms edition)"
+)
+REQUEST_HEADERS = {"User-Agent": USER_AGENT}
+
 
 ROTK_NUM_CHAPTERS = 120
 
@@ -52,7 +62,7 @@ def scrape_chapter(chapter_number):
     chapter_url = build_chapter_url(chapter_number)
     print(f">>> {chapter_url}")
 
-    response = requests.get(chapter_url)
+    response = requests.get(chapter_url, headers=REQUEST_HEADERS)
 
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -180,7 +190,11 @@ def scrape_rotk_character_page(letter):
     page_factions = set()
     page_roles = set()
 
-    response = requests.get(page_url)
+    response = requests.get(page_url, headers=REQUEST_HEADERS)
+
+    if response.status_code != 200:
+        print(f"!!! {letter}: HTTP {response.status_code} from {page_url}")
+        return [], [], []
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
