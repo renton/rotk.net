@@ -126,4 +126,4 @@ See `ISSUES.md` for the full running list. Highlights still open:
 
 ## Memory
 
-The auto-memory store lives at `~/.claude/projects/-home-renlawrence-Desktop-dev-rotk-net/memory/`. Use it for things that should persist across sessions (user preferences, project decisions). Don't store anything in memory that's already derivable from the code or git history.
+The auto-memory store lives at `~/.claude/projects/-home-renton-Desktop-dev-codedev-webdev-rotk-net/memory/`. Use it for things that should persist across sessions (user preferences, project decisions). Don't store anything in memory that's already derivable from the code or git history.

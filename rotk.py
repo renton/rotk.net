@@ -16,6 +16,7 @@ from app import create_app, db
 from tools.scraper import scrape_rotk_book, scrape_rotk_characters
 from tools.book_parser import get_characters_for_chapter, scan_chapter_for_characters
 from flask import render_template, request, jsonify
+import os, time, urllib.parse
 
 # COV = None
 # if os.environ.get('FLASK_COVERAGE'):
@@ -26,6 +27,7 @@ from flask import render_template, request, jsonify
 # from flask_migrate import Migrate, upgrade
 from app.models import \
     Chapter, Character, Faction, Role, User
+from app.models.character import Portrait
 
 app = create_app(os.getenv('FLASK_ENV') or 'default')
 
@@ -126,6 +128,132 @@ def scrape_characters():
     print("\n==========")
     for egg in bad_eggs:
         print(egg)
+
+@app.cli.command()
+@click.option('--character-id', type=int, default=None,
+              help='Scrape just this character (by id). Omit to scrape all.')
+@click.option('--skip-existing/--refresh', default=True,
+              help='Skip characters that already have a Koei portrait. --refresh re-scrapes.')
+@click.option('--limit', type=int, default=None,
+              help='Stop after N successful scrapes (useful for smoke-testing).')
+@click.option('--delay', type=float, default=0.5,
+              help='Seconds to sleep between requests (be polite to Fandom).')
+@click.option('--no-download', is_flag=True, default=False,
+              help='Save only the remote URL, do not download the image bytes.')
+def scrape_koei_images(character_id, skip_existing, limit, delay, no_download):
+    """Scrape character portraits from koei.fandom.com and store them as Portrait rows."""
+    from tools.image_scrapers import koei_fandom
+
+    if character_id is not None:
+        characters = [Character.query.get_or_404(character_id)]
+    else:
+        characters = Character.query.order_by(Character.name).all()
+
+    portraits_dir = os.path.join(app.static_folder, 'portraits')
+    os.makedirs(portraits_dir, exist_ok=True)
+
+    successes = 0
+    misses = 0
+    skipped = 0
+    errors = 0
+
+    for character in characters:
+        if skip_existing:
+            existing = Portrait.query.filter_by(
+                character_id=character.id,
+                source_site=koei_fandom.SITE_NAME,
+            ).first()
+            if existing is not None:
+                skipped += 1
+                continue
+
+        print(f"[{character.id}] {character.name} ...", end=' ', flush=True)
+        try:
+            scraped = koei_fandom.scrape(character)
+        except Exception as exc:
+            print(f"ERROR ({exc})")
+            errors += 1
+            continue
+
+        if scraped is None:
+            print("no match")
+            misses += 1
+            time.sleep(delay)
+            continue
+
+        local_path = None
+        if not no_download:
+            try:
+                local_path = _download_image(
+                    scraped.image_url,
+                    portraits_dir,
+                    character.id,
+                    'koei',
+                )
+            except Exception as exc:
+                print(f"image download failed ({exc})")
+                errors += 1
+                time.sleep(delay)
+                continue
+
+        portrait = Portrait(
+            name=character.name,
+            character_id=character.id,
+            image_url=scraped.image_url,
+            local_path=local_path,
+            description=scraped.description,
+            source_url=scraped.source_url,
+            source_site=scraped.source_site,
+        )
+        db.session.add(portrait)
+        db.session.commit()
+        successes += 1
+        print("ok" + (f" -> {local_path}" if local_path else ""))
+
+        if limit is not None and successes >= limit:
+            print(f"\nhit --limit {limit}; stopping.")
+            break
+
+        time.sleep(delay)
+
+    print(f"\nDone. ok={successes} miss={misses} skip={skipped} err={errors}")
+
+
+def _download_image(image_url, save_dir, character_id, source_tag):
+    """Stream `image_url` to disk under `save_dir`. Returns the path relative
+    to `app/static/` for storage in Portrait.local_path."""
+    import requests as _requests
+
+    parsed = urllib.parse.urlparse(image_url)
+    ext = os.path.splitext(parsed.path)[1].lower()
+    if ext not in ('.jpg', '.jpeg', '.png', '.gif', '.webp'):
+        ext = '.jpg'
+
+    # If multiple portraits accumulate per character per site, suffix with a
+    # counter so we don't clobber the existing file.
+    n = 0
+    while True:
+        suffix = f"_{n}" if n else ""
+        filename = f"{character_id}_{source_tag}{suffix}{ext}"
+        path = os.path.join(save_dir, filename)
+        if not os.path.exists(path):
+            break
+        n += 1
+
+    response = _requests.get(
+        image_url,
+        headers={"User-Agent": "rotk.net-scraper/1.0 (+https://rotk.net)"},
+        timeout=30,
+        stream=True,
+    )
+    response.raise_for_status()
+    with open(path, 'wb') as f:
+        for chunk in response.iter_content(8192):
+            if chunk:
+                f.write(chunk)
+
+    return f"portraits/{filename}"
+
 
 @app.cli.command()
 def create_all():

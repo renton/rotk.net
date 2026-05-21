@@ -40,6 +40,7 @@
                   {% if current_user.is_administrator and current_user.confirmed %}
                   <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.chapter_associations') }}">Chapter associations</a></li>
                   <li><hr class="dropdown-divider"></li>
                   {% endif %}
                   <li><a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change password</a></li>

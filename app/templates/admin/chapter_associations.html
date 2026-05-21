@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: Chapter Associations{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Chapter ↔ Character Associations</h1>
+    <p class="text-muted">
+        Pick a chapter to view, audit, and edit the characters the scanner
+        associated with it. Mention snippets show <em>why</em> each character
+        was matched, so you can spot false positives.
+    </p>
+</div>
+
+<form method="GET" action="{{ url_for('admin.chapter_associations') }}"
+      id="chapter-picker-form" class="mb-4">
+    <label for="chapter-picker" class="form-label">Chapter:</label>
+    <div class="d-flex gap-2">
+        <select name="chapter_num" id="chapter-picker" class="form-select">
+            <option value="">— Select a chapter —</option>
+            {% for c in chapters %}
+            <option value="{{ c.chapter_num }}"
+                {% if selected and selected.id == c.id %}selected{% endif %}>
+                {{ c.chapter_num }}. {{ c.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary" id="chapter-picker-submit">Go</button>
+    </div>
+</form>
+
+{% if selected %}
+
+<div class="d-flex flex-wrap gap-3 align-items-end mb-3">
+    <div class="flex-grow-1" style="min-width: 240px;">
+        <label for="row-filter-search" class="form-label">Search name / alias / courtesy:</label>
+        <input type="search" id="row-filter-search" class="form-control"
+               placeholder="Type to filter…" autocomplete="off">
+    </div>
+    <div style="min-width: 200px;">
+        <label for="row-filter-faction" class="form-label">Faction:</label>
+        <select id="row-filter-faction" class="form-select">
+            <option value="">All factions</option>
+            <option value="__none__">— No faction —</option>
+            {% for f in faction_options %}
+            <option value="{{ f.id }}">{{ f.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="ms-auto text-muted small">
+        <span id="row-count">{{ rows|length }}</span> / {{ rows|length }} characters
+    </div>
+</div>
+
+<table class="table table-striped align-middle" id="associations-table">
+    <thead>
+        <tr>
+            <th data-sort-key="name" role="button">Name <span class="sort-indicator"></span></th>
+            <th data-sort-key="faction" role="button">Faction <span class="sort-indicator"></span></th>
+            <th>Roles</th>
+            <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
+            <th>Snippets</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        {% set ch = row.character %}
+        {% set f = row.faction %}
+        <tr class="association-row"
+            data-name="{{ ch.name|lower }}"
+            data-aliases="{{ (ch.aliases or '')|lower }} {{ (ch.courtesty_name or '')|lower }}"
+            data-faction-id="{{ f.id if f else '__none__' }}"
+            data-mention-count="{{ row.mention_count }}">
+            <td data-sort-value="{{ ch.name|lower }}">
+                {% if f %}
+                    <span class="badge rounded-pill"
+                          style="color:{{ f.font_colour }} !important;
+                                 {% if f.bg_colour == f.default_colour %}background-color:rgba(var(--bs-primary-rgb));{% else %}background-color:{{ f.bg_colour }} !important;{% endif %}
+                                 {% if f.border_colour != f.default_colour %}border:2px solid {{ f.border_colour }} !important;{% endif %}">
+                        {{ ch.name }}
+                    </span>
+                {% else %}
+                    <span class="badge rounded-pill bg-secondary">{{ ch.name }}</span>
+                {% endif %}
+                {% if ch.courtesty_name %}
+                    <div class="small text-muted">{{ ch.courtesty_name }}</div>
+                {% endif %}
+            </td>
+            <td data-sort-value="{{ (f.name if f else '')|lower }}">
+                {% if f %}
+                    {{ macros.badge_widget(f) }}
+                {% else %}
+                    <span class="text-muted">—</span>
+                {% endif %}
+            </td>
+            <td>
+                {% for role in row.roles %}
+                    <span class="badge rounded-pill bg-primary">{{ role.name }}</span>
+                {% endfor %}
+            </td>
+            <td data-sort-value="{{ row.mention_count }}" class="text-end">
+                {{ row.mention_count }}
+            </td>
+            <td>
+                {% if row.mentions %}
+                <details>
+                    <summary class="small text-muted">show {{ row.mention_count }} snippet{{ '' if row.mention_count == 1 else 's' }}</summary>
+                    <ul class="snippet-list list-unstyled mt-2 mb-0">
+                        {% for m in row.mentions %}
+                        <li class="snippet-item">
+                            <span class="snippet-text">
+                                {{ m.before }}<mark class="snippet-match">{{ m.match }}</mark>{{ m.after }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                {% else %}
+                <span class="text-warning small">no live matches</span>
+                {% endif %}
+            </td>
+            <td class="text-end">
+                <form method="POST"
+                      action="{{ url_for('admin.chapter_associations_remove', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                      class="d-inline remove-association-form">
+                    {{ csrf_form.hidden_tag() }}
+                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                            data-confirm="Remove {{ ch.name }} from chapter {{ selected.chapter_num }}?">
+                        Remove
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-muted">No characters associated with this chapter.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="card mt-4">
+    <div class="card-header">Add a character to chapter {{ selected.chapter_num }}</div>
+    <div class="card-body">
+        <form method="POST"
+              action="{{ url_for('admin.chapter_associations_add', chapter_num=selected.chapter_num) }}"
+              class="row g-2 align-items-end">
+            {{ csrf_form.hidden_tag() }}
+            <div class="col-md-8">
+                <label for="add-character-name" class="form-label">Character name</label>
+                <input type="text" name="character_name" id="add-character-name"
+                       class="form-control" list="addable-characters-datalist"
+                       autocomplete="off" required>
+                <input type="hidden" name="character_id" id="add-character-id">
+                <div class="form-text">
+                    Type to search. If two characters share a name, the JS
+                    picker resolves to an ID; otherwise the server matches by
+                    exact name and flashes on ambiguity.
+                </div>
+            </div>
+            <div class="col-md-4 text-end">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+        <datalist id="addable-characters-datalist">
+            {% for c in addable_characters %}
+            <option value="{{ c.name }}"
+                    data-character-id="{{ c.id }}"
+                    label="{{ c.name }}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+            </option>
+            {% endfor %}
+        </datalist>
+    </div>
+</div>
+
+{% endif %}{# selected #}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_associations.js') }}"></script>
+{% endblock %}

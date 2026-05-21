@@ -3,6 +3,53 @@ import re
 from app.models import \
     Chapter, Character
 
+_TAG_RE = re.compile(r'<[^>]+>')
+
+
+def strip_html_tags(text):
+    """Strip HTML tags out of scraped chapter content, replacing each with a
+    space so adjacent words don't get glued together."""
+    if not text:
+        return ""
+    return _TAG_RE.sub(' ', text)
+
+
+def find_character_mentions(chapter, character, context_chars=60, limit=None):
+    """Return a list of mention dicts for `character` in `chapter`.
+
+    Each mention is {'before', 'match', 'after', 'start'} extracted from the
+    chapter content with HTML tags stripped (so the admin sees prose, not
+    markup). `limit` caps the number returned per character."""
+    needles = [n for n in character.get_all_name_labels() if n]
+    if not needles:
+        return []
+
+    content = strip_html_tags(chapter.content)
+    pattern = build_needle_pattern(needles)
+
+    mentions = []
+    for m in pattern.finditer(content):
+        start, end = m.start(), m.end()
+        before = content[max(0, start - context_chars):start]
+        after = content[end:end + context_chars]
+        # Trim partial words at the edges of the context window for readability.
+        if start - context_chars > 0:
+            before = before.split(' ', 1)[1] if ' ' in before else before
+            before = '…' + before.lstrip()
+        if end + context_chars < len(content):
+            after = after.rsplit(' ', 1)[0] if ' ' in after else after
+            after = after.rstrip() + '…'
+        mentions.append({
+            'start': start,
+            'before': before,
+            'match': m.group(0),
+            'after': after,
+        })
+        if limit is not None and len(mentions) >= limit:
+            break
+    return mentions
+
+
 def get_characters_for_chapter(chapter_id):
     chapter = Chapter.query.get_or_404(chapter_id)
 

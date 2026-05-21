@@ -114,7 +114,21 @@ class Faction(AbstractTag):
 class Portrait(AbstractObject):
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=False)
 
+    # Direct URL of the image on the source CDN (e.g. Fandom's static.wikia.nocookie.net).
+    image_url = db.Column(db.Text, default="", nullable=False)
+
+    # Path under app/static/ where we cached the downloaded image, or NULL if
+    # we're hot-linking to image_url. Stored as 'portraits/<file>' so it
+    # composes with url_for('static', filename=portrait.local_path).
+    local_path = db.Column(db.String(255), default=None, nullable=True)
+
+    description = db.Column(db.Text, default="", nullable=False)
+
+    # Where we found it, for crediting.
+    source_url = db.Column(db.Text, default="", nullable=False)
+    source_site = db.Column(db.String(255), default="", nullable=False)
+
     character = db.relationship('Character', back_populates='portraits', lazy='select')
 
     def __repr__(self):
-        return f'<Portrait {self.name}>'
+        return f'<Portrait {self.name} from {self.source_site}>'
