@@ -22,6 +22,7 @@ MarkupSafe==3.0.2
 packaging==24.2
 psycopg[binary]==3.2.3
 python-dotenv==1.0.1
+redis==5.2.0
 requests==2.32.3
 setuptools==75.1.0
 soupsieve==2.6
