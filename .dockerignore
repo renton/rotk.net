@@ -1,0 +1,27 @@
+# Never bake host-specific or sensitive things into the image. The
+# Dockerfile does `COPY . .`, so anything that lands in the build
+# context gets shipped in the image layer otherwise.
+
+.env
+.env.*
+!.env.example
+
+.git/
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+
+# Local DB data + dev fixtures
+db-data/
+
+# Editor noise
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Local docs / planning
+ISSUES.md
+CLAUDE.md

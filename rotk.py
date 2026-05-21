@@ -1,11 +1,14 @@
 import os, sys
 
-# load .env file
+# Load .env if present, but never override values that are already in the
+# environment. In docker-compose deployments the compose `environment:`
+# block is the source of truth; a baked-in .env (or a stale .env in a
+# bind-mount) must not silently replace what compose set.
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path, override=True)
+    load_dotenv(dotenv_path, override=False)
 
 import click
 from sqlalchemy.exc import IntegrityError
