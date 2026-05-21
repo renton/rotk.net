@@ -46,6 +46,8 @@ Then populate the empty DB — see [Populating the data](#populating-the-data) b
 
 After first boot the database is empty. The app needs four commands to fill in the schema and pull the source content. Run them **in order** — later commands depend on rows that earlier commands insert.
 
+> Compose v2 users (most installs these days) should substitute `docker compose` (space) for `docker-compose` (hyphen). Same commands, same arguments.
+
 ```bash
 # 1. Create the tables from the current SQLAlchemy models.
 #    Idempotent; safe to re-run.
