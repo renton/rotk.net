@@ -1,7 +1,6 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_talisman import Talisman
 from flask_bootstrap import Bootstrap5
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -22,18 +21,30 @@ login_manager.login_view = 'auth.login'
 limiter = Limiter(key_func=get_remote_address, default_limits=[])
 
 
+# CSP for every response. Other security headers (HSTS, X-Content-Type-Options,
+# Referrer-Policy) and HTTP→HTTPS redirects are added by the front-edge Caddy
+# from stateful_boilerplate, so we don't duplicate them here. frame-ancestors
+# 'none' covers what X-Frame-Options used to do.
+_CSP = (
+    "default-src 'self'; "
+    "img-src 'self' https://cdn.jsdelivr.net data:; "
+    "script-src 'self' https://cdn.jsdelivr.net; "
+    "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
+    "frame-ancestors 'none'; "
+    "base-uri 'self'; "
+    "form-action 'self'"
+)
+
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    csp = {
-        "default-src": ["'self'"],
-        "img-src": ["'self'", "https://cdn.jsdelivr.net", "http://www.w3.org", "data:"],
-        "script-src": ["'self'", "https://cdn.jsdelivr.net"],
-        "style-src": ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"],
-    }
-    Talisman(app, content_security_policy=csp, force_https=True)
+    @app.after_request
+    def _set_csp(response):
+        response.headers.setdefault("Content-Security-Policy", _CSP)
+        return response
 
     bootstrap.init_app(app)
     db.init_app(app)

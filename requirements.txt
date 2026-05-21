@@ -12,7 +12,6 @@ Flask-Limiter==3.8.0
 Flask-Login==0.6.3
 Flask-Mail==0.10.0
 Flask-SQLAlchemy==3.1.1
-flask-talisman==1.1.0
 Flask-WTF==1.2.2
 greenlet==3.1.1
 gunicorn==23.0.0
