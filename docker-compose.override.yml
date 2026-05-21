@@ -1,0 +1,35 @@
+  services:
+    # Strip the bundled postgres — we use the shared one.
+    db: !reset null
+
+    app:
+      container_name: rotk-app
+      restart: unless-stopped
+      # The shared postgres lives in the boilerplate stack; drop the dev-only
+      # depends_on that pointed at the now-deleted local db.
+      depends_on: !reset []
+      # Don't publish a host port — Caddy reaches us over the shared network.
+      ports: !reset []
+      # Drop the dev source bind-mount so the container runs the image we built.
+      volumes: !reset []
+      # Base healthcheck targets flask-run's :5000; gunicorn binds :8081 in prod.
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8081"]
+        interval: 10s
+        retries: 5
+        start_period: 5s
+      environment:
+        FLASK_ENV: production
+        POSTGRES_HOST: postgres
+        POSTGRES_PORT: "5432"
+        POSTGRES_USER: rotk_app
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: rotk_net
+      networks:
+        - vswitch0
+        - shared
+
+  networks:
+    shared:
+      name: shared
+      external: true
