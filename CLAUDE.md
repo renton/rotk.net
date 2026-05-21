@@ -4,18 +4,18 @@ Guidance for Claude Code when working in this repository.
 
 ## What this project is
 
-`rotk.net` is a Flask web app that hosts an annotated, browsable edition of *Romance of the Three Kingdoms* (Luo Guanzhong, ~1300, Brewitt-Taylor translation). It scrapes the public-domain text from `threekingdoms.com` and a character index from Wikipedia, stores them in MySQL, and renders chapters with inline character "tagging" (clickable badges that link the prose to a character record).
+`rotk.net` is a Flask web app that hosts an annotated, browsable edition of *Romance of the Three Kingdoms* (Luo Guanzhong, ~1300, Brewitt-Taylor translation). It scrapes the public-domain text from `threekingdoms.com` and a character index from Wikipedia, stores them in PostgreSQL, and renders chapters with inline character "tagging" (clickable badges that link the prose to a character record).
 
 The site is single-tenant (one book), small-traffic, and most of the surface is read-only. The only write paths are admin character/faction/role editing and user login.
 
 ## Stack
 
 - **Backend:** Flask 3.1 (app factory pattern), SQLAlchemy 2.0, Flask-Login, Flask-WTF, Flask-Talisman, Bootstrap-Flask
-- **DB:** MySQL 8.4 via `mysqlclient` (`mysql+mysqldb://...`)
+- **DB:** PostgreSQL 16 via `psycopg[binary]` (`postgresql+psycopg://...`). Local dev runs a bundled `db` service; production uses the shared cluster from [`stateful_boilerplate`](../stateful_boilerplate) — see the README for the override pattern.
 - **Frontend:** Server-rendered Jinja2 + Bootstrap 5 CSS/JS from CDN. No bundler, no SPA. One CSS file (`app/static/styles.css`) with effectively no custom styling.
 - **Scraping:** `requests` + `beautifulsoup4`
-- **Serving:** gunicorn behind nginx (TLS via certbot/Let's Encrypt) in prod; `flask run` in dev
-- **Containers:** Docker + docker-compose (separate dev / prod compose files)
+- **Serving:** gunicorn behind Caddy (provided by `stateful_boilerplate`) in prod; `flask run` in dev
+- **Containers:** Docker + docker-compose. Single base `docker-compose.yml`; production gets a `docker-compose.override.yml` on the VPS that swaps the bundled `db` for shared postgres and joins the `shared` docker network.
 
 ## Architecture
 
@@ -49,9 +49,7 @@ tools/
   decorators.py          # admin_required (BROKEN — see ISSUES.md)
 
 migrations/              # Empty. Flask-Migrate is imported but commented out.
-nginx/nginx.conf         # Reverse proxy + TLS termination for prod
-db-confs/                # MySQL conf overrides (empty in repo, gitignored)
-db-data/                 # MySQL data volume (gitignored)
+db-data/                 # Postgres data volume for local dev (gitignored)
 ```
 
 ## How data flows
@@ -65,14 +63,15 @@ db-data/                 # MySQL data volume (gitignored)
 ### Dev
 
 ```bash
-cp .env.example .env       # fill in SECRET_KEY, MYSQL_ROOT_PASSWORD, MYSQL_APP_PASSWORD
+cp .env.example .env       # fill in SECRET_KEY and POSTGRES_PASSWORD (any value for local dev)
 docker-compose up          # serves on http://localhost:80
-docker-compose exec -e MYSQL_USE_ROOT=1 app flask create-all   # DDL needs root
-docker-compose exec app flask scrape-book        # ~120 HTTP fetches
-docker-compose exec app flask scrape-characters  # ~26 HTTP fetches
+docker-compose exec app flask create-all          # creates schema
+docker-compose exec app flask scrape-book         # ~120 HTTP fetches
+docker-compose exec app flask scrape-characters   # ~26 HTTP fetches
+docker-compose exec app flask build-chapter-character-association
 ```
 
-The app connects as the least-privileged `rotk_app` user; pass `MYSQL_USE_ROOT=1` to any CLI command that needs DDL (currently just `create-all`).
+The app connects as the `rotk_app` role, which owns the `rotk_net` database and thus has DDL privileges on it. No separate root/app distinction needed (unlike the previous MySQL setup).
 
 Notes:
 - `FLASK_ENV=development` is set in `docker-compose.yml`. CSRF is disabled in dev (`WTF_CSRF_ENABLED = False`).
@@ -81,11 +80,14 @@ Notes:
 
 ### Prod
 
-```bash
-docker-compose -f docker-compose.prod.yml up -d
-```
+Production lives on a single VPS running `stateful_boilerplate` (Caddy + shared postgres + shared redis). Deploy this project as a child:
 
-Requires Let's Encrypt certs on the host at `/etc/letsencrypt/live/rotk.net/`. nginx terminates TLS and proxies to gunicorn (3 workers, 240s timeout, `--reload`).
+1. Carve out the postgres role+DB on the shared cluster (one-off).
+2. Drop a `docker-compose.override.yml` on the VPS that deletes the bundled `db`, joins the `shared` network, and points `POSTGRES_HOST=postgres`.
+3. Add a site block to the boilerplate's `caddy/Caddyfile` reverse-proxying the app container.
+4. Run the data-population CLI commands once.
+
+Full walkthrough in `README.md`.
 
 ## CLI commands (defined in `rotk.py`)
 
@@ -102,7 +104,7 @@ Requires Let's Encrypt certs on the host at `/etc/letsencrypt/live/rotk.net/`. n
 ## Conventions worth knowing
 
 - **Soft delete** via `is_deleted` on `AbstractObject`. Use `Model.get_all_active()` to filter.
-- **Case-sensitive name matching** is intentional — `name`/`aliases` columns use `utf8mb4_bin` collation so `Cao` and `cao` are distinct. This is why `flask scrape-characters` lowercases roles but NOT factions.
+- **Case-sensitive name matching** is intentional — `name`/`aliases` columns use the Postgres `C` collation (byte-wise comparison) so `Cao` and `cao` (and `ü` vs `u`) are distinct. The previous MySQL incarnation used `utf8mb4_bin` for the same effect. This is why `flask scrape-characters` lowercases roles but NOT factions.
 - **`sort_order=-1` on `mapped_column`** is used to keep inherited columns to the left in the physical table layout.
 - **No Flask-Migrate.** Schema changes today require dropping/recreating. Re-enabling Alembic is on the wishlist (see ISSUES.md).
 - **Admin gate** is `is_administrator` AND `confirmed` (both columns on `User`), enforced by `@admin_required`. First admin is bootstrapped via `flask make-admin <email>` or `flask create-user <email> <username> --admin`. After that the admin/users page promotes/demotes other users.
@@ -123,7 +125,7 @@ These are flagged in detail in `ISSUES.md`. The short list:
 
 - **Don't run scrapers without confirming.** They hit external sites ~150 times and overwrite/duplicate rows depending on existing state. The current scraper has no upsert logic — re-running will throw IntegrityErrors on the unique constraint and skip rows.
 - **Don't enable Flask-Migrate retroactively** without an Alembic baseline plan — `db.create_all()` has been the source of truth, and current schema may not match what a fresh autogenerate emits.
-- **Don't bump `mysql-connector` or remove it without checking** — it's pinned to a 2017 version, but is unused in code. Likely safe to drop; verify first.
+- **The MySQL → Postgres migration** (May 2026) changed: the DB URL builder in `config.py`, the `collation` argument in `app/models/abstract.py` (`utf8mb4_bin` → `C`), the bundled `db` service in `docker-compose.yml` (mysql:8.4 → postgres:16-alpine), `.env.example` (`MYSQL_*` → `POSTGRES_*`), and the requirements (`mysqlclient` / `mysql-connector` → `psycopg[binary]`). The DB was renamed `rotk.net` → `rotk_net` (no dot) to avoid postgres quoting hassles. `docker-compose.prod.yml`, `docker-compose.ambrose.yml`, `db-init/`, and the `nginx/` config were deleted — production now uses `stateful_boilerplate` for TLS/proxy.
 
 ## Memory
 

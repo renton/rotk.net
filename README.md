@@ -7,16 +7,18 @@ Live at [rotk.net](https://rotk.net).
 ## Stack
 
 - Python 3.12, Flask 3.1, SQLAlchemy 2.0
-- MySQL 8.4
+- PostgreSQL 16 (via the bundled `db` service for local dev, or a shared cluster in production)
 - Bootstrap-Flask + Bootstrap 5 (CDN), server-rendered Jinja2 templates
-- gunicorn behind nginx, TLS via Let's Encrypt
+- gunicorn behind a reverse proxy (Caddy in production via `stateful_boilerplate`)
 - Docker + docker-compose
 
 ## Quick start (development)
 
 ```bash
 cp .env.example .env
-# Edit .env and set SECRET_KEY, MYSQL_ROOT_PASSWORD, MYSQL_APP_PASSWORD
+# Edit .env and set:
+#   SECRET_KEY (any long random string)
+#   POSTGRES_PASSWORD (any value — local dev only)
 ```
 
 Bring it up:
@@ -25,18 +27,44 @@ Bring it up:
 docker-compose up
 ```
 
-The app is served at `http://localhost`. On first boot the database container runs `db-init/01-create-app-user.sh` which creates the `rotk.net` schema and a least-privileged `rotk_app` user. The Flask app connects as `rotk_app`. DDL commands need root, so populate the empty DB like this:
+The bundled postgres container initialises with the role/DB named in `.env` (defaults: user `rotk_app`, DB `rotk_net`) on first boot. The Flask app connects as that role.
 
-```bash
-docker-compose exec -e MYSQL_USE_ROOT=1 app flask create-all
-docker-compose exec app flask scrape-book                         # ~120 chapter fetches from threekingdoms.com
-docker-compose exec app flask scrape-characters                   # ~26 alphabetised pages from Wikipedia
-docker-compose exec app flask build-chapter-character-association # precomputes which characters appear in which chapter
-```
-
-Then visit `http://localhost/` for the table of contents.
+Then populate the empty DB — see [Populating the data](#populating-the-data) below.
 
 > **Note:** `Talisman(force_https=True)` is on unconditionally, so your browser may HSTS-upgrade `http://localhost` after the first visit. If you hit a redirect loop, use a fresh incognito window or clear HSTS for `localhost`.
+
+---
+
+## Populating the data
+
+After first boot the database is empty. The app needs four commands to fill in the schema and pull the source content. Run them **in order** — later commands depend on rows that earlier commands insert.
+
+```bash
+# 1. Create the tables from the current SQLAlchemy models.
+#    Idempotent; safe to re-run.
+docker-compose exec app flask create-all
+
+# 2. Scrape all 120 chapter texts from threekingdoms.com.
+#    Hits the source site ~120 times; takes a few minutes.
+docker-compose exec app flask scrape-book
+
+# 3. Scrape character index pages from Wikipedia (26 alphabetised pages).
+#    Populates `character`, `faction`, and `role` tables.
+docker-compose exec app flask scrape-characters
+
+# 4. Build the chapter↔character association cache.
+#    Regex-scans each chapter for every character's names and aliases.
+#    Required for the chapter view's sidebar to work.
+docker-compose exec app flask build-chapter-character-association
+```
+
+After step 4 finishes, visit `http://localhost/` for the table of contents.
+
+### Re-running individual jobs
+
+* **`scrape-book`** — re-running adds duplicate chapter rows (it does not upsert). If you need to refresh chapter content, drop the table first or DELETE from it.
+* **`scrape-characters`** — same caveat. The dedup is via DB unique constraints, so re-runs are mostly a no-op for already-known characters but will log "Duplicate key" warnings for each.
+* **`build-chapter-character-association`** — **idempotent**. Clears the join table for each chapter before refilling, so re-run any time you've added new characters or chapters and want the chapter view to pick them up.
 
 ### Creating the first admin
 
@@ -59,32 +87,7 @@ After that, additional admins can be promoted via the **Users** page in the navb
 
 The auth flow sends confirmation and password-reset emails. Set the `MAIL_*` variables in `.env` to any SMTP provider — see `.env.example` for Mailgun/SendGrid/SES/Gmail examples. If `MAIL_SERVER` is left blank, outbound mail is suppressed and each message body is logged to stderr instead, which is enough for local dev.
 
-## Production
-
-```bash
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-The production compose adds an nginx reverse proxy that terminates TLS using certs mounted from the host's `/etc/letsencrypt/`.
-
-### TLS / Let's Encrypt setup (host machine)
-
-```bash
-sudo apt install certbot
-sudo certbot certonly --standalone -d rotk.net
-# Certs land in /etc/letsencrypt/live/rotk.net/
-
-# Auto-renew (certbot installs a systemd timer)
-systemctl cat certbot.timer
-sudo certbot renew --dry-run
-```
-
-To force a renewal:
-
-```bash
-sudo certbot renew --force-renewal
-<<<<<<< HEAD
-```
+---
 
 ## CLI commands
 
@@ -100,6 +103,100 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
+---
+
+## Production deployment via `stateful_boilerplate`
+
+Production lives on a single VPS running [`stateful_boilerplate`](../stateful_boilerplate), which provides shared postgres + redis + TLS-terminating Caddy. rotk.net deploys as a child project: its base compose is shipped as-is, and a `docker-compose.override.yml` on the VPS swaps the bundled `db` service for the shared postgres cluster and joins the `shared` docker network so Caddy can reach it.
+
+The full walkthrough is in `stateful_boilerplate/USAGE_GUIDE.md`. Specifically for rotk.net:
+
+**1. Carve out the role + DB on the shared cluster** (one-off, on the VPS):
+
+```bash
+cd ~/stateful_boilerplate
+ROTK_DB_PASSWORD="$(openssl rand -base64 24)"
+echo "SAVE THIS: $ROTK_DB_PASSWORD"
+
+docker compose exec -T postgres psql -U postgres <<SQL
+CREATE ROLE rotk_app WITH LOGIN PASSWORD '${ROTK_DB_PASSWORD}';
+CREATE DATABASE rotk_net OWNER rotk_app;
+SQL
+```
+
+**2. Deploy the code to the VPS** (e.g. `/opt/rotk.net`).
+
+**3. Write `/opt/rotk.net/docker-compose.override.yml`:**
+
+```yaml
+services:
+  db: !reset null
+
+  app:
+    container_name: rotk-app
+    restart: unless-stopped
+    depends_on: !reset []
+    ports: !reset []
+    environment:
+      FLASK_ENV: production
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: rotk_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: rotk_net
+    networks:
+      - vswitch0
+      - shared
+
+networks:
+  shared:
+    name: shared
+    external: true
+```
+
+**4. Write `/opt/rotk.net/.env`:**
+
+```bash
+FLASK_APP=rotk.py
+SECRET_KEY=<paste new strong secret>
+
+# Used by the override to wire the app to shared postgres.
+POSTGRES_PASSWORD=<the value you saved in step 1>
+
+# Mail config (or leave blank to suppress sends).
+MAIL_SERVER=...
+APP_BASE_URL=https://rotk.net
+```
+
+**5. Add the Caddy route** in `~/stateful_boilerplate/caddy/Caddyfile`:
+
+```caddy
+rotk.net, www.rotk.net {
+    import security_headers
+    import rate_limit_default
+    reverse_proxy rotk-app:8081
+}
+```
+
+**6. Reload Caddy and bring up the app:**
+
+```bash
+cd ~/stateful_boilerplate && ./scripts/reload-caddy.sh
+cd /opt/rotk.net && docker compose up -d --build
+```
+
+**7. Run data population against the shared DB** (same four steps as local dev — see [Populating the data](#populating-the-data) — just `docker compose` instead of `docker-compose`):
+
+```bash
+cd /opt/rotk.net
+docker compose exec app flask create-all
+docker compose exec app flask scrape-book
+docker compose exec app flask scrape-characters
+docker compose exec app flask build-chapter-character-association
+```
+
+---
+
 ## Project layout
 
 ```
@@ -107,9 +204,7 @@ rotk.py                  Application entry + CLI commands
 config.py                Config classes (Development, Production)
 boot.sh                  Container entrypoint (runs `flask deploy`, then gunicorn or flask run)
 Dockerfile               Python 3.12 image; installs requirements, runs boot.sh
-docker-compose.yml       Dev: app + mysql, port 80
-docker-compose.prod.yml  Prod: app + mysql + nginx, port 80/443
-nginx/nginx.conf         Reverse proxy + TLS termination
+docker-compose.yml       Dev: app + postgres. Production VPSes override the `db` service.
 
 app/
   __init__.py            Flask app factory; extensions; blueprint registration
@@ -145,4 +240,3 @@ See [ISSUES.md](./ISSUES.md) for the running list of design notes. Highlights st
 - No Flask-Migrate / Alembic — schema changes require manual SQL or drop/recreate
 - "courtesty" is misspelled throughout (model fields, forms, templates)
 - No tests
-certbot --nginx -d rotk.net

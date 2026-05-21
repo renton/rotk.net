@@ -3,16 +3,17 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 def _database_uri():
-    # Use the least-privileged app user at runtime. Root is reserved for
-    # DDL (create-all, migrations) — invoke those with MYSQL_USE_ROOT=1.
-    if os.environ.get("MYSQL_USE_ROOT") == "1":
-        user = "root"
-        password = os.environ.get("MYSQL_ROOT_PASSWORD", "")
-    else:
-        user = os.environ.get("MYSQL_APP_USER", "rotk_app")
-        password = os.environ.get("MYSQL_APP_PASSWORD", "")
-    host = os.environ.get("MYSQL_HOST", "db")
-    return f"mysql+mysqldb://{user}:{password}@{host}/rotk.net"
+    # Postgres connection string. Env vars mirror standard libpq names so
+    # any tooling that already reads them (psql, alembic, etc.) just works.
+    # The role used here should be the least-privileged app user; DDL
+    # (create_all, migrations) is run with the same role since it owns the
+    # database it was created against.
+    user = os.environ.get("POSTGRES_USER", "rotk_app")
+    password = os.environ.get("POSTGRES_PASSWORD", "")
+    host = os.environ.get("POSTGRES_HOST", "db")
+    port = os.environ.get("POSTGRES_PORT", "5432")
+    dbname = os.environ.get("POSTGRES_DB", "rotk_net")
+    return f"postgresql+psycopg://{user}:{password}@{host}:{port}/{dbname}"
 
 
 def _env_bool(name, default=False):

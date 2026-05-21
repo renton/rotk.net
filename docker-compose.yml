@@ -1,4 +1,3 @@
-version: '3.7'
 services:
   app:
     build: .
@@ -16,18 +15,33 @@ services:
       start_period: 1s
     volumes:
       - .:/rotk.net
+    depends_on:
+      db:
+        condition: service_healthy
   db:
-    image: "mysql:8.4"
+    image: postgres:16-alpine
     env_file: .env
+    environment:
+      # Local-dev postgres. Container is initialised from POSTGRES_USER,
+      # POSTGRES_PASSWORD, and POSTGRES_DB on first boot (when the data
+      # volume is empty). On the VPS this service is dropped by the
+      # override; the app talks to shared postgres instead.
+      POSTGRES_USER: ${POSTGRES_USER:-rotk_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme-localdev-only}
+      POSTGRES_DB: ${POSTGRES_DB:-rotk_net}
     networks:
       - vswitch0
     ports:
-      - "32000:3306"
+      - "127.0.0.1:5432:5432"
     restart: unless-stopped
     volumes:
-      - ./db-data:/var/lib/mysql
-      - ./db-confs:/etc/mysql/conf.d
-      - ./db-init:/docker-entrypoint-initdb.d:ro
+      - ./db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rotk_app} -d ${POSTGRES_DB:-rotk_net}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
 
 networks:
   vswitch0:
