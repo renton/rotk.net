@@ -136,15 +136,19 @@ def split_cell_sections(td):
 
 # Maps a lowercased Wikipedia header substring to the logical column we
 # care about. Order matters — first match wins, so put more specific keys
-# (e.g. "ancestral") before more general ones (e.g. "home").
+# (e.g. "courtesy", "ancestral") before general ones whose substring shows
+# up inside them ("name", "home"). Wikipedia headers seen in the wild
+# include "Courtesy name" (matches both "courtesy" and "name") and
+# "Ancestral home (present-day location)" (matches both "ancestral" and
+# "home").
 COLUMN_MATCHERS = [
-    ('name', 'name'),
     ('courtesy', 'courtesy_name'),
+    ('ancestral', 'ancestral_home'),
+    ('name', 'name'),
     ('born', 'birth_date'),
     ('birth', 'birth_date'),
     ('died', 'death_date'),
     ('death', 'death_date'),
-    ('ancestral', 'ancestral_home'),
     ('home', 'ancestral_home'),
     ('role', 'role'),
     ('allegiance', 'faction'),
