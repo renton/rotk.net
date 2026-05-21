@@ -9,8 +9,17 @@ Live at [rotk.net](https://rotk.net).
 - Python 3.12, Flask 3.1, SQLAlchemy 2.0
 - PostgreSQL 16 (via the bundled `db` service for local dev, or a shared cluster in production)
 - Bootstrap-Flask + Bootstrap 5 (CDN), server-rendered Jinja2 templates
-- gunicorn behind a reverse proxy (Caddy in production via `stateful_boilerplate`)
+- gunicorn behind a reverse proxy in production (Caddy in both supported deployment paths)
 - Docker + docker-compose
+
+## Deployment paths
+
+The app supports two production paths:
+
+1. **[Standalone](examples/standalone/README.md)** — run rotk.net on its own VPS with a bundled Caddy for auto-TLS. The base `docker-compose.yml` plus the overlay in `examples/standalone/` is everything you need.
+2. **[Shared boilerplate](#production-deployment-via-stateful_boilerplate)** — drop rotk.net into a VPS already running [`stateful_boilerplate`](../stateful_boilerplate) (shared Caddy + Postgres + Redis). For when you're hosting several stateful apps on the same host.
+
+Both keep the base `docker-compose.yml` intact and use compose overrides to swap the moving parts. Pick whichever fits your hosting story.
 
 ## Quick start (development)
 
@@ -30,8 +39,6 @@ docker-compose up
 The bundled postgres container initialises with the role/DB named in `.env` (defaults: user `rotk_app`, DB `rotk_net`) on first boot. The Flask app connects as that role.
 
 Then populate the empty DB — see [Populating the data](#populating-the-data) below.
-
-> **Note:** `Talisman(force_https=True)` is on unconditionally, so your browser may HSTS-upgrade `http://localhost` after the first visit. If you hit a redirect loop, use a fresh incognito window or clear HSTS for `localhost`.
 
 ---
 
@@ -105,9 +112,30 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 
 ---
 
+## Standalone production deployment
+
+Self-host on a single VPS with no extra infrastructure. The base compose plus the overlay in `examples/standalone/` adds a Caddy reverse proxy with auto-TLS via Let's Encrypt.
+
+See [`examples/standalone/README.md`](examples/standalone/README.md) for the full walkthrough. The short version:
+
+```bash
+cp .env.example .env
+# Edit .env — set SECRET_KEY, POSTGRES_PASSWORD, MAIL_* (or leave blank),
+# plus DOMAIN and CADDY_EMAIL for the Caddy overlay.
+
+docker-compose \
+  -f docker-compose.yml \
+  -f examples/standalone/docker-compose.tls.yml \
+  up -d --build
+```
+
+Then run the four data-population commands (see [Populating the data](#populating-the-data)).
+
+---
+
 ## Production deployment via `stateful_boilerplate`
 
-Production lives on a single VPS running [`stateful_boilerplate`](../stateful_boilerplate), which provides shared postgres + redis + TLS-terminating Caddy. rotk.net deploys as a child project: its base compose is shipped as-is, and a `docker-compose.override.yml` on the VPS swaps the bundled `db` service for the shared postgres cluster and joins the `shared` docker network so Caddy can reach it.
+If you're already running [`stateful_boilerplate`](../stateful_boilerplate) (shared Caddy + Postgres + Redis on one VPS), drop rotk.net in as a child project. rotk.net's base compose is shipped as-is, and a `docker-compose.override.yml` on the VPS swaps the bundled `db` service for the shared postgres cluster and joins the `shared` docker network so Caddy can reach it.
 
 The full walkthrough is in `stateful_boilerplate/USAGE_GUIDE.md`. Specifically for rotk.net:
 
@@ -202,9 +230,9 @@ docker compose exec app flask build-chapter-character-association
 ```
 rotk.py                  Application entry + CLI commands
 config.py                Config classes (Development, Production)
-boot.sh                  Container entrypoint (runs `flask deploy`, then gunicorn or flask run)
-Dockerfile               Python 3.12 image; installs requirements, runs boot.sh
-docker-compose.yml       Dev: app + postgres. Production VPSes override the `db` service.
+boot.sh                  Container entrypoint (runs flask run in dev, gunicorn in prod)
+Dockerfile               Python 3.12-slim image; installs requirements, runs boot.sh
+docker-compose.yml       Base: app + postgres. Overlaid by examples/standalone/ or by a VPS-side override for stateful_boilerplate.
 
 app/
   __init__.py            Flask app factory; extensions; blueprint registration
@@ -221,6 +249,9 @@ tools/
   dbm.py                 Generic DB helper class
   validators.py          Hex-colour validator for faction/role badges
   decorators.py          @admin_required decorator
+
+examples/
+  standalone/            Compose overlay + Caddyfile for self-hosting on one VPS
 ```
 
 ## Features

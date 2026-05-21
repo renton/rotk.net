@@ -1,0 +1,29 @@
+# Minimal Caddyfile for a single-domain deployment of rotk.net.
+# Caddy obtains a Let's Encrypt cert automatically the first time it
+# starts (Caddy uses the email from $CADDY_EMAIL for the ACME account).
+#
+# After editing, restart Caddy:
+#   docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml restart caddy
+
+{
+    email {$CADDY_EMAIL}
+    # Uncomment while testing to use the LE staging endpoint:
+    # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
+{$DOMAIN} {
+    encode gzip zstd
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+
+    # Cache static assets long; HTML stays fresh.
+    @static path /static/*
+    header @static Cache-Control "public, max-age=31536000, immutable"
+
+    reverse_proxy app:8081
+}

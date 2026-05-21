@@ -1,0 +1,53 @@
+# Standalone production overlay — puts Caddy in front of the base
+# docker-compose.yml so a fresh VPS (no shared boilerplate) gets HTTPS
+# with zero certbot fiddling.
+#
+# Usage:
+#   docker-compose \
+#     -f docker-compose.yml \
+#     -f examples/standalone/docker-compose.tls.yml \
+#     up -d --build
+#
+# Requires DOMAIN and CADDY_EMAIL in your .env (see examples/standalone/README.md).
+
+services:
+  app:
+    # Switch off the dev port mapping — Caddy is the only thing facing the
+    # internet now and reaches the app on the internal docker network.
+    ports: !reset []
+    # Drop the dev source bind-mount so the container runs the image we
+    # built (immutable, reproducible) rather than the host filesystem.
+    volumes: !reset []
+    environment:
+      FLASK_ENV: production
+    # Dev's healthcheck targets flask-run's port 5000; gunicorn binds 8081
+    # in production. Point at the right port.
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: rotk-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3 (QUIC)
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN is required (e.g. rotk.example.com)}
+      CADDY_EMAIL: ${CADDY_EMAIL:?CADDY_EMAIL is required for Let's Encrypt}
+    volumes:
+      - ./examples/standalone/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - vswitch0
+    depends_on:
+      - app
+
+volumes:
+  caddy_data:
+  caddy_config:
