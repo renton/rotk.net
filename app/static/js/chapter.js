@@ -15,11 +15,15 @@
     var modalBody = document.getElementById('character-modal-body');
     var sidebar = sidebarAccordionBody();
     if (!modalBody || !sidebar) return;
-    while (modalBody.firstChild) {
-      var panel = modalBody.firstChild;
-      panel.style.display = 'none';   // hidden in the sidebar; the next click re-reveals
-      sidebar.appendChild(panel);
-    }
+    // querySelector restricts to elements — using .firstChild looped over
+    // whitespace text nodes too, which don't have .style.
+    Array.prototype.forEach.call(
+      modalBody.querySelectorAll('.character-panel'),
+      function (panel) {
+        panel.style.display = 'none';   // hidden in the sidebar; next click re-reveals
+        sidebar.appendChild(panel);
+      }
+    );
   }
 
   var modalInstance = null;

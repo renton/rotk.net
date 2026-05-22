@@ -45,7 +45,11 @@ def _build_csp(nonce):
         "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
         "connect-src 'self' "
             "https://*.google-analytics.com https://*.analytics.google.com "
-            "https://*.googletagmanager.com; "
+            "https://*.googletagmanager.com "
+            # Bootstrap's CSS/JS reference source maps; browsers fetch them
+            # as XHR (connect-src, not script/style-src) when dev tools is
+            # open. Allowed so the console stays clean during debugging.
+            "https://cdn.jsdelivr.net; "
         "frame-ancestors 'none'; "
         "base-uri 'self'; "
         "form-action 'self'"
