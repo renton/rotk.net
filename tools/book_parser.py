@@ -112,14 +112,20 @@ def build_name_ref_html(character):
             html_output += f"background-color:{character.latest_faction.bg_colour};"
         else:
             html_output += f"background-color:#000;"
-        
+
         if character.latest_faction.font_colour:
             html_output += f"color:{character.latest_faction.font_colour};"
 
         if character.latest_faction.border_colour not in ["", character.latest_faction.default_colour]:
             html_output += f"border:2px solid {character.latest_faction.border_colour};"
-        
+
         html_output += "'"
+    else:
+        # No faction → Bootstrap's default badge styling makes the text
+        # white, which disappears against the white page background.
+        # Fall back to a plain outline pill: white fill, black text,
+        # black border.
+        html_output += "style='background-color:#fff; color:#000; border:2px solid #000;'"
 
     html_output += f">{ character.name }</span>"
 
