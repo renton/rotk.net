@@ -71,44 +71,23 @@
   }
 
   // ---- Generic character-picker resolver. ---------------------------------
-  // Any text input marked `data-character-picker` referencing a `<datalist>`
-  // gets its sibling `<input name="character_id">` (same form) populated
-  // with the ID of the picked option whenever the value changes. The Add
-  // Character Association form and every per-row Switch form share this
-  // handler.
-  var datalistMaps = {};
-  function nameToIdMapFor(datalistId) {
-    if (datalistMaps[datalistId]) return datalistMaps[datalistId];
-    var dl = document.getElementById(datalistId);
-    var map = {};
-    if (dl) {
-      Array.prototype.forEach.call(dl.querySelectorAll('option'), function (opt) {
-        var v = opt.getAttribute('value');
-        var id = opt.getAttribute('data-character-id');
-        if (!v || !id) return;
-        // Ambiguity: if multiple options share a name, drop the ID so the
-        // server gets the name alone and can flash an ambiguity error.
-        if (Object.prototype.hasOwnProperty.call(map, v)) {
-          map[v] = null;
-        } else {
-          map[v] = id;
-        }
-      });
-    }
-    datalistMaps[datalistId] = map;
-    return map;
-  }
+  // The datalist's option values end in ` #<id>` (e.g. "Zhang Liang #42")
+  // so duplicate-name characters get unique values. We just regex the id
+  // out of whatever's currently in the input and stash it in the sibling
+  // `<input name="character_id">`. Server still resolves a clean name
+  // (without #id suffix) as a fallback if the JS doesn't fire.
+  var ID_SUFFIX_RE = /#(\d+)\s*$/;
 
   Array.prototype.forEach.call(
     document.querySelectorAll('input[data-character-picker]'),
     function (input) {
-      var dlId = input.getAttribute('list');
-      if (!dlId) return;
-      var map = nameToIdMapFor(dlId);
       var form = input.closest('form');
       var hidden = form ? form.querySelector('input[name="character_id"]') : null;
       if (!hidden) return;
-      function resolve() { hidden.value = map[input.value] || ''; }
+      function resolve() {
+        var m = ID_SUFFIX_RE.exec(input.value);
+        hidden.value = m ? m[1] : '';
+      }
       input.addEventListener('input', resolve);
       input.addEventListener('change', resolve);
     }

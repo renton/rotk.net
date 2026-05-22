@@ -186,10 +186,14 @@
 </div>
 
 {# Shared datalist used by the Add form above and every row's Switch form.
-   Renders once at the bottom so the option list isn't duplicated per row. #}
+   Renders once at the bottom so the option list isn't duplicated per row.
+
+   Each value includes a trailing `#<id>` so values are guaranteed unique
+   even when two characters share a name (e.g. multiple Zhang Liangs). The
+   JS picker handler and the server-side resolver both parse the id out. #}
 <datalist id="all-characters-datalist">
     {% for c in all_characters %}
-    <option value="{{ c.name }}"
+    <option value="{{ c.name }} #{{ c.id }}"
             data-character-id="{{ c.id }}"
             label="{{ c.name }}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
     </option>

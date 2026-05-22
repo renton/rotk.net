@@ -1,4 +1,5 @@
 import os
+import re
 
 from flask import render_template, redirect, url_for, flash, current_app, abort, request
 from flask_login import login_required, current_user
@@ -160,10 +161,21 @@ def chapter_associations_remove(chapter_num, character_id):
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
 
+_ID_SUFFIX_RE = re.compile(r'\s*#(\d+)\s*$')
+
+
 def _resolve_character_from_form():
     """Pull (character_id, character_name) out of request.form and resolve to
     a single Character or (None, error_message_to_flash). Used by both the
-    add and switch flows — they share the same picker pattern."""
+    add and switch flows — they share the same picker pattern.
+
+    Resolution order:
+      1. Explicit `character_id` field (set by the JS picker).
+      2. `Name #<id>` suffix in `character_name` — fallback when JS hasn't
+         populated the hidden field but the user picked from the datalist
+         (the option values always carry the suffix for disambiguation).
+      3. Plain `character_name` exact match (errors on duplicates).
+    """
     raw_id = (request.form.get('character_id') or '').strip()
     raw_name = (request.form.get('character_name') or '').strip()
 
@@ -172,14 +184,23 @@ def _resolve_character_from_form():
         if character is None:
             return None, "Couldn't find a character with that id."
         return character, None
+
     if raw_name:
+        m = _ID_SUFFIX_RE.search(raw_name)
+        if m:
+            character = Character.query.get(int(m.group(1)))
+            if character is None:
+                return None, "Couldn't find a character with that id."
+            return character, None
+
         matches = Character.query.filter(Character.name == raw_name).all()
         if len(matches) == 1:
             return matches[0], None
         if len(matches) > 1:
             return None, (
-                f"Multiple characters named {raw_name!r}. Use the picker "
-                f"(it sends the character ID) instead of typing the name."
+                f"Multiple characters named {raw_name!r}. Pick one from the "
+                f"dropdown (each option has a unique '#<id>' suffix) instead "
+                f"of typing the bare name."
             )
     return None, "Couldn't find a character matching that selection."
 
