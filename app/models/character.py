@@ -2,6 +2,10 @@ from app import db
 from app.models.abstract import AbstractObject, AbstractTag
 from sqlalchemy.ext.hybrid import hybrid_property
 
+# All locally-downloaded portrait files live under app/static/PORTRAIT_DIR/.
+# Compose with url_for('static', filename=Portrait.static_path) at render time.
+PORTRAIT_DIR = "portraits"
+
 
 class Character(AbstractObject):
     is_fictional = db.Column(db.Boolean, default=False)
@@ -114,13 +118,14 @@ class Faction(AbstractTag):
 class Portrait(AbstractObject):
     character_id = db.Column(db.Integer, db.ForeignKey('character.id'), nullable=False)
 
-    # Direct URL of the image on the source CDN (e.g. Fandom's static.wikia.nocookie.net).
+    # Original URL of the image on the source CDN. Kept for re-fetch / provenance;
+    # the served image is always the local copy at static/PORTRAIT_DIR/<filename>.
     image_url = db.Column(db.Text, default="", nullable=False)
 
-    # Path under app/static/ where we cached the downloaded image, or NULL if
-    # we're hot-linking to image_url. Stored as 'portraits/<file>' so it
-    # composes with url_for('static', filename=portrait.local_path).
-    local_path = db.Column(db.String(255), default=None, nullable=True)
+    # Basename of the locally-downloaded file, e.g. "42_koei.jpg".
+    # The directory (PORTRAIT_DIR) is implicit so files can be relocated by
+    # changing one constant. Use Portrait.static_path with url_for('static').
+    filename = db.Column(db.String(255), default="", nullable=False)
 
     description = db.Column(db.Text, default="", nullable=False)
 
@@ -129,6 +134,11 @@ class Portrait(AbstractObject):
     source_site = db.Column(db.String(255), default="", nullable=False)
 
     character = db.relationship('Character', back_populates='portraits', lazy='select')
+
+    @hybrid_property
+    def static_path(self):
+        """Path suitable for `url_for('static', filename=...)`. Empty if no file."""
+        return f"{PORTRAIT_DIR}/{self.filename}" if self.filename else ""
 
     def __repr__(self):
         return f'<Portrait {self.name} from {self.source_site}>'

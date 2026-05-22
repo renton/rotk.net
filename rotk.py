@@ -27,7 +27,7 @@ import os, time, urllib.parse
 # from flask_migrate import Migrate, upgrade
 from app.models import \
     Chapter, Character, Faction, Role, User
-from app.models.character import Portrait
+from app.models.character import Portrait, PORTRAIT_DIR
 
 app = create_app(os.getenv('FLASK_ENV') or 'default')
 
@@ -138,10 +138,9 @@ def scrape_characters():
               help='Stop after N successful scrapes (useful for smoke-testing).')
 @click.option('--delay', type=float, default=0.5,
               help='Seconds to sleep between requests (be polite to Fandom).')
-@click.option('--no-download', is_flag=True, default=False,
-              help='Save only the remote URL, do not download the image bytes.')
-def scrape_koei_images(character_id, skip_existing, limit, delay, no_download):
-    """Scrape character portraits from koei.fandom.com and store them as Portrait rows."""
+def scrape_koei_images(character_id, skip_existing, limit, delay):
+    """Scrape character portraits from koei.fandom.com, save them to
+    app/static/portraits/, and record one Portrait row per character."""
     from tools.image_scrapers import koei_fandom
 
     if character_id is not None:
@@ -149,7 +148,7 @@ def scrape_koei_images(character_id, skip_existing, limit, delay, no_download):
     else:
         characters = Character.query.order_by(Character.name).all()
 
-    portraits_dir = os.path.join(app.static_folder, 'portraits')
+    portraits_dir = os.path.join(app.static_folder, PORTRAIT_DIR)
     os.makedirs(portraits_dir, exist_ok=True)
 
     successes = 0
@@ -181,26 +180,24 @@ def scrape_koei_images(character_id, skip_existing, limit, delay, no_download):
             time.sleep(delay)
             continue
 
-        local_path = None
-        if not no_download:
-            try:
-                local_path = _download_image(
-                    scraped.image_url,
-                    portraits_dir,
-                    character.id,
-                    'koei',
-                )
-            except Exception as exc:
-                print(f"image download failed ({exc})")
-                errors += 1
-                time.sleep(delay)
-                continue
+        try:
+            filename = _download_image(
+                scraped.image_url,
+                portraits_dir,
+                character.id,
+                'koei',
+            )
+        except Exception as exc:
+            print(f"image download failed ({exc})")
+            errors += 1
+            time.sleep(delay)
+            continue
 
         portrait = Portrait(
             name=character.name,
             character_id=character.id,
             image_url=scraped.image_url,
-            local_path=local_path,
+            filename=filename,
             description=scraped.description,
             source_url=scraped.source_url,
             source_site=scraped.source_site,
@@ -208,7 +205,7 @@ def scrape_koei_images(character_id, skip_existing, limit, delay, no_download):
         db.session.add(portrait)
         db.session.commit()
         successes += 1
-        print("ok" + (f" -> {local_path}" if local_path else ""))
+        print(f"ok -> {PORTRAIT_DIR}/{filename}")
 
         if limit is not None and successes >= limit:
             print(f"\nhit --limit {limit}; stopping.")
@@ -220,8 +217,8 @@ def scrape_koei_images(character_id, skip_existing, limit, delay, no_download):
 
 
 def _download_image(image_url, save_dir, character_id, source_tag):
-    """Stream `image_url` to disk under `save_dir`. Returns the path relative
-    to `app/static/` for storage in Portrait.local_path."""
+    """Stream `image_url` to disk under `save_dir`. Returns the basename
+    (e.g. '42_koei.jpg') for storage in Portrait.filename."""
     import requests as _requests
 
     parsed = urllib.parse.urlparse(image_url)
@@ -229,8 +226,8 @@ def _download_image(image_url, save_dir, character_id, source_tag):
     if ext not in ('.jpg', '.jpeg', '.png', '.gif', '.webp'):
         ext = '.jpg'
 
-    # If multiple portraits accumulate per character per site, suffix with a
-    # counter so we don't clobber the existing file.
+    # Counter suffix lets multiple portraits per character/site coexist
+    # without clobbering each other on re-runs (--refresh).
     n = 0
     while True:
         suffix = f"_{n}" if n else ""
@@ -252,7 +249,7 @@ def _download_image(image_url, save_dir, character_id, source_tag):
             if chunk:
                 f.write(chunk)
 
-    return f"portraits/{filename}"
+    return filename
 
 
 @app.cli.command()
