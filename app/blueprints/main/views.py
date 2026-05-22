@@ -111,12 +111,14 @@ def characters():
     if form.role.data:
         query = query.filter(Character.roles.any(Role.id == form.role.data.id))
 
-    # Apply faction filter
-    if form.faction.data:
-        if form.search_past_factions.data == True:
-            query = query.filter(Character.factions.any(Faction.id == form.faction.data.id))
-        else:
-            query = query.filter(Character.primary_faction == form.faction.data)
+    # Two independent faction filters. `any_faction` matches characters
+    # whose M2M factions list contains the chosen faction (past or
+    # present); `primary_faction` matches strictly on primary. Both can
+    # be combined.
+    if form.any_faction.data:
+        query = query.filter(Character.factions.any(Faction.id == form.any_faction.data.id))
+    if form.primary_faction.data:
+        query = query.filter(Character.primary_faction == form.primary_faction.data)
 
     if form.search_query.data:
         search_term = f"%{form.search_query.data}%"

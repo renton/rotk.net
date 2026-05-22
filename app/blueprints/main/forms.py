@@ -22,16 +22,23 @@ class CharacterFilterForm(FlaskForm):
         blank_value=""
 
     )
-    faction = QuerySelectField(
-        "Faction", 
+    any_faction = QuerySelectField(
+        "Faction (any — past or present)",
         query_factory=lambda: Faction.query.order_by(Faction.name).all(),
         get_label="name",
         allow_blank=True,
-        blank_text='--- Select a faction ---',
+        blank_text='--- Any faction ---',
         blank_value=""
     )
 
-    search_past_factions = BooleanField("Search past factions", default=True)
+    primary_faction = QuerySelectField(
+        "Primary faction only",
+        query_factory=lambda: Faction.query.order_by(Faction.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='--- Any primary ---',
+        blank_value=""
+    )
 
     submit = SubmitField('Search')
 

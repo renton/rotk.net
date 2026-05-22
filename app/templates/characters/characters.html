@@ -7,32 +7,37 @@
 
 {% block page_content %}
 
+{# Filter state — set once and reused for tab links + pagination so URLs
+   stay consistent. Each may be a Model object (from QuerySelectField)
+   or None; we pass `.id` when present, else blank string. #}
+{% set role_id    = form.role.data.id          if form.role.data          else '' %}
+{% set anyf_id    = form.any_faction.data.id   if form.any_faction.data   else '' %}
+{% set primf_id   = form.primary_faction.data.id if form.primary_faction.data else '' %}
+{% set q_text     = form.search_query.data or '' %}
+
 <fieldset class="border p-3">
 <form method="GET" class="mb-4">
     <div class="row mb-3">
         <div class="col">
-            <label for="faction">Search:</label>
+            <label for="search_query">Search:</label>
             {{ form.search_query(class="form-control") }}
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col">
-            <label for="faction">Filter Faction:</label>
-            {{ form.faction(class="form-control") }}
+        <div class="col-md-4">
+            <label for="any_faction">Faction (any):</label>
+            {{ form.any_faction(class="form-control") }}
         </div>
-        <div class="col">
-            <label for="role">Filter Role:</label>
+        <div class="col-md-4">
+            <label for="primary_faction">Primary faction:</label>
+            {{ form.primary_faction(class="form-control") }}
+        </div>
+        <div class="col-md-4">
+            <label for="role">Role:</label>
             {{ form.role(class="form-control") }}
         </div>
     </div>
-    <div class="row mb-3">
-        <div>
-            {{ form.search_past_factions(class="form-check-input") }}
-            <label for="search_past_factions"> Search past factions</label>
 
-        </div>
-    </div>
-    
     <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
     <a href="{{ url_for('main.characters') }}" class="btn btn-primary">Clear</a>
 </form>
@@ -42,7 +47,15 @@
 <ul class="nav nav-tabs">
     {% for display_letter in alphabet %}
         <li class="nav-item">
-            <a class="nav-link {% if display_letter == letter %}active{% endif %}" aria-current="page" href="{{ url_for('main.characters', page=page, letter=display_letter, role=form.role.data.id, faction=form.faction.data.id, search_query=form.search_query.data) }}">{{ display_letter }}</a>
+            <a class="nav-link {% if display_letter == letter %}active{% endif %}"
+               aria-current="page"
+               href="{{ url_for('main.characters',
+                                page=page,
+                                letter=display_letter,
+                                role=role_id,
+                                any_faction=anyf_id,
+                                primary_faction=primf_id,
+                                search_query=q_text) }}">{{ display_letter }}</a>
         </li>
     {% endfor %}
 </ul>
@@ -131,7 +144,12 @@
 
 {% if pagination %}
 <div class="pagination">
-    {{ macros.pagination_widget(pagination, 'main.characters', letter=letter, role=form.role.data.id, faction=form.faction.data.id, search_query=form.search_query.data) }}
+    {{ macros.pagination_widget(pagination, 'main.characters',
+                                letter=letter,
+                                role=role_id,
+                                any_faction=anyf_id,
+                                primary_faction=primf_id,
+                                search_query=q_text) }}
 </div>
 {% endif %}
 
