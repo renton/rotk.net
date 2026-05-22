@@ -494,6 +494,50 @@ def remove_portrait_tag(portrait_id, tag_id):
     return redirect(request.referrer or url_for('admin.image_manager'))
 
 
+# ----- Duplicate character names ------------------------------------------
+
+@admin.route('/duplicates', methods=['GET'])
+@login_required
+@admin_required
+def duplicate_characters():
+    """List every Character.name that appears more than once. Name comparison
+    is byte-wise (collation 'C') — 'Cao Cao' and 'cao cao' aren't flagged as
+    duplicates by design. is_deleted rows are excluded."""
+    rows = (
+        db.session.query(
+            Character.name,
+            func.count(Character.id).label('count'),
+        )
+        .filter(Character.is_deleted.is_(False))
+        .group_by(Character.name)
+        .having(func.count(Character.id) > 1)
+        .order_by(func.count(Character.id).desc(), Character.name)
+        .all()
+    )
+
+    # For each duplicated name, pull the actual Character rows so the admin
+    # can click through. One query for all of them via a name-IN filter.
+    duplicate_names = [r[0] for r in rows]
+    chars_by_name = {}
+    if duplicate_names:
+        for c in (
+            Character.query
+            .filter(
+                Character.name.in_(duplicate_names),
+                Character.is_deleted.is_(False),
+            )
+            .order_by(Character.name, Character.id)
+            .all()
+        ):
+            chars_by_name.setdefault(c.name, []).append(c)
+
+    return render_template(
+        'admin/duplicates.html',
+        rows=rows,
+        chars_by_name=chars_by_name,
+    )
+
+
 # ----- Tag manager ---------------------------------------------------------
 
 _TAG_SORTS = ('name', 'created_at', 'image_count')
