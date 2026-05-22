@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  rotk.net favicon.
+
+  Vermilion seal background — the colour of the cinnabar ink used on
+  imperial Chinese seals — with the character 三 (sān, "three") in
+  white. Three strokes for the three kingdoms; the seal silhouette
+  evokes a chapter-end name stamp from the period. Reads as an
+  abstract three-stripe glyph at 16×16 if you don't know the
+  character, and stays crisp because each stroke is a tiny rounded
+  rectangle (no font dependency).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="3" ry="3" fill="#B22222"/>
+  <rect x="8"  y="8"  width="14" height="3" rx="1" fill="#FFFFFF"/>
+  <rect x="10" y="15" width="10" height="3" rx="1" fill="#FFFFFF"/>
+  <rect x="6"  y="22" width="20" height="3" rx="1" fill="#FFFFFF"/>
+</svg>
