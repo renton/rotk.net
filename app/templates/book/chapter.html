@@ -33,8 +33,16 @@
                        | rejectattr('is_hidden')
                        | sort(attribute='is_default', reverse=true) | list %}
                     {% set tab_set = 'char-' ~ character.id %}
+                    {% set chapter_count = mention_counts.get(character.id, 0) %}
+                    {% set book_count = character.book_mention_count or 0 %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                      <h6 class="mb-2">{{ character.name }}</h6>
+                      <h6 class="mb-1">{{ character.name }}</h6>
+                      <div class="small text-muted">
+                        {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
+                      </div>
+                      <div class="small text-muted mb-3">
+                        {{ book_count }} mention{{ '' if book_count == 1 else 's' }} in the book
+                      </div>
 
                       {% if portraits %}
                         {% if portraits|length > 1 %}
