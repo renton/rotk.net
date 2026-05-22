@@ -415,6 +415,32 @@ def _randomize_tag_colours(model, label, target_id, seed, dry_run):
 
 
 @app.cli.command()
+def recount_book_mentions():
+    """Recompute Character.book_mention_count for every character.
+
+    Run after scraping new chapters or after editing character aliases.
+    Re-stripping HTML and re-scanning all chapters takes a couple of
+    minutes for the full book × 1500 characters; this is why we cache
+    the result on Character rather than computing it on every page load."""
+    from tools.book_parser import count_mentions_per_character
+
+    chapters = Chapter.query.all()
+    characters = Character.query.all()
+    print(f"Scanning {len(chapters)} chapters for {len(characters)} characters...")
+
+    counts = count_mentions_per_character(chapters, characters)
+    updated = 0
+    for character in characters:
+        new_count = counts.get(character.id, 0)
+        if character.book_mention_count != new_count:
+            character.book_mention_count = new_count
+            updated += 1
+    db.session.commit()
+
+    print(f"Updated {updated} characters.")
+
+
+@app.cli.command()
 def create_all():
     db.create_all()
 

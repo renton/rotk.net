@@ -18,6 +18,11 @@ class Character(AbstractObject):
 
     ancestral_home = db.Column(db.String(255), default="")
 
+    # Pre-computed total mentions of this character across the entire book.
+    # Populated by `flask recount-book-mentions`; not live (scanning all
+    # 120 chapters per page load would be too slow).
+    book_mention_count = db.Column(db.Integer, default=0, nullable=False)
+
     role_table = db.Table(
         'character_roles_association',
         db.Column('character_id', db.ForeignKey('character.id'), primary_key=True),

@@ -103,6 +103,7 @@ Full walkthrough in `README.md`.
 | `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
+| `flask recount-book-mentions` | Recompute `Character.book_mention_count` across the whole book. Run after scraping new chapters or alias changes. |
 | `flask scrape-koei-images` | Scrape character portraits from koei.fandom.com into `app/static/portraits/` + `Portrait` rows |
 | `flask randomize-faction-colours` | Randomize bg/font/border on every faction; font chosen for WCAG-readable contrast |
 | `flask randomize-role-colours` | Same as `randomize-faction-colours` but for `Role` rows |

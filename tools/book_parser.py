@@ -50,6 +50,26 @@ def find_character_mentions(chapter, character, context_chars=60, limit=None):
     return mentions
 
 
+def count_mentions_per_character(chapters, characters):
+    """Return {character_id: total_mentions_across_chapters}.
+
+    HTML is stripped from each chapter content once up front so we don't
+    pay that cost per character. Each character's `get_all_name_labels()`
+    becomes one regex; we scan every chapter and sum findall() counts."""
+    stripped = [strip_html_tags(c.content) for c in chapters]
+    counts = {}
+    for character in characters:
+        needles = [n for n in character.get_all_name_labels() if n]
+        if not needles:
+            counts[character.id] = 0
+            continue
+        pattern = build_needle_pattern(needles)
+        counts[character.id] = sum(
+            len(pattern.findall(text)) for text in stripped
+        )
+    return counts
+
+
 def get_characters_for_chapter(chapter_id):
     chapter = Chapter.query.get_or_404(chapter_id)
 
