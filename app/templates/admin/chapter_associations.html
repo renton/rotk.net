@@ -53,14 +53,15 @@
     </div>
 </div>
 
+<div class="table-responsive">
 <table class="table table-striped align-middle" id="associations-table">
     <thead>
         <tr>
             <th data-sort-key="name" role="button">Name <span class="sort-indicator"></span></th>
             <th data-sort-key="faction" role="button">Faction <span class="sort-indicator"></span></th>
-            <th>Roles</th>
+            <th class="d-none d-md-table-cell">Roles</th>
             <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
-            <th>Snippets</th>
+            <th class="d-none d-md-table-cell">Snippets</th>
             <th class="text-end">Switch</th>
         </tr>
     </thead>
@@ -95,7 +96,7 @@
                     <span class="text-muted">—</span>
                 {% endif %}
             </td>
-            <td>
+            <td class="d-none d-md-table-cell">
                 {% for role in row.roles %}
                     <span class="badge rounded-pill bg-primary">{{ role.name }}</span>
                 {% endfor %}
@@ -103,7 +104,7 @@
             <td data-sort-value="{{ row.mention_count }}" class="text-end">
                 {{ row.mention_count }}
             </td>
-            <td>
+            <td class="d-none d-md-table-cell">
                 {% if row.mentions %}
                 <details>
                     <summary class="small text-muted">show {{ row.mention_count }} snippet{{ '' if row.mention_count == 1 else 's' }}</summary>
@@ -148,6 +149,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 <div class="card mt-4">
     <div class="card-header">Add Character Association to chapter {{ selected.chapter_num }}</div>

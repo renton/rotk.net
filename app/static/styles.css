@@ -1,3 +1,35 @@
 span.character-ref {
     cursor: pointer;
 }
+
+/* ------------------------------------------------------------------
+   Chapter sidebar.
+
+   On desktop the right-hand info accordion sticks to the top of the
+   viewport and scrolls inside itself when its content exceeds 100vh.
+   On phones / tablets the sidebar stacks below the prose, so sticky
+   positioning would just glue it to the top of the screen and cover
+   the chapter text — flip it back to normal flow there.
+   ------------------------------------------------------------------ */
+@media (min-width: 992px) {
+    .chapter-sidebar {
+        position: sticky;
+        top: 0;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Touch targets.
+
+   Bootstrap's btn-sm is ~31px tall, below Apple's 44px recommendation.
+   Keep desktop density but upsize inside tables on small screens so
+   admin action buttons stay tappable on a phone.
+   ------------------------------------------------------------------ */
+@media (max-width: 768px) {
+    .table .btn-sm {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+    }
+}

@@ -56,13 +56,14 @@
     </div>
 </form>
 
+<div class="table-responsive">
 <table class="table table-striped align-middle">
     <thead>
         <tr>
             <th>{{ sort_link('name', 'Name') }}</th>
             <th>Preview</th>
             <th class="text-end">{{ sort_link('image_count', 'Images') }}</th>
-            <th>{{ sort_link('created_at', 'Created') }}</th>
+            <th class="d-none d-md-table-cell">{{ sort_link('created_at', 'Created') }}</th>
             <th class="text-end">Actions</th>
         </tr>
     </thead>
@@ -80,7 +81,7 @@
                 <span class="text-muted">0</span>
                 {% endif %}
             </td>
-            <td>{{ tag.created_at.strftime('%Y-%m-%d') if tag.created_at else '' }}</td>
+            <td class="d-none d-md-table-cell">{{ tag.created_at.strftime('%Y-%m-%d') if tag.created_at else '' }}</td>
             <td class="text-end">
                 <a href="{{ url_for('admin.edit_tag', tag_id=tag.id) }}"
                    class="btn btn-sm btn-outline-primary">Edit</a>
@@ -109,6 +110,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 {% if pagination.pages > 1 %}
 <nav>

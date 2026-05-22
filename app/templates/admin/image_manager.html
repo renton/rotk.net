@@ -83,14 +83,15 @@
     </div>
 </form>
 
+<div class="table-responsive">
 <table class="table table-striped align-middle">
     <thead>
         <tr>
             <th style="width: 100px;">Image</th>
             <th>{{ sort_link('character', 'Character') }}</th>
-            <th>{{ sort_link('source_site', 'Source') }}</th>
+            <th class="d-none d-md-table-cell">{{ sort_link('source_site', 'Source') }}</th>
             <th>Tags</th>
-            <th>{{ sort_link('created_at', 'Added') }}</th>
+            <th class="d-none d-md-table-cell">{{ sort_link('created_at', 'Added') }}</th>
             <th class="text-end">Actions</th>
         </tr>
     </thead>
@@ -128,7 +129,7 @@
                 <span class="text-muted">(orphaned)</span>
                 {% endif %}
             </td>
-            <td>
+            <td class="d-none d-md-table-cell">
                 {% if portrait.source_url %}
                 <a href="{{ portrait.source_url }}" target="_blank" rel="noopener">
                     {{ portrait.source_site or portrait.source_url }}
@@ -173,7 +174,7 @@
                 </form>
                 {% endif %}
             </td>
-            <td class="small text-muted">
+            <td class="small text-muted d-none d-md-table-cell">
                 {{ portrait.created_at.strftime('%Y-%m-%d') if portrait.created_at else '' }}
             </td>
             <td class="text-end">
@@ -209,6 +210,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 {% if pagination.pages > 1 %}
 <nav>

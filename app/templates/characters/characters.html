@@ -47,18 +47,19 @@
     {% endfor %}
 </ul>
 
+<div class="table-responsive">
 <table class="table table-striped mt-4">
     <thead>
         <th style="width: 80px;">Image</th>
         <th>Name</th>
-        <th>Courtesy Name</th>
-        <th>Aliases</th>
-        <th>Birth</th>
-        <th>Death</th>
-        <th>Ancestral Home</th>
-        <th>Roles</th>
+        <th class="d-none d-md-table-cell">Courtesy Name</th>
+        <th class="d-none d-md-table-cell">Aliases</th>
+        <th class="d-none d-md-table-cell">Birth</th>
+        <th class="d-none d-md-table-cell">Death</th>
+        <th class="d-none d-md-table-cell">Ancestral Home</th>
+        <th class="d-none d-md-table-cell">Roles</th>
         <th>Faction</th>
-        <th>Past Factions</th>
+        <th class="d-none d-md-table-cell">Past Factions</th>
         <th>Chapter References</th>
     </thead>
     <tbody>
@@ -86,7 +87,7 @@
                         {{ character.chinese_name }}
                     </div>
                 </td>
-                <td>
+                <td class="d-none d-md-table-cell">
                     <div>
                         {{ character.courtesty_name }}
                     </div>
@@ -94,11 +95,11 @@
                         {{ character.chinese_courtesty_name }}
                     </div>
                 </td>
-                <td>{{ character.aliases }}</td>
-                <td>{{ character.birth_date }}</td>
-                <td>{{ character.death_date }}</td>
-                <td>{{ character.ancestral_home }}</td>
-                <td>
+                <td class="d-none d-md-table-cell">{{ character.aliases }}</td>
+                <td class="d-none d-md-table-cell">{{ character.birth_date }}</td>
+                <td class="d-none d-md-table-cell">{{ character.death_date }}</td>
+                <td class="d-none d-md-table-cell">{{ character.ancestral_home }}</td>
+                <td class="d-none d-md-table-cell">
                     {% for role in character.roles %}
                         <div>
                             <span class="badge rounded-pill bg-primary">{{ role.name }}</span>
@@ -110,7 +111,7 @@
                         {{ macros.badge_widget(character.latest_faction) }}
                     {% endif %}
                 </td>
-                <td>
+                <td class="d-none d-md-table-cell">
                     {% for faction in character.factions %}
                         <div>
                             {{ macros.badge_widget(faction) }}
@@ -126,6 +127,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 {% if pagination %}
 <div class="pagination">

@@ -7,14 +7,15 @@
     <h1>Users</h1>
 </div>
 
+<div class="table-responsive">
 <table class="table table-striped align-middle">
     <thead>
         <tr>
             <th>Username</th>
-            <th>Email</th>
+            <th class="d-none d-md-table-cell">Email</th>
             <th>Confirmed</th>
             <th>Admin</th>
-            <th>Member since</th>
+            <th class="d-none d-md-table-cell">Member since</th>
             <th></th>
         </tr>
     </thead>
@@ -22,7 +23,7 @@
         {% for user in users %}
         <tr>
             <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
+            <td class="d-none d-md-table-cell">{{ user.email }}</td>
             <td>
                 {% if user.confirmed %}
                 <span class="badge bg-success">Yes</span>
@@ -37,7 +38,7 @@
                 <span class="text-muted">—</span>
                 {% endif %}
             </td>
-            <td>{{ user.member_since.strftime('%Y-%m-%d') if user.member_since else '' }}</td>
+            <td class="d-none d-md-table-cell">{{ user.member_since.strftime('%Y-%m-%d') if user.member_since else '' }}</td>
             <td class="text-end">
                 {% if user.id != current_user.id %}
                 <form method="POST" action="{{ url_for('admin.toggle_admin', user_id=user.id) }}" class="d-inline">
@@ -59,4 +60,5 @@
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 {% endblock %}

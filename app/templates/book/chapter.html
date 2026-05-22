@@ -11,13 +11,12 @@
 
 <div class="page-copy mt-4">
     <div class="row">
-        <div class="col-9">
+        <div class="col-12 col-lg-8">
             {{ chapter_content | safe }}
         </div>
-        {# Sticky sidebar: pins to the top while you scroll the prose. The
-           explicit max-height + overflow-y let it grow up to the viewport
-           and then scroll inside itself instead of going off-screen. #}
-        <div class="col" style="position:sticky; top:0; max-height:100vh; overflow-y:auto;">
+        {# Sticky sidebar at lg+ (styles.css → .chapter-sidebar @media). On
+           phones/tablets it stacks below the prose as a normal column. #}
+        <div class="col-12 col-lg-4 chapter-sidebar mt-4 mt-lg-0">
 
           <div class="accordion" id="sidebar-accordion">
             <div class="accordion-item">

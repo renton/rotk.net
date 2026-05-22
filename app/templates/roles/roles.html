@@ -4,6 +4,7 @@
 {% block page_content %}
 
 {% set is_admin = current_user.is_authenticated and current_user.is_administrator %}
+<div class="table-responsive">
 <table class="table table-striped mt-4">
     <thead>
         <th>Name</th>
@@ -33,6 +34,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 
 {% endblock %}
