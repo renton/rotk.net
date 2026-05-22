@@ -70,26 +70,7 @@
     });
   }
 
-  // ---- Generic character-picker resolver. ---------------------------------
-  // The datalist's option values end in ` #<id>` (e.g. "Zhang Liang #42")
-  // so duplicate-name characters get unique values. We just regex the id
-  // out of whatever's currently in the input and stash it in the sibling
-  // `<input name="character_id">`. Server still resolves a clean name
-  // (without #id suffix) as a fallback if the JS doesn't fire.
-  var ID_SUFFIX_RE = /#(\d+)\s*$/;
-
-  Array.prototype.forEach.call(
-    document.querySelectorAll('input[data-character-picker]'),
-    function (input) {
-      var form = input.closest('form');
-      var hidden = form ? form.querySelector('input[name="character_id"]') : null;
-      if (!hidden) return;
-      function resolve() {
-        var m = ID_SUFFIX_RE.exec(input.value);
-        hidden.value = m ? m[1] : '';
-      }
-      input.addEventListener('input', resolve);
-      input.addEventListener('change', resolve);
-    }
-  );
+  // The generic character-picker resolver moved to admin_picker.js so it
+  // can be reused on other admin pages (image manager, etc.) without
+  // dragging this file's row-sort/filter logic along.
 })();

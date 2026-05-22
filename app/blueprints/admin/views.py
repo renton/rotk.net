@@ -356,6 +356,7 @@ def image_manager():
     search = (request.args.get('q') or '').strip()
     source_site = (request.args.get('source_site') or '').strip()
     tag_id = request.args.get('tag_id', type=int)
+    character_id = request.args.get('character_id', type=int)
     sort = request.args.get('sort', 'character')
     direction = request.args.get('dir', 'asc')
 
@@ -372,7 +373,17 @@ def image_manager():
         .options(selectinload(Portrait.tags))
     )
 
-    if search:
+    # Character filter: prefer the explicit id (set by the JS picker, or
+    # parsed out of the trailing "#<id>" in `q` if JS didn't fire). Fall
+    # back to substring search on name + description for free-form text.
+    if character_id is None and search:
+        m = re.search(r'#(\d+)\s*$', search)
+        if m:
+            character_id = int(m.group(1))
+
+    if character_id:
+        query = query.filter(Portrait.character_id == character_id)
+    elif search:
         like = f"%{search}%"
         query = query.filter(or_(
             Character.name.ilike(like),
@@ -420,14 +431,28 @@ def image_manager():
 
     all_tags = Tag.query.order_by(Tag.name).all()
 
+    # Picker data for the character search box — same shape as chapter
+    # associations: every character is a datalist option whose value is
+    # "<name> #<id>" so duplicate names disambiguate, plus a label that
+    # tacks the factions on for duplicate-name characters.
+    all_characters = Character.query.order_by(Character.name).all()
+    from collections import Counter
+    name_counter = Counter(c.name for c in all_characters)
+    duplicate_names = {n for n, count in name_counter.items() if count > 1}
+    factions_by_char = _factions_by_character_id([c.id for c in all_characters])
+
     return render_template(
         'admin/image_manager.html',
         pagination=pagination,
         source_sites=source_sites,
         all_tags=all_tags,
+        all_characters=all_characters,
+        duplicate_names=duplicate_names,
+        factions_by_char=factions_by_char,
         search=search,
         source_site=source_site,
         tag_id=tag_id,
+        character_id=character_id,
         sort=sort,
         direction=direction,
         csrf_form=_CsrfOnlyForm(),

@@ -191,15 +191,20 @@ def edit_character(id):
         flash('The character has been updated.')
         return redirect(url_for("main.edit_character", id=character.id))
 
-    portraits = [
-        p for p in character.portraits
-        if not p.is_deleted and not p.is_hidden
-    ]
-    # Default-first; same ordering the chapter sidebar uses.
-    portraits.sort(key=lambda p: not p.is_default)
+    # Admin view of the edit page surfaces hidden portraits too (with a
+    # visual marker), so the admin can promote / unhide them from here
+    # without bouncing to the Image Manager.
+    portraits = [p for p in character.portraits if not p.is_deleted]
+    portraits.sort(key=lambda p: (not p.is_default, p.is_hidden))
 
     upload_form = UploadPortraitForm()
     all_tags = Tag.query.order_by(Tag.name).all()
+
+    # Bare FlaskForm gives us CSRF tokens for the per-portrait toggle forms
+    # below. They POST to admin.toggle_portrait_hidden / set_default_portrait
+    # which both verify the token via their own _CsrfOnlyForm instance.
+    from flask_wtf import FlaskForm
+    csrf_form = FlaskForm()
 
     return render_template(
         'characters/character_edit.html',
@@ -208,6 +213,7 @@ def edit_character(id):
         portraits=portraits,
         upload_form=upload_form,
         all_tags=all_tags,
+        csrf_form=csrf_form,
     )
 
 

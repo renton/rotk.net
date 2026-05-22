@@ -9,6 +9,7 @@
 {% macro filter_url() -%}
     {% set args = {} %}
     {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
+    {% if character_id %}{% set _ = args.update({'character_id': character_id}) %}{% endif %}
     {% if source_site %}{% set _ = args.update({'source_site': source_site}) %}{% endif %}
     {% if tag_id %}{% set _ = args.update({'tag_id': tag_id}) %}{% endif %}
     {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
@@ -44,9 +45,17 @@
 
 <form method="GET" action="{{ url_for('admin.image_manager') }}" class="row g-2 align-items-end mb-4">
     <div class="col-md-4">
-        <label for="image-mgr-search" class="form-label">Search (character or description)</label>
+        <label for="image-mgr-search" class="form-label">Character</label>
         <input type="search" name="q" id="image-mgr-search" class="form-control"
-               value="{{ search or '' }}" autocomplete="off">
+               value="{{ search or '' }}"
+               list="all-characters-datalist"
+               data-character-picker
+               autocomplete="off"
+               placeholder="Type a name and pick from the list">
+        {# Hidden field populated by admin_picker.js when an option is chosen
+           from the datalist. The server prefers this id when present so we
+           filter to exactly one character even if two share a name. #}
+        <input type="hidden" name="character_id" value="{{ character_id or '' }}">
     </div>
     <div class="col-md-3">
         <label for="image-mgr-source" class="form-label">Source site</label>
@@ -222,9 +231,23 @@
     </ul>
 </nav>
 {% endif %}
+
+{# Shared datalist for the character picker. Each option's value carries
+   a "#<id>" suffix so duplicate names disambiguate; admin_picker.js
+   reads the id out of the input and stashes it in the hidden field. #}
+<datalist id="all-characters-datalist">
+    {% for c in all_characters %}
+        {% set is_dupe = c.name in duplicate_names %}
+        {% set f_names = factions_by_char.get(c.id, []) %}
+    <option value="{{ c.name }} #{{ c.id }}"
+            label="{{ c.name }}{% if is_dupe %} [{{ f_names|join(', ') if f_names else 'no faction' }}]{% endif %}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+    </option>
+    {% endfor %}
+</datalist>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
 {% endblock %}
