@@ -17,3 +17,7 @@ class ScrapedImage:
     source_url: str      # the page URL where the image was found
     source_site: str     # human-readable site name, for credits
     description: str = ""
+    # Optional site-specific tag (e.g. game version code parsed from a Koei
+    # filename like "Cao Cao (DW9).png" -> "DW9"). The CLI uses this to
+    # auto-create / attach a Tag to the resulting Portrait row.
+    variant_tag: str = ""

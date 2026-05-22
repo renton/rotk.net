@@ -26,7 +26,7 @@ import os, time, urllib.parse
 
 # from flask_migrate import Migrate, upgrade
 from app.models import \
-    Chapter, Character, Faction, Role, User
+    Chapter, Character, Faction, Role, User, Tag, TagAssociation
 from app.models.character import Portrait, PORTRAIT_DIR
 
 app = create_app(os.getenv('FLASK_ENV') or 'default')
@@ -133,14 +133,22 @@ def scrape_characters():
 @click.option('--character-id', type=int, default=None,
               help='Scrape just this character (by id). Omit to scrape all.')
 @click.option('--skip-existing/--refresh', default=True,
-              help='Skip characters that already have a Koei portrait. --refresh re-scrapes.')
+              help='Skip characters that already have a Koei portrait. '
+                   '--refresh re-fetches and adds any new images that aren\'t already stored.')
 @click.option('--limit', type=int, default=None,
-              help='Stop after N successful scrapes (useful for smoke-testing).')
+              help='Stop after N successful downloads in total (across all characters).')
+@click.option('--max-per-character', type=int, default=200,
+              help='Cap downloads per character (Cao Cao alone has 100+ images on Koei).')
 @click.option('--delay', type=float, default=0.5,
-              help='Seconds to sleep between requests (be polite to Fandom).')
-def scrape_koei_images(character_id, skip_existing, limit, delay):
-    """Scrape character portraits from koei.fandom.com, save them to
-    app/static/portraits/, and record one Portrait row per character."""
+              help='Seconds between requests.')
+def scrape_koei_images(character_id, skip_existing, limit, max_per_character, delay):
+    """Scrape ALL Koei portraits for each character.
+
+    Lists every image on the character's wiki page via the MediaWiki API,
+    keeps only filenames that start with the character's name, downloads
+    each one, and tags the resulting Portrait with the game variant code
+    parsed from the filename (e.g. 'DW9' from 'Cao Cao (DW9).png'). Tags
+    are created on demand with a name-seeded random palette."""
     from tools.image_scrapers import koei_fandom
 
     if character_id is not None:
@@ -153,68 +161,110 @@ def scrape_koei_images(character_id, skip_existing, limit, delay):
 
     successes = 0
     misses = 0
-    skipped = 0
+    skipped_chars = 0
     errors = 0
+    hit_limit = False
 
     for character in characters:
+        if hit_limit:
+            break
+
         if skip_existing:
-            existing = Portrait.query.filter_by(
+            has_any = Portrait.query.filter_by(
                 character_id=character.id,
                 source_site=koei_fandom.SITE_NAME,
-            ).first()
-            if existing is not None:
-                skipped += 1
+            ).first() is not None
+            if has_any:
+                skipped_chars += 1
                 continue
 
-        print(f"[{character.id}] {character.name} ...", end=' ', flush=True)
+        print(f"[{character.id}] {character.name}: looking up images...", flush=True)
         try:
-            scraped = koei_fandom.scrape(character)
+            scraped_list = koei_fandom.scrape(
+                character,
+                max_images=max_per_character,
+            )
         except Exception as exc:
-            print(f"ERROR ({exc})")
+            print(f"  ERROR ({exc})")
             errors += 1
             continue
 
-        if scraped is None:
-            print("no match")
+        if not scraped_list:
+            print("  no images found")
             misses += 1
             time.sleep(delay)
             continue
 
-        try:
-            filename = _download_image(
-                scraped.image_url,
-                portraits_dir,
-                character.id,
-                'koei',
+        # Dedupe against the URLs we've already stored for this character so
+        # --refresh runs only download genuinely-new images.
+        already_have = {
+            row[0] for row in db.session.query(Portrait.image_url)
+            .filter_by(character_id=character.id)
+            .all()
+        }
+
+        new_count = 0
+        dup_count = 0
+        err_count = 0
+        for scraped in scraped_list:
+            if scraped.image_url in already_have:
+                dup_count += 1
+                continue
+
+            try:
+                filename = _download_image(
+                    scraped.image_url,
+                    portraits_dir,
+                    character.id,
+                    'koei',
+                )
+            except Exception as exc:
+                print(f"  fail: {scraped.variant_tag or 'image'} — {exc}")
+                err_count += 1
+                continue
+
+            portrait = Portrait(
+                name=character.name,
+                character_id=character.id,
+                image_url=scraped.image_url,
+                filename=filename,
+                description=scraped.description,
+                source_url=scraped.source_url,
+                source_site=scraped.source_site,
             )
-        except Exception as exc:
-            print(f"image download failed ({exc})")
-            errors += 1
+
+            tag = None
+            if scraped.variant_tag:
+                tag, _ = Tag.get_or_create(scraped.variant_tag)
+
+            db.session.add(portrait)
+            db.session.flush()   # populates portrait.id (and tag.id if newly added)
+
+            if tag is not None:
+                db.session.add(TagAssociation(
+                    tag_id=tag.id,
+                    target_type='portrait',
+                    target_id=portrait.id,
+                ))
+
+            db.session.commit()
+            already_have.add(scraped.image_url)
+            successes += 1
+            new_count += 1
+            size = os.path.getsize(os.path.join(portraits_dir, filename))
+            tag_str = f" tag={scraped.variant_tag}" if scraped.variant_tag else ""
+            print(f"  ok  {filename}  ({size:,} B){tag_str}")
+
+            if limit is not None and successes >= limit:
+                print(f"\nhit --limit {limit}; stopping.")
+                hit_limit = True
+                break
+
             time.sleep(delay)
-            continue
 
-        portrait = Portrait(
-            name=character.name,
-            character_id=character.id,
-            image_url=scraped.image_url,
-            filename=filename,
-            description=scraped.description,
-            source_url=scraped.source_url,
-            source_site=scraped.source_site,
-        )
-        db.session.add(portrait)
-        db.session.commit()
-        successes += 1
-        size = os.path.getsize(os.path.join(portraits_dir, filename))
-        print(f"ok -> {PORTRAIT_DIR}/{filename} ({size:,} bytes)")
+        print(f"  -> {new_count} new, {dup_count} dup, {err_count} err")
 
-        if limit is not None and successes >= limit:
-            print(f"\nhit --limit {limit}; stopping.")
-            break
-
-        time.sleep(delay)
-
-    print(f"\nDone. ok={successes} miss={misses} skip={skipped} err={errors}")
+    print(f"\nDone. ok={successes} miss={misses} skipped_chars={skipped_chars} err={errors}")
 
 
 _VALID_EXTS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')

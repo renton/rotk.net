@@ -22,6 +22,30 @@ class Tag(AbstractTag):
         lazy='dynamic',
     )
 
+    @classmethod
+    def get_or_create(cls, name):
+        """Find a Tag by exact name, or create one with a name-seeded
+        random palette. Returns (tag, was_created). Caller commits.
+
+        Seeding the RNG by the tag name means the same variant
+        (e.g. 'DW9') gets the same colours every time it's auto-created,
+        regardless of which machine or run made it."""
+        tag = cls.query.filter_by(name=name).first()
+        if tag is not None:
+            return tag, False
+
+        import random
+        from tools.colours import randomize_palette
+        bg, font, border = randomize_palette(rng=random.Random(name))
+        tag = cls(
+            name=name,
+            bg_colour=bg,
+            font_colour=font,
+            border_colour=border,
+        )
+        db.session.add(tag)
+        return tag, True
+
     def __repr__(self):
         return f'<Tag {self.name}>'
 

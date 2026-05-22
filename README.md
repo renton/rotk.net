@@ -108,7 +108,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
-| `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--delay 0.5]` | Scrape character portraits from `koei.fandom.com`, download to `app/static/portraits/`, and record one `Portrait` row per character. Skips characters that already have a Koei portrait by default; pass `--refresh` to re-scrape. |
+| `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |
 | `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
 | `randomize-role-colours [--role-id N] [--seed N] [--dry-run]` | Same as `randomize-faction-colours` but for `Role` rows. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
