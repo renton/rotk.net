@@ -14,7 +14,7 @@ from app import db
 from app.models import User, Chapter, Character, Faction, Tag, TagAssociation
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions
+from tools.book_parser import find_character_mentions, count_mentions_per_character
 from .forms import EditTagForm
 from . import admin
 
@@ -286,6 +286,12 @@ def chapter_associations_add(chapter_num):
 
     if character not in chapter.characters:
         chapter.characters.append(character)
+
+    # The character's labels just changed → its book_mention_count is stale.
+    # Recount this one character (cheap: one HTML-strip pass, one regex).
+    if alias_added:
+        counts = count_mentions_per_character(Chapter.query.all(), [character])
+        character.book_mention_count = counts.get(character.id, 0)
 
     db.session.commit()
 

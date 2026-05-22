@@ -14,7 +14,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     CharacterFilterForm, UploadPortraitForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character
 
 
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
@@ -173,7 +173,18 @@ def edit_character(id):
     form = EditCharacterForm(obj=character)
 
     if form.validate_on_submit():
+        # Capture the pre-edit labels so we can tell whether the regex-needles
+        # for this character changed. If they did, the cached
+        # book_mention_count is stale and we should recount before commit.
+        old_labels = (character.name, character.courtesty_name, character.aliases)
         form.populate_obj(character)
+        new_labels = (character.name, character.courtesty_name, character.aliases)
+
+        if old_labels != new_labels:
+            counts = count_mentions_per_character(
+                Chapter.query.all(), [character]
+            )
+            character.book_mention_count = counts.get(character.id, 0)
 
         db.session.add(character)
         db.session.commit()
