@@ -76,6 +76,14 @@ def toggle_admin(user_id):
 @login_required
 @admin_required
 def chapter_associations(chapter_num=None):
+    # The chapter picker is a plain GET form, so it submits as ?chapter_num=N.
+    # Redirect to the cleaner path-style URL so the page is shareable and the
+    # URL reflects the selection.
+    if chapter_num is None:
+        from_query = request.args.get('chapter_num', type=int)
+        if from_query is not None:
+            return redirect(url_for('admin.chapter_associations', chapter_num=from_query))
+
     chapters = Chapter.query.order_by(Chapter.chapter_num).all()
 
     selected = None

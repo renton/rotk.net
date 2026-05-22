@@ -15,7 +15,7 @@ The site is single-tenant (one book), small-traffic, and most of the surface is 
 - **Frontend:** Server-rendered Jinja2 + Bootstrap 5 CSS/JS from CDN. No bundler, no SPA. One CSS file (`app/static/styles.css`) with effectively no custom styling.
 - **Scraping:** `requests` + `beautifulsoup4`
 - **Serving:** gunicorn behind Caddy (provided by `stateful_boilerplate`) in prod; `flask run` in dev
-- **Containers:** Docker + docker-compose. Single base `docker-compose.yml`; production gets a `docker-compose.override.yml` on the VPS that swaps the bundled `db` for shared postgres and joins the `shared` docker network.
+- **Containers:** Docker + docker-compose. Single base `docker-compose.yml`. Production layers `examples/ambrose/docker-compose.override.yml` on top (via `-f` or `COMPOSE_FILE=`) to swap the bundled `db` for shared postgres, drop the dev bind-mount, and join the `shared` docker network. The overlay deliberately does NOT live at the repo root so it doesn't auto-apply on developer laptops.
 
 ## Architecture
 
@@ -83,7 +83,7 @@ Notes:
 Production lives on a single VPS running `stateful_boilerplate` (Caddy + shared postgres + shared redis). Deploy this project as a child:
 
 1. Carve out the postgres role+DB on the shared cluster (one-off).
-2. Drop a `docker-compose.override.yml` on the VPS that deletes the bundled `db`, joins the `shared` network, and points `POSTGRES_HOST=postgres`.
+2. On the VPS, apply the in-repo overlay at `examples/ambrose/docker-compose.override.yml` with `-f` (or `COMPOSE_FILE=docker-compose.yml:examples/ambrose/docker-compose.override.yml` in `.env`). It deletes the bundled `db`, joins the `shared` network, drops the dev bind-mount, and points `POSTGRES_HOST=postgres`.
 3. Add a site block to the boilerplate's `caddy/Caddyfile` reverse-proxying the app container.
 4. Run the data-population CLI commands once.
 
@@ -97,9 +97,13 @@ Full walkthrough in `README.md`.
 | `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
+| `flask scrape-koei-images` | Scrape character portraits from koei.fandom.com into `app/static/portraits/` + `Portrait` rows |
+| `flask randomize-faction-colours` | Randomize bg/font/border on every faction; font chosen for WCAG-readable contrast |
 | `flask make-admin EMAIL` | Promote a user to admin (also marks them confirmed) |
 | `flask create-user EMAIL USERNAME [--admin]` | Create a user directly; prompts for the password |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
+
+**When you add a new `@app.cli.command()`, also add it to this table AND to the matching table in `README.md`.** The README table is the one users see; this one is what future Claude sessions read first.
 
 ## Conventions worth knowing
 

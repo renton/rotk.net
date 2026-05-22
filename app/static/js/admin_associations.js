@@ -1,27 +1,6 @@
 (function () {
-  // ---- Chapter picker: auto-submit on change. -----------------------------
-  var picker = document.getElementById('chapter-picker');
-  var pickerForm = document.getElementById('chapter-picker-form');
-  if (picker && pickerForm) {
-    // Rewrite the form action to /admin/chapter-associations/<num> on submit
-    // so the URL is shareable and the back button works as expected.
-    pickerForm.addEventListener('submit', function (e) {
-      var num = picker.value;
-      if (!num) {
-        e.preventDefault();
-        return;
-      }
-      pickerForm.action = pickerForm.action.replace(/\/?$/, '') + '/' + encodeURIComponent(num);
-      // Don't send chapter_num as a query string once it's in the path.
-      picker.name = '';
-    });
-    picker.addEventListener('change', function () {
-      if (picker.value) pickerForm.submit();
-    });
-    // Hide the submit button when JS is available — the change handler covers it.
-    var submitBtn = document.getElementById('chapter-picker-submit');
-    if (submitBtn) submitBtn.style.display = 'none';
-  }
+  // Chapter picker is a plain GET form; the server redirects ?chapter_num=N
+  // to the path-form URL. No JS needed for it.
 
   // ---- Row filtering (search + faction). ----------------------------------
   var searchInput = document.getElementById('row-filter-search');

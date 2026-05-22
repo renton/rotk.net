@@ -108,6 +108,8 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
+| `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--delay 0.5]` | Scrape character portraits from `koei.fandom.com`, download to `app/static/portraits/`, and record one `Portrait` row per character. Skips characters that already have a Koei portrait by default; pass `--refresh` to re-scrape. |
+| `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
@@ -137,7 +139,9 @@ Then run the four data-population commands (see [Populating the data](#populatin
 
 ## Production deployment via `stateful_boilerplate`
 
-If you're already running [`stateful_boilerplate`](../stateful_boilerplate) (shared Caddy + Postgres + Redis on one VPS), drop rotk.net in as a child project. rotk.net's base compose is shipped as-is, and a `docker-compose.override.yml` on the VPS swaps the bundled `db` service for the shared postgres cluster and joins the `shared` docker network so Caddy can reach it.
+If you're already running [`stateful_boilerplate`](../stateful_boilerplate) (shared Caddy + Postgres + Redis on one VPS), drop rotk.net in as a child project. The compose overlay that wires rotk into the shared stack ships with the repo at [`examples/ambrose/docker-compose.override.yml`](examples/ambrose/docker-compose.override.yml) — apply it on top of the base compose with `-f`. See [`examples/ambrose/README.md`](examples/ambrose/README.md) for the overlay's own write-up.
+
+> **Why isn't the overlay at the repo root?** Compose auto-picks up `docker-compose.override.yml` from the working directory. If the production overlay lived there, it'd silently activate on every developer's laptop and strip the dev bind-mount — template/code edits would stop reaching the container until a rebuild. Keeping it under `examples/` means it only applies when you explicitly opt in.
 
 The full walkthrough is in `stateful_boilerplate/USAGE_GUIDE.md`. Specifically for rotk.net:
 
@@ -156,49 +160,25 @@ SQL
 
 **2. Deploy the code to the VPS** (e.g. `/opt/rotk.net`).
 
-**3. Write `/opt/rotk.net/docker-compose.override.yml`:**
-
-```yaml
-services:
-  db: !reset null
-
-  app:
-    container_name: rotk-app
-    restart: unless-stopped
-    depends_on: !reset []
-    ports: !reset []
-    environment:
-      FLASK_ENV: production
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: "5432"
-      POSTGRES_USER: rotk_app
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: rotk_net
-    networks:
-      - vswitch0
-      - shared
-
-networks:
-  shared:
-    name: shared
-    external: true
-```
-
-**4. Write `/opt/rotk.net/.env`:**
+**3. Write `/opt/rotk.net/.env`:**
 
 ```bash
 FLASK_APP=rotk.py
 SECRET_KEY=<paste new strong secret>
 
-# Used by the override to wire the app to shared postgres.
+# Used by the ambrose overlay to wire the app to shared postgres.
 POSTGRES_PASSWORD=<the value you saved in step 1>
 
 # Mail config (or leave blank to suppress sends).
 MAIL_SERVER=...
 APP_BASE_URL=https://rotk.net
+
+# Tell docker-compose to layer the ambrose overlay on every command, so
+# you don't have to repeat `-f docker-compose.yml -f examples/ambrose/...`.
+COMPOSE_FILE=docker-compose.yml:examples/ambrose/docker-compose.override.yml
 ```
 
-**5. Add the Caddy route** in `~/stateful_boilerplate/caddy/Caddyfile`:
+**4. Add the Caddy route** in `~/stateful_boilerplate/caddy/Caddyfile`:
 
 ```caddy
 rotk.net, www.rotk.net {
@@ -208,14 +188,16 @@ rotk.net, www.rotk.net {
 }
 ```
 
-**6. Reload Caddy and bring up the app:**
+**5. Reload Caddy and bring up the app** (with the overlay applied via `COMPOSE_FILE` from step 3):
 
 ```bash
 cd ~/stateful_boilerplate && ./scripts/reload-caddy.sh
 cd /opt/rotk.net && docker compose up -d --build
 ```
 
-**7. Run data population against the shared DB** (same four steps as local dev — see [Populating the data](#populating-the-data) — just `docker compose` instead of `docker-compose`):
+(If you'd rather not use `COMPOSE_FILE`, pass the flags explicitly each time: `docker compose -f docker-compose.yml -f examples/ambrose/docker-compose.override.yml up -d --build`.)
+
+**6. Run data population against the shared DB** (same four steps as local dev — see [Populating the data](#populating-the-data) — just `docker compose` instead of `docker-compose`):
 
 ```bash
 cd /opt/rotk.net
