@@ -205,7 +205,8 @@ def scrape_koei_images(character_id, skip_existing, limit, delay):
         db.session.add(portrait)
         db.session.commit()
         successes += 1
-        print(f"ok -> {PORTRAIT_DIR}/{filename}")
+        size = os.path.getsize(os.path.join(portraits_dir, filename))
+        print(f"ok -> {PORTRAIT_DIR}/{filename} ({size:,} bytes)")
 
         if limit is not None and successes >= limit:
             print(f"\nhit --limit {limit}; stopping.")
@@ -216,15 +217,60 @@ def scrape_koei_images(character_id, skip_existing, limit, delay):
     print(f"\nDone. ok={successes} miss={misses} skip={skipped} err={errors}")
 
 
+_VALID_EXTS = ('.jpg', '.jpeg', '.png', '.gif', '.webp')
+# Polite identifying UA without "scraper" in it. Some CDNs (Fandom's
+# static.wikia.nocookie.net included) serve interstitials to bot-flavoured
+# UAs even when they let the bytes through with status 200.
+_DOWNLOAD_UA = (
+    "rotk.net/1.0 (+https://rotk.net; "
+    "an annotated Romance of the Three Kingdoms edition)"
+)
+
+
+def _extension_for(image_url, content_type):
+    """Pick a file extension from Content-Type first, falling back to the URL
+    path with Fandom's `/revision/<rev>` suffix stripped. Returns one of the
+    members of _VALID_EXTS or '.jpg' as a last resort."""
+    import mimetypes
+
+    if content_type:
+        ext = mimetypes.guess_extension(content_type.split(';')[0].strip())
+        if ext in _VALID_EXTS:
+            return ext
+        if ext == '.jpe':   # mimetypes quirk for image/jpeg
+            return '.jpg'
+
+    path = urllib.parse.urlparse(image_url).path
+    # Fandom CDN: ".../foo.png/revision/latest" — strip the revision suffix
+    # so splitext sees the real basename.
+    if '/revision/' in path:
+        path = path.split('/revision/')[0]
+    ext = os.path.splitext(path)[1].lower()
+    return ext if ext in _VALID_EXTS else '.jpg'
+
+
 def _download_image(image_url, save_dir, character_id, source_tag):
     """Stream `image_url` to disk under `save_dir`. Returns the basename
-    (e.g. '42_koei.jpg') for storage in Portrait.filename."""
+    (e.g. '42_koei.png') for storage in Portrait.filename. Raises with a
+    descriptive message if the response doesn't look like a real image."""
     import requests as _requests
 
-    parsed = urllib.parse.urlparse(image_url)
-    ext = os.path.splitext(parsed.path)[1].lower()
-    if ext not in ('.jpg', '.jpeg', '.png', '.gif', '.webp'):
-        ext = '.jpg'
+    response = _requests.get(
+        image_url,
+        headers={"User-Agent": _DOWNLOAD_UA},
+        timeout=30,
+        stream=True,
+    )
+    response.raise_for_status()
+
+    content_type = response.headers.get('Content-Type', '')
+    if not content_type.lower().startswith('image/'):
+        raise ValueError(
+            f"expected image/*, got Content-Type {content_type!r} "
+            f"(likely an anti-bot interstitial or redirect)"
+        )
+
+    ext = _extension_for(image_url, content_type)
 
     # Counter suffix lets multiple portraits per character/site coexist
     # without clobbering each other on re-runs (--refresh).
@@ -237,17 +283,21 @@ def _download_image(image_url, save_dir, character_id, source_tag):
             break
         n += 1
 
-    response = _requests.get(
-        image_url,
-        headers={"User-Agent": "rotk.net-scraper/1.0 (+https://rotk.net)"},
-        timeout=30,
-        stream=True,
-    )
-    response.raise_for_status()
+    total = 0
     with open(path, 'wb') as f:
         for chunk in response.iter_content(8192):
             if chunk:
                 f.write(chunk)
+                total += len(chunk)
+
+    # A real portrait is at minimum a few KB. If we got essentially nothing,
+    # don't leave a broken file lying around.
+    if total < 512:
+        try:
+            os.remove(path)
+        except OSError:
+            pass
+        raise ValueError(f"downloaded file too small ({total} bytes) — discarded")
 
     return filename
 
