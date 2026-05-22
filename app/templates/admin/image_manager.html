@@ -239,10 +239,10 @@
    reads the id out of the input and stashes it in the hidden field. #}
 <datalist id="all-characters-datalist">
     {% for c in all_characters %}
-        {% set is_dupe = c.name in duplicate_names %}
         {% set f_names = factions_by_char.get(c.id, []) %}
+        {% set r_names = roles_by_char.get(c.id, []) %}
     <option value="{{ c.name }} #{{ c.id }}"
-            label="{{ c.name }}{% if is_dupe %} [{{ f_names|join(', ') if f_names else 'no faction' }}]{% endif %}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+            label="{{ c.name }} [{{ f_names|join(', ') if f_names else '—' }}] [{{ r_names|join(', ') if r_names else '—' }}]{% if c.courtesty_name %} · {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
     </option>
     {% endfor %}
 </datalist>

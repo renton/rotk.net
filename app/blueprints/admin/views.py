@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Tag, TagAssociation
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, count_mentions_per_character
@@ -23,26 +23,46 @@ PORTRAIT_TARGET_TYPE = 'portrait'   # TagAssociation.target_type for Portrait ro
 
 
 def _factions_by_character_id(character_ids):
-    """Return {character_id: [faction_name, ...]} for the given character ids.
+    """Return {character_id: [faction_name, ...]} for the given character ids."""
+    return _m2m_names_by_character_id(
+        character_ids,
+        Character.faction_table,
+        Faction,
+        Character.faction_table.c.faction_id,
+    )
 
-    `Character.factions` is `lazy='dynamic'`, which blocks selectinload, so
-    we go straight at the M2M association table with one explicit join.
-    Empty input -> empty dict."""
+
+def _roles_by_character_id(character_ids):
+    """Return {character_id: [role_name, ...]} for the given character ids."""
+    return _m2m_names_by_character_id(
+        character_ids,
+        Character.role_table,
+        Role,
+        Character.role_table.c.role_id,
+    )
+
+
+def _m2m_names_by_character_id(character_ids, assoc_table, target_model, target_fk_col):
+    """Shared driver for the two _*_by_character_id helpers.
+
+    Character.factions and Character.roles are both lazy='dynamic', which
+    blocks selectinload, so we go straight at the M2M association table
+    with one explicit join. Empty input -> empty dict."""
     if not character_ids:
         return {}
     rows = (
         db.session.query(
-            Character.faction_table.c.character_id,
-            Faction.name,
+            assoc_table.c.character_id,
+            target_model.name,
         )
-        .join(Faction, Faction.id == Character.faction_table.c.faction_id)
-        .filter(Character.faction_table.c.character_id.in_(character_ids))
-        .order_by(Faction.name)
+        .join(target_model, target_model.id == target_fk_col)
+        .filter(assoc_table.c.character_id.in_(character_ids))
+        .order_by(target_model.name)
         .all()
     )
     out = {}
-    for cid, fname in rows:
-        out.setdefault(cid, []).append(fname)
+    for cid, name in rows:
+        out.setdefault(cid, []).append(name)
     return out
 
 
@@ -189,13 +209,14 @@ def chapter_associations(chapter_num=None):
         # chapter; the Switch form might pick one not currently here).
         all_characters = Character.query.order_by(Character.name).all()
 
-    # Names that appear on more than one character — used by the picker
-    # template to annotate ambiguous options with each character's factions
-    # so the admin can tell them apart visually.
+    # Names that appear on more than one character — kept around so the
+    # picker can still annotate ambiguous-name cases distinctly if we want.
     from collections import Counter
     name_counter = Counter(c.name for c in all_characters)
     duplicate_names = {name for name, n in name_counter.items() if n > 1}
-    factions_by_char = _factions_by_character_id([c.id for c in all_characters])
+    char_ids = [c.id for c in all_characters]
+    factions_by_char = _factions_by_character_id(char_ids)
+    roles_by_char = _roles_by_character_id(char_ids)
 
     return render_template(
         'admin/chapter_associations.html',
@@ -206,6 +227,7 @@ def chapter_associations(chapter_num=None):
         all_characters=all_characters,
         duplicate_names=duplicate_names,
         factions_by_char=factions_by_char,
+        roles_by_char=roles_by_char,
         csrf_form=_CsrfOnlyForm(),
     )
 
@@ -475,7 +497,9 @@ def image_manager():
     from collections import Counter
     name_counter = Counter(c.name for c in all_characters)
     duplicate_names = {n for n, count in name_counter.items() if count > 1}
-    factions_by_char = _factions_by_character_id([c.id for c in all_characters])
+    char_ids = [c.id for c in all_characters]
+    factions_by_char = _factions_by_character_id(char_ids)
+    roles_by_char = _roles_by_character_id(char_ids)
 
     return render_template(
         'admin/image_manager.html',
@@ -485,6 +509,7 @@ def image_manager():
         all_characters=all_characters,
         duplicate_names=duplicate_names,
         factions_by_char=factions_by_char,
+        roles_by_char=roles_by_char,
         search=search,
         source_site=source_site,
         tag_id=tag_id,
