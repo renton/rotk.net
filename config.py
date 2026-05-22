@@ -30,6 +30,11 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
 
+    # Force Jinja to re-stat templates on each render so edits show up on
+    # browser refresh without a container restart. Negligible overhead for
+    # this app's traffic level; default-False in prod gunicorn otherwise.
+    TEMPLATES_AUTO_RELOAD = True
+
     # --- Mail (Flask-Mail) ---
     # Any SMTP provider works (Mailgun, SendGrid, AWS SES, Postmark, Gmail).
     # If MAIL_SERVER is not set, MAIL_SUPPRESS_SEND defaults to True and
