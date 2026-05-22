@@ -24,7 +24,7 @@ class CharacterFilterForm(FlaskForm):
     )
     any_faction = QuerySelectField(
         "Faction (any — past or present)",
-        query_factory=lambda: Faction.query.order_by(Faction.name).all(),
+        query_factory=lambda: Faction.query.filter(Faction.is_hidden.is_(False)).order_by(Faction.name).all(),
         get_label="name",
         allow_blank=True,
         blank_text='--- Any faction ---',
@@ -33,7 +33,7 @@ class CharacterFilterForm(FlaskForm):
 
     primary_faction = QuerySelectField(
         "Primary faction only",
-        query_factory=lambda: Faction.query.order_by(Faction.name).all(),
+        query_factory=lambda: Faction.query.filter(Faction.is_hidden.is_(False)).order_by(Faction.name).all(),
         get_label="name",
         allow_blank=True,
         blank_text='--- Any primary ---',
@@ -60,12 +60,12 @@ class EditCharacterForm(FlaskForm):
     )
     factions = QuerySelectMultipleField(
         "Factions (all, past and present)",
-        query_factory=lambda: Faction.query.all(),
+        query_factory=lambda: Faction.query.filter(Faction.is_hidden.is_(False)).all(),
         get_label="name"
     )
     primary_faction = QuerySelectField(
         "Primary faction (drives the highlight colour)",
-        query_factory=lambda: Faction.query.order_by(Faction.name).all(),
+        query_factory=lambda: Faction.query.filter(Faction.is_hidden.is_(False)).order_by(Faction.name).all(),
         get_label="name",
         allow_blank=True,
         blank_text='— None —',
@@ -122,6 +122,14 @@ class UploadPortraitForm(FlaskForm):
     )
     is_visible = BooleanField("Visible to the public", default=True)
     submit = SubmitField("Upload")
+
+
+class MergeFactionForm(FlaskForm):
+    """Empty form used for CSRF on the faction merge POST. The actual
+    `target_faction_id` is a hidden field populated by admin_picker.js
+    when the admin picks from the datalist; the view validates it
+    manually so we don't have to model it on the form too."""
+    submit = SubmitField("Merge & hide")
 
 
 class EditRoleForm(FlaskForm):

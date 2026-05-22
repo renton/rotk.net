@@ -47,7 +47,9 @@ def _m2m_names_by_character_id(character_ids, assoc_table, target_model, target_
 
     Character.factions and Character.roles are both lazy='dynamic', which
     blocks selectinload, so we go straight at the M2M association table
-    with one explicit join. Empty input -> empty dict."""
+    with one explicit join. Hidden Factions / Roles are filtered out so
+    merged-away tags don't keep appearing in the picker annotations.
+    Empty input -> empty dict."""
     if not character_ids:
         return {}
     rows = (
@@ -56,7 +58,10 @@ def _m2m_names_by_character_id(character_ids, assoc_table, target_model, target_
             target_model.name,
         )
         .join(target_model, target_model.id == target_fk_col)
-        .filter(assoc_table.c.character_id.in_(character_ids))
+        .filter(
+            assoc_table.c.character_id.in_(character_ids),
+            target_model.is_hidden.is_(False),
+        )
         .order_by(target_model.name)
         .all()
     )

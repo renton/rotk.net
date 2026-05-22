@@ -1,1 +1,63 @@
 {% extends "base.html" %}
+
+{% block title %}rotk.net - Edit faction: {{ faction.name }}{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-3">
+    <h1>Edit faction: {{ faction.name }}</h1>
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+
+{% if merge_form is defined %}
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">Merge into another faction</legend>
+    <p class="text-muted small mb-3">
+        Merging hides <strong>{{ faction.name }}</strong> from all
+        listings (faction page, character filters, badges in lists).
+        Every character who's a member of {{ faction.name }} also
+        becomes a member of the target. Any character whose
+        <strong>primary</strong> faction is {{ faction.name }} gets
+        switched to the target. Other characters' primaries are not
+        touched. To undo, flip <code>is_hidden=false</code> directly
+        in the DB — there's no UI for un-hiding.
+    </p>
+    <form method="POST"
+          action="{{ url_for('main.merge_faction', id=faction.id) }}"
+          class="row g-2 align-items-end">
+        {{ merge_form.hidden_tag() }}
+        <div class="col-md-8">
+            <label for="merge-target-search" class="form-label">Merge into faction</label>
+            <input type="text" id="merge-target-search"
+                   class="form-control"
+                   list="all-factions-datalist"
+                   data-picker-target="target_faction_id"
+                   placeholder="Type to search…"
+                   autocomplete="off" required>
+            <input type="hidden" name="target_faction_id">
+        </div>
+        <div class="col-md-4 text-end">
+            <button type="submit" class="btn btn-warning"
+                    data-confirm="Merge '{{ faction.name|e }}' into the chosen faction and hide it? Action can't be undone from the UI.">
+                {{ merge_form.submit.label.text }}
+            </button>
+        </div>
+    </form>
+
+    <datalist id="all-factions-datalist">
+        {% for f in mergeable_factions %}
+        <option value="{{ f.name }} #{{ f.id }}" label="{{ f.name }}"></option>
+        {% endfor %}
+    </datalist>
+</fieldset>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+{% endblock %}

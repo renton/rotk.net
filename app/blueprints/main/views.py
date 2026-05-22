@@ -11,7 +11,7 @@ from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation
 from app.models.character import Portrait, PORTRAIT_DIR
 from . import main
 from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
-    CharacterFilterForm, UploadPortraitForm
+    CharacterFilterForm, UploadPortraitForm, MergeFactionForm
 
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character
@@ -368,8 +368,14 @@ def upload_portrait(id):
 
 @main.route('/factions', methods=['GET'])
 def factions():
-
-    factions = Faction.query.order_by(Faction.name).all()
+    # Skip hidden factions (merged-away). To unhide, flip is_hidden=false in
+    # the DB directly — no UI for it per the design.
+    factions = (
+        Faction.query
+        .filter(Faction.is_hidden.is_(False))
+        .order_by(Faction.name)
+        .all()
+    )
 
     return render_template(
         'factions/factions.html',
@@ -391,10 +397,85 @@ def edit_faction(id):
         flash('The faction has been updated.')
         return redirect(url_for("main.factions"))
 
+    # Merge form + its target picker datalist. Excludes the source itself
+    # and anything already hidden.
+    merge_form = MergeFactionForm()
+    mergeable_factions = (
+        Faction.query
+        .filter(Faction.is_hidden.is_(False), Faction.id != faction.id)
+        .order_by(Faction.name)
+        .all()
+    )
+
     return render_template(
         'factions/faction_edit.html',
-        form=form
+        form=form,
+        faction=faction,
+        merge_form=merge_form,
+        mergeable_factions=mergeable_factions,
     )
+
+
+@main.route('/factions/<int:id>/merge', methods=['POST'])
+@login_required
+@admin_required
+def merge_faction(id):
+    """Merge faction `id` (source) into the target picked in the form.
+
+    1. Every character with `source` in their M2M factions list ALSO gets
+       `target` added (M2M is non-destructive — source link stays, but
+       source is about to be hidden anyway so it falls out of all
+       listings).
+    2. Every character whose primary_faction is `source` gets switched
+       to `target`. Other characters' primaries are not touched.
+    3. `source.is_hidden` flips to True so it disappears from listings.
+
+    The action isn't undoable from the UI — flip is_hidden back in the DB
+    if you need to recover (the M2M membership added to characters stays
+    either way)."""
+    merge_form = MergeFactionForm()
+    if not merge_form.validate_on_submit():
+        abort(400)
+
+    source = Faction.query.get_or_404(id)
+
+    raw = (request.form.get('target_faction_id') or '').strip()
+    if not raw.isdigit():
+        flash("Pick a faction from the dropdown to merge into.")
+        return redirect(url_for('main.edit_faction', id=id))
+    target = Faction.query.get(int(raw))
+    if target is None or target.is_hidden:
+        flash("Target faction is missing or already hidden.")
+        return redirect(url_for('main.edit_faction', id=id))
+    if target.id == source.id:
+        flash("Can't merge a faction into itself.")
+        return redirect(url_for('main.edit_faction', id=id))
+
+    members_carried = 0
+    for character in list(source.characters):
+        if target not in character.factions.all():
+            character.factions.append(target)
+        members_carried += 1
+
+    primary_switched = (
+        Character.query
+        .filter(Character.primary_faction_id == source.id)
+        .update(
+            {'primary_faction_id': target.id},
+            synchronize_session='fetch',
+        )
+    )
+
+    source.is_hidden = True
+    db.session.commit()
+
+    flash(
+        f"Merged {source.name!r} into {target.name!r}. "
+        f"{members_carried} member(s) inherited the target, "
+        f"{primary_switched} primary(s) switched. "
+        f"{source.name!r} is now hidden."
+    )
+    return redirect(url_for('main.factions'))
 
 @main.route('/roles', methods=['GET'])
 def roles():
