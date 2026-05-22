@@ -135,6 +135,22 @@ class Portrait(AbstractObject):
 
     character = db.relationship('Character', back_populates='portraits', lazy='select')
 
+    # Polymorphic tag relationship — TagAssociation.target_type='portrait'.
+    # viewonly=True because writes happen via TagAssociation rows directly
+    # (see admin add/remove tag routes); the secondary-table mapper can't
+    # safely write through a discriminator-filtered relationship.
+    tags = db.relationship(
+        'Tag',
+        secondary='tag_association',
+        primaryjoin=(
+            "and_(Portrait.id == TagAssociation.target_id, "
+            "TagAssociation.target_type == 'portrait')"
+        ),
+        secondaryjoin='Tag.id == TagAssociation.tag_id',
+        viewonly=True,
+        order_by='Tag.name',
+    )
+
     @hybrid_property
     def static_path(self):
         """Path suitable for `url_for('static', filename=...)`. Empty if no file."""

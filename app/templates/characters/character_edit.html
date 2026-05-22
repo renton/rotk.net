@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
 
 {% block title %}rotk.net - Edit {{ character.name if character else 'character' }}{% endblock %}
 
@@ -30,6 +31,11 @@
                         {{ p.source_site or 'unknown' }}
                     {% endif %}
                 </figcaption>
+                {% if p.tags %}
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                    {% for tag in p.tags %}{{ macros.badge_widget(tag) }}{% endfor %}
+                </div>
+                {% endif %}
             </figure>
         </div>
         {% endfor %}

@@ -3,12 +3,10 @@
 
 {% block title %}rotk.net - Admin: Image Manager{% endblock %}
 
-{# Helper: build a URL preserving current filter state, overriding the keys passed. #}
 {% macro filter_url(**overrides) -%}
     {% set args = {} %}
     {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
-    {% if faction_id %}{% set _ = args.update({'faction_id': faction_id}) %}{% endif %}
-    {% if has_images %}{% set _ = args.update({'has_images': has_images}) %}{% endif %}
+    {% if source_site %}{% set _ = args.update({'source_site': source_site}) %}{% endif %}
     {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
     {% if direction %}{% set _ = args.update({'dir': direction}) %}{% endif %}
     {% set _ = args.update(overrides) %}
@@ -31,41 +29,33 @@
     <div>
         <h1>Image Manager</h1>
         <p class="text-muted mb-0">
-            All characters with their portrait counts. Click a character name to edit and review their images.
+            One row per stored image. Characters with multiple images appear
+            multiple times.
         </p>
     </div>
     <div class="text-muted small">
-        {{ pagination.total }} character{{ '' if pagination.total == 1 else 's' }}
+        {{ pagination.total }} image{{ '' if pagination.total == 1 else 's' }}
     </div>
 </div>
 
 <form method="GET" action="{{ url_for('admin.image_manager') }}" class="row g-2 align-items-end mb-4">
-    <div class="col-md-4">
-        <label for="image-mgr-search" class="form-label">Search name</label>
+    <div class="col-md-5">
+        <label for="image-mgr-search" class="form-label">Search (character or description)</label>
         <input type="search" name="q" id="image-mgr-search" class="form-control"
                value="{{ search or '' }}" autocomplete="off">
     </div>
-    <div class="col-md-3">
-        <label for="image-mgr-faction" class="form-label">Faction</label>
-        <select name="faction_id" id="image-mgr-faction" class="form-select">
-            <option value="">All factions</option>
-            {% for f in factions %}
-            <option value="{{ f.id }}" {% if faction_id == f.id %}selected{% endif %}>{{ f.name }}</option>
+    <div class="col-md-4">
+        <label for="image-mgr-source" class="form-label">Source site</label>
+        <select name="source_site" id="image-mgr-source" class="form-select">
+            <option value="">All sources</option>
+            {% for s in source_sites %}
+            <option value="{{ s }}" {% if source_site == s %}selected{% endif %}>{{ s }}</option>
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-3">
-        <label for="image-mgr-has-images" class="form-label">Images</label>
-        <select name="has_images" id="image-mgr-has-images" class="form-select">
-            <option value=""    {% if has_images == ''    %}selected{% endif %}>Any</option>
-            <option value="yes" {% if has_images == 'yes' %}selected{% endif %}>Has images</option>
-            <option value="no"  {% if has_images == 'no'  %}selected{% endif %}>No images</option>
-        </select>
-    </div>
-    {# Preserve sort across form submits. #}
     <input type="hidden" name="sort" value="{{ sort }}">
     <input type="hidden" name="dir"  value="{{ direction }}">
-    <div class="col-md-2 d-flex gap-2">
+    <div class="col-md-3 d-flex gap-2">
         <button type="submit" class="btn btn-primary flex-grow-1">Apply</button>
         <a href="{{ url_for('admin.image_manager') }}" class="btn btn-outline-secondary">Reset</a>
     </div>
@@ -74,43 +64,106 @@
 <table class="table table-striped align-middle">
     <thead>
         <tr>
-            <th>{{ sort_link('name', 'Name') }}</th>
-            <th>Faction</th>
-            <th class="text-end">{{ sort_link('image_count', 'Images') }}</th>
+            <th style="width: 100px;">Image</th>
+            <th>{{ sort_link('character', 'Character') }}</th>
+            <th>{{ sort_link('source_site', 'Source') }}</th>
+            <th>Tags</th>
+            <th>{{ sort_link('created_at', 'Added') }}</th>
             <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
-        {% for character, image_count in pagination.items %}
+        {% for portrait in pagination.items %}
+        {% set ch = portrait.character %}
         <tr>
             <td>
-                <a href="{{ url_for('main.edit_character', id=character.id) }}">{{ character.name }}</a>
-                {% if character.chinese_name %}
-                    <div class="small text-muted">{{ character.chinese_name }}</div>
+                {% if portrait.static_path %}
+                <a href="{{ url_for('static', filename=portrait.static_path) }}" target="_blank" rel="noopener">
+                    <img src="{{ url_for('static', filename=portrait.static_path) }}"
+                         alt="{{ portrait.name or (ch.name if ch else '') }}"
+                         loading="lazy"
+                         style="max-width: 80px; max-height: 80px; object-fit: contain;">
+                </a>
+                {% else %}
+                <span class="text-muted small">no file</span>
                 {% endif %}
             </td>
             <td>
-                {% if character.latest_faction %}
-                    {{ macros.badge_widget(character.latest_faction) }}
+                {% if ch %}
+                <a href="{{ url_for('main.edit_character', id=ch.id) }}">{{ ch.name }}</a>
+                {% if ch.latest_faction %}
+                <div class="mt-1">{{ macros.badge_widget(ch.latest_faction) }}</div>
+                {% endif %}
                 {% else %}
-                    <span class="text-muted">—</span>
+                <span class="text-muted">(orphaned)</span>
                 {% endif %}
             </td>
-            <td class="text-end">
-                {% if image_count == 0 %}
-                    <span class="text-muted">0</span>
+            <td>
+                {% if portrait.source_url %}
+                <a href="{{ portrait.source_url }}" target="_blank" rel="noopener">
+                    {{ portrait.source_site or portrait.source_url }}
+                </a>
                 {% else %}
-                    <span class="badge bg-primary rounded-pill">{{ image_count }}</span>
+                {{ portrait.source_site or '—' }}
                 {% endif %}
             </td>
+            <td style="min-width: 220px;">
+                {% set attached_ids = portrait.tags | map(attribute='id') | list %}
+                <div class="d-flex flex-wrap gap-1 align-items-center">
+                    {% for tag in portrait.tags %}
+                    <span class="d-inline-flex align-items-center gap-1">
+                        {{ macros.badge_widget(tag) }}
+                        <form method="POST"
+                              action="{{ url_for('admin.remove_portrait_tag', portrait_id=portrait.id, tag_id=tag.id) }}"
+                              class="d-inline">
+                            {{ csrf_form.hidden_tag() }}
+                            <button type="submit"
+                                    class="btn btn-sm btn-link p-0 text-danger"
+                                    title="Remove tag">&times;</button>
+                        </form>
+                    </span>
+                    {% endfor %}
+                    {% if not portrait.tags %}
+                    <span class="text-muted small fst-italic">no tags</span>
+                    {% endif %}
+                </div>
+                {% set available = all_tags | rejectattr('id', 'in', attached_ids) | list %}
+                {% if available %}
+                <form method="POST"
+                      action="{{ url_for('admin.add_portrait_tag', portrait_id=portrait.id) }}"
+                      class="d-flex gap-1 mt-2">
+                    {{ csrf_form.hidden_tag() }}
+                    <select name="tag_id" class="form-select form-select-sm" required>
+                        <option value="">+ tag</option>
+                        {% for tag in available %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Add</button>
+                </form>
+                {% endif %}
+            </td>
+            <td class="small text-muted">
+                {{ portrait.created_at.strftime('%Y-%m-%d') if portrait.created_at else '' }}
+            </td>
             <td class="text-end">
-                <a href="{{ url_for('main.edit_character', id=character.id) }}"
-                   class="btn btn-sm btn-outline-primary">Edit</a>
+                <form method="POST"
+                      action="{{ url_for('admin.delete_portrait', portrait_id=portrait.id) }}"
+                      class="d-inline"
+                      data-confirm="Delete this portrait of {{ (ch.name if ch else 'unknown')|e }}? The image file will also be removed from disk.">
+                    {{ csrf_form.hidden_tag() }}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
             </td>
         </tr>
         {% else %}
         <tr>
-            <td colspan="4" class="text-muted">No characters match the current filters.</td>
+            <td colspan="6" class="text-muted">
+                No images{% if search or source_site %} match the current filters{% endif %}.
+                {% if not (search or source_site) %}
+                Run <code>flask scrape-koei-images</code> to start populating.
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
@@ -137,5 +190,9 @@
     </ul>
 </nav>
 {% endif %}
+{% endblock %}
 
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
 {% endblock %}

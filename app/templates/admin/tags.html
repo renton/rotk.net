@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: Tags{% endblock %}
+
+{% macro filter_url(**overrides) -%}
+    {% set args = {} %}
+    {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
+    {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
+    {% if direction %}{% set _ = args.update({'dir': direction}) %}{% endif %}
+    {% set _ = args.update(overrides) %}
+    {{ url_for('admin.tags', **args) }}
+{%- endmacro %}
+
+{% macro sort_link(column, label) %}
+    {% if sort == column %}
+        {% set new_dir = 'desc' if direction == 'asc' else 'asc' %}
+        {% set arrow = ' ▲' if direction == 'asc' else ' ▼' %}
+    {% else %}
+        {% set new_dir = 'asc' %}
+        {% set arrow = '' %}
+    {% endif %}
+    <a href="{{ filter_url(sort=column, dir=new_dir, page=1) }}">{{ label }}{{ arrow }}</a>
+{% endmacro %}
+
+{% block page_content %}
+<div class="page-header mb-4 d-flex justify-content-between align-items-end">
+    <div>
+        <h1>Tags</h1>
+        <p class="text-muted mb-0">
+            Free-form coloured labels that can attach to any base object
+            (characters, chapters, roles, portraits…). Display is not wired
+            up yet — this page just manages the tag pool.
+        </p>
+    </div>
+    <a href="{{ url_for('admin.new_tag') }}" class="btn btn-primary">New tag</a>
+</div>
+
+<form method="GET" action="{{ url_for('admin.tags') }}" class="row g-2 align-items-end mb-4">
+    <div class="col-md-6">
+        <label for="tag-search" class="form-label">Search name</label>
+        <input type="search" name="q" id="tag-search" class="form-control"
+               value="{{ search or '' }}" autocomplete="off">
+    </div>
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <input type="hidden" name="dir"  value="{{ direction }}">
+    <div class="col-md-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-grow-1">Search</button>
+        <a href="{{ url_for('admin.tags') }}" class="btn btn-outline-secondary">Reset</a>
+    </div>
+    <div class="col-md-3 text-end text-muted small">
+        {{ pagination.total }} tag{{ '' if pagination.total == 1 else 's' }}
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>{{ sort_link('name', 'Name') }}</th>
+            <th>Preview</th>
+            <th>{{ sort_link('created_at', 'Created') }}</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tag in pagination.items %}
+        <tr>
+            <td>
+                <a href="{{ url_for('admin.edit_tag', tag_id=tag.id) }}">{{ tag.name }}</a>
+            </td>
+            <td>{{ macros.badge_widget(tag) }}</td>
+            <td>{{ tag.created_at.strftime('%Y-%m-%d') if tag.created_at else '' }}</td>
+            <td class="text-end">
+                <a href="{{ url_for('admin.edit_tag', tag_id=tag.id) }}"
+                   class="btn btn-sm btn-outline-primary">Edit</a>
+                <form method="POST" action="{{ url_for('admin.delete_tag', tag_id=tag.id) }}"
+                      class="d-inline"
+                      data-confirm="Delete tag &quot;{{ tag.name|e }}&quot;? Any associations will be removed.">
+                    {{ csrf_form.hidden_tag() }}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4" class="text-muted">
+                No tags{% if search %} matching that search{% endif %}.
+                {% if not search %}<a href="{{ url_for('admin.new_tag') }}">Create one</a>.{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if pagination.pages > 1 %}
+<nav>
+    <ul class="pagination">
+        <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+            <a class="page-link" href="{{ filter_url(page=pagination.prev_num) if pagination.has_prev else '#' }}">&laquo;</a>
+        </li>
+        {% for p in pagination.iter_pages(left_edge=2, left_current=3, right_current=3, right_edge=2) %}
+            {% if p %}
+                <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ filter_url(page=p) }}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">…</a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+            <a class="page-link" href="{{ filter_url(page=pagination.next_num) if pagination.has_next else '#' }}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+{% endblock %}

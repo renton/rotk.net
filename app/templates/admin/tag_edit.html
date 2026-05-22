@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}
+rotk.net - {% if tag %}Edit tag {{ tag.name }}{% else %}New tag{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    <h1>{% if tag %}Edit tag{% else %}New tag{% endif %}</h1>
+    {% if tag %}
+    <p class="text-muted mb-0">Preview: {{ macros.badge_widget(tag) }}</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+<div class="mt-3">
+    <a href="{{ url_for('admin.tags') }}" class="btn btn-link">&larr; Back to tags</a>
+</div>
+{% endblock %}
