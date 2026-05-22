@@ -14,7 +14,10 @@
         <div class="col-9">
             {{ chapter_content | safe }}
         </div>
-        <div class="col" style="position:sticky; height:fit-content; top:0;">
+        {# Sticky sidebar: pins to the top while you scroll the prose. The
+           explicit max-height + overflow-y let it grow up to the viewport
+           and then scroll inside itself instead of going off-screen. #}
+        <div class="col" style="position:sticky; top:0; max-height:100vh; overflow-y:auto;">
 
           <div class="accordion" id="sidebar-accordion">
             <div class="accordion-item">

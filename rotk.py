@@ -415,6 +415,106 @@ def _randomize_tag_colours(model, label, target_id, seed, dry_run):
 
 
 @app.cli.command()
+@click.option('--preferred-tag', default='1MROTK',
+              help='Tag name to prefer when picking. Exact name match. '
+                   'If no portrait of the character has this tag, falls '
+                   'back to a random pick from any of their portraits.')
+@click.option('--seed', type=int, default=None,
+              help='Optional RNG seed for reproducible picks.')
+@click.option('--dry-run', is_flag=True, default=False,
+              help='Print what would be done without writing to the DB.')
+def assign_default_portraits(preferred_tag, seed, dry_run):
+    """For each character with images but none currently visible, promote
+    one to be the character's default (which also makes it visible).
+
+    Pick policy:
+      1. Prefer a portrait tagged with --preferred-tag, chosen at random
+         from the matches.
+      2. If no portrait has that tag, pick any active portrait at random.
+
+    Characters with no portraits are skipped. Characters that already have
+    at least one visible portrait are skipped (we don't disturb existing
+    defaults). Sorting portraits by id before the random pick makes runs
+    with the same --seed deterministic."""
+    import random as _random
+    from sqlalchemy.orm import selectinload
+
+    rng = _random.Random(seed) if seed is not None else _random.Random()
+    preferred_tag = (preferred_tag or '').strip()
+
+    # Eager-load portraits + tags so the per-character loop doesn't N+1.
+    characters = (
+        Character.query
+        .options(selectinload(Character.portraits).selectinload(Portrait.tags))
+        .filter(Character.is_deleted.is_(False))
+        .order_by(Character.id)
+        .all()
+    )
+
+    updated = 0
+    no_portraits = 0
+    already_visible = 0
+    preferred_picks = 0
+    fallback_picks = 0
+
+    for character in characters:
+        active = sorted(
+            (p for p in character.portraits if not p.is_deleted),
+            key=lambda p: p.id,
+        )
+        if not active:
+            no_portraits += 1
+            continue
+        if any(not p.is_hidden for p in active):
+            already_visible += 1
+            continue
+
+        preferred = [
+            p for p in active
+            if any(t.name == preferred_tag for t in p.tags)
+        ]
+        if preferred:
+            chosen = rng.choice(preferred)
+            source_label = f"preferred ({preferred_tag})"
+            preferred_picks += 1
+        else:
+            chosen = rng.choice(active)
+            source_label = "random fallback"
+            fallback_picks += 1
+
+        print(
+            f"[{character.id}] {character.name}: -> {chosen.filename} "
+            f"[{source_label}]"
+        )
+
+        if not dry_run:
+            # Clear default on any other portraits for this character so
+            # the partial unique index doesn't reject the insert.
+            Portrait.query.filter(
+                Portrait.character_id == character.id,
+                Portrait.id != chosen.id,
+            ).update({'is_default': False})
+            chosen.is_default = True
+            chosen.is_hidden = False    # defaults are always visible
+            updated += 1
+
+    if dry_run:
+        print(
+            f"\nDry run. Would update {preferred_picks + fallback_picks} "
+            f"character(s)."
+        )
+    else:
+        db.session.commit()
+        print(f"\nDone. Updated {updated} character(s).")
+
+    print(
+        f"Summary: {preferred_picks} preferred, {fallback_picks} fallback, "
+        f"{already_visible} already had a visible portrait, "
+        f"{no_portraits} had no portraits."
+    )
+
+
+@app.cli.command()
 def recount_book_mentions():
     """Recompute Character.book_mention_count for every character.
 
