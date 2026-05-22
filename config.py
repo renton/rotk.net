@@ -41,6 +41,11 @@ class Config:
     # (multipart boundary + other form fields add a few KB).
     MAX_CONTENT_LENGTH = 12 * 1024 * 1024
 
+    # Google Analytics 4 tracking ID (e.g. "G-XXXXXXXXXX"). Leave blank to
+    # disable analytics — the base template skips the gtag snippet when
+    # this is empty.
+    GA_TRACKING_ID = os.environ.get('GA_TRACKING_ID', '')
+
     # --- Mail (Flask-Mail) ---
     # Any SMTP provider works (Mailgun, SendGrid, AWS SES, Postmark, Gmail).
     # If MAIL_SERVER is not set, MAIL_SUPPRESS_SEND defaults to True and

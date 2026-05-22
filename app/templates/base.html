@@ -6,6 +6,20 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+{# Google Analytics (gtag.js). Tracking ID comes from the GA_TRACKING_ID
+   env var (see config.py / .env). Block is skipped entirely when blank.
+   The inline init is CSP-allowed via the per-request nonce — no
+   'unsafe-inline' needed. #}
+{% if config.GA_TRACKING_ID %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config.GA_TRACKING_ID|urlencode }}"></script>
+<script nonce="{{ csp_nonce }}">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', {{ config.GA_TRACKING_ID|tojson }});
+</script>
+{% endif %}
 {% endblock %}
 
 {% block navbar %}
