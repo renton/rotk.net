@@ -1,6 +1,7 @@
 import re, string
 from flask import render_template, abort, request, current_app, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
+from sqlalchemy.orm import selectinload
 from app import db
 from app.models import Chapter, Character, Faction, Role
 from . import main
@@ -80,6 +81,13 @@ def characters():
         search_term = f"%{form.search_query.data}%"
         query = query.filter(Character.name.ilike(search_term))
 
+    # Batch-load portraits and chapters so the per-row image + chapter list
+    # in the template doesn't N+1 the DB.
+    query = query.options(
+        selectinload(Character.portraits),
+        selectinload(Character.chapters),
+    )
+
     # Apply pagination after filtering
     pagination = query.order_by(Character.name).paginate(
         page=page,
@@ -89,6 +97,21 @@ def characters():
 
     characters = pagination.items  # Get current page items
 
+    # Pick one image per character to show next to the row: the default if
+    # set, else the first non-hidden portrait, else None. Matches the
+    # ordering the chapter sidebar uses for its first tab.
+    default_portraits = {}
+    chapter_lists = {}
+    for ch in characters:
+        visible = sorted(
+            (p for p in ch.portraits if not p.is_deleted and not p.is_hidden),
+            key=lambda p: not p.is_default,
+        )
+        default_portraits[ch.id] = visible[0] if visible else None
+        chapter_lists[ch.id] = sorted(
+            ch.chapters, key=lambda c: c.chapter_num
+        )
+
     return render_template(
         'characters/characters.html',
         characters=characters,
@@ -96,7 +119,9 @@ def characters():
         page=page,
         alphabet=alphabet,
         form=form,
-        letter=letter
+        letter=letter,
+        default_portraits=default_portraits,
+        chapter_lists=chapter_lists,
     )
 
 @main.route('/characters/edit/<int:id>', methods=['GET', 'POST'])

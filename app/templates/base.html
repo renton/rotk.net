@@ -78,7 +78,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+{# `container_class` lets data-dense pages opt into a wider layout
+   (e.g. container-fluid). Default is the standard Bootstrap container. #}
+<div class="{% block container_class %}container{% endblock %} mt-4">
     {% if current_user.is_authenticated and not current_user.confirmed %}
     <div class="alert alert-info" role="alert">
       Your email is not confirmed yet.

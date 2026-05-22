@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% import "_macros.html" as macros %}
 
+{# Data-dense table (11 columns including image + chapter refs). Use the
+   full viewport width instead of the standard centred container. #}
+{% block container_class %}container-fluid{% endblock %}
+
 {% block page_content %}
 
 <fieldset class="border p-3">
@@ -45,6 +49,7 @@
 
 <table class="table table-striped mt-4">
     <thead>
+        <th style="width: 80px;">Image</th>
         <th>Name</th>
         <th>Courtesy Name</th>
         <th>Aliases</th>
@@ -54,10 +59,21 @@
         <th>Roles</th>
         <th>Faction</th>
         <th>Past Factions</th>
+        <th>Chapter References</th>
     </thead>
     <tbody>
         {% for character in characters %}
-            <tr>                
+            {% set portrait = default_portraits.get(character.id) %}
+            {% set ch_list = chapter_lists.get(character.id, []) %}
+            <tr>
+                <td>
+                    {% if portrait %}
+                    <img src="{{ url_for('static', filename=portrait.static_path) }}"
+                         alt="{{ character.name }}"
+                         loading="lazy"
+                         style="max-width: 64px; max-height: 64px; object-fit: contain;">
+                    {% endif %}
+                </td>
                 <td>
                     <div>
                         {% if current_user.is_authenticated and current_user.is_administrator %}
@@ -100,6 +116,11 @@
                             {{ macros.badge_widget(faction) }}
                         </div>
                     {% endfor %}
+                </td>
+                <td class="small">
+                    {% for chapter in ch_list -%}
+                    <a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.chapter_num }}</a>{% if not loop.last %}, {% endif %}
+                    {%- endfor %}
                 </td>
             </tr>
         {% endfor %}
