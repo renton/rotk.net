@@ -7,11 +7,11 @@
 {{ super() }}
 
 {% if portraits is defined %}
-<section class="mt-5">
-    <h3>Images</h3>
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">Images</legend>
 
     {% if not portraits %}
-    <div class="text-muted">No images yet for this character.</div>
+    <div class="text-muted">No visible images yet for this character.</div>
     {% else %}
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
         {% for p in portraits %}
@@ -41,6 +41,45 @@
         {% endfor %}
     </div>
     {% endif %}
-</section>
+
+    {% if upload_form is defined %}
+    <hr class="my-4">
+    <h5>Upload a new image</h5>
+    <p class="text-muted small mb-3">
+        Max 10 MB. JPG / JPEG / PNG / GIF / WEBP only — the server checks
+        the file's actual signature, not just the extension.
+    </p>
+    <form method="POST"
+          action="{{ url_for('main.upload_portrait', id=character.id) }}"
+          enctype="multipart/form-data">
+        {{ upload_form.hidden_tag() }}
+        <div class="mb-3">
+            {{ upload_form.image_file.label(class='form-label') }}
+            {{ upload_form.image_file(class='form-control') }}
+        </div>
+        <div class="mb-3">
+            {{ upload_form.tag_name.label(class='form-label') }}
+            {{ upload_form.tag_name(class='form-control',
+                                    list='all-tags-datalist',
+                                    autocomplete='off',
+                                    placeholder='Type to pick an existing tag or enter a new name') }}
+        </div>
+        <div class="form-check">
+            {{ upload_form.is_default(class='form-check-input') }}
+            {{ upload_form.is_default.label(class='form-check-label') }}
+        </div>
+        <div class="form-check mb-3">
+            {{ upload_form.is_visible(class='form-check-input') }}
+            {{ upload_form.is_visible.label(class='form-check-label') }}
+        </div>
+        {{ upload_form.submit(class='btn btn-primary') }}
+    </form>
+    <datalist id="all-tags-datalist">
+        {% for t in all_tags %}
+        <option value="{{ t.name }}">
+        {% endfor %}
+    </datalist>
+    {% endif %}
+</fieldset>
 {% endif %}
 {% endblock %}

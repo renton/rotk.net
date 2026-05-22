@@ -35,6 +35,12 @@ class Config:
     # this app's traffic level; default-False in prod gunicorn otherwise.
     TEMPLATES_AUTO_RELOAD = True
 
+    # Hard cap on the size of any HTTP request body. Werkzeug returns 413
+    # before our view sees an oversized upload. 12 MB gives some headroom
+    # over the 10 MB per-portrait limit enforced in the upload route
+    # (multipart boundary + other form fields add a few KB).
+    MAX_CONTENT_LENGTH = 12 * 1024 * 1024
+
     # --- Mail (Flask-Mail) ---
     # Any SMTP provider works (Mailgun, SendGrid, AWS SES, Postmark, Gmail).
     # If MAIL_SERVER is not set, MAIL_SUPPRESS_SEND defaults to True and

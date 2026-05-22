@@ -120,11 +120,22 @@
               </h2>
               <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                  <table class="table table-striped mt-4">
+                  <table class="table table-striped table-hover mt-4">
                     <tbody>
                         {% for character in characters %}
-                            <tr>                
-                                <td scope="row">{{ character.name }}</td>
+                            {% set count = mention_counts.get(character.id, 0) %}
+                            <tr class="chapter-character-link"
+                                data-character-id="{{ character.id }}"
+                                role="button"
+                                style="cursor: pointer;">
+                                <td scope="row">
+                                    {{ character.name }}
+                                    {% if count > 0 %}
+                                    <span class="badge bg-secondary rounded-pill ms-1">
+                                        {{ count }} mention{{ '' if count == 1 else 's' }}
+                                    </span>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

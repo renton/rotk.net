@@ -134,9 +134,11 @@ class Portrait(AbstractObject):
     source_site = db.Column(db.String(255), default="", nullable=False)
 
     # Admin can hide a Portrait from public views (chapter sidebar, character
-    # edit page) without deleting the row — useful for false-positive scrapes.
-    # The Image Manager still shows it so the admin can unhide.
-    is_hidden = db.Column(db.Boolean, default=False, nullable=False)
+    # edit page) without deleting the row. New portraits start hidden — an
+    # admin has to opt-in to public visibility, either by toggling Hide off
+    # or by setting the portrait as the character's default (which auto-
+    # unhides it as a side effect).
+    is_hidden = db.Column(db.Boolean, default=True, nullable=False)
 
     # Exactly one Portrait per character can be the "default" — shown first
     # in the chapter sidebar. Enforced application-side by the set-default

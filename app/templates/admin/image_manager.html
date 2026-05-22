@@ -169,7 +169,7 @@
             </td>
             <td class="text-end">
                 <div class="btn-group-vertical btn-group-sm" role="group">
-                    {% if not portrait.is_default and not portrait.is_hidden %}
+                    {% if not portrait.is_default %}
                     <form method="POST"
                           action="{{ url_for('admin.set_default_portrait', portrait_id=portrait.id) }}"
                           class="d-inline">

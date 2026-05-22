@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField, IntegerField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
@@ -81,6 +82,32 @@ class EditFactionForm(FlaskForm):
     icon = StringField("Icon")
 
     submit = SubmitField('Submit')
+
+class UploadPortraitForm(FlaskForm):
+    """Manually upload an image for a character, optionally tagging it and
+    setting default/visible flags. Rendered as a fieldset on the character
+    edit page; posts to main.upload_portrait."""
+    image_file = FileField(
+        "Image file",
+        validators=[
+            FileRequired(),
+            FileAllowed(
+                ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+                "Image files only (jpg, jpeg, png, gif, webp).",
+            ),
+        ],
+    )
+    tag_name = StringField(
+        "Tag (existing or new — leave blank for no tag)",
+        validators=[Optional()],
+    )
+    is_default = BooleanField(
+        "Set as default for this character (auto-makes it visible)",
+        default=False,
+    )
+    is_visible = BooleanField("Visible to the public", default=True)
+    submit = SubmitField("Upload")
+
 
 class EditRoleForm(FlaskForm):
     name = StringField("Name *", validators=[DataRequired()])

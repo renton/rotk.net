@@ -458,16 +458,18 @@ def set_default_portrait(portrait_id):
         abort(400)
 
     portrait = Portrait.query.get_or_404(portrait_id)
-    if portrait.is_hidden:
-        flash("Can't set a hidden portrait as default — unhide it first.")
-        return redirect(request.referrer or url_for('admin.image_manager'))
 
     # Clear is_default on any other portraits for this character first.
+    # Their is_hidden state is intentionally not touched — only the chosen
+    # default is affected by this route.
     Portrait.query.filter(
         Portrait.character_id == portrait.character_id,
         Portrait.id != portrait.id,
     ).update({'is_default': False})
+
     portrait.is_default = True
+    # Defaults are always public — auto-unhide if it was hidden.
+    portrait.is_hidden = False
     db.session.commit()
     return redirect(request.referrer or url_for('admin.image_manager'))
 

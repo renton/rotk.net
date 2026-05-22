@@ -19,8 +19,12 @@
     }
   }
 
+  // Two click sources reveal the same Character Info panel:
+  //   .character-ref          — inline badge tagged in the prose
+  //   .chapter-character-link — row in the "Chapter Characters" sidebar list
+  // Both carry data-character-id; we just hand it to showCharacter().
   document.addEventListener('click', function (event) {
-    var target = event.target.closest('.character-ref');
+    var target = event.target.closest('.character-ref, .chapter-character-link');
     if (!target) {
       return;
     }
