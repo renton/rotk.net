@@ -150,7 +150,26 @@
 
 
         </div>
-      </div>    
+      </div>
+</div>
+
+{# Mobile-only character info modal. On screens below the lg breakpoint
+   chapter.js moves the clicked character's panel into the modal body
+   (and back to the sidebar on close). On desktop the modal stays
+   inert — the sticky sidebar handles everything. #}
+<div class="modal fade" id="character-modal" tabindex="-1"
+     aria-labelledby="character-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="character-modal-label">Character info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="character-modal-body">
+        {# Character panel is moved here at click time on mobile. #}
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
