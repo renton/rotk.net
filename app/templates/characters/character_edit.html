@@ -1,1 +1,40 @@
 {% extends "base.html" %}
+
+{% block title %}rotk.net - Edit {{ character.name if character else 'character' }}{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+
+{% if portraits is defined %}
+<section class="mt-5">
+    <h3>Images</h3>
+
+    {% if not portraits %}
+    <div class="text-muted">No images yet for this character.</div>
+    {% else %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        {% for p in portraits %}
+        <div class="col">
+            <figure class="border rounded p-2 h-100 d-flex flex-column">
+                <img src="{{ url_for('static', filename=p.static_path) }}"
+                     alt="{{ p.name or character.name }}"
+                     class="img-fluid mx-auto"
+                     style="max-height: 260px; object-fit: contain;">
+                <figcaption class="small text-muted mt-2">
+                    Source:
+                    {% if p.source_url %}
+                        <a href="{{ p.source_url }}" target="_blank" rel="noopener">
+                            {{ p.source_site or p.source_url }}
+                        </a>
+                    {% else %}
+                        {{ p.source_site or 'unknown' }}
+                    {% endif %}
+                </figcaption>
+            </figure>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+{% endblock %}

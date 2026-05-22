@@ -26,11 +26,58 @@
               <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   {% for character in characters %}
-                    <div class="character-panel" id="character-panel-{{ character.id }}" class="mb-4" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                      {{ character.name }}
-                      <div>
-                        <img src="{{ url_for('static', filename='test.webp') }}">
-                      </div>
+                    {% set portraits = character.portraits | rejectattr('is_deleted') | list %}
+                    {% set tab_set = 'char-' ~ character.id %}
+                    <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                      <h6 class="mb-2">{{ character.name }}</h6>
+
+                      {% if portraits %}
+                        {% if portraits|length > 1 %}
+                        <ul class="nav nav-pills nav-fill flex-wrap mb-2" id="{{ tab_set }}-tabs" role="tablist">
+                          {% for p in portraits %}
+                          <li class="nav-item" role="presentation">
+                            <button class="nav-link py-1 px-2 {% if loop.first %}active{% endif %}"
+                                    id="{{ tab_set }}-tab-{{ loop.index0 }}"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#{{ tab_set }}-pane-{{ loop.index0 }}"
+                                    type="button" role="tab"
+                                    aria-controls="{{ tab_set }}-pane-{{ loop.index0 }}"
+                                    aria-selected="{{ 'true' if loop.first else 'false' }}">
+                              {{ loop.index }}
+                            </button>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <div class="tab-content border rounded p-2 mb-2">
+                          {% for p in portraits %}
+                          <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                               id="{{ tab_set }}-pane-{{ loop.index0 }}"
+                               role="tabpanel"
+                               aria-labelledby="{{ tab_set }}-tab-{{ loop.index0 }}">
+                            <img src="{{ url_for('static', filename=p.static_path) }}"
+                                 alt="{{ p.name or character.name }}"
+                                 class="img-fluid d-block mx-auto"
+                                 loading="lazy"
+                                 style="max-height: 240px; object-fit: contain;">
+                            <div class="small text-muted mt-1">
+                              Source:
+                              {% if p.source_url %}
+                                <a href="{{ p.source_url }}" target="_blank" rel="noopener">{{ p.source_site or p.source_url }}</a>
+                              {% else %}
+                                {{ p.source_site or 'unknown' }}
+                              {% endif %}
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <div class="bg-secondary-subtle text-muted text-center rounded d-flex align-items-center justify-content-center mb-2"
+                             style="height: 180px; font-style: italic;">
+                          No Image.
+                        </div>
+                      {% endif %}
+
                       {% for role in character.roles %}
                         <div>
                           {{ macros.badge_widget(role) }}
@@ -38,14 +85,12 @@
                       {% endfor %}
 
                       {% if character.latest_faction %}
-                      
                         Faction:
                         <div>
                           {{ macros.badge_widget(character.latest_faction) }}
                         </div>
-
                       {% endif %}
-        
+
                       {% if character.factions %}
                         Past Factions:
                         {% for faction in character.factions %}

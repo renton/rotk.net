@@ -114,9 +114,12 @@ def edit_character(id):
         flash('The character has been updated.')
         return redirect(url_for("main.edit_character", id=character.id))
 
+    portraits = [p for p in character.portraits if not p.is_deleted]
     return render_template(
         'characters/character_edit.html',
-        form=form
+        form=form,
+        character=character,
+        portraits=portraits,
     )
 
 @main.route('/factions', methods=['GET'])

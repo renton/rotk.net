@@ -3,8 +3,11 @@ from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import SubmitField
 
+from sqlalchemy import func
+
 from app import db
-from app.models import User, Chapter, Character
+from app.models import User, Chapter, Character, Faction
+from app.models.character import Portrait
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions
 from . import admin
@@ -188,3 +191,84 @@ def chapter_associations_add(chapter_num):
         flash(f"Added {character.name} to chapter {chapter.chapter_num}.")
 
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+
+# ----- Image Manager -------------------------------------------------------
+
+# Sort columns we expose. Keys are the values accepted in ?sort=...; values
+# are the SQL expressions used in order_by. Defined below `_image_count_subq`
+# so the subquery columns are in scope when looked up.
+_SORTS = ('name', 'image_count')
+_PER_PAGE = 50
+
+
+def _image_count_subquery():
+    """Subquery yielding (character_id, image_count) for non-deleted portraits."""
+    return (
+        db.session.query(
+            Portrait.character_id.label('character_id'),
+            func.count(Portrait.id).label('image_count'),
+        )
+        .filter(Portrait.is_deleted.is_(False))
+        .group_by(Portrait.character_id)
+        .subquery()
+    )
+
+
+@admin.route('/images', methods=['GET'])
+@login_required
+@admin_required
+def image_manager():
+    page = request.args.get('page', 1, type=int)
+    search = (request.args.get('q') or '').strip()
+    faction_id = request.args.get('faction_id', type=int)
+    has_images = request.args.get('has_images', '')   # '', 'yes', 'no'
+    sort = request.args.get('sort', 'name')
+    direction = request.args.get('dir', 'asc')
+
+    if sort not in _SORTS:
+        sort = 'name'
+    if direction not in ('asc', 'desc'):
+        direction = 'asc'
+
+    counts = _image_count_subquery()
+    image_count_expr = func.coalesce(counts.c.image_count, 0)
+
+    query = (
+        Character.query
+        .outerjoin(counts, Character.id == counts.c.character_id)
+        .add_columns(image_count_expr.label('image_count'))
+        .filter(Character.is_deleted.is_(False))
+    )
+
+    if search:
+        query = query.filter(Character.name.ilike(f"%{search}%"))
+
+    if faction_id:
+        query = query.filter(Character.latest_faction_id == faction_id)
+
+    if has_images == 'yes':
+        query = query.filter(image_count_expr > 0)
+    elif has_images == 'no':
+        query = query.filter(image_count_expr == 0)
+
+    order_col = image_count_expr if sort == 'image_count' else Character.name
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+    if sort == 'image_count':
+        # Stable tiebreak so the order is deterministic across pages.
+        query = query.order_by(Character.name.asc())
+
+    pagination = query.paginate(page=page, per_page=_PER_PAGE, error_out=False)
+    factions = Faction.query.order_by(Faction.name).all()
+
+    return render_template(
+        'admin/image_manager.html',
+        pagination=pagination,
+        factions=factions,
+        # Echo filter state back so links/form preserve it.
+        search=search,
+        faction_id=faction_id,
+        has_images=has_images,
+        sort=sort,
+        direction=direction,
+    )
