@@ -99,6 +99,7 @@ Full walkthrough in `README.md`.
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
 | `flask scrape-koei-images` | Scrape character portraits from koei.fandom.com into `app/static/portraits/` + `Portrait` rows |
 | `flask randomize-faction-colours` | Randomize bg/font/border on every faction; font chosen for WCAG-readable contrast |
+| `flask randomize-role-colours` | Same as `randomize-faction-colours` but for `Role` rows |
 | `flask make-admin EMAIL` | Promote a user to admin (also marks them confirmed) |
 | `flask create-user EMAIL USERNAME [--admin]` | Create a user directly; prompts for the password |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |

@@ -110,6 +110,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
 | `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--delay 0.5]` | Scrape character portraits from `koei.fandom.com`, download to `app/static/portraits/`, and record one `Portrait` row per character. Skips characters that already have a Koei portrait by default; pass `--refresh` to re-scrape. |
 | `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
+| `randomize-role-colours [--role-id N] [--seed N] [--dry-run]` | Same as `randomize-faction-colours` but for `Role` rows. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |

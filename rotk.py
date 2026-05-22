@@ -265,34 +265,53 @@ def randomize_faction_colours(faction_id, seed, dry_run):
     Background is sampled in HSL with saturated mid-lightness; font is
     forced to black or white based on WCAG relative luminance so the
     badge stays readable; border is a same-hue shift of the bg."""
+    _randomize_tag_colours(Faction, "faction", faction_id, seed, dry_run)
+
+
+@app.cli.command()
+@click.option('--role-id', type=int, default=None,
+              help='Randomize just one role (by id). Omit to do all roles.')
+@click.option('--seed', type=int, default=None,
+              help='Optional RNG seed for reproducible palettes.')
+@click.option('--dry-run', is_flag=True, default=False,
+              help='Print the new palette without writing to the DB.')
+def randomize_role_colours(role_id, seed, dry_run):
+    """Assign each role a new random bg/font/border palette. Same colour-
+    selection logic as randomize-faction-colours; see that command's docs."""
+    _randomize_tag_colours(Role, "role", role_id, seed, dry_run)
+
+
+def _randomize_tag_colours(model, label, target_id, seed, dry_run):
+    """Shared driver for the two randomize-*-colours commands. `model` is
+    Faction or Role (both inherit AbstractTag, which has the colour cols)."""
     import random as _random
     from tools.colours import randomize_palette
 
     rng = _random.Random(seed) if seed is not None else _random.Random()
 
-    if faction_id is not None:
-        factions = [Faction.query.get_or_404(faction_id)]
+    if target_id is not None:
+        tags = [model.query.get_or_404(target_id)]
     else:
-        factions = Faction.query.order_by(Faction.name).all()
+        tags = model.query.order_by(model.name).all()
 
-    if not factions:
-        print("No factions to update.")
+    if not tags:
+        print(f"No {label}s to update.")
         return
 
-    for faction in factions:
+    for tag in tags:
         bg, font, border = randomize_palette(rng=rng)
-        print(f"[{faction.id}] {faction.name:30s} bg={bg} font={font} border={border}")
+        print(f"[{tag.id}] {tag.name:30s} bg={bg} font={font} border={border}")
         if not dry_run:
-            faction.bg_colour = bg
-            faction.font_colour = font
-            faction.border_colour = border
-            db.session.add(faction)
+            tag.bg_colour = bg
+            tag.font_colour = font
+            tag.border_colour = border
+            db.session.add(tag)
 
     if dry_run:
-        print(f"\nDry run — no changes committed ({len(factions)} factions).")
+        print(f"\nDry run — no changes committed ({len(tags)} {label}s).")
     else:
         db.session.commit()
-        print(f"\nUpdated {len(factions)} faction(s).")
+        print(f"\nUpdated {len(tags)} {label}(s).")
 
 
 @app.cli.command()
