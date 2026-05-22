@@ -3,12 +3,15 @@
 
 {% block title %}rotk.net - Admin: Tags{% endblock %}
 
-{% macro filter_url(**overrides) -%}
+{# Jinja macros can't use Python's **kwargs splat in the signature, but
+   any unconsumed keyword args at the call site land in the implicit
+   `kwargs` dict — same effect. Call as filter_url(page=2), etc. #}
+{% macro filter_url() -%}
     {% set args = {} %}
     {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
     {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
     {% if direction %}{% set _ = args.update({'dir': direction}) %}{% endif %}
-    {% set _ = args.update(overrides) %}
+    {% set _ = args.update(kwargs) %}
     {{ url_for('admin.tags', **args) }}
 {%- endmacro %}
 
