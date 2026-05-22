@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import SubmitField
 
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
@@ -215,6 +215,7 @@ def image_manager():
     page = request.args.get('page', 1, type=int)
     search = (request.args.get('q') or '').strip()
     source_site = (request.args.get('source_site') or '').strip()
+    tag_id = request.args.get('tag_id', type=int)
     sort = request.args.get('sort', 'character')
     direction = request.args.get('dir', 'asc')
 
@@ -240,6 +241,16 @@ def image_manager():
 
     if source_site:
         query = query.filter(Portrait.source_site == source_site)
+
+    if tag_id:
+        # Inner-join the polymorphic association limited to this tag so we
+        # only get portraits that actually have it attached.
+        query = query.join(
+            TagAssociation,
+            (TagAssociation.target_type == PORTRAIT_TARGET_TYPE)
+            & (TagAssociation.target_id == Portrait.id)
+            & (TagAssociation.tag_id == tag_id),
+        )
 
     if sort == 'character':
         order_col = Character.name
@@ -276,6 +287,7 @@ def image_manager():
         all_tags=all_tags,
         search=search,
         source_site=source_site,
+        tag_id=tag_id,
         sort=sort,
         direction=direction,
         csrf_form=_CsrfOnlyForm(),
@@ -341,6 +353,46 @@ def add_portrait_tag(portrait_id):
     return redirect(request.referrer or url_for('admin.image_manager'))
 
 
+@admin.route('/images/<int:portrait_id>/toggle-hidden', methods=['POST'])
+@login_required
+@admin_required
+def toggle_portrait_hidden(portrait_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    portrait = Portrait.query.get_or_404(portrait_id)
+    portrait.is_hidden = not portrait.is_hidden
+    # A hidden Portrait can't simultaneously be the default — clear it.
+    if portrait.is_hidden and portrait.is_default:
+        portrait.is_default = False
+    db.session.commit()
+    return redirect(request.referrer or url_for('admin.image_manager'))
+
+
+@admin.route('/images/<int:portrait_id>/set-default', methods=['POST'])
+@login_required
+@admin_required
+def set_default_portrait(portrait_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    portrait = Portrait.query.get_or_404(portrait_id)
+    if portrait.is_hidden:
+        flash("Can't set a hidden portrait as default — unhide it first.")
+        return redirect(request.referrer or url_for('admin.image_manager'))
+
+    # Clear is_default on any other portraits for this character first.
+    Portrait.query.filter(
+        Portrait.character_id == portrait.character_id,
+        Portrait.id != portrait.id,
+    ).update({'is_default': False})
+    portrait.is_default = True
+    db.session.commit()
+    return redirect(request.referrer or url_for('admin.image_manager'))
+
+
 @admin.route('/images/<int:portrait_id>/tags/<int:tag_id>/remove', methods=['POST'])
 @login_required
 @admin_required
@@ -363,7 +415,7 @@ def remove_portrait_tag(portrait_id, tag_id):
 
 # ----- Tag manager ---------------------------------------------------------
 
-_TAG_SORTS = ('name', 'created_at')
+_TAG_SORTS = ('name', 'created_at', 'image_count')
 _TAGS_PER_PAGE = 50
 
 
@@ -381,11 +433,32 @@ def tags():
     if direction not in ('asc', 'desc'):
         direction = 'asc'
 
-    query = Tag.query
+    # One subquery counts how many portraits each tag is attached to, joined
+    # back to Tag with COALESCE so tags with zero associations sort as 0
+    # instead of NULL.
+    image_counts = (
+        db.session.query(
+            TagAssociation.tag_id.label('tag_id'),
+            func.count(TagAssociation.id).label('image_count'),
+        )
+        .filter(TagAssociation.target_type == PORTRAIT_TARGET_TYPE)
+        .group_by(TagAssociation.tag_id)
+        .subquery()
+    )
+    image_count_expr = func.coalesce(image_counts.c.image_count, 0)
+
+    query = (
+        Tag.query
+        .outerjoin(image_counts, Tag.id == image_counts.c.tag_id)
+        .add_columns(image_count_expr.label('image_count'))
+    )
     if search:
         query = query.filter(Tag.name.ilike(f"%{search}%"))
 
-    order_col = getattr(Tag, sort)
+    if sort == 'image_count':
+        order_col = image_count_expr
+    else:
+        order_col = getattr(Tag, sort)
     query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
     if sort != 'name':
         query = query.order_by(Tag.name.asc())  # deterministic tiebreak
@@ -453,7 +526,22 @@ def delete_tag(tag_id):
 
     tag = Tag.query.get_or_404(tag_id)
     name = tag.name
-    db.session.delete(tag)   # cascade removes TagAssociation rows
+
+    # Refuse to delete if any image is using this tag. Belt-and-braces: the
+    # template hides the delete button for in-use tags, but this is the
+    # authoritative check (race conditions, direct curls).
+    image_uses = TagAssociation.query.filter_by(
+        tag_id=tag.id,
+        target_type=PORTRAIT_TARGET_TYPE,
+    ).count()
+    if image_uses > 0:
+        flash(
+            f"Can't delete {name!r}: it's attached to {image_uses} image"
+            f"{'' if image_uses == 1 else 's'}. Detach it from those first."
+        )
+        return redirect(url_for('admin.tags'))
+
+    db.session.delete(tag)   # cascade removes any non-image TagAssociation rows
     db.session.commit()
     flash(f"Deleted tag {name!r}.")
     return redirect(url_for('admin.tags'))

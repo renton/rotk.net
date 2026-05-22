@@ -10,6 +10,7 @@
     {% set args = {} %}
     {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
     {% if source_site %}{% set _ = args.update({'source_site': source_site}) %}{% endif %}
+    {% if tag_id %}{% set _ = args.update({'tag_id': tag_id}) %}{% endif %}
     {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
     {% if direction %}{% set _ = args.update({'dir': direction}) %}{% endif %}
     {% set _ = args.update(kwargs) %}
@@ -42,12 +43,12 @@
 </div>
 
 <form method="GET" action="{{ url_for('admin.image_manager') }}" class="row g-2 align-items-end mb-4">
-    <div class="col-md-5">
+    <div class="col-md-4">
         <label for="image-mgr-search" class="form-label">Search (character or description)</label>
         <input type="search" name="q" id="image-mgr-search" class="form-control"
                value="{{ search or '' }}" autocomplete="off">
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label for="image-mgr-source" class="form-label">Source site</label>
         <select name="source_site" id="image-mgr-source" class="form-select">
             <option value="">All sources</option>
@@ -56,9 +57,18 @@
             {% endfor %}
         </select>
     </div>
+    <div class="col-md-3">
+        <label for="image-mgr-tag" class="form-label">Tag</label>
+        <select name="tag_id" id="image-mgr-tag" class="form-select">
+            <option value="">All tags</option>
+            {% for t in all_tags %}
+            <option value="{{ t.id }}" {% if tag_id == t.id %}selected{% endif %}>{{ t.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <input type="hidden" name="sort" value="{{ sort }}">
     <input type="hidden" name="dir"  value="{{ direction }}">
-    <div class="col-md-3 d-flex gap-2">
+    <div class="col-md-2 d-flex gap-2">
         <button type="submit" class="btn btn-primary flex-grow-1">Apply</button>
         <a href="{{ url_for('admin.image_manager') }}" class="btn btn-outline-secondary">Reset</a>
     </div>
@@ -97,6 +107,14 @@
                 {% if ch.latest_faction %}
                 <div class="mt-1">{{ macros.badge_widget(ch.latest_faction) }}</div>
                 {% endif %}
+                <div class="mt-1">
+                    {% if portrait.is_default %}
+                    <span class="badge bg-success">Default</span>
+                    {% endif %}
+                    {% if portrait.is_hidden %}
+                    <span class="badge bg-secondary">Hidden</span>
+                    {% endif %}
+                </div>
                 {% else %}
                 <span class="text-muted">(orphaned)</span>
                 {% endif %}
@@ -150,13 +168,31 @@
                 {{ portrait.created_at.strftime('%Y-%m-%d') if portrait.created_at else '' }}
             </td>
             <td class="text-end">
-                <form method="POST"
-                      action="{{ url_for('admin.delete_portrait', portrait_id=portrait.id) }}"
-                      class="d-inline"
-                      data-confirm="Delete this portrait of {{ (ch.name if ch else 'unknown')|e }}? The image file will also be removed from disk.">
-                    {{ csrf_form.hidden_tag() }}
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                </form>
+                <div class="btn-group-vertical btn-group-sm" role="group">
+                    {% if not portrait.is_default and not portrait.is_hidden %}
+                    <form method="POST"
+                          action="{{ url_for('admin.set_default_portrait', portrait_id=portrait.id) }}"
+                          class="d-inline">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-success">Set default</button>
+                    </form>
+                    {% endif %}
+                    <form method="POST"
+                          action="{{ url_for('admin.toggle_portrait_hidden', portrait_id=portrait.id) }}"
+                          class="d-inline">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            {{ 'Unhide' if portrait.is_hidden else 'Hide' }}
+                        </button>
+                    </form>
+                    <form method="POST"
+                          action="{{ url_for('admin.delete_portrait', portrait_id=portrait.id) }}"
+                          class="d-inline"
+                          data-confirm="Delete this portrait of {{ (ch.name if ch else 'unknown')|e }}? The image file will also be removed from disk.">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
             </td>
         </tr>
         {% else %}

@@ -114,7 +114,12 @@ def edit_character(id):
         flash('The character has been updated.')
         return redirect(url_for("main.edit_character", id=character.id))
 
-    portraits = [p for p in character.portraits if not p.is_deleted]
+    portraits = [
+        p for p in character.portraits
+        if not p.is_deleted and not p.is_hidden
+    ]
+    # Default-first; same ordering the chapter sidebar uses.
+    portraits.sort(key=lambda p: not p.is_default)
     return render_template(
         'characters/character_edit.html',
         form=form,

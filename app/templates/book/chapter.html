@@ -26,7 +26,10 @@
               <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   {% for character in characters %}
-                    {% set portraits = character.portraits | rejectattr('is_deleted') | list %}
+                    {% set portraits = character.portraits
+                       | rejectattr('is_deleted')
+                       | rejectattr('is_hidden')
+                       | sort(attribute='is_default', reverse=true) | list %}
                     {% set tab_set = 'char-' ~ character.id %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                       <h6 class="mb-2">{{ character.name }}</h6>

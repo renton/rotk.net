@@ -61,32 +61,47 @@
         <tr>
             <th>{{ sort_link('name', 'Name') }}</th>
             <th>Preview</th>
+            <th class="text-end">{{ sort_link('image_count', 'Images') }}</th>
             <th>{{ sort_link('created_at', 'Created') }}</th>
             <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
-        {% for tag in pagination.items %}
+        {% for tag, image_count in pagination.items %}
         <tr>
             <td>
                 <a href="{{ url_for('admin.edit_tag', tag_id=tag.id) }}">{{ tag.name }}</a>
             </td>
             <td>{{ macros.badge_widget(tag) }}</td>
+            <td class="text-end">
+                {% if image_count > 0 %}
+                <span class="badge bg-primary rounded-pill">{{ image_count }}</span>
+                {% else %}
+                <span class="text-muted">0</span>
+                {% endif %}
+            </td>
             <td>{{ tag.created_at.strftime('%Y-%m-%d') if tag.created_at else '' }}</td>
             <td class="text-end">
                 <a href="{{ url_for('admin.edit_tag', tag_id=tag.id) }}"
                    class="btn btn-sm btn-outline-primary">Edit</a>
+                {% if image_count > 0 %}
+                <button type="button" class="btn btn-sm btn-outline-danger" disabled
+                        title="In use by {{ image_count }} image{{ '' if image_count == 1 else 's' }}; detach first">
+                    Delete
+                </button>
+                {% else %}
                 <form method="POST" action="{{ url_for('admin.delete_tag', tag_id=tag.id) }}"
                       class="d-inline"
-                      data-confirm="Delete tag &quot;{{ tag.name|e }}&quot;? Any associations will be removed.">
+                      data-confirm="Delete tag &quot;{{ tag.name|e }}&quot;?">
                     {{ csrf_form.hidden_tag() }}
                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                 </form>
+                {% endif %}
             </td>
         </tr>
         {% else %}
         <tr>
-            <td colspan="4" class="text-muted">
+            <td colspan="5" class="text-muted">
                 No tags{% if search %} matching that search{% endif %}.
                 {% if not search %}<a href="{{ url_for('admin.new_tag') }}">Create one</a>.{% endif %}
             </td>

@@ -133,6 +133,16 @@ class Portrait(AbstractObject):
     source_url = db.Column(db.Text, default="", nullable=False)
     source_site = db.Column(db.String(255), default="", nullable=False)
 
+    # Admin can hide a Portrait from public views (chapter sidebar, character
+    # edit page) without deleting the row — useful for false-positive scrapes.
+    # The Image Manager still shows it so the admin can unhide.
+    is_hidden = db.Column(db.Boolean, default=False, nullable=False)
+
+    # Exactly one Portrait per character can be the "default" — shown first
+    # in the chapter sidebar. Enforced by the set-default admin route, not by
+    # a DB constraint (no partial-unique-index migration needed).
+    is_default = db.Column(db.Boolean, default=False, nullable=False)
+
     character = db.relationship('Character', back_populates='portraits', lazy='select')
 
     # Polymorphic tag relationship — TagAssociation.target_type='portrait'.
