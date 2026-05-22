@@ -100,7 +100,7 @@ def chapter_associations(chapter_num=None):
     selected = None
     rows = []
     faction_options = []
-    addable_characters = []
+    all_characters = []
 
     if chapter_num is not None:
         selected = Chapter.query.filter_by(chapter_num=chapter_num).first()
