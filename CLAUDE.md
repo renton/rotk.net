@@ -48,7 +48,12 @@ tools/
   validators.py          # Hex colour validator
   decorators.py          # admin_required (authenticated + is_administrator + confirmed)
 
-migrations/              # Empty. Flask-Migrate is imported but commented out.
+migrations/              # Raw .sql files applied by `flask apply-migrations`.
+                         # Numbered NNNN_description.sql; each should be
+                         # idempotent (IF NOT EXISTS / IF EXISTS). Tracked
+                         # in the _schema_migrations table at runtime.
+                         # Alembic / Flask-Migrate is NOT set up (it's
+                         # imported in rotk.py but commented out; ISSUES #26).
 db-data/                 # Postgres data volume for local dev (gitignored)
 ```
 
@@ -94,6 +99,7 @@ Full walkthrough in `README.md`.
 | Command | What it does |
 |---|---|
 | `flask create-all` | `db.create_all()` — create schema |
+| `flask apply-migrations` | Run new `migrations/*.sql` files (tracked in `_schema_migrations`). Each file should be idempotent (`IF NOT EXISTS` / `IF EXISTS`); already-applied files are skipped. |
 | `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |

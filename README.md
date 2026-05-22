@@ -105,6 +105,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | Command | Purpose |
 |---|---|
 | `create-all` | Run `db.create_all()` to create all tables from the current model definitions |
+| `apply-migrations` | Apply any unapplied `migrations/*.sql` files in lexicographic order; tracks applied filenames in `_schema_migrations`. Idempotent. |
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |

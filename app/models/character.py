@@ -139,8 +139,8 @@ class Portrait(AbstractObject):
     is_hidden = db.Column(db.Boolean, default=False, nullable=False)
 
     # Exactly one Portrait per character can be the "default" — shown first
-    # in the chapter sidebar. Enforced by the set-default admin route, not by
-    # a DB constraint (no partial-unique-index migration needed).
+    # in the chapter sidebar. Enforced application-side by the set-default
+    # admin route AND db-side by the partial unique index in __table_args__.
     is_default = db.Column(db.Boolean, default=False, nullable=False)
 
     character = db.relationship('Character', back_populates='portraits', lazy='select')
@@ -159,6 +159,19 @@ class Portrait(AbstractObject):
         secondaryjoin='Tag.id == TagAssociation.tag_id',
         viewonly=True,
         order_by='Tag.name',
+    )
+
+    __table_args__ = (
+        # Allow many is_default=false rows per character; allow at most one
+        # is_default=true. The corresponding raw DDL lives in
+        # migrations/0001_partial_unique_default_portrait.sql for existing
+        # DBs; this declaration makes flask create-all on a fresh DB include it.
+        db.Index(
+            'uniq_default_portrait_per_character',
+            'character_id',
+            unique=True,
+            postgresql_where=db.text('is_default = true'),
+        ),
     )
 
     @hybrid_property

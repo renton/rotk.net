@@ -419,6 +419,79 @@ def create_all():
     db.create_all()
 
 
+_MIGRATIONS_DIR = os.path.join(os.path.dirname(__file__), 'migrations')
+
+
+@app.cli.command()
+def apply_migrations():
+    """Apply unapplied SQL migrations from the migrations/ directory.
+
+    Each .sql file in migrations/ is run in lexicographic filename order;
+    files already recorded in the _schema_migrations table are skipped.
+    Each file runs in its own transaction so a failure aborts that file
+    cleanly and the runner stops. Files are tracked by exact filename, so
+    don't rename existing migration files after they've been applied
+    anywhere — pick a new number and add a new file instead.
+
+    Idempotent on already-applied files (skipped). Each file should itself
+    be idempotent (use IF NOT EXISTS / IF EXISTS) so re-applying a partial
+    failure picks up cleanly.
+    """
+    from sqlalchemy import text
+
+    if not os.path.isdir(_MIGRATIONS_DIR):
+        print(f"No migrations directory at {_MIGRATIONS_DIR}.")
+        return
+
+    db.session.execute(text("""
+        CREATE TABLE IF NOT EXISTS _schema_migrations (
+            filename   TEXT PRIMARY KEY,
+            applied_at TIMESTAMP NOT NULL DEFAULT now()
+        )
+    """))
+    db.session.commit()
+
+    applied = {
+        row[0] for row in db.session.execute(
+            text("SELECT filename FROM _schema_migrations")
+        )
+    }
+
+    files = sorted(
+        f for f in os.listdir(_MIGRATIONS_DIR)
+        if f.endswith('.sql') and not f.startswith('.')
+    )
+    if not files:
+        print("No .sql migration files found.")
+        return
+
+    new_count = 0
+    for filename in files:
+        if filename in applied:
+            print(f"  skip {filename}")
+            continue
+        path = os.path.join(_MIGRATIONS_DIR, filename)
+        with open(path) as f:
+            sql = f.read()
+        print(f"  apply {filename} ...", flush=True)
+        try:
+            db.session.execute(text(sql))
+            db.session.execute(
+                text("INSERT INTO _schema_migrations (filename) VALUES (:f)"),
+                {'f': filename},
+            )
+            db.session.commit()
+        except Exception as exc:
+            db.session.rollback()
+            print(f"  FAIL {filename}: {exc}")
+            print("  stopping; fix the file and re-run.")
+            return
+        new_count += 1
+        print(f"  ok   {filename}")
+
+    print(f"\nDone. {new_count} new migration(s) applied; {len(applied)} were already in place.")
+
+
 @app.cli.command()
 @click.argument('email')
 def make_admin(email):
