@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Admin: Edits{% endblock %}
+
+{% macro filter_url() -%}
+    {% set args = {} %}
+    {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
+    {% if target_type %}{% set _ = args.update({'target_type': target_type}) %}{% endif %}
+    {% if action %}{% set _ = args.update({'action': action}) %}{% endif %}
+    {% if user_label %}{% set _ = args.update({'user_label': user_label}) %}{% endif %}
+    {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
+    {% if direction %}{% set _ = args.update({'dir': direction}) %}{% endif %}
+    {% set _ = args.update(kwargs) %}
+    {{ url_for('admin.edits', **args) }}
+{%- endmacro %}
+
+{% macro sort_link(column, label) %}
+    {% if sort == column %}
+        {% set new_dir = 'desc' if direction == 'asc' else 'asc' %}
+        {% set arrow = ' ▲' if direction == 'asc' else ' ▼' %}
+    {% else %}
+        {% set new_dir = 'desc' if column == 'created_at' else 'asc' %}
+        {% set arrow = '' %}
+    {% endif %}
+    <a href="{{ filter_url(sort=column, dir=new_dir, page=1) }}">{{ label }}{{ arrow }}</a>
+{% endmacro %}
+
+{% block page_content %}
+<div class="page-header mb-4 d-flex justify-content-between align-items-end">
+    <div>
+        <h1>Edits</h1>
+        <p class="text-muted mb-0">
+            Every ORM insert / update / delete logged by
+            <code>app/edit_log.py</code>. Bulk queries bypass the
+            listener and aren't recorded here.
+        </p>
+    </div>
+    <div class="text-muted small">
+        {{ pagination.total }} edit{{ '' if pagination.total == 1 else 's' }}
+    </div>
+</div>
+
+<form method="GET" action="{{ url_for('admin.edits') }}" class="row g-2 align-items-end mb-4">
+    <div class="col-md-3">
+        <label for="edits-search" class="form-label">Search</label>
+        <input type="search" name="q" id="edits-search" class="form-control"
+               value="{{ search or '' }}" autocomplete="off"
+               placeholder="user or target type">
+    </div>
+    <div class="col-md-3">
+        <label for="edits-target-type" class="form-label">Target type</label>
+        <select name="target_type" id="edits-target-type" class="form-select">
+            <option value="">All types</option>
+            {% for t in target_types %}
+            <option value="{{ t }}" {% if target_type == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="edits-action" class="form-label">Action</label>
+        <select name="action" id="edits-action" class="form-select">
+            <option value="">Any</option>
+            {% for a in ['create', 'update', 'delete'] %}
+            <option value="{{ a }}" {% if action == a %}selected{% endif %}>{{ a }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="edits-user" class="form-label">User</label>
+        <select name="user_label" id="edits-user" class="form-select">
+            <option value="">Anyone</option>
+            {% for u in user_labels %}
+            <option value="{{ u }}" {% if user_label == u %}selected{% endif %}>{{ u }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <input type="hidden" name="dir"  value="{{ direction }}">
+    <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-grow-1">Apply</button>
+        <a href="{{ url_for('admin.edits') }}" class="btn btn-outline-secondary">Reset</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>{{ sort_link('created_at', 'When') }}</th>
+            <th>{{ sort_link('user_label', 'Who') }}</th>
+            <th>{{ sort_link('action', 'Action') }}</th>
+            <th>{{ sort_link('target_type', 'Target') }}</th>
+            <th>Changes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for edit in pagination.items %}
+        <tr>
+            <td class="small text-muted">
+                {{ edit.created_at.strftime('%Y-%m-%d %H:%M:%S') if edit.created_at else '' }}
+            </td>
+            <td>
+                {{ edit.user_label or '—' }}
+                {% if edit.user_label == 'rotk.net_system' %}
+                <span class="badge bg-secondary ms-1">system</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if edit.action == 'create' %}
+                <span class="badge bg-success">create</span>
+                {% elif edit.action == 'update' %}
+                <span class="badge bg-primary">update</span>
+                {% elif edit.action == 'delete' %}
+                <span class="badge bg-danger">delete</span>
+                {% else %}
+                <span class="badge bg-secondary">{{ edit.action }}</span>
+                {% endif %}
+            </td>
+            <td class="small">
+                <code>{{ edit.target_type }}</code>{% if edit.target_id %} <span class="text-muted">#{{ edit.target_id }}</span>{% endif %}
+            </td>
+            <td>
+                <details>
+                    <summary class="small text-muted">
+                        {{ edit.changes.keys()|list|length }} field{{ '' if edit.changes.keys()|list|length == 1 else 's' }}
+                    </summary>
+                    <pre class="small mt-2 mb-0" style="max-height: 300px; overflow:auto;">{{ edit.changes | tojson(indent=2) }}</pre>
+                </details>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-muted">No edits match the current filters.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>{# /.table-responsive #}
+
+{% if pagination.pages > 1 %}
+<nav>
+    <ul class="pagination">
+        <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+            <a class="page-link" href="{{ filter_url(page=pagination.prev_num) if pagination.has_prev else '#' }}">&laquo;</a>
+        </li>
+        {% for p in pagination.iter_pages(left_edge=2, left_current=3, right_current=3, right_edge=2) %}
+            {% if p %}
+                <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ filter_url(page=p) }}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">…</a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+            <a class="page-link" href="{{ filter_url(page=pagination.next_num) if pagination.has_next else '#' }}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

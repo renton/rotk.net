@@ -94,4 +94,9 @@ def create_app(config_name):
     from app.blueprints.admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
+    # Importing edit_log registers SQLAlchemy Mapper event listeners that
+    # write to the Edit audit table on every ORM insert/update/delete.
+    # Side-effect-only import; nothing in here is called by name.
+    from app import edit_log  # noqa: F401
+
     return app

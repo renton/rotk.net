@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Edit
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, count_mentions_per_character
@@ -692,6 +692,80 @@ def duplicate_characters():
         rows=rows,
         chars_by_name=chars_by_name,
         factions_by_char=factions_by_char,
+    )
+
+
+# ----- Edits (audit log) ---------------------------------------------------
+
+_EDIT_SORTS = ('created_at', 'target_type', 'user_label', 'action')
+_EDITS_PER_PAGE = 50
+
+
+@admin.route('/edits', methods=['GET'])
+@login_required
+@admin_required
+def edits():
+    page = request.args.get('page', 1, type=int)
+    search = (request.args.get('q') or '').strip()
+    target_type = (request.args.get('target_type') or '').strip()
+    action = (request.args.get('action') or '').strip()
+    user_label = (request.args.get('user_label') or '').strip()
+    sort = request.args.get('sort', 'created_at')
+    direction = request.args.get('dir', 'desc')
+
+    if sort not in _EDIT_SORTS:
+        sort = 'created_at'
+    if direction not in ('asc', 'desc'):
+        direction = 'desc'
+
+    query = Edit.query
+
+    if search:
+        like = f"%{search}%"
+        query = query.filter(or_(
+            Edit.user_label.ilike(like),
+            Edit.target_type.ilike(like),
+        ))
+
+    if target_type:
+        query = query.filter(Edit.target_type == target_type)
+
+    if action:
+        query = query.filter(Edit.action == action)
+
+    if user_label:
+        query = query.filter(Edit.user_label == user_label)
+
+    order_col = getattr(Edit, sort)
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+    if sort != 'created_at':
+        query = query.order_by(Edit.created_at.desc())  # deterministic tiebreak
+
+    pagination = query.paginate(page=page, per_page=_EDITS_PER_PAGE, error_out=False)
+
+    # Filter-dropdown options come from distinct values currently in the
+    # table — cheap because of the indexes on these columns.
+    target_types = [
+        r[0] for r in
+        db.session.query(Edit.target_type).distinct().order_by(Edit.target_type).all()
+    ]
+    user_labels = [
+        r[0] for r in
+        db.session.query(Edit.user_label).distinct().order_by(Edit.user_label).all()
+        if r[0]
+    ]
+
+    return render_template(
+        'admin/edits.html',
+        pagination=pagination,
+        target_types=target_types,
+        user_labels=user_labels,
+        search=search,
+        target_type=target_type,
+        action=action,
+        user_label=user_label,
+        sort=sort,
+        direction=direction,
     )
 
 

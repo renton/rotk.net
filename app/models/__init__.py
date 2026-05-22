@@ -8,3 +8,5 @@ from app.models.chapter import Chapter
 from app.models.auth import User
 
 from app.models.tag import Tag, TagAssociation
+
+from app.models.edit import Edit
