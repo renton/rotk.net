@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Tag, TagAssociation
+from app.models import User, Chapter, Character, Faction, Tag, TagAssociation
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions
@@ -20,6 +20,30 @@ from . import admin
 
 
 PORTRAIT_TARGET_TYPE = 'portrait'   # TagAssociation.target_type for Portrait rows.
+
+
+def _factions_by_character_id(character_ids):
+    """Return {character_id: [faction_name, ...]} for the given character ids.
+
+    `Character.factions` is `lazy='dynamic'`, which blocks selectinload, so
+    we go straight at the M2M association table with one explicit join.
+    Empty input -> empty dict."""
+    if not character_ids:
+        return {}
+    rows = (
+        db.session.query(
+            Character.faction_table.c.character_id,
+            Faction.name,
+        )
+        .join(Faction, Faction.id == Character.faction_table.c.faction_id)
+        .filter(Character.faction_table.c.character_id.in_(character_ids))
+        .order_by(Faction.name)
+        .all()
+    )
+    out = {}
+    for cid, fname in rows:
+        out.setdefault(cid, []).append(fname)
+    return out
 
 
 class _CsrfOnlyForm(FlaskForm):
@@ -129,6 +153,14 @@ def chapter_associations(chapter_num=None):
         # chapter; the Switch form might pick one not currently here).
         all_characters = Character.query.order_by(Character.name).all()
 
+    # Names that appear on more than one character — used by the picker
+    # template to annotate ambiguous options with each character's factions
+    # so the admin can tell them apart visually.
+    from collections import Counter
+    name_counter = Counter(c.name for c in all_characters)
+    duplicate_names = {name for name, n in name_counter.items() if n > 1}
+    factions_by_char = _factions_by_character_id([c.id for c in all_characters])
+
     return render_template(
         'admin/chapter_associations.html',
         chapters=chapters,
@@ -136,6 +168,8 @@ def chapter_associations(chapter_num=None):
         rows=rows,
         faction_options=faction_options,
         all_characters=all_characters,
+        duplicate_names=duplicate_names,
+        factions_by_char=factions_by_char,
         csrf_form=_CsrfOnlyForm(),
     )
 
@@ -552,10 +586,15 @@ def duplicate_characters():
         ):
             chars_by_name.setdefault(c.name, []).append(c)
 
+    factions_by_char = _factions_by_character_id(
+        [c.id for cs in chars_by_name.values() for c in cs]
+    )
+
     return render_template(
         'admin/duplicates.html',
         rows=rows,
         chars_by_name=chars_by_name,
+        factions_by_char=factions_by_char,
     )
 
 

@@ -34,9 +34,9 @@
             </td>
             <td class="small">
                 {% for c in chars_by_name.get(name, []) -%}
-                <a href="{{ url_for('main.edit_character', id=c.id) }}">
-                    #{{ c.id }}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}
-                </a>{% if not loop.last %}, {% endif %}
+                    {% set f_names = factions_by_char.get(c.id, []) %}
+                    <a href="{{ url_for('main.edit_character', id=c.id) }}">#{{ c.id }}</a>
+                    [{{ f_names|join(', ') if f_names else 'no faction' }}]{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}{% if not loop.last %}<br>{% endif %}
                 {%- endfor %}
             </td>
         </tr>

@@ -190,12 +190,18 @@
 
    Each value includes a trailing `#<id>` so values are guaranteed unique
    even when two characters share a name (e.g. multiple Zhang Liangs). The
-   JS picker handler and the server-side resolver both parse the id out. #}
+   JS picker handler and the server-side resolver both parse the id out.
+
+   For names that occur on more than one character, the dropdown label
+   annotates the option with that character's factions so the admin can
+   tell them apart visually. #}
 <datalist id="all-characters-datalist">
     {% for c in all_characters %}
+        {% set is_dupe = c.name in duplicate_names %}
+        {% set f_names = factions_by_char.get(c.id, []) %}
     <option value="{{ c.name }} #{{ c.id }}"
             data-character-id="{{ c.id }}"
-            label="{{ c.name }}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+            label="{{ c.name }}{% if is_dupe %} [{{ f_names|join(', ') if f_names else 'no faction' }}]{% endif %}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
     </option>
     {% endfor %}
 </datalist>
