@@ -61,6 +61,7 @@
             <th>Roles</th>
             <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
             <th>Snippets</th>
+            <th class="text-end">Switch</th>
         </tr>
     </thead>
     <tbody>
@@ -120,48 +121,80 @@
                 <span class="text-warning small">no live matches</span>
                 {% endif %}
             </td>
+            <td class="text-end" style="min-width: 220px;">
+                <details>
+                    <summary class="btn btn-sm btn-outline-warning" style="list-style: none;">
+                        Switch character
+                    </summary>
+                    <form method="POST"
+                          action="{{ url_for('admin.chapter_associations_switch', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                          class="d-flex gap-1 mt-2">
+                        {{ csrf_form.hidden_tag() }}
+                        <input type="text" name="character_name"
+                               class="form-control form-control-sm"
+                               list="all-characters-datalist"
+                               data-character-picker
+                               placeholder="Search…" autocomplete="off" required>
+                        <input type="hidden" name="character_id">
+                        <button type="submit" class="btn btn-sm btn-warning">Apply</button>
+                    </form>
+                </details>
+            </td>
         </tr>
         {% else %}
         <tr>
-            <td colspan="5" class="text-muted">No characters associated with this chapter.</td>
+            <td colspan="6" class="text-muted">No characters associated with this chapter.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
 <div class="card mt-4">
-    <div class="card-header">Add a character to chapter {{ selected.chapter_num }}</div>
+    <div class="card-header">Add Character Association to chapter {{ selected.chapter_num }}</div>
     <div class="card-body">
+        <p class="text-muted small mb-3">
+            Use this when the chapter text contains a name that doesn't match
+            any character's name / courtesy name / alias in our DB
+            (e.g. "Mengde" for Cao Cao). Enter the term as it appears in the
+            text and pick the canonical character — we'll verify the term
+            occurs in this chapter, add it to that character's aliases (so
+            future renders highlight it), and associate the character with
+            this chapter.
+        </p>
         <form method="POST"
               action="{{ url_for('admin.chapter_associations_add', chapter_num=selected.chapter_num) }}"
               class="row g-2 align-items-end">
             {{ csrf_form.hidden_tag() }}
-            <div class="col-md-8">
-                <label for="add-character-name" class="form-label">Character name</label>
-                <input type="text" name="character_name" id="add-character-name"
-                       class="form-control" list="addable-characters-datalist"
-                       autocomplete="off" required>
-                <input type="hidden" name="character_id" id="add-character-id">
-                <div class="form-text">
-                    Type to search. If two characters share a name, the JS
-                    picker resolves to an ID; otherwise the server matches by
-                    exact name and flashes on ambiguity.
-                </div>
+            <div class="col-md-4">
+                <label for="add-search-term" class="form-label">Search term (as in text)</label>
+                <input type="text" name="search_term" id="add-search-term"
+                       class="form-control" required placeholder="e.g. Mengde"
+                       autocomplete="off">
             </div>
-            <div class="col-md-4 text-end">
+            <div class="col-md-5">
+                <label for="add-character-name" class="form-label">Canonical character</label>
+                <input type="text" name="character_name" id="add-character-name"
+                       class="form-control" list="all-characters-datalist"
+                       data-character-picker autocomplete="off" required>
+                <input type="hidden" name="character_id" id="add-character-id">
+            </div>
+            <div class="col-md-3 text-end">
                 <button type="submit" class="btn btn-primary">Add</button>
             </div>
         </form>
-        <datalist id="addable-characters-datalist">
-            {% for c in addable_characters %}
-            <option value="{{ c.name }}"
-                    data-character-id="{{ c.id }}"
-                    label="{{ c.name }}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
-            </option>
-            {% endfor %}
-        </datalist>
     </div>
 </div>
+
+{# Shared datalist used by the Add form above and every row's Switch form.
+   Renders once at the bottom so the option list isn't duplicated per row. #}
+<datalist id="all-characters-datalist">
+    {% for c in all_characters %}
+    <option value="{{ c.name }}"
+            data-character-id="{{ c.id }}"
+            label="{{ c.name }}{% if c.courtesty_name %} — {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+    </option>
+    {% endfor %}
+</datalist>
 
 {% endif %}{# selected #}
 

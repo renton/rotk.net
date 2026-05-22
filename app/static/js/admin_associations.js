@@ -70,30 +70,47 @@
     });
   }
 
-  // ---- Add-character picker: resolve typed name -> character_id. ---------
-  var addNameInput = document.getElementById('add-character-name');
-  var addIdInput = document.getElementById('add-character-id');
-  var dl = document.getElementById('addable-characters-datalist');
-  if (addNameInput && addIdInput && dl) {
-    var nameToId = {};
-    Array.prototype.forEach.call(dl.querySelectorAll('option'), function (opt) {
-      var v = opt.getAttribute('value');
-      var id = opt.getAttribute('data-character-id');
-      if (!v || !id) return;
-      // Track ambiguity: if multiple options share a name, drop the ID so the
-      // server gets the name only and can flash an ambiguity error.
-      if (Object.prototype.hasOwnProperty.call(nameToId, v)) {
-        nameToId[v] = null;
-      } else {
-        nameToId[v] = id;
-      }
-    });
-    function resolveId() {
-      var v = addNameInput.value;
-      var id = nameToId[v];
-      addIdInput.value = id || '';
+  // ---- Generic character-picker resolver. ---------------------------------
+  // Any text input marked `data-character-picker` referencing a `<datalist>`
+  // gets its sibling `<input name="character_id">` (same form) populated
+  // with the ID of the picked option whenever the value changes. The Add
+  // Character Association form and every per-row Switch form share this
+  // handler.
+  var datalistMaps = {};
+  function nameToIdMapFor(datalistId) {
+    if (datalistMaps[datalistId]) return datalistMaps[datalistId];
+    var dl = document.getElementById(datalistId);
+    var map = {};
+    if (dl) {
+      Array.prototype.forEach.call(dl.querySelectorAll('option'), function (opt) {
+        var v = opt.getAttribute('value');
+        var id = opt.getAttribute('data-character-id');
+        if (!v || !id) return;
+        // Ambiguity: if multiple options share a name, drop the ID so the
+        // server gets the name alone and can flash an ambiguity error.
+        if (Object.prototype.hasOwnProperty.call(map, v)) {
+          map[v] = null;
+        } else {
+          map[v] = id;
+        }
+      });
     }
-    addNameInput.addEventListener('input', resolveId);
-    addNameInput.addEventListener('change', resolveId);
+    datalistMaps[datalistId] = map;
+    return map;
   }
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('input[data-character-picker]'),
+    function (input) {
+      var dlId = input.getAttribute('list');
+      if (!dlId) return;
+      var map = nameToIdMapFor(dlId);
+      var form = input.closest('form');
+      var hidden = form ? form.querySelector('input[name="character_id"]') : null;
+      if (!hidden) return;
+      function resolve() { hidden.value = map[input.value] || ''; }
+      input.addEventListener('input', resolve);
+      input.addEventListener('change', resolve);
+    }
+  );
 })();

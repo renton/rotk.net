@@ -122,11 +122,11 @@ def chapter_associations(chapter_num=None):
                 seen_factions[character.latest_faction.id] = character.latest_faction
         faction_options = sorted(seen_factions.values(), key=lambda f: f.name)
 
-        associated_ids = {c.id for c in associated}
-        addable_query = Character.query.order_by(Character.name)
-        if associated_ids:
-            addable_query = addable_query.filter(~Character.id.in_(associated_ids))
-        addable_characters = addable_query.all()
+        # Both the per-row Switch picker and the Add Character Association
+        # form below need to pick from every character (the Add form might
+        # want to attach an alias to a character that's already in the
+        # chapter; the Switch form might pick one not currently here).
+        all_characters = Character.query.order_by(Character.name).all()
 
     return render_template(
         'admin/chapter_associations.html',
@@ -134,7 +134,7 @@ def chapter_associations(chapter_num=None):
         selected=selected,
         rows=rows,
         faction_options=faction_options,
-        addable_characters=addable_characters,
+        all_characters=all_characters,
         csrf_form=_CsrfOnlyForm(),
     )
 
@@ -160,44 +160,123 @@ def chapter_associations_remove(chapter_num, character_id):
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
 
+def _resolve_character_from_form():
+    """Pull (character_id, character_name) out of request.form and resolve to
+    a single Character or (None, error_message_to_flash). Used by both the
+    add and switch flows — they share the same picker pattern."""
+    raw_id = (request.form.get('character_id') or '').strip()
+    raw_name = (request.form.get('character_name') or '').strip()
+
+    if raw_id.isdigit():
+        character = Character.query.get(int(raw_id))
+        if character is None:
+            return None, "Couldn't find a character with that id."
+        return character, None
+    if raw_name:
+        matches = Character.query.filter(Character.name == raw_name).all()
+        if len(matches) == 1:
+            return matches[0], None
+        if len(matches) > 1:
+            return None, (
+                f"Multiple characters named {raw_name!r}. Use the picker "
+                f"(it sends the character ID) instead of typing the name."
+            )
+    return None, "Couldn't find a character matching that selection."
+
+
 @admin.route('/chapter-associations/<int:chapter_num>/add', methods=['POST'])
 @login_required
 @admin_required
 def chapter_associations_add(chapter_num):
+    """Add a Character ↔ Chapter association by alias.
+
+    Admin provides a `search_term` (the name as it appears in the chapter
+    text) and picks the canonical character. We verify the term occurs in
+    the chapter, add it to the character's aliases (so the rendered chapter
+    tags those occurrences), and associate the character with the chapter."""
+    from tools.book_parser import strip_html_tags, build_needle_pattern
+
     form = _CsrfOnlyForm()
     if not form.validate_on_submit():
         abort(400)
 
     chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
 
-    raw_id = (request.form.get('character_id') or '').strip()
-    raw_name = (request.form.get('character_name') or '').strip()
-
-    character = None
-    if raw_id.isdigit():
-        character = Character.query.get(int(raw_id))
-    elif raw_name:
-        matches = Character.query.filter(Character.name == raw_name).all()
-        if len(matches) == 1:
-            character = matches[0]
-        elif len(matches) > 1:
-            flash(
-                f"Multiple characters named {raw_name!r}. "
-                f"Use the picker (it sends the character ID) instead of typing the name."
-            )
-            return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
-
-    if character is None:
-        flash("Couldn't find a character matching that selection.")
+    search_term = (request.form.get('search_term') or '').strip()
+    if not search_term:
+        flash("Search term is required.")
         return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
-    if character in chapter.characters:
-        flash(f"{character.name} is already associated with chapter {chapter.chapter_num}.")
-    else:
-        chapter.characters.append(character)
-        db.session.commit()
-        flash(f"Added {character.name} to chapter {chapter.chapter_num}.")
+    character, err = _resolve_character_from_form()
+    if err:
+        flash(err)
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
+    content = strip_html_tags(chapter.content)
+    matches = build_needle_pattern([search_term]).findall(content)
+    if not matches:
+        flash(f"{search_term!r} was not found in chapter {chapter.chapter_num}'s text.")
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+    # Add the search term to character.aliases if it isn't already a known
+    # label for this character (covers name, courtesy name, alias).
+    existing = [a.strip() for a in (character.aliases or '').split(',') if a.strip()]
+    known_labels = {character.name, character.courtesty_name or ''}
+    known_labels.update(existing)
+    alias_added = False
+    if search_term not in known_labels:
+        existing.append(search_term)
+        character.aliases = ','.join(existing)
+        alias_added = True
+
+    if character not in chapter.characters:
+        chapter.characters.append(character)
+
+    db.session.commit()
+
+    parts = [f"Found {len(matches)} occurrence{'' if len(matches) == 1 else 's'} of {search_term!r}."]
+    if alias_added:
+        parts.append(f"Added {search_term!r} as an alias of {character.name}.")
+    parts.append(f"{character.name} is now associated with chapter {chapter.chapter_num}.")
+    flash(" ".join(parts))
+
+    return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+
+@admin.route('/chapter-associations/<int:chapter_num>/switch/<int:character_id>', methods=['POST'])
+@login_required
+@admin_required
+def chapter_associations_switch(chapter_num, character_id):
+    """Swap which character a chapter association points at.
+
+    Keeps the chapter the same; removes the old character and adds the new
+    one. Used when the scanner picked the wrong character for a name."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    old_character = Character.query.get_or_404(character_id)
+
+    new_character, err = _resolve_character_from_form()
+    if err:
+        flash(err)
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+    if new_character.id == old_character.id:
+        flash(f"{new_character.name} is already the associated character — nothing to switch.")
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+    if old_character in chapter.characters:
+        chapter.characters.remove(old_character)
+    if new_character not in chapter.characters:
+        chapter.characters.append(new_character)
+    db.session.commit()
+
+    flash(
+        f"Switched {old_character.name} → {new_character.name} in "
+        f"chapter {chapter.chapter_num}."
+    )
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
 
