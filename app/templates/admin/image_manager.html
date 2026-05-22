@@ -185,13 +185,6 @@
                             {{ 'Unhide' if portrait.is_hidden else 'Hide' }}
                         </button>
                     </form>
-                    <form method="POST"
-                          action="{{ url_for('admin.delete_portrait', portrait_id=portrait.id) }}"
-                          class="d-inline"
-                          data-confirm="Delete this portrait of {{ (ch.name if ch else 'unknown')|e }}? The image file will also be removed from disk.">
-                        {{ csrf_form.hidden_tag() }}
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                    </form>
                 </div>
             </td>
         </tr>

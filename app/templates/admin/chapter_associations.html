@@ -61,7 +61,6 @@
             <th>Roles</th>
             <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
             <th>Snippets</th>
-            <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -121,21 +120,10 @@
                 <span class="text-warning small">no live matches</span>
                 {% endif %}
             </td>
-            <td class="text-end">
-                <form method="POST"
-                      action="{{ url_for('admin.chapter_associations_remove', chapter_num=selected.chapter_num, character_id=ch.id) }}"
-                      class="d-inline remove-association-form">
-                    {{ csrf_form.hidden_tag() }}
-                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                            data-confirm="Remove {{ ch.name }} from chapter {{ selected.chapter_num }}?">
-                        Remove
-                    </button>
-                </form>
-            </td>
         </tr>
         {% else %}
         <tr>
-            <td colspan="6" class="text-muted">No characters associated with this chapter.</td>
+            <td colspan="5" class="text-muted">No characters associated with this chapter.</td>
         </tr>
         {% endfor %}
     </tbody>
