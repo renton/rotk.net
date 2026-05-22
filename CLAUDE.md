@@ -83,7 +83,7 @@ Notes:
 Production lives on a single VPS running `stateful_boilerplate` (Caddy + shared postgres + shared redis). Deploy this project as a child:
 
 1. Carve out the postgres role+DB on the shared cluster (one-off).
-2. On the VPS, apply the in-repo overlay at `examples/ambrose/docker-compose.override.yml` with `-f` (or `COMPOSE_FILE=docker-compose.yml:examples/ambrose/docker-compose.override.yml` in `.env`). It deletes the bundled `db`, joins the `shared` network, drops the dev bind-mount, and points `POSTGRES_HOST=postgres`.
+2. Drop a `docker-compose.override.yml` on the VPS that deletes the bundled `db`, joins the `shared` network, and points `POSTGRES_HOST=postgres`.
 3. Add a site block to the boilerplate's `caddy/Caddyfile` reverse-proxying the app container.
 4. Run the data-population CLI commands once.
 

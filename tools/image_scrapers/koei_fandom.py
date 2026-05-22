@@ -1,84 +1,94 @@
-"""Scrape character portraits from koei.fandom.com.
+"""Scrape character portraits from koei.fandom.com via the MediaWiki API.
 
-URL pattern: https://koei.fandom.com/wiki/<Name_With_Underscores>
+We use api.php instead of scraping the rendered HTML because Fandom's
+Fastly layer returns 403 for bot-flavoured User-Agents on regular wiki
+pages. The MediaWiki API is intended for programmatic access and
+doesn't trip those rules.
 
-If the primary URL 404s (or has no matching image), we fall through to the
-character's courtesy name and aliases. The image we want is the first
-<img> inside an <a class="mw-file-description image"> on the page.
+Endpoint:
+    https://koei.fandom.com/api.php
+      ?action=query
+      &prop=pageimages
+      &piprop=original
+      &titles=<Page_Title>
+      &redirects=1
+      &format=json
+
+`prop=pageimages` with `piprop=original` returns the article's "lead
+image" — for a character article that's the infobox portrait, at
+native resolution. `redirects=1` follows page redirects server-side
+(e.g. romanisation variants), so we don't have to try every alias.
 """
-import urllib.parse
-
 import requests
-from bs4 import BeautifulSoup
 
 from . import ScrapedImage
 
 
 SITE_NAME = "Koei Wiki (Fandom)"
-BASE_URL = "https://koei.fandom.com/wiki/"
+API_URL = "https://koei.fandom.com/api.php"
+WIKI_URL = "https://koei.fandom.com/wiki/"
 USER_AGENT = (
-    "rotk.net-scraper/1.0 "
-    "(+https://rotk.net; an annotated Romance of the Three Kingdoms edition)"
+    "rotk.net/1.0 (+https://rotk.net; "
+    "an annotated Romance of the Three Kingdoms edition)"
 )
 REQUEST_HEADERS = {"User-Agent": USER_AGENT}
 TIMEOUT_SECONDS = 15
 
 
-def _candidate_slugs(character):
-    """Yield wiki-URL slugs to try, in priority order: canonical name first,
-    then courtesy name, then each alias. De-duplicated."""
+def _candidate_titles(character):
+    """Page titles to try, in priority order: canonical name first,
+    then courtesy name, then each alias. De-duplicated. Underscores
+    for spaces (MediaWiki accepts both, but underscores are canonical)."""
     seen = set()
     for label in character.get_all_name_labels():
         if not label:
             continue
-        slug = label.strip().replace(' ', '_')
-        if not slug or slug in seen:
+        title = label.strip().replace(' ', '_')
+        if not title or title in seen:
             continue
-        seen.add(slug)
-        yield slug
+        seen.add(title)
+        yield title
 
 
-def _fetch(url):
-    response = requests.get(url, headers=REQUEST_HEADERS, timeout=TIMEOUT_SECONDS)
-    if response.status_code == 404:
-        return None
+def _query_image(title):
+    """Hit the MediaWiki API for `title`. Returns (image_url, canonical_title)
+    or (None, None) if the page is missing or has no lead image."""
+    params = {
+        'action': 'query',
+        'prop': 'pageimages',
+        'piprop': 'original',
+        'titles': title,
+        'redirects': 1,
+        'format': 'json',
+    }
+    response = requests.get(
+        API_URL,
+        headers=REQUEST_HEADERS,
+        params=params,
+        timeout=TIMEOUT_SECONDS,
+    )
     if response.status_code != 200:
-        # 429 / 503 / etc. — surface to the caller log; treat as miss for now.
-        print(f"  koei: {url} returned HTTP {response.status_code}")
-        return None
-    return response.text
+        print(f"  koei API: {title} returned HTTP {response.status_code}")
+        return None, None
 
-
-def _extract_image(html):
-    """Return the first image src found inside an <a class='mw-file-description image'>,
-    or None. Prefers data-src (Fandom's lazy-load attribute) over src."""
-    soup = BeautifulSoup(html, 'html.parser')
-
-    for anchor in soup.find_all('a'):
-        classes = anchor.get('class') or []
-        if 'mw-file-description' in classes and 'image' in classes:
-            img = anchor.find('img')
-            if not img:
-                continue
-            src = img.get('data-src') or img.get('src')
-            if src:
-                return src
-    return None
+    pages = response.json().get('query', {}).get('pages', {})
+    for page in pages.values():
+        if 'missing' in page:
+            return None, None
+        original = page.get('original')
+        if original and original.get('source'):
+            return original['source'], page.get('title', title)
+    return None, None
 
 
 def scrape(character):
-    """Try each candidate slug until one yields an image. Returns a
-    ScrapedImage or None if no slug produced one."""
-    for slug in _candidate_slugs(character):
-        url = BASE_URL + urllib.parse.quote(slug, safe='_')
-        html = _fetch(url)
-        if html is None:
-            continue
-        image_url = _extract_image(html)
+    for title in _candidate_titles(character):
+        image_url, canonical = _query_image(title)
         if image_url:
+            page_slug = (canonical or title).replace(' ', '_')
             return ScrapedImage(
                 image_url=image_url,
-                source_url=url,
+                source_url=WIKI_URL + page_slug,
                 source_site=SITE_NAME,
                 description="",
             )
