@@ -62,7 +62,7 @@
             <th class="d-none d-md-table-cell">Roles</th>
             <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
             <th class="d-none d-md-table-cell">Snippets</th>
-            <th class="text-end">Switch</th>
+            <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -123,23 +123,32 @@
                 {% endif %}
             </td>
             <td class="text-end" style="min-width: 220px;">
-                <details>
-                    <summary class="btn btn-sm btn-outline-warning" style="list-style: none;">
-                        Switch character
-                    </summary>
+                <div class="d-flex flex-column gap-2 align-items-end">
+                    <details>
+                        <summary class="btn btn-sm btn-outline-warning" style="list-style: none;">
+                            Switch character
+                        </summary>
+                        <form method="POST"
+                              action="{{ url_for('admin.chapter_associations_switch', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                              class="d-flex gap-1 mt-2">
+                            {{ csrf_form.hidden_tag() }}
+                            <input type="text" name="character_name"
+                                   class="form-control form-control-sm"
+                                   list="all-characters-datalist"
+                                   data-character-picker
+                                   placeholder="Search…" autocomplete="off" required>
+                            <input type="hidden" name="character_id">
+                            <button type="submit" class="btn btn-sm btn-warning">Apply</button>
+                        </form>
+                    </details>
                     <form method="POST"
-                          action="{{ url_for('admin.chapter_associations_switch', chapter_num=selected.chapter_num, character_id=ch.id) }}"
-                          class="d-flex gap-1 mt-2">
+                          action="{{ url_for('admin.chapter_associations_remove', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                          class="d-inline"
+                          data-confirm="Remove {{ ch.name }} from chapter {{ selected.chapter_num }}? (You can re-add via the form below.)">
                         {{ csrf_form.hidden_tag() }}
-                        <input type="text" name="character_name"
-                               class="form-control form-control-sm"
-                               list="all-characters-datalist"
-                               data-character-picker
-                               placeholder="Search…" autocomplete="off" required>
-                        <input type="hidden" name="character_id">
-                        <button type="submit" class="btn btn-sm btn-warning">Apply</button>
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
                     </form>
-                </details>
+                </div>
             </td>
         </tr>
         {% else %}
@@ -216,4 +225,5 @@
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_associations.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
 {% endblock %}
