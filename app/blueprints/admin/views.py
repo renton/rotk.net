@@ -15,7 +15,7 @@ from app.models import User, Chapter, Character, Faction, Tag, TagAssociation
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, count_mentions_per_character
-from .forms import EditTagForm
+from .forms import EditTagForm, CreateUserForm
 from . import admin
 
 
@@ -67,6 +67,42 @@ def users():
         pagination=pagination,
         csrf_form=_CsrfOnlyForm(),
     )
+
+
+@admin.route('/users/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_user():
+    """Admin-only form to create a new user, optionally with admin access.
+
+    The user is marked confirmed (no email verification needed — the
+    admin is vouching), and is_administrator follows the checkbox.
+    Duplicate email / username are caught by CreateUserForm validators
+    before we hit the DB, so the only failure path here would be a race
+    with another insert — IntegrityError fallback for safety."""
+    form = CreateUserForm()
+    if form.validate_on_submit():
+        user = User(
+            email=form.email.data.lower(),
+            username=form.username.data,
+            confirmed=True,
+            is_administrator=bool(form.is_administrator.data),
+        )
+        user.password = form.password.data
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash("Couldn't create the user — email or username may "
+                  "have just been taken by another insert.")
+            return render_template('admin/user_new.html', form=form)
+
+        suffix = " (admin)" if user.is_administrator else ""
+        flash(f"Created user {user.username}{suffix}.")
+        return redirect(url_for('admin.users'))
+
+    return render_template('admin/user_new.html', form=form)
 
 
 @admin.route('/users/<int:user_id>/toggle-admin', methods=['POST'])
