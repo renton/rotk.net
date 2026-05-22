@@ -106,8 +106,8 @@ def scrape_characters():
     # add characters
     for character in characters:
         try:
-            latest_faction_name = character.pop('latest_faction', None)
-            latest_faction_obj = faction_index.get(latest_faction_name) if latest_faction_name else None
+            primary_faction_name = character.pop('primary_faction', None)
+            primary_faction_obj = faction_index.get(primary_faction_name) if primary_faction_name else None
 
             faction_objs = [faction_index[f] for f in character['factions'] if f in faction_index]
             role_objs = [role_index[r] for r in character['roles'] if r in role_index]
@@ -116,7 +116,7 @@ def scrape_characters():
             character['roles'] = role_objs
 
             new_character = Character(**character)
-            new_character.set_current_faction(latest_faction_obj)
+            new_character.set_primary_faction(primary_faction_obj)
             db.session.add(new_character)
 
             db.session.commit()

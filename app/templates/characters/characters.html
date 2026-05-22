@@ -107,8 +107,8 @@
                     {% endfor %}
                 </td>
                 <td>
-                    {% if character.latest_faction %}
-                        {{ macros.badge_widget(character.latest_faction) }}
+                    {% if character.primary_faction %}
+                        {{ macros.badge_widget(character.primary_faction) }}
                     {% endif %}
                 </td>
                 <td class="d-none d-md-table-cell">

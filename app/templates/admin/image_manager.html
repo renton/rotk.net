@@ -114,8 +114,8 @@
             <td>
                 {% if ch %}
                 <a href="{{ url_for('main.edit_character', id=ch.id) }}">{{ ch.name }}</a>
-                {% if ch.latest_faction %}
-                <div class="mt-1">{{ macros.badge_widget(ch.latest_faction) }}</div>
+                {% if ch.primary_faction %}
+                <div class="mt-1">{{ macros.badge_widget(ch.primary_faction) }}</div>
                 {% endif %}
                 <div class="mt-1">
                     {% if portrait.is_default %}

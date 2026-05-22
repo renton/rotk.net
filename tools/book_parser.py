@@ -104,20 +104,20 @@ def build_needle_pattern(name_needles):
 def build_name_ref_html(character):
     html_output = f"<span class='character-ref badge rounded-pill' data-character-id='{ character.id }' "
 
-    if character.latest_faction is not None:
-        html_output += f"data-faction-id='{ character.latest_faction.id }'"
+    if character.primary_faction is not None:
+        html_output += f"data-faction-id='{ character.primary_faction.id }'"
 
         html_output += f" style='"
-        if character.latest_faction.bg_colour not in ["", character.latest_faction.default_colour]:
-            html_output += f"background-color:{character.latest_faction.bg_colour};"
+        if character.primary_faction.bg_colour not in ["", character.primary_faction.default_colour]:
+            html_output += f"background-color:{character.primary_faction.bg_colour};"
         else:
             html_output += f"background-color:#000;"
 
-        if character.latest_faction.font_colour:
-            html_output += f"color:{character.latest_faction.font_colour};"
+        if character.primary_faction.font_colour:
+            html_output += f"color:{character.primary_faction.font_colour};"
 
-        if character.latest_faction.border_colour not in ["", character.latest_faction.default_colour]:
-            html_output += f"border:2px solid {character.latest_faction.border_colour};"
+        if character.primary_faction.border_colour not in ["", character.primary_faction.default_colour]:
+            html_output += f"border:2px solid {character.primary_faction.border_colour};"
 
         html_output += "'"
     else:

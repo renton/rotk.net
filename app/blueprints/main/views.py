@@ -116,7 +116,7 @@ def characters():
         if form.search_past_factions.data == True:
             query = query.filter(Character.factions.any(Faction.id == form.faction.data.id))
         else:
-            query = query.filter(Character.latest_faction == form.faction.data)
+            query = query.filter(Character.primary_faction == form.faction.data)
 
     if form.search_query.data:
         search_term = f"%{form.search_query.data}%"
@@ -185,10 +185,10 @@ def edit_character(id):
         # sidebar would highlight a faction the character supposedly
         # isn't a member of).
         if (
-            character.latest_faction is not None
-            and character.latest_faction not in character.factions.all()
+            character.primary_faction is not None
+            and character.primary_faction not in character.factions.all()
         ):
-            character.factions.append(character.latest_faction)
+            character.factions.append(character.primary_faction)
 
         if old_labels != new_labels:
             counts = count_mentions_per_character(

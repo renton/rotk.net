@@ -49,8 +49,12 @@ class Character(AbstractObject):
         lazy='dynamic'
     )
 
-    latest_faction_id = db.Column(db.Integer, db.ForeignKey("faction.id"), default=None, nullable=True)
-    latest_faction = db.relationship("Faction", foreign_keys=[latest_faction_id])
+    # Primary faction = the faction the character is most associated with.
+    # Often the chronologically latest, but not always (the role-defining
+    # / public-perception one wins over strictly-latest). Drives the pill
+    # highlight in chapter prose, the Faction column in listings, etc.
+    primary_faction_id = db.Column(db.Integer, db.ForeignKey("faction.id"), default=None, nullable=True)
+    primary_faction = db.relationship("Faction", foreign_keys=[primary_faction_id])
 
     # Association table for many-to-many relationship
     chapter_character = db.Table('chapter_character',
@@ -75,15 +79,15 @@ class Character(AbstractObject):
     def __repr__(self):
         return f'<Character {self.name}>'
 
-    def set_current_faction(self, faction):
-        # Keep `latest_faction` (FK) and the `factions` M2M consistent.
+    def set_primary_faction(self, faction):
+        # Keep `primary_faction` (FK) and the `factions` M2M consistent.
         # Caller should add `faction` to `factions` themselves if the
         # instance isn't yet persisted (the dynamic relationship can't
         # be queried for transient rows).
         if faction is None:
-            self.latest_faction = None
+            self.primary_faction = None
             return
-        self.latest_faction = faction
+        self.primary_faction = faction
         try:
             if faction not in self.factions.all():
                 self.factions.append(faction)

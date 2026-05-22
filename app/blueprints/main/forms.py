@@ -56,8 +56,8 @@ class EditCharacterForm(FlaskForm):
         query_factory=lambda: Faction.query.all(),
         get_label="name"
     )
-    latest_faction = QuerySelectField(
-        "Main faction (drives the highlight colour)",
+    primary_faction = QuerySelectField(
+        "Primary faction (drives the highlight colour)",
         query_factory=lambda: Faction.query.order_by(Faction.name).all(),
         get_label="name",
         allow_blank=True,

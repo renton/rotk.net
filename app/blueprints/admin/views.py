@@ -197,10 +197,10 @@ def chapter_associations(chapter_num=None):
                 'mentions': mentions,
                 'mention_count': len(mentions),
                 'roles': list(character.roles),
-                'faction': character.latest_faction,
+                'faction': character.primary_faction,
             })
-            if character.latest_faction is not None:
-                seen_factions[character.latest_faction.id] = character.latest_faction
+            if character.primary_faction is not None:
+                seen_factions[character.primary_faction.id] = character.primary_faction
         faction_options = sorted(seen_factions.values(), key=lambda f: f.name)
 
         # Both the per-row Switch picker and the Add Character Association

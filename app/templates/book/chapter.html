@@ -102,10 +102,10 @@
                         </div>
                       {% endfor %}
 
-                      {% if character.latest_faction %}
+                      {% if character.primary_faction %}
                         Faction:
                         <div>
-                          {{ macros.badge_widget(character.latest_faction) }}
+                          {{ macros.badge_widget(character.primary_faction) }}
                         </div>
                       {% endif %}
 
