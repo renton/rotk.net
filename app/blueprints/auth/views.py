@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect, flash, current_app
+from flask import render_template, request, url_for, redirect, flash, current_app, abort
 from flask_login import login_user, logout_user, login_required, current_user
 
 from app import db, limiter
@@ -42,6 +42,15 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 @limiter.limit("5 per hour; 20 per day", methods=["POST"])
 def register():
+    # Public sign-up is disabled until we actually want non-admin users.
+    # Admins are created out-of-band via `flask make-admin` or the admin
+    # panel. The body below is kept (but unreachable) so re-enabling is
+    # just deleting the abort line. `is_administrator=False` is set
+    # explicitly so a future regression can't accidentally promote
+    # registrants — `User.is_administrator` already defaults to False on
+    # the model, but stating it here makes the intent unambiguous.
+    abort(404)
+
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
 
@@ -51,6 +60,7 @@ def register():
             email=form.email.data.lower(),
             username=form.username.data,
             confirmed=False,
+            is_administrator=False,
         )
         user.password = form.password.data
         db.session.add(user)
