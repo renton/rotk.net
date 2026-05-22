@@ -10,8 +10,12 @@
       depends_on: !reset []
       # Don't publish a host port — Caddy reaches us over the shared network.
       ports: !reset []
-      # Drop the dev source bind-mount so the container runs the image we built.
-      volumes: !reset []
+      # Drop the dev source bind-mount so the container runs the image we built,
+      # but keep a named volume for downloaded portraits — otherwise every
+      # `up -d --build` would destroy the container's writable layer and wipe
+      # the scraped images. The volume preserves them across rebuilds.
+      volumes: !reset
+        - portraits_data:/rotk.net/app/static/portraits
       # Base healthcheck targets flask-run's :5000; gunicorn binds :8081 in prod.
       healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:8081"]
@@ -33,3 +37,8 @@
     shared:
       name: shared
       external: true
+
+  volumes:
+    portraits_data:
+      # Persistent named volume for scraped character portraits. Lives outside
+      # the container lifecycle so rebuilds keep the downloaded images.
