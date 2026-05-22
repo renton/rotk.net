@@ -16,9 +16,14 @@
         {% for faction in factions %}
             <tr>
                 <td>
-                    {# Name always links to the characters page filtered by this faction.
-                       Admins also get a dedicated Edit button in the actions column. #}
-                    <a href="{{ url_for('main.characters', faction=faction.id) }}">{{ faction.name }}</a>
+                    {# Name links to the characters page filtered by this faction.
+                       `search_past_factions=y` flips the filter to "anyone whose
+                       M2M factions list contains this one" — same set the count
+                       below is taken from, so the page-down number matches what
+                       was advertised. Admins also get a dedicated Edit button. #}
+                    <a href="{{ url_for('main.characters',
+                                        faction=faction.id,
+                                        search_past_factions='y') }}">{{ faction.name }}</a>
                 </td>
                 <td>
                     {{ macros.badge_widget(faction) }}
