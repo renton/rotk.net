@@ -15,7 +15,7 @@ The site is single-tenant (one book), small-traffic, and most of the surface is 
 - **Frontend:** Server-rendered Jinja2 + Bootstrap 5 CSS/JS from CDN. No bundler, no SPA. One CSS file (`app/static/styles.css`) with effectively no custom styling.
 - **Scraping:** `requests` + `beautifulsoup4`
 - **Serving:** gunicorn behind Caddy (provided by `stateful_boilerplate`) in prod; `flask run` in dev
-- **Containers:** Docker + docker-compose. Single base `docker-compose.yml`. Production layers `examples/ambrose/docker-compose.override.yml` on top (via `-f` or `COMPOSE_FILE=`) to swap the bundled `db` for shared postgres, drop the dev bind-mount, and join the `shared` docker network. The overlay deliberately does NOT live at the repo root so it doesn't auto-apply on developer laptops.
+- **Containers:** Docker + docker-compose. Single base `docker-compose.yml`; production gets a `docker-compose.override.yml` on the VPS that swaps the bundled `db` for shared postgres and joins the `shared` docker network.
 
 ## Architecture
 
