@@ -180,6 +180,16 @@ def edit_character(id):
         form.populate_obj(character)
         new_labels = (character.name, character.courtesty_name, character.aliases)
 
+        # If a main faction is picked but isn't in the M2M factions list,
+        # auto-add it so the data stays consistent (otherwise the chapter
+        # sidebar would highlight a faction the character supposedly
+        # isn't a member of).
+        if (
+            character.latest_faction is not None
+            and character.latest_faction not in character.factions.all()
+        ):
+            character.factions.append(character.latest_faction)
+
         if old_labels != new_labels:
             counts = count_mentions_per_character(
                 Chapter.query.all(), [character]

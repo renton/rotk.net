@@ -47,14 +47,22 @@ class EditCharacterForm(FlaskForm):
     notes = TextAreaField("Notes")
 
     roles = QuerySelectMultipleField(
-        "Roles", 
+        "Roles",
         query_factory=lambda: Role.query.all(),
         get_label="name"
     )
     factions = QuerySelectMultipleField(
-        "Factions", 
+        "Factions (all, past and present)",
         query_factory=lambda: Faction.query.all(),
         get_label="name"
+    )
+    latest_faction = QuerySelectField(
+        "Main faction (drives the highlight colour)",
+        query_factory=lambda: Faction.query.order_by(Faction.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='— None —',
+        blank_value="",
     )
 
     is_fictional = BooleanField("Is Fictional?")
