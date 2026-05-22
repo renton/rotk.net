@@ -253,6 +253,49 @@ def _download_image(image_url, save_dir, character_id, source_tag):
 
 
 @app.cli.command()
+@click.option('--faction-id', type=int, default=None,
+              help='Randomize just one faction (by id). Omit to do all factions.')
+@click.option('--seed', type=int, default=None,
+              help='Optional RNG seed for reproducible palettes.')
+@click.option('--dry-run', is_flag=True, default=False,
+              help='Print the new palette without writing to the DB.')
+def randomize_faction_colours(faction_id, seed, dry_run):
+    """Assign each faction a new random bg/font/border palette.
+
+    Background is sampled in HSL with saturated mid-lightness; font is
+    forced to black or white based on WCAG relative luminance so the
+    badge stays readable; border is a same-hue shift of the bg."""
+    import random as _random
+    from tools.colours import randomize_palette
+
+    rng = _random.Random(seed) if seed is not None else _random.Random()
+
+    if faction_id is not None:
+        factions = [Faction.query.get_or_404(faction_id)]
+    else:
+        factions = Faction.query.order_by(Faction.name).all()
+
+    if not factions:
+        print("No factions to update.")
+        return
+
+    for faction in factions:
+        bg, font, border = randomize_palette(rng=rng)
+        print(f"[{faction.id}] {faction.name:30s} bg={bg} font={font} border={border}")
+        if not dry_run:
+            faction.bg_colour = bg
+            faction.font_colour = font
+            faction.border_colour = border
+            db.session.add(faction)
+
+    if dry_run:
+        print(f"\nDry run — no changes committed ({len(factions)} factions).")
+    else:
+        db.session.commit()
+        print(f"\nUpdated {len(factions)} faction(s).")
+
+
+@app.cli.command()
 def create_all():
     db.create_all()
 
