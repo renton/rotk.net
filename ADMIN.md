@@ -1,0 +1,5 @@
+- Choose defualt and visibile images. Allow image uploading.
+- Wrong character linked
+- Page missing a link
+- Faction/Role colours. To be distinct from each other, especially within a chapter
+- Duplicate entries with same name need way to distinguish. Like a (1) (2). Tool to separate them
