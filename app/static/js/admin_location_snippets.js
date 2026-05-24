@@ -221,4 +221,23 @@
       handleRestore(form);
     }
   });
+
+  // ---- Init: re-sync counts on page load ----------------------------
+  //
+  // The server-rendered "show N snippets" / "M excluded snippets"
+  // counts come from find_location_mentions + a DB query. If anything
+  // ever desyncs (a fingerprint that doesn't match between save and
+  // render, a cached page that's serving a stale count, etc.) the
+  // visible LI count is the source of truth — recompute from it once
+  // the DOM is parsed so what the admin sees always reflects what's
+  // actually in the two pools.
+  function syncAllCounts() {
+    var cells = document.querySelectorAll('[data-snippets-cell]');
+    for (var i = 0; i < cells.length; i++) {
+      updateCount(cells[i], 'live');
+      updateCount(cells[i], 'excluded');
+    }
+  }
+  if (document.readyState !== 'loading') syncAllCounts();
+  else document.addEventListener('DOMContentLoaded', syncAllCounts);
 })();

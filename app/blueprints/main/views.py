@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet
 
 
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
@@ -126,7 +126,12 @@ def chapter(chapter_num):
                 if end + 60 < len(stripped_content):
                     after = after.rsplit(' ', 1)[0] if ' ' in after else after
                     after = after.rstrip() + '…'
-                if (before, m.group(0), after) in fingerprints:
+                fp = (
+                    normalize_snippet(before),
+                    normalize_snippet(m.group(0)),
+                    normalize_snippet(after),
+                )
+                if fp in fingerprints:
                     skips.add(i)
             if skips:
                 location_skip_indices[(loc.id, needle)] = skips

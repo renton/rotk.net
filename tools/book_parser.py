@@ -14,10 +14,32 @@ def strip_html_tags(text):
     return _TAG_RE.sub(' ', text)
 
 
+_WS_RE = re.compile(r'\s+')
+
+
+def normalize_snippet(s):
+    """Collapse all whitespace runs to a single space and strip ends.
+
+    The exclusion fingerprint stored in the DB came from a browser
+    form submission, which normalises newlines (\\r\\n → \\n) and
+    may collapse some whitespace; the render-time fingerprint comes
+    straight out of the chapter content via strip_html_tags(), which
+    preserves whatever was there. Without this normaliser the two
+    sides can disagree on a single character and the exclusion lookup
+    misses, leaving the "excluded" snippet still tagged in the prose
+    and still counted in the admin live pool. Idempotent, so safe to
+    call on both sides."""
+    if not s:
+        return ''
+    return _WS_RE.sub(' ', s).strip()
+
+
 def load_match_exclusions(chapter_id, target_type, target_id):
     """Return the set of (before, match, after) fingerprints excluded
     for this (chapter, target). Empty set when nothing's excluded —
-    safe to call always.
+    safe to call always. Fingerprints are whitespace-normalised so
+    the lookup is robust against newline / multi-space drift between
+    save and render (see normalize_snippet docstring).
 
     Imported lazily because tools.book_parser is reachable from CLI
     contexts where the Flask app isn't bound yet."""
@@ -27,7 +49,11 @@ def load_match_exclusions(chapter_id, target_type, target_id):
         target_type=target_type,
         target_id=target_id,
     ).all()
-    return {(r.before_snippet or '', r.match_text or '', r.after_snippet or '') for r in rows}
+    return {(
+        normalize_snippet(r.before_snippet),
+        normalize_snippet(r.match_text),
+        normalize_snippet(r.after_snippet),
+    ) for r in rows}
 
 
 def find_location_mentions(chapter, location, context_chars=60, limit=None, exclusions=None):
@@ -61,8 +87,14 @@ def find_location_mentions(chapter, location, context_chars=60, limit=None, excl
             after = after.rsplit(' ', 1)[0] if ' ' in after else after
             after = after.rstrip() + '…'
         match_text = m.group(0)
-        if exclusions and (before, match_text, after) in exclusions:
-            continue
+        if exclusions:
+            fp = (
+                normalize_snippet(before),
+                normalize_snippet(match_text),
+                normalize_snippet(after),
+            )
+            if fp in exclusions:
+                continue
         mentions.append({
             'start': start,
             'before': before,

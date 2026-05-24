@@ -162,7 +162,7 @@
                       </div>
                       {% endif %}
 
-                      {# Each block (Faction / Past Factions / Links) sits
+                      {# Each block (Faction / Other Factions / Links) sits
                          in its own padded card-style wrapper so the
                          eye can find each section without parsing the
                          badges in flow. bg-body-tertiary is Bootstrap's
@@ -192,7 +192,7 @@
                          | list %}
                       {% if past_factions %}
                       <div class="chapter-section-card rounded p-2 mt-3 mb-2">
-                        <div class="small text-muted fw-bold mb-1">Past Factions:</div>
+                        <div class="small text-muted fw-bold mb-1">Other Factions:</div>
                         {% for faction in past_factions %}
                           <div>
                             {{ macros.badge_widget(faction) }}
