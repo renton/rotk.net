@@ -11,10 +11,10 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, Location, Edit
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, Location, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm
 from . import admin
 
@@ -681,11 +681,23 @@ def location_associations(chapter_num=None):
 
         associated = sorted(selected.locations, key=lambda l: l.name)
         for loc in associated:
-            mentions = find_location_mentions(selected, loc, limit=10)
+            exclusions = load_match_exclusions(selected.id, 'location', loc.id)
+            # Live (still-tagged) mentions — feed the exclusions set so
+            # snippets already marked-bad don't appear in the main list.
+            live = find_location_mentions(selected, loc, limit=None, exclusions=exclusions)
+            # Stored exclusion rows for this (chapter, location) — used
+            # to render the collapsible "Excluded snippets" section with
+            # restore buttons.
+            excluded_rows = MatchExclusion.query.filter_by(
+                chapter_id=selected.id,
+                target_type='location',
+                target_id=loc.id,
+            ).order_by(MatchExclusion.id).all()
             rows.append({
                 'location': loc,
-                'mentions': mentions,
-                'mention_count': len(mentions),
+                'mentions': live,
+                'mention_count': len(live),
+                'excluded': excluded_rows,
             })
 
         all_locations = (
@@ -811,6 +823,79 @@ def location_associations_switch(chapter_num, location_id):
     db.session.commit()
 
     flash(f"Switched {old_loc.name!r} → {new_loc.name!r} in chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+
+@admin.route('/location-associations/<int:chapter_num>/<int:location_id>/exclude', methods=['POST'])
+@login_required
+@admin_required
+def location_associations_exclude(chapter_num, location_id):
+    """Mark a single snippet as a bad match for this (chapter, location).
+
+    Admin posts the (before, match, after) fingerprint of the snippet
+    they want suppressed. We store a MatchExclusion row; render-time
+    scans + the admin page will hide that specific match. Duplicate
+    posts are idempotent — the same fingerprint inserted twice is
+    harmless, since the render-time set lookup dedupes by membership."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    location = Location.query.get_or_404(location_id)
+
+    match_text = (request.form.get('match_text') or '').strip()
+    before = request.form.get('before_snippet') or ''
+    after = request.form.get('after_snippet') or ''
+    if not match_text:
+        flash("Snippet fingerprint missing — refresh the page and try again.")
+        return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+    # Idempotency: skip insert if an identical row already exists.
+    already = MatchExclusion.query.filter_by(
+        chapter_id=chapter.id,
+        target_type='location',
+        target_id=location.id,
+        match_text=match_text,
+        before_snippet=before,
+        after_snippet=after,
+    ).first()
+    if already is None:
+        db.session.add(MatchExclusion(
+            chapter_id=chapter.id,
+            target_type='location',
+            target_id=location.id,
+            match_text=match_text,
+            before_snippet=before,
+            after_snippet=after,
+        ))
+        db.session.commit()
+
+    flash(f"Excluded snippet {match_text!r} for {location.name!r} in chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+
+@admin.route('/location-associations/<int:chapter_num>/<int:location_id>/restore/<int:exclusion_id>', methods=['POST'])
+@login_required
+@admin_required
+def location_associations_restore(chapter_num, location_id, exclusion_id):
+    """Undo a previous per-snippet exclusion — re-show the match."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    row = MatchExclusion.query.get_or_404(exclusion_id)
+    # Sanity check: route params must match the row to prevent cross-
+    # entity restore by URL-tampering. 404 keeps the failure mode quiet.
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    if (row.chapter_id != chapter.id or row.target_type != 'location' or
+            row.target_id != location_id):
+        abort(404)
+
+    match_text = row.match_text
+    db.session.delete(row)
+    db.session.commit()
+    flash(f"Restored snippet {match_text!r}.")
     return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
 
 

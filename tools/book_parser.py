@@ -14,8 +14,29 @@ def strip_html_tags(text):
     return _TAG_RE.sub(' ', text)
 
 
-def find_location_mentions(chapter, location, context_chars=60, limit=None):
-    """Same shape as find_event_mentions but for Location."""
+def load_match_exclusions(chapter_id, target_type, target_id):
+    """Return the set of (before, match, after) fingerprints excluded
+    for this (chapter, target). Empty set when nothing's excluded —
+    safe to call always.
+
+    Imported lazily because tools.book_parser is reachable from CLI
+    contexts where the Flask app isn't bound yet."""
+    from app.models import MatchExclusion
+    rows = MatchExclusion.query.filter_by(
+        chapter_id=chapter_id,
+        target_type=target_type,
+        target_id=target_id,
+    ).all()
+    return {(r.before_snippet or '', r.match_text or '', r.after_snippet or '') for r in rows}
+
+
+def find_location_mentions(chapter, location, context_chars=60, limit=None, exclusions=None):
+    """Same shape as find_event_mentions but for Location.
+
+    If `exclusions` (a set of (before, match, after) fingerprints) is
+    passed, any match whose fingerprint is in the set is skipped. The
+    admin location-associations page uses this to hide snippets the
+    admin has marked as bad."""
     needles = [location.name]
     for alias in (location.aliases or '').split(','):
         alias = alias.strip()
@@ -39,10 +60,13 @@ def find_location_mentions(chapter, location, context_chars=60, limit=None):
         if end + context_chars < len(content):
             after = after.rsplit(' ', 1)[0] if ' ' in after else after
             after = after.rstrip() + '…'
+        match_text = m.group(0)
+        if exclusions and (before, match_text, after) in exclusions:
+            continue
         mentions.append({
             'start': start,
             'before': before,
-            'match': m.group(0),
+            'match': match_text,
             'after': after,
         })
         if limit is not None and len(mentions) >= limit:

@@ -64,12 +64,57 @@
                     <summary class="small text-muted">show {{ row.mention_count }} snippet{{ '' if row.mention_count == 1 else 's' }}</summary>
                     <ul class="list-unstyled small mt-2 mb-0">
                         {% for m in row.mentions %}
-                        <li>{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</li>
+                        <li class="d-flex gap-2 align-items-start py-1">
+                            <span class="flex-grow-1">{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</span>
+                            {# Per-snippet exclude — fingerprints (before, match,
+                               after) match what render-time scans produce, so
+                               the chapter prose stops tagging this specific
+                               occurrence too. #}
+                            <form method="POST"
+                                  action="{{ url_for('admin.location_associations_exclude', chapter_num=selected.chapter_num, location_id=loc.id) }}"
+                                  class="d-inline"
+                                  data-confirm="Mark this snippet as a wrong match for {{ loc.name|e }}?">
+                                {{ csrf_form.hidden_tag() }}
+                                <input type="hidden" name="match_text" value="{{ m.match }}">
+                                <input type="hidden" name="before_snippet" value="{{ m.before }}">
+                                <input type="hidden" name="after_snippet" value="{{ m.after }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
+                                        title="Exclude this snippet">
+                                    &times;
+                                </button>
+                            </form>
+                        </li>
                         {% endfor %}
                     </ul>
                 </details>
                 {% else %}
                 <span class="text-warning small">no live matches</span>
+                {% endif %}
+
+                {% if row.excluded %}
+                <details class="mt-2">
+                    <summary class="small text-muted">
+                        {{ row.excluded|length }} excluded snippet{{ '' if row.excluded|length == 1 else 's' }}
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0">
+                        {% for ex in row.excluded %}
+                        <li class="d-flex gap-2 align-items-start py-1 text-muted">
+                            <span class="flex-grow-1">
+                                <s>{{ ex.before_snippet }}<mark>{{ ex.match_text }}</mark>{{ ex.after_snippet }}</s>
+                            </span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.location_associations_restore', chapter_num=selected.chapter_num, location_id=loc.id, exclusion_id=ex.id) }}"
+                                  class="d-inline">
+                                {{ csrf_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2"
+                                        title="Restore this snippet">
+                                    ↺
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
                 {% endif %}
             </td>
             <td class="text-end" style="min-width: 220px;">

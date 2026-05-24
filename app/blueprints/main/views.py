@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions
 
 
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
@@ -62,6 +62,7 @@ def chapter(chapter_num):
 
     replacements = {}
     needle_to_character_id = {}
+    needle_to_location_id = {}
 
     # Characters get first claim on a needle so character mentions never
     # get accidentally re-coloured as an event/location with the same word.
@@ -74,41 +75,82 @@ def chapter(chapter_num):
     # respective sidebar accordion item. Both pre-loaded into
     # chapter_events / chapter_locations below; building the labels now
     # so they participate in the same single regex pass.
-    _pending_event_needles = []
-    _pending_location_needles = []
-
     for event in sorted(chapter.events, key=lambda e: e.name):
         for needle in get_event_labels(event):
             if needle in replacements:
                 continue   # character already claimed it
             replacements[needle] = build_event_ref_html(event, match_text=needle)
-            _pending_event_needles.append(needle)
 
     # Locations from any source — events that pin to one + direct
     # chapter ↔ location associations. De-dup by id; first one wins.
     seen_loc_ids = set()
+    locations_for_render = []
     for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
         if loc is None or loc.id in seen_loc_ids:
             continue
         seen_loc_ids.add(loc.id)
+        locations_for_render.append(loc)
         for needle in get_location_labels(loc):
             if needle in replacements:
                 continue
             replacements[needle] = build_location_ref_html(loc, match_text=needle)
-            _pending_location_needles.append(needle)
+            needle_to_location_id[needle] = loc.id
 
     pattern = build_needle_pattern(list(replacements.keys()))
+
+    # ----- Per-snippet exclusions for locations ---------------------------
+    # Admins can mark individual location matches as "wrong" on the
+    # location-associations page. The exclusion fingerprints below
+    # match what find_location_mentions() produces against stripped
+    # chapter content. Pre-compute which (loc_id, needle, occurrence)
+    # tuples should NOT get re-wrapped as inline refs; the
+    # replace_match closure consults this skip-set per match.
+    stripped_content = strip_html_tags(chapter.content) if needle_to_location_id else ''
+    location_skip_indices = {}   # (loc_id, needle) -> set of 0-indexed match positions to skip
+    for loc in locations_for_render:
+        fingerprints = load_match_exclusions(chapter.id, 'location', loc.id)
+        if not fingerprints:
+            continue
+        for needle in get_location_labels(loc):
+            if needle_to_location_id.get(needle) != loc.id:
+                continue  # character or earlier location already claimed this needle
+            pat = build_needle_pattern([needle])
+            skips = set()
+            for i, m in enumerate(pat.finditer(stripped_content)):
+                start, end = m.start(), m.end()
+                before = stripped_content[max(0, start - 60):start]
+                after = stripped_content[end:end + 60]
+                if start - 60 > 0:
+                    before = before.split(' ', 1)[1] if ' ' in before else before
+                    before = '…' + before.lstrip()
+                if end + 60 < len(stripped_content):
+                    after = after.rsplit(' ', 1)[0] if ' ' in after else after
+                    after = after.rstrip() + '…'
+                if (before, m.group(0), after) in fingerprints:
+                    skips.add(i)
+            if skips:
+                location_skip_indices[(loc.id, needle)] = skips
 
     # Count mentions per character as a side-effect of the rendering pass —
     # avoids a second scan of the chapter content for the sidebar's
     # "N mentions" badges.
     mention_counts = defaultdict(int)
+    location_seen = defaultdict(int)   # (loc_id, needle) -> running counter
 
     def replace_match(match):
         matched = match.group(0)
         cid = needle_to_character_id.get(matched)
         if cid is not None:
             mention_counts[cid] += 1
+            return replacements[matched]
+        loc_id = needle_to_location_id.get(matched)
+        if loc_id is not None:
+            key = (loc_id, matched)
+            idx = location_seen[key]
+            location_seen[key] += 1
+            skips = location_skip_indices.get(key)
+            if skips is not None and idx in skips:
+                return matched   # admin-excluded snippet → leave as plain prose
         return replacements[matched]
 
     rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
