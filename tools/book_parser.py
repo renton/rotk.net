@@ -178,31 +178,42 @@ def build_needle_pattern(name_needles):
     return re.compile(r'\b(' + '|'.join(map(re.escape, name_needles)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
 
 def build_name_ref_html(character):
-    html_output = f"<span class='character-ref badge rounded-pill' data-character-id='{ character.id }' "
+    """Emit the inline character-ref span. Includes:
 
+      * The default pill styling inline so no-JS renders / first paint
+        still look right.
+      * data-bg / data-font / data-border attributes carrying the same
+        three colours regardless of whether the character has a primary
+        faction. The chapter-page style switcher (chapter_style.js)
+        uses these to re-style the span on the fly without round-
+        tripping to the server.
+      * A shared `text-ref` class so future inline-tagged data types
+        (events, locations) can opt into the same style switcher by
+        adding the class.
+    """
     if character.primary_faction is not None:
-        html_output += f"data-faction-id='{ character.primary_faction.id }'"
-
-        html_output += f" style='"
-        if character.primary_faction.bg_colour not in ["", character.primary_faction.default_colour]:
-            html_output += f"background-color:{character.primary_faction.bg_colour};"
-        else:
-            html_output += f"background-color:#000;"
-
-        if character.primary_faction.font_colour:
-            html_output += f"color:{character.primary_faction.font_colour};"
-
-        if character.primary_faction.border_colour not in ["", character.primary_faction.default_colour]:
-            html_output += f"border:2px solid {character.primary_faction.border_colour};"
-
-        html_output += "'"
+        f = character.primary_faction
+        bg = f.bg_colour if f.bg_colour not in ["", f.default_colour] else "#000000"
+        font = f.font_colour or "#ffffff"
+        border = f.border_colour if f.border_colour not in ["", f.default_colour] else bg
+        faction_attr = f"data-faction-id='{f.id}' "
     else:
-        # No faction → Bootstrap's default badge styling makes the text
-        # white, which disappears against the white page background.
-        # Fall back to a plain outline pill: white fill, black text,
-        # black border.
-        html_output += "style='background-color:#fff; color:#000; border:2px solid #000;'"
+        # No faction → plain outline pill (white fill, black text + border).
+        # Same three colours go into the data attributes so the style
+        # switcher's "readable text colour" picker has something to work
+        # with.
+        bg, font, border = "#ffffff", "#000000", "#000000"
+        faction_attr = ""
 
-    html_output += f">{ character.name }</span>"
-
-    return html_output
+    style = (
+        f"background-color:{bg};"
+        f"color:{font};"
+        f"border:2px solid {border};"
+    )
+    return (
+        f"<span class='text-ref character-ref badge rounded-pill' "
+        f"data-character-id='{character.id}' "
+        f"{faction_attr}"
+        f"data-bg='{bg}' data-font='{font}' data-border='{border}' "
+        f"style='{style}'>{character.name}</span>"
+    )
