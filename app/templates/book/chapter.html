@@ -291,7 +291,11 @@
                         {% endif %}
                       </div>
                       {% set list_urls = ev.urls %}
-                      {% include '_url_list.html' %}
+                      {% if list_urls %}
+                      <div class="ms-5 mt-1">
+                        {% include '_url_list.html' %}
+                      </div>
+                      {% endif %}
                     </li>
                     {% endfor %}
                   </ul>
@@ -328,7 +332,11 @@
                         {% endif %}
                       </div>
                       {% set list_urls = loc.urls %}
-                      {% include '_url_list.html' %}
+                      {% if list_urls %}
+                      <div class="ms-5 mt-1">
+                        {% include '_url_list.html' %}
+                      </div>
+                      {% endif %}
                     </li>
                     {% endfor %}
                   </ul>
