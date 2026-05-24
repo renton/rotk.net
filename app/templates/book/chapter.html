@@ -48,7 +48,20 @@
                     {% set chapter_count = mention_counts.get(character.id, 0) %}
                     {% set book_count = character.book_mention_count or 0 %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                      <h6 class="mb-1">{{ character.name }}</h6>
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <h6 class="mb-0">{{ character.name }}</h6>
+                        {# Admin-only shortcut: jump straight to the edit page
+                           for this character. Hidden for anonymous + non-admin
+                           users so the sidebar stays read-only for readers. #}
+                        {% if current_user.is_authenticated and current_user.is_administrator %}
+                        <a href="{{ url_for('main.edit_character', id=character.id) }}"
+                           class="btn btn-sm btn-outline-secondary py-0 px-2 ms-auto"
+                           title="Edit character">
+                          <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                          Edit
+                        </a>
+                        {% endif %}
+                      </div>
                       <div class="small text-muted">
                         {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
                       </div>
