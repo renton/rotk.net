@@ -85,14 +85,16 @@ def chapter(chapter_num):
     rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
 
     # Events associated with this chapter, plus the unique set of
-    # Locations those events pin to (deduped, name-sorted). Both lists
-    # power the new accordion sections in the chapter sidebar — each
-    # entry renders its own external Urls.
+    # Locations — both event-pinned (from each event.location) AND
+    # directly-associated (chapter ↔ location M2M via the
+    # /admin/location-associations tool). Deduped by id, name-sorted.
     chapter_events = sorted(chapter.events, key=lambda e: e.name)
-    chapter_locations = sorted(
-        {e.location.id: e.location for e in chapter_events if e.location}.values(),
-        key=lambda loc: loc.name,
-    )
+    locations_by_id = {
+        e.location.id: e.location for e in chapter_events if e.location
+    }
+    for loc in chapter.locations:
+        locations_by_id.setdefault(loc.id, loc)
+    chapter_locations = sorted(locations_by_id.values(), key=lambda loc: loc.name)
 
     return render_template(
         'book/chapter.html',
@@ -436,6 +438,8 @@ _URL_OWNER_TYPES = {
     'character': (Character, 'main.edit_character'),
     'event':     (Event,     'main.edit_event'),
     'location':  (Location,  'main.edit_location'),
+    'faction':   (Faction,   'main.edit_faction'),
+    'role':      (Role,      'main.edit_role'),
 }
 
 
@@ -546,6 +550,7 @@ def new_faction():
 @login_required
 @admin_required
 def edit_faction(id):
+    from flask_wtf import FlaskForm
     faction = Faction.query.get_or_404(id)
     form = EditFactionForm(obj=faction)
 
@@ -573,6 +578,9 @@ def edit_faction(id):
         faction=faction,
         merge_form=merge_form,
         mergeable_factions=mergeable_factions,
+        urls=[u for u in faction.urls if not u.is_deleted],
+        add_url_form=AddUrlForm(),
+        csrf_form=FlaskForm(),
     )
 
 
@@ -651,6 +659,7 @@ def roles():
 @login_required
 @admin_required
 def edit_role(id):
+    from flask_wtf import FlaskForm
     role = Role.query.get_or_404(id)
     form = EditRoleForm(obj=role)
 
@@ -664,7 +673,11 @@ def edit_role(id):
 
     return render_template(
         'roles/role_edit.html',
-        form=form
+        form=form,
+        role=role,
+        urls=[u for u in role.urls if not u.is_deleted],
+        add_url_form=AddUrlForm(),
+        csrf_form=FlaskForm(),
     )
 
 

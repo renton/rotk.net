@@ -322,27 +322,25 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 
 {# ------------------------------------------------------------------- #}
 <section id="chapter-assoc-other" class="mb-5">
-    <h2>Other chapter-association tools (Location, Event, Faction)</h2>
-    <p>
-        <strong>Status:</strong> only <em>Character</em> ↔ chapter has an
-        admin association tool today. Status of the others:
-    </p>
+    <h2>Other chapter-association tools</h2>
+    <p>Three association editors today, all the same shape:</p>
     <ul>
-        <li><strong>Event ↔ chapter</strong> — model + M2M table exist
-            (Event.chapters). An admin association page mirroring
-            Chapter Associations is on the immediate roadmap; the
-            keyword-list pattern will be the same (comma-separated
-            terms that get added to <code>Event.aliases</code>).</li>
-        <li><strong>Location ↔ chapter</strong> — no per-chapter
-            association concept yet. Locations are referenced indirectly
-            via Events that pin to them.</li>
-        <li><strong>Faction ↔ chapter</strong> — no per-chapter
-            association concept yet. Factions are referenced via
-            characters who appear in the chapter.</li>
+        <li><a href="{{ url_for('admin.chapter_associations') }}">Chapter associations</a> — chapter ↔ character.</li>
+        <li><a href="{{ url_for('admin.event_associations') }}">Event associations</a> — chapter ↔ event.
+            The Add form takes a <em>comma-separated keyword list</em>;
+            each matching keyword gets added to the event's aliases.</li>
+        <li><a href="{{ url_for('admin.location_associations') }}">Location associations</a> — chapter ↔ location.
+            Same comma-separated keyword pattern as events.
+            Locations pinned via an Event's <code>location</code> FK
+            also show up in the chapter sidebar automatically — this
+            tool is for places that get referenced independent of any
+            specific event.</li>
     </ul>
     <p class="text-muted small">
-        If you want any of these to behave like chapter associations,
-        say which and we'll add the model + admin page.
+        <strong>Faction ↔ chapter</strong> is intentionally NOT a thing —
+        factions are referenced via the characters that appear in the
+        chapter (so changing a character's primary faction is enough to
+        get them into the right faction's listings).
     </p>
 </section>
 {% endblock %}

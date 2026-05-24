@@ -11,10 +11,10 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, Edit
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, Location, Edit
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm
 from . import admin
 
@@ -610,6 +610,195 @@ def event_associations_switch(chapter_num, event_id):
 
     flash(f"Switched {old_event.name!r} → {new_event.name!r} in chapter {chapter.chapter_num}.")
     return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+
+# ----- Chapter ↔ Location association editor ------------------------------
+
+def _resolve_location_from_form():
+    raw_id = (request.form.get('location_id') or '').strip()
+    raw_name = (request.form.get('location_name') or '').strip()
+
+    if raw_id.isdigit():
+        loc = Location.query.get(int(raw_id))
+        if loc is None:
+            return None, "Couldn't find a location with that id."
+        return loc, None
+
+    if raw_name:
+        m = _ID_SUFFIX_RE.search(raw_name)
+        if m:
+            loc = Location.query.get(int(m.group(1)))
+            if loc is None:
+                return None, "Couldn't find a location with that id."
+            return loc, None
+        matches = Location.query.filter(Location.name == raw_name).all()
+        if len(matches) == 1:
+            return matches[0], None
+        if len(matches) > 1:
+            return None, (
+                f"Multiple locations named {raw_name!r}. Pick from the dropdown "
+                f"(each option carries a unique '#<id>' suffix)."
+            )
+    return None, "Couldn't find a location matching that selection."
+
+
+@admin.route('/location-associations', methods=['GET'])
+@admin.route('/location-associations/<int:chapter_num>', methods=['GET'])
+@login_required
+@admin_required
+def location_associations(chapter_num=None):
+    """Mirror of chapter_associations / event_associations but for the
+    chapter ↔ location M2M (which is independent of event-pinned
+    locations — those still show up automatically in the chapter sidebar
+    via the events that pin to them)."""
+    if chapter_num is None:
+        from_query = request.args.get('chapter_num', type=int)
+        if from_query is not None:
+            return redirect(url_for('admin.location_associations', chapter_num=from_query))
+
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    selected = None
+    rows = []
+    all_locations = []
+
+    if chapter_num is not None:
+        selected = Chapter.query.filter_by(chapter_num=chapter_num).first()
+        if selected is None:
+            abort(404)
+
+        associated = sorted(selected.locations, key=lambda l: l.name)
+        for loc in associated:
+            mentions = find_location_mentions(selected, loc, limit=10)
+            rows.append({
+                'location': loc,
+                'mentions': mentions,
+                'mention_count': len(mentions),
+            })
+
+        all_locations = (
+            Location.query
+            .filter(Location.is_deleted.is_(False))
+            .order_by(Location.name)
+            .all()
+        )
+
+    return render_template(
+        'admin/location_associations.html',
+        chapters=chapters,
+        selected=selected,
+        rows=rows,
+        all_locations=all_locations,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/location-associations/<int:chapter_num>/add', methods=['POST'])
+@login_required
+@admin_required
+def location_associations_add(chapter_num):
+    """Same comma-separated keyword flow as event_associations_add but
+    for Location — keywords get added to location.aliases for matches
+    in the chapter; chapter ↔ location link is added regardless of
+    keyword matches."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+
+    loc, err = _resolve_location_from_form()
+    if err:
+        flash(err)
+        return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+    raw_terms = (request.form.get('search_terms') or '').strip()
+    keywords = [k.strip() for k in raw_terms.split(',') if k.strip()]
+    if not keywords:
+        flash("Enter at least one keyword (comma-separated for multiple).")
+        return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+    content = strip_html_tags(chapter.content)
+    existing = [a.strip() for a in (loc.aliases or '').split(',') if a.strip()]
+    known = {loc.name} | set(existing)
+
+    aliases_added = []
+    no_match = []
+    for keyword in keywords:
+        if not build_needle_pattern([keyword]).findall(content):
+            no_match.append(keyword)
+            continue
+        if keyword not in known:
+            existing.append(keyword)
+            known.add(keyword)
+            aliases_added.append(keyword)
+
+    if aliases_added:
+        loc.aliases = ','.join(existing)
+
+    if loc not in chapter.locations:
+        chapter.locations.append(loc)
+
+    db.session.commit()
+
+    parts = []
+    if aliases_added:
+        parts.append("Added aliases: " + ", ".join(repr(a) for a in aliases_added) + ".")
+    if no_match:
+        parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
+    parts.append(f"{loc.name!r} is now associated with chapter {chapter.chapter_num}.")
+    flash(" ".join(parts))
+
+    return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+
+@admin.route('/location-associations/<int:chapter_num>/remove/<int:location_id>', methods=['POST'])
+@login_required
+@admin_required
+def location_associations_remove(chapter_num, location_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    loc = Location.query.get_or_404(location_id)
+
+    if loc in chapter.locations:
+        chapter.locations.remove(loc)
+        db.session.commit()
+        flash(f"Removed {loc.name!r} from chapter {chapter.chapter_num}.")
+    else:
+        flash(f"{loc.name!r} was not associated with chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+
+@admin.route('/location-associations/<int:chapter_num>/switch/<int:location_id>', methods=['POST'])
+@login_required
+@admin_required
+def location_associations_switch(chapter_num, location_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    old_loc = Location.query.get_or_404(location_id)
+
+    new_loc, err = _resolve_location_from_form()
+    if err:
+        flash(err)
+        return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+    if new_loc.id == old_loc.id:
+        flash(f"{new_loc.name!r} is already the associated location.")
+        return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
+
+    if old_loc in chapter.locations:
+        chapter.locations.remove(old_loc)
+    if new_loc not in chapter.locations:
+        chapter.locations.append(new_loc)
+    db.session.commit()
+
+    flash(f"Switched {old_loc.name!r} → {new_loc.name!r} in chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
 
 
 # ----- Image Manager -------------------------------------------------------

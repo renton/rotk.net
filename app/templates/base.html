@@ -79,15 +79,21 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                   {% if current_user.is_administrator and current_user.confirmed %}
-                  <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>
-                  <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
+                  {# Ordering: FAQ first, then a divider; association
+                     editors grouped next, then a divider; everything
+                     else after. #}
+                  <li><a class="dropdown-item" href="{{ url_for('admin.faq') }}">Admin FAQ</a></li>
+                  <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.chapter_associations') }}">Chapter associations</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.event_associations') }}">Event associations</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.location_associations') }}">Location associations</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.image_manager') }}">Image Manager</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.tags') }}">Tags</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.url_types') }}">URL Types</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.duplicate_characters') }}">Duplicates</a></li>
-                  <li><a class="dropdown-item" href="{{ url_for('admin.faq') }}">Admin FAQ</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.edits') }}">Edits</a></li>
                   <li><hr class="dropdown-divider"></li>
                   {% endif %}

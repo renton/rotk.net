@@ -19,6 +19,12 @@ rotk.net - {% if faction %}Edit faction: {{ faction.name }}{% else %}New faction
 {% block main_form %}
 {{ super() }}
 
+{% if faction %}
+    {% set owner = faction %}
+    {% set owner_type = 'faction' %}
+    {% include '_url_section.html' %}
+{% endif %}
+
 {% if merge_form is defined %}
 <fieldset class="border rounded p-3 mt-5">
     <legend class="float-none w-auto fs-5 px-2">Merge into another faction</legend>

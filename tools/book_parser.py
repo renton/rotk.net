@@ -14,6 +14,42 @@ def strip_html_tags(text):
     return _TAG_RE.sub(' ', text)
 
 
+def find_location_mentions(chapter, location, context_chars=60, limit=None):
+    """Same shape as find_event_mentions but for Location."""
+    needles = [location.name]
+    for alias in (location.aliases or '').split(','):
+        alias = alias.strip()
+        if alias and alias != location.name:
+            needles.append(alias)
+    needles = [n for n in needles if n]
+    if not needles:
+        return []
+
+    content = strip_html_tags(chapter.content)
+    pattern = build_needle_pattern(needles)
+
+    mentions = []
+    for m in pattern.finditer(content):
+        start, end = m.start(), m.end()
+        before = content[max(0, start - context_chars):start]
+        after = content[end:end + context_chars]
+        if start - context_chars > 0:
+            before = before.split(' ', 1)[1] if ' ' in before else before
+            before = '…' + before.lstrip()
+        if end + context_chars < len(content):
+            after = after.rsplit(' ', 1)[0] if ' ' in after else after
+            after = after.rstrip() + '…'
+        mentions.append({
+            'start': start,
+            'before': before,
+            'match': m.group(0),
+            'after': after,
+        })
+        if limit is not None and len(mentions) >= limit:
+            break
+    return mentions
+
+
 def find_event_mentions(chapter, event, context_chars=60, limit=None):
     """Same shape as find_character_mentions but uses Event.name +
     Event.aliases (comma-delimited keywords) for the needle list.
