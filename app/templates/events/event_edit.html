@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+rotk.net - {% if event %}Edit {{ event.name }}{% else %}New event{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    <h1>{% if event %}Edit event: {{ event.name }}{% else %}New event{% endif %}</h1>
+    {% if not event %}
+    <p class="text-muted mb-0">
+        Name is required. <strong>Aliases</strong> are comma-separated
+        keywords used by the admin Event Associations tool to find
+        mentions of the event in chapter prose.
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+<div class="mt-3">
+    <a href="{{ url_for('main.events') }}" class="btn btn-link">&larr; Back to events</a>
+</div>
+{% endblock %}

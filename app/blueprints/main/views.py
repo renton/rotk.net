@@ -7,11 +7,12 @@ from sqlalchemy.orm import selectinload
 from werkzeug.utils import secure_filename
 
 from app import db
-from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType
+from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Location, Event
 from app.models.character import Portrait, PORTRAIT_DIR
 from . import main
 from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
-    CharacterFilterForm, UploadPortraitForm, MergeFactionForm, AddUrlForm
+    CharacterFilterForm, UploadPortraitForm, MergeFactionForm, AddUrlForm, \
+    EditLocationForm, EditEventForm
 
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character
@@ -604,3 +605,132 @@ def edit_role(id):
         'roles/role_edit.html',
         form=form
     )
+
+
+# ----- Locations ----------------------------------------------------------
+
+@main.route('/locations', methods=['GET'])
+def locations():
+    page = request.args.get('page', 1, type=int)
+    q = (request.args.get('q') or '').strip()
+    query = Location.query.filter(Location.is_deleted.is_(False))
+    if q:
+        query = query.filter(Location.name.ilike(f"%{q}%"))
+    pagination = query.order_by(Location.name).paginate(
+        page=page,
+        per_page=current_app.config['CHARACTERS_PER_PAGE'],
+        error_out=False,
+    )
+    return render_template(
+        'locations/locations.html',
+        pagination=pagination,
+        q=q,
+        page=page,
+    )
+
+
+@main.route('/locations/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_location():
+    form = EditLocationForm()
+    if form.validate_on_submit():
+        location = Location()
+        form.populate_obj(location)
+        db.session.add(location)
+        db.session.commit()
+        flash(f"Created location {location.name!r}.")
+        return redirect(url_for('main.edit_location', id=location.id))
+    return render_template('locations/location_edit.html', form=form, location=None)
+
+
+@main.route('/locations/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_location(id):
+    location = Location.query.get_or_404(id)
+    form = EditLocationForm(obj=location)
+    if form.validate_on_submit():
+        form.populate_obj(location)
+        db.session.add(location)
+        db.session.commit()
+        flash("Location updated.")
+        return redirect(url_for('main.edit_location', id=location.id))
+    return render_template('locations/location_edit.html', form=form, location=location)
+
+
+# ----- Events -------------------------------------------------------------
+
+@main.route('/events', methods=['GET'])
+def events():
+    page = request.args.get('page', 1, type=int)
+    q = (request.args.get('q') or '').strip()
+    location_id = request.args.get('location_id', type=int)
+
+    query = (
+        Event.query
+        .options(selectinload(Event.chapters))
+        .filter(Event.is_deleted.is_(False))
+    )
+    if q:
+        like = f"%{q}%"
+        query = query.filter(
+            (Event.name.ilike(like)) | (Event.aliases.ilike(like))
+        )
+    if location_id:
+        query = query.filter(Event.location_id == location_id)
+
+    pagination = query.order_by(Event.name).paginate(
+        page=page,
+        per_page=current_app.config['CHARACTERS_PER_PAGE'],
+        error_out=False,
+    )
+
+    locations_for_filter = Location.query.filter(Location.is_deleted.is_(False))\
+                                         .order_by(Location.name).all()
+
+    # Sorted-by-chapter-num chapter list per event, for the table column.
+    chapter_lists = {
+        e.id: sorted(e.chapters, key=lambda c: c.chapter_num)
+        for e in pagination.items
+    }
+
+    return render_template(
+        'events/events.html',
+        pagination=pagination,
+        q=q,
+        location_id=location_id,
+        locations=locations_for_filter,
+        chapter_lists=chapter_lists,
+        page=page,
+    )
+
+
+@main.route('/events/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_event():
+    form = EditEventForm()
+    if form.validate_on_submit():
+        event = Event()
+        form.populate_obj(event)
+        db.session.add(event)
+        db.session.commit()
+        flash(f"Created event {event.name!r}.")
+        return redirect(url_for('main.edit_event', id=event.id))
+    return render_template('events/event_edit.html', form=form, event=None)
+
+
+@main.route('/events/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_event(id):
+    event = Event.query.get_or_404(id)
+    form = EditEventForm(obj=event)
+    if form.validate_on_submit():
+        form.populate_obj(event)
+        db.session.add(event)
+        db.session.commit()
+        flash("Event updated.")
+        return redirect(url_for('main.edit_event', id=event.id))
+    return render_template('events/event_edit.html', form=form, event=event)

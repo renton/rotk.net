@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+rotk.net - {% if location %}Edit {{ location.name }}{% else %}New location{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    <h1>{% if location %}Edit location: {{ location.name }}{% else %}New location{% endif %}</h1>
+    {% if not location %}
+    <p class="text-muted mb-0">Name is required. Lat/lng are optional and can be filled in later.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+<div class="mt-3">
+    <a href="{{ url_for('main.locations') }}" class="btn btn-link">&larr; Back to locations</a>
+</div>
+{% endblock %}

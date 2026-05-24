@@ -2,12 +2,13 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField, IntegerField
+from wtforms import FloatField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
-from wtforms.validators import DataRequired, Length, Email, Regexp, Optional, URL
+from wtforms.validators import DataRequired, Length, Email, Regexp, Optional, URL, NumberRange
 from wtforms import ValidationError
 from tools.validators import validate_colour
 
-from app.models import Faction, Role, UrlType
+from app.models import Faction, Role, UrlType, Location
 
 class CharacterFilterForm(FlaskForm):
 
@@ -159,6 +160,61 @@ class AddUrlForm(FlaskForm):
         blank_value="",
     )
     submit = SubmitField("Add link")
+
+
+class EditLocationForm(FlaskForm):
+    name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
+    chinese_name = StringField("Chinese name", validators=[Length(0, 255)])
+    aliases = StringField("Aliases (comma-delimited)", validators=[Length(0, 255)])
+    latitude = FloatField(
+        "Latitude",
+        validators=[Optional(), NumberRange(min=-90, max=90)],
+        render_kw={"step": "any", "placeholder": "e.g. 34.7472"},
+    )
+    longitude = FloatField(
+        "Longitude",
+        validators=[Optional(), NumberRange(min=-180, max=180)],
+        render_kw={"step": "any", "placeholder": "e.g. 113.6253"},
+    )
+    notes = TextAreaField("Notes")
+    is_deleted = BooleanField("Is Deleted?")
+    submit = SubmitField("Save")
+
+
+class EditEventForm(FlaskForm):
+    name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
+    chinese_name = StringField("Chinese name", validators=[Length(0, 255)])
+    aliases = StringField(
+        "Aliases / keywords (comma-delimited)",
+        validators=[Length(0, 255)],
+        render_kw={"placeholder": "Battle of Red Cliffs, Chibi, 赤壁之战"},
+    )
+    location = QuerySelectField(
+        "Location",
+        query_factory=lambda: Location.query.filter(Location.is_deleted.is_(False))
+                                              .order_by(Location.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='— None —',
+        blank_value="",
+    )
+    geo_point_override = StringField(
+        "Geo-point override (free-form)",
+        validators=[Length(0, 255)],
+        render_kw={"placeholder": "e.g. 29.7359,113.0156 — overrides the linked Location"},
+    )
+    hide_on_map = BooleanField("Hide on map")
+    notes = TextAreaField("Notes")
+    is_deleted = BooleanField("Is Deleted?")
+    submit = SubmitField("Save")
+
+
+class AddEventAssociationForm(FlaskForm):
+    """Empty form for CSRF on the event-associations admin Add flow. The
+    `search_terms` (comma-delimited) and `event_id` fields are read from
+    request.form manually so we can split + validate the keyword list
+    cleanly."""
+    submit = SubmitField("Add")
 
 
 class MergeFactionForm(FlaskForm):
