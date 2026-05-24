@@ -11,11 +11,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Edit
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Edit
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, count_mentions_per_character
-from .forms import EditTagForm, CreateUserForm
+from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm
 from . import admin
 
 
@@ -901,3 +901,135 @@ def delete_tag(tag_id):
     db.session.commit()
     flash(f"Deleted tag {name!r}.")
     return redirect(url_for('admin.tags'))
+
+
+# ----- URL Type manager ----------------------------------------------------
+
+_URL_TYPE_SORTS = ('name', 'created_at', 'url_count')
+_URL_TYPES_PER_PAGE = 50
+
+
+@admin.route('/url-types', methods=['GET'])
+@login_required
+@admin_required
+def url_types():
+    page = request.args.get('page', 1, type=int)
+    search = (request.args.get('q') or '').strip()
+    sort = request.args.get('sort', 'name')
+    direction = request.args.get('dir', 'asc')
+
+    if sort not in _URL_TYPE_SORTS:
+        sort = 'name'
+    if direction not in ('asc', 'desc'):
+        direction = 'asc'
+
+    # Subquery counts how many Urls use each UrlType — same pattern as the
+    # tag image-count subquery on /admin/tags. Outer-joined so types with
+    # zero urls show 0 rather than NULL.
+    url_counts = (
+        db.session.query(
+            Url.url_type_id.label('url_type_id'),
+            func.count(Url.id).label('url_count'),
+        )
+        .filter(Url.is_deleted.is_(False))
+        .group_by(Url.url_type_id)
+        .subquery()
+    )
+    url_count_expr = func.coalesce(url_counts.c.url_count, 0)
+
+    query = (
+        UrlType.query
+        .outerjoin(url_counts, UrlType.id == url_counts.c.url_type_id)
+        .add_columns(url_count_expr.label('url_count'))
+        .filter(UrlType.is_hidden.is_(False))
+    )
+    if search:
+        query = query.filter(UrlType.name.ilike(f"%{search}%"))
+
+    if sort == 'url_count':
+        order_col = url_count_expr
+    else:
+        order_col = getattr(UrlType, sort)
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+    if sort != 'name':
+        query = query.order_by(UrlType.name.asc())
+
+    pagination = query.paginate(page=page, per_page=_URL_TYPES_PER_PAGE, error_out=False)
+
+    return render_template(
+        'admin/url_types.html',
+        pagination=pagination,
+        search=search,
+        sort=sort,
+        direction=direction,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/url-types/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_url_type():
+    form = EditUrlTypeForm()
+    if form.validate_on_submit():
+        url_type = UrlType()
+        form.populate_obj(url_type)
+        db.session.add(url_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A URL type named {url_type.name!r} already exists.")
+            return redirect(url_for('admin.new_url_type'))
+        flash(f"Created URL type {url_type.name!r}.")
+        return redirect(url_for('admin.url_types'))
+
+    return render_template('admin/url_type_edit.html', form=form, url_type=None)
+
+
+@admin.route('/url-types/<int:url_type_id>/edit', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_url_type(url_type_id):
+    url_type = UrlType.query.get_or_404(url_type_id)
+    form = EditUrlTypeForm(obj=url_type)
+    if form.validate_on_submit():
+        form.populate_obj(url_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A URL type named {url_type.name!r} already exists.")
+            return redirect(url_for('admin.edit_url_type', url_type_id=url_type.id))
+        flash(f"Updated URL type {url_type.name!r}.")
+        return redirect(url_for('admin.url_types'))
+
+    return render_template('admin/url_type_edit.html', form=form, url_type=url_type)
+
+
+@admin.route('/url-types/<int:url_type_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def delete_url_type(url_type_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    url_type = UrlType.query.get_or_404(url_type_id)
+    name = url_type.name
+
+    # Refuse if any Url is currently using it. ON DELETE SET NULL on the FK
+    # would clear url.url_type_id silently — we'd rather force the admin to
+    # untangle deliberately.
+    url_uses = Url.query.filter_by(url_type_id=url_type.id, is_deleted=False).count()
+    if url_uses > 0:
+        flash(
+            f"Can't delete {name!r}: it's the type for {url_uses} URL"
+            f"{'' if url_uses == 1 else 's'}. Reassign or delete those first."
+        )
+        return redirect(url_for('admin.url_types'))
+
+    db.session.delete(url_type)
+    db.session.commit()
+    flash(f"Deleted URL type {name!r}.")
+    return redirect(url_for('admin.url_types'))

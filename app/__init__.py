@@ -43,6 +43,10 @@ def _build_csp(nonce):
         f"script-src 'self' https://cdn.jsdelivr.net "
             f"https://www.googletagmanager.com 'nonce-{nonce}'; "
         "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
+        # Font Awesome ships its WOFF2/TTF font files alongside the CSS on
+        # jsdelivr; without this they'd fall back to default-src 'self' and
+        # be blocked.
+        "font-src 'self' https://cdn.jsdelivr.net; "
         "connect-src 'self' "
             "https://*.google-analytics.com https://*.analytics.google.com "
             "https://*.googletagmanager.com "

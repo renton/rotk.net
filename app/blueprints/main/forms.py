@@ -3,11 +3,11 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField, IntegerField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField, QuerySelectField
-from wtforms.validators import DataRequired, Length, Email, Regexp, Optional
+from wtforms.validators import DataRequired, Length, Email, Regexp, Optional, URL
 from wtforms import ValidationError
 from tools.validators import validate_colour
 
-from app.models import Faction, Role
+from app.models import Faction, Role, UrlType
 
 class CharacterFilterForm(FlaskForm):
 
@@ -122,6 +122,43 @@ class UploadPortraitForm(FlaskForm):
     )
     is_visible = BooleanField("Visible to the public", default=True)
     submit = SubmitField("Upload")
+
+
+class AddUrlForm(FlaskForm):
+    """Attach a new external link to a first-class object (currently
+    surfaced only on the character edit page). `name` doubles as the
+    visible description; `url` is the actual link target; `favicon` is
+    an optional static-relative path to a small image rendered alongside
+    the link; `url_type` is the UrlType pick."""
+    name = StringField(
+        "Description *",
+        validators=[DataRequired(), Length(1, 255)],
+        render_kw={"placeholder": "e.g. Wikipedia entry"},
+    )
+    url = StringField(
+        "URL *",
+        validators=[
+            DataRequired(),
+            Length(1, 2048),
+            URL(require_tld=True, message="Enter a valid URL (including http(s)://)."),
+        ],
+        render_kw={"placeholder": "https://en.wikipedia.org/wiki/Cao_Cao"},
+    )
+    favicon = StringField(
+        "Favicon path (under app/static/, optional)",
+        validators=[Length(0, 255), Optional()],
+        render_kw={"placeholder": "e.g. favicons/wikipedia.png"},
+    )
+    url_type = QuerySelectField(
+        "Type",
+        query_factory=lambda: UrlType.query.filter(UrlType.is_hidden.is_(False))
+                                              .order_by(UrlType.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='— Untyped —',
+        blank_value="",
+    )
+    submit = SubmitField("Add link")
 
 
 class MergeFactionForm(FlaskForm):

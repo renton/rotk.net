@@ -71,6 +71,21 @@ class Character(AbstractObject):
     links = db.relationship('Link', back_populates='character', lazy='select')
     portraits = db.relationship('Portrait', back_populates='character', lazy='select')
 
+    # External links attached to this character. Polymorphic — Url has
+    # target_type/target_id directly; no FK on target_id since the same
+    # column points across tables. `viewonly` because writes happen
+    # through the Url row itself (admin add/remove routes), not through
+    # appending to character.urls.
+    urls = db.relationship(
+        'Url',
+        primaryjoin=(
+            "and_(Character.id == foreign(Url.target_id), "
+            "Url.target_type == 'character')"
+        ),
+        viewonly=True,
+        order_by='Url.name',
+    )
+
     # Define a composite unique constraint on the combination of fields
     __table_args__ = (
         db.UniqueConstraint('name', 'birth_date', 'death_date', 'ancestral_home', name='uix_character_composite_id'),
@@ -116,11 +131,29 @@ class Link(AbstractObject):
 
 class Role(AbstractTag):
     characters = db.relationship('Character', secondary=Character.role_table, back_populates='roles')
+    urls = db.relationship(
+        'Url',
+        primaryjoin=(
+            "and_(Role.id == foreign(Url.target_id), "
+            "Url.target_type == 'role')"
+        ),
+        viewonly=True,
+        order_by='Url.name',
+    )
     def __repr__(self):
         return f'<Role {self.name}>'
 
 class Faction(AbstractTag):
     characters = db.relationship('Character', secondary=Character.faction_table, back_populates='factions')
+    urls = db.relationship(
+        'Url',
+        primaryjoin=(
+            "and_(Faction.id == foreign(Url.target_id), "
+            "Url.target_type == 'faction')"
+        ),
+        viewonly=True,
+        order_by='Url.name',
+    )
     def __repr__(self):
         return f'<Faction {self.name}>'
 

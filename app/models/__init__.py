@@ -9,6 +9,8 @@ from app.models.auth import User
 
 from app.models.tag import Tag, TagAssociation
 
+from app.models.url import Url, UrlType
+
 from app.models.edit import Edit
 
 # Importing the `audit` module registers ORM event listeners that stamp

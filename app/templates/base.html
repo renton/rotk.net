@@ -6,6 +6,9 @@
 <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
 <link rel="alternate icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{# Font Awesome — used for UrlType icons. cdn.jsdelivr.net is already
+   in the CSP style-src + connect-src (for the source map). #}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
 
 {# Google Analytics (gtag.js). Tracking ID comes from the GA_TRACKING_ID
    env var (see config.py / .env). Block is skipped entirely when blank.
@@ -69,6 +72,7 @@
                   <li><a class="dropdown-item" href="{{ url_for('admin.chapter_associations') }}">Chapter associations</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.image_manager') }}">Image Manager</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.tags') }}">Tags</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.url_types') }}">URL Types</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.duplicate_characters') }}">Duplicates</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.edits') }}">Edits</a></li>
                   <li><hr class="dropdown-divider"></li>

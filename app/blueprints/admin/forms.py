@@ -47,6 +47,35 @@ class CreateUserForm(FlaskForm):
             raise ValidationError('Username already in use.')
 
 
+class EditUrlTypeForm(FlaskForm):
+    """Create/edit form for a UrlType (essentially a tag for Url categories).
+    `icon` is a Font Awesome class string, e.g. 'fa-brands fa-wikipedia-w'
+    — entered as free text; rendered as `<i class="{{ icon }}">` next to
+    matching Url entries."""
+    name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
+    icon = StringField(
+        "Font Awesome icon class",
+        validators=[Length(0, 80)],
+        render_kw={"placeholder": "e.g. fa-brands fa-wikipedia-w"},
+    )
+    font_colour = StringField(
+        "Font Colour",
+        validators=[validate_colour],
+        render_kw={"type": "color"},
+    )
+    bg_colour = StringField(
+        "Background Colour",
+        validators=[validate_colour],
+        render_kw={"type": "color"},
+    )
+    border_colour = StringField(
+        "Border Colour",
+        validators=[validate_colour],
+        render_kw={"type": "color"},
+    )
+    submit = SubmitField("Save")
+
+
 class EditTagForm(FlaskForm):
     name = StringField("Name *", validators=[DataRequired()])
     font_colour = StringField(

@@ -7,11 +7,11 @@ from sqlalchemy.orm import selectinload
 from werkzeug.utils import secure_filename
 
 from app import db
-from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation
+from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType
 from app.models.character import Portrait, PORTRAIT_DIR
 from . import main
 from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
-    CharacterFilterForm, UploadPortraitForm, MergeFactionForm
+    CharacterFilterForm, UploadPortraitForm, MergeFactionForm, AddUrlForm
 
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character
@@ -256,6 +256,8 @@ def edit_character(id):
 
     upload_form = UploadPortraitForm()
     all_tags = Tag.query.order_by(Tag.name).all()
+    add_url_form = AddUrlForm()
+    urls = [u for u in character.urls if not u.is_deleted]
 
     # Bare FlaskForm gives us CSRF tokens for the per-portrait toggle forms
     # below. They POST to admin.toggle_portrait_hidden / set_default_portrait
@@ -270,6 +272,8 @@ def edit_character(id):
         portraits=portraits,
         upload_form=upload_form,
         all_tags=all_tags,
+        add_url_form=add_url_form,
+        urls=urls,
         csrf_form=csrf_form,
     )
 
@@ -410,6 +414,55 @@ def upload_portrait(id):
     db.session.commit()
     flash(f"Uploaded {filename} ({size:,} bytes) for {character.name}.")
     return redirect(url_for('main.edit_character', id=character.id))
+
+
+@main.route('/characters/<int:id>/urls/add', methods=['POST'])
+@login_required
+@admin_required
+def add_character_url(id):
+    """Attach a new external link (Url) to a character. Polymorphic owner —
+    `target_type='character'` + `target_id=character.id`. The url_type
+    selection is optional ("— Untyped —")."""
+    character = Character.query.get_or_404(id)
+    form = AddUrlForm()
+    if not form.validate_on_submit():
+        for field, errors in form.errors.items():
+            for err in errors:
+                flash(f"{field}: {err}")
+        return redirect(url_for('main.edit_character', id=character.id))
+
+    url = Url(
+        name=form.name.data.strip(),
+        url=form.url.data.strip(),
+        favicon=(form.favicon.data or '').strip(),
+        url_type=form.url_type.data or None,
+        target_type='character',
+        target_id=character.id,
+    )
+    db.session.add(url)
+    db.session.commit()
+    flash(f"Added link {url.name!r} to {character.name}.")
+    return redirect(url_for('main.edit_character', id=character.id))
+
+
+@main.route('/urls/<int:url_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def delete_url(url_id):
+    """Hard-delete a Url row. Redirects back to wherever the click came
+    from (request.referrer) so the admin stays on the page they were on."""
+    from flask_wtf import FlaskForm
+    form = FlaskForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    url = Url.query.get_or_404(url_id)
+    label = url.name
+    db.session.delete(url)
+    db.session.commit()
+    flash(f"Deleted link {label!r}.")
+    return redirect(request.referrer or url_for('main.index'))
+
 
 @main.route('/factions', methods=['GET'])
 def factions():

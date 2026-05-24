@@ -22,6 +22,16 @@ class Tag(AbstractTag):
         lazy='dynamic',
     )
 
+    urls = db.relationship(
+        'Url',
+        primaryjoin=(
+            "and_(Tag.id == foreign(Url.target_id), "
+            "Url.target_type == 'tag')"
+        ),
+        viewonly=True,
+        order_by='Url.name',
+    )
+
     @classmethod
     def get_or_create(cls, name):
         """Find a Tag by exact name, or create one with a name-seeded
