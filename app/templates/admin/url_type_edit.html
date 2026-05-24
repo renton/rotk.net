@@ -29,3 +29,8 @@ rotk.net - {% if url_type %}Edit URL type {{ url_type.name }}{% else %}New URL t
     <a href="{{ url_for('admin.url_types') }}" class="btn btn-link">&larr; Back to URL types</a>
 </div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_colour_picker.js') }}"></script>
+{% endblock %}

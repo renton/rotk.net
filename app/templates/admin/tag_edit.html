@@ -20,3 +20,8 @@ rotk.net - {% if tag %}Edit tag {{ tag.name }}{% else %}New tag{% endif %}
     <a href="{{ url_for('admin.tags') }}" class="btn btn-link">&larr; Back to tags</a>
 </div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_colour_picker.js') }}"></script>
+{% endblock %}
