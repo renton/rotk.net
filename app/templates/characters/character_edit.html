@@ -119,6 +119,24 @@
             {{ upload_form.image_file.label(class='form-label') }}
             {{ upload_form.image_file(class='form-control') }}
         </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md-5">
+                {{ upload_form.source_site.label(class='form-label') }}
+                {{ upload_form.source_site(class='form-control') }}
+            </div>
+            <div class="col-md-7">
+                {{ upload_form.source_url.label(class='form-label') }}
+                {{ upload_form.source_url(class='form-control') }}
+            </div>
+            <div class="col-12">
+                <div class="form-text">
+                    Both optional. If a Source URL is provided, the portrait's
+                    Source line in the chapter sidebar links there; if only a
+                    Source site is provided, it's shown as plain text. Leave
+                    both blank to credit the upload as <em>Manual upload</em>.
+                </div>
+            </div>
+        </div>
         <div class="mb-3">
             {{ upload_form.tag_name.label(class='form-label') }}
             {{ upload_form.tag_name(class='form-control',

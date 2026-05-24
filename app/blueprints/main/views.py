@@ -466,14 +466,20 @@ def upload_portrait(id):
     is_default = bool(form.is_default.data)
     is_visible = bool(form.is_visible.data)
 
+    # Credit fields — admin can supply both, either, or neither. Default
+    # the site label to "Manual upload" so the UI always has a string
+    # to display in the source line.
+    site_label = (form.source_site.data or '').strip() or 'Manual upload'
+    src_url = (form.source_url.data or '').strip()
+
     portrait = Portrait(
         name=character.name,
         character_id=character.id,
-        image_url='',           # no remote URL for manual uploads
+        image_url=src_url,      # used as the "originating URL"; safe to be empty
         filename=filename,
         description='',
-        source_url='',
-        source_site='Manual upload',
+        source_url=src_url,
+        source_site=site_label,
         is_default=False,       # set below if requested
         is_hidden=not is_visible,
     )

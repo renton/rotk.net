@@ -109,7 +109,12 @@ class EditFactionForm(FlaskForm):
 class UploadPortraitForm(FlaskForm):
     """Manually upload an image for a character, optionally tagging it and
     setting default/visible flags. Rendered as a fieldset on the character
-    edit page; posts to main.upload_portrait."""
+    edit page; posts to main.upload_portrait.
+
+    `source_site` and `source_url` are optional credit fields — same
+    columns the scrapers populate. Leaving them blank falls back to
+    'Manual upload' so we always have something in source_site for the
+    UI."""
     image_file = FileField(
         "Image file",
         validators=[
@@ -119,6 +124,16 @@ class UploadPortraitForm(FlaskForm):
                 "Image files only (jpg, jpeg, png, gif, webp).",
             ),
         ],
+    )
+    source_site = StringField(
+        "Source site (credit label)",
+        validators=[Optional(), Length(0, 255)],
+        render_kw={"placeholder": "e.g. koei.fandom.com, Wikipedia, Personal photo"},
+    )
+    source_url = StringField(
+        "Source URL (link back to original, optional)",
+        validators=[Optional(), Length(0, 1000)],
+        render_kw={"placeholder": "https://…"},
     )
     tag_name = StringField(
         "Tag (existing or new — leave blank for no tag)",
