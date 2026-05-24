@@ -65,7 +65,7 @@
                     {% set chapter_count = mention_counts.get(character.id, 0) %}
                     {% set book_count = character.book_mention_count or 0 %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                      <div class="d-flex align-items-center gap-2 mb-1">
+                      <div class="d-flex align-items-center gap-2 mb-0">
                         <h6 class="mb-0">{{ character.name }}</h6>
                         {# Admin-only shortcut: jump straight to the edit page
                            for this character. Hidden for anonymous + non-admin
@@ -79,6 +79,18 @@
                         </a>
                         {% endif %}
                       </div>
+                      {# Chinese name on its own line under the English name. #}
+                      {% if character.chinese_name %}
+                      <div>{{ character.chinese_name }}</div>
+                      {% endif %}
+                      {# Courtesy name (unbolded), with chinese courtesy in
+                         brackets when both exist. Render the line at all if
+                         either field is present. #}
+                      {% if character.courtesty_name or character.chinese_courtesty_name %}
+                      <div class="mb-1">
+                        {{ character.courtesty_name }}{% if character.chinese_courtesty_name %} ({{ character.chinese_courtesty_name }}){% endif %}
+                      </div>
+                      {% endif %}
                       <div class="small text-muted">
                         {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
                       </div>
