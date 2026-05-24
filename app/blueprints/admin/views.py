@@ -22,6 +22,16 @@ from . import admin
 PORTRAIT_TARGET_TYPE = 'portrait'   # TagAssociation.target_type for Portrait rows.
 
 
+@admin.route('/faq', methods=['GET'])
+@login_required
+@admin_required
+def faq():
+    """How-to reference for the most common admin tasks. Static content
+    — lives in templates/admin/faq.html — but admin-gated so it isn't
+    indexed and link references can assume the reader has admin rights."""
+    return render_template('admin/faq.html')
+
+
 def _factions_by_character_id(character_ids):
     """Return {character_id: [faction_name, ...]} for the given character ids."""
     return _m2m_names_by_character_id(
