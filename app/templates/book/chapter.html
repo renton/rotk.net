@@ -156,7 +156,7 @@
                          badges in flow. bg-body-tertiary is Bootstrap's
                          "slightly off-white" — readable, no theme fight. #}
                       {% if character.primary_faction %}
-                      <div class="bg-body-tertiary rounded p-2 mt-3">
+                      <div class="chapter-section-card rounded p-2 mt-3">
                         <div class="small text-muted fw-bold mb-1">Faction:</div>
                         <div>
                           {{ macros.badge_widget(character.primary_faction) }}
@@ -179,7 +179,7 @@
                          | reject('equalto', character.primary_faction)
                          | list %}
                       {% if past_factions %}
-                      <div class="bg-body-tertiary rounded p-2 mt-2">
+                      <div class="chapter-section-card rounded p-2 mt-2">
                         <div class="small text-muted fw-bold mb-1">Past Factions:</div>
                         {% for faction in past_factions %}
                           <div>
@@ -198,7 +198,7 @@
                       {# External links attached to the character. #}
                       {% set list_urls = character.urls %}
                       {% if list_urls %}
-                      <div class="bg-body-tertiary rounded p-2 mt-2">
+                      <div class="chapter-section-card rounded p-2 mt-2">
                         <div class="small text-muted fw-bold mb-1">Links:</div>
                         <div class="ms-5">
                           {% include '_url_list.html' %}

@@ -17,6 +17,15 @@ span.location-ref:hover {
     text-decoration-thickness: 2px;
 }
 
+/* Tinted card-style background for the Faction / Past Factions / Links
+   blocks in the chapter sidebar's Character Info panel. Sits halfway
+   between white and Bootstrap's accordion-active blue (#cfe2ff) so
+   the cards are visibly separated from the white panel without
+   looking like a different surface. */
+.chapter-section-card {
+    background-color: #e7f0ff;
+}
+
 /* Brief yellow flash on a sidebar row when its inline ref is clicked.
    Used by chapter.js showAccordionItem(): adds .sidebar-flash to the
    target <li>, the CSS animation runs once and fades back. The
