@@ -45,6 +45,7 @@
         <tr>
             <th>Name</th>
             <th>Type</th>
+            <th>Date</th>
             <th>Location</th>
             <th class="d-none d-md-table-cell">Keywords</th>
             <th class="d-none d-md-table-cell">Chapters</th>
@@ -65,6 +66,7 @@
                 {% endif %}
             </td>
             <td>{% if event.event_type %}{{ macros.badge_widget(event.event_type) }}{% endif %}</td>
+            <td class="small">{{ event.date }}</td>
             <td>{{ event.location.name if event.location else '' }}</td>
             <td class="d-none d-md-table-cell small text-muted">{{ event.aliases }}</td>
             <td class="d-none d-md-table-cell small">
@@ -80,7 +82,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="6" class="text-muted">No events yet.</td>
+            <td colspan="7" class="text-muted">No events yet.</td>
         </tr>
         {% endfor %}
     </tbody>

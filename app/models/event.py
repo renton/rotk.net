@@ -47,6 +47,12 @@ class Event(AbstractObject):
     )
     event_type = db.relationship('EventType', back_populates='events')
 
+    # Free-form date string (mirrors Character.birth_date / .death_date).
+    # Accepts ranges, BC years, imprecise values — kept as text rather
+    # than a typed DATE so historical sources with month/season-level
+    # precision (or BC) don't have to be normalised.
+    date = db.Column(db.String(64), default="", nullable=False)
+
     # Free-form override for the map plot point — used when the linked
     # Location's coords are wrong or the event happened somewhere distinct
     # from the canonical Location. Format intentionally open ("lat,lng" or

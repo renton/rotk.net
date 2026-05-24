@@ -215,6 +215,11 @@ class EditEventForm(FlaskForm):
         blank_text='— None —',
         blank_value="",
     )
+    date = StringField(
+        "Date (free-form)",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": "e.g. 208 AD, or Winter 208 AD - Spring 209 AD"},
+    )
     geo_point_override = StringField(
         "Geo-point override (free-form)",
         validators=[Length(0, 255)],
