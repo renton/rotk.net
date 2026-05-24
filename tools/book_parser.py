@@ -233,7 +233,7 @@ def scan_chapter_for_characters(chapter):
 def build_needle_pattern(name_needles):
     return re.compile(r'\b(' + '|'.join(map(re.escape, name_needles)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
 
-def build_name_ref_html(character):
+def build_name_ref_html(character, duplicate_warning_url=None):
     """Emit the inline character-ref span. Includes:
 
       * The default pill styling inline so no-JS renders / first paint
@@ -246,6 +246,11 @@ def build_name_ref_html(character):
       * A shared `text-ref` class so future inline-tagged data types
         (events, locations) can opt into the same style switcher by
         adding the class.
+      * When `duplicate_warning_url` is provided, a small red
+        circle-exclamation anchor follows the pill — for admins, this
+        signals that more than one character in the chapter shares this
+        name, and links to the Character/Chapter Association editor so
+        the admin can pick the right one.
     """
     if character.primary_faction is not None:
         f = character.primary_faction
@@ -266,13 +271,26 @@ def build_name_ref_html(character):
         f"color:{font};"
         f"border:2px solid {border};"
     )
-    return (
+    pill = (
         f"<span class='text-ref character-ref badge rounded-pill' "
         f"data-character-id='{character.id}' "
         f"{faction_attr}"
         f"data-bg='{bg}' data-font='{font}' data-border='{border}' "
         f"style='{style}'>{character.name}</span>"
     )
+    if duplicate_warning_url:
+        # No-underline link so the icon doesn't grow a baseline rule.
+        # title= drives the browser tooltip; aria-label echoes it for
+        # screen readers.
+        msg = f'Multiple characters named &quot;{character.name}&quot; in this chapter — click to resolve'
+        pill += (
+            f"<a href='{duplicate_warning_url}' "
+            f"class='character-dup-warning text-danger ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    return pill
 
 
 def build_event_ref_html(event, match_text=None):

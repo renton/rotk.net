@@ -64,11 +64,22 @@ def chapter(chapter_num):
     needle_to_character_id = {}
     needle_to_location_id = {}
 
+    # Admin-only: flag characters whose `name` is shared with another
+    # character in this same chapter so the inline pill gets a red
+    # circle-exclamation linking to the Character/Chapter Association
+    # editor. Lets the admin spot ambiguous matches without having to
+    # cross-check every name by hand.
+    from collections import Counter
+    is_admin = current_user.is_authenticated and current_user.is_administrator
+    dup_names = {n for n, count in Counter(c.name for c in characters).items() if count > 1}
+    dup_url = url_for('admin.chapter_associations', chapter_num=chapter.chapter_num) if is_admin and dup_names else None
+
     # Characters get first claim on a needle so character mentions never
     # get accidentally re-coloured as an event/location with the same word.
     for character in characters:
+        warn_url = dup_url if (dup_url and character.name in dup_names) else None
         for name_needle in character.get_all_name_labels():
-            replacements[name_needle] = build_name_ref_html(character)
+            replacements[name_needle] = build_name_ref_html(character, duplicate_warning_url=warn_url)
             needle_to_character_id[name_needle] = character.id
 
     # Events + locations get black-underlined spans linking to the
