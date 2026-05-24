@@ -109,9 +109,16 @@
                         </div>
                       {% endif %}
 
-                      {% if character.factions %}
+                      {# Past factions = the M2M minus the primary (already shown
+                         above) and minus hidden (merged-away factions). Skip
+                         the whole block if nothing's left to display. #}
+                      {% set past_factions = character.factions
+                         | rejectattr('is_hidden')
+                         | reject('equalto', character.primary_faction)
+                         | list %}
+                      {% if past_factions %}
                         Past Factions:
-                        {% for faction in character.factions %}
+                        {% for faction in past_factions %}
                           <div>
                             {{ macros.badge_widget(faction) }}
                           </div>
