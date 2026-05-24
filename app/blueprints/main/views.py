@@ -417,33 +417,59 @@ def upload_portrait(id):
     return redirect(url_for('main.edit_character', id=character.id))
 
 
-@main.route('/characters/<int:id>/urls/add', methods=['POST'])
+# Owner-type → (model class, edit view endpoint name) for the generic
+# URL add route below. Restricting the param via this map prevents an
+# attacker from inserting a Url against an arbitrary target_type value.
+_URL_OWNER_TYPES = {
+    'character': (Character, 'main.edit_character'),
+    'event':     (Event,     'main.edit_event'),
+    'location':  (Location,  'main.edit_location'),
+}
+
+
+@main.route('/<owner_type>/<int:id>/urls/add', methods=['POST'])
 @login_required
 @admin_required
-def add_character_url(id):
-    """Attach a new external link (Url) to a character. Polymorphic owner —
-    `target_type='character'` + `target_id=character.id`. The url_type
-    selection is optional ("— Untyped —")."""
-    character = Character.query.get_or_404(id)
+def add_owner_url(owner_type, id):
+    """Attach a new external link (Url) to a first-class object.
+    `owner_type` is one of the allow-listed keys in _URL_OWNER_TYPES;
+    `id` resolves to a row in the corresponding model. After insert we
+    best-effort auto-fetch a favicon from the URL's host and stash it
+    under app/static/favicons/<host>_favicon.ico (deduped per host)."""
+    from tools.favicon_fetcher import fetch_favicon
+
+    if owner_type not in _URL_OWNER_TYPES:
+        abort(404)
+    model_cls, edit_endpoint = _URL_OWNER_TYPES[owner_type]
+    owner = model_cls.query.get_or_404(id)
+
     form = AddUrlForm()
     if not form.validate_on_submit():
         for field, errors in form.errors.items():
             for err in errors:
                 flash(f"{field}: {err}")
-        return redirect(url_for('main.edit_character', id=character.id))
+        return redirect(url_for(edit_endpoint, id=owner.id))
+
+    favicon_path = (form.favicon.data or '').strip()
+    if not favicon_path:
+        # Admin didn't supply one — try to fetch & cache.
+        favicon_path = fetch_favicon(
+            form.url.data.strip(),
+            current_app.static_folder,
+        ) or ''
 
     url = Url(
         name=form.name.data.strip(),
         url=form.url.data.strip(),
-        favicon=(form.favicon.data or '').strip(),
+        favicon=favicon_path,
         url_type=form.url_type.data or None,
-        target_type='character',
-        target_id=character.id,
+        target_type=owner_type,
+        target_id=owner.id,
     )
     db.session.add(url)
     db.session.commit()
-    flash(f"Added link {url.name!r} to {character.name}.")
-    return redirect(url_for('main.edit_character', id=character.id))
+    flash(f"Added link {url.name!r} to {owner.name}.")
+    return redirect(url_for(edit_endpoint, id=owner.id))
 
 
 @main.route('/urls/<int:url_id>/delete', methods=['POST'])
@@ -648,6 +674,7 @@ def new_location():
 @login_required
 @admin_required
 def edit_location(id):
+    from flask_wtf import FlaskForm
     location = Location.query.get_or_404(id)
     form = EditLocationForm(obj=location)
     if form.validate_on_submit():
@@ -656,7 +683,14 @@ def edit_location(id):
         db.session.commit()
         flash("Location updated.")
         return redirect(url_for('main.edit_location', id=location.id))
-    return render_template('locations/location_edit.html', form=form, location=location)
+    return render_template(
+        'locations/location_edit.html',
+        form=form,
+        location=location,
+        urls=[u for u in location.urls if not u.is_deleted],
+        add_url_form=AddUrlForm(),
+        csrf_form=FlaskForm(),
+    )
 
 
 # ----- Events -------------------------------------------------------------
@@ -725,6 +759,7 @@ def new_event():
 @login_required
 @admin_required
 def edit_event(id):
+    from flask_wtf import FlaskForm
     event = Event.query.get_or_404(id)
     form = EditEventForm(obj=event)
     if form.validate_on_submit():
@@ -733,4 +768,11 @@ def edit_event(id):
         db.session.commit()
         flash("Event updated.")
         return redirect(url_for('main.edit_event', id=event.id))
-    return render_template('events/event_edit.html', form=form, event=event)
+    return render_template(
+        'events/event_edit.html',
+        form=form,
+        event=event,
+        urls=[u for u in event.urls if not u.is_deleted],
+        add_url_form=AddUrlForm(),
+        csrf_form=FlaskForm(),
+    )

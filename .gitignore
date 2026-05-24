@@ -64,6 +64,11 @@ db-data/
 app/static/portraits/*
 !app/static/portraits/.gitkeep
 
+# Auto-fetched per-domain favicons (downloaded when an admin attaches a URL).
+# Same pattern as portraits — directory tracked, contents ignored.
+app/static/favicons/*
+!app/static/favicons/.gitkeep
+
 # Environment files
 .env
 .env-mysql
