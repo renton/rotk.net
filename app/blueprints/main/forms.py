@@ -56,13 +56,20 @@ class EditCharacterForm(FlaskForm):
 
     roles = QuerySelectMultipleField(
         "Roles",
-        query_factory=lambda: Role.query.all(),
-        get_label="name"
+        query_factory=lambda: Role.query.order_by(Role.name).all(),
+        get_label="name",
+        # `size` makes the multi-select taller so the admin can see ~14
+        # options at once instead of the browser default of ~4. Pair with
+        # ctrl/cmd-click for multi-select. Sorted alphabetically in the
+        # query_factory above.
+        render_kw={"size": 14},
     )
     factions = QuerySelectMultipleField(
         "Factions (all, past and present)",
-        query_factory=lambda: Faction.query.filter(Faction.is_hidden.is_(False)).all(),
-        get_label="name"
+        query_factory=lambda: Faction.query.filter(Faction.is_hidden.is_(False))
+                                            .order_by(Faction.name).all(),
+        get_label="name",
+        render_kw={"size": 14},
     )
     primary_faction = QuerySelectField(
         "Primary faction (drives the highlight colour)",
