@@ -167,6 +167,51 @@ def characters():
         chapter_lists=chapter_lists,
     )
 
+@main.route('/characters/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_character():
+    """Admin form to create a brand-new Character. Reuses the same template
+    as the edit page, but doesn't pass `portraits` / `upload_form` so the
+    images section is skipped (the character has no id yet to attach
+    portraits to)."""
+    from sqlalchemy.exc import IntegrityError
+
+    form = EditCharacterForm()
+    if form.validate_on_submit():
+        character = Character()
+        form.populate_obj(character)
+
+        # Same primary_faction consistency rule as edit_character.
+        if (
+            character.primary_faction is not None
+            and character.primary_faction not in character.factions.all()
+        ):
+            character.factions.append(character.primary_faction)
+
+        db.session.add(character)
+        try:
+            db.session.flush()   # populate character.id for the recount step
+        except IntegrityError:
+            db.session.rollback()
+            flash(
+                f"Couldn't create {form.name.data!r}: a character with the "
+                f"same name + birth/death + ancestral home already exists."
+            )
+            return render_template('characters/character_edit.html', form=form)
+
+        # Fresh row → its book mention count is unknown; compute it now so
+        # the chapter sidebar shows real numbers right away.
+        counts = count_mentions_per_character(Chapter.query.all(), [character])
+        character.book_mention_count = counts.get(character.id, 0)
+
+        db.session.commit()
+        flash(f"Created character {character.name!r}.")
+        return redirect(url_for('main.edit_character', id=character.id))
+
+    return render_template('characters/character_edit.html', form=form)
+
+
 @main.route('/characters/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required

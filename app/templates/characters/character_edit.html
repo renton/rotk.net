@@ -1,7 +1,28 @@
 {% extends "base.html" %}
 {% import "_macros.html" as macros %}
 
-{% block title %}rotk.net - Edit {{ character.name if character else 'character' }}{% endblock %}
+{# `character` is None / undefined when this template is rendered for the
+   New Character form. We branch on it for the title + h1 + the images
+   section (skipped entirely when there's no character to attach to). #}
+
+{% block title %}
+{% if character %}rotk.net - Edit {{ character.name }}
+{% else %}rotk.net - New character{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    {% if character %}
+    <h1>Edit character: {{ character.name }}</h1>
+    {% else %}
+    <h1>New character</h1>
+    <p class="text-muted mb-0">
+        Name is the only required field. Everything else can be filled
+        in now or edited later.
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
 
 {% block main_form %}
 {{ super() }}
