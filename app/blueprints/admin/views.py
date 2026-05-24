@@ -514,14 +514,16 @@ def event_associations(chapter_num=None):
 @login_required
 @admin_required
 def event_associations_add(chapter_num):
-    """Attach an Event to a chapter, adding keyword aliases as we go.
+    """Attach an Event to a chapter, optionally extending aliases.
 
-    Admin supplies a comma-separated `search_terms` field. For each
-    keyword we verify it appears in the chapter text (HTML stripped)
-    and, if so, append it to event.aliases (deduped against name +
-    existing aliases). Keywords that don't appear in the chapter are
-    reported back but otherwise skipped. The chapter ↔ event link is
-    added regardless (admin opted to associate)."""
+    Admin picks the event. `search_terms` (comma-separated keywords) is
+    OPTIONAL — leave empty to just create the chapter ↔ event link, with
+    the event showing in the chapter sidebar but no inline-tagging of
+    the prose. If keywords are supplied, each is checked against the
+    chapter text and the matching ones become event aliases (so the
+    chapter view starts tagging those occurrences). Non-matching
+    keywords are reported and skipped. Either way the chapter ↔ event
+    link is added."""
     form = _CsrfOnlyForm()
     if not form.validate_on_submit():
         abort(400)
@@ -535,27 +537,25 @@ def event_associations_add(chapter_num):
 
     raw_terms = (request.form.get('search_terms') or '').strip()
     keywords = [k.strip() for k in raw_terms.split(',') if k.strip()]
-    if not keywords:
-        flash("Enter at least one keyword (comma-separated for multiple).")
-        return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
-
-    content = strip_html_tags(chapter.content)
-    existing = [a.strip() for a in (event.aliases or '').split(',') if a.strip()]
-    known = {event.name} | set(existing)
 
     aliases_added = []
     no_match = []
-    for keyword in keywords:
-        if not build_needle_pattern([keyword]).findall(content):
-            no_match.append(keyword)
-            continue
-        if keyword not in known:
-            existing.append(keyword)
-            known.add(keyword)
-            aliases_added.append(keyword)
+    if keywords:
+        content = strip_html_tags(chapter.content)
+        existing = [a.strip() for a in (event.aliases or '').split(',') if a.strip()]
+        known = {event.name} | set(existing)
 
-    if aliases_added:
-        event.aliases = ','.join(existing)
+        for keyword in keywords:
+            if not build_needle_pattern([keyword]).findall(content):
+                no_match.append(keyword)
+                continue
+            if keyword not in known:
+                existing.append(keyword)
+                known.add(keyword)
+                aliases_added.append(keyword)
+
+        if aliases_added:
+            event.aliases = ','.join(existing)
 
     if event not in chapter.events:
         chapter.events.append(event)

@@ -112,22 +112,21 @@
     <div class="card-header">Add Event Association to chapter {{ selected.chapter_num }}</div>
     <div class="card-body">
         <p class="text-muted small mb-3">
-            Enter one or more comma-separated <strong>keywords</strong>
-            (the words / phrases as they appear in the chapter text)
-            and pick the event. The server scans the chapter for each
-            keyword and adds the matching ones to the event's aliases.
-            Keywords not found in this chapter are reported and skipped
-            — but the chapter ↔ event link is still created (you may
-            have other reasons to associate them).
+            Pick the event to associate with this chapter. <strong>Keywords
+            are optional</strong> — leave the field blank to attach the event
+            to the chapter without scanning the prose. Provide comma-
+            separated keywords if you want the chapter text to inline-tag
+            those occurrences; matching ones become event aliases, non-
+            matching are reported and skipped.
         </p>
         <form method="POST"
               action="{{ url_for('admin.event_associations_add', chapter_num=selected.chapter_num) }}"
               class="row g-2 align-items-end">
             {{ csrf_form.hidden_tag() }}
             <div class="col-md-5">
-                <label for="add-search-terms" class="form-label">Keywords (comma-separated)</label>
+                <label for="add-search-terms" class="form-label">Keywords (optional, comma-separated)</label>
                 <input type="text" name="search_terms" id="add-search-terms"
-                       class="form-control" required autocomplete="off"
+                       class="form-control" autocomplete="off"
                        placeholder="Battle of Red Cliffs, Chibi, 赤壁之战">
             </div>
             <div class="col-md-5">
