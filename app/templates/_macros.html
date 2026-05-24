@@ -28,15 +28,17 @@
 </ul>
 {% endmacro %}
 
-{% macro badge_widget(tag, rounded=true, border_size=2) %}
+{% macro badge_widget(tag, rounded=true, border_size=2, show_icon=false) %}
 {# Generic coloured badge for any AbstractTag-shaped object (Faction,
-   Role, Tag, UrlType, EventType, ...). If the tag carries a Font
-   Awesome `icon` class, render it as a prefix inside the pill so the
-   icon picks up the badge's font colour. #}
+   Role, Tag, UrlType, EventType, ...). Pass `show_icon=true` to
+   render the tag's Font Awesome `icon` class as a prefix inside the
+   pill. Off by default so EventType / Faction / etc. badges stay
+   text-only; the URL-list partial opts in so the URL type icon sits
+   inside its pill. #}
 <span class="badge {% if rounded %}rounded-pill{% endif %}"
     style="color:{{ tag.font_colour }} !important;
     {% if tag.bg_colour == tag.default_colour %}background-color:rgba(var(--bs-primary-rgb));{% else %}background-color:{{ tag.bg_colour }} !important;{% endif %}
     {% if tag.border_colour == tag.default_colour %}{% else %}border:{{ border_size }}px solid {{ tag.border_colour }} !important;{% endif %}">
-    {% if tag.icon %}<i class="{{ tag.icon }} me-1" aria-hidden="true"></i>{% endif %}{{ tag.name }}
+    {% if show_icon and tag.icon %}<i class="{{ tag.icon }} me-1" aria-hidden="true"></i>{% endif %}{{ tag.name }}
 </span>
 {% endmacro %}
