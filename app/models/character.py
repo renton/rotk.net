@@ -13,8 +13,12 @@ class Character(AbstractObject):
     courtesty_name = db.Column(db.String(255), default="")
     chinese_courtesty_name = db.Column(db.String(255), default="")
 
-    birth_date = db.Column(db.String(4), default="")
-    death_date = db.Column(db.String(4), default="")
+    # Free-form date strings — wide enough to hold ranges and qualifiers
+    # like "256 BC - 247 BC" or "June 195 BC". A real date type / range
+    # is on the wishlist (ISSUES.md #20); 64 chars is the pragmatic stop
+    # in the meantime.
+    birth_date = db.Column(db.String(64), default="")
+    death_date = db.Column(db.String(64), default="")
 
     ancestral_home = db.Column(db.String(255), default="")
 
