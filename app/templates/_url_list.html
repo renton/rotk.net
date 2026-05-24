@@ -20,12 +20,8 @@
         <img src="{{ url_for('static', filename=u.favicon) }}"
              alt="" style="width: 16px; height: 16px; object-fit: contain;">
         {% elif u.url_type and u.url_type.icon %}
-        {# Leading icon picks up the UrlType's background colour so the
-           icon and its companion badge read as one branded unit. Skip
-           when the bg is still the default white (looks invisible). #}
-        {% set ic_bg = u.url_type.bg_colour %}
         <i class="{{ u.url_type.icon }}" aria-hidden="true"
-           style="width: 16px; text-align: center;{% if ic_bg and ic_bg != u.url_type.default_colour %}color:{{ ic_bg }};{% endif %}"></i>
+           style="width: 16px; text-align: center;"></i>
         {% else %}
         <i class="fa-solid fa-link text-muted" aria-hidden="true"
            style="width: 16px; text-align: center;"></i>
