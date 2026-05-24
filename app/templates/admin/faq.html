@@ -36,6 +36,8 @@
         <li class="list-group-item"><a href="#url-link-faction">Linking URLs to a Faction</a></li>
         <li class="list-group-item"><a href="#url-link-location">Linking URLs to a Location</a></li>
         <li class="list-group-item"><a href="#url-link-role">Linking URLs to a Role</a></li>
+        <li class="list-group-item"><a href="#location-snippet-exclude">Excluding bad location snippets in a chapter</a></li>
+        <li class="list-group-item"><a href="#event-types">Event Types (creating + assigning)</a></li>
     </ol>
 </div>
 
@@ -418,6 +420,63 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
     {% include 'admin/_faq_url_link_steps.html' with context %}
     <p>
         <strong>Where:</strong> <a href="{{ url_for('main.roles') }}">Roles</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="location-snippet-exclude" class="mb-5">
+    <h2>Excluding bad location snippets in a chapter</h2>
+    <p>
+        When a location's name or alias accidentally matches part of
+        another word in the prose (e.g. an alias <em>"Liang"</em> matching
+        a character named <em>"Zhang Liang"</em>), you don't have to remove
+        the alias entirely — you can suppress just the wrong occurrence.
+    </p>
+    <ol>
+        <li>Go to <a href="{{ url_for('admin.location_associations') }}">Location associations</a> and pick the chapter.</li>
+        <li>For each associated location, click <em>show N snippets</em> to expand the live match list.</li>
+        <li>Hit the red <strong>×</strong> next to a snippet to mark it as a bad match. A confirm dialog appears first.</li>
+        <li>The page reloads with that snippet moved into an <em>Excluded snippets</em> collapsible below — strikethrough, with a restore (↺) button if you change your mind.</li>
+    </ol>
+    <p>
+        The exclusion is fingerprinted by (chapter, location, the surrounding
+        text). Once excluded, that specific occurrence stops appearing as an
+        inline ref in the chapter prose too — the rest of the location's
+        matches continue to be tagged normally.
+    </p>
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('admin.location_associations') }}">Admin → Location associations</a>.
+        Pick a chapter, expand the snippet list on the row, click the
+        red &times; next to any bad match.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="event-types" class="mb-5">
+    <h2>Event Types (creating + assigning)</h2>
+    <p>
+        An <em>Event Type</em> is a coloured/iconed category for events
+        (e.g. Battle, Treaty, Court intrigue). It appears as a badge next
+        to the event everywhere the event is shown — chapter sidebar,
+        events list, etc. Same shape as <em>URL Types</em>: name + Font
+        Awesome icon + three colours.
+    </p>
+    <h3 class="h6 mt-3">Create a new event type</h3>
+    <ol>
+        <li>Go to <a href="{{ url_for('admin.event_types') }}">Event Types</a> and click <em>New event type</em>.</li>
+        <li>Give it a name (required), pick a Font Awesome icon class — browse <a href="https://fontawesome.com/search?o=r&m=free" target="_blank" rel="noopener">fontawesome.com</a> and copy the class string (e.g. <code>fa-solid fa-flag</code>).</li>
+        <li>Optionally set background / font / border colours. The randomize button generates a readable palette in one click.</li>
+        <li>Save.</li>
+    </ol>
+    <h3 class="h6 mt-3">Assign an event type to an event</h3>
+    <ol>
+        <li>Edit the event (<a href="{{ url_for('main.events') }}">Events</a> → Edit row).</li>
+        <li>Pick from the <em>Event type</em> dropdown — leaving it blank means no badge.</li>
+        <li>Save. The badge now appears in the chapter sidebar's <em>Events</em> accordion for every chapter the event is associated with.</li>
+    </ol>
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('admin.event_types') }}">Admin → Event Types</a> for managing types;
+        <a href="{{ url_for('main.events') }}">Events</a> → Edit for assigning.
     </p>
 </section>
 {% endblock %}
