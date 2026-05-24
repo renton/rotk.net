@@ -379,7 +379,7 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 {# ------------------------------------------------------------------- #}
 <section id="url-link-character" class="mb-5">
     <h2>Linking URLs to a Character</h2>
-    {% include '_faq_url_link_steps.html' with context %}
+    {% include 'admin/_faq_url_link_steps.html' with context %}
     <p>
         <strong>Where:</strong> <a href="{{ url_for('main.characters') }}">Characters</a> → click the character name → scroll to <em>External links</em>.
     </p>
@@ -388,7 +388,7 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 {# ------------------------------------------------------------------- #}
 <section id="url-link-event" class="mb-5">
     <h2>Linking URLs to an Event</h2>
-    {% include '_faq_url_link_steps.html' with context %}
+    {% include 'admin/_faq_url_link_steps.html' with context %}
     <p>
         <strong>Where:</strong> <a href="{{ url_for('main.events') }}">Events</a> → click the event name → scroll to <em>External links</em>.
     </p>
@@ -397,7 +397,7 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 {# ------------------------------------------------------------------- #}
 <section id="url-link-faction" class="mb-5">
     <h2>Linking URLs to a Faction</h2>
-    {% include '_faq_url_link_steps.html' with context %}
+    {% include 'admin/_faq_url_link_steps.html' with context %}
     <p>
         <strong>Where:</strong> <a href="{{ url_for('main.factions') }}">Factions</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
     </p>
@@ -406,7 +406,7 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 {# ------------------------------------------------------------------- #}
 <section id="url-link-location" class="mb-5">
     <h2>Linking URLs to a Location</h2>
-    {% include '_faq_url_link_steps.html' with context %}
+    {% include 'admin/_faq_url_link_steps.html' with context %}
     <p>
         <strong>Where:</strong> <a href="{{ url_for('main.locations') }}">Locations</a> → click the location name → scroll to <em>External links</em>.
     </p>
@@ -415,7 +415,7 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 {# ------------------------------------------------------------------- #}
 <section id="url-link-role" class="mb-5">
     <h2>Linking URLs to a Role</h2>
-    {% include '_faq_url_link_steps.html' with context %}
+    {% include 'admin/_faq_url_link_steps.html' with context %}
     <p>
         <strong>Where:</strong> <a href="{{ url_for('main.roles') }}">Roles</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
     </p>
