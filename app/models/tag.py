@@ -67,6 +67,11 @@ class TagAssociation(db.Model):
 
     created_at = db.Column(db.DateTime, default=db.func.now())
 
+    # Audit fields. Auto-stamped by app/models/audit.py's mapper hook on
+    # insert / update; "rotk.net_system" for CLI / scraper activity.
+    created_by = db.Column(db.String(64), default="rotk.net_system", nullable=False)
+    last_edited_by = db.Column(db.String(64), default="rotk.net_system", nullable=False)
+
     tag = db.relationship('Tag', back_populates='associations')
 
     __table_args__ = (
