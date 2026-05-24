@@ -31,6 +31,12 @@
             {% endif %}
 
             <a href="{{ u.url }}" target="_blank" rel="noopener">{{ u.name }}</a>
+            {# Raw URL in brackets so admins can sanity-check the target
+               at a glance without hovering. Truncated by CSS if it's
+               long; the link above remains the clickable element. #}
+            <span class="text-muted small text-truncate" style="max-width: 50%;">
+                ({{ u.url }})
+            </span>
 
             {% if u.url_type %}
             <span class="badge bg-secondary ms-2">{{ u.url_type.name }}</span>
