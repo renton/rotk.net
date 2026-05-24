@@ -16,10 +16,11 @@
 <div class="card mb-5">
     <div class="card-header">Contents</div>
     <ol class="list-group list-group-flush list-group-numbered">
-        <li class="list-group-item"><a href="#char-assoc-fix">How to fix the wrong character association in a chapter</a></li>
-        <li class="list-group-item"><a href="#char-assoc-add">How to add a character association in a chapter</a></li>
+        <li class="list-group-item"><a href="#char-assoc-fix">How to fix a wrong Character/Chapter Association</a></li>
+        <li class="list-group-item"><a href="#char-assoc-add">How to add a Character/Chapter Association</a></li>
         <li class="list-group-item"><a href="#char-add">How to add a character</a></li>
         <li class="list-group-item"><a href="#char-edit">How to edit a character</a></li>
+        <li class="list-group-item"><a href="#upload-portrait">How to upload a portrait (with source credit)</a></li>
         <li class="list-group-item"><a href="#loc-add">How to add a location</a></li>
         <li class="list-group-item"><a href="#loc-edit">How to edit a location</a></li>
         <li class="list-group-item"><a href="#event-add">How to add an event</a></li>
@@ -29,7 +30,7 @@
         <li class="list-group-item"><a href="#faction-merge">How to merge a faction</a></li>
         <li class="list-group-item"><a href="#default-pic">How to change a character's default picture</a></li>
         <li class="list-group-item"><a href="#hide-image">How to hide / remove an image for a character</a></li>
-        <li class="list-group-item"><a href="#chapter-assoc-other">Other chapter-association tools (Location, Event, Faction)</a></li>
+        <li class="list-group-item"><a href="#chapter-assoc-other">Event/Chapter + Location/Chapter Association tools</a></li>
         <li class="list-group-item"><a href="#url-types-add">Adding URL types</a></li>
         <li class="list-group-item"><a href="#url-link-character">Linking URLs to a Character</a></li>
         <li class="list-group-item"><a href="#url-link-event">Linking URLs to an Event</a></li>
@@ -38,12 +39,13 @@
         <li class="list-group-item"><a href="#url-link-role">Linking URLs to a Role</a></li>
         <li class="list-group-item"><a href="#location-snippet-exclude">Excluding bad location snippets in a chapter</a></li>
         <li class="list-group-item"><a href="#event-types">Event Types (creating + assigning)</a></li>
+        <li class="list-group-item"><a href="#chapter-view-tweaks">Chapter page reader controls (Tag style + Link style)</a></li>
     </ol>
 </div>
 
 {# ------------------------------------------------------------------- #}
 <section id="char-assoc-fix" class="mb-5">
-    <h2>How to fix the wrong character association in a chapter</h2>
+    <h2>How to fix a wrong Character/Chapter Association</h2>
     <p>
         When the chapter-association scanner picks the wrong character for
         a name (e.g. "Liu Bei" assigned to a Liu Bei who's the wrong
@@ -51,7 +53,7 @@
         chapter ↔ character link.
     </p>
     <ol>
-        <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Chapter Associations</a>.</li>
+        <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Character/Chapter Association</a>.</li>
         <li>Pick the chapter from the dropdown.</li>
         <li>Find the wrongly-attached character in the table.</li>
         <li>Click <strong>Switch character</strong> in that row's Actions column. A small inline form appears.</li>
@@ -72,7 +74,7 @@
 
 {# ------------------------------------------------------------------- #}
 <section id="char-assoc-add" class="mb-5">
-    <h2>How to add a character association in a chapter</h2>
+    <h2>How to add a Character/Chapter Association</h2>
     <p>
         Use this when the chapter prose mentions a character by a name
         we don't know about yet (e.g. a courtesy name, a nickname). The
@@ -80,24 +82,26 @@
         records the chapter ↔ character link.
     </p>
     <ol>
-        <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Chapter Associations</a>.</li>
+        <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Character/Chapter Association</a>.</li>
         <li>Pick the chapter.</li>
         <li>Scroll to <strong>Add Character Association to chapter N</strong> at the bottom of the page.</li>
-        <li>In <em>Search term</em>, enter the name <strong>exactly as it appears in the prose</strong>
-            (e.g. <code>Mengde</code> for Cao Cao's courtesy name).</li>
+        <li>In <em>Keywords</em>, enter one or more comma-separated names <strong>exactly as they appear in the prose</strong>
+            (e.g. <code>Mengde, Cao Cao</code>).</li>
         <li>In <em>Canonical character</em>, pick the real character from the dropdown
-            (autocomplete: type partial name, the list shows faction + role + dates).</li>
+            (autocomplete: type partial name, the list shows faction + role + dates).
+            <strong>Picking from the dropdown auto-fills the Keywords field</strong> with
+            <code>name, courtesy_name, aliases…</code> if you've left it blank — saves retyping.</li>
         <li>Click <strong>Add</strong>.</li>
     </ol>
     <p>
-        The server scans the chapter text for the search term; if zero
-        matches it refuses (saves you from typos). If it finds matches
-        it appends the term to <code>character.aliases</code> (deduped
-        against name / courtesy name / existing aliases) and creates the
-        chapter ↔ character link.
+        For each keyword the server scans the chapter text; matching
+        keywords are appended to <code>character.aliases</code> (deduped
+        against name / courtesy name / existing aliases). Keywords that
+        don't appear are reported and skipped. The chapter ↔ character
+        link is added regardless.
     </p>
     <p class="text-muted small">
-        Because aliases are global, the new alias will also tag this name
+        Because aliases are global, a new alias will also tag this name
         in <em>every other</em> chapter going forward — usually what you
         want for courtesy names. If the term is genuinely chapter-local,
         you'd be better off editing the character to remove the alias
@@ -128,17 +132,18 @@
 <section id="char-edit" class="mb-5">
     <h2>How to edit a character</h2>
     <ol>
-        <li>From <a href="{{ url_for('main.characters') }}">Characters</a>, click the character's name in the table — when you're logged in as admin the name is a link to the edit page.</li>
+        <li>From <a href="{{ url_for('main.characters') }}">Characters</a>, click the character's name in the table — when you're logged in as admin the name is a link to the edit page.
+            <em>Shortcut:</em> in the chapter sidebar's Character Info panel there's a small <strong>Edit</strong> button next to each character's name (admin only) that jumps straight to the same page.</li>
         <li>Edit any field. Press <strong>Submit</strong>.</li>
     </ol>
     <p>
         On the edit page you can also:
     </p>
     <ul>
-        <li>Upload a new image (form inside the <em>Images</em> fieldset; max 10 MB, JPG/PNG/GIF/WEBP).</li>
+        <li>Upload a new image with a source credit — see <a href="#upload-portrait">How to upload a portrait</a> below.</li>
         <li>Set a portrait as default (auto-makes it visible).</li>
         <li>Hide / unhide an image.</li>
-        <li>Attach external links — see <a href="{{ url_for('main.characters') }}">Add Character</a> flow for the URL section.</li>
+        <li>Attach external links — see <a href="#url-link-character">Linking URLs to a Character</a>.</li>
     </ul>
     <p class="text-muted small">
         Changing the character's <code>name</code>, <code>courtesty_name</code>, or
@@ -147,6 +152,33 @@
         chapter sidebar's "N mentions in the book" number stays accurate
         without a manual <code>flask recount-book-mentions</code> run.
     </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="upload-portrait" class="mb-5">
+    <h2>How to upload a portrait (with source credit)</h2>
+    <p>
+        Manual image upload lives in the <em>Images</em> fieldset on
+        the character edit page. Max 10 MB. JPG / JPEG / PNG / GIF /
+        WEBP only — the server sniffs magic bytes, not the extension.
+    </p>
+    <ol>
+        <li>Open the character's edit page.</li>
+        <li>Scroll to <em>Images</em> → <em>Upload a new image</em>.</li>
+        <li>Pick the file.</li>
+        <li><strong>Source site</strong> — the credit label shown next to
+            the image (e.g. <code>koei.fandom.com</code>, <code>Wikipedia</code>,
+            <code>Personal photo</code>). Leave blank to fall back to
+            <code>Manual upload</code>.</li>
+        <li><strong>Source URL</strong> — optional link back to the
+            original. If set, the chapter sidebar's <em>Source</em> line
+            renders the site label as a clickable link to this URL;
+            otherwise the label is plain text.</li>
+        <li>Optionally type a tag name (existing or new — the tag is
+            auto-created), tick <em>Set as default</em>, and pick
+            visibility.</li>
+        <li>Click <strong>Upload</strong>.</li>
+    </ol>
 </section>
 
 {# ------------------------------------------------------------------- #}
@@ -176,8 +208,9 @@
     <ol>
         <li>Open <a href="{{ url_for('main.events') }}">Events</a>.</li>
         <li>Click <strong>+ Add Event</strong>.</li>
-        <li>Fill in <em>Name</em> (required). <em>Aliases / keywords</em> is a comma-delimited list of search terms the future event-associations tool will scan chapters for.</li>
-        <li>Optionally pick a <em>Location</em>. <em>Geo-point override</em> is a free-form string used when the linked location is wrong/missing for this specific event.</li>
+        <li>Fill in <em>Name</em> (required). <em>Aliases / keywords</em> is a comma-delimited list of search terms the <a href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a> tool scans chapters for.</li>
+        <li>Optionally pick a <em>Location</em>, an <em>Event type</em> (coloured/iconed category — see <a href="#event-types">Event Types</a>), and a <em>Date</em> (free-form text, accepts BC years and ranges).</li>
+        <li><em>Geo-point override</em> is a free-form string used when the linked location is wrong/missing for this specific event.</li>
         <li>Tick <em>Hide on map</em> to keep the event off the future map render (it'll still appear in the events list).</li>
         <li>Submit.</li>
     </ol>
@@ -330,19 +363,25 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 
 {# ------------------------------------------------------------------- #}
 <section id="chapter-assoc-other" class="mb-5">
-    <h2>Other chapter-association tools</h2>
-    <p>Three association editors today, all the same shape:</p>
+    <h2>Event/Chapter + Location/Chapter Association tools</h2>
+    <p>Three association editors today, all the same shape (linked from the admin dropdown):</p>
     <ul>
-        <li><a href="{{ url_for('admin.chapter_associations') }}">Chapter associations</a> — chapter ↔ character.</li>
-        <li><a href="{{ url_for('admin.event_associations') }}">Event associations</a> — chapter ↔ event.
-            The Add form takes a <em>comma-separated keyword list</em>;
-            each matching keyword gets added to the event's aliases.</li>
-        <li><a href="{{ url_for('admin.location_associations') }}">Location associations</a> — chapter ↔ location.
-            Same comma-separated keyword pattern as events.
+        <li><a href="{{ url_for('admin.chapter_associations') }}">Character/Chapter Association</a>
+            — see <a href="#char-assoc-fix">fix</a> / <a href="#char-assoc-add">add</a>.</li>
+        <li><a href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a>
+            — pick the event from the dropdown; the picker auto-fills
+            the Keywords field with the event's name+aliases.
+            <strong>Keywords are optional</strong> — leave blank to attach the
+            event to the chapter without scanning the prose (event still
+            shows in the chapter sidebar, just no inline tagging).</li>
+        <li><a href="{{ url_for('admin.location_associations') }}">Location/Chapter Association</a>
+            — same picker + keyword pattern as Event/Chapter.
             Locations pinned via an Event's <code>location</code> FK
             also show up in the chapter sidebar automatically — this
             tool is for places that get referenced independent of any
-            specific event.</li>
+            specific event.
+            <strong>Per-snippet exclusions</strong> live on this page — see
+            <a href="#location-snippet-exclude">Excluding bad location snippets</a>.</li>
     </ul>
     <p class="text-muted small">
         <strong>Faction ↔ chapter</strong> is intentionally NOT a thing —
@@ -433,10 +472,10 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
         the alias entirely — you can suppress just the wrong occurrence.
     </p>
     <ol>
-        <li>Go to <a href="{{ url_for('admin.location_associations') }}">Location associations</a> and pick the chapter.</li>
+        <li>Go to <a href="{{ url_for('admin.location_associations') }}">Location/Chapter Association</a> and pick the chapter.</li>
         <li>For each associated location, click <em>show N snippets</em> to expand the live match list.</li>
         <li>Hit the red <strong>×</strong> next to a snippet to mark it as a bad match. A confirm dialog appears first.</li>
-        <li>The page reloads with that snippet moved into an <em>Excluded snippets</em> collapsible below — strikethrough, with a restore (↺) button if you change your mind.</li>
+        <li>The snippet moves into an <em>Excluded snippets</em> collapsible below — strikethrough, with a restore (↺) button if you change your mind. <strong>No page reload</strong>: both pools update live as you click.</li>
     </ol>
     <p>
         The exclusion is fingerprinted by (chapter, location, the surrounding
@@ -445,7 +484,7 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
         matches continue to be tagged normally.
     </p>
     <p>
-        <strong>Where:</strong> <a href="{{ url_for('admin.location_associations') }}">Admin → Location associations</a>.
+        <strong>Where:</strong> <a href="{{ url_for('admin.location_associations') }}">Admin → Location/Chapter Association</a>.
         Pick a chapter, expand the snippet list on the row, click the
         red &times; next to any bad match.
     </p>
@@ -477,6 +516,41 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
     <p>
         <strong>Where:</strong> <a href="{{ url_for('admin.event_types') }}">Admin → Event Types</a> for managing types;
         <a href="{{ url_for('main.events') }}">Events</a> → Edit for assigning.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="chapter-view-tweaks" class="mb-5">
+    <h2>Chapter page reader controls (Tag style + Link style)</h2>
+    <p>
+        Two dropdowns sit next to the chapter title at the top of every
+        chapter page — reader preferences, persisted client-side so
+        they carry across chapter navigation. Useful to know about
+        when triaging UI questions from readers.
+    </p>
+    <h3 class="h6 mt-3">Tag style</h3>
+    <p>
+        Controls how inline character refs render in the prose:
+        <em>Rounded pills</em> (default), <em>Square boxes</em>,
+        <em>Underline + coloured</em>, or <em>Coloured only</em>.
+        Persisted in <code>localStorage</code> under
+        <code>rotk.chapterStyle</code>. Event and Location refs are
+        always plain-black-underlined regardless of the choice.
+    </p>
+    <h3 class="h6 mt-3">Link style</h3>
+    <p>
+        Controls how clicking (or hovering) a character ref reveals
+        the sidebar panel: <em>Click</em> (default) or <em>Hover</em>.
+        Desktop-only — the dropdown is hidden on mobile/tablet, where
+        tapping always opens a modal regardless. Persisted in a
+        real cookie (<code>rotk_link_style</code>, 1-year expiry).
+    </p>
+    <h3 class="h6 mt-3">Inline event/location refs</h3>
+    <p>
+        Black-underlined words in the prose are events / locations
+        associated with the chapter. Clicking opens the matching
+        sidebar accordion (Events / Locations) and briefly flashes
+        the specific row — no page scroll.
     </p>
 </section>
 {% endblock %}
