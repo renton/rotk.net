@@ -177,16 +177,21 @@
               class="row g-2 align-items-end">
             {{ csrf_form.hidden_tag() }}
             <div class="col-md-4">
-                <label for="add-search-term" class="form-label">Search term (as in text)</label>
-                <input type="text" name="search_term" id="add-search-term"
-                       class="form-control" required placeholder="e.g. Mengde"
+                <label for="add-search-terms" class="form-label">Keywords (comma-separated)</label>
+                <input type="text" name="search_terms" id="add-search-terms"
+                       class="form-control" required placeholder="e.g. Mengde, Cao Cao"
                        autocomplete="off">
             </div>
             <div class="col-md-5">
                 <label for="add-character-name" class="form-label">Canonical character</label>
+                {# Picking a canonical character auto-fills the Keywords
+                   field above (name + courtesy name + aliases) when it's
+                   empty — saves retyping the same terms. #}
                 <input type="text" name="character_name" id="add-character-name"
                        class="form-control" list="all-characters-datalist"
-                       data-character-picker autocomplete="off" required>
+                       data-character-picker
+                       data-picker-keywords-target="search_terms"
+                       autocomplete="off" required>
                 <input type="hidden" name="character_id" id="add-character-id">
             </div>
             <div class="col-md-3 text-end">
@@ -212,6 +217,7 @@
         {% set r_names = roles_by_char.get(c.id, []) %}
     <option value="{{ c.name }} #{{ c.id }}"
             data-character-id="{{ c.id }}"
+            data-keywords="{{ c.name }}{% if c.courtesty_name %}, {{ c.courtesty_name }}{% endif %}{% if c.aliases %}, {{ c.aliases }}{% endif %}"
             label="{{ c.name }} [{{ f_names|join(', ') if f_names else '—' }}] [{{ r_names|join(', ') if r_names else '—' }}]{% if c.courtesty_name %} · {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
     </option>
     {% endfor %}

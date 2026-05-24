@@ -316,12 +316,16 @@ def _resolve_character_from_form():
 @login_required
 @admin_required
 def chapter_associations_add(chapter_num):
-    """Add a Character ↔ Chapter association by alias.
+    """Add a Character ↔ Chapter association.
 
-    Admin provides a `search_term` (the name as it appears in the chapter
-    text) and picks the canonical character. We verify the term occurs in
-    the chapter, add it to the character's aliases (so the rendered chapter
-    tags those occurrences), and associate the character with the chapter."""
+    Admin provides comma-separated `search_terms` (the names/aliases as
+    they appear in the chapter text) and picks the canonical character.
+    For each keyword we verify it appears in the chapter, add it to
+    character.aliases if new, and report match counts. The chapter ↔
+    character link is added regardless (admin opted in via the picker).
+
+    Backwards compat: the older single `search_term` field name is also
+    accepted, treated as a one-keyword list."""
     from tools.book_parser import strip_html_tags, build_needle_pattern
 
     form = _CsrfOnlyForm()
@@ -330,47 +334,56 @@ def chapter_associations_add(chapter_num):
 
     chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
 
-    search_term = (request.form.get('search_term') or '').strip()
-    if not search_term:
-        flash("Search term is required.")
-        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
-
     character, err = _resolve_character_from_form()
     if err:
         flash(err)
         return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
-    content = strip_html_tags(chapter.content)
-    matches = build_needle_pattern([search_term]).findall(content)
-    if not matches:
-        flash(f"{search_term!r} was not found in chapter {chapter.chapter_num}'s text.")
+    raw_terms = (request.form.get('search_terms') or request.form.get('search_term') or '').strip()
+    keywords = [k.strip() for k in raw_terms.split(',') if k.strip()]
+    if not keywords:
+        flash("Enter at least one keyword (comma-separated for multiple).")
         return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
-    # Add the search term to character.aliases if it isn't already a known
-    # label for this character (covers name, courtesy name, alias).
+    content = strip_html_tags(chapter.content)
     existing = [a.strip() for a in (character.aliases or '').split(',') if a.strip()]
-    known_labels = {character.name, character.courtesty_name or ''}
-    known_labels.update(existing)
-    alias_added = False
-    if search_term not in known_labels:
-        existing.append(search_term)
+    known = {character.name, character.courtesty_name or ''} | set(existing)
+
+    aliases_added = []
+    no_match = []
+    total_matches = 0
+    for keyword in keywords:
+        matches = build_needle_pattern([keyword]).findall(content)
+        if not matches:
+            no_match.append(keyword)
+            continue
+        total_matches += len(matches)
+        if keyword not in known:
+            existing.append(keyword)
+            known.add(keyword)
+            aliases_added.append(keyword)
+
+    if aliases_added:
         character.aliases = ','.join(existing)
-        alias_added = True
 
     if character not in chapter.characters:
         chapter.characters.append(character)
 
     # The character's labels just changed → its book_mention_count is stale.
     # Recount this one character (cheap: one HTML-strip pass, one regex).
-    if alias_added:
+    if aliases_added:
         counts = count_mentions_per_character(Chapter.query.all(), [character])
         character.book_mention_count = counts.get(character.id, 0)
 
     db.session.commit()
 
-    parts = [f"Found {len(matches)} occurrence{'' if len(matches) == 1 else 's'} of {search_term!r}."]
-    if alias_added:
-        parts.append(f"Added {search_term!r} as an alias of {character.name}.")
+    parts = []
+    if total_matches:
+        parts.append(f"Found {total_matches} occurrence{'' if total_matches == 1 else 's'} across {len(keywords) - len(no_match)} keyword(s).")
+    if aliases_added:
+        parts.append("Added aliases: " + ", ".join(repr(a) for a in aliases_added) + ".")
+    if no_match:
+        parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
     parts.append(f"{character.name} is now associated with chapter {chapter.chapter_num}.")
     flash(" ".join(parts))
 

@@ -133,9 +133,13 @@
             </div>
             <div class="col-md-5">
                 <label for="add-location-name" class="form-label">Canonical location</label>
+                {# Picking a canonical location auto-fills the Keywords
+                   field above (name + aliases) when it's empty. #}
                 <input type="text" name="location_name" id="add-location-name"
                        class="form-control" list="all-locations-datalist"
-                       data-picker-target="location_id" autocomplete="off" required>
+                       data-picker-target="location_id"
+                       data-picker-keywords-target="search_terms"
+                       autocomplete="off" required>
                 <input type="hidden" name="location_id" id="add-location-id">
             </div>
             <div class="col-md-2 text-end">
@@ -148,6 +152,7 @@
 <datalist id="all-locations-datalist">
     {% for loc in all_locations %}
     <option value="{{ loc.name }} #{{ loc.id }}"
+            data-keywords="{{ loc.name }}{% if loc.aliases %}, {{ loc.aliases }}{% endif %}"
             label="{{ loc.name }}{% if loc.aliases %} ({{ loc.aliases }}){% endif %}">
     </option>
     {% endfor %}

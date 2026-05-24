@@ -87,4 +87,37 @@
       showCharacter(characterId);
     }
   });
+
+  // Event / location inline refs open the matching sidebar accordion and
+  // scroll the specific item into view. No mobile-modal path — on mobile
+  // the sidebar is just stacked below the prose, scrollIntoView handles
+  // moving the user down to it.
+  function showAccordionItem(collapseId, itemId) {
+    var collapseEl = document.getElementById(collapseId);
+    if (collapseEl && typeof bootstrap !== 'undefined') {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false }).show();
+    }
+    var item = itemId ? document.getElementById(itemId) : null;
+    if (!item) return;
+    // Defer the scroll one frame so the accordion's slide-down animation
+    // has started — otherwise the target's offsetTop reads as 0 while the
+    // panel is still collapsed.
+    setTimeout(function () {
+      item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+
+  document.addEventListener('click', function (event) {
+    var ev = event.target.closest('.event-ref');
+    if (ev) {
+      var eid = ev.getAttribute('data-event-id');
+      showAccordionItem('collapseEvents', eid ? 'event-item-' + eid : null);
+      return;
+    }
+    var loc = event.target.closest('.location-ref');
+    if (loc) {
+      var lid = loc.getAttribute('data-location-id');
+      showAccordionItem('collapseLocations', lid ? 'location-item-' + lid : null);
+    }
+  });
 })();

@@ -217,3 +217,47 @@ def build_name_ref_html(character):
         f"data-bg='{bg}' data-font='{font}' data-border='{border}' "
         f"style='{style}'>{character.name}</span>"
     )
+
+
+def build_event_ref_html(event, match_text=None):
+    """Inline span for an event mention in chapter prose. Plain black
+    underlined text, clickable — chapter.js wires it to open the
+    Events accordion in the sidebar and scroll to the matching item.
+
+    `match_text` lets the caller render the exact substring that matched
+    (an alias) instead of the event's canonical name."""
+    label = match_text if match_text is not None else event.name
+    return (
+        f"<span class='event-ref' data-event-id='{event.id}'>"
+        f"{label}</span>"
+    )
+
+
+def build_location_ref_html(location, match_text=None):
+    """Same as build_event_ref_html but for Location."""
+    label = match_text if match_text is not None else location.name
+    return (
+        f"<span class='location-ref' data-location-id='{location.id}'>"
+        f"{label}</span>"
+    )
+
+
+def get_event_labels(event):
+    """Name + aliases for an event (used as needles when tagging the
+    event's mentions in chapter prose)."""
+    labels = [event.name]
+    for alias in (event.aliases or '').split(','):
+        alias = alias.strip()
+        if alias and alias != event.name:
+            labels.append(alias)
+    return [l for l in labels if l]
+
+
+def get_location_labels(location):
+    """Name + aliases for a location, mirroring get_event_labels."""
+    labels = [location.name]
+    for alias in (location.aliases or '').split(','):
+        alias = alias.strip()
+        if alias and alias != location.name:
+            labels.append(alias)
+    return [l for l in labels if l]

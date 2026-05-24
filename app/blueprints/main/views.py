@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels
 
 
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
@@ -63,10 +63,39 @@ def chapter(chapter_num):
     replacements = {}
     needle_to_character_id = {}
 
+    # Characters get first claim on a needle so character mentions never
+    # get accidentally re-coloured as an event/location with the same word.
     for character in characters:
         for name_needle in character.get_all_name_labels():
             replacements[name_needle] = build_name_ref_html(character)
             needle_to_character_id[name_needle] = character.id
+
+    # Events + locations get black-underlined spans linking to the
+    # respective sidebar accordion item. Both pre-loaded into
+    # chapter_events / chapter_locations below; building the labels now
+    # so they participate in the same single regex pass.
+    _pending_event_needles = []
+    _pending_location_needles = []
+
+    for event in sorted(chapter.events, key=lambda e: e.name):
+        for needle in get_event_labels(event):
+            if needle in replacements:
+                continue   # character already claimed it
+            replacements[needle] = build_event_ref_html(event, match_text=needle)
+            _pending_event_needles.append(needle)
+
+    # Locations from any source — events that pin to one + direct
+    # chapter ↔ location associations. De-dup by id; first one wins.
+    seen_loc_ids = set()
+    for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
+        if loc is None or loc.id in seen_loc_ids:
+            continue
+        seen_loc_ids.add(loc.id)
+        for needle in get_location_labels(loc):
+            if needle in replacements:
+                continue
+            replacements[needle] = build_location_ref_html(loc, match_text=needle)
+            _pending_location_needles.append(needle)
 
     pattern = build_needle_pattern(list(replacements.keys()))
 

@@ -119,6 +119,13 @@
                         <div>
                           {{ macros.badge_widget(character.primary_faction) }}
                         </div>
+                        {# Indented links attached to the faction, if any. #}
+                        {% set list_urls = character.primary_faction.urls %}
+                        {% if list_urls %}
+                        <div class="ms-3 mb-2">
+                          {% include '_url_list.html' %}
+                        </div>
+                        {% endif %}
                       {% endif %}
 
                       {# Past factions = the M2M minus the primary (already shown
@@ -134,6 +141,12 @@
                           <div>
                             {{ macros.badge_widget(faction) }}
                           </div>
+                          {% set list_urls = faction.urls %}
+                          {% if list_urls %}
+                          <div class="ms-3 mb-2">
+                            {% include '_url_list.html' %}
+                          </div>
+                          {% endif %}
                         {% endfor %}
                       {% endif %}
 
@@ -202,7 +215,7 @@
                   {% else %}
                   <ul class="list-unstyled mb-0">
                     {% for ev in chapter_events %}
-                    <li class="mb-3">
+                    <li class="mb-3" id="event-item-{{ ev.id }}">
                       <div>
                         <strong>{{ ev.name }}</strong>
                         {% if ev.location %}
@@ -237,7 +250,7 @@
                   {% else %}
                   <ul class="list-unstyled mb-0">
                     {% for loc in chapter_locations %}
-                    <li class="mb-3">
+                    <li class="mb-3" id="location-item-{{ loc.id }}">
                       <div>
                         <strong>{{ loc.name }}</strong>
                         {% if loc.latitude is not none and loc.longitude is not none %}

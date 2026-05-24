@@ -132,9 +132,13 @@
             </div>
             <div class="col-md-5">
                 <label for="add-event-name" class="form-label">Canonical event</label>
+                {# Picking a canonical event auto-fills the Keywords
+                   field above (name + aliases) when it's empty. #}
                 <input type="text" name="event_name" id="add-event-name"
                        class="form-control" list="all-events-datalist"
-                       data-picker-target="event_id" autocomplete="off" required>
+                       data-picker-target="event_id"
+                       data-picker-keywords-target="search_terms"
+                       autocomplete="off" required>
                 <input type="hidden" name="event_id" id="add-event-id">
             </div>
             <div class="col-md-2 text-end">
@@ -149,6 +153,7 @@
 <datalist id="all-events-datalist">
     {% for e in all_events %}
     <option value="{{ e.name }} #{{ e.id }}"
+            data-keywords="{{ e.name }}{% if e.aliases %}, {{ e.aliases }}{% endif %}"
             label="{{ e.name }}{% if e.location %} · {{ e.location.name }}{% endif %}{% if e.aliases %} ({{ e.aliases }}){% endif %}">
     </option>
     {% endfor %}

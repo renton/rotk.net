@@ -2,6 +2,21 @@ span.character-ref {
     cursor: pointer;
 }
 
+/* Event / location inline refs: minimal styling so they don't compete
+   with the coloured character pills. Just an underline + pointer
+   cursor, fixed black; chapter_style.js does NOT touch these. Click
+   handler (chapter.js) opens the matching sidebar accordion. */
+span.event-ref,
+span.location-ref {
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
+}
+span.event-ref:hover,
+span.location-ref:hover {
+    text-decoration-thickness: 2px;
+}
+
 /* ------------------------------------------------------------------
    Chapter sidebar.
 
