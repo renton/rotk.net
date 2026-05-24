@@ -58,21 +58,29 @@
             <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.latitude) if loc.latitude is not none else '' }}</td>
             <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.longitude) if loc.longitude is not none else '' }}</td>
             <td class="text-end">{{ row.mention_count }}</td>
-            <td class="d-none d-md-table-cell">
-                {% if row.mentions %}
-                <details>
-                    <summary class="small text-muted">show {{ row.mention_count }} snippet{{ '' if row.mention_count == 1 else 's' }}</summary>
-                    <ul class="list-unstyled small mt-2 mb-0">
+            <td class="d-none d-md-table-cell"
+                data-snippets-cell
+                data-chapter-num="{{ selected.chapter_num }}"
+                data-location-id="{{ loc.id }}"
+                data-location-name="{{ loc.name|e }}">
+                {# Both <details> blocks always render so the AJAX swap
+                   has stable targets. Each toggles its own visibility
+                   via [data-empty]; the JS flips that flag as items
+                   move between pools. #}
+                <details class="snippets-live" {% if not row.mentions %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        show <span class="snippet-live-count">{{ row.mention_count }}</span> snippet<span class="snippet-live-plural">{{ '' if row.mention_count == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-live">
                         {% for m in row.mentions %}
-                        <li class="d-flex gap-2 align-items-start py-1">
-                            <span class="flex-grow-1">{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</span>
-                            {# Per-snippet exclude — fingerprints (before, match,
-                               after) match what render-time scans produce, so
-                               the chapter prose stops tagging this specific
-                               occurrence too. #}
+                        <li class="d-flex gap-2 align-items-start py-1 snippet-item"
+                            data-match-text="{{ m.match }}"
+                            data-before-snippet="{{ m.before }}"
+                            data-after-snippet="{{ m.after }}">
+                            <span class="flex-grow-1 snippet-body">{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</span>
                             <form method="POST"
                                   action="{{ url_for('admin.location_associations_exclude', chapter_num=selected.chapter_num, location_id=loc.id) }}"
-                                  class="d-inline"
+                                  class="d-inline exclude-snippet-form"
                                   data-confirm="Mark this snippet as a wrong match for {{ loc.name|e }}?">
                                 {{ csrf_form.hidden_tag() }}
                                 <input type="hidden" name="match_text" value="{{ m.match }}">
@@ -87,24 +95,33 @@
                         {% endfor %}
                     </ul>
                 </details>
-                {% else %}
-                <span class="text-warning small">no live matches</span>
-                {% endif %}
+                <span class="text-warning small snippets-empty-live"
+                      {% if row.mentions %}hidden{% endif %}>no live matches</span>
 
-                {% if row.excluded %}
-                <details class="mt-2">
+                {# data-restore-url-prefix ends in /restore/ so the JS
+                   just appends the new exclusion id. We url_for with
+                   id=0 and trim the trailing "0" — safer than a
+                   string-replace, which could mangle ids that happen
+                   to contain "0". #}
+                <details class="snippets-excluded mt-2"
+                         data-restore-url-prefix="{{ url_for('admin.location_associations_restore', chapter_num=selected.chapter_num, location_id=loc.id, exclusion_id=0)[:-1] }}"
+                         {% if not row.excluded %}data-empty hidden{% endif %}>
                     <summary class="small text-muted">
-                        {{ row.excluded|length }} excluded snippet{{ '' if row.excluded|length == 1 else 's' }}
+                        <span class="snippet-excluded-count">{{ row.excluded|length }}</span> excluded snippet<span class="snippet-excluded-plural">{{ '' if row.excluded|length == 1 else 's' }}</span>
                     </summary>
-                    <ul class="list-unstyled small mt-2 mb-0">
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-excluded">
                         {% for ex in row.excluded %}
-                        <li class="d-flex gap-2 align-items-start py-1 text-muted">
-                            <span class="flex-grow-1">
+                        <li class="d-flex gap-2 align-items-start py-1 text-muted snippet-item"
+                            data-match-text="{{ ex.match_text }}"
+                            data-before-snippet="{{ ex.before_snippet }}"
+                            data-after-snippet="{{ ex.after_snippet }}"
+                            data-exclusion-id="{{ ex.id }}">
+                            <span class="flex-grow-1 snippet-body">
                                 <s>{{ ex.before_snippet }}<mark>{{ ex.match_text }}</mark>{{ ex.after_snippet }}</s>
                             </span>
                             <form method="POST"
                                   action="{{ url_for('admin.location_associations_restore', chapter_num=selected.chapter_num, location_id=loc.id, exclusion_id=ex.id) }}"
-                                  class="d-inline">
+                                  class="d-inline restore-snippet-form">
                                 {{ csrf_form.hidden_tag() }}
                                 <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2"
                                         title="Restore this snippet">
@@ -115,7 +132,6 @@
                         {% endfor %}
                     </ul>
                 </details>
-                {% endif %}
             </td>
             <td class="text-end" style="min-width: 220px;">
                 <div class="d-flex flex-column gap-2 align-items-end">
@@ -209,4 +225,5 @@
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_location_snippets.js') }}"></script>
 {% endblock %}

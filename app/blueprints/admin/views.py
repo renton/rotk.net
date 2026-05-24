@@ -1,7 +1,7 @@
 import os
 import re
 
-from flask import render_template, redirect, url_for, flash, current_app, abort, request
+from flask import render_template, redirect, url_for, flash, current_app, abort, request, jsonify
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import SubmitField
@@ -826,6 +826,14 @@ def location_associations_switch(chapter_num, location_id):
     return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
 
 
+def _wants_json():
+    """The admin location-snippets JS posts these forms with
+    `Accept: application/json` so it can swap the row between the
+    live and excluded pools without a full page reload. Plain form
+    submits fall through to the redirect-with-flash path."""
+    return 'application/json' in (request.headers.get('Accept') or '')
+
+
 @admin.route('/location-associations/<int:chapter_num>/<int:location_id>/exclude', methods=['POST'])
 @login_required
 @admin_required
@@ -836,7 +844,10 @@ def location_associations_exclude(chapter_num, location_id):
     they want suppressed. We store a MatchExclusion row; render-time
     scans + the admin page will hide that specific match. Duplicate
     posts are idempotent — the same fingerprint inserted twice is
-    harmless, since the render-time set lookup dedupes by membership."""
+    harmless, since the render-time set lookup dedupes by membership.
+
+    Returns JSON when the client asks for it (Accept: application/json);
+    falls back to the redirect-with-flash flow otherwise."""
     form = _CsrfOnlyForm()
     if not form.validate_on_submit():
         abort(400)
@@ -848,11 +859,14 @@ def location_associations_exclude(chapter_num, location_id):
     before = request.form.get('before_snippet') or ''
     after = request.form.get('after_snippet') or ''
     if not match_text:
-        flash("Snippet fingerprint missing — refresh the page and try again.")
+        msg = "Snippet fingerprint missing — refresh the page and try again."
+        if _wants_json():
+            return jsonify(error=msg), 400
+        flash(msg)
         return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
 
     # Idempotency: skip insert if an identical row already exists.
-    already = MatchExclusion.query.filter_by(
+    existing = MatchExclusion.query.filter_by(
         chapter_id=chapter.id,
         target_type='location',
         target_id=location.id,
@@ -860,16 +874,27 @@ def location_associations_exclude(chapter_num, location_id):
         before_snippet=before,
         after_snippet=after,
     ).first()
-    if already is None:
-        db.session.add(MatchExclusion(
+    if existing is None:
+        row = MatchExclusion(
             chapter_id=chapter.id,
             target_type='location',
             target_id=location.id,
             match_text=match_text,
             before_snippet=before,
             after_snippet=after,
-        ))
+        )
+        db.session.add(row)
         db.session.commit()
+    else:
+        row = existing
+
+    if _wants_json():
+        return jsonify(
+            id=row.id,
+            match_text=row.match_text,
+            before_snippet=row.before_snippet,
+            after_snippet=row.after_snippet,
+        )
 
     flash(f"Excluded snippet {match_text!r} for {location.name!r} in chapter {chapter.chapter_num}.")
     return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
@@ -893,8 +918,19 @@ def location_associations_restore(chapter_num, location_id, exclusion_id):
         abort(404)
 
     match_text = row.match_text
+    before = row.before_snippet
+    after = row.after_snippet
     db.session.delete(row)
     db.session.commit()
+
+    if _wants_json():
+        return jsonify(
+            ok=True,
+            match_text=match_text,
+            before_snippet=before,
+            after_snippet=after,
+        )
+
     flash(f"Restored snippet {match_text!r}.")
     return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
 
