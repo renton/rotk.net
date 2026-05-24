@@ -8,7 +8,7 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, Optional, UR
 from wtforms import ValidationError
 from tools.validators import validate_colour
 
-from app.models import Faction, Role, UrlType, Location
+from app.models import Faction, Role, UrlType, Location, EventType
 
 class CharacterFilterForm(FlaskForm):
 
@@ -200,6 +200,16 @@ class EditEventForm(FlaskForm):
         "Location",
         query_factory=lambda: Location.query.filter(Location.is_deleted.is_(False))
                                               .order_by(Location.name).all(),
+        get_label="name",
+        allow_blank=True,
+        blank_text='— None —',
+        blank_value="",
+    )
+    event_type = QuerySelectField(
+        "Event type",
+        query_factory=lambda: EventType.query.filter(EventType.is_deleted.is_(False))
+                                              .filter(EventType.is_hidden.is_(False))
+                                              .order_by(EventType.name).all(),
         get_label="name",
         allow_blank=True,
         blank_text='— None —',

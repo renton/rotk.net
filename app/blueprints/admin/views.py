@@ -11,11 +11,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, Location, Edit, MatchExclusion
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions
-from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm
+from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm
 from . import admin
 
 
@@ -1528,3 +1528,134 @@ def delete_url_type(url_type_id):
     db.session.commit()
     flash(f"Deleted URL type {name!r}.")
     return redirect(url_for('admin.url_types'))
+
+
+# ----- Event Type manager -------------------------------------------------
+
+_EVENT_TYPE_SORTS = ('name', 'created_at', 'event_count')
+_EVENT_TYPES_PER_PAGE = 50
+
+
+@admin.route('/event-types', methods=['GET'])
+@login_required
+@admin_required
+def event_types():
+    """List event types with their usage count, search + sort. Same
+    shape as /admin/url-types."""
+    page = request.args.get('page', 1, type=int)
+    search = (request.args.get('q') or '').strip()
+    sort = request.args.get('sort', 'name')
+    direction = request.args.get('dir', 'asc')
+
+    if sort not in _EVENT_TYPE_SORTS:
+        sort = 'name'
+    if direction not in ('asc', 'desc'):
+        direction = 'asc'
+
+    event_counts = (
+        db.session.query(
+            Event.event_type_id.label('event_type_id'),
+            func.count(Event.id).label('event_count'),
+        )
+        .filter(Event.is_deleted.is_(False))
+        .group_by(Event.event_type_id)
+        .subquery()
+    )
+    event_count_expr = func.coalesce(event_counts.c.event_count, 0)
+
+    query = (
+        EventType.query
+        .outerjoin(event_counts, EventType.id == event_counts.c.event_type_id)
+        .add_columns(event_count_expr.label('event_count'))
+        .filter(EventType.is_hidden.is_(False))
+    )
+    if search:
+        query = query.filter(EventType.name.ilike(f"%{search}%"))
+
+    if sort == 'event_count':
+        order_col = event_count_expr
+    else:
+        order_col = getattr(EventType, sort)
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+    if sort != 'name':
+        query = query.order_by(EventType.name.asc())
+
+    pagination = query.paginate(page=page, per_page=_EVENT_TYPES_PER_PAGE, error_out=False)
+
+    return render_template(
+        'admin/event_types.html',
+        pagination=pagination,
+        search=search,
+        sort=sort,
+        direction=direction,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/event-types/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_event_type():
+    form = EditEventTypeForm()
+    if form.validate_on_submit():
+        ev_type = EventType()
+        form.populate_obj(ev_type)
+        db.session.add(ev_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"An event type named {ev_type.name!r} already exists.")
+            return redirect(url_for('admin.new_event_type'))
+        flash(f"Created event type {ev_type.name!r}.")
+        return redirect(url_for('admin.event_types'))
+
+    return render_template('admin/event_type_edit.html', form=form, event_type=None)
+
+
+@admin.route('/event-types/<int:event_type_id>/edit', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_event_type(event_type_id):
+    ev_type = EventType.query.get_or_404(event_type_id)
+    form = EditEventTypeForm(obj=ev_type)
+    if form.validate_on_submit():
+        form.populate_obj(ev_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"An event type named {ev_type.name!r} already exists.")
+            return redirect(url_for('admin.edit_event_type', event_type_id=ev_type.id))
+        flash(f"Updated event type {ev_type.name!r}.")
+        return redirect(url_for('admin.event_types'))
+
+    return render_template('admin/event_type_edit.html', form=form, event_type=ev_type)
+
+
+@admin.route('/event-types/<int:event_type_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def delete_event_type(event_type_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    ev_type = EventType.query.get_or_404(event_type_id)
+    name = ev_type.name
+
+    # Refuse if any Event still uses this type. FK is ON DELETE SET NULL
+    # so cascading would silently strip the type — force the admin to
+    # untangle on purpose.
+    in_use = Event.query.filter_by(event_type_id=ev_type.id, is_deleted=False).count()
+    if in_use > 0:
+        flash(
+            f"Can't delete {name!r}: it's assigned to {in_use} event"
+            f"{'' if in_use == 1 else 's'}. Reassign or delete those first."
+        )
+        return redirect(url_for('admin.event_types'))
+
+    db.session.delete(ev_type)
+    db.session.commit()
+    flash(f"Deleted event type {name!r}.")
+    return redirect(url_for('admin.event_types'))

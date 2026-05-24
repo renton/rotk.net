@@ -5,9 +5,12 @@
 
    Renders nothing if list_urls is empty or undefined. Each row shows
    favicon (if set) → url_type's Font Awesome icon (if set) → generic
-   link icon, the link text, and an optional type badge. No remove
-   button — for the edit-page form use _url_section.html instead.
+   link icon, the link text, and an optional type badge. The type badge
+   renders via badge_widget — it picks up the UrlType's own colours and
+   icon prefix automatically. No remove button — for the edit-page form
+   use _url_section.html instead.
 #}
+{% import "_macros.html" as macros %}
 {% if list_urls is defined and list_urls %}
 <ul class="list-unstyled mb-0 small">
     {% for u in list_urls %}
@@ -25,7 +28,7 @@
         {% endif %}
         <a href="{{ u.url }}" target="_blank" rel="noopener">{{ u.name }}</a>
         {% if u.url_type %}
-        <span class="badge bg-secondary ms-1">{{ u.url_type.name }}</span>
+        {{ macros.badge_widget(u.url_type) }}
         {% endif %}
     </li>
     {% endif %}

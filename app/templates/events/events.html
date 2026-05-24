@@ -44,6 +44,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Type</th>
             <th>Location</th>
             <th class="d-none d-md-table-cell">Keywords</th>
             <th class="d-none d-md-table-cell">Chapters</th>
@@ -63,6 +64,7 @@
                 <span class="badge bg-secondary ms-1" title="Excluded from the map view">no-map</span>
                 {% endif %}
             </td>
+            <td>{% if event.event_type %}{{ macros.badge_widget(event.event_type) }}{% endif %}</td>
             <td>{{ event.location.name if event.location else '' }}</td>
             <td class="d-none d-md-table-cell small text-muted">{{ event.aliases }}</td>
             <td class="d-none d-md-table-cell small">
@@ -78,7 +80,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="5" class="text-muted">No events yet.</td>
+            <td colspan="6" class="text-muted">No events yet.</td>
         </tr>
         {% endfor %}
     </tbody>

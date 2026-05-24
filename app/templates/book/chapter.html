@@ -246,10 +246,16 @@
                   <ul class="list-unstyled mb-0">
                     {% for ev in chapter_events %}
                     <li class="mb-3" id="event-item-{{ ev.id }}">
-                      <div>
+                      <div class="d-flex align-items-center gap-2 flex-wrap">
                         <strong>{{ ev.name }}</strong>
+                        {% if ev.event_type %}
+                          {# EventType badge — icon (if set) + name, coloured
+                             via the same three-colour scheme as Faction /
+                             Role / Tag badges. #}
+                          {{ macros.badge_widget(ev.event_type) }}
+                        {% endif %}
                         {% if ev.location %}
-                        <span class="text-muted small ms-1">· {{ ev.location.name }}</span>
+                        <span class="text-muted small">· {{ ev.location.name }}</span>
                         {% endif %}
                       </div>
                       {% set list_urls = ev.urls %}

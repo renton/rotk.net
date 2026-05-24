@@ -76,6 +76,34 @@ class EditUrlTypeForm(FlaskForm):
     submit = SubmitField("Save")
 
 
+class EditEventTypeForm(FlaskForm):
+    """Create/edit form for an EventType — name + Font Awesome icon +
+    three colours. Same shape as EditUrlTypeForm; the badge gets
+    rendered next to each event in the chapter sidebar."""
+    name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
+    icon = StringField(
+        "Font Awesome icon class",
+        validators=[Length(0, 80)],
+        render_kw={"placeholder": "e.g. fa-solid fa-flag"},
+    )
+    font_colour = StringField(
+        "Font Colour",
+        validators=[validate_colour],
+        render_kw={"type": "color"},
+    )
+    bg_colour = StringField(
+        "Background Colour",
+        validators=[validate_colour],
+        render_kw={"type": "color"},
+    )
+    border_colour = StringField(
+        "Border Colour",
+        validators=[validate_colour],
+        render_kw={"type": "color"},
+    )
+    submit = SubmitField("Save")
+
+
 class EditTagForm(FlaskForm):
     name = StringField("Name *", validators=[DataRequired()])
     font_colour = StringField(

@@ -1,11 +1,12 @@
 """Event model — battles, treaties, court intrigues, etc. mentioned in the
-book. Each Event optionally pins to a Location (FK), can override the
-plotted geo-point per event (`geo_point_override`), and can be excluded
-from a future map render (`hide_on_map`). Aliases (from AbstractObject)
-hold the comma-delimited search terms used by the admin
-event-associations tool to match the event in chapter prose."""
+book. Each Event optionally pins to a Location (FK), an EventType (FK
+giving the event a coloured/iconed category), can override the plotted
+geo-point per event (`geo_point_override`), and can be excluded from a
+future map render (`hide_on_map`). Aliases (from AbstractObject) hold
+the comma-delimited search terms used by the admin event-associations
+tool to match the event in chapter prose."""
 from app import db
-from app.models.abstract import AbstractObject
+from app.models.abstract import AbstractObject, AbstractTag
 from app.models.chapter import Chapter
 
 
@@ -14,6 +15,17 @@ event_chapter = db.Table(
     db.Column('event_id',   db.Integer, db.ForeignKey('event.id'),   primary_key=True),
     db.Column('chapter_id', db.Integer, db.ForeignKey('chapter.id'), primary_key=True),
 )
+
+
+class EventType(AbstractTag):
+    """A category for Events (e.g. "Battle", "Court intrigue", "Treaty").
+    Inherits AbstractTag so it gets a unique name + the three colour
+    columns + a Font Awesome `icon` string used in the chapter sidebar
+    badge."""
+    events = db.relationship('Event', back_populates='event_type')
+
+    def __repr__(self):
+        return f'<EventType {self.name}>'
 
 
 class Event(AbstractObject):
@@ -26,6 +38,14 @@ class Event(AbstractObject):
         index=True,
     )
     location = db.relationship('Location', foreign_keys=[location_id])
+
+    event_type_id = db.Column(
+        db.Integer,
+        db.ForeignKey('event_type.id', ondelete='SET NULL'),
+        nullable=True,
+        index=True,
+    )
+    event_type = db.relationship('EventType', back_populates='events')
 
     # Free-form override for the map plot point — used when the linked
     # Location's coords are wrong or the event happened somewhere distinct
