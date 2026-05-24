@@ -79,16 +79,21 @@
                 'border:2px solid ' + border + ';' +
                 'border-radius:0;';
         } else if (style === 'underline') {
+            // No badge wrapper — sit inline with the prose. font-size:
+            // inherit makes the span match the surrounding paragraph
+            // text size instead of the smaller badge default.
             var c1 = pickReadable(bg, border, font);
             span.style.cssText =
                 'color:' + c1 + ';' +
                 'text-decoration:underline;' +
-                'font-weight:bold;';
+                'font-weight:bold;' +
+                'font-size:inherit;';
         } else if (style === 'coloured') {
             var c2 = pickReadable(bg, border, font);
             span.style.cssText =
                 'color:' + c2 + ';' +
-                'font-weight:bold;';
+                'font-weight:bold;' +
+                'font-size:inherit;';
         }
     }
 
