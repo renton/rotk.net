@@ -17,6 +17,20 @@ span.location-ref:hover {
     text-decoration-thickness: 2px;
 }
 
+/* Brief yellow flash on a sidebar row when its inline ref is clicked.
+   Used by chapter.js showAccordionItem(): adds .sidebar-flash to the
+   target <li>, the CSS animation runs once and fades back. The
+   forwards keeps the final transparent state so the row doesn't reset
+   to whatever inherited background it had. */
+@keyframes sidebar-flash-fade {
+    0%   { background-color: #fff3cd; }   /* bootstrap "warning-subtle" */
+    100% { background-color: transparent; }
+}
+.sidebar-flash {
+    animation: sidebar-flash-fade 1.6s ease-out forwards;
+    border-radius: 0.25rem;
+}
+
 /* ------------------------------------------------------------------
    Chapter sidebar.
 

@@ -89,9 +89,11 @@
   });
 
   // Event / location inline refs open the matching sidebar accordion and
-  // scroll the specific item into view. No mobile-modal path — on mobile
-  // the sidebar is just stacked below the prose, scrollIntoView handles
-  // moving the user down to it.
+  // briefly highlight the specific row. Deliberately NO scrollIntoView:
+  // on mobile that would yank the whole page down to the stacked sidebar,
+  // which is more jarring than helpful — the highlight gives the visual
+  // cue, the reader can flick down to the sidebar themselves if they
+  // want to see more.
   function showAccordionItem(collapseId, itemId) {
     var collapseEl = document.getElementById(collapseId);
     if (collapseEl && typeof bootstrap !== 'undefined') {
@@ -99,12 +101,13 @@
     }
     var item = itemId ? document.getElementById(itemId) : null;
     if (!item) return;
-    // Defer the scroll one frame so the accordion's slide-down animation
-    // has started — otherwise the target's offsetTop reads as 0 while the
-    // panel is still collapsed.
-    setTimeout(function () {
-      item.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+    // CSS animates a yellow-fade-out via the .sidebar-flash class.
+    // Re-trigger by removing + re-adding so a second click flashes again.
+    item.classList.remove('sidebar-flash');
+    // Force a reflow so the browser actually treats the next add as a
+    // fresh class change rather than a no-op.
+    void item.offsetWidth;
+    item.classList.add('sidebar-flash');
   }
 
   document.addEventListener('click', function (event) {
