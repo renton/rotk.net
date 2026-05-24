@@ -117,6 +117,15 @@
                           </div>
                         {% endfor %}
                       {% endif %}
+
+                      {# External links attached to the character. #}
+                      {% set list_urls = character.urls %}
+                      {% if list_urls %}
+                      <div class="mt-3">
+                        <div class="small text-muted mb-1">Links</div>
+                        {% include '_url_list.html' %}
+                      </div>
+                      {% endif %}
                     </div>
                   {% endfor %}
                 </div>
@@ -156,6 +165,77 @@
               </div>
             </div>
 
+            {# Events accordion: one row per event associated with the
+               chapter; each row shows its external Urls (favicon /
+               UrlType icon / fallback link icon). #}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-events">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseEvents"
+                        aria-expanded="false" aria-controls="collapseEvents">
+                  Events ({{ chapter_events|length }})
+                </button>
+              </h2>
+              <div id="collapseEvents" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  {% if not chapter_events %}
+                  <div class="text-muted small">No events associated with this chapter yet.</div>
+                  {% else %}
+                  <ul class="list-unstyled mb-0">
+                    {% for ev in chapter_events %}
+                    <li class="mb-3">
+                      <div>
+                        <strong>{{ ev.name }}</strong>
+                        {% if ev.location %}
+                        <span class="text-muted small ms-1">· {{ ev.location.name }}</span>
+                        {% endif %}
+                      </div>
+                      {% set list_urls = ev.urls %}
+                      {% include '_url_list.html' %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            {# Locations accordion: deduped locations from the events
+               above (a location can be pinned by many events). Same
+               URL-list pattern. #}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-locations">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseLocations"
+                        aria-expanded="false" aria-controls="collapseLocations">
+                  Locations ({{ chapter_locations|length }})
+                </button>
+              </h2>
+              <div id="collapseLocations" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  {% if not chapter_locations %}
+                  <div class="text-muted small">No locations associated with this chapter's events.</div>
+                  {% else %}
+                  <ul class="list-unstyled mb-0">
+                    {% for loc in chapter_locations %}
+                    <li class="mb-3">
+                      <div>
+                        <strong>{{ loc.name }}</strong>
+                        {% if loc.latitude is not none and loc.longitude is not none %}
+                        <span class="text-muted small ms-1">
+                          ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
+                        </span>
+                        {% endif %}
+                      </div>
+                      {% set list_urls = loc.urls %}
+                      {% include '_url_list.html' %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
 
         </div>
       </div>

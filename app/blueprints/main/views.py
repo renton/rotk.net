@@ -84,12 +84,24 @@ def chapter(chapter_num):
 
     rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
 
+    # Events associated with this chapter, plus the unique set of
+    # Locations those events pin to (deduped, name-sorted). Both lists
+    # power the new accordion sections in the chapter sidebar — each
+    # entry renders its own external Urls.
+    chapter_events = sorted(chapter.events, key=lambda e: e.name)
+    chapter_locations = sorted(
+        {e.location.id: e.location for e in chapter_events if e.location}.values(),
+        key=lambda loc: loc.name,
+    )
+
     return render_template(
         'book/chapter.html',
         chapter=chapter,
         chapter_content=rendered_content,
         characters=characters,
         mention_counts=mention_counts,
+        chapter_events=chapter_events,
+        chapter_locations=chapter_locations,
     )
 
 @main.route('/characters', methods=['GET', 'POST'])
