@@ -23,7 +23,7 @@ span.location-ref:hover {
    the cards are visibly separated from the white panel without
    looking like a different surface. */
 .chapter-section-card {
-    background-color: #e7f0ff;
+    background-color: #eff5ff;
 }
 
 /* Brief yellow flash on a sidebar row when its inline ref is clicked.
