@@ -30,6 +30,12 @@
         <li class="list-group-item"><a href="#default-pic">How to change a character's default picture</a></li>
         <li class="list-group-item"><a href="#hide-image">How to hide / remove an image for a character</a></li>
         <li class="list-group-item"><a href="#chapter-assoc-other">Other chapter-association tools (Location, Event, Faction)</a></li>
+        <li class="list-group-item"><a href="#url-types-add">Adding URL types</a></li>
+        <li class="list-group-item"><a href="#url-link-character">Linking URLs to a Character</a></li>
+        <li class="list-group-item"><a href="#url-link-event">Linking URLs to an Event</a></li>
+        <li class="list-group-item"><a href="#url-link-faction">Linking URLs to a Faction</a></li>
+        <li class="list-group-item"><a href="#url-link-location">Linking URLs to a Location</a></li>
+        <li class="list-group-item"><a href="#url-link-role">Linking URLs to a Role</a></li>
     </ol>
 </div>
 
@@ -341,6 +347,77 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
         factions are referenced via the characters that appear in the
         chapter (so changing a character's primary faction is enough to
         get them into the right faction's listings).
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-types-add" class="mb-5">
+    <h2>Adding URL types</h2>
+    <p>
+        URL types are categories for external links (e.g. <em>Wikipedia</em>,
+        <em>YouTube</em>, <em>Wikidata</em>). Each type carries a Font
+        Awesome icon class that renders next to matching URLs in lists
+        and the chapter sidebar.
+    </p>
+    <ol>
+        <li>Open <a href="{{ url_for('admin.url_types') }}">Admin → URL Types</a>.</li>
+        <li>Click <strong>New URL type</strong>.</li>
+        <li>Set <em>Name</em> (required, unique).</li>
+        <li>Set <em>Font Awesome icon class</em>. Browse
+            <a href="https://fontawesome.com/search?o=r&amp;m=free" target="_blank" rel="noopener">fontawesome.com</a>
+            and copy the class names from any free icon, e.g.
+            <code>fa-brands fa-wikipedia-w</code> or <code>fa-solid fa-link</code>.</li>
+        <li>Optional: pick colours (not currently rendered in the UI; reserved for badge styling later).</li>
+        <li>Submit. On the edit page you'll see a live icon preview.</li>
+    </ol>
+    <p class="text-muted small">
+        Deletion is blocked while any URL still references the type —
+        either reassign those URLs first, or wait until they're gone.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-character" class="mb-5">
+    <h2>Linking URLs to a Character</h2>
+    {% include '_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.characters') }}">Characters</a> → click the character name → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-event" class="mb-5">
+    <h2>Linking URLs to an Event</h2>
+    {% include '_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.events') }}">Events</a> → click the event name → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-faction" class="mb-5">
+    <h2>Linking URLs to a Faction</h2>
+    {% include '_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.factions') }}">Factions</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-location" class="mb-5">
+    <h2>Linking URLs to a Location</h2>
+    {% include '_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.locations') }}">Locations</a> → click the location name → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-role" class="mb-5">
+    <h2>Linking URLs to a Role</h2>
+    {% include '_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.roles') }}">Roles</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
     </p>
 </section>
 {% endblock %}
