@@ -3,19 +3,36 @@
 
 {% block page_content %}
 
-<div class="page-header mt-4 mb-4 d-flex justify-content-between align-items-end flex-wrap gap-2">
+<div class="page-header mt-4 mb-4 d-flex justify-content-between align-items-end flex-wrap gap-3">
     <h2 class="mb-0">{{ chapter.title | safe }}</h2>
-    {# Inline-tag style switcher. Choice is persisted in localStorage by
-       chapter_style.js so it carries across chapter navigations. #}
-    <div class="d-flex align-items-center gap-2 small">
-        <label for="chapter-style-picker" class="form-label text-muted mb-0">Tag style:</label>
-        <select id="chapter-style-picker" class="form-select form-select-sm"
-                style="width: auto;">
-            <option value="pills">Rounded pills</option>
-            <option value="squares">Square boxes</option>
-            <option value="underline">Underline + coloured</option>
-            <option value="coloured">Coloured only</option>
-        </select>
+    <div class="d-flex align-items-end flex-wrap gap-3">
+        {# Inline-tag style switcher. Choice is persisted in localStorage by
+           chapter_style.js so it carries across chapter navigations. #}
+        <div class="d-flex align-items-center gap-2 small">
+            <label for="chapter-style-picker" class="form-label text-muted mb-0">Tag style:</label>
+            <select id="chapter-style-picker" class="form-select form-select-sm"
+                    style="width: auto;">
+                <option value="pills">Rounded pills</option>
+                <option value="squares">Square boxes</option>
+                <option value="underline">Underline + coloured</option>
+                <option value="coloured">Coloured only</option>
+            </select>
+        </div>
+
+        {# Link-style switcher: click (default) vs hover to open the
+           character panel in the sidebar. Hover doesn't apply on
+           touch devices — on mobile/tablet the sidebar isn't sticky
+           and we open a modal on tap regardless — so this picker is
+           hidden below the lg breakpoint (d-none d-lg-flex). Persisted
+           via cookie by chapter.js. #}
+        <div class="d-none d-lg-flex align-items-center gap-2 small">
+            <label for="link-style-picker" class="form-label text-muted mb-0">Link style:</label>
+            <select id="link-style-picker" class="form-select form-select-sm"
+                    style="width: auto;">
+                <option value="click">Click</option>
+                <option value="hover">Hover</option>
+            </select>
+        </div>
     </div>
 </div>
 

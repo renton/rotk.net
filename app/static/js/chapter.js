@@ -7,6 +7,42 @@
     return window.matchMedia(MOBILE_QUERY).matches;
   }
 
+  // ---- Link-style cookie (click vs hover) -------------------------------
+  // Cookie-backed so it survives across sessions like a real preference.
+  // Hover only fires on desktop — on mobile we always fall back to click.
+  var LINK_STYLE_COOKIE = 'rotk_link_style';
+  var LINK_STYLES = ['click', 'hover'];
+  var DEFAULT_LINK_STYLE = 'click';
+
+  function setCookie(name, value, days) {
+    var expires = '';
+    if (days) {
+      var d = new Date();
+      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = '; expires=' + d.toUTCString();
+    }
+    document.cookie = name + '=' + encodeURIComponent(value) +
+      expires + '; path=/; SameSite=Lax';
+  }
+  function getCookie(name) {
+    var parts = document.cookie ? document.cookie.split(';') : [];
+    for (var i = 0; i < parts.length; i++) {
+      var kv = parts[i].trim();
+      if (kv.indexOf(name + '=') === 0) {
+        return decodeURIComponent(kv.substring(name.length + 1));
+      }
+    }
+    return null;
+  }
+  function getLinkStyle() {
+    var v = getCookie(LINK_STYLE_COOKIE);
+    return LINK_STYLES.indexOf(v) >= 0 ? v : DEFAULT_LINK_STYLE;
+  }
+  function setLinkStyle(v) {
+    if (LINK_STYLES.indexOf(v) < 0) return;
+    setCookie(LINK_STYLE_COOKIE, v, 365);
+  }
+
   function sidebarAccordionBody() {
     return document.querySelector('#collapseOne .accordion-body');
   }
@@ -123,4 +159,35 @@
       showAccordionItem('collapseLocations', lid ? 'location-item-' + lid : null);
     }
   });
+
+  // Hover-to-open for .character-ref. Desktop only — on touch / mobile
+  // the dropdown is hidden and click stays the only trigger. A short
+  // debounce delay so casual cursor flyovers don't keep swapping the
+  // sidebar panel; clearing on mouseleave keeps a quick out-and-back
+  // from queuing a stale show.
+  var hoverTimer = null;
+  document.addEventListener('mouseover', function (event) {
+    if (isMobile()) return;
+    if (getLinkStyle() !== 'hover') return;
+    var ref = event.target.closest('.character-ref');
+    if (!ref) return;
+    var characterId = ref.getAttribute('data-character-id');
+    if (!characterId) return;
+    if (hoverTimer) clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(function () { showCharacter(characterId); }, 180);
+  });
+  document.addEventListener('mouseout', function (event) {
+    if (hoverTimer) { clearTimeout(hoverTimer); hoverTimer = null; }
+  });
+
+  // Wire the dropdown once the DOM is parsed. value is initialised from
+  // the cookie so reloading the page reflects the saved preference.
+  function initLinkStylePicker() {
+    var picker = document.getElementById('link-style-picker');
+    if (!picker) return;
+    picker.value = getLinkStyle();
+    picker.addEventListener('change', function () { setLinkStyle(picker.value); });
+  }
+  if (document.readyState !== 'loading') initLinkStylePicker();
+  else document.addEventListener('DOMContentLoaded', initLinkStylePicker);
 })();
