@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}rotk.net - Edit faction: {{ faction.name }}{% endblock %}
+{% block title %}
+rotk.net - {% if faction %}Edit faction: {{ faction.name }}{% else %}New faction{% endif %}
+{% endblock %}
 
 {% block page_header %}
 <div class="page-header mb-3">
-    <h1>Edit faction: {{ faction.name }}</h1>
+    <h1>{% if faction %}Edit faction: {{ faction.name }}{% else %}New faction{% endif %}</h1>
+    {% if not faction %}
+    <p class="text-muted mb-0">
+        Faction name is required. Colours can be tweaked later via the
+        edit page, or randomized in bulk via <code>flask randomize-faction-colours</code>.
+    </p>
+    {% endif %}
 </div>
 {% endblock %}
 

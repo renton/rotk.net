@@ -11,10 +11,10 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Edit
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, Edit
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, count_mentions_per_character
+from tools.book_parser import find_character_mentions, find_event_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm
 from . import admin
 
@@ -412,6 +412,204 @@ def chapter_associations_switch(chapter_num, character_id):
         f"chapter {chapter.chapter_num}."
     )
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+
+# ----- Chapter ↔ Event association editor ---------------------------------
+
+def _resolve_event_from_form():
+    """Same shape as _resolve_character_from_form but for Events. Reads
+    `event_id` (preferred) or `event_name` ("Name #id" or bare name)
+    out of request.form. Returns (event, error_message_to_flash)."""
+    raw_id = (request.form.get('event_id') or '').strip()
+    raw_name = (request.form.get('event_name') or '').strip()
+
+    if raw_id.isdigit():
+        event = Event.query.get(int(raw_id))
+        if event is None:
+            return None, "Couldn't find an event with that id."
+        return event, None
+
+    if raw_name:
+        m = _ID_SUFFIX_RE.search(raw_name)
+        if m:
+            event = Event.query.get(int(m.group(1)))
+            if event is None:
+                return None, "Couldn't find an event with that id."
+            return event, None
+        matches = Event.query.filter(Event.name == raw_name).all()
+        if len(matches) == 1:
+            return matches[0], None
+        if len(matches) > 1:
+            return None, (
+                f"Multiple events named {raw_name!r}. Pick from the dropdown "
+                f"(each option carries a unique '#<id>' suffix)."
+            )
+    return None, "Couldn't find an event matching that selection."
+
+
+@admin.route('/event-associations', methods=['GET'])
+@admin.route('/event-associations/<int:chapter_num>', methods=['GET'])
+@login_required
+@admin_required
+def event_associations(chapter_num=None):
+    """Mirror of chapter_associations but for Events. Pick a chapter,
+    see the events associated with it, add new associations by keyword
+    list (comma-separated), switch a wrong association, or remove one."""
+    if chapter_num is None:
+        from_query = request.args.get('chapter_num', type=int)
+        if from_query is not None:
+            return redirect(url_for('admin.event_associations', chapter_num=from_query))
+
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    selected = None
+    rows = []
+    all_events = []
+
+    if chapter_num is not None:
+        selected = Chapter.query.filter_by(chapter_num=chapter_num).first()
+        if selected is None:
+            abort(404)
+
+        associated = sorted(selected.events, key=lambda e: e.name)
+        for event in associated:
+            mentions = find_event_mentions(selected, event, limit=10)
+            rows.append({
+                'event': event,
+                'mentions': mentions,
+                'mention_count': len(mentions),
+                'location': event.location,
+            })
+
+        all_events = (
+            Event.query
+            .filter(Event.is_deleted.is_(False))
+            .order_by(Event.name)
+            .all()
+        )
+
+    return render_template(
+        'admin/event_associations.html',
+        chapters=chapters,
+        selected=selected,
+        rows=rows,
+        all_events=all_events,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/event-associations/<int:chapter_num>/add', methods=['POST'])
+@login_required
+@admin_required
+def event_associations_add(chapter_num):
+    """Attach an Event to a chapter, adding keyword aliases as we go.
+
+    Admin supplies a comma-separated `search_terms` field. For each
+    keyword we verify it appears in the chapter text (HTML stripped)
+    and, if so, append it to event.aliases (deduped against name +
+    existing aliases). Keywords that don't appear in the chapter are
+    reported back but otherwise skipped. The chapter ↔ event link is
+    added regardless (admin opted to associate)."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+
+    event, err = _resolve_event_from_form()
+    if err:
+        flash(err)
+        return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+    raw_terms = (request.form.get('search_terms') or '').strip()
+    keywords = [k.strip() for k in raw_terms.split(',') if k.strip()]
+    if not keywords:
+        flash("Enter at least one keyword (comma-separated for multiple).")
+        return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+    content = strip_html_tags(chapter.content)
+    existing = [a.strip() for a in (event.aliases or '').split(',') if a.strip()]
+    known = {event.name} | set(existing)
+
+    aliases_added = []
+    no_match = []
+    for keyword in keywords:
+        if not build_needle_pattern([keyword]).findall(content):
+            no_match.append(keyword)
+            continue
+        if keyword not in known:
+            existing.append(keyword)
+            known.add(keyword)
+            aliases_added.append(keyword)
+
+    if aliases_added:
+        event.aliases = ','.join(existing)
+
+    if event not in chapter.events:
+        chapter.events.append(event)
+
+    db.session.commit()
+
+    parts = []
+    if aliases_added:
+        parts.append("Added aliases: " + ", ".join(repr(a) for a in aliases_added) + ".")
+    if no_match:
+        parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
+    parts.append(f"{event.name!r} is now associated with chapter {chapter.chapter_num}.")
+    flash(" ".join(parts))
+
+    return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+
+@admin.route('/event-associations/<int:chapter_num>/remove/<int:event_id>', methods=['POST'])
+@login_required
+@admin_required
+def event_associations_remove(chapter_num, event_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    event = Event.query.get_or_404(event_id)
+
+    if event in chapter.events:
+        chapter.events.remove(event)
+        db.session.commit()
+        flash(f"Removed {event.name!r} from chapter {chapter.chapter_num}.")
+    else:
+        flash(f"{event.name!r} was not associated with chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+
+@admin.route('/event-associations/<int:chapter_num>/switch/<int:event_id>', methods=['POST'])
+@login_required
+@admin_required
+def event_associations_switch(chapter_num, event_id):
+    """Swap which event a chapter association points at — keep chapter,
+    remove old, add new."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    old_event = Event.query.get_or_404(event_id)
+
+    new_event, err = _resolve_event_from_form()
+    if err:
+        flash(err)
+        return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+    if new_event.id == old_event.id:
+        flash(f"{new_event.name!r} is already the associated event.")
+        return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
+
+    if old_event in chapter.events:
+        chapter.events.remove(old_event)
+    if new_event not in chapter.events:
+        chapter.events.append(new_event)
+    db.session.commit()
+
+    flash(f"Switched {old_event.name!r} → {new_event.name!r} in chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
 
 
 # ----- Image Manager -------------------------------------------------------

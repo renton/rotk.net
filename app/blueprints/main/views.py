@@ -507,6 +507,29 @@ def factions():
         factions=factions
     )
 
+@main.route('/factions/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_faction():
+    """Admin form to create a Faction. Mirrors new_character / new_event /
+    new_location — same template as edit_faction with `faction=None`."""
+    from sqlalchemy.exc import IntegrityError
+    form = EditFactionForm()
+    if form.validate_on_submit():
+        faction = Faction()
+        form.populate_obj(faction)
+        db.session.add(faction)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A faction named {form.name.data!r} already exists.")
+            return render_template('factions/faction_edit.html', form=form, faction=None)
+        flash(f"Created faction {faction.name!r}.")
+        return redirect(url_for('main.edit_faction', id=faction.id))
+    return render_template('factions/faction_edit.html', form=form, faction=None)
+
+
 @main.route('/factions/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required

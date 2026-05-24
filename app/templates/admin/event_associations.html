@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: Event Associations{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Chapter ↔ Event Associations</h1>
+    <p class="text-muted mb-0">
+        Same shape as Chapter ↔ Character Associations, but operating on
+        Events. Pick a chapter, see the events associated with it, and
+        switch / remove the wrong ones. Adding a new association takes a
+        comma-separated list of keywords — the server verifies each
+        keyword appears in the chapter text and adds matching ones to
+        the event's aliases.
+    </p>
+</div>
+
+<form method="GET" action="{{ url_for('admin.event_associations') }}" class="mb-4">
+    <label for="chapter-picker" class="form-label">Chapter:</label>
+    <div class="d-flex gap-2">
+        <select name="chapter_num" id="chapter-picker" class="form-select">
+            <option value="">— Select a chapter —</option>
+            {% for c in chapters %}
+            <option value="{{ c.chapter_num }}"
+                {% if selected and selected.id == c.id %}selected{% endif %}>
+                {{ c.chapter_num }}. {{ c.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Go</button>
+    </div>
+</form>
+
+{% if selected %}
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Location</th>
+            <th class="text-end">Mentions</th>
+            <th class="d-none d-md-table-cell">Snippets</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        {% set ev = row.event %}
+        <tr>
+            <td>
+                <div>{{ ev.name }}</div>
+                {% if ev.aliases %}
+                <div class="small text-muted">Aliases: {{ ev.aliases }}</div>
+                {% endif %}
+            </td>
+            <td>{{ row.location.name if row.location else '' }}</td>
+            <td class="text-end">{{ row.mention_count }}</td>
+            <td class="d-none d-md-table-cell">
+                {% if row.mentions %}
+                <details>
+                    <summary class="small text-muted">show {{ row.mention_count }} snippet{{ '' if row.mention_count == 1 else 's' }}</summary>
+                    <ul class="list-unstyled small mt-2 mb-0">
+                        {% for m in row.mentions %}
+                        <li>{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                {% else %}
+                <span class="text-warning small">no live matches</span>
+                {% endif %}
+            </td>
+            <td class="text-end" style="min-width: 220px;">
+                <div class="d-flex flex-column gap-2 align-items-end">
+                    <details>
+                        <summary class="btn btn-sm btn-outline-warning" style="list-style: none;">
+                            Switch event
+                        </summary>
+                        <form method="POST"
+                              action="{{ url_for('admin.event_associations_switch', chapter_num=selected.chapter_num, event_id=ev.id) }}"
+                              class="d-flex gap-1 mt-2">
+                            {{ csrf_form.hidden_tag() }}
+                            <input type="text" name="event_name"
+                                   class="form-control form-control-sm"
+                                   list="all-events-datalist"
+                                   data-picker-target="event_id"
+                                   placeholder="Search event…" autocomplete="off" required>
+                            <input type="hidden" name="event_id">
+                            <button type="submit" class="btn btn-sm btn-warning">Apply</button>
+                        </form>
+                    </details>
+                    <form method="POST"
+                          action="{{ url_for('admin.event_associations_remove', chapter_num=selected.chapter_num, event_id=ev.id) }}"
+                          class="d-inline"
+                          data-confirm="Remove {{ ev.name|e }} from chapter {{ selected.chapter_num }}?">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-muted">No events associated with this chapter.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">Add Event Association to chapter {{ selected.chapter_num }}</div>
+    <div class="card-body">
+        <p class="text-muted small mb-3">
+            Enter one or more comma-separated <strong>keywords</strong>
+            (the words / phrases as they appear in the chapter text)
+            and pick the event. The server scans the chapter for each
+            keyword and adds the matching ones to the event's aliases.
+            Keywords not found in this chapter are reported and skipped
+            — but the chapter ↔ event link is still created (you may
+            have other reasons to associate them).
+        </p>
+        <form method="POST"
+              action="{{ url_for('admin.event_associations_add', chapter_num=selected.chapter_num) }}"
+              class="row g-2 align-items-end">
+            {{ csrf_form.hidden_tag() }}
+            <div class="col-md-5">
+                <label for="add-search-terms" class="form-label">Keywords (comma-separated)</label>
+                <input type="text" name="search_terms" id="add-search-terms"
+                       class="form-control" required autocomplete="off"
+                       placeholder="Battle of Red Cliffs, Chibi, 赤壁之战">
+            </div>
+            <div class="col-md-5">
+                <label for="add-event-name" class="form-label">Canonical event</label>
+                <input type="text" name="event_name" id="add-event-name"
+                       class="form-control" list="all-events-datalist"
+                       data-picker-target="event_id" autocomplete="off" required>
+                <input type="hidden" name="event_id" id="add-event-id">
+            </div>
+            <div class="col-md-2 text-end">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{# Shared datalist for the Add + Switch pickers. Each option's value
+   ends in " #<id>" so duplicate-named events still resolve uniquely. #}
+<datalist id="all-events-datalist">
+    {% for e in all_events %}
+    <option value="{{ e.name }} #{{ e.id }}"
+            label="{{ e.name }}{% if e.location %} · {{ e.location.name }}{% endif %}{% if e.aliases %} ({{ e.aliases }}){% endif %}">
+    </option>
+    {% endfor %}
+</datalist>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+{% endblock %}

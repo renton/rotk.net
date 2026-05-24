@@ -146,7 +146,8 @@
                         {{ macros.badge_widget(tag) }}
                         <form method="POST"
                               action="{{ url_for('admin.remove_portrait_tag', portrait_id=portrait.id, tag_id=tag.id) }}"
-                              class="d-inline">
+                              class="d-inline"
+                              data-confirm="Remove tag &quot;{{ tag.name|e }}&quot; from this portrait?">
                             {{ csrf_form.hidden_tag() }}
                             <button type="submit"
                                     class="btn btn-sm btn-link p-0 text-danger"

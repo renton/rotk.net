@@ -188,22 +188,23 @@
 {# ------------------------------------------------------------------- #}
 <section id="faction-add" class="mb-5">
     <h2>How to add a faction</h2>
-    <p class="text-warning">
-        There's no <strong>+ Add Faction</strong> button yet. Factions
-        currently come from the <code>flask scrape-characters</code> CLI
-        — it creates a Faction row for every distinct faction name it
-        sees on the Wikipedia character index.
+    <ol>
+        <li>Open <a href="{{ url_for('main.factions') }}">Factions</a>.</li>
+        <li>Click <strong>+ Add Faction</strong> in the top right (admin-only).</li>
+        <li>Fill in <em>Name</em> (required, unique). Optionally tweak the
+            three colours and an icon string.</li>
+        <li>Submit. You're redirected to the new faction's edit page.</li>
+    </ol>
+    <p class="text-muted small">
+        Bulk colour randomization is available via
+        <code>flask randomize-faction-colours</code> — useful after creating
+        a batch of new factions.
     </p>
-    <p>If you need a one-off new faction today, the simplest paths are:</p>
-    <ul>
-        <li>Edit an existing character, multi-select <em>Factions</em>, type the new name…
-            actually no — that selector is a query of existing factions, not free-form.
-            <strong>You can't add a faction from the UI right now.</strong></li>
-        <li>Add it via direct SQL:
-            <pre class="small bg-light p-2 mb-2">INSERT INTO faction (name) VALUES ('My New Faction');</pre>
-        </li>
-    </ul>
-    <p class="text-muted small">A dedicated <em>Add Faction</em> page is on the wishlist — same shape as Add Character / Add Location / Add Event.</p>
+    <p class="text-muted small">
+        There's no <em>FactionAssociation</em> concept (no chapter ↔
+        faction direct link). Factions show up in a chapter via the
+        characters that appear there.
+    </p>
 </section>
 
 {# ------------------------------------------------------------------- #}
