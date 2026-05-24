@@ -176,7 +176,7 @@
                         {# Indented links attached to the faction, if any. #}
                         {% set list_urls = character.primary_faction.urls %}
                         {% if list_urls %}
-                        <div class="ms-5 mt-1">
+                        <div class="sidebar-url-indent mt-1">
                           {% include '_url_list.html' %}
                         </div>
                         {% endif %}
@@ -199,7 +199,7 @@
                           </div>
                           {% set list_urls = faction.urls %}
                           {% if list_urls %}
-                          <div class="ms-5 mt-1 mb-1">
+                          <div class="sidebar-url-indent mt-1 mb-1">
                             {% include '_url_list.html' %}
                           </div>
                           {% endif %}
@@ -212,7 +212,7 @@
                       {% if list_urls %}
                       <div class="chapter-section-card rounded p-2 mt-3 mb-2">
                         <div class="small text-muted fw-bold mb-1">Links:</div>
-                        <div class="ms-5">
+                        <div class="sidebar-url-indent">
                           {% include '_url_list.html' %}
                         </div>
                       </div>
@@ -292,7 +292,7 @@
                       </div>
                       {% set list_urls = ev.urls %}
                       {% if list_urls %}
-                      <div class="ms-5 mt-1">
+                      <div class="sidebar-url-indent mt-1">
                         {% include '_url_list.html' %}
                       </div>
                       {% endif %}
@@ -333,7 +333,7 @@
                       </div>
                       {% set list_urls = loc.urls %}
                       {% if list_urls %}
-                      <div class="ms-5 mt-1">
+                      <div class="sidebar-url-indent mt-1">
                         {% include '_url_list.html' %}
                       </div>
                       {% endif %}

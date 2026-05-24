@@ -17,6 +17,14 @@ span.location-ref:hover {
     text-decoration-thickness: 2px;
 }
 
+/* Consistent 2rem indent for URL lists nested under a faction /
+   character / event / location in the chapter sidebar. Bootstrap's
+   ms-5 (3rem) was too wide; ms-4 (1.5rem) too tight — 2rem sits
+   between them and matches the visual rhythm of the section cards. */
+.sidebar-url-indent {
+    margin-left: 2rem;
+}
+
 /* Tinted card-style background for the Faction / Past Factions / Links
    blocks in the chapter sidebar's Character Info panel. Sits halfway
    between white and Bootstrap's accordion-active blue (#cfe2ff) so
