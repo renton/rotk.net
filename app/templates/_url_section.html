@@ -1,0 +1,87 @@
+{# Shared URL-attachments fieldset for the Character / Event / Location
+   edit pages. Include with:
+
+       {% set owner = character %}      (or event / location)
+       {% set owner_type = 'character' %}
+       {% include '_url_section.html' %}
+
+   Expects: `urls` (list), `add_url_form` (AddUrlForm instance),
+   `csrf_form` (anything with hidden_tag() — for the delete buttons).
+   Renders nothing if any of those are undefined.
+#}
+{% if urls is defined and add_url_form is defined and csrf_form is defined %}
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">External links</legend>
+
+    {% if not urls %}
+    <div class="text-muted mb-3">No links yet.</div>
+    {% else %}
+    <ul class="list-unstyled mb-3">
+        {% for u in urls %}
+        <li class="d-flex align-items-center gap-2 py-1">
+            {% if u.favicon %}
+            <img src="{{ url_for('static', filename=u.favicon) }}"
+                 alt="" style="width: 18px; height: 18px; object-fit: contain;">
+            {% elif u.url_type and u.url_type.icon %}
+            <i class="{{ u.url_type.icon }}" aria-hidden="true"
+               style="width: 18px; text-align: center;"></i>
+            {% else %}
+            <i class="fa-solid fa-link text-muted" aria-hidden="true"
+               style="width: 18px; text-align: center;"></i>
+            {% endif %}
+
+            <a href="{{ u.url }}" target="_blank" rel="noopener">{{ u.name }}</a>
+            {# Raw URL in brackets so admins can sanity-check the target
+               at a glance without hovering. Truncated by CSS if it's
+               long; the link above remains the clickable element. #}
+            <span class="text-muted small text-truncate" style="max-width: 50%;">
+                ({{ u.url }})
+            </span>
+
+            {% if u.url_type %}
+            <span class="badge bg-secondary ms-2">{{ u.url_type.name }}</span>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('main.delete_url', url_id=u.id) }}"
+                  class="d-inline ms-auto"
+                  data-confirm="Delete link &quot;{{ u.name|e }}&quot;?">
+                {{ csrf_form.hidden_tag() }}
+                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <hr class="my-3">
+    <h5>Add a new link</h5>
+    <p class="text-muted small mb-3">
+        Favicon is fetched automatically from the URL's host if you leave
+        it blank. The path-field is there as an override.
+    </p>
+    <form method="POST"
+          action="{{ url_for('main.add_owner_url', owner_type=owner_type, id=owner.id) }}"
+          class="row g-2 align-items-end">
+        {{ add_url_form.hidden_tag() }}
+        <div class="col-md-4">
+            {{ add_url_form.name.label(class='form-label') }}
+            {{ add_url_form.name(class='form-control') }}
+        </div>
+        <div class="col-md-4">
+            {{ add_url_form.url.label(class='form-label') }}
+            {{ add_url_form.url(class='form-control') }}
+        </div>
+        <div class="col-md-2">
+            {{ add_url_form.url_type.label(class='form-label') }}
+            {{ add_url_form.url_type(class='form-select') }}
+        </div>
+        <div class="col-md-2">
+            {{ add_url_form.favicon.label(class='form-label') }}
+            {{ add_url_form.favicon(class='form-control') }}
+        </div>
+        <div class="col-12 text-end">
+            {{ add_url_form.submit(class='btn btn-primary') }}
+        </div>
+    </form>
+</fieldset>
+{% endif %}

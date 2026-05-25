@@ -3,32 +3,50 @@
 
 {% block page_content %}
 
+{% set is_admin = current_user.is_authenticated and current_user.is_administrator %}
+
+{% if is_admin %}
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ url_for('main.new_faction') }}" class="btn btn-primary">+ Add Faction</a>
+</div>
+{% endif %}
+
+<div class="table-responsive">
 <table class="table table-striped mt-4">
     <thead>
         <th>Name</th>
         <th>Preview</th>
         <th>Count</th>
+        {% if is_admin %}<th class="text-end">Actions</th>{% endif %}
     </thead>
     <tbody>
         {% for faction in factions %}
-            <tr>                
+            <tr>
                 <td>
-                    {% if current_user.is_authenticated and current_user.is_administrator %}
-                    <a href="{{ url_for('main.edit_faction', id=faction.id) }}">{{ faction.name }}</a>
-                    {% else %}
-                        {{ faction.name }}
-                    {% endif %}
+                    {# Name links to the characters page filtered by this faction
+                       using the `any_faction` filter (past + present), which is
+                       the same set the count below is taken from — so the count
+                       on the destination page matches what's advertised here. #}
+                    <a href="{{ url_for('main.characters',
+                                        any_faction=faction.id) }}">{{ faction.name }}</a>
                 </td>
                 <td>
                     {{ macros.badge_widget(faction) }}
                 </td>
                 <td>
-                        {{ faction.characters | length }}
+                    {{ faction.characters | length }}
                 </td>
+                {% if is_admin %}
+                <td class="text-end">
+                    <a href="{{ url_for('main.edit_faction', id=faction.id) }}"
+                       class="btn btn-sm btn-outline-primary">Edit</a>
+                </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 {% endblock %}
 

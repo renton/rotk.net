@@ -30,6 +30,22 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
 
+    # Force Jinja to re-stat templates on each render so edits show up on
+    # browser refresh without a container restart. Negligible overhead for
+    # this app's traffic level; default-False in prod gunicorn otherwise.
+    TEMPLATES_AUTO_RELOAD = True
+
+    # Hard cap on the size of any HTTP request body. Werkzeug returns 413
+    # before our view sees an oversized upload. 12 MB gives some headroom
+    # over the 10 MB per-portrait limit enforced in the upload route
+    # (multipart boundary + other form fields add a few KB).
+    MAX_CONTENT_LENGTH = 12 * 1024 * 1024
+
+    # Google Analytics 4 tracking ID (e.g. "G-XXXXXXXXXX"). Leave blank to
+    # disable analytics — the base template skips the gtag snippet when
+    # this is empty.
+    GA_TRACKING_ID = os.environ.get('GA_TRACKING_ID', '')
+
     # --- Mail (Flask-Mail) ---
     # Any SMTP provider works (Mailgun, SendGrid, AWS SES, Postmark, Gmail).
     # If MAIL_SERVER is not set, MAIL_SUPPRESS_SEND defaults to True and

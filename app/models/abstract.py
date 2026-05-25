@@ -15,8 +15,19 @@ class AbstractObject(db.Model):
     chinese_name = mapped_column(db.String(255), default="", sort_order=-1)
     aliases = mapped_column(db.String(255, collation='C'), default="", sort_order=-1)
     created_at = mapped_column(db.DateTime, default=db.func.now(), sort_order=-1)
-    #updated_at = mapped_column(db.DateTime, onupdate=db.func.now(), sort_order=-1)   
+    #updated_at = mapped_column(db.DateTime, onupdate=db.func.now(), sort_order=-1)
     updated_at = mapped_column(db.DateTime, sort_order=-1)
+
+    # Audit stamps. The ORM hooks in app/models/audit.py auto-populate these
+    # on insert/update from `current_user` when there's a request context,
+    # falling back to "rotk.net_system" for CLI / scraper activity. Plain
+    # string (rather than FK to user.id) keeps history readable even after
+    # a user is deleted.
+    created_by = mapped_column(db.String(64), default="rotk.net_system",
+                               nullable=False, sort_order=-1)
+    last_edited_by = mapped_column(db.String(64), default="rotk.net_system",
+                                   nullable=False, sort_order=-1)
+
     is_deleted = mapped_column(db.Boolean, default=False, nullable=False, sort_order=-1)
     
     notes = db.Column(db.Text, default="")

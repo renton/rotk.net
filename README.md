@@ -105,9 +105,15 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | Command | Purpose |
 |---|---|
 | `create-all` | Run `db.create_all()` to create all tables from the current model definitions |
+| `apply-migrations` | Apply any unapplied `migrations/*.sql` files in lexicographic order; tracks applied filenames in `_schema_migrations`. Idempotent. |
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
+| `recount-book-mentions` | Recompute `Character.book_mention_count` (total mentions across all chapters). Run after scraping new chapters or editing aliases. |
+| `assign-default-portraits [--preferred-tag 1MROTK] [--seed N] [--dry-run]` | For each character that has portraits but none visible, promote one to default (which also makes it visible). Prefers portraits tagged with `--preferred-tag`; falls back to a random pick. |
+| `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |
+| `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
+| `randomize-role-colours [--role-id N] [--seed N] [--dry-run]` | Same as `randomize-faction-colours` but for `Role` rows. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
@@ -255,7 +261,9 @@ app/
 
 tools/
   scraper.py             Web scrapers for the book text and character index
-  book_parser.py         Inline character-tagging regex pipeline
+  book_parser.py         Inline character-tagging regex pipeline (now also tags events + locations, with per-snippet exclusions)
+  colours.py             HSL palette generator used by the randomize-colour CLI and the in-form Randomize buttons
+  favicon_fetcher.py     Auto-fetch favicons for any URL added to a Character / Event / Location / Faction / Role
   dbm.py                 Generic DB helper class
   validators.py          Hex-colour validator for faction/role badges
   decorators.py          @admin_required decorator
@@ -266,13 +274,45 @@ examples/
 
 ## Features
 
+### Reader-facing
 - **Table of contents** at `/` listing all 120 chapters
-- **Chapter view** at `/chapter/<n>` rendering the chapter text with clickable character badges. Sidebar shows character details + faction colour-coding.
-- **Character browser** at `/characters` with alphabet tabs, search, and faction/role filters (incl. "search past factions" toggle)
-- **Faction and Role pages** at `/factions` and `/roles` showing each tag, its colour preview, and member count
+- **Chapter view** at `/chapter/<n>` rendering the chapter text with inline tags for three kinds of references:
+  - Character badges — coloured pills tied to the character's primary faction
+  - Event refs — black-underlined; click to open the sidebar's *Events* accordion and highlight the matching row
+  - Location refs — same behaviour as events, scoped to the *Locations* accordion
+- **Tag style switcher** on every chapter page — choose how the inline character refs render (pills, squares, underlined, coloured-only). Persisted in `localStorage`.
+- **Link style switcher** on every chapter page (desktop only) — *Click* (default) or *Hover* to populate the sidebar's character info panel. Persisted in a cookie.
+- **Chapter sidebar accordion** with:
+  - *Character Info* — portrait gallery, mention counts, role + faction badges, attached URLs, optional admin-only *Edit* button
+  - *Chapter Characters* — clickable list of every character associated with the chapter
+  - *Events* — name + Event Type badge + location + URLs
+  - *Locations* — name + lat/lng + URLs
+- **Character browser** at `/characters` with alphabet tabs, search, and two independent faction filters (primary / past)
+- **Faction, Role, Event, Location pages** with their own list views, admin-gated edit buttons, and faction-filter shortcuts wired into the character browser
 - **User accounts** — `/auth/register`, `/auth/login`, `/auth/forgot-password`, `/auth/change-password`, `/auth/change-email`, all with email confirmation.
-- **Admin panel** at `/admin/users` — confirmed admins can promote or demote any user (you can't demote yourself or the last remaining admin)
-- **Admin editing** for characters / factions / roles (gated to confirmed admins)
+
+### First-class content types (admin)
+- **Character** (incl. portraits, roles, primary + past factions)
+- **Faction** — coloured tag, randomize-palette button, merge into another faction (carries M2M membership), hide flag
+- **Role** — coloured tag mirroring Faction
+- **Tag** — coloured tag, attachable to portraits and other things via polymorphic `TagAssociation`
+- **Event** — name, aliases, optional `Location` FK, optional `EventType` FK, geo-point override, hide-on-map flag
+- **Location** — name, aliases, lat/lng
+- **URL** — polymorphic external link attachable to any of the above; auto-fetched favicon; categorised by `UrlType`
+- **UrlType** — coloured tag with a Font Awesome icon class; renders as the badge prefix in URL lists
+- **EventType** — coloured tag with a Font Awesome icon class; shows next to each event in the chapter sidebar
+- **MatchExclusion** — per-snippet "don't inline-tag this match" record (currently wired for Location associations)
+- **Edit log** — every admin save is recorded (model, row, field-by-field diff, who, when) and viewable at `/admin/edits`
+- **Audit stamps** — every first-class row gets `created_by` and `last_edited_by` columns via ORM event hooks
+
+### Admin tools
+- `/admin/faq` — how-to reference for every common task (linked from the admin dropdown)
+- `/admin/chapter-associations`, `/admin/event-associations`, `/admin/location-associations` — pick a chapter, see what's associated, add/switch/remove. The picker auto-fills the *Keywords* field with `name, aliases…` when you commit a selection.
+- Per-snippet match exclusions on Location associations (red × on each snippet; restore from the *Excluded snippets* fold)
+- `/admin/duplicates` — character rows with name collisions
+- `/admin/edits` — full edit history (filterable by model + row)
+- `/admin/image-manager`, `/admin/tags`, `/admin/url-types`, `/admin/event-types` — CRUD for each tag-shaped type, with usage counts and reassign-before-delete guards
+- `/admin/users` — promote / demote (you can't demote yourself or the last remaining admin)
 
 ## Limitations and known issues
 

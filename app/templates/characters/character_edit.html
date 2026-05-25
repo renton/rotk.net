@@ -1,1 +1,172 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{# `character` is None / undefined when this template is rendered for the
+   New Character form. We branch on it for the title + h1 + the images
+   section (skipped entirely when there's no character to attach to). #}
+
+{% block title %}
+{% if character %}rotk.net - Edit {{ character.name }}
+{% else %}rotk.net - New character{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    {% if character %}
+    <h1>Edit character: {{ character.name }}</h1>
+    {% else %}
+    <h1>New character</h1>
+    <p class="text-muted mb-0">
+        Name is the only required field. Everything else can be filled
+        in now or edited later.
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+
+{% set owner = character %}
+{% set owner_type = 'character' %}
+{% include '_url_section.html' %}
+
+{% if portraits is defined %}
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">Images</legend>
+
+    {% if not portraits %}
+    <div class="text-muted">No images yet for this character.</div>
+    {% else %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        {% for p in portraits %}
+        <div class="col">
+            <figure class="border rounded p-2 h-100 d-flex flex-column
+                           {% if p.is_default %}border-success{% endif %}
+                           {% if p.is_hidden %}bg-light{% endif %}">
+                <img src="{{ url_for('static', filename=p.static_path) }}"
+                     alt="{{ p.name or character.name }}"
+                     class="img-fluid mx-auto"
+                     style="max-height: 260px; object-fit: contain;
+                            {% if p.is_hidden %}opacity: 0.45;{% endif %}">
+
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                    {% if p.is_default %}
+                    <span class="badge bg-success">Default</span>
+                    {% endif %}
+                    {% if p.is_hidden %}
+                    <span class="badge bg-secondary">Hidden</span>
+                    {% endif %}
+                </div>
+
+                <figcaption class="small text-muted mt-2">
+                    Source:
+                    {% if p.source_url %}
+                        <a href="{{ p.source_url }}" target="_blank" rel="noopener">
+                            {{ p.source_site or p.source_url }}
+                        </a>
+                    {% else %}
+                        {{ p.source_site or 'unknown' }}
+                    {% endif %}
+                </figcaption>
+
+                {% if p.tags %}
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                    {% for tag in p.tags %}{{ macros.badge_widget(tag) }}{% endfor %}
+                </div>
+                {% endif %}
+
+                {# Admin toggles: routes redirect back to request.referrer so
+                   we stay on the character edit page after the POST. #}
+                <div class="d-flex flex-wrap gap-1 mt-auto pt-3">
+                    {% if not p.is_default %}
+                    <form method="POST"
+                          action="{{ url_for('admin.set_default_portrait', portrait_id=p.id) }}"
+                          class="d-inline">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-success">
+                            Set default
+                        </button>
+                    </form>
+                    {% endif %}
+                    <form method="POST"
+                          action="{{ url_for('admin.toggle_portrait_hidden', portrait_id=p.id) }}"
+                          class="d-inline">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            {{ 'Unhide' if p.is_hidden else 'Hide' }}
+                        </button>
+                    </form>
+                </div>
+            </figure>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if upload_form is defined %}
+    <hr class="my-4">
+    <h5>Upload a new image</h5>
+    <p class="text-muted small mb-3">
+        Max 10 MB. JPG / JPEG / PNG / GIF / WEBP only — the server checks
+        the file's actual signature, not just the extension.
+    </p>
+    <form method="POST"
+          action="{{ url_for('main.upload_portrait', id=character.id) }}"
+          enctype="multipart/form-data">
+        {{ upload_form.hidden_tag() }}
+        <div class="mb-3">
+            {{ upload_form.image_file.label(class='form-label') }}
+            {{ upload_form.image_file(class='form-control') }}
+        </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md-5">
+                {{ upload_form.source_site.label(class='form-label') }}
+                {{ upload_form.source_site(class='form-control') }}
+            </div>
+            <div class="col-md-7">
+                {{ upload_form.source_url.label(class='form-label') }}
+                {{ upload_form.source_url(class='form-control') }}
+            </div>
+            <div class="col-12">
+                <div class="form-text">
+                    Both optional. If a Source URL is provided, the portrait's
+                    Source line in the chapter sidebar links there; if only a
+                    Source site is provided, it's shown as plain text. Leave
+                    both blank to credit the upload as <em>Manual upload</em>.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ upload_form.tag_name.label(class='form-label') }}
+            {{ upload_form.tag_name(class='form-control',
+                                    list='all-tags-datalist',
+                                    autocomplete='off',
+                                    placeholder='Type to pick an existing tag or enter a new name') }}
+        </div>
+        <div class="form-check">
+            {{ upload_form.is_default(class='form-check-input') }}
+            {{ upload_form.is_default.label(class='form-check-label') }}
+        </div>
+        <div class="form-check mb-3">
+            {{ upload_form.is_visible(class='form-check-input') }}
+            {{ upload_form.is_visible.label(class='form-check-label') }}
+        </div>
+        {{ upload_form.submit(class='btn btn-primary') }}
+    </form>
+    <datalist id="all-tags-datalist">
+        {% for t in all_tags %}
+        <option value="{{ t.name }}">
+        {% endfor %}
+    </datalist>
+    {% endif %}
+</fieldset>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{# admin_confirm.js handles the data-confirm attribute on the URL
+   delete buttons (and any future confirm-on-submit forms on this page). #}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+{% endblock %}

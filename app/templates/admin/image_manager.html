@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: Image Manager{% endblock %}
+
+{# Jinja macros can't use Python's **kwargs splat in the signature, but
+   any unconsumed keyword args at the call site land in the implicit
+   `kwargs` dict — same effect. Call as filter_url(page=2), etc. #}
+{% macro filter_url() -%}
+    {% set args = {} %}
+    {% if search %}{% set _ = args.update({'q': search}) %}{% endif %}
+    {% if character_id %}{% set _ = args.update({'character_id': character_id}) %}{% endif %}
+    {% if source_site %}{% set _ = args.update({'source_site': source_site}) %}{% endif %}
+    {% if tag_id %}{% set _ = args.update({'tag_id': tag_id}) %}{% endif %}
+    {% if sort %}{% set _ = args.update({'sort': sort}) %}{% endif %}
+    {% if direction %}{% set _ = args.update({'dir': direction}) %}{% endif %}
+    {% set _ = args.update(kwargs) %}
+    {{ url_for('admin.image_manager', **args) }}
+{%- endmacro %}
+
+{% macro sort_link(column, label) %}
+    {% if sort == column %}
+        {% set new_dir = 'desc' if direction == 'asc' else 'asc' %}
+        {% set arrow = ' ▲' if direction == 'asc' else ' ▼' %}
+    {% else %}
+        {% set new_dir = 'asc' %}
+        {% set arrow = '' %}
+    {% endif %}
+    <a href="{{ filter_url(sort=column, dir=new_dir, page=1) }}">{{ label }}{{ arrow }}</a>
+{% endmacro %}
+
+{% block page_content %}
+<div class="page-header mb-4 d-flex justify-content-between align-items-end">
+    <div>
+        <h1>Image Manager</h1>
+        <p class="text-muted mb-0">
+            One row per stored image. Characters with multiple images appear
+            multiple times.
+        </p>
+    </div>
+    <div class="text-muted small">
+        {{ pagination.total }} image{{ '' if pagination.total == 1 else 's' }}
+    </div>
+</div>
+
+<form method="GET" action="{{ url_for('admin.image_manager') }}" class="row g-2 align-items-end mb-4">
+    <div class="col-md-4">
+        <label for="image-mgr-search" class="form-label">Character</label>
+        <input type="search" name="q" id="image-mgr-search" class="form-control"
+               value="{{ search or '' }}"
+               list="all-characters-datalist"
+               data-character-picker
+               autocomplete="off"
+               placeholder="Type a name and pick from the list">
+        {# Hidden field populated by admin_picker.js when an option is chosen
+           from the datalist. The server prefers this id when present so we
+           filter to exactly one character even if two share a name. #}
+        <input type="hidden" name="character_id" value="{{ character_id or '' }}">
+    </div>
+    <div class="col-md-3">
+        <label for="image-mgr-source" class="form-label">Source site</label>
+        <select name="source_site" id="image-mgr-source" class="form-select">
+            <option value="">All sources</option>
+            {% for s in source_sites %}
+            <option value="{{ s }}" {% if source_site == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="image-mgr-tag" class="form-label">Tag</label>
+        <select name="tag_id" id="image-mgr-tag" class="form-select">
+            <option value="">All tags</option>
+            {% for t in all_tags %}
+            <option value="{{ t.id }}" {% if tag_id == t.id %}selected{% endif %}>{{ t.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <input type="hidden" name="dir"  value="{{ direction }}">
+    <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-grow-1">Apply</button>
+        <a href="{{ url_for('admin.image_manager') }}" class="btn btn-outline-secondary">Reset</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th style="width: 100px;">Image</th>
+            <th>{{ sort_link('character', 'Character') }}</th>
+            <th class="d-none d-md-table-cell">{{ sort_link('source_site', 'Source') }}</th>
+            <th>Tags</th>
+            <th class="d-none d-md-table-cell">{{ sort_link('created_at', 'Added') }}</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for portrait in pagination.items %}
+        {% set ch = portrait.character %}
+        <tr>
+            <td>
+                {% if portrait.static_path %}
+                <a href="{{ url_for('static', filename=portrait.static_path) }}" target="_blank" rel="noopener">
+                    <img src="{{ url_for('static', filename=portrait.static_path) }}"
+                         alt="{{ portrait.name or (ch.name if ch else '') }}"
+                         loading="lazy"
+                         style="max-width: 80px; max-height: 80px; object-fit: contain;">
+                </a>
+                {% else %}
+                <span class="text-muted small">no file</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if ch %}
+                <a href="{{ url_for('main.edit_character', id=ch.id) }}">{{ ch.name }}</a>
+                {% if ch.primary_faction %}
+                <div class="mt-1">{{ macros.badge_widget(ch.primary_faction) }}</div>
+                {% endif %}
+                <div class="mt-1">
+                    {% if portrait.is_default %}
+                    <span class="badge bg-success">Default</span>
+                    {% endif %}
+                    {% if portrait.is_hidden %}
+                    <span class="badge bg-secondary">Hidden</span>
+                    {% endif %}
+                </div>
+                {% else %}
+                <span class="text-muted">(orphaned)</span>
+                {% endif %}
+            </td>
+            <td class="d-none d-md-table-cell">
+                {% if portrait.source_url %}
+                <a href="{{ portrait.source_url }}" target="_blank" rel="noopener">
+                    {{ portrait.source_site or portrait.source_url }}
+                </a>
+                {% else %}
+                {{ portrait.source_site or '—' }}
+                {% endif %}
+            </td>
+            <td style="min-width: 220px;">
+                {% set attached_ids = portrait.tags | map(attribute='id') | list %}
+                <div class="d-flex flex-wrap gap-1 align-items-center">
+                    {% for tag in portrait.tags %}
+                    <span class="d-inline-flex align-items-center gap-1">
+                        {{ macros.badge_widget(tag) }}
+                        <form method="POST"
+                              action="{{ url_for('admin.remove_portrait_tag', portrait_id=portrait.id, tag_id=tag.id) }}"
+                              class="d-inline"
+                              data-confirm="Remove tag &quot;{{ tag.name|e }}&quot; from this portrait?">
+                            {{ csrf_form.hidden_tag() }}
+                            <button type="submit"
+                                    class="btn btn-sm btn-link p-0 text-danger"
+                                    title="Remove tag">&times;</button>
+                        </form>
+                    </span>
+                    {% endfor %}
+                    {% if not portrait.tags %}
+                    <span class="text-muted small fst-italic">no tags</span>
+                    {% endif %}
+                </div>
+                {% set available = all_tags | rejectattr('id', 'in', attached_ids) | list %}
+                {% if available %}
+                <form method="POST"
+                      action="{{ url_for('admin.add_portrait_tag', portrait_id=portrait.id) }}"
+                      class="d-flex gap-1 mt-2">
+                    {{ csrf_form.hidden_tag() }}
+                    <select name="tag_id" class="form-select form-select-sm" required>
+                        <option value="">+ tag</option>
+                        {% for tag in available %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Add</button>
+                </form>
+                {% endif %}
+            </td>
+            <td class="small text-muted d-none d-md-table-cell">
+                {{ portrait.created_at.strftime('%Y-%m-%d') if portrait.created_at else '' }}
+            </td>
+            <td class="text-end">
+                <div class="btn-group-vertical btn-group-sm" role="group">
+                    {% if not portrait.is_default %}
+                    <form method="POST"
+                          action="{{ url_for('admin.set_default_portrait', portrait_id=portrait.id) }}"
+                          class="d-inline">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-success">Set default</button>
+                    </form>
+                    {% endif %}
+                    <form method="POST"
+                          action="{{ url_for('admin.toggle_portrait_hidden', portrait_id=portrait.id) }}"
+                          class="d-inline">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            {{ 'Unhide' if portrait.is_hidden else 'Hide' }}
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-muted">
+                No images{% if search or source_site %} match the current filters{% endif %}.
+                {% if not (search or source_site) %}
+                Run <code>flask scrape-koei-images</code> to start populating.
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>{# /.table-responsive #}
+
+{% if pagination.pages > 1 %}
+<nav>
+    <ul class="pagination">
+        <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+            <a class="page-link" href="{{ filter_url(page=pagination.prev_num) if pagination.has_prev else '#' }}">&laquo;</a>
+        </li>
+        {% for p in pagination.iter_pages(left_edge=2, left_current=3, right_current=3, right_edge=2) %}
+            {% if p %}
+                <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ filter_url(page=p) }}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">…</a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+            <a class="page-link" href="{{ filter_url(page=pagination.next_num) if pagination.has_next else '#' }}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+
+{# Shared datalist for the character picker. Each option's value carries
+   a "#<id>" suffix so duplicate names disambiguate; admin_picker.js
+   reads the id out of the input and stashes it in the hidden field. #}
+<datalist id="all-characters-datalist">
+    {% for c in all_characters %}
+        {% set f_names = factions_by_char.get(c.id, []) %}
+        {% set r_names = roles_by_char.get(c.id, []) %}
+    <option value="{{ c.name }} #{{ c.id }}"
+            label="{{ c.name }} [{{ f_names|join(', ') if f_names else '—' }}] [{{ r_names|join(', ') if r_names else '—' }}]{% if c.courtesty_name %} · {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+    </option>
+    {% endfor %}
+</datalist>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
+{% endblock %}

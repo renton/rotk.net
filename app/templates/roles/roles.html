@@ -3,30 +3,45 @@
 
 {% block page_content %}
 
+{% set is_admin = current_user.is_authenticated and current_user.is_administrator %}
+
+{% if is_admin %}
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ url_for('main.new_role') }}" class="btn btn-primary">+ Add Role</a>
+</div>
+{% endif %}
+
+<div class="table-responsive">
 <table class="table table-striped mt-4">
     <thead>
         <th>Name</th>
         <th>Preview</th>
         <th>Count</th>
+        {% if is_admin %}<th class="text-end">Actions</th>{% endif %}
     </thead>
     <tbody>
         {% for role in roles %}
-            <tr>                
+            <tr>
                 <td>
-                    {% if current_user.is_authenticated and current_user.is_administrator %}
-                        <a href="{{ url_for('main.edit_role', id=role.id) }}">{{ role.name }}</a>
-                    {% else %}
-                        {{ role.name }}
-                    {% endif %}
+                    {# Name always links to the characters page filtered by this role.
+                       Admins also get a dedicated Edit button in the actions column. #}
+                    <a href="{{ url_for('main.characters', role=role.id) }}">{{ role.name }}</a>
                 </td>
                 <td>
                     {{ macros.badge_widget(role) }}
                 </td>
-                <td> {{ role.characters | length }} </td>
+                <td>{{ role.characters | length }}</td>
+                {% if is_admin %}
+                <td class="text-end">
+                    <a href="{{ url_for('main.edit_role', id=role.id) }}"
+                       class="btn btn-sm btn-outline-primary">Edit</a>
+                </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>
 </table>
+</div>{# /.table-responsive #}
 
 
 {% endblock %}

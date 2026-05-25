@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Admin: New user{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    <h1>New user</h1>
+    <p class="text-muted mb-0">
+        Admin-created users skip email confirmation. Tick
+        <strong>Grant administrator access</strong> to make the new
+        user an admin from the start; leave unchecked for a regular
+        confirmed user.
+    </p>
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+<div class="mt-3">
+    <a href="{{ url_for('admin.users') }}" class="btn btn-link">&larr; Back to users</a>
+</div>
+{% endblock %}

@@ -1,0 +1,556 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Admin FAQ{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Admin FAQ</h1>
+    <p class="text-muted mb-0">
+        How-to for the common things you'll need to do as an admin. Click
+        a question to jump to it. If something isn't covered here, the
+        UI dropdown under your username has every admin page, and the
+        edit pages themselves usually have inline help text.
+    </p>
+</div>
+
+<div class="card mb-5">
+    <div class="card-header">Contents</div>
+    <ol class="list-group list-group-flush list-group-numbered">
+        <li class="list-group-item"><a href="#char-assoc-fix">How to fix a wrong Character/Chapter Association</a></li>
+        <li class="list-group-item"><a href="#char-assoc-add">How to add a Character/Chapter Association</a></li>
+        <li class="list-group-item"><a href="#char-add">How to add a character</a></li>
+        <li class="list-group-item"><a href="#char-edit">How to edit a character</a></li>
+        <li class="list-group-item"><a href="#upload-portrait">How to upload a portrait (with source credit)</a></li>
+        <li class="list-group-item"><a href="#loc-add">How to add a location</a></li>
+        <li class="list-group-item"><a href="#loc-edit">How to edit a location</a></li>
+        <li class="list-group-item"><a href="#event-add">How to add an event</a></li>
+        <li class="list-group-item"><a href="#event-edit">How to edit an event</a></li>
+        <li class="list-group-item"><a href="#faction-add">How to add a faction</a></li>
+        <li class="list-group-item"><a href="#faction-edit">How to edit a faction</a></li>
+        <li class="list-group-item"><a href="#faction-merge">How to merge a faction</a></li>
+        <li class="list-group-item"><a href="#default-pic">How to change a character's default picture</a></li>
+        <li class="list-group-item"><a href="#hide-image">How to hide / remove an image for a character</a></li>
+        <li class="list-group-item"><a href="#chapter-assoc-other">Event/Chapter + Location/Chapter Association tools</a></li>
+        <li class="list-group-item"><a href="#url-types-add">Adding URL types</a></li>
+        <li class="list-group-item"><a href="#url-link-character">Linking URLs to a Character</a></li>
+        <li class="list-group-item"><a href="#url-link-event">Linking URLs to an Event</a></li>
+        <li class="list-group-item"><a href="#url-link-faction">Linking URLs to a Faction</a></li>
+        <li class="list-group-item"><a href="#url-link-location">Linking URLs to a Location</a></li>
+        <li class="list-group-item"><a href="#url-link-role">Linking URLs to a Role</a></li>
+        <li class="list-group-item"><a href="#location-snippet-exclude">Excluding bad location snippets in a chapter</a></li>
+        <li class="list-group-item"><a href="#event-types">Event Types (creating + assigning)</a></li>
+        <li class="list-group-item"><a href="#chapter-view-tweaks">Chapter page reader controls (Tag style + Link style)</a></li>
+    </ol>
+</div>
+
+{# ------------------------------------------------------------------- #}
+<section id="char-assoc-fix" class="mb-5">
+    <h2>How to fix a wrong Character/Chapter Association</h2>
+    <p>
+        When the chapter-association scanner picks the wrong character for
+        a name (e.g. "Liu Bei" assigned to a Liu Bei who's the wrong
+        historical period), you can swap it out without losing the
+        chapter ↔ character link.
+    </p>
+    <ol>
+        <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Character/Chapter Association</a>.</li>
+        <li>Pick the chapter from the dropdown.</li>
+        <li>Find the wrongly-attached character in the table.</li>
+        <li>Click <strong>Switch character</strong> in that row's Actions column. A small inline form appears.</li>
+        <li>Type the correct character name. The autocomplete annotates each option with
+            <code>[Faction] [Role]</code> so you can tell duplicate-named characters apart.
+            Each option's value carries a trailing <code>#&lt;id&gt;</code> for disambiguation.</li>
+        <li>Click <strong>Apply</strong>.</li>
+    </ol>
+    <p class="text-muted small">
+        Behind the scenes: the chapter ↔ old character M2M row is removed
+        and a new chapter ↔ new character row is inserted in the same
+        transaction. The chapter's text and any aliases stay untouched —
+        if the wrong character had a unique alias matched in that chapter,
+        you may also want to clean up that alias on the old character's
+        edit page.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="char-assoc-add" class="mb-5">
+    <h2>How to add a Character/Chapter Association</h2>
+    <p>
+        Use this when the chapter prose mentions a character by a name
+        we don't know about yet (e.g. a courtesy name, a nickname). The
+        flow adds the name as an alias on the canonical character AND
+        records the chapter ↔ character link.
+    </p>
+    <ol>
+        <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Character/Chapter Association</a>.</li>
+        <li>Pick the chapter.</li>
+        <li>Scroll to <strong>Add Character Association to chapter N</strong> at the bottom of the page.</li>
+        <li>In <em>Keywords</em>, enter one or more comma-separated names <strong>exactly as they appear in the prose</strong>
+            (e.g. <code>Mengde, Cao Cao</code>).</li>
+        <li>In <em>Canonical character</em>, pick the real character from the dropdown
+            (autocomplete: type partial name, the list shows faction + role + dates).
+            <strong>Picking from the dropdown auto-fills the Keywords field</strong> with
+            <code>name, courtesy_name, aliases…</code> if you've left it blank — saves retyping.</li>
+        <li>Click <strong>Add</strong>.</li>
+    </ol>
+    <p>
+        For each keyword the server scans the chapter text; matching
+        keywords are appended to <code>character.aliases</code> (deduped
+        against name / courtesy name / existing aliases). Keywords that
+        don't appear are reported and skipped. The chapter ↔ character
+        link is added regardless.
+    </p>
+    <p class="text-muted small">
+        Because aliases are global, a new alias will also tag this name
+        in <em>every other</em> chapter going forward — usually what you
+        want for courtesy names. If the term is genuinely chapter-local,
+        you'd be better off editing the character to remove the alias
+        afterwards.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="char-add" class="mb-5">
+    <h2>How to add a character</h2>
+    <ol>
+        <li>Open <a href="{{ url_for('main.characters') }}">Characters</a>.</li>
+        <li>Click the <strong>+ Add Character</strong> button in the top right (admin-only, hidden otherwise).</li>
+        <li>Fill in <em>Name</em> (the only required field). Everything else can be filled in later.</li>
+        <li>If you set a <em>Primary faction</em> that isn't already in the <em>Factions</em> multi-select, the server auto-adds it on save so the data stays consistent.</li>
+        <li>Click <strong>Submit</strong>. You'll be redirected to the new character's edit page where you can attach images, URLs, etc.</li>
+    </ol>
+    <p class="text-muted small">
+        Duplicate guard: the database has a unique constraint on
+        (<code>name</code>, <code>birth_date</code>, <code>death_date</code>,
+        <code>ancestral_home</code>). If you try to create a second
+        character with all four identical to an existing one, you'll get
+        a friendly flash message instead of a 500.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="char-edit" class="mb-5">
+    <h2>How to edit a character</h2>
+    <ol>
+        <li>From <a href="{{ url_for('main.characters') }}">Characters</a>, click the character's name in the table — when you're logged in as admin the name is a link to the edit page.
+            <em>Shortcut:</em> in the chapter sidebar's Character Info panel there's a small <strong>Edit</strong> button next to each character's name (admin only) that jumps straight to the same page.</li>
+        <li>Edit any field. Press <strong>Submit</strong>.</li>
+    </ol>
+    <p>
+        On the edit page you can also:
+    </p>
+    <ul>
+        <li>Upload a new image with a source credit — see <a href="#upload-portrait">How to upload a portrait</a> below.</li>
+        <li>Set a portrait as default (auto-makes it visible).</li>
+        <li>Hide / unhide an image.</li>
+        <li>Attach external links — see <a href="#url-link-character">Linking URLs to a Character</a>.</li>
+    </ul>
+    <p class="text-muted small">
+        Changing the character's <code>name</code>, <code>courtesty_name</code>, or
+        <code>aliases</code> triggers an automatic recount of
+        <code>book_mention_count</code> in the same transaction — the
+        chapter sidebar's "N mentions in the book" number stays accurate
+        without a manual <code>flask recount-book-mentions</code> run.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="upload-portrait" class="mb-5">
+    <h2>How to upload a portrait (with source credit)</h2>
+    <p>
+        Manual image upload lives in the <em>Images</em> fieldset on
+        the character edit page. Max 10 MB. JPG / JPEG / PNG / GIF /
+        WEBP only — the server sniffs magic bytes, not the extension.
+    </p>
+    <ol>
+        <li>Open the character's edit page.</li>
+        <li>Scroll to <em>Images</em> → <em>Upload a new image</em>.</li>
+        <li>Pick the file.</li>
+        <li><strong>Source site</strong> — the credit label shown next to
+            the image (e.g. <code>koei.fandom.com</code>, <code>Wikipedia</code>,
+            <code>Personal photo</code>). Leave blank to fall back to
+            <code>Manual upload</code>.</li>
+        <li><strong>Source URL</strong> — optional link back to the
+            original. If set, the chapter sidebar's <em>Source</em> line
+            renders the site label as a clickable link to this URL;
+            otherwise the label is plain text.</li>
+        <li>Optionally type a tag name (existing or new — the tag is
+            auto-created), tick <em>Set as default</em>, and pick
+            visibility.</li>
+        <li>Click <strong>Upload</strong>.</li>
+    </ol>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="loc-add" class="mb-5">
+    <h2>How to add a location</h2>
+    <ol>
+        <li>Open <a href="{{ url_for('main.locations') }}">Locations</a>.</li>
+        <li>Click <strong>+ Add Location</strong>.</li>
+        <li>Fill in <em>Name</em>. <em>Latitude</em> and <em>Longitude</em> are optional and can be filled in later (will drive the future map).</li>
+        <li>Submit.</li>
+    </ol>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="loc-edit" class="mb-5">
+    <h2>How to edit a location</h2>
+    <ol>
+        <li>On <a href="{{ url_for('main.locations') }}">Locations</a>, click the location name (links when admin).</li>
+        <li>Edit fields, submit.</li>
+        <li>The edit page also has an <em>External links</em> section to attach URLs to the location.</li>
+    </ol>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="event-add" class="mb-5">
+    <h2>How to add an event</h2>
+    <ol>
+        <li>Open <a href="{{ url_for('main.events') }}">Events</a>.</li>
+        <li>Click <strong>+ Add Event</strong>.</li>
+        <li>Fill in <em>Name</em> (required). <em>Aliases / keywords</em> is a comma-delimited list of search terms the <a href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a> tool scans chapters for.</li>
+        <li>Optionally pick a <em>Location</em>, an <em>Event type</em> (coloured/iconed category — see <a href="#event-types">Event Types</a>), and a <em>Date</em> (free-form text, accepts BC years and ranges).</li>
+        <li><em>Geo-point override</em> is a free-form string used when the linked location is wrong/missing for this specific event.</li>
+        <li>Tick <em>Hide on map</em> to keep the event off the future map render (it'll still appear in the events list).</li>
+        <li>Submit.</li>
+    </ol>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="event-edit" class="mb-5">
+    <h2>How to edit an event</h2>
+    <ol>
+        <li>On <a href="{{ url_for('main.events') }}">Events</a>, click the event name.</li>
+        <li>Edit, submit.</li>
+        <li>The edit page has an <em>External links</em> section for attaching URLs.</li>
+    </ol>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="faction-add" class="mb-5">
+    <h2>How to add a faction</h2>
+    <ol>
+        <li>Open <a href="{{ url_for('main.factions') }}">Factions</a>.</li>
+        <li>Click <strong>+ Add Faction</strong> in the top right (admin-only).</li>
+        <li>Fill in <em>Name</em> (required, unique). Optionally tweak the
+            three colours and an icon string.</li>
+        <li>Submit. You're redirected to the new faction's edit page.</li>
+    </ol>
+    <p class="text-muted small">
+        Bulk colour randomization is available via
+        <code>flask randomize-faction-colours</code> — useful after creating
+        a batch of new factions.
+    </p>
+    <p class="text-muted small">
+        There's no <em>FactionAssociation</em> concept (no chapter ↔
+        faction direct link). Factions show up in a chapter via the
+        characters that appear there.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="faction-edit" class="mb-5">
+    <h2>How to edit a faction</h2>
+    <ol>
+        <li>Open <a href="{{ url_for('main.factions') }}">Factions</a>.</li>
+        <li>Each row has an <strong>Edit</strong> button on the right (admin-only).</li>
+        <li>Change the name, colours, or icon. Submit.</li>
+    </ol>
+    <p class="text-muted small">
+        Faction name is the link to the characters listing filtered by
+        that faction — convenient for double-checking the roster after
+        edits.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="faction-merge" class="mb-5">
+    <h2>How to merge a faction</h2>
+    <p>
+        Use this when two factions are actually the same (different
+        scrape passes, different spelling). The source disappears from
+        all listings; the target absorbs everything.
+    </p>
+    <ol>
+        <li>Open the <strong>source</strong> faction's edit page (<a href="{{ url_for('main.factions') }}">Factions</a> → Edit).</li>
+        <li>Scroll to the <em>Merge into another faction</em> fieldset at the bottom.</li>
+        <li>Type the target faction. Autocomplete shows every other non-hidden faction.</li>
+        <li>Click <strong>Merge &amp; hide</strong>. Confirm the dialog.</li>
+    </ol>
+    <p>What the merge does atomically:</p>
+    <ul>
+        <li>For every character whose M2M factions list contains the source,
+            the target is added too (membership carried over). The source
+            stays in the M2M for history, but won't render anywhere because
+            it's hidden.</li>
+        <li>For every character whose <em>primary</em> faction was the source,
+            the primary is switched to the target.</li>
+        <li>The source faction's <code>is_hidden</code> flag is set true,
+            removing it from all faction dropdowns + listings.</li>
+    </ul>
+    <p class="text-muted small">
+        Merge is irreversible from the UI. If you want to undo, set
+        <code>UPDATE faction SET is_hidden = false WHERE id = ...</code>
+        via psql — the M2M membership rows are still there.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="default-pic" class="mb-5">
+    <h2>How to change a character's default picture</h2>
+    <p>
+        The default picture is the one that loads first in the chapter
+        sidebar's image tabs and shows next to the character row on the
+        characters list.
+    </p>
+    <p>Two ways, same effect:</p>
+    <h5>From the character edit page</h5>
+    <ol>
+        <li>Open the character's edit page.</li>
+        <li>In the <em>Images</em> grid, find the picture you want.</li>
+        <li>Click <strong>Set default</strong> on its card.</li>
+    </ol>
+    <h5>From the Image Manager</h5>
+    <ol>
+        <li>Open <a href="{{ url_for('admin.image_manager') }}">Admin → Image Manager</a>.</li>
+        <li>Filter to that character (the search box uses the type-ahead picker).</li>
+        <li>Find the image, click <strong>Set default</strong>.</li>
+    </ol>
+    <p class="text-muted small">
+        Setting default also force-unhides the image (defaults are always
+        public). The previously-default image keeps its visibility — it
+        just loses the <em>default</em> badge. A partial unique index in
+        Postgres enforces "at most one default per character" so this
+        can't drift.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="hide-image" class="mb-5">
+    <h2>How to hide / remove an image for a character</h2>
+    <p>
+        Hiding makes the image stop appearing on the public-facing pages
+        (chapter sidebar, character edit page outside the Images grid),
+        but the row stays in the DB and the file stays on disk. Same as
+        deletion but reversible from the UI.
+    </p>
+    <h5>To hide</h5>
+    <ol>
+        <li>Open the character's edit page <em>or</em> the <a href="{{ url_for('admin.image_manager') }}">Image Manager</a>.</li>
+        <li>Click <strong>Hide</strong> on the image. The label flips to <strong>Unhide</strong> for the next click.</li>
+    </ol>
+    <p>
+        If hiding an image that was the default, the default flag is
+        cleared at the same time (you can't have a hidden default).
+    </p>
+    <h5>To permanently remove</h5>
+    <p>
+        There's no <strong>Delete</strong> button in the UI right now —
+        we intentionally took it out to prevent accidental clicks. If you
+        really need to delete an image:
+    </p>
+    <pre class="small bg-light p-2">-- as the postgres superuser, from stateful_boilerplate:
+docker compose exec -T postgres psql -U rotk_app -d rotk_net \
+  -c "DELETE FROM portrait WHERE id = 123;"
+
+-- and (optionally) remove the file from disk:
+docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
+    <p class="text-muted small">
+        If you find yourself doing this often, the delete button could
+        come back behind a confirmation dialog — ask.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="chapter-assoc-other" class="mb-5">
+    <h2>Event/Chapter + Location/Chapter Association tools</h2>
+    <p>Three association editors today, all the same shape (linked from the admin dropdown):</p>
+    <ul>
+        <li><a href="{{ url_for('admin.chapter_associations') }}">Character/Chapter Association</a>
+            — see <a href="#char-assoc-fix">fix</a> / <a href="#char-assoc-add">add</a>.</li>
+        <li><a href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a>
+            — pick the event from the dropdown; the picker auto-fills
+            the Keywords field with the event's name+aliases.
+            <strong>Keywords are optional</strong> — leave blank to attach the
+            event to the chapter without scanning the prose (event still
+            shows in the chapter sidebar, just no inline tagging).</li>
+        <li><a href="{{ url_for('admin.location_associations') }}">Location/Chapter Association</a>
+            — same picker + keyword pattern as Event/Chapter.
+            Locations pinned via an Event's <code>location</code> FK
+            also show up in the chapter sidebar automatically — this
+            tool is for places that get referenced independent of any
+            specific event.
+            <strong>Per-snippet exclusions</strong> live on this page — see
+            <a href="#location-snippet-exclude">Excluding bad location snippets</a>.</li>
+    </ul>
+    <p class="text-muted small">
+        <strong>Faction ↔ chapter</strong> is intentionally NOT a thing —
+        factions are referenced via the characters that appear in the
+        chapter (so changing a character's primary faction is enough to
+        get them into the right faction's listings).
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-types-add" class="mb-5">
+    <h2>Adding URL types</h2>
+    <p>
+        URL types are categories for external links (e.g. <em>Wikipedia</em>,
+        <em>YouTube</em>, <em>Wikidata</em>). Each type carries a Font
+        Awesome icon class that renders next to matching URLs in lists
+        and the chapter sidebar.
+    </p>
+    <ol>
+        <li>Open <a href="{{ url_for('admin.url_types') }}">Admin → URL Types</a>.</li>
+        <li>Click <strong>New URL type</strong>.</li>
+        <li>Set <em>Name</em> (required, unique).</li>
+        <li>Set <em>Font Awesome icon class</em>. Browse
+            <a href="https://fontawesome.com/search?o=r&amp;m=free" target="_blank" rel="noopener">fontawesome.com</a>
+            and copy the class names from any free icon, e.g.
+            <code>fa-brands fa-wikipedia-w</code> or <code>fa-solid fa-link</code>.</li>
+        <li>Optional: pick colours (not currently rendered in the UI; reserved for badge styling later).</li>
+        <li>Submit. On the edit page you'll see a live icon preview.</li>
+    </ol>
+    <p class="text-muted small">
+        Deletion is blocked while any URL still references the type —
+        either reassign those URLs first, or wait until they're gone.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-character" class="mb-5">
+    <h2>Linking URLs to a Character</h2>
+    {% include 'admin/_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.characters') }}">Characters</a> → click the character name → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-event" class="mb-5">
+    <h2>Linking URLs to an Event</h2>
+    {% include 'admin/_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.events') }}">Events</a> → click the event name → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-faction" class="mb-5">
+    <h2>Linking URLs to a Faction</h2>
+    {% include 'admin/_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.factions') }}">Factions</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-location" class="mb-5">
+    <h2>Linking URLs to a Location</h2>
+    {% include 'admin/_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.locations') }}">Locations</a> → click the location name → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="url-link-role" class="mb-5">
+    <h2>Linking URLs to a Role</h2>
+    {% include 'admin/_faq_url_link_steps.html' with context %}
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('main.roles') }}">Roles</a> → click <em>Edit</em> on the row → scroll to <em>External links</em>.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="location-snippet-exclude" class="mb-5">
+    <h2>Excluding bad location snippets in a chapter</h2>
+    <p>
+        When a location's name or alias accidentally matches part of
+        another word in the prose (e.g. an alias <em>"Liang"</em> matching
+        a character named <em>"Zhang Liang"</em>), you don't have to remove
+        the alias entirely — you can suppress just the wrong occurrence.
+    </p>
+    <ol>
+        <li>Go to <a href="{{ url_for('admin.location_associations') }}">Location/Chapter Association</a> and pick the chapter.</li>
+        <li>For each associated location, click <em>show N snippets</em> to expand the live match list.</li>
+        <li>Hit the red <strong>×</strong> next to a snippet to mark it as a bad match. A confirm dialog appears first.</li>
+        <li>The snippet moves into an <em>Excluded snippets</em> collapsible below — strikethrough, with a restore (↺) button if you change your mind. <strong>No page reload</strong>: both pools update live as you click.</li>
+    </ol>
+    <p>
+        The exclusion is fingerprinted by (chapter, location, the surrounding
+        text). Once excluded, that specific occurrence stops appearing as an
+        inline ref in the chapter prose too — the rest of the location's
+        matches continue to be tagged normally.
+    </p>
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('admin.location_associations') }}">Admin → Location/Chapter Association</a>.
+        Pick a chapter, expand the snippet list on the row, click the
+        red &times; next to any bad match.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="event-types" class="mb-5">
+    <h2>Event Types (creating + assigning)</h2>
+    <p>
+        An <em>Event Type</em> is a coloured/iconed category for events
+        (e.g. Battle, Treaty, Court intrigue). It appears as a badge next
+        to the event everywhere the event is shown — chapter sidebar,
+        events list, etc. Same shape as <em>URL Types</em>: name + Font
+        Awesome icon + three colours.
+    </p>
+    <h3 class="h6 mt-3">Create a new event type</h3>
+    <ol>
+        <li>Go to <a href="{{ url_for('admin.event_types') }}">Event Types</a> and click <em>New event type</em>.</li>
+        <li>Give it a name (required), pick a Font Awesome icon class — browse <a href="https://fontawesome.com/search?o=r&m=free" target="_blank" rel="noopener">fontawesome.com</a> and copy the class string (e.g. <code>fa-solid fa-flag</code>).</li>
+        <li>Optionally set background / font / border colours. The randomize button generates a readable palette in one click.</li>
+        <li>Save.</li>
+    </ol>
+    <h3 class="h6 mt-3">Assign an event type to an event</h3>
+    <ol>
+        <li>Edit the event (<a href="{{ url_for('main.events') }}">Events</a> → Edit row).</li>
+        <li>Pick from the <em>Event type</em> dropdown — leaving it blank means no badge.</li>
+        <li>Save. The badge now appears in the chapter sidebar's <em>Events</em> accordion for every chapter the event is associated with.</li>
+    </ol>
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('admin.event_types') }}">Admin → Event Types</a> for managing types;
+        <a href="{{ url_for('main.events') }}">Events</a> → Edit for assigning.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="chapter-view-tweaks" class="mb-5">
+    <h2>Chapter page reader controls (Tag style + Link style)</h2>
+    <p>
+        Two dropdowns sit next to the chapter title at the top of every
+        chapter page — reader preferences, persisted client-side so
+        they carry across chapter navigation. Useful to know about
+        when triaging UI questions from readers.
+    </p>
+    <h3 class="h6 mt-3">Tag style</h3>
+    <p>
+        Controls how inline character refs render in the prose:
+        <em>Rounded pills</em> (default), <em>Square boxes</em>,
+        <em>Underline + coloured</em>, or <em>Coloured only</em>.
+        Persisted in <code>localStorage</code> under
+        <code>rotk.chapterStyle</code>. Event and Location refs are
+        always plain-black-underlined regardless of the choice.
+    </p>
+    <h3 class="h6 mt-3">Link style</h3>
+    <p>
+        Controls how clicking (or hovering) a character ref reveals
+        the sidebar panel: <em>Click</em> (default) or <em>Hover</em>.
+        Desktop-only — the dropdown is hidden on mobile/tablet, where
+        tapping always opens a modal regardless. Persisted in a
+        real cookie (<code>rotk_link_style</code>, 1-year expiry).
+    </p>
+    <h3 class="h6 mt-3">Inline event/location refs</h3>
+    <p>
+        Black-underlined words in the prose are events / locations
+        associated with the chapter. Clicking opens the matching
+        sidebar accordion (Events / Locations) and briefly flashes
+        the specific row — no page scroll.
+    </p>
+</section>
+{% endblock %}

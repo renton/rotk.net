@@ -3,18 +3,49 @@
 
 {% block page_content %}
 
-<div class="page-header mt-4 mb-4">
-    <h2>{{ chapter.title | safe }}</h2>
+<div class="page-header mt-4 mb-4 d-flex justify-content-between align-items-end flex-wrap gap-3">
+    <h2 class="mb-0">{{ chapter.title | safe }}</h2>
+    <div class="d-flex align-items-end flex-wrap gap-3">
+        {# Inline-tag style switcher. Choice is persisted in localStorage by
+           chapter_style.js so it carries across chapter navigations. #}
+        <div class="d-flex align-items-center gap-2 small">
+            <label for="chapter-style-picker" class="form-label text-muted mb-0">Tag style:</label>
+            <select id="chapter-style-picker" class="form-select form-select-sm"
+                    style="width: auto;">
+                <option value="pills">Rounded pills</option>
+                <option value="squares">Square boxes</option>
+                <option value="underline">Underline + coloured</option>
+                <option value="coloured">Coloured only</option>
+            </select>
+        </div>
+
+        {# Link-style switcher: click (default) vs hover to open the
+           character panel in the sidebar. Hover doesn't apply on
+           touch devices — on mobile/tablet the sidebar isn't sticky
+           and we open a modal on tap regardless — so this picker is
+           hidden below the lg breakpoint (d-none d-lg-flex). Persisted
+           via cookie by chapter.js. #}
+        <div class="d-none d-lg-flex align-items-center gap-2 small">
+            <label for="link-style-picker" class="form-label text-muted mb-0">Link style:</label>
+            <select id="link-style-picker" class="form-select form-select-sm"
+                    style="width: auto;">
+                <option value="click">Click</option>
+                <option value="hover">Hover</option>
+            </select>
+        </div>
+    </div>
 </div>
 
 <hr>
 
 <div class="page-copy mt-4">
     <div class="row">
-        <div class="col-9">
+        <div class="col-12 col-lg-8">
             {{ chapter_content | safe }}
         </div>
-        <div class="col" style="position:sticky; height:fit-content; top:0;">
+        {# Sticky sidebar at lg+ (styles.css → .chapter-sidebar @media). On
+           phones/tablets it stacks below the prose as a normal column. #}
+        <div class="col-12 col-lg-4 chapter-sidebar mt-4 mt-lg-0">
 
           <div class="accordion" id="sidebar-accordion">
             <div class="accordion-item">
@@ -26,48 +57,178 @@
               <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   {% for character in characters %}
-                    <div class="character-panel" id="character-panel-{{ character.id }}" class="mb-4" {% if loop.index != 1 %}style="display:none;"{% endif %}>
-                      {{ character.name }}
-                      <div>
-                        <img src="{{ url_for('static', filename='test.webp') }}">
+                    {% set portraits = character.portraits
+                       | rejectattr('is_deleted')
+                       | rejectattr('is_hidden')
+                       | sort(attribute='is_default', reverse=true) | list %}
+                    {% set tab_set = 'char-' ~ character.id %}
+                    {% set chapter_count = mention_counts.get(character.id, 0) %}
+                    {% set book_count = character.book_mention_count or 0 %}
+                    <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
+                      <div class="d-flex align-items-center gap-2 mb-0">
+                        <h6 class="mb-0">
+                          {{ character.name }}
+                          {% if character.is_fictional %}
+                          <i class="fa-solid fa-book text-muted ms-1"
+                             title="fictional"
+                             aria-label="fictional"
+                             style="font-size: 0.75em;"></i>
+                          {% endif %}
+                        </h6>
+                        {# Admin-only shortcut: jump straight to the edit page
+                           for this character. Hidden for anonymous + non-admin
+                           users so the sidebar stays read-only for readers. #}
+                        {% if current_user.is_authenticated and current_user.is_administrator %}
+                        <a href="{{ url_for('main.edit_character', id=character.id) }}"
+                           class="btn btn-sm btn-outline-secondary py-0 px-2 ms-auto"
+                           title="Edit character">
+                          <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+                          Edit
+                        </a>
+                        {% endif %}
                       </div>
-                      {% for role in character.roles %}
+                      {# Chinese name on its own line under the English name. #}
+                      {% if character.chinese_name %}
+                      <div>{{ character.chinese_name }}</div>
+                      {% endif %}
+                      {# Courtesy name (unbolded), with chinese courtesy in
+                         brackets when both exist. Render the line at all if
+                         either field is present. #}
+                      {% if character.courtesty_name or character.chinese_courtesty_name %}
+                      <div class="mb-1">
+                        {{ character.courtesty_name }}{% if character.chinese_courtesty_name %} ({{ character.chinese_courtesty_name }}){% endif %}
+                      </div>
+                      {% endif %}
+                      <div class="small text-muted">
+                        {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
+                      </div>
+                      <div class="small text-muted mb-3">
+                        {{ book_count }} mention{{ '' if book_count == 1 else 's' }} in the book
+                      </div>
+
+                      {% if portraits %}
+                        {% if portraits|length > 1 %}
+                        <ul class="nav nav-pills nav-fill flex-wrap mb-2" id="{{ tab_set }}-tabs" role="tablist">
+                          {% for p in portraits %}
+                          <li class="nav-item" role="presentation">
+                            <button class="nav-link py-1 px-2 {% if loop.first %}active{% endif %}"
+                                    id="{{ tab_set }}-tab-{{ loop.index0 }}"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#{{ tab_set }}-pane-{{ loop.index0 }}"
+                                    type="button" role="tab"
+                                    aria-controls="{{ tab_set }}-pane-{{ loop.index0 }}"
+                                    aria-selected="{{ 'true' if loop.first else 'false' }}">
+                              {{ loop.index }}
+                            </button>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <div class="tab-content border rounded p-2 mb-3">
+                          {% for p in portraits %}
+                          <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                               id="{{ tab_set }}-pane-{{ loop.index0 }}"
+                               role="tabpanel"
+                               aria-labelledby="{{ tab_set }}-tab-{{ loop.index0 }}">
+                            <img src="{{ url_for('static', filename=p.static_path) }}"
+                                 alt="{{ p.name or character.name }}"
+                                 class="img-fluid d-block mx-auto"
+                                 loading="lazy"
+                                 style="max-height: 240px; object-fit: contain;">
+                            <div class="small text-muted mt-1">
+                              Source:
+                              {% if p.source_url %}
+                                <a href="{{ p.source_url }}" target="_blank" rel="noopener">{{ p.source_site or p.source_url }}</a>
+                              {% else %}
+                                {{ p.source_site or 'unknown' }}
+                              {% endif %}
+                            </div>
+                            {% if p.tags %}
+                            <div class="d-flex flex-wrap gap-1 mt-2">
+                              {% for tag in p.tags %}{{ macros.badge_widget(tag) }}{% endfor %}
+                            </div>
+                            {% endif %}
+                          </div>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <div class="bg-secondary-subtle text-muted text-center rounded d-flex align-items-center justify-content-center mb-3"
+                             style="height: 180px; font-style: italic;">
+                          No Image.
+                        </div>
+                      {% endif %}
+
+                      {# Roles wrapped so the chunk gets a bottom margin that
+                         separates them from the Factions block below. #}
+                      {% if character.roles %}
+                      <div class="mb-3">
+                        {% for role in character.roles %}
                         <div>
                           {{ macros.badge_widget(role) }}
                         </div>
-                      {% endfor %}
-
-                      {% if character.latest_faction %}
-                      
-                        Faction:
-                        <div>
-                          {{ macros.badge_widget(character.latest_faction) }}
-                        </div>
-
+                        {% endfor %}
+                      </div>
                       {% endif %}
-        
-                      {% if character.factions %}
-                        Past Factions:
-                        {% for faction in character.factions %}
+
+                      {# Each block (Links / Faction / Other Factions) sits
+                         in its own padded card-style wrapper so the
+                         eye can find each section without parsing the
+                         badges in flow. Links comes first — character's
+                         external references are the highest-signal info
+                         for a reader who tapped the pill. #}
+
+                      {# External links attached to the character. #}
+                      {% set list_urls = character.urls %}
+                      {% if list_urls %}
+                      <div class="chapter-section-card rounded p-2 mt-3 mb-2">
+                        <div class="small text-muted fw-bold mb-1">Links:</div>
+                        <div class="sidebar-url-indent">
+                          {% include '_url_list.html' %}
+                        </div>
+                      </div>
+                      {% endif %}
+
+                      {% if character.primary_faction %}
+                      <div class="chapter-section-card rounded p-2 mt-3 mb-2">
+                        <div class="small text-muted fw-bold mb-1">Faction:</div>
+                        <div>
+                          {{ macros.badge_widget(character.primary_faction) }}
+                        </div>
+                        {# Indented links attached to the faction, if any. #}
+                        {% set list_urls = character.primary_faction.urls %}
+                        {% if list_urls %}
+                        <div class="sidebar-url-indent mt-1">
+                          {% include '_url_list.html' %}
+                        </div>
+                        {% endif %}
+                      </div>
+                      {% endif %}
+
+                      {# Other factions = the M2M minus the primary (already shown
+                         above) and minus hidden (merged-away factions). Skip
+                         the whole block if nothing's left to display. #}
+                      {% set past_factions = character.factions
+                         | rejectattr('is_hidden')
+                         | reject('equalto', character.primary_faction)
+                         | list %}
+                      {% if past_factions %}
+                      <div class="chapter-section-card rounded p-2 mt-3 mb-2">
+                        <div class="small text-muted fw-bold mb-1">Other Factions:</div>
+                        {% for faction in past_factions %}
                           <div>
                             {{ macros.badge_widget(faction) }}
                           </div>
+                          {% set list_urls = faction.urls %}
+                          {% if list_urls %}
+                          <div class="sidebar-url-indent mt-1 mb-1">
+                            {% include '_url_list.html' %}
+                          </div>
+                          {% endif %}
                         {% endfor %}
+                      </div>
                       {% endif %}
                     </div>
                   {% endfor %}
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="sidebar-map">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Map
-                </button>
-              </h2>
-              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
                 </div>
               </div>
             </div>
@@ -79,11 +240,31 @@
               </h2>
               <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                  <table class="table table-striped mt-4">
+                  <table class="table table-striped table-hover mt-4">
                     <tbody>
                         {% for character in characters %}
-                            <tr>                
-                                <td scope="row">{{ character.name }}</td>
+                            {% set chapter_count = mention_counts.get(character.id, 0) %}
+                            {% set book_count = character.book_mention_count or 0 %}
+                            <tr class="chapter-character-link"
+                                data-character-id="{{ character.id }}"
+                                role="button"
+                                style="cursor: pointer;">
+                                <td scope="row">
+                                    <div>
+                                        {{ character.name }}
+                                        {% if character.is_fictional %}
+                                        <i class="fa-solid fa-book text-muted ms-1"
+                                           title="fictional"
+                                           aria-label="fictional"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="small text-muted">
+                                        {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
+                                    </div>
+                                    <div class="small text-muted">
+                                        {{ book_count }} mention{{ '' if book_count == 1 else 's' }} in the book
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -92,9 +273,116 @@
               </div>
             </div>
 
+            {# Events accordion: one row per event associated with the
+               chapter; each row shows its external Urls (favicon /
+               UrlType icon / fallback link icon). #}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-events">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseEvents"
+                        aria-expanded="false" aria-controls="collapseEvents">
+                  Events ({{ chapter_events|length }})
+                </button>
+              </h2>
+              <div id="collapseEvents" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  {% if not chapter_events %}
+                  <div class="text-muted small">No events associated with this chapter yet.</div>
+                  {% else %}
+                  <ul class="list-unstyled mb-0">
+                    {% for ev in chapter_events %}
+                    <li class="mb-3" id="event-item-{{ ev.id }}">
+                      <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <strong>{{ ev.name }}</strong>
+                        {% if ev.event_type %}
+                          {# EventType badge — icon (if set) + name, coloured
+                             via the same three-colour scheme as Faction /
+                             Role / Tag badges. #}
+                          {{ macros.badge_widget(ev.event_type) }}
+                        {% endif %}
+                        {% if ev.date %}
+                        <span class="text-muted small">· {{ ev.date }}</span>
+                        {% endif %}
+                        {% if ev.location %}
+                        <span class="text-muted small">· {{ ev.location.name }}</span>
+                        {% endif %}
+                      </div>
+                      {% set list_urls = ev.urls %}
+                      {% if list_urls %}
+                      <div class="sidebar-url-indent mt-1">
+                        {% include '_url_list.html' %}
+                      </div>
+                      {% endif %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            {# Locations accordion: deduped locations from the events
+               above (a location can be pinned by many events). Same
+               URL-list pattern. #}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-locations">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseLocations"
+                        aria-expanded="false" aria-controls="collapseLocations">
+                  Locations ({{ chapter_locations|length }})
+                </button>
+              </h2>
+              <div id="collapseLocations" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  {% if not chapter_locations %}
+                  <div class="text-muted small">No locations associated with this chapter's events.</div>
+                  {% else %}
+                  <ul class="list-unstyled mb-0">
+                    {% for loc in chapter_locations %}
+                    <li class="mb-3" id="location-item-{{ loc.id }}">
+                      <div>
+                        <strong>{{ loc.name }}</strong>
+                        {% if loc.latitude is not none and loc.longitude is not none %}
+                        <span class="text-muted small ms-1">
+                          ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
+                        </span>
+                        {% endif %}
+                      </div>
+                      {% set list_urls = loc.urls %}
+                      {% if list_urls %}
+                      <div class="sidebar-url-indent mt-1">
+                        {% include '_url_list.html' %}
+                      </div>
+                      {% endif %}
+                    </li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
 
         </div>
-      </div>    
+      </div>
+</div>
+
+{# Mobile-only character info modal. On screens below the lg breakpoint
+   chapter.js moves the clicked character's panel into the modal body
+   (and back to the sidebar on close). On desktop the modal stays
+   inert — the sticky sidebar handles everything. #}
+<div class="modal fade" id="character-modal" tabindex="-1"
+     aria-labelledby="character-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="character-modal-label">Character info</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="character-modal-body">
+        {# Character panel is moved here at click time on mobile. #}
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
@@ -102,4 +390,5 @@
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/chapter.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chapter_style.js') }}"></script>
 {% endblock %}

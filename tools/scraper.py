@@ -226,7 +226,7 @@ def scrape_rotk_character_page(letter):
             'birth_date': '',
             'death_date': '',
             'ancestral_home': '',
-            'latest_faction': None,
+            'primary_faction': None,
         }
 
         cells = character_row.find_all('td')
@@ -278,7 +278,7 @@ def scrape_rotk_character_page(letter):
                     new_character_data['factions'].append(faction_string)
                 # First faction column on the row is treated as "current".
                 if not seen_faction_column and row_factions:
-                    new_character_data['latest_faction'] = row_factions[0]
+                    new_character_data['primary_faction'] = row_factions[0]
                 seen_faction_column = True
 
         page_characters.append(new_character_data)

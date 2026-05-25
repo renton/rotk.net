@@ -1,1 +1,29 @@
 {% extends "base.html" %}
+
+{% block title %}rotk.net - {% if role %}Edit role: {{ role.name }}{% else %}New role{% endif %}{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-3">
+    <h1>{% if role %}Edit role: {{ role.name }}{% else %}New role{% endif %}</h1>
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+
+{% if role %}
+    {% set owner = role %}
+    {% set owner_type = 'role' %}
+    {% include '_url_section.html' %}
+{% endif %}
+
+<div class="mt-3">
+    <a href="{{ url_for('main.roles') }}" class="btn btn-link">&larr; Back to roles</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_colour_picker.js') }}"></script>
+{% endblock %}

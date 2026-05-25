@@ -10,8 +10,10 @@
       depends_on: !reset []
       # Don't publish a host port — Caddy reaches us over the shared network.
       ports: !reset []
-      # Drop the dev source bind-mount so the container runs the image we built.
-      volumes: !reset []
+      # Keep the base bind-mount (.:/rotk.net) so source edits + scraped
+      # portraits live on the host and survive container rebuilds. Restart
+      # the app container for Python changes to take effect; templates and
+      # static files reload on browser refresh (see TEMPLATES_AUTO_RELOAD).
       # Base healthcheck targets flask-run's :5000; gunicorn binds :8081 in prod.
       healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:8081"]

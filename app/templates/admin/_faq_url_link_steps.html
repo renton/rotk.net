@@ -1,0 +1,22 @@
+{# Shared steps for the "Linking URLs to a <Thing>" FAQ sections.
+   The "Where:" pointer to the specific edit page lives in the
+   surrounding section; only the flow itself is here. #}
+<ol>
+    <li>On the edit page, find the <em>External links</em> fieldset (above the form's bottom).</li>
+    <li>Existing links list at the top — each has a <strong>Remove</strong> button.</li>
+    <li>Under <em>Add a new link</em>:
+        <ul>
+            <li><strong>Description</strong> — what the link says (e.g. <em>"Wikipedia entry"</em>).</li>
+            <li><strong>URL</strong> — the full link, including <code>http://</code> / <code>https://</code>. Validated for shape on submit.</li>
+            <li><strong>Type</strong> — dropdown of <a href="{{ url_for('admin.url_types') }}">URL Types</a>; optional. The type's icon (Font Awesome) renders next to the link in lists when there's no favicon.</li>
+            <li><strong>Favicon path</strong> — leave <em>blank</em> and the server scrapes <code>https://&lt;host&gt;/favicon.ico</code> on submit, saves it under <code>app/static/favicons/&lt;host&gt;_favicon.ico</code>, and reuses that file for every other link from the same host. Set the field manually only when you want to override the auto-fetch (e.g. a custom path under <code>static/</code>).</li>
+        </ul>
+    </li>
+    <li><strong>Add link</strong>. The new link appears at the top of the list, ready to be removed if you mis-typed.</li>
+</ol>
+<p class="text-muted small">
+    Favicon auto-fetch is best-effort — if the host blocks bots,
+    returns HTML instead of an image, or times out, the link is still
+    saved but without a favicon. Set the path manually after the fact
+    in that case.
+</p>

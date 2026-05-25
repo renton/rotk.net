@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: Location Associations{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Chapter ↔ Location Associations</h1>
+    <p class="text-muted mb-0">
+        Same shape as Chapter ↔ Character / Event association tools, but
+        for Locations. Pick a chapter, see the directly-associated
+        locations, and switch / remove the wrong ones. Locations that
+        come in via an Event's location FK don't appear here — those
+        show in the chapter sidebar automatically; this page is for
+        location references that aren't tied to a specific event.
+    </p>
+</div>
+
+<form method="GET" action="{{ url_for('admin.location_associations') }}" class="mb-4">
+    <label for="chapter-picker" class="form-label">Chapter:</label>
+    <div class="d-flex gap-2">
+        <select name="chapter_num" id="chapter-picker" class="form-select">
+            <option value="">— Select a chapter —</option>
+            {% for c in chapters %}
+            <option value="{{ c.chapter_num }}"
+                {% if selected and selected.id == c.id %}selected{% endif %}>
+                {{ c.chapter_num }}. {{ c.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Go</button>
+    </div>
+</form>
+
+{% if selected %}
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Location</th>
+            <th class="d-none d-md-table-cell text-end">Lat</th>
+            <th class="d-none d-md-table-cell text-end">Lng</th>
+            <th class="d-none d-md-table-cell">Keywords</th>
+            <th class="text-end">Mentions</th>
+            <th class="d-none d-md-table-cell">Snippets</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        {% set loc = row.location %}
+        <tr>
+            <td>
+                <div>{{ loc.name }}</div>
+                {% if loc.aliases %}
+                <div class="small text-muted">Aliases: {{ loc.aliases }}</div>
+                {% endif %}
+            </td>
+            <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.latitude) if loc.latitude is not none else '' }}</td>
+            <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.longitude) if loc.longitude is not none else '' }}</td>
+            <td class="d-none d-md-table-cell small text-muted">{{ row.keywords }}</td>
+            <td class="text-end">{{ row.mention_count }}</td>
+            <td class="d-none d-md-table-cell"
+                data-snippets-cell
+                data-chapter-num="{{ selected.chapter_num }}"
+                data-location-id="{{ loc.id }}"
+                data-location-name="{{ loc.name|e }}">
+                {# Both <details> blocks always render so the AJAX swap
+                   has stable targets. Each toggles its own visibility
+                   via [data-empty]; the JS flips that flag as items
+                   move between pools. #}
+                <details class="snippets-live" {% if not row.mentions %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        show <span class="snippet-live-count">{{ row.mention_count }}</span> snippet<span class="snippet-live-plural">{{ '' if row.mention_count == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-live">
+                        {% for m in row.mentions %}
+                        <li class="d-flex gap-2 align-items-start py-1 snippet-item"
+                            data-match-text="{{ m.match }}"
+                            data-before-snippet="{{ m.before }}"
+                            data-after-snippet="{{ m.after }}">
+                            <span class="flex-grow-1 snippet-body">{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.location_associations_exclude', chapter_num=selected.chapter_num, location_id=loc.id) }}"
+                                  class="d-inline exclude-snippet-form"
+                                  data-confirm="Mark this snippet as a wrong match for {{ loc.name|e }}?">
+                                {{ csrf_form.hidden_tag() }}
+                                <input type="hidden" name="match_text" value="{{ m.match }}">
+                                <input type="hidden" name="before_snippet" value="{{ m.before }}">
+                                <input type="hidden" name="after_snippet" value="{{ m.after }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
+                                        title="Exclude this snippet">
+                                    &times;
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                <span class="text-warning small snippets-empty-live"
+                      {% if row.mentions %}hidden{% endif %}>no live matches</span>
+
+                {# data-restore-url-prefix ends in /restore/ so the JS
+                   just appends the new exclusion id. We url_for with
+                   id=0 and trim the trailing "0" — safer than a
+                   string-replace, which could mangle ids that happen
+                   to contain "0". #}
+                <details class="snippets-excluded mt-2"
+                         data-restore-url-prefix="{{ url_for('admin.location_associations_restore', chapter_num=selected.chapter_num, location_id=loc.id, exclusion_id=0)[:-1] }}"
+                         {% if not row.excluded %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        <span class="snippet-excluded-count">{{ row.excluded|length }}</span> excluded snippet<span class="snippet-excluded-plural">{{ '' if row.excluded|length == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-excluded">
+                        {% for ex in row.excluded %}
+                        <li class="d-flex gap-2 align-items-start py-1 text-muted snippet-item"
+                            data-match-text="{{ ex.match_text }}"
+                            data-before-snippet="{{ ex.before_snippet }}"
+                            data-after-snippet="{{ ex.after_snippet }}"
+                            data-exclusion-id="{{ ex.id }}">
+                            <span class="flex-grow-1 snippet-body">
+                                <s>{{ ex.before_snippet }}<mark>{{ ex.match_text }}</mark>{{ ex.after_snippet }}</s>
+                            </span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.location_associations_restore', chapter_num=selected.chapter_num, location_id=loc.id, exclusion_id=ex.id) }}"
+                                  class="d-inline restore-snippet-form">
+                                {{ csrf_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2"
+                                        title="Restore this snippet">
+                                    ↺
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </td>
+            <td class="text-end" style="min-width: 220px;">
+                <div class="d-flex flex-column gap-2 align-items-end">
+                    <details>
+                        <summary class="btn btn-sm btn-outline-warning" style="list-style: none;">
+                            Switch location
+                        </summary>
+                        <form method="POST"
+                              action="{{ url_for('admin.location_associations_switch', chapter_num=selected.chapter_num, location_id=loc.id) }}"
+                              class="d-flex gap-1 mt-2">
+                            {{ csrf_form.hidden_tag() }}
+                            <input type="text" name="location_name"
+                                   class="form-control form-control-sm"
+                                   list="all-locations-datalist"
+                                   data-picker-target="location_id"
+                                   placeholder="Search location…" autocomplete="off" required>
+                            <input type="hidden" name="location_id">
+                            <button type="submit" class="btn btn-sm btn-warning">Apply</button>
+                        </form>
+                    </details>
+                    <form method="POST"
+                          action="{{ url_for('admin.location_associations_remove', chapter_num=selected.chapter_num, location_id=loc.id) }}"
+                          class="d-inline"
+                          data-confirm="Remove {{ loc.name|e }} from chapter {{ selected.chapter_num }}?">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" class="text-muted">No locations directly associated with this chapter.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">Add Location Association to chapter {{ selected.chapter_num }}</div>
+    <div class="card-body">
+        <p class="text-muted small mb-3">
+            Comma-separated <strong>keywords</strong> (words / phrases as
+            they appear in the chapter text) + the location pick. The
+            server scans the chapter for each keyword, adds matching ones
+            to the location's aliases, and creates the chapter ↔ location
+            link. Keywords not found are reported and skipped (link is
+            still created).
+        </p>
+        <form method="POST"
+              action="{{ url_for('admin.location_associations_add', chapter_num=selected.chapter_num) }}"
+              class="row g-2 align-items-end">
+            {{ csrf_form.hidden_tag() }}
+            <div class="col-md-5">
+                <label for="add-search-terms" class="form-label">Keywords (comma-separated)</label>
+                <input type="text" name="search_terms" id="add-search-terms"
+                       class="form-control" required autocomplete="off"
+                       placeholder="Luoyang, Loyang, capital">
+            </div>
+            <div class="col-md-5">
+                <label for="add-location-name" class="form-label">Canonical location</label>
+                {# Picking a canonical location auto-fills the Keywords
+                   field above (name + aliases) when it's empty. #}
+                <input type="text" name="location_name" id="add-location-name"
+                       class="form-control" list="all-locations-datalist"
+                       data-picker-target="location_id"
+                       data-picker-keywords-target="search_terms"
+                       autocomplete="off" required>
+                <input type="hidden" name="location_id" id="add-location-id">
+            </div>
+            <div class="col-md-2 text-end">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<datalist id="all-locations-datalist">
+    {% for loc in all_locations %}
+    <option value="{{ loc.name }} #{{ loc.id }}"
+            data-keywords="{{ loc.name }}{% if loc.aliases %},{{ loc.aliases }}{% endif %}"
+            label="{{ loc.name }}{% if loc.aliases %} ({{ loc.aliases }}){% endif %}">
+    </option>
+    {% endfor %}
+</datalist>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_location_snippets.js') }}"></script>
+{% endblock %}

@@ -3,9 +3,26 @@
 
 {% block head %}
 {{ super() }}
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+<link rel="alternate icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{# Font Awesome — used for UrlType icons. cdn.jsdelivr.net is already
+   in the CSP style-src + connect-src (for the source map). #}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+
+{# Google Analytics (gtag.js). Tracking ID comes from the GA_TRACKING_ID
+   env var (see config.py / .env). Block is skipped entirely when blank.
+   The inline init is CSP-allowed via the per-request nonce — no
+   'unsafe-inline' needed. #}
+{% if config.GA_TRACKING_ID %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ config.GA_TRACKING_ID|urlencode }}"></script>
+<script nonce="{{ csp_nonce }}">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', {{ config.GA_TRACKING_ID|tojson }});
+</script>
+{% endif %}
 {% endblock %}
 
 {% block navbar %}
@@ -18,15 +35,39 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {# `ep` is the current Flask endpoint, used to highlight the matching
+           top-nav item. Each entry lists the endpoints it should light up for. #}
+        {% set ep = request.endpoint or '' %}
+        {% set book_eps     = ('main.index', 'main.chapter') %}
+        {% set char_eps     = ('main.characters', 'main.edit_character', 'main.new_character') %}
+        {% set faction_eps  = ('main.factions', 'main.edit_faction') %}
+        {% set event_eps    = ('main.events', 'main.edit_event', 'main.new_event') %}
+        {% set loc_eps      = ('main.locations', 'main.edit_location', 'main.new_location') %}
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('main.characters') }}">Characters</a>
+            <a class="nav-link {% if ep in book_eps %}active{% endif %}"
+               {% if ep in book_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.index') }}">Book</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('main.factions') }}">Factions</a>
+            <a class="nav-link {% if ep in char_eps %}active{% endif %}"
+               {% if ep in char_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.characters') }}">Characters</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Map</a>
+            <a class="nav-link {% if ep in faction_eps %}active{% endif %}"
+               {% if ep in faction_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.factions') }}">Factions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if ep in event_eps %}active{% endif %}"
+               {% if ep in event_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.events') }}">Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if ep in loc_eps %}active{% endif %}"
+               {% if ep in loc_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.locations') }}">Locations</a>
           </li>
         </ul>
 
@@ -38,9 +79,25 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                   {% if current_user.is_administrator and current_user.confirmed %}
-                  <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>
-                  <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
+                  {# Ordering: FAQ first, then a divider; association
+                     editors next, then a divider; content/management
+                     pages, then a divider; account + admin meta
+                     (Users, Edits, password/email) at the bottom. #}
+                  <li><a class="dropdown-item" href="{{ url_for('admin.faq') }}">Admin FAQ</a></li>
                   <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.chapter_associations') }}">Character/Chapter Association</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.location_associations') }}">Location/Chapter Association</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.image_manager') }}">Image Manager</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.tags') }}">Tags</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.url_types') }}">URL Types</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.event_types') }}">Event Types</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.duplicate_characters') }}">Duplicates</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.edits') }}">Edits</a></li>
                   {% endif %}
                   <li><a class="dropdown-item" href="{{ url_for('auth.change_password') }}">Change password</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('auth.change_email_request') }}">Change email</a></li>
@@ -52,7 +109,9 @@
         {% else %}
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Log in</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+            {# Register link removed — public sign-up is disabled until we
+               actually want non-admin users. Admins are created via
+               `flask make-admin` or the admin panel. #}
         </ul>
         {% endif %}
 
@@ -63,7 +122,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+{# `container_class` lets data-dense pages opt into a wider layout
+   (e.g. container-fluid). Default is the standard Bootstrap container. #}
+<div class="{% block container_class %}container{% endblock %} mt-4">
     {% if current_user.is_authenticated and not current_user.confirmed %}
     <div class="alert alert-info" role="alert">
       Your email is not confirmed yet.

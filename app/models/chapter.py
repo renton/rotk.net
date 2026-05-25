@@ -11,6 +11,16 @@ class Chapter(AbstractObject):
 
     characters = db.relationship('Character', secondary=Character.chapter_character, back_populates='chapters')
 
+    urls = db.relationship(
+        'Url',
+        primaryjoin=(
+            "and_(Chapter.id == foreign(Url.target_id), "
+            "Url.target_type == 'chapter')"
+        ),
+        viewonly=True,
+        order_by='Url.name',
+    )
+
     @hybrid_property
     def title(self):        
         return self.name

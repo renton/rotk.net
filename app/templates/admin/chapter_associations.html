@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: Chapter Associations{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Chapter ↔ Character Associations</h1>
+    <p class="text-muted">
+        Pick a chapter to view, audit, and edit the characters the scanner
+        associated with it. Mention snippets show <em>why</em> each character
+        was matched, so you can spot false positives.
+    </p>
+</div>
+
+<form method="GET" action="{{ url_for('admin.chapter_associations') }}"
+      id="chapter-picker-form" class="mb-4">
+    <label for="chapter-picker" class="form-label">Chapter:</label>
+    <div class="d-flex gap-2">
+        <select name="chapter_num" id="chapter-picker" class="form-select">
+            <option value="">— Select a chapter —</option>
+            {% for c in chapters %}
+            <option value="{{ c.chapter_num }}"
+                {% if selected and selected.id == c.id %}selected{% endif %}>
+                {{ c.chapter_num }}. {{ c.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary" id="chapter-picker-submit">Go</button>
+    </div>
+</form>
+
+{% if selected %}
+
+<div class="d-flex flex-wrap gap-3 align-items-end mb-3">
+    <div class="flex-grow-1" style="min-width: 240px;">
+        <label for="row-filter-search" class="form-label">Search name / alias / courtesy:</label>
+        <input type="search" id="row-filter-search" class="form-control"
+               placeholder="Type to filter…" autocomplete="off">
+    </div>
+    <div style="min-width: 200px;">
+        <label for="row-filter-faction" class="form-label">Faction:</label>
+        <select id="row-filter-faction" class="form-select">
+            <option value="">All factions</option>
+            <option value="__none__">— No faction —</option>
+            {% for f in faction_options %}
+            <option value="{{ f.id }}">{{ f.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="ms-auto text-muted small">
+        <span id="row-count">{{ rows|length }}</span> / {{ rows|length }} characters
+    </div>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped align-middle" id="associations-table">
+    <thead>
+        <tr>
+            <th data-sort-key="name" role="button">Name <span class="sort-indicator"></span></th>
+            <th data-sort-key="faction" role="button">Faction <span class="sort-indicator"></span></th>
+            <th class="d-none d-md-table-cell">Roles</th>
+            <th class="d-none d-md-table-cell">Keywords</th>
+            <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
+            <th class="d-none d-md-table-cell">Snippets</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        {% set ch = row.character %}
+        {% set f = row.faction %}
+        <tr class="association-row"
+            data-name="{{ ch.name|lower }}"
+            data-aliases="{{ (ch.aliases or '')|lower }} {{ (ch.courtesty_name or '')|lower }}"
+            data-faction-id="{{ f.id if f else '__none__' }}"
+            data-mention-count="{{ row.mention_count }}">
+            <td data-sort-value="{{ ch.name|lower }}">
+                {% if f %}
+                    <span class="badge rounded-pill"
+                          style="color:{{ f.font_colour }} !important;
+                                 {% if f.bg_colour == f.default_colour %}background-color:rgba(var(--bs-primary-rgb));{% else %}background-color:{{ f.bg_colour }} !important;{% endif %}
+                                 {% if f.border_colour != f.default_colour %}border:2px solid {{ f.border_colour }} !important;{% endif %}">
+                        {{ ch.name }}
+                    </span>
+                {% else %}
+                    <span class="badge rounded-pill bg-secondary">{{ ch.name }}</span>
+                {% endif %}
+                {% if ch.courtesty_name %}
+                    <div class="small text-muted">{{ ch.courtesty_name }}</div>
+                {% endif %}
+            </td>
+            <td data-sort-value="{{ (f.name if f else '')|lower }}">
+                {% if f %}
+                    {{ macros.badge_widget(f) }}
+                {% else %}
+                    <span class="text-muted">—</span>
+                {% endif %}
+            </td>
+            <td class="d-none d-md-table-cell">
+                {% for role in row.roles %}
+                    <span class="badge rounded-pill bg-primary">{{ role.name }}</span>
+                {% endfor %}
+            </td>
+            <td class="d-none d-md-table-cell small text-muted">{{ row.keywords }}</td>
+            <td data-sort-value="{{ row.mention_count }}" class="text-end">
+                {{ row.mention_count }}
+            </td>
+            <td class="d-none d-md-table-cell"
+                data-snippets-cell
+                data-chapter-num="{{ selected.chapter_num }}"
+                data-location-id="{{ ch.id }}"
+                data-location-name="{{ ch.name|e }}">
+                {# Markup identical to location_associations so
+                   admin_location_snippets.js works as-is. The
+                   data-location-* attrs are misnamed for characters
+                   but the JS treats them as opaque labels. #}
+                <details class="snippets-live" {% if not row.mentions %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        show <span class="snippet-live-count">{{ row.mention_count }}</span> snippet<span class="snippet-live-plural">{{ '' if row.mention_count == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-live">
+                        {% for m in row.mentions %}
+                        <li class="d-flex gap-2 align-items-start py-1 snippet-item"
+                            data-match-text="{{ m.match }}"
+                            data-before-snippet="{{ m.before }}"
+                            data-after-snippet="{{ m.after }}">
+                            <span class="flex-grow-1 snippet-body">{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.chapter_associations_exclude', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                                  class="d-inline exclude-snippet-form"
+                                  data-confirm="Mark this snippet as a wrong match for {{ ch.name|e }}?">
+                                {{ csrf_form.hidden_tag() }}
+                                <input type="hidden" name="match_text" value="{{ m.match }}">
+                                <input type="hidden" name="before_snippet" value="{{ m.before }}">
+                                <input type="hidden" name="after_snippet" value="{{ m.after }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
+                                        title="Exclude this snippet">
+                                    &times;
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                <span class="text-warning small snippets-empty-live"
+                      {% if row.mentions %}hidden{% endif %}>no live matches</span>
+
+                <details class="snippets-excluded mt-2"
+                         data-restore-url-prefix="{{ url_for('admin.chapter_associations_restore', chapter_num=selected.chapter_num, character_id=ch.id, exclusion_id=0)[:-1] }}"
+                         {% if not row.excluded %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        <span class="snippet-excluded-count">{{ row.excluded|length }}</span> excluded snippet<span class="snippet-excluded-plural">{{ '' if row.excluded|length == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-excluded">
+                        {% for ex in row.excluded %}
+                        <li class="d-flex gap-2 align-items-start py-1 text-muted snippet-item"
+                            data-match-text="{{ ex.match_text }}"
+                            data-before-snippet="{{ ex.before_snippet }}"
+                            data-after-snippet="{{ ex.after_snippet }}"
+                            data-exclusion-id="{{ ex.id }}">
+                            <span class="flex-grow-1 snippet-body">
+                                <s>{{ ex.before_snippet }}<mark>{{ ex.match_text }}</mark>{{ ex.after_snippet }}</s>
+                            </span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.chapter_associations_restore', chapter_num=selected.chapter_num, character_id=ch.id, exclusion_id=ex.id) }}"
+                                  class="d-inline restore-snippet-form">
+                                {{ csrf_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2"
+                                        title="Restore this snippet">
+                                    ↺
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </td>
+            <td class="text-end" style="min-width: 220px;">
+                <div class="d-flex flex-column gap-2 align-items-end">
+                    <details>
+                        <summary class="btn btn-sm btn-outline-warning" style="list-style: none;">
+                            Switch character
+                        </summary>
+                        <form method="POST"
+                              action="{{ url_for('admin.chapter_associations_switch', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                              class="d-flex gap-1 mt-2">
+                            {{ csrf_form.hidden_tag() }}
+                            <input type="text" name="character_name"
+                                   class="form-control form-control-sm"
+                                   list="all-characters-datalist"
+                                   data-character-picker
+                                   placeholder="Search…" autocomplete="off" required>
+                            <input type="hidden" name="character_id">
+                            <button type="submit" class="btn btn-sm btn-warning">Apply</button>
+                        </form>
+                    </details>
+                    <form method="POST"
+                          action="{{ url_for('admin.chapter_associations_remove', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                          class="d-inline"
+                          data-confirm="Remove {{ ch.name }} from chapter {{ selected.chapter_num }}? (You can re-add via the form below.)">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7" class="text-muted">No characters associated with this chapter.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>{# /.table-responsive #}
+
+<div class="card mt-4">
+    <div class="card-header">Add Character Association to chapter {{ selected.chapter_num }}</div>
+    <div class="card-body">
+        <p class="text-muted small mb-3">
+            Use this when the chapter text contains a name that doesn't match
+            any character's name / courtesy name / alias in our DB
+            (e.g. "Mengde" for Cao Cao). Enter the term as it appears in the
+            text and pick the canonical character — we'll verify the term
+            occurs in this chapter, add it to that character's aliases (so
+            future renders highlight it), and associate the character with
+            this chapter.
+        </p>
+        <form method="POST"
+              action="{{ url_for('admin.chapter_associations_add', chapter_num=selected.chapter_num) }}"
+              class="row g-2 align-items-end">
+            {{ csrf_form.hidden_tag() }}
+            <div class="col-md-4">
+                <label for="add-search-terms" class="form-label">Keywords (comma-separated)</label>
+                <input type="text" name="search_terms" id="add-search-terms"
+                       class="form-control" required placeholder="e.g. Mengde, Cao Cao"
+                       autocomplete="off">
+            </div>
+            <div class="col-md-5">
+                <label for="add-character-name" class="form-label">Canonical character</label>
+                {# Picking a canonical character auto-fills the Keywords
+                   field above (name + courtesy name + aliases) when it's
+                   empty — saves retyping the same terms. #}
+                <input type="text" name="character_name" id="add-character-name"
+                       class="form-control" list="all-characters-datalist"
+                       data-character-picker
+                       data-picker-keywords-target="search_terms"
+                       autocomplete="off" required>
+                <input type="hidden" name="character_id" id="add-character-id">
+            </div>
+            <div class="col-md-3 text-end">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{# Shared datalist used by the Add form above and every row's Switch form.
+   Renders once at the bottom so the option list isn't duplicated per row.
+
+   Each value includes a trailing `#<id>` so values are guaranteed unique
+   even when two characters share a name (e.g. multiple Zhang Liangs). The
+   JS picker handler and the server-side resolver both parse the id out.
+
+   For names that occur on more than one character, the dropdown label
+   annotates the option with that character's factions so the admin can
+   tell them apart visually. #}
+<datalist id="all-characters-datalist">
+    {% for c in all_characters %}
+        {% set f_names = factions_by_char.get(c.id, []) %}
+        {% set r_names = roles_by_char.get(c.id, []) %}
+    <option value="{{ c.name }} #{{ c.id }}"
+            data-character-id="{{ c.id }}"
+            data-keywords="{{ c.name }}{% if c.courtesty_name %},{{ c.courtesty_name }}{% endif %}{% if c.aliases %},{{ c.aliases }}{% endif %}"
+            label="{{ c.name }} [{{ f_names|join(', ') if f_names else '—' }}] [{{ r_names|join(', ') if r_names else '—' }}]{% if c.courtesty_name %} · {{ c.courtesty_name }}{% endif %}{% if c.birth_date or c.death_date %} ({{ c.birth_date }}–{{ c.death_date }}){% endif %}">
+    </option>
+    {% endfor %}
+</datalist>
+
+{% endif %}{# selected #}
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_associations.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_location_snippets.js') }}"></script>
+{% endblock %}

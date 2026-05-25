@@ -1,0 +1,6 @@
+- Choose defualt and visibile images. Allow image uploading.
+- Wrong character linked
+- Page missing a link
+- Faction/Role colours. To be distinct from each other, especially within a chapter
+- Merge Factions
+- Backups in case someone breaks data

@@ -59,6 +59,16 @@ venv
 db-confs/
 db-data/
 
+# Scraped character portraits (downloaded by `flask scrape-koei-images` etc.).
+# Keep the directory tracked via .gitkeep but ignore everything else inside.
+app/static/portraits/*
+!app/static/portraits/.gitkeep
+
+# Auto-fetched per-domain favicons (downloaded when an admin attaches a URL).
+# Same pattern as portraits — directory tracked, contents ignored.
+app/static/favicons/*
+!app/static/favicons/.gitkeep
+
 # Environment files
 .env
 .env-mysql
