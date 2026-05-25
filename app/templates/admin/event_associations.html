@@ -152,7 +152,7 @@
 <datalist id="all-events-datalist">
     {% for e in all_events %}
     <option value="{{ e.name }} #{{ e.id }}"
-            data-keywords="{{ e.name }}{% if e.aliases %}, {{ e.aliases }}{% endif %}"
+            data-keywords="{{ e.name }}{% if e.aliases %},{{ e.aliases }}{% endif %}"
             label="{{ e.name }}{% if e.location %} · {{ e.location.name }}{% endif %}{% if e.aliases %} ({{ e.aliases }}){% endif %}">
     </option>
     {% endfor %}

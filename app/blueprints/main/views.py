@@ -18,6 +18,16 @@ from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet
 
 
+def _normalize_csv(s):
+    """Normalise a comma-delimited keyword list: strip whitespace around
+    each entry, drop empties, rejoin with bare commas (no spaces). Keeps
+    the stored format stable so "A, B" and "A,B" never live side-by-side
+    in the same `aliases` column."""
+    if not s:
+        return ''
+    return ','.join(part.strip() for part in s.split(',') if part.strip())
+
+
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
 # higher to leave room for multipart overhead; this is the post-parse limit
 # we apply to the file itself.
@@ -291,6 +301,7 @@ def new_character():
     if form.validate_on_submit():
         character = Character()
         form.populate_obj(character)
+        character.aliases = _normalize_csv(character.aliases)
 
         # Same primary_faction consistency rule as edit_character.
         if (
@@ -335,6 +346,7 @@ def edit_character(id):
         # book_mention_count is stale and we should recount before commit.
         old_labels = (character.name, character.courtesty_name, character.aliases)
         form.populate_obj(character)
+        character.aliases = _normalize_csv(character.aliases)
         new_labels = (character.name, character.courtesty_name, character.aliases)
 
         # If a main faction is picked but isn't in the M2M factions list,
@@ -835,6 +847,7 @@ def new_location():
     if form.validate_on_submit():
         location = Location()
         form.populate_obj(location)
+        location.aliases = _normalize_csv(location.aliases)
         db.session.add(location)
         db.session.commit()
         flash(f"Created location {location.name!r}.")
@@ -851,6 +864,7 @@ def edit_location(id):
     form = EditLocationForm(obj=location)
     if form.validate_on_submit():
         form.populate_obj(location)
+        location.aliases = _normalize_csv(location.aliases)
         db.session.add(location)
         db.session.commit()
         flash("Location updated.")
@@ -920,6 +934,7 @@ def new_event():
     if form.validate_on_submit():
         event = Event()
         form.populate_obj(event)
+        event.aliases = _normalize_csv(event.aliases)
         db.session.add(event)
         db.session.commit()
         flash(f"Created event {event.name!r}.")
@@ -936,6 +951,7 @@ def edit_event(id):
     form = EditEventForm(obj=event)
     if form.validate_on_submit():
         form.populate_obj(event)
+        event.aliases = _normalize_csv(event.aliases)
         db.session.add(event)
         db.session.commit()
         flash("Event updated.")

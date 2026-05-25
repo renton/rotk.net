@@ -213,7 +213,7 @@
 <datalist id="all-locations-datalist">
     {% for loc in all_locations %}
     <option value="{{ loc.name }} #{{ loc.id }}"
-            data-keywords="{{ loc.name }}{% if loc.aliases %}, {{ loc.aliases }}{% endif %}"
+            data-keywords="{{ loc.name }}{% if loc.aliases %},{{ loc.aliases }}{% endif %}"
             label="{{ loc.name }}{% if loc.aliases %} ({{ loc.aliases }}){% endif %}">
     </option>
     {% endfor %}
