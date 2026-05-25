@@ -66,7 +66,15 @@
                     {% set book_count = character.book_mention_count or 0 %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                       <div class="d-flex align-items-center gap-2 mb-0">
-                        <h6 class="mb-0">{{ character.name }}</h6>
+                        <h6 class="mb-0">
+                          {{ character.name }}
+                          {% if character.is_fictional %}
+                          <i class="fa-solid fa-book text-muted ms-1"
+                             title="fictional"
+                             aria-label="fictional"
+                             style="font-size: 0.75em;"></i>
+                          {% endif %}
+                        </h6>
                         {# Admin-only shortcut: jump straight to the edit page
                            for this character. Hidden for anonymous + non-admin
                            users so the sidebar stays read-only for readers. #}
@@ -242,7 +250,14 @@
                                 role="button"
                                 style="cursor: pointer;">
                                 <td scope="row">
-                                    <div>{{ character.name }}</div>
+                                    <div>
+                                        {{ character.name }}
+                                        {% if character.is_fictional %}
+                                        <i class="fa-solid fa-book text-muted ms-1"
+                                           title="fictional"
+                                           aria-label="fictional"></i>
+                                        {% endif %}
+                                    </div>
                                     <div class="small text-muted">
                                         {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
                                     </div>
