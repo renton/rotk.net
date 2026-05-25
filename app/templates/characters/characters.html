@@ -101,6 +101,14 @@
                         {% else %}
                             {{ character.name }}
                         {% endif %}
+                        {# Book icon next to the name when the character is
+                           marked fictional. Hover tooltip says "fictional";
+                           aria-label echoes it for screen readers. #}
+                        {% if character.is_fictional %}
+                        <i class="fa-solid fa-book text-muted ms-1"
+                           title="fictional"
+                           aria-label="fictional"></i>
+                        {% endif %}
                     </div>
                     <div>
                         {{ character.chinese_name }}
