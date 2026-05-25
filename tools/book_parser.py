@@ -146,12 +146,15 @@ def find_event_mentions(chapter, event, context_chars=60, limit=None):
     return mentions
 
 
-def find_character_mentions(chapter, character, context_chars=60, limit=None):
+def find_character_mentions(chapter, character, context_chars=60, limit=None, exclusions=None):
     """Return a list of mention dicts for `character` in `chapter`.
 
     Each mention is {'before', 'match', 'after', 'start'} extracted from the
     chapter content with HTML tags stripped (so the admin sees prose, not
-    markup). `limit` caps the number returned per character."""
+    markup). `limit` caps the number returned per character. `exclusions`
+    is the same shape as in find_location_mentions / find_event_mentions:
+    a set of whitespace-normalised (before, match, after) fingerprints that
+    should be skipped (matches the per-snippet MatchExclusion table)."""
     needles = [n for n in character.get_all_name_labels() if n]
     if not needles:
         return []
@@ -171,10 +174,19 @@ def find_character_mentions(chapter, character, context_chars=60, limit=None):
         if end + context_chars < len(content):
             after = after.rsplit(' ', 1)[0] if ' ' in after else after
             after = after.rstrip() + '…'
+        match_text = m.group(0)
+        if exclusions:
+            fp = (
+                normalize_snippet(before),
+                normalize_snippet(match_text),
+                normalize_snippet(after),
+            )
+            if fp in exclusions:
+                continue
         mentions.append({
             'start': start,
             'before': before,
-            'match': m.group(0),
+            'match': match_text,
             'after': after,
         })
         if limit is not None and len(mentions) >= limit:

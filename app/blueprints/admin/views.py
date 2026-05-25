@@ -206,11 +206,21 @@ def chapter_associations(chapter_num=None):
         associated = sorted(selected.characters, key=lambda c: c.name)
         seen_factions = {}
         for character in associated:
-            mentions = find_character_mentions(selected, character, limit=10)
+            exclusions = load_match_exclusions(selected.id, 'character', character.id)
+            # Live (still-tagged) mentions — filter out fingerprints the
+            # admin has already excluded so the live pool reflects what
+            # actually renders in the prose.
+            live = find_character_mentions(selected, character, limit=None, exclusions=exclusions)
+            excluded_rows = MatchExclusion.query.filter_by(
+                chapter_id=selected.id,
+                target_type='character',
+                target_id=character.id,
+            ).order_by(MatchExclusion.id).all()
             rows.append({
                 'character': character,
-                'mentions': mentions,
-                'mention_count': len(mentions),
+                'mentions': live,
+                'mention_count': len(live),
+                'excluded': excluded_rows,
                 'roles': list(character.roles),
                 'faction': character.primary_faction,
             })
@@ -424,6 +434,97 @@ def chapter_associations_switch(chapter_num, character_id):
         f"Switched {old_character.name} → {new_character.name} in "
         f"chapter {chapter.chapter_num}."
     )
+    return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+
+@admin.route('/chapter-associations/<int:chapter_num>/<int:character_id>/exclude', methods=['POST'])
+@login_required
+@admin_required
+def chapter_associations_exclude(chapter_num, character_id):
+    """Mark a single snippet as a bad match for this (chapter, character).
+    Same shape as location_associations_exclude — the underlying
+    MatchExclusion table is polymorphic via target_type."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    character = Character.query.get_or_404(character_id)
+
+    match_text = (request.form.get('match_text') or '').strip()
+    before = request.form.get('before_snippet') or ''
+    after = request.form.get('after_snippet') or ''
+    if not match_text:
+        msg = "Snippet fingerprint missing — refresh the page and try again."
+        if _wants_json():
+            return jsonify(error=msg), 400
+        flash(msg)
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+    existing = MatchExclusion.query.filter_by(
+        chapter_id=chapter.id,
+        target_type='character',
+        target_id=character.id,
+        match_text=match_text,
+        before_snippet=before,
+        after_snippet=after,
+    ).first()
+    if existing is None:
+        row = MatchExclusion(
+            chapter_id=chapter.id,
+            target_type='character',
+            target_id=character.id,
+            match_text=match_text,
+            before_snippet=before,
+            after_snippet=after,
+        )
+        db.session.add(row)
+        db.session.commit()
+    else:
+        row = existing
+
+    if _wants_json():
+        return jsonify(
+            id=row.id,
+            match_text=row.match_text,
+            before_snippet=row.before_snippet,
+            after_snippet=row.after_snippet,
+        )
+
+    flash(f"Excluded snippet {match_text!r} for {character.name!r} in chapter {chapter.chapter_num}.")
+    return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+
+@admin.route('/chapter-associations/<int:chapter_num>/<int:character_id>/restore/<int:exclusion_id>', methods=['POST'])
+@login_required
+@admin_required
+def chapter_associations_restore(chapter_num, character_id, exclusion_id):
+    """Undo a previous per-snippet exclusion — re-show the match."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    row = MatchExclusion.query.get_or_404(exclusion_id)
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    if (row.chapter_id != chapter.id or row.target_type != 'character' or
+            row.target_id != character_id):
+        abort(404)
+
+    match_text = row.match_text
+    before = row.before_snippet
+    after = row.after_snippet
+    db.session.delete(row)
+    db.session.commit()
+
+    if _wants_json():
+        return jsonify(
+            ok=True,
+            match_text=match_text,
+            before_snippet=before,
+            after_snippet=after,
+        )
+
+    flash(f"Restored snippet {match_text!r}.")
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
 

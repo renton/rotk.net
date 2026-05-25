@@ -104,23 +104,75 @@
             <td data-sort-value="{{ row.mention_count }}" class="text-end">
                 {{ row.mention_count }}
             </td>
-            <td class="d-none d-md-table-cell">
-                {% if row.mentions %}
-                <details>
-                    <summary class="small text-muted">show {{ row.mention_count }} snippet{{ '' if row.mention_count == 1 else 's' }}</summary>
-                    <ul class="snippet-list list-unstyled mt-2 mb-0">
+            <td class="d-none d-md-table-cell"
+                data-snippets-cell
+                data-chapter-num="{{ selected.chapter_num }}"
+                data-location-id="{{ ch.id }}"
+                data-location-name="{{ ch.name|e }}">
+                {# Markup identical to location_associations so
+                   admin_location_snippets.js works as-is. The
+                   data-location-* attrs are misnamed for characters
+                   but the JS treats them as opaque labels. #}
+                <details class="snippets-live" {% if not row.mentions %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        show <span class="snippet-live-count">{{ row.mention_count }}</span> snippet<span class="snippet-live-plural">{{ '' if row.mention_count == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-live">
                         {% for m in row.mentions %}
-                        <li class="snippet-item">
-                            <span class="snippet-text">
-                                {{ m.before }}<mark class="snippet-match">{{ m.match }}</mark>{{ m.after }}
-                            </span>
+                        <li class="d-flex gap-2 align-items-start py-1 snippet-item"
+                            data-match-text="{{ m.match }}"
+                            data-before-snippet="{{ m.before }}"
+                            data-after-snippet="{{ m.after }}">
+                            <span class="flex-grow-1 snippet-body">{{ m.before }}<mark>{{ m.match }}</mark>{{ m.after }}</span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.chapter_associations_exclude', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                                  class="d-inline exclude-snippet-form"
+                                  data-confirm="Mark this snippet as a wrong match for {{ ch.name|e }}?">
+                                {{ csrf_form.hidden_tag() }}
+                                <input type="hidden" name="match_text" value="{{ m.match }}">
+                                <input type="hidden" name="before_snippet" value="{{ m.before }}">
+                                <input type="hidden" name="after_snippet" value="{{ m.after }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2"
+                                        title="Exclude this snippet">
+                                    &times;
+                                </button>
+                            </form>
                         </li>
                         {% endfor %}
                     </ul>
                 </details>
-                {% else %}
-                <span class="text-warning small">no live matches</span>
-                {% endif %}
+                <span class="text-warning small snippets-empty-live"
+                      {% if row.mentions %}hidden{% endif %}>no live matches</span>
+
+                <details class="snippets-excluded mt-2"
+                         data-restore-url-prefix="{{ url_for('admin.chapter_associations_restore', chapter_num=selected.chapter_num, character_id=ch.id, exclusion_id=0)[:-1] }}"
+                         {% if not row.excluded %}data-empty hidden{% endif %}>
+                    <summary class="small text-muted">
+                        <span class="snippet-excluded-count">{{ row.excluded|length }}</span> excluded snippet<span class="snippet-excluded-plural">{{ '' if row.excluded|length == 1 else 's' }}</span>
+                    </summary>
+                    <ul class="list-unstyled small mt-2 mb-0 snippets-list-excluded">
+                        {% for ex in row.excluded %}
+                        <li class="d-flex gap-2 align-items-start py-1 text-muted snippet-item"
+                            data-match-text="{{ ex.match_text }}"
+                            data-before-snippet="{{ ex.before_snippet }}"
+                            data-after-snippet="{{ ex.after_snippet }}"
+                            data-exclusion-id="{{ ex.id }}">
+                            <span class="flex-grow-1 snippet-body">
+                                <s>{{ ex.before_snippet }}<mark>{{ ex.match_text }}</mark>{{ ex.after_snippet }}</s>
+                            </span>
+                            <form method="POST"
+                                  action="{{ url_for('admin.chapter_associations_restore', chapter_num=selected.chapter_num, character_id=ch.id, exclusion_id=ex.id) }}"
+                                  class="d-inline restore-snippet-form">
+                                {{ csrf_form.hidden_tag() }}
+                                <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2"
+                                        title="Restore this snippet">
+                                    ↺
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
             </td>
             <td class="text-end" style="min-width: 220px;">
                 <div class="d-flex flex-column gap-2 align-items-end">
@@ -232,4 +284,5 @@
 <script src="{{ url_for('static', filename='js/admin_associations.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_location_snippets.js') }}"></script>
 {% endblock %}

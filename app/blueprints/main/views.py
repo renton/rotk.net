@@ -127,41 +127,62 @@ def chapter(chapter_num):
 
     pattern = build_needle_pattern(list(replacements.keys()))
 
-    # ----- Per-snippet exclusions for locations ---------------------------
-    # Admins can mark individual location matches as "wrong" on the
-    # location-associations page. The exclusion fingerprints below
-    # match what find_location_mentions() produces against stripped
-    # chapter content. Pre-compute which (loc_id, needle, occurrence)
-    # tuples should NOT get re-wrapped as inline refs; the
-    # replace_match closure consults this skip-set per match.
-    stripped_content = strip_html_tags(chapter.content) if needle_to_location_id else ''
-    location_skip_indices = {}   # (loc_id, needle) -> set of 0-indexed match positions to skip
+    # ----- Per-snippet exclusions (characters + locations) ----------------
+    # Admins can mark individual character / location matches as "wrong"
+    # on their respective association admin pages. The exclusion
+    # fingerprints below match what find_*_mentions() produces against
+    # stripped chapter content. Pre-compute which (id, needle, occurrence)
+    # tuples should NOT get re-wrapped as inline refs; the replace_match
+    # closure consults this skip-set per match.
+    needs_stripped = bool(needle_to_character_id or needle_to_location_id)
+    stripped_content = strip_html_tags(chapter.content) if needs_stripped else ''
+
+    def _skip_indices_for(needle, fingerprints):
+        """Return the set of 0-indexed occurrences of `needle` in the
+        stripped content whose (before, match, after) fingerprint is in
+        the exclusion set. Shared between character + location flows."""
+        pat = build_needle_pattern([needle])
+        skips = set()
+        for i, m in enumerate(pat.finditer(stripped_content)):
+            start, end = m.start(), m.end()
+            before = stripped_content[max(0, start - 60):start]
+            after = stripped_content[end:end + 60]
+            if start - 60 > 0:
+                before = before.split(' ', 1)[1] if ' ' in before else before
+                before = '…' + before.lstrip()
+            if end + 60 < len(stripped_content):
+                after = after.rsplit(' ', 1)[0] if ' ' in after else after
+                after = after.rstrip() + '…'
+            fp = (
+                normalize_snippet(before),
+                normalize_snippet(m.group(0)),
+                normalize_snippet(after),
+            )
+            if fp in fingerprints:
+                skips.add(i)
+        return skips
+
+    character_skip_indices = {}   # (char_id, needle) -> set of indices
+    for character in characters:
+        fingerprints = load_match_exclusions(chapter.id, 'character', character.id)
+        if not fingerprints:
+            continue
+        for needle in character.get_all_name_labels():
+            if needle_to_character_id.get(needle) != character.id:
+                continue   # another character (or location) claimed this needle
+            skips = _skip_indices_for(needle, fingerprints)
+            if skips:
+                character_skip_indices[(character.id, needle)] = skips
+
+    location_skip_indices = {}   # (loc_id, needle) -> set of indices
     for loc in locations_for_render:
         fingerprints = load_match_exclusions(chapter.id, 'location', loc.id)
         if not fingerprints:
             continue
         for needle in get_location_labels(loc):
             if needle_to_location_id.get(needle) != loc.id:
-                continue  # character or earlier location already claimed this needle
-            pat = build_needle_pattern([needle])
-            skips = set()
-            for i, m in enumerate(pat.finditer(stripped_content)):
-                start, end = m.start(), m.end()
-                before = stripped_content[max(0, start - 60):start]
-                after = stripped_content[end:end + 60]
-                if start - 60 > 0:
-                    before = before.split(' ', 1)[1] if ' ' in before else before
-                    before = '…' + before.lstrip()
-                if end + 60 < len(stripped_content):
-                    after = after.rsplit(' ', 1)[0] if ' ' in after else after
-                    after = after.rstrip() + '…'
-                fp = (
-                    normalize_snippet(before),
-                    normalize_snippet(m.group(0)),
-                    normalize_snippet(after),
-                )
-                if fp in fingerprints:
-                    skips.add(i)
+                continue
+            skips = _skip_indices_for(needle, fingerprints)
             if skips:
                 location_skip_indices[(loc.id, needle)] = skips
 
@@ -169,6 +190,7 @@ def chapter(chapter_num):
     # avoids a second scan of the chapter content for the sidebar's
     # "N mentions" badges.
     mention_counts = defaultdict(int)
+    character_seen = defaultdict(int)   # (char_id, needle) -> running counter
     location_seen = defaultdict(int)   # (loc_id, needle) -> running counter
 
     def replace_match(match):
@@ -176,6 +198,12 @@ def chapter(chapter_num):
         cid = needle_to_character_id.get(matched)
         if cid is not None:
             mention_counts[cid] += 1
+            key = (cid, matched)
+            idx = character_seen[key]
+            character_seen[key] += 1
+            skips = character_skip_indices.get(key)
+            if skips is not None and idx in skips:
+                return matched   # admin-excluded snippet → leave as plain prose
             return replacements[matched]
         loc_id = needle_to_location_id.get(matched)
         if loc_id is not None:
@@ -184,7 +212,7 @@ def chapter(chapter_num):
             location_seen[key] += 1
             skips = location_skip_indices.get(key)
             if skips is not None and idx in skips:
-                return matched   # admin-excluded snippet → leave as plain prose
+                return matched
         return replacements[matched]
 
     rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
