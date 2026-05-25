@@ -115,14 +115,29 @@ class Character(AbstractObject):
             pass
 
     def get_all_name_labels(self):
-        labels = [self.name]
-        if self.courtesty_name != "":
-            labels.append(self.courtesty_name)
+        """Return every label this character matches by in chapter prose:
+        the canonical name, the courtesy name (if set), and every alias
+        from the comma-delimited `aliases` field.
 
-        for alias in self.aliases.split(','):
-            if alias != "":
+        Each label is .strip()'d so we never emit a needle with a
+        leading / trailing whitespace character. Older `aliases` values
+        stored before _normalize_csv() landed (or scraped from
+        Wikipedia where ", " is the usual delimiter) can carry such
+        whitespace; without this strip the inline pill ends up
+        rendering ` Lord Cao` with a literal leading space."""
+        labels = []
+        if self.name:
+            n = self.name.strip()
+            if n:
+                labels.append(n)
+        if self.courtesty_name:
+            c = self.courtesty_name.strip()
+            if c:
+                labels.append(c)
+        for alias in (self.aliases or '').split(','):
+            alias = alias.strip()
+            if alias:
                 labels.append(alias)
-
         return labels
 
 class Link(AbstractObject):
