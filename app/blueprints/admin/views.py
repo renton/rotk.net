@@ -326,13 +326,23 @@ def _resolve_character_from_form():
 @login_required
 @admin_required
 def chapter_associations_add(chapter_num):
-    """Add a Character ↔ Chapter association.
+    """Add or resync a Character ↔ Chapter association.
 
-    Admin provides comma-separated `search_terms` (the names/aliases as
-    they appear in the chapter text) and picks the canonical character.
-    For each keyword we verify it appears in the chapter, add it to
-    character.aliases if new, and report match counts. The chapter ↔
-    character link is added regardless (admin opted in via the picker).
+    Two flows behind the same endpoint:
+
+    * Fresh add — character isn't yet linked to this chapter: link the
+      pair AND append matched keywords to character.aliases (additive
+      so any prior aliases from the scrape or other chapters survive).
+    * Resync — character is already in chapter.characters: the chapter
+      ↔ character link is left as-is (no duplicate row, M2M PK would
+      reject it anyway). `character.aliases` is REPLACED by the new
+      keyword list (filtered to matches actually present in this
+      chapter, deduped, with the character's own name / courtesy name
+      excluded since those are auto-included as needles).
+
+    Per-snippet MatchExclusion rows for this (chapter, character) pair
+    are never touched — the admin's deliberate "this snippet is wrong"
+    decisions persist across resyncs.
 
     Backwards compat: the older single `search_term` field name is also
     accepted, treated as a one-keyword list."""
@@ -356,32 +366,63 @@ def chapter_associations_add(chapter_num):
         return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
 
     content = strip_html_tags(chapter.content)
-    existing = [a.strip() for a in (character.aliases or '').split(',') if a.strip()]
-    known = {character.name, character.courtesty_name or ''} | set(existing)
 
-    aliases_added = []
+    # First pass: keep only keywords that actually occur in this chapter.
+    matched = []
     no_match = []
     total_matches = 0
     for keyword in keywords:
-        matches = build_needle_pattern([keyword]).findall(content)
-        if not matches:
+        n = len(build_needle_pattern([keyword]).findall(content))
+        if n == 0:
             no_match.append(keyword)
             continue
-        total_matches += len(matches)
-        if keyword not in known:
-            existing.append(keyword)
-            known.add(keyword)
-            aliases_added.append(keyword)
+        total_matches += n
+        matched.append(keyword)
 
-    if aliases_added:
-        character.aliases = ','.join(existing)
+    own_labels = {character.name, character.courtesty_name or ''}
+    # Dedup matched while preserving order; drop entries that just
+    # duplicate the character's own name / courtesy name (those go in
+    # via get_all_name_labels() and don't belong in aliases too).
+    seen = set()
+    new_alias_list = []
+    for kw in matched:
+        if kw in own_labels or kw in seen:
+            continue
+        seen.add(kw)
+        new_alias_list.append(kw)
 
-    if character not in chapter.characters:
+    is_resync = character in chapter.characters
+    old_aliases = character.aliases or ''
+    aliases_changed = False
+
+    if is_resync:
+        # Resync: aliases for this character are REPLACED with the
+        # submitted (matched, deduped) keyword list. Empties out if the
+        # admin submitted only the name / courtesy name.
+        new_aliases = ','.join(new_alias_list)
+        if new_aliases != old_aliases:
+            character.aliases = new_aliases
+            aliases_changed = True
+    else:
+        # Fresh add: append matched keywords (non-destructive — any
+        # prior aliases on the global character row survive).
+        existing = [a.strip() for a in old_aliases.split(',') if a.strip()]
+        known = own_labels | set(existing)
+        added_this_pass = []
+        for kw in new_alias_list:
+            if kw not in known:
+                existing.append(kw)
+                known.add(kw)
+                added_this_pass.append(kw)
+        if added_this_pass:
+            character.aliases = ','.join(existing)
+            aliases_changed = True
         chapter.characters.append(character)
 
-    # The character's labels just changed → its book_mention_count is stale.
-    # Recount this one character (cheap: one HTML-strip pass, one regex).
-    if aliases_added:
+    # The character's labels may have changed → book_mention_count is
+    # stale. Recount this one character (cheap: one HTML-strip pass,
+    # one regex).
+    if aliases_changed:
         counts = count_mentions_per_character(Chapter.query.all(), [character])
         character.book_mention_count = counts.get(character.id, 0)
 
@@ -389,12 +430,18 @@ def chapter_associations_add(chapter_num):
 
     parts = []
     if total_matches:
-        parts.append(f"Found {total_matches} occurrence{'' if total_matches == 1 else 's'} across {len(keywords) - len(no_match)} keyword(s).")
-    if aliases_added:
-        parts.append("Added aliases: " + ", ".join(repr(a) for a in aliases_added) + ".")
+        parts.append(f"Found {total_matches} occurrence{'' if total_matches == 1 else 's'} across {len(matched)} keyword(s).")
+    if is_resync:
+        if aliases_changed:
+            parts.append(
+                f"Resynced aliases for {character.name!r}: now {character.aliases or '(empty)'}."
+            )
+        else:
+            parts.append(f"No alias changes — {character.name!r} already had this set.")
+    else:
+        parts.append(f"{character.name!r} is now associated with chapter {chapter.chapter_num}.")
     if no_match:
         parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
-    parts.append(f"{character.name} is now associated with chapter {chapter.chapter_num}.")
     flash(" ".join(parts))
 
     return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
