@@ -243,7 +243,16 @@ def scan_chapter_for_characters(chapter):
     return list(chapter_characters)
 
 def build_needle_pattern(name_needles):
-    return re.compile(r'\b(' + '|'.join(map(re.escape, name_needles)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
+    """Combined regex over all keyword needles for the chapter renderer.
+
+    Python's alternation is leftmost-first (NOT longest-match), so we
+    sort the needles by descending length before joining. That way when
+    one needle is a prefix of another (e.g. "Cao" + "Cao Cao", or "Liu"
+    + "Liu Bei"), the longer one wins. Without this sort, "Cao Cao" in
+    prose would match the "Cao" alternative first and the inline pill
+    would tag just three letters instead of the full name."""
+    ordered = sorted(name_needles, key=len, reverse=True)
+    return re.compile(r'\b(' + '|'.join(map(re.escape, ordered)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
 
 def build_name_ref_html(character, duplicate_warning_url=None, display_text=None):
     """Emit the inline character-ref span. Includes:
