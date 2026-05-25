@@ -66,3 +66,38 @@ def toggle_admin(user_id):
     db.session.add(target)
     db.session.commit()
     return redirect(url_for('admin.users'))
+
+
+@admin.route('/users/<int:user_id>/delete', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def delete_user(user_id):
+    target = User.query.get_or_404(user_id)
+
+    if target.id == current_user.id:
+        flash("You can't delete your own account. Ask another admin.")
+        return redirect(url_for('admin.users'))
+
+    if target.is_administrator:
+        remaining_admins = User.query.filter(
+            User.is_administrator.is_(True),
+            User.id != target.id,
+        ).count()
+        if remaining_admins == 0:
+            flash("Can't delete the last administrator.")
+            return redirect(url_for('admin.users'))
+
+    form = _CsrfOnlyForm()
+
+    if form.validate_on_submit():
+        username = target.username
+        db.session.delete(target)
+        db.session.commit()
+        flash(f"Deleted user {username}. Their username and email are available for reuse.")
+        return redirect(url_for('admin.users'))
+
+    return render_template(
+        'admin/delete_user.html',
+        target=target,
+        csrf_form=form,
+    )
