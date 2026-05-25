@@ -60,10 +60,15 @@ class Character(AbstractObject):
     primary_faction_id = db.Column(db.Integer, db.ForeignKey("faction.id"), default=None, nullable=True)
     primary_faction = db.relationship("Faction", foreign_keys=[primary_faction_id])
 
-    # Association table for many-to-many relationship
+    # Association table for many-to-many relationship.
+    # `keywords` is the per-(chapter, character) comma-delimited keyword
+    # list — fills the role that `character.aliases` used to play
+    # globally. The chapter renderer reads from here; admin sets it via
+    # the Character/Chapter Association page.
     chapter_character = db.Table('chapter_character',
         db.Column('chapter_id', db.Integer, db.ForeignKey('chapter.id'), primary_key=True),
-        db.Column('character_id', db.Integer, db.ForeignKey('character.id'), primary_key=True)
+        db.Column('character_id', db.Integer, db.ForeignKey('character.id'), primary_key=True),
+        db.Column('keywords', db.Text, nullable=False, default=''),
     )
 
     chapters = db.relationship(

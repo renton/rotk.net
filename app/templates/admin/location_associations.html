@@ -40,6 +40,7 @@
             <th>Location</th>
             <th class="d-none d-md-table-cell text-end">Lat</th>
             <th class="d-none d-md-table-cell text-end">Lng</th>
+            <th class="d-none d-md-table-cell">Keywords</th>
             <th class="text-end">Mentions</th>
             <th class="d-none d-md-table-cell">Snippets</th>
             <th class="text-end">Actions</th>
@@ -57,6 +58,7 @@
             </td>
             <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.latitude) if loc.latitude is not none else '' }}</td>
             <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.longitude) if loc.longitude is not none else '' }}</td>
+            <td class="d-none d-md-table-cell small text-muted">{{ row.keywords }}</td>
             <td class="text-end">{{ row.mention_count }}</td>
             <td class="d-none d-md-table-cell"
                 data-snippets-cell
@@ -164,7 +166,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="6" class="text-muted">No locations directly associated with this chapter.</td>
+            <td colspan="7" class="text-muted">No locations directly associated with this chapter.</td>
         </tr>
         {% endfor %}
     </tbody>

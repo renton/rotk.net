@@ -34,6 +34,41 @@ def normalize_snippet(s):
     return _WS_RE.sub(' ', s).strip()
 
 
+def load_chapter_keywords(chapter_id, table_name, target_id_column):
+    """Return {target_id: keyword_csv} for every association row in the
+    given M2M table (chapter_character / event_chapter / chapter_location)
+    that belongs to `chapter_id`. Result is the per-(chapter, target)
+    keyword override list — the chapter renderer uses it instead of the
+    global character.aliases / event.aliases / location.aliases.
+
+    Imported lazily because tools.book_parser is reachable from CLI
+    contexts where the Flask app isn't bound yet."""
+    from app import db
+    from sqlalchemy import text
+    rows = db.session.execute(
+        text(
+            f"SELECT {target_id_column}, keywords FROM {table_name} "
+            f"WHERE chapter_id = :cid"
+        ),
+        {'cid': chapter_id},
+    ).all()
+    return {row[0]: (row[1] or '') for row in rows}
+
+
+def split_keywords_csv(s):
+    """Split a comma-delimited keyword string into a deduped, stripped
+    list. Used by both the chapter render path and the admin association
+    views to turn the stored `keywords` column into a needle list."""
+    seen = set()
+    out = []
+    for part in (s or '').split(','):
+        part = part.strip()
+        if part and part not in seen:
+            seen.add(part)
+            out.append(part)
+    return out
+
+
 def load_match_exclusions(chapter_id, target_type, target_id):
     """Return the set of (before, match, after) fingerprints excluded
     for this (chapter, target). Empty set when nothing's excluded —
@@ -56,18 +91,22 @@ def load_match_exclusions(chapter_id, target_type, target_id):
     ) for r in rows}
 
 
-def find_location_mentions(chapter, location, context_chars=60, limit=None, exclusions=None):
+def find_location_mentions(chapter, location, context_chars=60, limit=None, exclusions=None, needles=None):
     """Same shape as find_event_mentions but for Location.
 
     If `exclusions` (a set of (before, match, after) fingerprints) is
     passed, any match whose fingerprint is in the set is skipped. The
     admin location-associations page uses this to hide snippets the
-    admin has marked as bad."""
-    needles = [location.name]
-    for alias in (location.aliases or '').split(','):
-        alias = alias.strip()
-        if alias and alias != location.name:
-            needles.append(alias)
+    admin has marked as bad.
+
+    `needles` overrides the default needle list (location.name +
+    aliases) — used to pass per-(chapter, location) keywords."""
+    if needles is None:
+        needles = [location.name]
+        for alias in (location.aliases or '').split(','):
+            alias = alias.strip()
+            if alias and alias != location.name:
+                needles.append(alias)
     needles = [n for n in needles if n]
     if not needles:
         return []
@@ -106,17 +145,14 @@ def find_location_mentions(chapter, location, context_chars=60, limit=None, excl
     return mentions
 
 
-def find_event_mentions(chapter, event, context_chars=60, limit=None):
-    """Same shape as find_character_mentions but uses Event.name +
-    Event.aliases (comma-delimited keywords) for the needle list.
-
-    Events don't have a `courtesty_name` field, so we collect labels
-    inline rather than going through get_all_name_labels()."""
-    needles = [event.name]
-    for alias in (event.aliases or '').split(','):
-        alias = alias.strip()
-        if alias and alias != event.name:
-            needles.append(alias)
+def find_event_mentions(chapter, event, context_chars=60, limit=None, exclusions=None, needles=None):
+    """Same shape as find_character_mentions but for Event."""
+    if needles is None:
+        needles = [event.name]
+        for alias in (event.aliases or '').split(','):
+            alias = alias.strip()
+            if alias and alias != event.name:
+                needles.append(alias)
     needles = [n for n in needles if n]
     if not needles:
         return []
@@ -135,10 +171,19 @@ def find_event_mentions(chapter, event, context_chars=60, limit=None):
         if end + context_chars < len(content):
             after = after.rsplit(' ', 1)[0] if ' ' in after else after
             after = after.rstrip() + '…'
+        match_text = m.group(0)
+        if exclusions:
+            fp = (
+                normalize_snippet(before),
+                normalize_snippet(match_text),
+                normalize_snippet(after),
+            )
+            if fp in exclusions:
+                continue
         mentions.append({
             'start': start,
             'before': before,
-            'match': m.group(0),
+            'match': match_text,
             'after': after,
         })
         if limit is not None and len(mentions) >= limit:
@@ -146,7 +191,7 @@ def find_event_mentions(chapter, event, context_chars=60, limit=None):
     return mentions
 
 
-def find_character_mentions(chapter, character, context_chars=60, limit=None, exclusions=None):
+def find_character_mentions(chapter, character, context_chars=60, limit=None, exclusions=None, needles=None):
     """Return a list of mention dicts for `character` in `chapter`.
 
     Each mention is {'before', 'match', 'after', 'start'} extracted from the
@@ -154,8 +199,16 @@ def find_character_mentions(chapter, character, context_chars=60, limit=None, ex
     markup). `limit` caps the number returned per character. `exclusions`
     is the same shape as in find_location_mentions / find_event_mentions:
     a set of whitespace-normalised (before, match, after) fingerprints that
-    should be skipped (matches the per-snippet MatchExclusion table)."""
-    needles = [n for n in character.get_all_name_labels() if n]
+    should be skipped (matches the per-snippet MatchExclusion table).
+
+    `needles` overrides the default needle list (character.name +
+    courtesy + aliases). The chapter-association admin and the chapter
+    renderer pass per-(chapter, character) keywords here so each chapter
+    can have its own keyword set independent of the character's global
+    aliases."""
+    if needles is None:
+        needles = character.get_all_name_labels()
+    needles = [n for n in needles if n]
     if not needles:
         return []
 

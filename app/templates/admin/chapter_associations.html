@@ -60,6 +60,7 @@
             <th data-sort-key="name" role="button">Name <span class="sort-indicator"></span></th>
             <th data-sort-key="faction" role="button">Faction <span class="sort-indicator"></span></th>
             <th class="d-none d-md-table-cell">Roles</th>
+            <th class="d-none d-md-table-cell">Keywords</th>
             <th data-sort-key="mentions" role="button" class="text-end">Mentions <span class="sort-indicator"></span></th>
             <th class="d-none d-md-table-cell">Snippets</th>
             <th class="text-end">Actions</th>
@@ -101,6 +102,7 @@
                     <span class="badge rounded-pill bg-primary">{{ role.name }}</span>
                 {% endfor %}
             </td>
+            <td class="d-none d-md-table-cell small text-muted">{{ row.keywords }}</td>
             <td data-sort-value="{{ row.mention_count }}" class="text-end">
                 {{ row.mention_count }}
             </td>
@@ -205,7 +207,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="6" class="text-muted">No characters associated with this chapter.</td>
+            <td colspan="7" class="text-muted">No characters associated with this chapter.</td>
         </tr>
         {% endfor %}
     </tbody>

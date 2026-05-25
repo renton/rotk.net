@@ -661,6 +661,121 @@ def create_user(email, username, password, admin):
     print(f"Created {user.username} ({user.email})" + (" [admin]" if admin else "") + ".")
 
 @app.cli.command()
+@click.option('--dry-run/--no-dry-run', default=False,
+              help='Print what would change without writing it.')
+def backfill_association_keywords(dry_run):
+    """Seed per-association keyword columns from the entity's global aliases.
+
+    The 0012 migration adds an empty `keywords` column to chapter_character,
+    event_chapter, and chapter_location. This command walks every row whose
+    keywords are still empty and seeds them with the corresponding entity's
+    `name + aliases` (whitespace-stripped, comma-delimited, no leading
+    space). Rows already populated (by admin edits via the association
+    pages) are left alone. Safe to re-run.
+
+    For Character: keywords = "name,courtesy_name,alias1,alias2,…"
+    For Event:     keywords = "name,alias1,alias2,…"
+    For Location:  keywords = "name,alias1,alias2,…"
+
+    With --dry-run the command prints a summary without writing.
+    """
+    from sqlalchemy import text
+    from app.models import Event, Location
+    from app.models.character import Character as CharacterModel
+
+    def _build(name, *extras):
+        """Build a clean comma-delimited keyword string from a name +
+        N extra fields (each potentially a comma-delimited string itself).
+        Dedups, strips whitespace, drops empties."""
+        seen = set()
+        out = []
+        candidates = [name or '']
+        for extra in extras:
+            for piece in (extra or '').split(','):
+                candidates.append(piece)
+        for c in candidates:
+            c = (c or '').strip()
+            if not c or c in seen:
+                continue
+            seen.add(c)
+            out.append(c)
+        return ','.join(out)
+
+    plans = []   # (label, sql, params)
+    updated_total = 0
+
+    # ---- chapter_character (name + courtesy_name + aliases) -----------
+    rows = db.session.execute(text("""
+        SELECT cc.chapter_id, cc.character_id, c.name, c.courtesty_name, c.aliases
+        FROM chapter_character cc
+        JOIN character c ON c.id = cc.character_id
+        WHERE cc.keywords = ''
+    """)).all()
+    print(f"chapter_character: {len(rows)} row(s) with empty keywords")
+    for chapter_id, character_id, name, courtesy, aliases in rows:
+        kw = _build(name, courtesy, aliases)
+        plans.append((
+            f"character({character_id}) ↔ chapter({chapter_id})",
+            "UPDATE chapter_character SET keywords = :kw "
+            "WHERE chapter_id = :cid AND character_id = :charid",
+            {'kw': kw, 'cid': chapter_id, 'charid': character_id},
+        ))
+
+    # ---- event_chapter (name + aliases) -------------------------------
+    rows = db.session.execute(text("""
+        SELECT ec.event_id, ec.chapter_id, e.name, e.aliases
+        FROM event_chapter ec
+        JOIN event e ON e.id = ec.event_id
+        WHERE ec.keywords = ''
+    """)).all()
+    print(f"event_chapter:     {len(rows)} row(s) with empty keywords")
+    for event_id, chapter_id, name, aliases in rows:
+        kw = _build(name, aliases)
+        plans.append((
+            f"event({event_id}) ↔ chapter({chapter_id})",
+            "UPDATE event_chapter SET keywords = :kw "
+            "WHERE event_id = :eid AND chapter_id = :cid",
+            {'kw': kw, 'eid': event_id, 'cid': chapter_id},
+        ))
+
+    # ---- chapter_location (name + aliases) ----------------------------
+    rows = db.session.execute(text("""
+        SELECT cl.chapter_id, cl.location_id, l.name, l.aliases
+        FROM chapter_location cl
+        JOIN location l ON l.id = cl.location_id
+        WHERE cl.keywords = ''
+    """)).all()
+    print(f"chapter_location:  {len(rows)} row(s) with empty keywords")
+    for chapter_id, location_id, name, aliases in rows:
+        kw = _build(name, aliases)
+        plans.append((
+            f"location({location_id}) ↔ chapter({chapter_id})",
+            "UPDATE chapter_location SET keywords = :kw "
+            "WHERE chapter_id = :cid AND location_id = :lid",
+            {'kw': kw, 'cid': chapter_id, 'lid': location_id},
+        ))
+
+    if not plans:
+        print("Nothing to backfill — every association row already has keywords set.")
+        return
+
+    print(f"\nTotal planned updates: {len(plans)}")
+    if dry_run:
+        print("\n(dry-run) Showing first 10 planned updates:")
+        for label, _, params in plans[:10]:
+            print(f"  {label}  ->  {params['kw']!r}")
+        if len(plans) > 10:
+            print(f"  … and {len(plans) - 10} more")
+        return
+
+    for _, sql, params in plans:
+        db.session.execute(text(sql), params)
+        updated_total += 1
+    db.session.commit()
+    print(f"\nDone. Updated {updated_total} association row(s).")
+
+
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     pass

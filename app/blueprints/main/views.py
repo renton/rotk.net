@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv
 
 
 def _normalize_csv(s):
@@ -74,6 +74,26 @@ def chapter(chapter_num):
     needle_to_character_id = {}
     needle_to_location_id = {}
 
+    # Per-(chapter, target) keyword overrides. The chapter renderer
+    # reads from these instead of each character's / event's / location's
+    # global aliases. Empty rows (e.g. pre-backfill scrape data) fall
+    # back to the entity's global labels via the helpers below.
+    chapter_char_kw = load_chapter_keywords(chapter.id, 'chapter_character', 'character_id')
+    chapter_event_kw = load_chapter_keywords(chapter.id, 'event_chapter', 'event_id')
+    chapter_loc_kw = load_chapter_keywords(chapter.id, 'chapter_location', 'location_id')
+
+    def _character_needles(character):
+        kws = split_keywords_csv(chapter_char_kw.get(character.id, ''))
+        return kws if kws else character.get_all_name_labels()
+
+    def _event_needles(event):
+        kws = split_keywords_csv(chapter_event_kw.get(event.id, ''))
+        return kws if kws else get_event_labels(event)
+
+    def _location_needles(loc):
+        kws = split_keywords_csv(chapter_loc_kw.get(loc.id, ''))
+        return kws if kws else get_location_labels(loc)
+
     # Admin-only: flag characters whose `name` is shared with another
     # character in this same chapter so the inline pill gets a red
     # circle-exclamation linking to the Character/Chapter Association
@@ -92,7 +112,7 @@ def chapter(chapter_num):
     # switcher / link-style behaviour resolve to the right person.
     for character in characters:
         warn_url = dup_url if (dup_url and character.name in dup_names) else None
-        for name_needle in character.get_all_name_labels():
+        for name_needle in _character_needles(character):
             replacements[name_needle] = build_name_ref_html(
                 character,
                 duplicate_warning_url=warn_url,
@@ -101,11 +121,9 @@ def chapter(chapter_num):
             needle_to_character_id[name_needle] = character.id
 
     # Events + locations get black-underlined spans linking to the
-    # respective sidebar accordion item. Both pre-loaded into
-    # chapter_events / chapter_locations below; building the labels now
-    # so they participate in the same single regex pass.
+    # respective sidebar accordion item.
     for event in sorted(chapter.events, key=lambda e: e.name):
-        for needle in get_event_labels(event):
+        for needle in _event_needles(event):
             if needle in replacements:
                 continue   # character already claimed it
             replacements[needle] = build_event_ref_html(event, match_text=needle)
@@ -119,7 +137,7 @@ def chapter(chapter_num):
             continue
         seen_loc_ids.add(loc.id)
         locations_for_render.append(loc)
-        for needle in get_location_labels(loc):
+        for needle in _location_needles(loc):
             if needle in replacements:
                 continue
             replacements[needle] = build_location_ref_html(loc, match_text=needle)
@@ -167,7 +185,7 @@ def chapter(chapter_num):
         fingerprints = load_match_exclusions(chapter.id, 'character', character.id)
         if not fingerprints:
             continue
-        for needle in character.get_all_name_labels():
+        for needle in _character_needles(character):
             if needle_to_character_id.get(needle) != character.id:
                 continue   # another character (or location) claimed this needle
             skips = _skip_indices_for(needle, fingerprints)
@@ -179,7 +197,7 @@ def chapter(chapter_num):
         fingerprints = load_match_exclusions(chapter.id, 'location', loc.id)
         if not fingerprints:
             continue
-        for needle in get_location_labels(loc):
+        for needle in _location_needles(loc):
             if needle_to_location_id.get(needle) != loc.id:
                 continue
             skips = _skip_indices_for(needle, fingerprints)

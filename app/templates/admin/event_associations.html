@@ -39,6 +39,7 @@
         <tr>
             <th>Event</th>
             <th>Location</th>
+            <th class="d-none d-md-table-cell">Keywords</th>
             <th class="text-end">Mentions</th>
             <th class="d-none d-md-table-cell">Snippets</th>
             <th class="text-end">Actions</th>
@@ -55,6 +56,7 @@
                 {% endif %}
             </td>
             <td>{{ row.location.name if row.location else '' }}</td>
+            <td class="d-none d-md-table-cell small text-muted">{{ row.keywords }}</td>
             <td class="text-end">{{ row.mention_count }}</td>
             <td class="d-none d-md-table-cell">
                 {% if row.mentions %}
@@ -101,7 +103,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="5" class="text-muted">No events associated with this chapter.</td>
+            <td colspan="6" class="text-muted">No events associated with this chapter.</td>
         </tr>
         {% endfor %}
     </tbody>

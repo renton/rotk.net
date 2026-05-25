@@ -17,6 +17,9 @@ chapter_location = db.Table(
     'chapter_location',
     db.Column('chapter_id',  db.Integer, db.ForeignKey('chapter.id'),  primary_key=True),
     db.Column('location_id', db.Integer, db.ForeignKey('location.id'), primary_key=True),
+    # Per-(chapter, location) comma-delimited keyword list — replaces
+    # the global `location.aliases` for chapter-prose matching.
+    db.Column('keywords', db.Text, nullable=False, default=''),
 )
 
 

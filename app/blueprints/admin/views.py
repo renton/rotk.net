@@ -14,7 +14,7 @@ from app import db
 from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm
 from . import admin
 
@@ -204,13 +204,18 @@ def chapter_associations(chapter_num=None):
             abort(404)
 
         associated = sorted(selected.characters, key=lambda c: c.name)
+        # Per-(chapter, character) keyword overrides for this chapter.
+        per_char_kw = load_chapter_keywords(selected.id, 'chapter_character', 'character_id')
         seen_factions = {}
         for character in associated:
             exclusions = load_match_exclusions(selected.id, 'character', character.id)
+            kw_csv = per_char_kw.get(character.id, '')
+            needles = split_keywords_csv(kw_csv) or character.get_all_name_labels()
             # Live (still-tagged) mentions — filter out fingerprints the
             # admin has already excluded so the live pool reflects what
             # actually renders in the prose.
-            live = find_character_mentions(selected, character, limit=None, exclusions=exclusions)
+            live = find_character_mentions(selected, character, limit=None,
+                                           exclusions=exclusions, needles=needles)
             excluded_rows = MatchExclusion.query.filter_by(
                 chapter_id=selected.id,
                 target_type='character',
@@ -223,6 +228,7 @@ def chapter_associations(chapter_num=None):
                 'excluded': excluded_rows,
                 'roles': list(character.roles),
                 'faction': character.primary_faction,
+                'keywords': kw_csv,
             })
             if character.primary_faction is not None:
                 seen_factions[character.primary_faction.id] = character.primary_faction
@@ -328,17 +334,16 @@ def _resolve_character_from_form():
 def chapter_associations_add(chapter_num):
     """Add or resync a Character ↔ Chapter association.
 
-    Two flows behind the same endpoint:
+    Stores the submitted keyword list on the per-association row
+    (chapter_character.keywords) for THIS chapter only. The character's
+    global `aliases` field is no longer touched.
 
-    * Fresh add — character isn't yet linked to this chapter: link the
-      pair AND append matched keywords to character.aliases (additive
-      so any prior aliases from the scrape or other chapters survive).
-    * Resync — character is already in chapter.characters: the chapter
-      ↔ character link is left as-is (no duplicate row, M2M PK would
-      reject it anyway). `character.aliases` is REPLACED by the new
-      keyword list (filtered to matches actually present in this
-      chapter, deduped, with the character's own name / courtesy name
-      excluded since those are auto-included as needles).
+    Two flows:
+    * Fresh add — pair isn't yet linked: link the pair AND set
+      chapter_character.keywords to the submitted (matched) list.
+    * Resync — pair already linked: REPLACE chapter_character.keywords
+      with the submitted (matched) list. Other chapters' keyword rows
+      for this character are unaffected.
 
     Per-snippet MatchExclusion rows for this (chapter, character) pair
     are never touched — the admin's deliberate "this snippet is wrong"
@@ -347,6 +352,8 @@ def chapter_associations_add(chapter_num):
     Backwards compat: the older single `search_term` field name is also
     accepted, treated as a one-keyword list."""
     from tools.book_parser import strip_html_tags, build_needle_pattern
+    from app.models.character import Character as _Char
+    from sqlalchemy import text
 
     form = _CsrfOnlyForm()
     if not form.validate_on_submit():
@@ -379,52 +386,27 @@ def chapter_associations_add(chapter_num):
         total_matches += n
         matched.append(keyword)
 
-    own_labels = {character.name, character.courtesty_name or ''}
-    # Dedup matched while preserving order; drop entries that just
-    # duplicate the character's own name / courtesy name (those go in
-    # via get_all_name_labels() and don't belong in aliases too).
+    # Dedup matched while preserving order.
     seen = set()
-    new_alias_list = []
+    new_kw_list = []
     for kw in matched:
-        if kw in own_labels or kw in seen:
-            continue
-        seen.add(kw)
-        new_alias_list.append(kw)
+        if kw not in seen:
+            seen.add(kw)
+            new_kw_list.append(kw)
+    new_kw_csv = ','.join(new_kw_list)
 
     is_resync = character in chapter.characters
-    old_aliases = character.aliases or ''
-    aliases_changed = False
-
-    if is_resync:
-        # Resync: aliases for this character are REPLACED with the
-        # submitted (matched, deduped) keyword list. Empties out if the
-        # admin submitted only the name / courtesy name.
-        new_aliases = ','.join(new_alias_list)
-        if new_aliases != old_aliases:
-            character.aliases = new_aliases
-            aliases_changed = True
-    else:
-        # Fresh add: append matched keywords (non-destructive — any
-        # prior aliases on the global character row survive).
-        existing = [a.strip() for a in old_aliases.split(',') if a.strip()]
-        known = own_labels | set(existing)
-        added_this_pass = []
-        for kw in new_alias_list:
-            if kw not in known:
-                existing.append(kw)
-                known.add(kw)
-                added_this_pass.append(kw)
-        if added_this_pass:
-            character.aliases = ','.join(existing)
-            aliases_changed = True
+    if not is_resync:
         chapter.characters.append(character)
+        db.session.flush()  # ensure the row exists before the UPDATE below
 
-    # The character's labels may have changed → book_mention_count is
-    # stale. Recount this one character (cheap: one HTML-strip pass,
-    # one regex).
-    if aliases_changed:
-        counts = count_mentions_per_character(Chapter.query.all(), [character])
-        character.book_mention_count = counts.get(character.id, 0)
+    db.session.execute(
+        text(
+            "UPDATE chapter_character SET keywords = :kw "
+            "WHERE chapter_id = :cid AND character_id = :charid"
+        ),
+        {'kw': new_kw_csv, 'cid': chapter.id, 'charid': character.id},
+    )
 
     db.session.commit()
 
@@ -432,14 +414,15 @@ def chapter_associations_add(chapter_num):
     if total_matches:
         parts.append(f"Found {total_matches} occurrence{'' if total_matches == 1 else 's'} across {len(matched)} keyword(s).")
     if is_resync:
-        if aliases_changed:
-            parts.append(
-                f"Resynced aliases for {character.name!r}: now {character.aliases or '(empty)'}."
-            )
-        else:
-            parts.append(f"No alias changes — {character.name!r} already had this set.")
+        parts.append(
+            f"Resynced keywords for {character.name!r} in this chapter: "
+            f"now {new_kw_csv or '(empty)'}."
+        )
     else:
-        parts.append(f"{character.name!r} is now associated with chapter {chapter.chapter_num}.")
+        parts.append(
+            f"{character.name!r} is now associated with chapter {chapter.chapter_num} "
+            f"(keywords: {new_kw_csv or '(empty)'})."
+        )
     if no_match:
         parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
     flash(" ".join(parts))
@@ -632,13 +615,19 @@ def event_associations(chapter_num=None):
             abort(404)
 
         associated = sorted(selected.events, key=lambda e: e.name)
+        per_event_kw = load_chapter_keywords(selected.id, 'event_chapter', 'event_id')
         for event in associated:
-            mentions = find_event_mentions(selected, event, limit=10)
+            kw_csv = per_event_kw.get(event.id, '')
+            needles = split_keywords_csv(kw_csv)
+            if not needles:
+                needles = [event.name] + [a.strip() for a in (event.aliases or '').split(',') if a.strip()]
+            mentions = find_event_mentions(selected, event, limit=None, needles=needles)
             rows.append({
                 'event': event,
                 'mentions': mentions,
                 'mention_count': len(mentions),
                 'location': event.location,
+                'keywords': kw_csv,
             })
 
         all_events = (
@@ -662,16 +651,15 @@ def event_associations(chapter_num=None):
 @login_required
 @admin_required
 def event_associations_add(chapter_num):
-    """Attach an Event to a chapter, optionally extending aliases.
+    """Attach an Event to a chapter and set its per-chapter keywords.
 
-    Admin picks the event. `search_terms` (comma-separated keywords) is
-    OPTIONAL — leave empty to just create the chapter ↔ event link, with
-    the event showing in the chapter sidebar but no inline-tagging of
-    the prose. If keywords are supplied, each is checked against the
-    chapter text and the matching ones become event aliases (so the
-    chapter view starts tagging those occurrences). Non-matching
-    keywords are reported and skipped. Either way the chapter ↔ event
-    link is added."""
+    Stores `search_terms` on the event_chapter.keywords row for THIS
+    chapter only (resync). Empty keyword list is fine — the event is
+    still linked (shows in the chapter sidebar) but no inline tagging.
+    Keywords that don't appear in the chapter are reported and
+    skipped."""
+    from sqlalchemy import text
+
     form = _CsrfOnlyForm()
     if not form.validate_on_submit():
         abort(400)
@@ -686,36 +674,51 @@ def event_associations_add(chapter_num):
     raw_terms = (request.form.get('search_terms') or '').strip()
     keywords = [k.strip() for k in raw_terms.split(',') if k.strip()]
 
-    aliases_added = []
+    content = strip_html_tags(chapter.content)
+    matched = []
     no_match = []
-    if keywords:
-        content = strip_html_tags(chapter.content)
-        existing = [a.strip() for a in (event.aliases or '').split(',') if a.strip()]
-        known = {event.name} | set(existing)
+    for keyword in keywords:
+        if build_needle_pattern([keyword]).findall(content):
+            matched.append(keyword)
+        else:
+            no_match.append(keyword)
+    # Dedup preserving order.
+    seen = set()
+    deduped = []
+    for kw in matched:
+        if kw not in seen:
+            seen.add(kw)
+            deduped.append(kw)
+    new_kw_csv = ','.join(deduped)
 
-        for keyword in keywords:
-            if not build_needle_pattern([keyword]).findall(content):
-                no_match.append(keyword)
-                continue
-            if keyword not in known:
-                existing.append(keyword)
-                known.add(keyword)
-                aliases_added.append(keyword)
-
-        if aliases_added:
-            event.aliases = ','.join(existing)
-
-    if event not in chapter.events:
+    is_resync = event in chapter.events
+    if not is_resync:
         chapter.events.append(event)
+        db.session.flush()
+
+    db.session.execute(
+        text(
+            "UPDATE event_chapter SET keywords = :kw "
+            "WHERE event_id = :eid AND chapter_id = :cid"
+        ),
+        {'kw': new_kw_csv, 'eid': event.id, 'cid': chapter.id},
+    )
 
     db.session.commit()
 
     parts = []
-    if aliases_added:
-        parts.append("Added aliases: " + ", ".join(repr(a) for a in aliases_added) + ".")
+    if is_resync:
+        parts.append(
+            f"Resynced keywords for {event.name!r} in this chapter: "
+            f"now {new_kw_csv or '(empty)'}."
+        )
+    else:
+        parts.append(
+            f"{event.name!r} is now associated with chapter {chapter.chapter_num} "
+            f"(keywords: {new_kw_csv or '(empty)'})."
+        )
     if no_match:
         parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
-    parts.append(f"{event.name!r} is now associated with chapter {chapter.chapter_num}.")
     flash(" ".join(parts))
 
     return redirect(url_for('admin.event_associations', chapter_num=chapter_num))
@@ -828,11 +831,17 @@ def location_associations(chapter_num=None):
             abort(404)
 
         associated = sorted(selected.locations, key=lambda l: l.name)
+        per_loc_kw = load_chapter_keywords(selected.id, 'chapter_location', 'location_id')
         for loc in associated:
             exclusions = load_match_exclusions(selected.id, 'location', loc.id)
-            # Live (still-tagged) mentions — feed the exclusions set so
-            # snippets already marked-bad don't appear in the main list.
-            live = find_location_mentions(selected, loc, limit=None, exclusions=exclusions)
+            kw_csv = per_loc_kw.get(loc.id, '')
+            needles = split_keywords_csv(kw_csv)
+            if not needles:
+                needles = [loc.name] + [a.strip() for a in (loc.aliases or '').split(',') if a.strip()]
+            # Live (still-tagged) mentions — filter via the exclusions set
+            # so snippets already marked-bad don't appear in the main list.
+            live = find_location_mentions(selected, loc, limit=None,
+                                          exclusions=exclusions, needles=needles)
             # Stored exclusion rows for this (chapter, location) — used
             # to render the collapsible "Excluded snippets" section with
             # restore buttons.
@@ -846,6 +855,7 @@ def location_associations(chapter_num=None):
                 'mentions': live,
                 'mention_count': len(live),
                 'excluded': excluded_rows,
+                'keywords': kw_csv,
             })
 
         all_locations = (
@@ -869,10 +879,12 @@ def location_associations(chapter_num=None):
 @login_required
 @admin_required
 def location_associations_add(chapter_num):
-    """Same comma-separated keyword flow as event_associations_add but
-    for Location — keywords get added to location.aliases for matches
-    in the chapter; chapter ↔ location link is added regardless of
-    keyword matches."""
+    """Add or resync a Location ↔ Chapter association. Keywords are
+    stored on the chapter_location row for THIS chapter only —
+    location.aliases stays untouched. Empty keyword list is fine
+    (location appears in sidebar but no inline tagging)."""
+    from sqlalchemy import text
+
     form = _CsrfOnlyForm()
     if not form.validate_on_submit():
         abort(400)
@@ -886,39 +898,51 @@ def location_associations_add(chapter_num):
 
     raw_terms = (request.form.get('search_terms') or '').strip()
     keywords = [k.strip() for k in raw_terms.split(',') if k.strip()]
-    if not keywords:
-        flash("Enter at least one keyword (comma-separated for multiple).")
-        return redirect(url_for('admin.location_associations', chapter_num=chapter_num))
 
     content = strip_html_tags(chapter.content)
-    existing = [a.strip() for a in (loc.aliases or '').split(',') if a.strip()]
-    known = {loc.name} | set(existing)
-
-    aliases_added = []
+    matched = []
     no_match = []
     for keyword in keywords:
-        if not build_needle_pattern([keyword]).findall(content):
+        if build_needle_pattern([keyword]).findall(content):
+            matched.append(keyword)
+        else:
             no_match.append(keyword)
-            continue
-        if keyword not in known:
-            existing.append(keyword)
-            known.add(keyword)
-            aliases_added.append(keyword)
+    seen = set()
+    deduped = []
+    for kw in matched:
+        if kw not in seen:
+            seen.add(kw)
+            deduped.append(kw)
+    new_kw_csv = ','.join(deduped)
 
-    if aliases_added:
-        loc.aliases = ','.join(existing)
-
-    if loc not in chapter.locations:
+    is_resync = loc in chapter.locations
+    if not is_resync:
         chapter.locations.append(loc)
+        db.session.flush()
+
+    db.session.execute(
+        text(
+            "UPDATE chapter_location SET keywords = :kw "
+            "WHERE chapter_id = :cid AND location_id = :lid"
+        ),
+        {'kw': new_kw_csv, 'cid': chapter.id, 'lid': loc.id},
+    )
 
     db.session.commit()
 
     parts = []
-    if aliases_added:
-        parts.append("Added aliases: " + ", ".join(repr(a) for a in aliases_added) + ".")
+    if is_resync:
+        parts.append(
+            f"Resynced keywords for {loc.name!r} in this chapter: "
+            f"now {new_kw_csv or '(empty)'}."
+        )
+    else:
+        parts.append(
+            f"{loc.name!r} is now associated with chapter {chapter.chapter_num} "
+            f"(keywords: {new_kw_csv or '(empty)'})."
+        )
     if no_match:
         parts.append("Skipped (not found in chapter): " + ", ".join(repr(k) for k in no_match) + ".")
-    parts.append(f"{loc.name!r} is now associated with chapter {chapter.chapter_num}.")
     flash(" ".join(parts))
 
     return redirect(url_for('admin.location_associations', chapter_num=chapter_num))

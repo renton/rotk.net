@@ -14,6 +14,10 @@ event_chapter = db.Table(
     'event_chapter',
     db.Column('event_id',   db.Integer, db.ForeignKey('event.id'),   primary_key=True),
     db.Column('chapter_id', db.Integer, db.ForeignKey('chapter.id'), primary_key=True),
+    # Per-(event, chapter) comma-delimited keyword list. Same role as
+    # `event.aliases` used to fill globally — the chapter renderer
+    # consults this row instead.
+    db.Column('keywords', db.Text, nullable=False, default=''),
 )
 
 
