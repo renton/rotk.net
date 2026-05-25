@@ -4,6 +4,13 @@
 {% block page_content %}
 
 {% set is_admin = current_user.is_authenticated and current_user.is_administrator %}
+
+{% if is_admin %}
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ url_for('main.new_role') }}" class="btn btn-primary">+ Add Role</a>
+</div>
+{% endif %}
+
 <div class="table-responsive">
 <table class="table table-striped mt-4">
     <thead>

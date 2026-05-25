@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}rotk.net - Edit role: {{ role.name }}{% endblock %}
+{% block title %}rotk.net - {% if role %}Edit role: {{ role.name }}{% else %}New role{% endif %}{% endblock %}
 
 {% block page_header %}
 <div class="page-header mb-3">
-    <h1>Edit role: {{ role.name }}</h1>
+    <h1>{% if role %}Edit role: {{ role.name }}{% else %}New role{% endif %}</h1>
 </div>
 {% endblock %}
 

@@ -756,6 +756,29 @@ def roles():
         roles=roles
     )
 
+@main.route('/roles/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_role():
+    """Admin form to create a Role. Mirrors new_faction — same template
+    as edit_role with `role=None`."""
+    from sqlalchemy.exc import IntegrityError
+    form = EditRoleForm()
+    if form.validate_on_submit():
+        role = Role()
+        form.populate_obj(role)
+        db.session.add(role)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A role named {form.name.data!r} already exists.")
+            return render_template('roles/role_edit.html', form=form, role=None)
+        flash(f"Created role {role.name!r}.")
+        return redirect(url_for('main.edit_role', id=role.id))
+    return render_template('roles/role_edit.html', form=form, role=None)
+
+
 @main.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
