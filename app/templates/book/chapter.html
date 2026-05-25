@@ -162,11 +162,24 @@
                       </div>
                       {% endif %}
 
-                      {# Each block (Faction / Other Factions / Links) sits
+                      {# Each block (Links / Faction / Other Factions) sits
                          in its own padded card-style wrapper so the
                          eye can find each section without parsing the
-                         badges in flow. bg-body-tertiary is Bootstrap's
-                         "slightly off-white" — readable, no theme fight. #}
+                         badges in flow. Links comes first — character's
+                         external references are the highest-signal info
+                         for a reader who tapped the pill. #}
+
+                      {# External links attached to the character. #}
+                      {% set list_urls = character.urls %}
+                      {% if list_urls %}
+                      <div class="chapter-section-card rounded p-2 mt-3 mb-2">
+                        <div class="small text-muted fw-bold mb-1">Links:</div>
+                        <div class="sidebar-url-indent">
+                          {% include '_url_list.html' %}
+                        </div>
+                      </div>
+                      {% endif %}
+
                       {% if character.primary_faction %}
                       <div class="chapter-section-card rounded p-2 mt-3 mb-2">
                         <div class="small text-muted fw-bold mb-1">Faction:</div>
@@ -183,7 +196,7 @@
                       </div>
                       {% endif %}
 
-                      {# Past factions = the M2M minus the primary (already shown
+                      {# Other factions = the M2M minus the primary (already shown
                          above) and minus hidden (merged-away factions). Skip
                          the whole block if nothing's left to display. #}
                       {% set past_factions = character.factions
@@ -204,17 +217,6 @@
                           </div>
                           {% endif %}
                         {% endfor %}
-                      </div>
-                      {% endif %}
-
-                      {# External links attached to the character. #}
-                      {% set list_urls = character.urls %}
-                      {% if list_urls %}
-                      <div class="chapter-section-card rounded p-2 mt-3 mb-2">
-                        <div class="small text-muted fw-bold mb-1">Links:</div>
-                        <div class="sidebar-url-indent">
-                          {% include '_url_list.html' %}
-                        </div>
                       </div>
                       {% endif %}
                     </div>
