@@ -76,10 +76,18 @@ def chapter(chapter_num):
 
     # Characters get first claim on a needle so character mentions never
     # get accidentally re-coloured as an event/location with the same word.
+    # display_text=name_needle keeps the prose word visible in the pill
+    # (e.g. "Mengde" stays "Mengde") while data-character-id still points
+    # at the canonical character — so the sidebar panel + chapter-style
+    # switcher / link-style behaviour resolve to the right person.
     for character in characters:
         warn_url = dup_url if (dup_url and character.name in dup_names) else None
         for name_needle in character.get_all_name_labels():
-            replacements[name_needle] = build_name_ref_html(character, duplicate_warning_url=warn_url)
+            replacements[name_needle] = build_name_ref_html(
+                character,
+                duplicate_warning_url=warn_url,
+                display_text=name_needle,
+            )
             needle_to_character_id[name_needle] = character.id
 
     # Events + locations get black-underlined spans linking to the

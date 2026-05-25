@@ -233,7 +233,7 @@ def scan_chapter_for_characters(chapter):
 def build_needle_pattern(name_needles):
     return re.compile(r'\b(' + '|'.join(map(re.escape, name_needles)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
 
-def build_name_ref_html(character, duplicate_warning_url=None):
+def build_name_ref_html(character, duplicate_warning_url=None, display_text=None):
     """Emit the inline character-ref span. Includes:
 
       * The default pill styling inline so no-JS renders / first paint
@@ -251,6 +251,11 @@ def build_name_ref_html(character, duplicate_warning_url=None):
         signals that more than one character in the chapter shares this
         name, and links to the Character/Chapter Association editor so
         the admin can pick the right one.
+      * `display_text` overrides the pill text; default is
+        `character.name`. The chapter renderer passes the matched
+        alias (courtesy name, nickname, …) so the inline pill reads
+        the same word the prose uses, while still linking to the
+        canonical character via data-character-id.
     """
     if character.primary_faction is not None:
         f = character.primary_faction
@@ -271,12 +276,13 @@ def build_name_ref_html(character, duplicate_warning_url=None):
         f"color:{font};"
         f"border:2px solid {border};"
     )
+    label = display_text if display_text is not None else character.name
     pill = (
         f"<span class='text-ref character-ref badge rounded-pill' "
         f"data-character-id='{character.id}' "
         f"{faction_attr}"
         f"data-bg='{bg}' data-font='{font}' data-border='{border}' "
-        f"style='{style}'>{character.name}</span>"
+        f"style='{style}'>{label}</span>"
     )
     if duplicate_warning_url:
         # No-underline link so the icon doesn't grow a baseline rule.
