@@ -156,12 +156,30 @@ def chapter(chapter_num):
     stripped_content = strip_html_tags(chapter.content) if needs_stripped else ''
 
     def _skip_indices_for(needle, fingerprints):
-        """Return the set of 0-indexed occurrences of `needle` in the
-        stripped content whose (before, match, after) fingerprint is in
-        the exclusion set. Shared between character + location flows."""
-        pat = build_needle_pattern([needle])
+        """Return the set of 0-indexed occurrences of `needle` (in
+        left-to-right, target-needle-filtered order) whose
+        (before, match, after) fingerprint is in the exclusion set.
+
+        We deliberately iterate the *combined* pattern (the one
+        replace_match uses below) rather than a per-needle pattern.
+        Two reasons:
+          1) build_needle_pattern sorts alternatives by length
+             descending, so when one needle is a prefix of another
+             ("Cao" + "Cao Cao"), the combined pattern always picks
+             the longer alternative. A per-needle scan for "Cao"
+             would also count the "Cao" sitting inside "Cao Cao",
+             which the combined pattern's longest-first rule swallows.
+          2) The counter character_seen / location_seen in
+             replace_match increments per (id, matched) tuple — i.e.
+             per matched alternative under the combined pattern. The
+             skip indices have to align with that same counter.
+        We filter inside the loop so the occurrence counter (`occ`)
+        only advances on matches whose alternative is `needle`."""
         skips = set()
-        for i, m in enumerate(pat.finditer(stripped_content)):
+        occ = 0
+        for m in pattern.finditer(stripped_content):
+            if m.group(0) != needle:
+                continue
             start, end = m.start(), m.end()
             before = stripped_content[max(0, start - 60):start]
             after = stripped_content[end:end + 60]
@@ -173,11 +191,12 @@ def chapter(chapter_num):
                 after = after.rstrip() + '…'
             fp = (
                 normalize_snippet(before),
-                normalize_snippet(m.group(0)),
+                normalize_snippet(needle),
                 normalize_snippet(after),
             )
             if fp in fingerprints:
-                skips.add(i)
+                skips.add(occ)
+            occ += 1
         return skips
 
     character_skip_indices = {}   # (char_id, needle) -> set of indices
