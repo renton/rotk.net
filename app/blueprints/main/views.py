@@ -256,10 +256,15 @@ def chapter(chapter_num):
 
     def replace_match(match):
         matched = match.group(0)
-        cids = needle_to_character_ids.get(matched)
+        # Needles compile with \s+ between words so a name split across
+        # a line break ("Wang\nYun") still matches. The character /
+        # location dicts are keyed by the canonical single-space form,
+        # so collapse whatever whitespace the prose had before lookup.
+        key_str = re.sub(r'\s+', ' ', matched)
+        cids = needle_to_character_ids.get(key_str)
         if cids:
-            idx = needle_seen[matched]
-            needle_seen[matched] += 1
+            idx = needle_seen[key_str]
+            needle_seen[key_str] += 1
             # Walk candidate characters in registration order, give the
             # pill to the first one who hasn't excluded this occurrence.
             # Duplicate-name resolution: A excludes occurrences they
@@ -267,21 +272,21 @@ def chapter(chapter_num):
             # remains for each character is rendered with that
             # character's pill. If both excluded → plain text.
             for cid in cids:
-                skips = character_skip_indices.get((cid, matched))
+                skips = character_skip_indices.get((cid, key_str))
                 if skips is not None and idx in skips:
                     continue
                 mention_counts[cid] += 1
-                return character_html[(cid, matched)]
+                return character_html[(cid, key_str)]
             return matched   # every candidate excluded this occurrence
-        loc_id = needle_to_location_id.get(matched)
+        loc_id = needle_to_location_id.get(key_str)
         if loc_id is not None:
-            key = (loc_id, matched)
-            l_idx = location_seen[key]
-            location_seen[key] += 1
-            skips = location_skip_indices.get(key)
+            inner_key = (loc_id, key_str)
+            l_idx = location_seen[inner_key]
+            location_seen[inner_key] += 1
+            skips = location_skip_indices.get(inner_key)
             if skips is not None and l_idx in skips:
                 return matched
-        return replacements[matched]
+        return replacements[key_str]
 
     rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
 

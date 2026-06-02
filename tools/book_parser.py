@@ -301,11 +301,35 @@ def build_needle_pattern(name_needles):
     Python's alternation is leftmost-first (NOT longest-match), so we
     sort the needles by descending length before joining. That way when
     one needle is a prefix of another (e.g. "Cao" + "Cao Cao", or "Liu"
-    + "Liu Bei"), the longer one wins. Without this sort, "Cao Cao" in
-    prose would match the "Cao" alternative first and the inline pill
-    would tag just three letters instead of the full name."""
+    + "Liu Bei"), the longer one wins.
+
+    Multi-word needles compile with `\\s+` between tokens — not a
+    literal space — so a name split across two lines of prose
+    ("Wang\\nYun") or padded with multiple spaces still matches.
+    Callers must normalise the matched text via re.sub(r'\\s+', ' ', m)
+    when looking it up against keyed dicts that were built from the
+    canonical single-space needle (see replace_match in the chapter
+    view).
+
+    Trailing context is `(?=\\W|$)` — any non-word character or
+    end-of-string — instead of an explicit punctuation allowlist, so
+    `"Wang Yun:"` (colon), `"Wang Yun)"` (close-paren), em-dashes,
+    etc. all match correctly. Leading `\\b` keeps the original word-
+    boundary semantics on the front; together they're equivalent to
+    a `\\b ... \\b` wrap without depending on a hand-rolled punctuation
+    list."""
     ordered = sorted(name_needles, key=len, reverse=True)
-    return re.compile(r'\b(' + '|'.join(map(re.escape, ordered)) + r')(?=\s|,|\.|\!|\?|\'|;|"|-)')
+    alternatives = []
+    for n in ordered:
+        tokens = [t for t in re.split(r'\s+', n) if t]
+        if not tokens:
+            continue
+        alternatives.append(r'\s+'.join(re.escape(t) for t in tokens))
+    if not alternatives:
+        # Fallback: a pattern that never matches anything. Caller code
+        # treats an empty result list as "no inline tags" anyway.
+        return re.compile(r'(?!)')
+    return re.compile(r'\b(' + '|'.join(alternatives) + r')(?=\W|$)')
 
 def build_name_ref_html(character, duplicate_warning_url=None, display_text=None):
     """Emit the inline character-ref span. Includes:
