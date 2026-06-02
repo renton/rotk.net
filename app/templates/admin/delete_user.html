@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Delete user{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Delete user</h1>
+</div>
+
+<div class="alert alert-danger">
+    <strong>This is a hard delete.</strong> The row is removed from the
+    <code>user</code> table immediately. The username and email become
+    available for someone else to register.
+</div>
+
+<table class="table">
+    <tbody>
+        <tr><th scope="row" style="width:180px;">Username</th><td>{{ target.username }}</td></tr>
+        <tr><th scope="row">Email</th><td>{{ target.email }}</td></tr>
+        <tr>
+            <th scope="row">Confirmed</th>
+            <td>
+                {% if target.confirmed %}
+                <span class="badge bg-success">Yes</span>
+                {% else %}
+                <span class="badge bg-secondary">No</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Admin</th>
+            <td>
+                {% if target.is_administrator %}
+                <span class="badge bg-primary">Admin</span>
+                {% else %}
+                <span class="text-muted">—</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">Member since</th>
+            <td>{{ target.member_since.strftime('%Y-%m-%d %H:%M UTC') if target.member_since else '' }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Last seen</th>
+            <td>{{ target.last_seen.strftime('%Y-%m-%d %H:%M UTC') if target.last_seen else '—' }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<form method="POST" action="{{ url_for('admin.delete_user', user_id=target.id) }}" class="mt-4">
+    {{ csrf_form.hidden_tag() }}
+    <button type="submit" class="btn btn-danger">Yes, delete this user</button>
+    <a href="{{ url_for('admin.users') }}" class="btn btn-link">Cancel</a>
+</form>
+{% endblock %}

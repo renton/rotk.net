@@ -53,6 +53,8 @@
                     </button>
                     {% endif %}
                 </form>
+                <a href="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                   class="btn btn-sm btn-outline-danger">Delete</a>
                 {% else %}
                 <span class="text-muted small">(you)</span>
                 {% endif %}

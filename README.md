@@ -180,6 +180,9 @@ services:
       POSTGRES_USER: rotk_app
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: rotk_net
+      # Point rate-limiting at the boilerplate's shared redis so limits
+      # are global across all gunicorn workers (not per-worker).
+      RATELIMIT_STORAGE_URI: "redis://:${REDIS_PASSWORD}@redis:6379/0"
     networks:
       - vswitch0
       - shared
@@ -198,6 +201,11 @@ SECRET_KEY=<paste new strong secret>
 
 # Used by the override to wire the app to shared postgres.
 POSTGRES_PASSWORD=<the value you saved in step 1>
+
+# Same value as REDIS_PASSWORD in ~/stateful_boilerplate/.env. The
+# override's RATELIMIT_STORAGE_URI substitutes this in to authenticate
+# against the shared redis (which is --requirepass-protected).
+REDIS_PASSWORD=<copy from boilerplate .env>
 
 # Mail config (or leave blank to suppress sends).
 MAIL_SERVER=...

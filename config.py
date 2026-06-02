@@ -73,6 +73,13 @@ class Config:
     RESET_TOKEN_TTL = 60 * 60          # 1h
     EMAIL_CHANGE_TOKEN_TTL = 60 * 60   # 1h
 
+    # --- Rate limiting (Flask-Limiter) ---
+    # `memory://` keeps counters in each worker's process, which means
+    # limits are per-worker — with 3 gunicorn workers the effective limit
+    # is ~3x what's configured. Set RATELIMIT_STORAGE_URI to a shared
+    # Redis (e.g. redis://:<password>@redis:6379/0) for global limits.
+    RATELIMIT_STORAGE_URI = os.environ.get('RATELIMIT_STORAGE_URI', 'memory://')
+
     @staticmethod
     def init_app(app):
         pass
