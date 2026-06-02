@@ -71,7 +71,15 @@ def chapter(chapter_num):
     characters.sort(key=lambda x: x.name)
 
     replacements = {}
-    needle_to_character_id = {}
+    # `needle_to_character_ids` is a LIST of character ids per needle so
+    # the duplicate-name case (two characters both called "Cao Cao", both
+    # tagged in the same chapter) works: each character contributes its
+    # own exclusion set, and replace_match picks the first one that
+    # hasn't excluded the current occurrence. `character_html` stores
+    # one rendered pill per (char_id, needle) so we can swap to the
+    # right character's badge at substitution time.
+    needle_to_character_ids = defaultdict(list)
+    character_html = {}
     needle_to_location_id = {}
 
     # Per-(chapter, target) keyword overrides. The chapter renderer
@@ -113,18 +121,24 @@ def chapter(chapter_num):
     for character in characters:
         warn_url = dup_url if (dup_url and character.name in dup_names) else None
         for name_needle in _character_needles(character):
-            replacements[name_needle] = build_name_ref_html(
+            html = build_name_ref_html(
                 character,
                 duplicate_warning_url=warn_url,
                 display_text=name_needle,
             )
-            needle_to_character_id[name_needle] = character.id
+            character_html[(character.id, name_needle)] = html
+            needle_to_character_ids[name_needle].append(character.id)
+            # The combined-pattern build only cares about the key; the
+            # value here is a fallback (first character wins). The real
+            # per-character HTML is picked in replace_match.
+            if name_needle not in replacements:
+                replacements[name_needle] = html
 
     # Events + locations get black-underlined spans linking to the
     # respective sidebar accordion item.
     for event in sorted(chapter.events, key=lambda e: e.name):
         for needle in _event_needles(event):
-            if needle in replacements:
+            if needle in replacements or needle_to_character_ids.get(needle):
                 continue   # character already claimed it
             replacements[needle] = build_event_ref_html(event, match_text=needle)
 
@@ -138,7 +152,7 @@ def chapter(chapter_num):
         seen_loc_ids.add(loc.id)
         locations_for_render.append(loc)
         for needle in _location_needles(loc):
-            if needle in replacements:
+            if needle in replacements or needle_to_character_ids.get(needle):
                 continue
             replacements[needle] = build_location_ref_html(loc, match_text=needle)
             needle_to_location_id[needle] = loc.id
@@ -152,7 +166,7 @@ def chapter(chapter_num):
     # stripped chapter content. Pre-compute which (id, needle, occurrence)
     # tuples should NOT get re-wrapped as inline refs; the replace_match
     # closure consults this skip-set per match.
-    needs_stripped = bool(needle_to_character_id or needle_to_location_id)
+    needs_stripped = bool(needle_to_character_ids or needle_to_location_id)
     stripped_content = strip_html_tags(chapter.content) if needs_stripped else ''
 
     def _skip_indices_for(needle, fingerprints):
@@ -205,8 +219,13 @@ def chapter(chapter_num):
         if not fingerprints:
             continue
         for needle in _character_needles(character):
-            if needle_to_character_id.get(needle) != character.id:
-                continue   # another character (or location) claimed this needle
+            # Note: multiple characters can claim the same needle now
+            # (duplicate-name case). Each character's skip set is built
+            # against the SAME global occurrence sequence — what differs
+            # is which fingerprints belong to which character's
+            # exclusion table.
+            if character.id not in needle_to_character_ids.get(needle, ()):
+                continue
             skips = _skip_indices_for(needle, fingerprints)
             if skips:
                 character_skip_indices[(character.id, needle)] = skips
@@ -227,28 +246,40 @@ def chapter(chapter_num):
     # avoids a second scan of the chapter content for the sidebar's
     # "N mentions" badges.
     mention_counts = defaultdict(int)
-    character_seen = defaultdict(int)   # (char_id, needle) -> running counter
-    location_seen = defaultdict(int)   # (loc_id, needle) -> running counter
+    # Per-needle GLOBAL counter (one bump per match of the needle in
+    # the combined pattern). Skip indices are keyed against this same
+    # global sequence; in the duplicate-name case each character's
+    # skip set covers different subset of occurrences but all indices
+    # reference the same numbering.
+    needle_seen = defaultdict(int)
+    location_seen = defaultdict(int)
 
     def replace_match(match):
         matched = match.group(0)
-        cid = needle_to_character_id.get(matched)
-        if cid is not None:
-            mention_counts[cid] += 1
-            key = (cid, matched)
-            idx = character_seen[key]
-            character_seen[key] += 1
-            skips = character_skip_indices.get(key)
-            if skips is not None and idx in skips:
-                return matched   # admin-excluded snippet → leave as plain prose
-            return replacements[matched]
+        cids = needle_to_character_ids.get(matched)
+        if cids:
+            idx = needle_seen[matched]
+            needle_seen[matched] += 1
+            # Walk candidate characters in registration order, give the
+            # pill to the first one who hasn't excluded this occurrence.
+            # Duplicate-name resolution: A excludes occurrences they
+            # don't want, B excludes the ones THEY don't want; what
+            # remains for each character is rendered with that
+            # character's pill. If both excluded → plain text.
+            for cid in cids:
+                skips = character_skip_indices.get((cid, matched))
+                if skips is not None and idx in skips:
+                    continue
+                mention_counts[cid] += 1
+                return character_html[(cid, matched)]
+            return matched   # every candidate excluded this occurrence
         loc_id = needle_to_location_id.get(matched)
         if loc_id is not None:
             key = (loc_id, matched)
-            idx = location_seen[key]
+            l_idx = location_seen[key]
             location_seen[key] += 1
             skips = location_skip_indices.get(key)
-            if skips is not None and idx in skips:
+            if skips is not None and l_idx in skips:
                 return matched
         return replacements[matched]
 
