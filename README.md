@@ -44,30 +44,45 @@ Then populate the empty DB — see [Populating the data](#populating-the-data) b
 
 ## Populating the data
 
-After first boot the database is empty. The app needs four commands to fill in the schema and pull the source content. Run them **in order** — later commands depend on rows that earlier commands insert.
+After first boot the database is empty. The app needs a handful of commands to fill in the schema and pull the source content. Run them **in order** — later commands depend on rows that earlier commands insert.
 
 > Compose v2 users (most installs these days) should substitute `docker compose` (space) for `docker-compose` (hyphen). Same commands, same arguments.
 
 ```bash
-# 1. Create the tables from the current SQLAlchemy models.
-#    Idempotent; safe to re-run.
+# 1. Create the tables from the current SQLAlchemy models. Idempotent.
 docker-compose exec app flask create-all
 
-# 2. Scrape all 120 chapter texts from threekingdoms.com.
-#    Hits the source site ~120 times; takes a few minutes.
+# 2. Apply every SQL file in migrations/ that hasn't run yet (tracked in
+#    the _schema_migrations table). Idempotent — re-runnable any time.
+docker-compose exec app flask apply-migrations
+
+# 3. Scrape all 120 chapter texts from threekingdoms.com (~120 fetches).
 docker-compose exec app flask scrape-book
 
-# 3. Scrape character index pages from Wikipedia (26 alphabetised pages).
-#    Populates `character`, `faction`, and `role` tables.
+# 4. Scrape the Wikipedia character index pages (~26 fetches). Populates
+#    `character`, `faction`, and `role`.
 docker-compose exec app flask scrape-characters
 
-# 4. Build the chapter↔character association cache.
-#    Regex-scans each chapter for every character's names and aliases.
-#    Required for the chapter view's sidebar to work.
+# 5. Build the chapter↔character association cache. Required for the
+#    chapter view sidebar to work.
 docker-compose exec app flask build-chapter-character-association
 ```
 
-After step 4 finishes, visit `http://localhost/` for the table of contents.
+After step 5 finishes, visit `http://localhost/` for the table of contents.
+
+**Optional — seed the Location hierarchy from the bundled CSV** so chapter sidebars and the `/locations` page show admin-division ancestry:
+
+```bash
+# 6. Seed the standard LocationType rows (Province, Commandery, County, City, ...).
+docker-compose exec app flask seed-location-types
+
+# 7. Import the Province/Commandery/County hierarchy from data/3k_admin_divisions.csv.
+#    Adds ~800 locations with parent_id + location_type_id wired. Idempotent.
+docker-compose exec app flask import-admin-divisions
+
+# 8. Build the chapter↔location association cache (mirror of step 5 for locations).
+docker-compose exec app flask build-location-chapter-association
+```
 
 ### Re-running individual jobs
 
@@ -321,6 +336,6 @@ examples/
 
 See [ISSUES.md](./ISSUES.md) for the running list of design notes. Highlights still relevant:
 
-- No Flask-Migrate / Alembic — schema changes require manual SQL or drop/recreate
-- "courtesty" is misspelled throughout (model fields, forms, templates)
-- No tests
+- "courtesty" is misspelled throughout (model fields, forms, templates) — coordinated rename pending
+- No tests — pytest fixtures for the regex-tagging pipeline would catch a lot
+- Plain-SQL migrations only; no Alembic. Fine for a single-author project, but a fresh contributor would need to read the `migrations/` directory rather than rely on auto-generated diffs.

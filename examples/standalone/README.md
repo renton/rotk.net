@@ -41,15 +41,26 @@ docker-compose \
   -f examples/standalone/docker-compose.tls.yml \
   up -d --build
 
-# 4. Populate the data (see the main README for context).
+# 4. Populate the data (see the main README's "Populating the data"
+#    section for what each command does and when to re-run).
 docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
   exec app flask create-all
+docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
+  exec app flask apply-migrations
 docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
   exec app flask scrape-book
 docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
   exec app flask scrape-characters
 docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
   exec app flask build-chapter-character-association
+
+# Optional: seed the Location hierarchy from the bundled CSV.
+docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
+  exec app flask seed-location-types
+docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
+  exec app flask import-admin-divisions
+docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \
+  exec app flask build-location-chapter-association
 
 # 5. Bootstrap the first admin.
 docker-compose -f docker-compose.yml -f examples/standalone/docker-compose.tls.yml \

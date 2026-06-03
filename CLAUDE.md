@@ -74,17 +74,19 @@ tools/
   decorators.py          # admin_required (authenticated + is_administrator + confirmed)
 
 migrations/              # Raw .sql files applied by `flask apply-migrations`.
-                         # Numbered NNNN_description.sql; each should be
-                         # idempotent (IF NOT EXISTS / IF EXISTS). Tracked
-                         # in the _schema_migrations table at runtime.
-                         # Alembic / Flask-Migrate is NOT set up (it's
-                         # imported in rotk.py but commented out; ISSUES #26).
+                         # Numbered NNNN_description.sql; each is idempotent
+                         # (IF NOT EXISTS / IF EXISTS / ON CONFLICT DO NOTHING).
+                         # Already-applied filenames are tracked in the
+                         # `_schema_migrations` table at runtime — re-running
+                         # the command is safe.  Flask-Migrate / Alembic
+                         # itself is NOT wired up; plain-SQL is the chosen
+                         # migration system for this project.
 db-data/                 # Postgres data volume for local dev (gitignored)
 ```
 
 ## How data flows
 
-1. **Bootstrap:** `flask create-all` creates schema, then `flask scrape-book` and `flask scrape-characters` populate from the web.
+1. **Bootstrap:** `flask create-all` creates the tables, `flask apply-migrations` applies every SQL file in `migrations/`, then `flask scrape-book` and `flask scrape-characters` populate from the web. `seed-location-types` + `import-admin-divisions` seed the Location hierarchy from `data/3k_admin_divisions.csv` if you want the admin divisions pre-populated.
 2. **Character ↔ Chapter linking is materialised by a CLI command.** Run `flask build-chapter-character-association` after scraping. `get_characters_for_chapter()` reads from the populated `chapter_character` table; if the table is empty, it falls back to regex-scanning every character against the chapter text on the fly.
 3. **Inline tagging** at chapter render time. The chapter view builds one combined needle pattern out of:
     - Every associated character's `name + courtesy_name + aliases` → coloured pill via `build_name_ref_html()`
@@ -155,7 +157,7 @@ Full walkthrough in `README.md`.
 - **Soft delete** via `is_deleted` on `AbstractObject`. Use `Model.get_all_active()` to filter.
 - **Case-sensitive name matching** is intentional — `name`/`aliases` columns use the Postgres `C` collation (byte-wise comparison) so `Cao` and `cao` (and `ü` vs `u`) are distinct. The previous MySQL incarnation used `utf8mb4_bin` for the same effect. This is why `flask scrape-characters` lowercases roles but NOT factions.
 - **`sort_order=-1` on `mapped_column`** is used to keep inherited columns to the left in the physical table layout.
-- **Plain-SQL migrations.** Schema changes go into `migrations/NNNN_*.sql`, applied by `flask apply-migrations` (tracked in `_schema_migrations`). Each file must be idempotent (`IF NOT EXISTS` / `IF EXISTS` / `DO $$ ... $$`) so partial reruns are safe. Flask-Migrate / Alembic is NOT wired up (see ISSUES #26).
+- **Plain-SQL migrations.** Schema changes go into `migrations/NNNN_*.sql`, applied by `flask apply-migrations` (tracked in `_schema_migrations`). Each file must be idempotent (`IF NOT EXISTS` / `IF EXISTS` / `ON CONFLICT DO NOTHING` / `DO $$ ... $$`) so partial reruns are safe. Flask-Migrate / Alembic itself is intentionally not wired up — plain SQL is enough for a single-tenant single-author project and keeps the dependency surface small.
 - **Admin gate** is `is_administrator` AND `confirmed` (both columns on `User`), enforced by `@admin_required`. First admin is bootstrapped via `flask make-admin <email>` or `flask create-user <email> <username> --admin`. After that the admin/users page promotes/demotes other users.
 - **Email** is via Flask-Mail over SMTP. With no `MAIL_SERVER` configured, outbound mail is logged to stderr instead — dev works out of the box.
 - **Polymorphic relationships** (`Url`, `TagAssociation`, `MatchExclusion`) use `target_type` (string) + `target_id` (no FK). Adding a new owner type means: (1) string the target_type allowlist in views, (2) add a viewonly `urls` / `tags` relationship to the model with `primaryjoin=and_(YourModel.id == foreign(Url.target_id), Url.target_type == 'yourtype')`, (3) wire the edit page partial. No migration needed.
@@ -170,13 +172,13 @@ Full walkthrough in `README.md`.
 See `ISSUES.md` for the full running list. Highlights still open:
 
 - Character name fields are typo'd as `courtesty_name` (and `chinese_courtesty_name`) throughout models, forms, and templates. Renaming is a coordinated change (#19).
-- Birth/death dates are stored as `String(4)` and can't represent BC years or be range-queried (#20).
-- No tests, no Alembic — schema changes still require drop/recreate + re-scrape (#25, #26).
+- Birth/death dates are stored as `String(N)` and can't be range-queried, though widening to fit BC years has shipped (#20).
+- No tests yet — the inline-tagging regex pipeline in particular would benefit from a pytest harness (#25).
 
 ## Things to ask before doing
 
 - **Don't run scrapers without confirming.** They hit external sites ~150 times and overwrite/duplicate rows depending on existing state. The current scraper has no upsert logic — re-running will throw IntegrityErrors on the unique constraint and skip rows.
-- **Don't enable Flask-Migrate retroactively** without an Alembic baseline plan — `db.create_all()` has been the source of truth, and current schema may not match what a fresh autogenerate emits.
+- **Don't enable Flask-Migrate retroactively** without an Alembic baseline plan — `db.create_all()` (now followed by the SQL files in `migrations/`) is the source of truth, and a fresh Alembic autogenerate would not match.
 - **The MySQL → Postgres migration** (May 2026) changed: the DB URL builder in `config.py`, the `collation` argument in `app/models/abstract.py` (`utf8mb4_bin` → `C`), the bundled `db` service in `docker-compose.yml` (mysql:8.4 → postgres:16-alpine), `.env.example` (`MYSQL_*` → `POSTGRES_*`), and the requirements (`mysqlclient` / `mysql-connector` → `psycopg[binary]`). The DB was renamed `rotk.net` → `rotk_net` (no dot) to avoid postgres quoting hassles. `docker-compose.prod.yml`, `docker-compose.ambrose.yml`, `db-init/`, and the `nginx/` config were deleted — production now uses `stateful_boilerplate` for TLS/proxy.
 
 ## Memory

@@ -9,7 +9,7 @@ Ordered loosely by impact within each section.
 - ✅ = fixed (see git log for the commit)
 - ⬜ = open
 
-**Progress:** 22 / 48 resolved.
+**Progress:** 28 / 48 resolved.
 
 ---
 
@@ -188,8 +188,10 @@ This makes tag lookups case-sensitive. The scraper sometimes lowercases (roles) 
 ### 25. ⬜ No tests
 No `tests/` directory. `rotk.py` has commented-out scaffolding for `unittest` + `coverage`. The whole inline-tagging regex pipeline is exactly the kind of code that benefits from a unit test (name-with-apostrophe, name-at-end-of-paragraph, name-inside-HTML-tag). Pytest + a couple of fixtures is two hours of work.
 
-### 26. ⬜ No Alembic / Flask-Migrate
+### 26. ✅ No Alembic / Flask-Migrate
 Schema changes today are "drop tables, change models, `flask create-all`, re-scrape". With ~150 HTTP fetches per scrape that's slow, brittle, and lossy (you lose any admin edits). Wire up Flask-Migrate with a baseline migration of the current schema.
+
+*(Resolved by a different mechanism: plain-SQL migration files in `migrations/NNNN_*.sql` applied by `flask apply-migrations`, tracked in `_schema_migrations`. Idempotent (`IF NOT EXISTS` / `ON CONFLICT DO NOTHING`). Alembic deliberately not adopted — plain SQL is enough for a single-tenant single-author project. See CLAUDE.md "Plain-SQL migrations" for the working pattern.)*
 
 ### 27. ✅ `Talisman(force_https=True)` unconditionally
 **File:** `app/__init__.py:40`
@@ -208,10 +210,12 @@ Every SQL statement is logged in *prod* as well as dev. Move to `DevelopmentConf
 
 *(Fixed incidentally while sorting out the MySQL non-root user — see commit `6835672`.)*
 
-### 30. ⬜ Two MySQL drivers pinned
+### 30. ✅ Two MySQL drivers pinned
 **File:** `requirements.txt:22-23`
 
 `mysql-connector==2.2.9` (Oracle, last touched 2017) and `mysqlclient==2.2.6` (the C-based one) are both installed. The connection URI uses `mysql+mysqldb://` which is `mysqlclient`. Drop `mysql-connector`.
+
+*(Moot — the project migrated MySQL → PostgreSQL in May 2026. Both MySQL drivers are gone; `psycopg[binary]` is the only DB driver in `requirements.txt`.)*
 
 ### 31. ⬜ `dominate` and `visitor` in requirements look unused
 Grep doesn't show them being imported. They're transitive remnants from Flask-Bootstrap (3.x). Confirm and remove.
@@ -228,10 +232,12 @@ Either implement `deploy` (run migrations, seed admin user, etc.) or remove the 
 
 `--reload` is for dev. In prod it makes gunicorn watch files and restart workers — wasted CPU and a potential foot-gun on a production volume mount. Drop it from the prod path.
 
-### 34. ⬜ `volumes: - .:/rotk.net` in the *production* compose
+### 34. ✅ `volumes: - .:/rotk.net` in the *production* compose
 **File:** `docker-compose.prod.yml:19`
 
 Bind-mounting the source tree into prod means the running container reflects whatever's on disk on the host. Combined with `--reload`, you have a "live" production that updates on `git pull` without a deploy step. Could be intentional, but it's load-bearing magic that's not documented anywhere.
+
+*(Resolved: `docker-compose.prod.yml` was deleted in the MySQL→Postgres migration. Both deployment paths now use overlays — `examples/standalone/docker-compose.tls.yml` resets `volumes: !reset []` so the standalone container runs the image filesystem, and the `stateful_boilerplate` VPS override does the same. No source bind-mount in production any more.)*
 
 ### 35. ⬜ `db-data/` checked into the repo
 **File:** layout (visible in `ls -la`)
@@ -251,11 +257,15 @@ A `.github/workflows/ci.yml` that runs `pytest` + `ruff` + `mypy` on every PR is
 
 ## Things I'd consider adding
 
-### 39. ⬜ A Map / Locations model
+### 39. ✅ A Map / Locations model
 `app/models/location.py` is a placeholder. There's a "Map" link in the navbar that goes nowhere, and a "Map" accordion item in the chapter sidebar that shows lorem-ipsum. If maps are on the roadmap, a `Location` model + a JS map (Leaflet over a stylized China map) would be a striking feature.
 
-### 40. ⬜ Event / Battle model
+*(Done as far as the data model: `Location` has name + Chinese name + aliases + lat/lng + `parent_id` (self-FK for the Province → Commandery → County → City hierarchy) + `location_type_id`. `LocationType` is admin-managed with colours + Font Awesome icons. The CSV import (`flask import-admin-divisions`) seeds ~800 admin-division rows. The chapter sidebar shows type badge + ancestry breadcrumb per location. The actual JS map (Leaflet) is the only remaining piece — that's worth its own ticket when the day comes.)*
+
+### 40. ✅ Event / Battle model
 `app/models/event.py` is also a placeholder. Modelling battles (with date, location, participants, outcome) would let you build a "battles in this chapter" sidebar or a timeline view across all 120 chapters. The novel is *built* on battles — they're a much bigger draw than character bios alone.
+
+*(Done: `Event` has name + aliases + optional `Location` FK + `EventType` FK + per-event geo override + per-event date. `EventType` is admin-managed with colours + icon. Chapter sidebar surfaces them in a dedicated accordion. Cross-chapter timeline view is the next obvious feature.)*
 
 ### 41. ⬜ Front-end tooling
 Not a SPA, not even close — but you do have inline JS (`show_character`) sitting in a Jinja template, and you'll grow more. Consider:
@@ -287,5 +297,7 @@ The codebase is small enough that full type coverage is achievable. Adds maintai
 ### 47. ⬜ SQLAlchemy 2.0-style query API
 Models use `Model.query.all()` (legacy 1.x-style). The 2.0 idiom is `db.session.scalars(select(Model)).all()`. Mixing the two styles is fine but consistency would be a small win.
 
-### 48. ⬜ Docs for the bootstrap dance
+### 48. ✅ Docs for the bootstrap dance
 There's no single command that takes a fresh checkout to "site has content". The README I just wrote sketches it, but a `make bootstrap` target (or a `flask init`-like command that runs `create-all → scrape-book → scrape-characters → build-chapter-character-association`) would make onboarding a one-liner.
+
+*(Resolved by docs, not by a single command: README's "Populating the data" section now walks through the full 5-step + optional Location-import sequence; CLAUDE.md's "How data flows" and "CLI commands" tables list each step with what it does and when to re-run. A single `flask init` wrapper would still be a nice ergonomic win, but the steps are no longer a guessing game.)*
