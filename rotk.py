@@ -771,18 +771,43 @@ def import_admin_divisions(path, dry_run):
 
     stats = {'created': 0, 'updated': 0, 'unchanged': 0}
 
-    def find_or_create(canonical_name, chinese, type_name, parent):
+    def _add_alias(current_csv, new_alias):
+        """Merge `new_alias` into a comma-delimited aliases string,
+        preserving every entry that's already there. Returns
+        (joined_csv, changed). Idempotent — if the alias is already
+        present (whitespace-trimmed match), nothing changes."""
+        if not new_alias:
+            return current_csv or '', False
+        parts = [p.strip() for p in (current_csv or '').split(',') if p.strip()]
+        if new_alias in parts:
+            return current_csv or '', False
+        parts.append(new_alias)
+        return ','.join(parts), True
+
+    def find_or_create(canonical_name, chinese, type_name, parent, alias=None):
         """Return (location, status) where status is 'created' / 'updated'
         / 'unchanged'. Looks up by English name first, falls back to
         Chinese. Fills in missing chinese_name / type / parent on
-        existing rows; never overwrites values already present."""
+        existing rows; never overwrites values already present.
+
+        If `alias` is given (typically the bare English name without
+        any "Province"/"Commandery"/"County" suffix), it's merged into
+        the location's comma-delimited `aliases` field. Idempotent —
+        existing alias entries stay intact, only missing ones are
+        appended. Lets the book parser match either the full canonical
+        name ("Bing Province") or the bare form ("Bing")."""
         loc_type_obj = type_by_name.get(type_name) if type_name else None
         existing_row = by_name.get(canonical_name)
         if existing_row is None and chinese:
             existing_row = by_chinese.get(chinese)
 
         if existing_row is None:
-            loc = Location(name=canonical_name, chinese_name=chinese or '')
+            initial_aliases = alias if alias else ''
+            loc = Location(
+                name=canonical_name,
+                chinese_name=chinese or '',
+                aliases=initial_aliases,
+            )
             if loc_type_obj is not None:
                 loc.location_type = loc_type_obj
             if parent is not None:
@@ -804,6 +829,11 @@ def import_admin_divisions(path, dry_run):
         if existing_row.parent_id is None and parent is not None:
             existing_row.parent = parent
             changed = True
+        if alias:
+            merged, alias_changed = _add_alias(existing_row.aliases, alias)
+            if alias_changed:
+                existing_row.aliases = merged
+                changed = True
 
         # Cache under both keys so later passes find this row by either
         # the canonical-suffix name OR the chinese name.
@@ -829,7 +859,7 @@ def import_admin_divisions(path, dry_run):
         en, zh = _split_en_zh(cell)
         if not en:
             continue
-        loc, status = find_or_create(f"{en} Province", zh, 'Province', None)
+        loc, status = find_or_create(f"{en} Province", zh, 'Province', None, alias=en)
         _bump(status)
         provinces[cell] = loc
     db.session.flush()
@@ -848,7 +878,7 @@ def import_admin_divisions(path, dry_run):
         if not en:
             continue
         parent = provinces.get(prov_cell)
-        loc, status = find_or_create(f"{en} Commandery", zh, 'Commandery', parent)
+        loc, status = find_or_create(f"{en} Commandery", zh, 'Commandery', parent, alias=en)
         _bump(status)
         commanderies[key] = loc
     db.session.flush()
@@ -868,7 +898,7 @@ def import_admin_divisions(path, dry_run):
         if not en:
             continue
         parent = commanderies.get((prov_cell, com_cell))
-        loc, status = find_or_create(f"{en} County", zh, 'County', parent)
+        loc, status = find_or_create(f"{en} County", zh, 'County', parent, alias=en)
         _bump(status)
         counties[key] = loc
     db.session.flush()
