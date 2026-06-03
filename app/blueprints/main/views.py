@@ -133,7 +133,11 @@ def chapter(chapter_num):
     seen_loc_ids = set()
     locations_for_render = []
     for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
-        if loc is None or loc.id in seen_loc_ids:
+        # `chapter.locations` and `event.location` are M2M / FK
+        # relationships that don't filter `is_deleted`, so we drop
+        # soft-deleted locations here to keep them out of the prose
+        # tagging AND the sidebar card list.
+        if loc is None or loc.id in seen_loc_ids or loc.is_deleted:
             continue
         seen_loc_ids.add(loc.id)
         locations_for_render.append(loc)
@@ -382,9 +386,12 @@ def chapter(chapter_num):
     # /admin/location-associations tool). Deduped by id, name-sorted.
     chapter_events = sorted(chapter.events, key=lambda e: e.name)
     locations_by_id = {
-        e.location.id: e.location for e in chapter_events if e.location
+        e.location.id: e.location for e in chapter_events
+        if e.location and not e.location.is_deleted
     }
     for loc in chapter.locations:
+        if loc.is_deleted:
+            continue
         locations_by_id.setdefault(loc.id, loc)
     chapter_locations = sorted(locations_by_id.values(), key=lambda loc: loc.name)
 
