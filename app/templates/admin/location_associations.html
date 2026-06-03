@@ -59,10 +59,10 @@
                        an alias) overlaps a character's name (substring
                        either way) in this chapter. Both can appear
                        together. #}
-                    {% if loc.name in in_chapter_dup_names %}
+                    {% if loc.id in in_chapter_dup_ids %}
                     <i class="fa-solid fa-circle-exclamation text-danger ms-1"
-                       title="Another location in this chapter has the same name"
-                       aria-label="Another location in this chapter has the same name"></i>
+                       title="Shares a name or alias with another location in this chapter"
+                       aria-label="Shares a name or alias with another location in this chapter"></i>
                     {% endif %}
                     {% set overlap_chars = char_overlap_by_loc_id.get(loc.id, []) %}
                     {% if overlap_chars %}

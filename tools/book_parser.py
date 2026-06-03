@@ -451,8 +451,12 @@ def build_name_ref_html(
     if duplicate_warning_url:
         # No-underline link so the icon doesn't grow a baseline rule.
         # title= drives the browser tooltip; aria-label echoes it for
-        # screen readers.
-        msg = f'Multiple characters named &quot;{character.name}&quot; in this chapter — click to resolve'
+        # screen readers. "Shared needle" not "shared name" because we
+        # flag overlap on any of name + courtesy + aliases.
+        msg = (
+            f'&quot;{character.name}&quot; shares a name or alias with '
+            f'another character in this chapter — click to resolve'
+        )
         pill += (
             f"<a href='{duplicate_warning_url}' "
             f"class='character-dup-warning text-danger ms-1 text-decoration-none' "
@@ -488,6 +492,52 @@ def build_event_ref_html(event, match_text=None):
         f"<span class='event-ref' data-event-id='{event.id}'>"
         f"{label}</span>"
     )
+
+
+def find_shared_needle_ids(entities, get_needles):
+    """Return the set of entity ids that share at least one needle
+    (name or alias, exact-match) with another entity in the same
+    iterable.
+
+    Used to drive the red admin warning icon on inline pills and
+    association rows. Catches the common case where two Locations
+    have different `name`s but the import has given them the same
+    bare-English alias (e.g. "Yu Province" and "Yu County" both
+    carry the alias "Yu"); a `name`-only Counter would miss it.
+
+    `get_needles(entity)` returns an iterable of strings for the
+    entity. Empty / whitespace-only needles are skipped before
+    comparing. The match is exact equality between needle strings —
+    cross-substring overlap is a separate signal handled by
+    find_location_character_overlap.
+    """
+    from collections import defaultdict
+    needle_to_ids = defaultdict(set)
+    for e in entities:
+        for n in get_needles(e):
+            n = (n or '').strip()
+            if n:
+                needle_to_ids[n].add(e.id)
+    dup_ids = set()
+    for ids in needle_to_ids.values():
+        if len(ids) > 1:
+            dup_ids.update(ids)
+    return dup_ids
+
+
+def location_needles(loc):
+    """Standard needle list for a Location: name + comma-split aliases.
+    Shared by the chapter view + admin listings so the duplicate-name
+    detection and the cross-overlap detection agree on what counts
+    as a 'needle'."""
+    out = []
+    if loc.name:
+        out.append(loc.name)
+    for alias in (loc.aliases or '').split(','):
+        alias = alias.strip()
+        if alias:
+            out.append(alias)
+    return out
 
 
 def find_location_character_overlap(locations, characters):
@@ -588,8 +638,8 @@ def build_location_ref_html(
     )
     if duplicate_warning_url:
         msg = (
-            f'Multiple locations named &quot;{location.name}&quot; '
-            f'in this chapter — click to resolve'
+            f'&quot;{location.name}&quot; shares a name or alias with '
+            f'another location in this chapter — click to resolve'
         )
         pill += (
             f"<a href='{duplicate_warning_url}' "

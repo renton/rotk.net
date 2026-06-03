@@ -14,7 +14,7 @@ from app import db
 from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv, find_location_character_overlap
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
@@ -287,22 +287,23 @@ def chapter_associations(chapter_num=None):
     # here so admins can spot the same ambiguity at a glance from the
     # association listing.
     #
-    #   in_chapter_dup_names    : character names shared by >1 character
-    #                             TAGGED IN THIS chapter (chapter-scoped,
-    #                             distinct from `duplicate_names` above
-    #                             which is global).
+    #   in_chapter_dup_ids      : ids of characters sharing at least one
+    #                             needle (name / courtesy / alias) with
+    #                             ANOTHER character TAGGED IN THIS
+    #                             chapter. Needle-based (not name-only)
+    #                             so e.g. two characters whose aliases
+    #                             both include "Yu" both get flagged.
     #   loc_overlap_by_char_id  : dict[character.id -> list[Location]]
     #                             of cross-type needle overlaps. Templates
     #                             use the list to name the matched
     #                             locations in the hover tooltip.
-    in_chapter_dup_names = set()
+    in_chapter_dup_ids = set()
     loc_overlap_by_char_id = {}
     if selected is not None:
         chapter_chars = [r['character'] for r in rows]
-        in_chapter_dup_names = {
-            n for n, count in Counter(c.name for c in chapter_chars).items()
-            if count > 1
-        }
+        in_chapter_dup_ids = find_shared_needle_ids(
+            chapter_chars, lambda c: c.get_all_name_labels(),
+        )
         _loc_map, loc_overlap_by_char_id = find_location_character_overlap(
             list(selected.locations), chapter_chars,
         )
@@ -315,7 +316,7 @@ def chapter_associations(chapter_num=None):
         faction_options=faction_options,
         all_characters=all_characters,
         duplicate_names=duplicate_names,
-        in_chapter_dup_names=in_chapter_dup_names,
+        in_chapter_dup_ids=in_chapter_dup_ids,
         loc_overlap_by_char_id=loc_overlap_by_char_id,
         factions_by_char=factions_by_char,
         roles_by_char=roles_by_char,
@@ -927,21 +928,24 @@ def location_associations(chapter_num=None):
 
     # Same warning signals as chapter_associations, swapped sides.
     #
-    #   in_chapter_dup_names    : location names shared by >1 location
-    #                             TAGGED IN THIS chapter.
+    #   in_chapter_dup_ids      : ids of locations sharing at least one
+    #                             needle (name or alias) with ANOTHER
+    #                             location TAGGED IN THIS chapter. This
+    #                             is the canonical case for the admin-
+    #                             division import — "Yu Province" and
+    #                             "Yu County" both carry the alias "Yu"
+    #                             so a name-only check missed them.
     #   char_overlap_by_loc_id  : dict[location.id -> list[Character]]
     #                             of cross-type needle overlaps. Templates
     #                             use the list to name the matched
     #                             characters in the hover tooltip.
-    from collections import Counter
-    in_chapter_dup_names = set()
+    in_chapter_dup_ids = set()
     char_overlap_by_loc_id = {}
     if selected is not None:
         chapter_locs = [r['location'] for r in rows]
-        in_chapter_dup_names = {
-            n for n, count in Counter(l.name for l in chapter_locs).items()
-            if count > 1
-        }
+        in_chapter_dup_ids = find_shared_needle_ids(
+            chapter_locs, location_needles,
+        )
         char_overlap_by_loc_id, _char_map = find_location_character_overlap(
             chapter_locs, list(selected.characters),
         )
@@ -952,7 +956,7 @@ def location_associations(chapter_num=None):
         selected=selected,
         rows=rows,
         all_locations=all_locations,
-        in_chapter_dup_names=in_chapter_dup_names,
+        in_chapter_dup_ids=in_chapter_dup_ids,
         char_overlap_by_loc_id=char_overlap_by_loc_id,
         csrf_form=_CsrfOnlyForm(),
     )

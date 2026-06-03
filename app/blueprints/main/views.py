@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm, MergeLocationForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv, find_location_character_overlap
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
 
 
 def _normalize_csv(s):
@@ -119,12 +119,11 @@ def chapter(chapter_num):
         kws = split_keywords_csv(chapter_loc_kw.get(loc.id, ''))
         return kws if kws else get_location_labels(loc)
 
-    # Admin-only: flag characters whose `name` is shared with another
-    # character in this same chapter so the inline pill gets a red
-    # circle-exclamation linking to the Character/Chapter Association
-    # editor. Lets the admin spot ambiguous matches without having to
-    # cross-check every name by hand.
-    from collections import Counter
+    # Admin-only: flag characters that share at least one needle (name /
+    # courtesy / alias) with another character in this same chapter so
+    # the inline pill gets a red circle-exclamation linking to the
+    # Character/Chapter Association editor. Lets the admin spot
+    # ambiguous matches without having to cross-check every name by hand.
     is_admin = current_user.is_authenticated and current_user.is_administrator
 
     # Pre-collect the locations for THIS chapter so we can compute the
@@ -140,16 +139,24 @@ def chapter(chapter_num):
         locations_for_render.append(loc)
 
     # Admin warning signals, all computed once up front:
-    #   dup_names         — character names shared by >1 character in chapter
-    #   loc_dup_names     — location names shared by >1 location in chapter
-    #   {loc,char}_loc_overlap_ids — cross-type needle overlap
+    #   char_dup_ids      — character ids that share at least one needle
+    #                       (name / courtesy / alias) with ANOTHER
+    #                       character tagged in this chapter.
+    #   loc_dup_ids       — location ids that share at least one needle
+    #                       (name or alias) with another location in
+    #                       this chapter. Catches the canonical-import
+    #                       case where "Yu Province" + "Yu County" both
+    #                       carry the bare alias "Yu" — a name-only
+    #                       check would miss it.
+    #   {loc,char}_loc_overlap_ids — cross-type needle overlap.
     # Public readers skip the cross-product (find_location_character_overlap
     # is the expensive bit) since they don't see any of these icons.
-    dup_names = {n for n, count in Counter(c.name for c in characters).items() if count > 1}
-    loc_dup_names = {
-        n for n, count in Counter(l.name for l in locations_for_render).items()
-        if count > 1
-    }
+    char_dup_ids = find_shared_needle_ids(
+        characters, lambda c: c.get_all_name_labels(),
+    )
+    loc_dup_ids = find_shared_needle_ids(
+        locations_for_render, location_needles,
+    )
     char_admin_url = (
         url_for('admin.chapter_associations', chapter_num=chapter.chapter_num)
         if is_admin else None
@@ -158,8 +165,8 @@ def chapter(chapter_num):
         url_for('admin.location_associations', chapter_num=chapter.chapter_num)
         if is_admin else None
     )
-    dup_url     = char_admin_url if dup_names     else None
-    loc_dup_url = loc_admin_url  if loc_dup_names else None
+    dup_url     = char_admin_url if char_dup_ids else None
+    loc_dup_url = loc_admin_url  if loc_dup_ids  else None
     # loc_char_overlaps : dict[location.id  -> list[Character]]
     # char_loc_overlaps : dict[character.id -> list[Location]]
     # Pill renderers feed the matched names into the green icon's
@@ -179,7 +186,7 @@ def chapter(chapter_num):
     # at the canonical character — so the sidebar panel + chapter-style
     # switcher / link-style behaviour resolve to the right person.
     for character in characters:
-        warn_url = dup_url if (dup_url and character.name in dup_names) else None
+        warn_url = dup_url if (dup_url and character.id in char_dup_ids) else None
         overlap_locs = char_loc_overlaps.get(character.id, [])
         overlap_url = loc_admin_url if overlap_locs else None
         overlap_names = [l.name for l in overlap_locs]
@@ -213,7 +220,7 @@ def chapter(chapter_num):
     # already ran above, so locations get whatever the character /
     # event loops didn't claim.
     for loc in locations_for_render:
-        loc_warn_url = loc_dup_url if (loc_dup_url and loc.name in loc_dup_names) else None
+        loc_warn_url = loc_dup_url if (loc_dup_url and loc.id in loc_dup_ids) else None
         # Both green icons (on character pills AND location pills) link
         # to the LOCATION admin: that's where the bare-name aliases from
         # the CSV import live, and that's where most noisy-overlap
