@@ -11,11 +11,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, Edit, MatchExclusion
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv
-from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm
+from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
 
@@ -1900,3 +1900,132 @@ def delete_event_type(event_type_id):
     db.session.commit()
     flash(f"Deleted event type {name!r}.")
     return redirect(url_for('admin.event_types'))
+
+
+_LOCATION_TYPE_SORTS = ('name', 'created_at', 'location_count')
+_LOCATION_TYPES_PER_PAGE = 50
+
+
+@admin.route('/location-types', methods=['GET'])
+@login_required
+@admin_required
+def location_types():
+    """List location types with their usage count, search + sort. Same
+    shape as /admin/event-types."""
+    page = request.args.get('page', 1, type=int)
+    search = (request.args.get('q') or '').strip()
+    sort = request.args.get('sort', 'name')
+    direction = request.args.get('dir', 'asc')
+
+    if sort not in _LOCATION_TYPE_SORTS:
+        sort = 'name'
+    if direction not in ('asc', 'desc'):
+        direction = 'asc'
+
+    location_counts = (
+        db.session.query(
+            Location.location_type_id.label('location_type_id'),
+            func.count(Location.id).label('location_count'),
+        )
+        .filter(Location.is_deleted.is_(False))
+        .group_by(Location.location_type_id)
+        .subquery()
+    )
+    location_count_expr = func.coalesce(location_counts.c.location_count, 0)
+
+    query = (
+        LocationType.query
+        .outerjoin(location_counts, LocationType.id == location_counts.c.location_type_id)
+        .add_columns(location_count_expr.label('location_count'))
+        .filter(LocationType.is_hidden.is_(False))
+    )
+    if search:
+        query = query.filter(LocationType.name.ilike(f"%{search}%"))
+
+    if sort == 'location_count':
+        order_col = location_count_expr
+    else:
+        order_col = getattr(LocationType, sort)
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+    if sort != 'name':
+        query = query.order_by(LocationType.name.asc())
+
+    pagination = query.paginate(page=page, per_page=_LOCATION_TYPES_PER_PAGE, error_out=False)
+
+    return render_template(
+        'admin/location_types.html',
+        pagination=pagination,
+        search=search,
+        sort=sort,
+        direction=direction,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/location-types/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_location_type():
+    form = EditLocationTypeForm()
+    if form.validate_on_submit():
+        loc_type = LocationType()
+        form.populate_obj(loc_type)
+        db.session.add(loc_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A location type named {loc_type.name!r} already exists.")
+            return redirect(url_for('admin.new_location_type'))
+        flash(f"Created location type {loc_type.name!r}.")
+        return redirect(url_for('admin.location_types'))
+
+    return render_template('admin/location_type_edit.html', form=form, location_type=None)
+
+
+@admin.route('/location-types/<int:location_type_id>/edit', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_location_type(location_type_id):
+    loc_type = LocationType.query.get_or_404(location_type_id)
+    form = EditLocationTypeForm(obj=loc_type)
+    if form.validate_on_submit():
+        form.populate_obj(loc_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A location type named {loc_type.name!r} already exists.")
+            return redirect(url_for('admin.edit_location_type', location_type_id=loc_type.id))
+        flash(f"Updated location type {loc_type.name!r}.")
+        return redirect(url_for('admin.location_types'))
+
+    return render_template('admin/location_type_edit.html', form=form, location_type=loc_type)
+
+
+@admin.route('/location-types/<int:location_type_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def delete_location_type(location_type_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    loc_type = LocationType.query.get_or_404(location_type_id)
+    name = loc_type.name
+
+    # Refuse if any Location still uses this type. FK is ON DELETE SET NULL
+    # so cascading would silently strip the type — force the admin to
+    # untangle on purpose. Same safety pattern as delete_event_type.
+    in_use = Location.query.filter_by(location_type_id=loc_type.id, is_deleted=False).count()
+    if in_use > 0:
+        flash(
+            f"Can't delete {name!r}: it's assigned to {in_use} location"
+            f"{'' if in_use == 1 else 's'}. Reassign or delete those first."
+        )
+        return redirect(url_for('admin.location_types'))
+
+    db.session.delete(loc_type)
+    db.session.commit()
+    flash(f"Deleted location type {name!r}.")
+    return redirect(url_for('admin.location_types'))
