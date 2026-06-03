@@ -26,7 +26,7 @@ import os, time, urllib.parse
 
 # from flask_migrate import Migrate, upgrade
 from app.models import \
-    Chapter, Character, Faction, Role, User, Tag, TagAssociation, LocationType
+    Chapter, Character, Faction, Role, User, Tag, TagAssociation, Location, LocationType
 from app.models.character import Portrait, PORTRAIT_DIR
 
 app = create_app(os.getenv('FLASK_ENV') or 'default')
@@ -661,6 +661,256 @@ def seed_location_types():
     if added:
         db.session.commit()
     print(f"\n{added} location type(s) added; {len(_STANDARD_LOCATION_TYPES) - added} already in place.")
+
+
+# ----- import-admin-divisions ---------------------------------------------
+
+import csv as _csv
+import re as _re
+
+# Default CSV path is resolved against the project root (where rotk.py
+# lives) so the command works regardless of the shell's cwd.
+_DEFAULT_DIVISIONS_CSV = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    'data', '3k_admin_divisions.csv',
+)
+
+# Continuous CJK block — captured group is the Chinese-name portion of a
+# cell. Used to peel "Bing 并州" → ("Bing", "并州"), "Qiaomen 橋門 (town)"
+# → ("Qiaomen (town)", "橋門"), etc.
+_CJK_BLOCK_RE = _re.compile(r'[一-鿿]+(?:[一-鿿\s]*[一-鿿])?')
+
+# Parenthetical type marker in column 4 cells (e.g. "(town)", "(city)").
+# Mapped to one of the LocationType names that `seed-location-types`
+# inserts. Anything outside this map leaves location_type NULL on
+# insert — admin can backfill from the UI.
+_COL4_PAREN_RE = _re.compile(r'\(\s*([A-Za-z]+)\s*\)')
+_COL4_TYPE_MAP = {
+    'town':       'Settlement',
+    'village':    'Settlement',
+    'settlement': 'Settlement',
+    'city':       'City',
+    'pass':       'Pass',
+    'gate':       'Building',
+}
+
+
+def _split_en_zh(cell):
+    """Split a CSV cell into (english, chinese). Chinese is the
+    contiguous CJK block (with any whitespace it contains); English is
+    everything else, whitespace-normalised. Empty cells return ('', '')."""
+    if not cell:
+        return '', ''
+    m = _CJK_BLOCK_RE.search(cell)
+    if not m:
+        return ' '.join(cell.split()), ''
+    english = ' '.join((cell[:m.start()] + cell[m.end():]).split())
+    chinese = m.group(0).strip()
+    return english, chinese
+
+
+def _detect_col4_type_name(cell):
+    """Return the LocationType.name implied by a "(type)" marker in a
+    column-4 cell, or None if no recognised marker is present."""
+    m = _COL4_PAREN_RE.search(cell)
+    if not m:
+        return None
+    return _COL4_TYPE_MAP.get(m.group(1).strip().lower())
+
+
+@app.cli.command()
+@click.argument('path', type=click.Path(dir_okay=False),
+                default=_DEFAULT_DIVISIONS_CSV, required=False)
+@click.option('--dry-run', is_flag=True,
+              help='Parse the CSV and show what would change, but commit nothing.')
+def import_admin_divisions(path, dry_run):
+    """Import the Province → Commandery → County → leaf hierarchy from a
+    CSV file (default data/3k_admin_divisions.csv).
+
+    The CSV is denormalised — every row carries its full ancestor chain
+    (province, commandery, county, col4). The command walks it in four
+    passes (top-down) so each child's parent already exists when we get
+    to it. Names are canonicalised on insert:
+
+      column 1 → "<en> Province"
+      column 2 → "<en> Commandery"
+      column 3 → "<en> County"
+      column 4 → raw English portion (incl. any "(town)" / "(city)" /
+                  "(pass)" parenthetical), with location_type inferred
+                  when the marker is recognisable.
+
+    The Chinese portion of each cell goes into Location.chinese_name.
+
+    Idempotent. Existing locations matched by English name (preferred)
+    or chinese_name (fallback) are reused — chinese_name, location_type,
+    and parent are filled in on the existing row when currently empty,
+    but already-set values are never overwritten."""
+    if not os.path.isfile(path):
+        print(f"CSV not found: {path}")
+        sys.exit(1)
+
+    type_by_name = {t.name: t for t in LocationType.query.all()}
+    required_types = {'Province', 'Commandery', 'County'}
+    missing = required_types - type_by_name.keys()
+    if missing:
+        print(f"Missing required LocationType rows: {sorted(missing)}.")
+        print("Run `flask seed-location-types` first.")
+        sys.exit(1)
+
+    # Indices over the existing data. first-wins for the same-name-twice
+    # case — historical commanderies that appear under two provinces
+    # get a single Location and the second CSV row reuses it.
+    existing = Location.query.filter(Location.is_deleted.is_(False)).all()
+    by_name = {}
+    by_chinese = {}
+    for l in existing:
+        if l.name:
+            by_name.setdefault(l.name, l)
+        if l.chinese_name:
+            by_chinese.setdefault(l.chinese_name, l)
+
+    stats = {'created': 0, 'updated': 0, 'unchanged': 0}
+
+    def find_or_create(canonical_name, chinese, type_name, parent):
+        """Return (location, status) where status is 'created' / 'updated'
+        / 'unchanged'. Looks up by English name first, falls back to
+        Chinese. Fills in missing chinese_name / type / parent on
+        existing rows; never overwrites values already present."""
+        loc_type_obj = type_by_name.get(type_name) if type_name else None
+        existing_row = by_name.get(canonical_name)
+        if existing_row is None and chinese:
+            existing_row = by_chinese.get(chinese)
+
+        if existing_row is None:
+            loc = Location(name=canonical_name, chinese_name=chinese or '')
+            if loc_type_obj is not None:
+                loc.location_type = loc_type_obj
+            if parent is not None:
+                loc.parent = parent
+            db.session.add(loc)
+            by_name.setdefault(canonical_name, loc)
+            if chinese:
+                by_chinese.setdefault(chinese, loc)
+            return loc, 'created'
+
+        changed = False
+        if not existing_row.chinese_name and chinese:
+            existing_row.chinese_name = chinese
+            by_chinese.setdefault(chinese, existing_row)
+            changed = True
+        if existing_row.location_type_id is None and loc_type_obj is not None:
+            existing_row.location_type = loc_type_obj
+            changed = True
+        if existing_row.parent_id is None and parent is not None:
+            existing_row.parent = parent
+            changed = True
+
+        # Cache under both keys so later passes find this row by either
+        # the canonical-suffix name OR the chinese name.
+        by_name.setdefault(canonical_name, existing_row)
+        if existing_row.chinese_name:
+            by_chinese.setdefault(existing_row.chinese_name, existing_row)
+
+        return existing_row, ('updated' if changed else 'unchanged')
+
+    def _bump(status):
+        stats[status] = stats.get(status, 0) + 1
+
+    with open(path, newline='') as fh:
+        rows = list(_csv.DictReader(fh))
+    print(f"loaded {len(rows)} rows from {path}")
+
+    # Pass 1 — provinces.
+    provinces = {}   # raw col-1 cell -> Location
+    for row in rows:
+        cell = row.get('province', '').strip()
+        if not cell or cell in provinces:
+            continue
+        en, zh = _split_en_zh(cell)
+        if not en:
+            continue
+        loc, status = find_or_create(f"{en} Province", zh, 'Province', None)
+        _bump(status)
+        provinces[cell] = loc
+    db.session.flush()
+
+    # Pass 2 — commanderies.
+    commanderies = {}   # (province_cell, commandery_cell) -> Location
+    for row in rows:
+        prov_cell = row.get('province', '').strip()
+        com_cell = row.get('commandery', '').strip()
+        if not com_cell:
+            continue
+        key = (prov_cell, com_cell)
+        if key in commanderies:
+            continue
+        en, zh = _split_en_zh(com_cell)
+        if not en:
+            continue
+        parent = provinces.get(prov_cell)
+        loc, status = find_or_create(f"{en} Commandery", zh, 'Commandery', parent)
+        _bump(status)
+        commanderies[key] = loc
+    db.session.flush()
+
+    # Pass 3 — counties.
+    counties = {}   # (prov, com, cnty) -> Location
+    for row in rows:
+        prov_cell = row.get('province', '').strip()
+        com_cell = row.get('commandery', '').strip()
+        cnty_cell = row.get('county', '').strip()
+        if not cnty_cell:
+            continue
+        key = (prov_cell, com_cell, cnty_cell)
+        if key in counties:
+            continue
+        en, zh = _split_en_zh(cnty_cell)
+        if not en:
+            continue
+        parent = commanderies.get((prov_cell, com_cell))
+        loc, status = find_or_create(f"{en} County", zh, 'County', parent)
+        _bump(status)
+        counties[key] = loc
+    db.session.flush()
+
+    # Pass 4 — column 4 (city/town/pass/village/...).
+    # Name is the raw English portion of the cell (no suffix added),
+    # so "Qiaomen 橋門 (town)" becomes name="Qiaomen (town)".
+    # location_type is inferred from a "(type)" marker when present;
+    # NULL otherwise.
+    for row in rows:
+        prov_cell = row.get('province', '').strip()
+        com_cell = row.get('commandery', '').strip()
+        cnty_cell = row.get('county', '').strip()
+        leaf_cell = row.get('city', '').strip()
+        if not leaf_cell:
+            continue
+        en, zh = _split_en_zh(leaf_cell)
+        if not en:
+            continue
+        # Pick the deepest ancestor available in this row. The schema is
+        # permissive about parent type — a (town) without a county can
+        # parent straight to the commandery.
+        parent = (counties.get((prov_cell, com_cell, cnty_cell))
+                  or commanderies.get((prov_cell, com_cell))
+                  or provinces.get(prov_cell))
+        type_name = _detect_col4_type_name(leaf_cell)
+        loc, status = find_or_create(en, zh, type_name, parent)
+        _bump(status)
+
+    if dry_run:
+        db.session.rollback()
+        print("\n[dry run — nothing committed]")
+    else:
+        db.session.commit()
+
+    total = sum(stats.values())
+    print(
+        f"\n{total} entr{'y' if total == 1 else 'ies'} touched: "
+        f"{stats.get('created', 0)} created, "
+        f"{stats.get('updated', 0)} updated, "
+        f"{stats.get('unchanged', 0)} unchanged."
+    )
 
 
 @app.cli.command()
