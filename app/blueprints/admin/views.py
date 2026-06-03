@@ -301,11 +301,27 @@ def chapter_associations(chapter_num=None):
     loc_overlap_by_char_id = {}
     if selected is not None:
         chapter_chars = [r['character'] for r in rows]
-        in_chapter_dup_ids = find_shared_needle_ids(
-            chapter_chars, lambda c: c.get_all_name_labels(),
+        # Use the SAME chapter-scoped keywords the inline tagger uses
+        # (chapter_character.keywords / chapter_location.keywords when
+        # set, else the entity's global labels). Pure-global aliases
+        # produce green-icon overlaps that don't reflect what's
+        # actually tagged in the prose.
+        char_kw_csv_by_id = {r['character'].id: r['keywords'] for r in rows}
+        def _char_needles(c):
+            return (split_keywords_csv(char_kw_csv_by_id.get(c.id, ''))
+                    or c.get_all_name_labels())
+        chapter_locs = list(selected.locations)
+        loc_kw_lookup = load_chapter_keywords(
+            selected.id, 'chapter_location', 'location_id',
         )
+        def _loc_needles(loc):
+            return (split_keywords_csv(loc_kw_lookup.get(loc.id, ''))
+                    or location_needles(loc))
+        in_chapter_dup_ids = find_shared_needle_ids(chapter_chars, _char_needles)
         _loc_map, loc_overlap_by_char_id = find_location_character_overlap(
-            list(selected.locations), chapter_chars,
+            chapter_locs, chapter_chars,
+            location_needles_for=_loc_needles,
+            character_needles_for=_char_needles,
         )
 
     return render_template(
@@ -943,11 +959,22 @@ def location_associations(chapter_num=None):
     char_overlap_by_loc_id = {}
     if selected is not None:
         chapter_locs = [r['location'] for r in rows]
-        in_chapter_dup_ids = find_shared_needle_ids(
-            chapter_locs, location_needles,
+        loc_kw_csv_by_id = {r['location'].id: r['keywords'] for r in rows}
+        def _loc_needles(loc):
+            return (split_keywords_csv(loc_kw_csv_by_id.get(loc.id, ''))
+                    or location_needles(loc))
+        chapter_chars = list(selected.characters)
+        char_kw_lookup = load_chapter_keywords(
+            selected.id, 'chapter_character', 'character_id',
         )
+        def _char_needles(c):
+            return (split_keywords_csv(char_kw_lookup.get(c.id, ''))
+                    or c.get_all_name_labels())
+        in_chapter_dup_ids = find_shared_needle_ids(chapter_locs, _loc_needles)
         char_overlap_by_loc_id, _char_map = find_location_character_overlap(
-            chapter_locs, list(selected.characters),
+            chapter_locs, chapter_chars,
+            location_needles_for=_loc_needles,
+            character_needles_for=_char_needles,
         )
 
     return render_template(

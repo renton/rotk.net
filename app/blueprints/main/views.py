@@ -151,12 +151,14 @@ def chapter(chapter_num):
     #   {loc,char}_loc_overlap_ids — cross-type needle overlap.
     # Public readers skip the cross-product (find_location_character_overlap
     # is the expensive bit) since they don't see any of these icons.
-    char_dup_ids = find_shared_needle_ids(
-        characters, lambda c: c.get_all_name_labels(),
-    )
-    loc_dup_ids = find_shared_needle_ids(
-        locations_for_render, location_needles,
-    )
+    # Duplicate + cross-overlap checks key off the same chapter-scoped
+    # needles the inline tagger uses (_character_needles / _location_needles
+    # above) — chapter_character.keywords / chapter_location.keywords
+    # when set, else the entity's global labels. Without that, the
+    # global aliases drive a green-icon match that doesn't reflect
+    # what's actually tagged in this chapter's prose.
+    char_dup_ids = find_shared_needle_ids(characters, _character_needles)
+    loc_dup_ids = find_shared_needle_ids(locations_for_render, _location_needles)
     char_admin_url = (
         url_for('admin.chapter_associations', chapter_num=chapter.chapter_num)
         if is_admin else None
@@ -177,6 +179,8 @@ def chapter(chapter_num):
     if is_admin:
         loc_char_overlaps, char_loc_overlaps = find_location_character_overlap(
             locations_for_render, characters,
+            location_needles_for=_location_needles,
+            character_needles_for=_character_needles,
         )
 
     # Characters get first claim on a needle so character mentions never

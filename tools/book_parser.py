@@ -540,34 +540,72 @@ def location_needles(loc):
     return out
 
 
-def find_location_character_overlap(locations, characters):
-    """Cross-product the needles (name + aliases / courtesy / etc.) of
-    every Location against every Character in the given lists.  Return
-    `(loc_overlaps, char_overlaps)` — two dicts mapping an entity id
-    to the list of *other-side* entities whose needles overlap it.
-    "Overlap" means substring containment in either direction (a
-    needle from one side is contained in a needle from the other, OR
-    vice versa).
+def _word_boundary_overlap(a, b):
+    """True iff `a` is a word-boundary substring of `b`, or vice versa.
+    Empty strings never overlap. Falls back to plain equality when both
+    sides are the same length and equal.
+
+    Using `\\b ... \\b` mirrors the regex semantics `build_needle_pattern`
+    uses against chapter prose. Without it, the alias 'Yu' would
+    "overlap" the character name 'Xia Yun' purely because 'Yu' is a
+    raw substring of 'Yun' — a false-positive the admin can never
+    resolve because Yu isn't actually competing with Xia Yun in the
+    text.
+    """
+    a = (a or '').strip()
+    b = (b or '').strip()
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    shorter, longer = (a, b) if len(a) <= len(b) else (b, a)
+    return re.search(r'\b' + re.escape(shorter) + r'\b', longer) is not None
+
+
+def find_location_character_overlap(locations, characters,
+                                    location_needles_for=None,
+                                    character_needles_for=None):
+    """Cross-product the needles of every Location against every
+    Character in the given lists.  Return `(loc_overlaps, char_overlaps)`
+    — two dicts mapping an entity id to the list of *other-side*
+    entities whose needles overlap it.
+
+    "Overlap" means *word-boundary* substring containment in either
+    direction: a needle from one side word-boundary-matches inside a
+    needle from the other.  Plain `in` matching produced false
+    positives like 'Yu' (alias of Yu Province) flagging the character
+    'Xia Yun' just because 'Yu' is a substring of 'Yun'.
+
+    Pass `location_needles_for(loc)` / `character_needles_for(char)`
+    to supply chapter-scoped needles (e.g. `chapter_location.keywords`
+    when set, falling back to `location.aliases`).  Defaults to the
+    entity's global labels, which is fine when no chapter context
+    exists.
 
         loc_overlaps  : dict[location.id  -> list[Character]]
         char_overlaps : dict[character.id -> list[Location]]
 
     Used by the chapter view + the admin association listings to
     surface a green warning icon (with a tooltip naming the matched
-    cross-type entities) next to entries whose name shares text with
-    a cross-type entity in the same chapter. Pure-Python and quadratic
-    in (sum of needles per side) — chapter-scoped lists are small
-    enough that this stays fast.  Only call when an admin is being
-    rendered to; the work is wasted otherwise.
+    cross-type entities) next to entries whose needles share text
+    with a cross-type entity in the same chapter. Pure-Python and
+    quadratic in (sum of needles per side) — chapter-scoped lists
+    are small enough that this stays fast.  Only call when an admin
+    is being rendered to; the work is wasted otherwise.
 
     Membership checks (`id in loc_overlaps`) still work the way the
     older set-returning version did, so callers that only care about
     "is this thing overlapping?" don't need to change.
     """
+    if character_needles_for is None:
+        character_needles_for = lambda c: c.get_all_name_labels()
+    if location_needles_for is None:
+        location_needles_for = location_needles
+
     char_needles_by_id = {}
     char_obj_by_id = {}
     for c in characters:
-        ns = {n for n in c.get_all_name_labels() if n}
+        ns = {n for n in character_needles_for(c) if n and n.strip()}
         if ns:
             char_needles_by_id[c.id] = ns
             char_obj_by_id[c.id] = c
@@ -575,13 +613,7 @@ def find_location_character_overlap(locations, characters):
     loc_needles_by_id = {}
     loc_obj_by_id = {}
     for loc in locations:
-        ns = set()
-        if loc.name:
-            ns.add(loc.name)
-        for alias in (loc.aliases or '').split(','):
-            alias = alias.strip()
-            if alias:
-                ns.add(alias)
+        ns = {n for n in location_needles_for(loc) if n and n.strip()}
         if ns:
             loc_needles_by_id[loc.id] = ns
             loc_obj_by_id[loc.id] = loc
@@ -593,7 +625,7 @@ def find_location_character_overlap(locations, characters):
             hit = False
             for ln in ln_set:
                 for cn in cn_set:
-                    if (ln in cn) or (cn in ln):
+                    if _word_boundary_overlap(ln, cn):
                         hit = True
                         break
                 if hit:
