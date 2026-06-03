@@ -964,6 +964,35 @@ def edit_location(id):
     location = Location.query.get_or_404(id)
     form = EditLocationForm(obj=location)
     if form.validate_on_submit():
+        # Cycle guard: parent must not be self, and must not be any
+        # descendant of self (which would close a loop). Walk the
+        # proposed parent's own ancestor chain looking for `location`.
+        proposed_parent = form.parent.data
+        if proposed_parent is not None:
+            if proposed_parent.id == location.id:
+                flash("A location can't be its own parent.")
+                return render_template(
+                    'locations/location_edit.html',
+                    form=form, location=location,
+                    urls=[u for u in location.urls if not u.is_deleted],
+                    add_url_form=AddUrlForm(), csrf_form=FlaskForm(),
+                )
+            cur, seen = proposed_parent, set()
+            while cur is not None and cur.id not in seen:
+                if cur.id == location.id:
+                    flash(
+                        f"That would create a cycle: {proposed_parent.name!r} "
+                        f"already has {location.name!r} as an ancestor."
+                    )
+                    return render_template(
+                        'locations/location_edit.html',
+                        form=form, location=location,
+                        urls=[u for u in location.urls if not u.is_deleted],
+                        add_url_form=AddUrlForm(), csrf_form=FlaskForm(),
+                    )
+                seen.add(cur.id)
+                cur = cur.parent
+
         form.populate_obj(location)
         location.aliases = _normalize_csv(location.aliases)
         db.session.add(location)

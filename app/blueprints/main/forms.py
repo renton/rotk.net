@@ -8,7 +8,7 @@ from wtforms.validators import DataRequired, Length, Email, Regexp, Optional, UR
 from wtforms import ValidationError
 from tools.validators import validate_colour
 
-from app.models import Faction, Role, UrlType, Location, EventType
+from app.models import Faction, Role, UrlType, Location, LocationType, EventType
 
 class CharacterFilterForm(FlaskForm):
 
@@ -184,10 +184,42 @@ class AddUrlForm(FlaskForm):
     submit = SubmitField("Add link")
 
 
+def _location_parent_label(loc):
+    """Render a Location option label as "Name (Type)" when the type is
+    set, falling back to just the name. The disambiguator helps admins
+    pick the right parent when several locations share a name across
+    different administrative tiers."""
+    if loc.location_type is not None:
+        return f"{loc.name} ({loc.location_type.name})"
+    return loc.name
+
+
 class EditLocationForm(FlaskForm):
     name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
     chinese_name = StringField("Chinese name", validators=[Length(0, 255)])
     aliases = StringField("Aliases (comma-delimited)", validators=[Length(0, 255)])
+    # Both classification + nesting are optional — there's pre-existing
+    # data without either, and not every Location fits the conventional
+    # admin-division chain (passes, landmarks, etc.).
+    location_type = QuerySelectField(
+        "Type",
+        query_factory=lambda: LocationType.query
+                              .filter(LocationType.is_deleted.is_(False))
+                              .filter(LocationType.is_hidden.is_(False))
+                              .order_by(LocationType.name).all(),
+        get_label='name',
+        allow_blank=True,
+        blank_text='— None —',
+    )
+    parent = QuerySelectField(
+        "Parent location",
+        query_factory=lambda: Location.query
+                              .filter(Location.is_deleted.is_(False))
+                              .order_by(Location.name).all(),
+        get_label=_location_parent_label,
+        allow_blank=True,
+        blank_text='— None —',
+    )
     latitude = FloatField(
         "Latitude",
         validators=[Optional(), NumberRange(min=-90, max=90)],
