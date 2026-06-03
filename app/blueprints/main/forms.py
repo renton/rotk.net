@@ -294,6 +294,13 @@ class MergeFactionForm(FlaskForm):
     submit = SubmitField("Merge & hide")
 
 
+class MergeLocationForm(FlaskForm):
+    """Empty form used for CSRF on the location merge POST. Same shape
+    as MergeFactionForm — the actual `target_location_id` is a hidden
+    field populated by admin_picker.js."""
+    submit = SubmitField("Merge & hide")
+
+
 class EditRoleForm(FlaskForm):
     name = StringField("Name *", validators=[DataRequired()])
     font_colour = StringField(

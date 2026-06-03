@@ -12,7 +12,7 @@ from app.models.character import Portrait, PORTRAIT_DIR
 from . import main
 from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     CharacterFilterForm, UploadPortraitForm, MergeFactionForm, AddUrlForm, \
-    EditLocationForm, EditEventForm
+    EditLocationForm, EditEventForm, MergeLocationForm
 
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv
@@ -1099,6 +1099,15 @@ def edit_location(id):
         db.session.commit()
         flash("Location updated.")
         return redirect(url_for('main.edit_location', id=location.id))
+    # Merge picker — same shape as edit_faction. Show every active
+    # location other than this one as a candidate target.
+    merge_form = MergeLocationForm()
+    mergeable_locations = (
+        Location.query
+        .filter(Location.is_deleted.is_(False), Location.id != location.id)
+        .order_by(Location.name)
+        .all()
+    )
     return render_template(
         'locations/location_edit.html',
         form=form,
@@ -1106,7 +1115,180 @@ def edit_location(id):
         urls=[u for u in location.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),
+        merge_form=merge_form,
+        mergeable_locations=mergeable_locations,
     )
+
+
+@main.route('/locations/<int:id>/merge', methods=['POST'])
+@login_required
+@admin_required
+def merge_location(id):
+    """Merge location `id` (source) into the target chosen in the form.
+
+    Moves every reference to source onto target before soft-deleting
+    source. References handled:
+
+      - chapter_location M2M (with per-link `keywords` merged)
+      - event.location_id
+      - location.parent_id (children re-parented)
+      - polymorphic Url rows         (target_type='location')
+      - polymorphic MatchExclusion   (target_type='location')
+
+    Target also inherits source's name + chinese_name + every alias on
+    source (added to target.aliases CSV, deduped). location_type, lat,
+    lng, and chinese_name on target are filled in from source ONLY when
+    target currently has them blank/null — pre-set values are never
+    overwritten, same rule the CSV import uses.
+
+    Refuses if target is in source's descendant chain — that would
+    require breaking the hierarchy first to avoid a self-loop. The
+    admin can re-parent and retry.
+
+    Source ends with is_deleted=True; UI listings filter it out.
+    Recovery is a DB-level flip of is_deleted back to false — there's
+    no un-merge UI."""
+    from collections import defaultdict
+    from sqlalchemy import text
+
+    merge_form = MergeLocationForm()
+    if not merge_form.validate_on_submit():
+        abort(400)
+
+    source = Location.query.get_or_404(id)
+
+    raw = (request.form.get('target_location_id') or '').strip()
+    if not raw.isdigit():
+        flash("Pick a location from the dropdown to merge into.")
+        return redirect(url_for('main.edit_location', id=id))
+    target = Location.query.get(int(raw))
+    if target is None or target.is_deleted:
+        flash("Target location is missing or already deleted.")
+        return redirect(url_for('main.edit_location', id=id))
+    if target.id == source.id:
+        flash("Can't merge a location into itself.")
+        return redirect(url_for('main.edit_location', id=id))
+
+    # Cycle guard: refuse if target is a descendant of source. Otherwise
+    # re-parenting source's children to target would loop target back
+    # onto itself via its own ancestry. Same BFS the /locations filter
+    # uses, scoped to active rows.
+    pairs = db.session.execute(
+        db.select(Location.id, Location.parent_id)
+        .where(Location.is_deleted.is_(False))
+    ).all()
+    kids_of = defaultdict(list)
+    for cid, pid in pairs:
+        if pid is not None:
+            kids_of[pid].append(cid)
+    descendants = {source.id}
+    stack = [source.id]
+    while stack:
+        node = stack.pop()
+        for child in kids_of.get(node, ()):
+            if child not in descendants:
+                descendants.add(child)
+                stack.append(child)
+    if target.id in descendants:
+        flash(
+            f"Can't merge: {target.name!r} is a descendant of "
+            f"{source.name!r}. Re-parent it first, then retry."
+        )
+        return redirect(url_for('main.edit_location', id=id))
+
+    # ----- chapter_location M2M ------------------------------------
+    # The M2M carries a per-link `keywords` column. For chapters where
+    # source AND target are both linked, merge the keyword CSVs into
+    # target's row; for chapters where only source is linked, re-point
+    # the row at target.
+    params = {'source_id': source.id, 'target_id': target.id}
+
+    # 1. Merge keywords on chapters where both rows exist (CSVs joined
+    #    with a comma — admin can de-dup later if they care). NULLIF
+    #    keeps a trailing comma from showing up when one side is empty.
+    db.session.execute(text("""
+        UPDATE chapter_location AS tgt
+        SET keywords = TRIM(BOTH ',' FROM
+            COALESCE(NULLIF(tgt.keywords, ''), '')
+            || CASE
+                WHEN tgt.keywords <> '' AND src.keywords <> '' THEN ','
+                ELSE ''
+            END
+            || COALESCE(NULLIF(src.keywords, ''), '')
+        )
+        FROM chapter_location AS src
+        WHERE tgt.chapter_id  = src.chapter_id
+          AND tgt.location_id = :target_id
+          AND src.location_id = :source_id
+    """), params)
+
+    # 2. Re-point chapters that only had source linked.
+    db.session.execute(text("""
+        UPDATE chapter_location
+        SET location_id = :target_id
+        WHERE location_id = :source_id
+          AND chapter_id NOT IN (
+              SELECT chapter_id FROM chapter_location
+              WHERE location_id = :target_id
+          )
+    """), params)
+
+    # 3. Drop any source row that's left (only the dup-chapter ones,
+    #    since step 2 took the rest).
+    db.session.execute(text(
+        "DELETE FROM chapter_location WHERE location_id = :source_id"
+    ), params)
+
+    # ----- Event.location_id ---------------------------------------
+    db.session.execute(text(
+        "UPDATE event SET location_id = :target_id WHERE location_id = :source_id"
+    ), params)
+
+    # ----- Location.parent_id (re-parent source's children) --------
+    db.session.execute(text(
+        "UPDATE location SET parent_id = :target_id WHERE parent_id = :source_id"
+    ), params)
+
+    # ----- Polymorphic relationships -------------------------------
+    db.session.execute(text("""
+        UPDATE url SET target_id = :target_id
+        WHERE target_type = 'location' AND target_id = :source_id
+    """), params)
+    db.session.execute(text("""
+        UPDATE match_exclusion SET target_id = :target_id
+        WHERE target_type = 'location' AND target_id = :source_id
+    """), params)
+
+    # ----- Aliases (target absorbs source's name + chinese + aliases) ---
+    aliases_existing = [a.strip() for a in (target.aliases or '').split(',') if a.strip()]
+    candidates = [source.name, source.chinese_name]
+    candidates += [a.strip() for a in (source.aliases or '').split(',') if a.strip()]
+    for alias in candidates:
+        if alias and alias not in aliases_existing:
+            aliases_existing.append(alias)
+    target.aliases = ','.join(aliases_existing)
+
+    # ----- Fill blank-only fields on target ------------------------
+    if not target.chinese_name and source.chinese_name:
+        target.chinese_name = source.chinese_name
+    if target.location_type_id is None and source.location_type_id is not None:
+        target.location_type_id = source.location_type_id
+    if target.latitude is None and source.latitude is not None:
+        target.latitude = source.latitude
+    if target.longitude is None and source.longitude is not None:
+        target.longitude = source.longitude
+
+    # ----- Soft-delete source --------------------------------------
+    source.is_deleted = True
+
+    db.session.commit()
+
+    flash(
+        f"Merged {source.name!r} into {target.name!r}. "
+        f"Source is now hidden from listings; aliases + references "
+        f"moved to target."
+    )
+    return redirect(url_for('main.edit_location', id=target.id))
 
 
 # ----- Events -------------------------------------------------------------
