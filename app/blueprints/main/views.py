@@ -1012,10 +1012,12 @@ def locations():
                     stack.append(child)
         query = query.filter(Location.id.in_(descendants))
 
-    # Avoid N+1 on the row render — every row reads its type + parent.
+    # Avoid N+1 on the row render — every row reads its type, parent,
+    # and chapter list.
     query = query.options(
         selectinload(Location.location_type),
         selectinload(Location.parent).selectinload(Location.location_type),
+        selectinload(Location.chapters),
     )
 
     pagination = query.order_by(Location.name).paginate(
@@ -1023,6 +1025,14 @@ def locations():
         per_page=current_app.config['CHARACTERS_PER_PAGE'],
         error_out=False,
     )
+
+    # Pre-sort chapters per location so the "Chapter References" cell
+    # renders them in book order. Done in Python because the M2M was
+    # selectin-loaded — no extra query.
+    chapter_lists = {
+        loc.id: sorted(loc.chapters, key=lambda c: c.chapter_num)
+        for loc in pagination.items
+    }
 
     return render_template(
         'locations/locations.html',
@@ -1037,6 +1047,7 @@ def locations():
         selected_province_id=province_id,
         selected_commandery_id=commandery_id,
         selected_county_id=county_id,
+        chapter_lists=chapter_lists,
     )
 
 

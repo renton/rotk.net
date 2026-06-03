@@ -295,6 +295,41 @@ def scan_chapter_for_characters(chapter):
 
     return list(chapter_characters)
 
+
+def scan_chapter_for_locations(chapter):
+    """Regex-scan the chapter text against every location's name/aliases.
+
+    Mirrors scan_chapter_for_characters for the Location model. Used by
+    `flask build-location-chapter-association` to bulk-populate the
+    chapter_location M2M. Soft-deleted Locations (merge sources, etc.)
+    are skipped so they don't leak back into chapter sidebars.
+    """
+    # Local import keeps the top-of-module import cheap.
+    from app.models import Location
+
+    all_locations = (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .all()
+    )
+    chapter_locations = set()
+
+    for location in all_locations:
+        needles = [location.name]
+        for alias in (location.aliases or '').split(','):
+            alias = alias.strip()
+            if alias and alias != location.name:
+                needles.append(alias)
+        needles = [n for n in needles if n]
+        if not needles:
+            continue
+        pattern = build_needle_pattern(needles)
+        if pattern.search(chapter.content):
+            chapter_locations.add(location)
+
+    return list(chapter_locations)
+
+
 def build_needle_pattern(name_needles):
     """Combined regex over all keyword needles for the chapter renderer.
 

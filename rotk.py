@@ -14,7 +14,7 @@ import click
 from sqlalchemy.exc import IntegrityError
 from app import create_app, db
 from tools.scraper import scrape_rotk_book, scrape_rotk_characters
-from tools.book_parser import get_characters_for_chapter, scan_chapter_for_characters
+from tools.book_parser import get_characters_for_chapter, scan_chapter_for_characters, scan_chapter_for_locations
 from flask import render_template, request, jsonify
 import os, time, urllib.parse
 
@@ -46,6 +46,29 @@ def build_chapter_character_association():
         print(f"chapter {chapter.chapter_num}: {len(chapter.characters)} characters")
         db.session.commit()
     print(f"\nDone. {total} character/chapter rows.")
+
+
+@app.cli.command()
+def build_location_chapter_association():
+    """Populate the chapter_location table by regex-scanning every chapter
+    for every location's name + aliases. Mirrors
+    build-chapter-character-association — idempotent (the M2M assignment
+    is a full replacement per chapter, so re-running picks up any new
+    locations / new aliases without manual cleanup) and skips
+    soft-deleted Locations so merge sources don't leak back in.
+
+    Per-chapter `keywords` overrides on the chapter_location M2M are
+    NOT touched here — this CLI sets membership only. Use the
+    /admin/location-associations page to refine specific chapter
+    matches after the bulk scan."""
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    total = 0
+    for chapter in chapters:
+        chapter.locations = scan_chapter_for_locations(chapter)
+        total += len(chapter.locations)
+        print(f"chapter {chapter.chapter_num}: {len(chapter.locations)} locations")
+        db.session.commit()
+    print(f"\nDone. {total} location/chapter rows.")
 
 
 @app.cli.command()

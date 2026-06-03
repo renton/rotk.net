@@ -136,6 +136,7 @@ Full walkthrough in `README.md`.
 | `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
+| `flask build-location-chapter-association` | Same shape but for the chapter_location M2M — populates `Chapter.locations` (membership only, doesn't touch per-(chapter, location) `keywords` overrides). Skips soft-deleted Locations. Idempotent. |
 | `flask recount-book-mentions` | Recompute `Character.book_mention_count` across the whole book. Run after scraping new chapters or alias changes. |
 | `flask assign-default-portraits` | For characters with images but none visible, promote one to default (auto-makes visible). Prefers a configurable tag; random fallback. |
 | `flask scrape-koei-images` | Scrape character portraits from koei.fandom.com into `app/static/portraits/` + `Portrait` rows |

@@ -109,6 +109,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `scrape-book` | Fetch all 120 chapters from `threekingdoms.com` into the `chapter` table |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
+| `build-location-chapter-association` | Same idea for the `chapter_location` M2M — populates `Chapter.locations` from each location's name + aliases. Idempotent. Skips soft-deleted Locations. |
 | `recount-book-mentions` | Recompute `Character.book_mention_count` (total mentions across all chapters). Run after scraping new chapters or editing aliases. |
 | `assign-default-portraits [--preferred-tag 1MROTK] [--seed N] [--dry-run]` | For each character that has portraits but none visible, promote one to default (which also makes it visible). Prefers portraits tagged with `--preferred-tag`; falls back to a random pick. |
 | `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |

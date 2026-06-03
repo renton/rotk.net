@@ -93,8 +93,7 @@
             <th>Type</th>
             <th class="d-none d-md-table-cell">Parent</th>
             <th class="d-none d-lg-table-cell">Aliases</th>
-            <th class="d-none d-lg-table-cell text-end">Lat</th>
-            <th class="d-none d-lg-table-cell text-end">Lng</th>
+            <th class="d-none d-md-table-cell">Chapter References</th>
             {% if is_admin %}<th class="text-end">Actions</th>{% endif %}
         </tr>
     </thead>
@@ -138,8 +137,16 @@
                 {% endif %}
             </td>
             <td class="d-none d-lg-table-cell small text-muted">{{ loc.aliases }}</td>
-            <td class="d-none d-lg-table-cell text-end small">{{ '%.4f'|format(loc.latitude) if loc.latitude is not none else '' }}</td>
-            <td class="d-none d-lg-table-cell text-end small">{{ '%.4f'|format(loc.longitude) if loc.longitude is not none else '' }}</td>
+            <td class="d-none d-md-table-cell small">
+                {% set ch_list = chapter_lists.get(loc.id, []) %}
+                {% if ch_list %}
+                    {%- for chapter in ch_list -%}
+                    <a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.chapter_num }}</a>{% if not loop.last %}, {% endif %}
+                    {%- endfor -%}
+                {% else %}
+                    <span class="text-muted">—</span>
+                {% endif %}
+            </td>
             {% if is_admin %}
             <td class="text-end">
                 <a href="{{ url_for('main.edit_location', id=loc.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
@@ -148,7 +155,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="7" class="text-muted">
+            <td colspan="6" class="text-muted">
                 No locations match the current filters.
                 <a href="{{ url_for('main.locations') }}">Clear filters</a>.
             </td>
