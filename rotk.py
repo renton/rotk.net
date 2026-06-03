@@ -904,10 +904,10 @@ def import_admin_divisions(path, dry_run):
     db.session.flush()
 
     # Pass 4 — column 4 (city/town/pass/village/...).
-    # Name is the raw English portion of the cell (no suffix added),
-    # so "Qiaomen 橋門 (town)" becomes name="Qiaomen (town)".
-    # location_type is inferred from a "(type)" marker when present;
-    # NULL otherwise.
+    # Name is the raw English portion of the cell, with any trailing
+    # "(town)" / "(city)" / "(pass)" type marker dropped — that info
+    # lives in location_type_id, not the name. So "Qiaomen 橋門 (town)"
+    # ends up as name="Qiaomen" with location_type=Settlement.
     for row in rows:
         prov_cell = row.get('province', '').strip()
         com_cell = row.get('commandery', '').strip()
@@ -918,13 +918,20 @@ def import_admin_divisions(path, dry_run):
         en, zh = _split_en_zh(leaf_cell)
         if not en:
             continue
+        # Strip "(type)" markers from the name BEFORE we look it up so
+        # find_or_create matches against the same canonical form we'd
+        # produce on a re-run. _detect_col4_type_name still reads the
+        # original cell (it needs the parenthetical to map to a type).
+        type_name = _detect_col4_type_name(leaf_cell)
+        en = ' '.join(_COL4_PAREN_RE.sub('', en).split())
+        if not en:
+            continue
         # Pick the deepest ancestor available in this row. The schema is
         # permissive about parent type — a (town) without a county can
         # parent straight to the commandery.
         parent = (counties.get((prov_cell, com_cell, cnty_cell))
                   or commanderies.get((prov_cell, com_cell))
                   or provinces.get(prov_cell))
-        type_name = _detect_col4_type_name(leaf_cell)
         loc, status = find_or_create(en, zh, type_name, parent)
         _bump(status)
 
