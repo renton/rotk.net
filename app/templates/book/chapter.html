@@ -340,15 +340,28 @@
                   <ul class="list-unstyled mb-0">
                     {% for loc in chapter_locations %}
                     <li class="border rounded p-2 mb-2 bg-light" id="location-item-{{ loc.id }}">
-                      <div>
-                        <strong>{{ loc.name }}</strong>
-                        {% if loc.location_type %}
-                        <span class="ms-1">{{ macros.badge_widget(loc.location_type) }}</span>
-                        {% endif %}
-                        {% if loc.latitude is not none and loc.longitude is not none %}
-                        <div class="text-muted small mt-1">
-                          ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
+                      <div class="d-flex justify-content-between align-items-start gap-2">
+                        <div>
+                          <strong>{{ loc.name }}</strong>
+                          {% if loc.location_type %}
+                          <span class="ms-1">{{ macros.badge_widget(loc.location_type) }}</span>
+                          {% endif %}
+                          {% if loc.latitude is not none and loc.longitude is not none %}
+                          <div class="text-muted small mt-1">
+                            ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
+                          </div>
+                          {% endif %}
                         </div>
+                        {% if current_user.is_authenticated and current_user.is_administrator %}
+                        {# Admin-only quick edit: small pencil icon on the right.
+                           Carries the chapter URL through ?back so the
+                           edit page's "Back" button lands the admin
+                           right back on the chapter they were reading. #}
+                        <a href="{{ url_for('main.edit_location', id=loc.id, back=url_for('main.chapter', chapter_num=chapter.chapter_num)) }}"
+                           class="btn btn-sm btn-outline-secondary py-0 px-1 lh-1"
+                           title="Edit this location" aria-label="Edit this location">
+                          <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+                        </a>
                         {% endif %}
                       </div>
                       {# Hierarchy chain: render closest-parent-last so
