@@ -26,7 +26,7 @@ import os, time, urllib.parse
 
 # from flask_migrate import Migrate, upgrade
 from app.models import \
-    Chapter, Character, Faction, Role, User, Tag, TagAssociation
+    Chapter, Character, Faction, Role, User, Tag, TagAssociation, LocationType
 from app.models.character import Portrait, PORTRAIT_DIR
 
 app = create_app(os.getenv('FLASK_ENV') or 'default')
@@ -616,6 +616,51 @@ def apply_migrations():
         print(f"  ok   {filename}")
 
     print(f"\nDone. {new_count} new migration(s) applied; {len(applied)} were already in place.")
+
+
+# Canonical seed list for `flask seed-location-types`. Edit here when
+# you want to add a new standard type; re-running the command picks up
+# additions and skips anything already in the DB.
+#
+# The first four (Province → Commandery → County → City) form the
+# conventional admin-division chain wired into
+# LOCATION_TYPE_PARENT_HIERARCHY in app/models/location.py. The rest are
+# free-form types the book uses constantly — they can parent to any
+# ancestor type. Admins can also create more from the LocationType admin
+# page; this CLI only owns the *initial* set.
+_STANDARD_LOCATION_TYPES = [
+    'Province',
+    'Commandery',
+    'County',
+    'City',
+    'Settlement',
+    'Pass',
+    'Landmark',
+    'Building',
+    'Mountain',
+    'River',
+    'Battlefield',
+]
+
+
+@app.cli.command()
+def seed_location_types():
+    """Insert the standard set of LocationTypes (Province, Commandery,
+    County, City, Settlement, Pass, Landmark, Building, Mountain, River,
+    Battlefield) if they don't already exist. Idempotent — re-run any
+    time to pick up additions to the standard list without touching
+    admin-created types."""
+    added = 0
+    for name in _STANDARD_LOCATION_TYPES:
+        if LocationType.query.filter_by(name=name).first():
+            print(f"  exists: {name}")
+            continue
+        db.session.add(LocationType(name=name))
+        added += 1
+        print(f"  added:  {name}")
+    if added:
+        db.session.commit()
+    print(f"\n{added} location type(s) added; {len(_STANDARD_LOCATION_TYPES) - added} already in place.")
 
 
 @app.cli.command()

@@ -114,6 +114,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |
 | `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
 | `randomize-role-colours [--role-id N] [--seed N] [--dry-run]` | Same as `randomize-faction-colours` but for `Role` rows. |
+| `seed-location-types` | Insert the standard `LocationType` rows (Province, Commandery, County, City, Settlement, Pass, Landmark, Building, Mountain, River, Battlefield). Idempotent — skips any already present. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |

@@ -48,14 +48,6 @@ ALTER TABLE location
 CREATE INDEX IF NOT EXISTS ix_location_location_type_id ON location (location_type_id);
 CREATE INDEX IF NOT EXISTS ix_location_parent_id        ON location (parent_id);
 
--- Seed types. Idempotent via the UNIQUE (name) constraint above.
-INSERT INTO location_type (name) VALUES
-    ('PROVINCE'),
-    ('COMMANDERY'),
-    ('COUNTY'),
-    ('CITY'),
-    ('PASS'),
-    ('MOUNTAIN'),
-    ('RIVER'),
-    ('BATTLEFIELD')
-ON CONFLICT (name) DO NOTHING;
+-- Seed data is intentionally NOT here. Run `flask seed-location-types`
+-- after the migration applies — keeps the migration pure-schema and
+-- lets the seed list evolve without filing a new migration each time.

@@ -20,27 +20,31 @@ from app.models.chapter import Chapter
 # Location), so e.g. a PASS or BATTLEFIELD can attach to any ancestor
 # the source actually mentions.
 LOCATION_TYPE_PARENT_HIERARCHY = {
-    'PROVINCE':   None,
-    'COMMANDERY': 'PROVINCE',
-    'COUNTY':     'COMMANDERY',
-    'CITY':       'COUNTY',
+    'Province':   None,
+    'Commandery': 'Province',
+    'County':     'Commandery',
+    'City':       'County',
 }
 
 
 def expected_parent_type_name(child_type_name):
     """Return the LocationType.name conventionally above `child_type_name`,
-    or None for PROVINCE (top of the chain) and for non-hierarchical types
-    (PASS, MOUNTAIN, etc. — they can parent to anything)."""
+    or None for Province (top of the chain) and for non-hierarchical types
+    (Settlement, Pass, Landmark, Building, Mountain, River, Battlefield —
+    they can parent to anything)."""
     return LOCATION_TYPE_PARENT_HIERARCHY.get(child_type_name)
 
 
 class LocationType(AbstractTag):
-    """A category for Locations (PROVINCE, COMMANDERY, COUNTY, CITY,
-    PASS, MOUNTAIN, RIVER, BATTLEFIELD, ...). Inherits AbstractTag for
-    the unique name, three colour columns, and Font Awesome icon string.
+    """A category for Locations (Province, Commandery, County, City,
+    Settlement, Pass, Landmark, Building, Mountain, River, Battlefield).
+    Inherits AbstractTag for the unique name, three colour columns, and
+    Font Awesome icon string.
 
     The first four types form the conventional administrative hierarchy
-    (see LOCATION_TYPE_PARENT_HIERARCHY); the rest are free-form."""
+    (see LOCATION_TYPE_PARENT_HIERARCHY); the rest are free-form.
+
+    Seeded via `flask seed-location-types` (idempotent)."""
     locations = db.relationship('Location', back_populates='location_type')
 
     def __repr__(self):
