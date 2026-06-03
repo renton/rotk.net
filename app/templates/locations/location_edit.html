@@ -5,6 +5,9 @@ rotk.net - {% if location %}Edit {{ location.name }}{% else %}New location{% end
 {% endblock %}
 
 {% block page_header %}
+<div class="mb-3">
+    <a href="{{ url_for('main.locations') }}" class="btn btn-sm btn-outline-secondary">&larr; Back to locations</a>
+</div>
 <div class="page-header mb-4">
     <h1>{% if location %}Edit location: {{ location.name }}{% else %}New location{% endif %}</h1>
     {% if not location %}

@@ -5,6 +5,9 @@ rotk.net - {% if faction %}Edit faction: {{ faction.name }}{% else %}New faction
 {% endblock %}
 
 {% block page_header %}
+<div class="mb-3">
+    <a href="{{ url_for('main.factions') }}" class="btn btn-sm btn-outline-secondary">&larr; Back to factions</a>
+</div>
 <div class="page-header mb-3">
     <h1>{% if faction %}Edit faction: {{ faction.name }}{% else %}New faction{% endif %}</h1>
     {% if not faction %}

@@ -11,6 +11,9 @@
 {% endblock %}
 
 {% block page_header %}
+<div class="mb-3">
+    <a href="{{ url_for('main.characters') }}" class="btn btn-sm btn-outline-secondary">&larr; Back to characters</a>
+</div>
 <div class="page-header mb-4">
     {% if character %}
     <h1>Edit character: {{ character.name }}</h1>
