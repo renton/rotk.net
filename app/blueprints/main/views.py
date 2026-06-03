@@ -126,8 +126,46 @@ def chapter(chapter_num):
     # cross-check every name by hand.
     from collections import Counter
     is_admin = current_user.is_authenticated and current_user.is_administrator
+
+    # Pre-collect the locations for THIS chapter so we can compute the
+    # location ↔ character cross-overlap once and feed both pill loops
+    # below. (The actual location pill loop still runs AFTER the
+    # character loop so characters keep first claim on a shared needle.)
+    seen_loc_ids = set()
+    locations_for_render = []
+    for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
+        if loc is None or loc.id in seen_loc_ids:
+            continue
+        seen_loc_ids.add(loc.id)
+        locations_for_render.append(loc)
+
+    # Admin warning signals, all computed once up front:
+    #   dup_names         — character names shared by >1 character in chapter
+    #   loc_dup_names     — location names shared by >1 location in chapter
+    #   {loc,char}_loc_overlap_ids — cross-type needle overlap
+    # Public readers skip the cross-product (find_location_character_overlap
+    # is the expensive bit) since they don't see any of these icons.
     dup_names = {n for n, count in Counter(c.name for c in characters).items() if count > 1}
-    dup_url = url_for('admin.chapter_associations', chapter_num=chapter.chapter_num) if is_admin and dup_names else None
+    loc_dup_names = {
+        n for n, count in Counter(l.name for l in locations_for_render).items()
+        if count > 1
+    }
+    char_admin_url = (
+        url_for('admin.chapter_associations', chapter_num=chapter.chapter_num)
+        if is_admin else None
+    )
+    loc_admin_url = (
+        url_for('admin.location_associations', chapter_num=chapter.chapter_num)
+        if is_admin else None
+    )
+    dup_url     = char_admin_url if dup_names     else None
+    loc_dup_url = loc_admin_url  if loc_dup_names else None
+    loc_char_overlap_ids = set()
+    char_loc_overlap_ids = set()
+    if is_admin:
+        loc_char_overlap_ids, char_loc_overlap_ids = find_location_character_overlap(
+            locations_for_render, characters,
+        )
 
     # Characters get first claim on a needle so character mentions never
     # get accidentally re-coloured as an event/location with the same word.
@@ -137,10 +175,12 @@ def chapter(chapter_num):
     # switcher / link-style behaviour resolve to the right person.
     for character in characters:
         warn_url = dup_url if (dup_url and character.name in dup_names) else None
+        overlap_url = loc_admin_url if character.id in char_loc_overlap_ids else None
         for name_needle in _character_needles(character):
             html = build_name_ref_html(
                 character,
                 duplicate_warning_url=warn_url,
+                location_overlap_url=overlap_url,
                 display_text=name_needle,
             )
             character_html[(character.id, name_needle)] = html
@@ -159,45 +199,11 @@ def chapter(chapter_num):
                 continue   # character already claimed it
             replacements[needle] = build_event_ref_html(event, match_text=needle)
 
-    # Locations from any source — events that pin to one + direct
-    # chapter ↔ location associations. De-dup by id; first one wins.
-    seen_loc_ids = set()
-    locations_for_render = []
-    for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
-        if loc is None or loc.id in seen_loc_ids:
-            continue
-        seen_loc_ids.add(loc.id)
-        locations_for_render.append(loc)
-
-    # Admin-only duplicate-warning URL pattern mirrors the character side:
-    # if multiple locations in this chapter share a `name`, surface a red
-    # circle-exclamation icon next to each affected pill linking to the
-    # /admin/location-associations editor so the admin can fix it.
-    loc_dup_names = {
-        n for n, count in Counter(l.name for l in locations_for_render).items()
-        if count > 1
-    }
-    loc_admin_url = (
-        url_for('admin.location_associations', chapter_num=chapter.chapter_num)
-        if is_admin else None
-    )
-    loc_dup_url = loc_admin_url if loc_dup_names else None
-
-    # Second admin signal — green: which locations have at least one
-    # name / alias that overlaps (exact OR substring in either
-    # direction) a character needle in THIS chapter? Helps the admin
-    # spot ambiguity between location and character mentions so they
-    # can refine per-(chapter, location) keywords. Both warnings can
-    # appear on the same pill — they're independent.
-    #
-    # find_location_character_overlap is admin-gated: skip the cross-
-    # product for public readers since they don't see the icon.
-    loc_char_overlap_ids = set()
-    if is_admin:
-        loc_char_overlap_ids, _ = find_location_character_overlap(
-            locations_for_render, characters,
-        )
-
+    # Locations were pre-collected above (so the cross-overlap with
+    # characters can be computed once and shared between both pill
+    # loops). Now we just claim needles in priority order: events
+    # already ran above, so locations get whatever the character /
+    # event loops didn't claim.
     for loc in locations_for_render:
         loc_warn_url = loc_dup_url if (loc_dup_url and loc.name in loc_dup_names) else None
         loc_overlap_url = loc_admin_url if loc.id in loc_char_overlap_ids else None

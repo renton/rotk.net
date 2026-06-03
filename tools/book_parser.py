@@ -366,7 +366,12 @@ def build_needle_pattern(name_needles):
         return re.compile(r'(?!)')
     return re.compile(r'\b(' + '|'.join(alternatives) + r')(?=\W|$)')
 
-def build_name_ref_html(character, duplicate_warning_url=None, display_text=None):
+def build_name_ref_html(
+    character,
+    duplicate_warning_url=None,
+    location_overlap_url=None,
+    display_text=None,
+):
     """Emit the inline character-ref span. Includes:
 
       * The default pill styling inline so no-JS renders / first paint
@@ -379,11 +384,19 @@ def build_name_ref_html(character, duplicate_warning_url=None, display_text=None
       * A shared `text-ref` class so future inline-tagged data types
         (events, locations) can opt into the same style switcher by
         adding the class.
-      * When `duplicate_warning_url` is provided, a small red
-        circle-exclamation anchor follows the pill — for admins, this
-        signals that more than one character in the chapter shares this
-        name, and links to the Character/Chapter Association editor so
-        the admin can pick the right one.
+      * Up to two optional admin warning anchors after the pill (each
+        a no-underline link with its own tooltip + screen-reader
+        label):
+          - `duplicate_warning_url`: red circle-exclamation — more
+            than one character in the chapter shares this `name`.
+          - `location_overlap_url`: green circle-exclamation — this
+            character's needles (name + courtesy name + aliases)
+            overlap (substring either way) a location's needles in
+            the same chapter. Character mentions take priority over
+            location mentions in the scanner, so the character is
+            correctly tagged here — but a location with the same
+            text exists too, which the admin may want to refine.
+        Both icons can appear together; they're independent signals.
       * `display_text` overrides the pill text; default is
         `character.name`. The chapter renderer passes the matched
         alias (courtesy name, nickname, …) so the inline pill reads
@@ -425,6 +438,18 @@ def build_name_ref_html(character, duplicate_warning_url=None, display_text=None
         pill += (
             f"<a href='{duplicate_warning_url}' "
             f"class='character-dup-warning text-danger ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    if location_overlap_url:
+        msg = (
+            f'&quot;{character.name}&quot; overlaps a location name '
+            f'in this chapter — click to review'
+        )
+        pill += (
+            f"<a href='{location_overlap_url}' "
+            f"class='character-loc-overlap-warning text-success ms-1 text-decoration-none' "
             f"title='{msg}' aria-label='{msg}'>"
             f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
             f"</a>"
