@@ -414,6 +414,17 @@ def chapter(chapter_num):
             depth += 1
         ancestry_by_loc_id[loc.id] = chain
 
+    # Adjacent chapters for the prev/next nav buttons at the bottom of
+    # the page. `chapter_num` is 1..120 and gapless in this dataset, so
+    # +/-1 lookups are fine — the .first() falls back to None at the
+    # extremes (chapter 1 has no prev; the final chapter has no next).
+    prev_chapter = (
+        Chapter.query.filter(Chapter.chapter_num == chapter.chapter_num - 1).first()
+    )
+    next_chapter = (
+        Chapter.query.filter(Chapter.chapter_num == chapter.chapter_num + 1).first()
+    )
+
     return render_template(
         'book/chapter.html',
         chapter=chapter,
@@ -423,6 +434,8 @@ def chapter(chapter_num):
         chapter_events=chapter_events,
         chapter_locations=chapter_locations,
         ancestry_by_loc_id=ancestry_by_loc_id,
+        prev_chapter=prev_chapter,
+        next_chapter=next_chapter,
     )
 
 @main.route('/characters', methods=['GET', 'POST'])

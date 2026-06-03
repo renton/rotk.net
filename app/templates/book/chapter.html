@@ -42,6 +42,33 @@
     <div class="row">
         <div class="col-12 col-lg-8">
             {{ chapter_content | safe }}
+
+            {# Prev / Next chapter nav under the prose. Either side
+               renders as an invisible spacer when there's no
+               neighbour (chapter 1 lacks prev; final chapter lacks
+               next) so the remaining button stays anchored to its
+               edge of the row. #}
+            <nav class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top"
+                 aria-label="Chapter navigation">
+                {% if prev_chapter %}
+                <a href="{{ url_for('main.chapter', chapter_num=prev_chapter.chapter_num) }}"
+                   class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1" aria-hidden="true"></i>
+                    Chapter {{ prev_chapter.chapter_num }}
+                </a>
+                {% else %}
+                <span></span>
+                {% endif %}
+                {% if next_chapter %}
+                <a href="{{ url_for('main.chapter', chapter_num=next_chapter.chapter_num) }}"
+                   class="btn btn-outline-secondary">
+                    Chapter {{ next_chapter.chapter_num }}
+                    <i class="fa-solid fa-arrow-right ms-1" aria-hidden="true"></i>
+                </a>
+                {% else %}
+                <span></span>
+                {% endif %}
+            </nav>
         </div>
         {# Sticky sidebar at lg+ (styles.css → .chapter-sidebar @media). On
            phones/tablets it stacks below the prose as a normal column. #}
