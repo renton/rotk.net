@@ -1164,6 +1164,24 @@ def locations():
         for loc in pagination.items
     }
 
+    # Walk each row's parent chain so the Parent column can render the
+    # full breadcrumb (closest parent first; template reverses for
+    # root → leaf order). Depth cap + seen-set guard against accidental
+    # parent loops in dirty data. Mirrors the chapter view's
+    # ancestry_by_loc_id helper.
+    ancestry_by_loc_id = {}
+    for loc in pagination.items:
+        chain = []
+        seen = set()
+        cur = loc.parent
+        depth = 0
+        while cur is not None and cur.id not in seen and depth < 10:
+            chain.append(cur)
+            seen.add(cur.id)
+            cur = cur.parent
+            depth += 1
+        ancestry_by_loc_id[loc.id] = chain
+
     return render_template(
         'locations/locations.html',
         pagination=pagination,
@@ -1178,6 +1196,7 @@ def locations():
         selected_commandery_id=commandery_id,
         selected_county_id=county_id,
         chapter_lists=chapter_lists,
+        ancestry_by_loc_id=ancestry_by_loc_id,
     )
 
 

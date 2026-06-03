@@ -120,22 +120,29 @@
                 {% endif %}
             </td>
             <td class="d-none d-md-table-cell small">
-                {# Click-through: jump the listing to everything under
-                   this parent. The right URL kwarg depends on the
-                   parent's type so the cascade dropdowns light up
-                   matching the new scope. Non-hierarchical parents
-                   (Pass, Mountain, ...) render as plain text. #}
-                {% if loc.parent %}
-                    {% set ptype = loc.parent.location_type.name if loc.parent.location_type else '' %}
-                    {% if ptype == 'Province' %}
-                        <a href="{{ url_for('main.locations', province_id=loc.parent.id) }}">{{ loc.parent.name }}</a>
-                    {% elif ptype == 'Commandery' %}
-                        <a href="{{ url_for('main.locations', commandery_id=loc.parent.id) }}">{{ loc.parent.name }}</a>
-                    {% elif ptype == 'County' %}
-                        <a href="{{ url_for('main.locations', county_id=loc.parent.id) }}">{{ loc.parent.name }}</a>
-                    {% else %}
-                        {{ loc.parent.name }}
-                    {% endif %}
+                {# Full ancestry chain rendered root → leaf so the
+                   reader sees the full Province › Commandery › County
+                   path, not just the immediate parent. Each crumb's
+                   URL kwarg matches its type so the cascade dropdowns
+                   light up correctly when followed. Non-hierarchical
+                   ancestors (Pass, Mountain, ...) render as plain
+                   text. Closest-parent-first chain from the view is
+                   reversed here for natural reading order. #}
+                {% set chain = ancestry_by_loc_id.get(loc.id, []) %}
+                {% if chain %}
+                    {% for ancestor in chain|reverse %}
+                        {%- set atype = ancestor.location_type.name if ancestor.location_type else '' -%}
+                        {%- if atype == 'Province' -%}
+                            <a href="{{ url_for('main.locations', province_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                        {%- elif atype == 'Commandery' -%}
+                            <a href="{{ url_for('main.locations', commandery_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                        {%- elif atype == 'County' -%}
+                            <a href="{{ url_for('main.locations', county_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                        {%- else -%}
+                            {{ ancestor.name }}
+                        {%- endif -%}
+                        {% if not loop.last %} <span class="mx-1 text-muted">›</span> {% endif %}
+                    {% endfor %}
                 {% else %}
                     <span class="text-muted">—</span>
                 {% endif %}
