@@ -287,20 +287,23 @@ def chapter_associations(chapter_num=None):
     # here so admins can spot the same ambiguity at a glance from the
     # association listing.
     #
-    #   in_chapter_dup_names: character `name`s that appear on >1
-    #     character TAGGED IN THIS chapter (chapter-scoped, distinct
-    #     from `duplicate_names` above which is global).
-    #   loc_overlap_char_ids: characters whose needles overlap a
-    #     location's needles in this chapter, substring either way.
+    #   in_chapter_dup_names    : character names shared by >1 character
+    #                             TAGGED IN THIS chapter (chapter-scoped,
+    #                             distinct from `duplicate_names` above
+    #                             which is global).
+    #   loc_overlap_by_char_id  : dict[character.id -> list[Location]]
+    #                             of cross-type needle overlaps. Templates
+    #                             use the list to name the matched
+    #                             locations in the hover tooltip.
     in_chapter_dup_names = set()
-    loc_overlap_char_ids = set()
+    loc_overlap_by_char_id = {}
     if selected is not None:
         chapter_chars = [r['character'] for r in rows]
         in_chapter_dup_names = {
             n for n, count in Counter(c.name for c in chapter_chars).items()
             if count > 1
         }
-        _loc_ids, loc_overlap_char_ids = find_location_character_overlap(
+        _loc_map, loc_overlap_by_char_id = find_location_character_overlap(
             list(selected.locations), chapter_chars,
         )
 
@@ -313,7 +316,7 @@ def chapter_associations(chapter_num=None):
         all_characters=all_characters,
         duplicate_names=duplicate_names,
         in_chapter_dup_names=in_chapter_dup_names,
-        loc_overlap_char_ids=loc_overlap_char_ids,
+        loc_overlap_by_char_id=loc_overlap_by_char_id,
         factions_by_char=factions_by_char,
         roles_by_char=roles_by_char,
         csrf_form=_CsrfOnlyForm(),
@@ -924,20 +927,22 @@ def location_associations(chapter_num=None):
 
     # Same warning signals as chapter_associations, swapped sides.
     #
-    #   in_chapter_dup_names: location `name`s that appear on >1
-    #     location TAGGED IN THIS chapter.
-    #   char_overlap_loc_ids: locations whose needles overlap a
-    #     character's needles in this chapter, substring either way.
+    #   in_chapter_dup_names    : location names shared by >1 location
+    #                             TAGGED IN THIS chapter.
+    #   char_overlap_by_loc_id  : dict[location.id -> list[Character]]
+    #                             of cross-type needle overlaps. Templates
+    #                             use the list to name the matched
+    #                             characters in the hover tooltip.
     from collections import Counter
     in_chapter_dup_names = set()
-    char_overlap_loc_ids = set()
+    char_overlap_by_loc_id = {}
     if selected is not None:
         chapter_locs = [r['location'] for r in rows]
         in_chapter_dup_names = {
             n for n, count in Counter(l.name for l in chapter_locs).items()
             if count > 1
         }
-        char_overlap_loc_ids, _ = find_location_character_overlap(
+        char_overlap_by_loc_id, _char_map = find_location_character_overlap(
             chapter_locs, list(selected.characters),
         )
 
@@ -948,7 +953,7 @@ def location_associations(chapter_num=None):
         rows=rows,
         all_locations=all_locations,
         in_chapter_dup_names=in_chapter_dup_names,
-        char_overlap_loc_ids=char_overlap_loc_ids,
+        char_overlap_by_loc_id=char_overlap_by_loc_id,
         csrf_form=_CsrfOnlyForm(),
     )
 

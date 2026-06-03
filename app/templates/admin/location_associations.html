@@ -64,10 +64,14 @@
                        title="Another location in this chapter has the same name"
                        aria-label="Another location in this chapter has the same name"></i>
                     {% endif %}
-                    {% if loc.id in char_overlap_loc_ids %}
+                    {% set overlap_chars = char_overlap_by_loc_id.get(loc.id, []) %}
+                    {% if overlap_chars %}
+                      {%- set shown   = overlap_chars[:3] -%}
+                      {%- set extra   = overlap_chars|length - shown|length -%}
+                      {%- set joined  = shown | map(attribute='name') | join(', ') -%}
+                      {%- set tooltip = 'Overlaps characters: ' ~ joined ~ ((' (+' ~ extra ~ ' more)') if extra else '') -%}
                     <i class="fa-solid fa-circle-exclamation text-success ms-1"
-                       title="This location's name overlaps a character in this chapter"
-                       aria-label="This location's name overlaps a character in this chapter"></i>
+                       title="{{ tooltip }}" aria-label="{{ tooltip }}"></i>
                     {% endif %}
                 </div>
                 {% if loc.aliases %}

@@ -366,10 +366,28 @@ def build_needle_pattern(name_needles):
         return re.compile(r'(?!)')
     return re.compile(r'\b(' + '|'.join(alternatives) + r')(?=\W|$)')
 
+def _overlap_tooltip_phrase(other_kind_plural, other_names, max_show=3):
+    """Render the names of overlapping cross-type entities into a short
+    HTML-attribute-safe phrase for use in a hover tooltip. Caps at
+    `max_show` names + "(+N more)" so the tooltip doesn't grow into a
+    wall of text. `other_kind_plural` is the noun for the listed
+    entities (e.g. "locations", "characters")."""
+    if not other_names:
+        return f'a {other_kind_plural[:-1]} name'  # "a location name" / "a character name"
+    import html as _html
+    shown = other_names[:max_show]
+    extra = len(other_names) - len(shown)
+    joined = ', '.join(_html.escape(n, quote=True) for n in shown)
+    if extra:
+        joined += f' (+{extra} more)'
+    return f'{other_kind_plural}: {joined}'
+
+
 def build_name_ref_html(
     character,
     duplicate_warning_url=None,
     location_overlap_url=None,
+    location_overlap_with=None,
     display_text=None,
 ):
     """Emit the inline character-ref span. Includes:
@@ -443,9 +461,10 @@ def build_name_ref_html(
             f"</a>"
         )
     if location_overlap_url:
+        phrase = _overlap_tooltip_phrase('locations', location_overlap_with or [])
         msg = (
-            f'&quot;{character.name}&quot; overlaps a location name '
-            f'in this chapter — click to review'
+            f'&quot;{character.name}&quot; overlaps {phrase} in this chapter '
+            f'— click to review'
         )
         pill += (
             f"<a href='{location_overlap_url}' "
@@ -474,25 +493,37 @@ def build_event_ref_html(event, match_text=None):
 def find_location_character_overlap(locations, characters):
     """Cross-product the needles (name + aliases / courtesy / etc.) of
     every Location against every Character in the given lists.  Return
-    `(loc_overlap_ids, char_overlap_ids)` — the sets of ids whose
-    needles partially or completely overlap *any* needle on the other
-    side, where "partial" means substring containment in either
-    direction.
+    `(loc_overlaps, char_overlaps)` — two dicts mapping an entity id
+    to the list of *other-side* entities whose needles overlap it.
+    "Overlap" means substring containment in either direction (a
+    needle from one side is contained in a needle from the other, OR
+    vice versa).
+
+        loc_overlaps  : dict[location.id  -> list[Character]]
+        char_overlaps : dict[character.id -> list[Location]]
 
     Used by the chapter view + the admin association listings to
-    surface a green warning icon next to entities whose name shares
-    text with a cross-type entity in the same chapter. Pure-Python and
-    quadratic in (sum of needles per side) — chapter-scoped lists are
-    small enough that this stays fast.  Make sure to *only* call this
-    when there's an admin to render to; the work is wasted otherwise.
+    surface a green warning icon (with a tooltip naming the matched
+    cross-type entities) next to entries whose name shares text with
+    a cross-type entity in the same chapter. Pure-Python and quadratic
+    in (sum of needles per side) — chapter-scoped lists are small
+    enough that this stays fast.  Only call when an admin is being
+    rendered to; the work is wasted otherwise.
+
+    Membership checks (`id in loc_overlaps`) still work the way the
+    older set-returning version did, so callers that only care about
+    "is this thing overlapping?" don't need to change.
     """
     char_needles_by_id = {}
+    char_obj_by_id = {}
     for c in characters:
         ns = {n for n in c.get_all_name_labels() if n}
         if ns:
             char_needles_by_id[c.id] = ns
+            char_obj_by_id[c.id] = c
 
     loc_needles_by_id = {}
+    loc_obj_by_id = {}
     for loc in locations:
         ns = set()
         if loc.name:
@@ -503,23 +534,25 @@ def find_location_character_overlap(locations, characters):
                 ns.add(alias)
         if ns:
             loc_needles_by_id[loc.id] = ns
+            loc_obj_by_id[loc.id] = loc
 
-    loc_overlap = set()
-    char_overlap = set()
+    loc_overlaps = {}
+    char_overlaps = {}
     for loc_id, ln_set in loc_needles_by_id.items():
         for char_id, cn_set in char_needles_by_id.items():
             hit = False
             for ln in ln_set:
                 for cn in cn_set:
                     if (ln in cn) or (cn in ln):
-                        loc_overlap.add(loc_id)
-                        char_overlap.add(char_id)
                         hit = True
                         break
                 if hit:
                     break
+            if hit:
+                loc_overlaps.setdefault(loc_id, []).append(char_obj_by_id[char_id])
+                char_overlaps.setdefault(char_id, []).append(loc_obj_by_id[loc_id])
 
-    return loc_overlap, char_overlap
+    return loc_overlaps, char_overlaps
 
 
 def build_location_ref_html(
@@ -527,6 +560,7 @@ def build_location_ref_html(
     match_text=None,
     duplicate_warning_url=None,
     character_overlap_url=None,
+    character_overlap_with=None,
 ):
     """Inline span for a location mention in chapter prose.
 
@@ -565,9 +599,10 @@ def build_location_ref_html(
             f"</a>"
         )
     if character_overlap_url:
+        phrase = _overlap_tooltip_phrase('characters', character_overlap_with or [])
         msg = (
-            f'&quot;{location.name}&quot; overlaps a character name '
-            f'in this chapter — click to review'
+            f'&quot;{location.name}&quot; overlaps {phrase} in this chapter '
+            f'— click to review'
         )
         pill += (
             f"<a href='{character_overlap_url}' "

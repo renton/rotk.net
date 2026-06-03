@@ -160,10 +160,15 @@ def chapter(chapter_num):
     )
     dup_url     = char_admin_url if dup_names     else None
     loc_dup_url = loc_admin_url  if loc_dup_names else None
-    loc_char_overlap_ids = set()
-    char_loc_overlap_ids = set()
+    # loc_char_overlaps : dict[location.id  -> list[Character]]
+    # char_loc_overlaps : dict[character.id -> list[Location]]
+    # Pill renderers feed the matched names into the green icon's
+    # title= attribute so admins can see WHICH cross-type entities
+    # overlap without clicking through.
+    loc_char_overlaps = {}
+    char_loc_overlaps = {}
     if is_admin:
-        loc_char_overlap_ids, char_loc_overlap_ids = find_location_character_overlap(
+        loc_char_overlaps, char_loc_overlaps = find_location_character_overlap(
             locations_for_render, characters,
         )
 
@@ -175,12 +180,15 @@ def chapter(chapter_num):
     # switcher / link-style behaviour resolve to the right person.
     for character in characters:
         warn_url = dup_url if (dup_url and character.name in dup_names) else None
-        overlap_url = loc_admin_url if character.id in char_loc_overlap_ids else None
+        overlap_locs = char_loc_overlaps.get(character.id, [])
+        overlap_url = loc_admin_url if overlap_locs else None
+        overlap_names = [l.name for l in overlap_locs]
         for name_needle in _character_needles(character):
             html = build_name_ref_html(
                 character,
                 duplicate_warning_url=warn_url,
                 location_overlap_url=overlap_url,
+                location_overlap_with=overlap_names,
                 display_text=name_needle,
             )
             character_html[(character.id, name_needle)] = html
@@ -206,7 +214,13 @@ def chapter(chapter_num):
     # event loops didn't claim.
     for loc in locations_for_render:
         loc_warn_url = loc_dup_url if (loc_dup_url and loc.name in loc_dup_names) else None
-        loc_overlap_url = loc_admin_url if loc.id in loc_char_overlap_ids else None
+        # Both green icons (on character pills AND location pills) link
+        # to the LOCATION admin: that's where the bare-name aliases from
+        # the CSV import live, and that's where most noisy-overlap
+        # cleanup happens regardless of which side took priority.
+        overlap_chars = loc_char_overlaps.get(loc.id, [])
+        loc_overlap_url = loc_admin_url if overlap_chars else None
+        loc_overlap_names = [c.name for c in overlap_chars]
         for needle in _location_needles(loc):
             if needle in replacements or needle_to_character_ids.get(needle):
                 continue
@@ -214,6 +228,7 @@ def chapter(chapter_num):
                 loc, match_text=needle,
                 duplicate_warning_url=loc_warn_url,
                 character_overlap_url=loc_overlap_url,
+                character_overlap_with=loc_overlap_names,
             )
             needle_to_location_id[needle] = loc.id
 
