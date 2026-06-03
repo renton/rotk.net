@@ -342,12 +342,39 @@
                     <li class="mb-3" id="location-item-{{ loc.id }}">
                       <div>
                         <strong>{{ loc.name }}</strong>
+                        {% if loc.location_type %}
+                        <span class="ms-1">{{ macros.badge_widget(loc.location_type) }}</span>
+                        {% endif %}
                         {% if loc.latitude is not none and loc.longitude is not none %}
                         <span class="text-muted small ms-1">
                           ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
                         </span>
                         {% endif %}
                       </div>
+                      {# Hierarchy chain: render closest-parent-last so
+                         the breadcrumb reads root → leaf, e.g.
+                         "Bing Province › Dingxiang Commandery › Luo County".
+                         Each crumb links to /locations filtered by that
+                         ancestor's id (matching the parent-link cells on
+                         the listing page). #}
+                      {% set chain = ancestry_by_loc_id.get(loc.id, []) %}
+                      {% if chain %}
+                      <div class="small text-muted mt-1">
+                        {% for ancestor in chain|reverse %}
+                          {%- set atype = ancestor.location_type.name if ancestor.location_type else '' -%}
+                          {%- if atype == 'Province' -%}
+                            <a href="{{ url_for('main.locations', province_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                          {%- elif atype == 'Commandery' -%}
+                            <a href="{{ url_for('main.locations', commandery_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                          {%- elif atype == 'County' -%}
+                            <a href="{{ url_for('main.locations', county_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                          {%- else -%}
+                            {{ ancestor.name }}
+                          {%- endif -%}
+                          {% if not loop.last %} <span class="mx-1">›</span> {% endif %}
+                        {% endfor %}
+                      </div>
+                      {% endif %}
                       {% set list_urls = loc.urls %}
                       {% if list_urls %}
                       <div class="sidebar-url-indent mt-1">

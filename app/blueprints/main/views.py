@@ -319,6 +319,25 @@ def chapter(chapter_num):
         locations_by_id.setdefault(loc.id, loc)
     chapter_locations = sorted(locations_by_id.values(), key=lambda loc: loc.name)
 
+    # Pre-walk each chapter location's parent chain so the sidebar can
+    # render the "Province › Commandery › County" breadcrumb without
+    # any tricky chain-walking in Jinja. Closest-parent first; the
+    # template reverses for display. `seen` and max_depth defend
+    # against cycle data even though the merge + cycle-guard logic
+    # forbid them — better to truncate than render forever.
+    ancestry_by_loc_id = {}
+    for loc in chapter_locations:
+        chain = []
+        seen = {loc.id}
+        cur = loc.parent
+        depth = 0
+        while cur is not None and cur.id not in seen and depth < 10:
+            chain.append(cur)
+            seen.add(cur.id)
+            cur = cur.parent
+            depth += 1
+        ancestry_by_loc_id[loc.id] = chain
+
     return render_template(
         'book/chapter.html',
         chapter=chapter,
@@ -327,6 +346,7 @@ def chapter(chapter_num):
         mention_counts=mention_counts,
         chapter_events=chapter_events,
         chapter_locations=chapter_locations,
+        ancestry_by_loc_id=ancestry_by_loc_id,
     )
 
 @main.route('/characters', methods=['GET', 'POST'])
