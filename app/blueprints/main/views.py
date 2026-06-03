@@ -168,10 +168,29 @@ def chapter(chapter_num):
             continue
         seen_loc_ids.add(loc.id)
         locations_for_render.append(loc)
+
+    # Admin-only duplicate-warning URL pattern mirrors the character side:
+    # if multiple locations in this chapter share a `name`, surface a red
+    # circle-exclamation icon next to each affected pill linking to the
+    # /admin/location-associations editor so the admin can fix it.
+    loc_dup_names = {
+        n for n, count in Counter(l.name for l in locations_for_render).items()
+        if count > 1
+    }
+    loc_dup_url = (
+        url_for('admin.location_associations', chapter_num=chapter.chapter_num)
+        if is_admin and loc_dup_names
+        else None
+    )
+
+    for loc in locations_for_render:
+        loc_warn_url = loc_dup_url if (loc_dup_url and loc.name in loc_dup_names) else None
         for needle in _location_needles(loc):
             if needle in replacements or needle_to_character_ids.get(needle):
                 continue
-            replacements[needle] = build_location_ref_html(loc, match_text=needle)
+            replacements[needle] = build_location_ref_html(
+                loc, match_text=needle, duplicate_warning_url=loc_warn_url,
+            )
             needle_to_location_id[needle] = loc.id
 
     pattern = build_needle_pattern(list(replacements.keys()))

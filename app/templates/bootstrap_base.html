@@ -16,7 +16,7 @@
         </title>
         {% endblock %}
     </head>
-    <body>
+    <body class="{% if current_user.is_authenticated and current_user.is_administrator %}is-admin{% endif %}">
         <!--- navbar -->
         {% block navbar %}{% endblock %}
         <!-- Your page content -->

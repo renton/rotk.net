@@ -446,13 +446,35 @@ def build_event_ref_html(event, match_text=None):
     )
 
 
-def build_location_ref_html(location, match_text=None):
-    """Same as build_event_ref_html but for Location."""
+def build_location_ref_html(location, match_text=None, duplicate_warning_url=None):
+    """Inline span for a location mention in chapter prose.
+
+    Same as build_event_ref_html — plain underlined text, clickable
+    (chapter.js opens the Locations accordion in the sidebar) — plus
+    an optional duplicate-warning anchor mirroring build_name_ref_html.
+    Pass `duplicate_warning_url` (typically the chapter's
+    /admin/location-associations URL) and the renderer appends a small
+    red circle-exclamation icon next to the pill so the admin can see
+    at a glance which inline matches have multiple Locations sharing
+    the same name in this chapter."""
     label = match_text if match_text is not None else location.name
-    return (
+    pill = (
         f"<span class='location-ref' data-location-id='{location.id}'>"
         f"{label}</span>"
     )
+    if duplicate_warning_url:
+        msg = (
+            f'Multiple locations named &quot;{location.name}&quot; '
+            f'in this chapter — click to resolve'
+        )
+        pill += (
+            f"<a href='{duplicate_warning_url}' "
+            f"class='location-dup-warning text-danger ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    return pill
 
 
 def get_event_labels(event):

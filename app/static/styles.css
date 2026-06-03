@@ -17,6 +17,15 @@ span.location-ref:hover {
     text-decoration-thickness: 2px;
 }
 
+/* Admin-only signal: tag every inline location-ref red so the admin
+   can see at a glance which pills came from the location scanner —
+   useful for spotting noisy matches that want a snippet exclusion.
+   The `is-admin` class lives on <body> only for authenticated admins
+   (bootstrap_base.html); public readers keep the plain black underline. */
+body.is-admin span.location-ref {
+    color: #c00;
+}
+
 /* Consistent 2rem indent for URL lists nested under a faction /
    character / event / location in the chapter sidebar. Bootstrap's
    ms-5 (3rem) was too wide; ms-4 (1.5rem) too tight — 2rem sits
