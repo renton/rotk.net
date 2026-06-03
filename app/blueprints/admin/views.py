@@ -14,7 +14,7 @@ from app import db
 from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv, find_location_character_overlap
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
@@ -282,6 +282,28 @@ def chapter_associations(chapter_num=None):
     factions_by_char = _factions_by_character_id(char_ids)
     roles_by_char = _roles_by_character_id(char_ids)
 
+    # Per-chapter warning signals — same shape the public chapter view
+    # uses to render red/green icons on inline pills. Surfacing them
+    # here so admins can spot the same ambiguity at a glance from the
+    # association listing.
+    #
+    #   in_chapter_dup_names: character `name`s that appear on >1
+    #     character TAGGED IN THIS chapter (chapter-scoped, distinct
+    #     from `duplicate_names` above which is global).
+    #   loc_overlap_char_ids: characters whose needles overlap a
+    #     location's needles in this chapter, substring either way.
+    in_chapter_dup_names = set()
+    loc_overlap_char_ids = set()
+    if selected is not None:
+        chapter_chars = [r['character'] for r in rows]
+        in_chapter_dup_names = {
+            n for n, count in Counter(c.name for c in chapter_chars).items()
+            if count > 1
+        }
+        _loc_ids, loc_overlap_char_ids = find_location_character_overlap(
+            list(selected.locations), chapter_chars,
+        )
+
     return render_template(
         'admin/chapter_associations.html',
         chapters=chapters,
@@ -290,6 +312,8 @@ def chapter_associations(chapter_num=None):
         faction_options=faction_options,
         all_characters=all_characters,
         duplicate_names=duplicate_names,
+        in_chapter_dup_names=in_chapter_dup_names,
+        loc_overlap_char_ids=loc_overlap_char_ids,
         factions_by_char=factions_by_char,
         roles_by_char=roles_by_char,
         csrf_form=_CsrfOnlyForm(),
@@ -898,12 +922,33 @@ def location_associations(chapter_num=None):
             .all()
         )
 
+    # Same warning signals as chapter_associations, swapped sides.
+    #
+    #   in_chapter_dup_names: location `name`s that appear on >1
+    #     location TAGGED IN THIS chapter.
+    #   char_overlap_loc_ids: locations whose needles overlap a
+    #     character's needles in this chapter, substring either way.
+    from collections import Counter
+    in_chapter_dup_names = set()
+    char_overlap_loc_ids = set()
+    if selected is not None:
+        chapter_locs = [r['location'] for r in rows]
+        in_chapter_dup_names = {
+            n for n, count in Counter(l.name for l in chapter_locs).items()
+            if count > 1
+        }
+        char_overlap_loc_ids, _ = find_location_character_overlap(
+            chapter_locs, list(selected.characters),
+        )
+
     return render_template(
         'admin/location_associations.html',
         chapters=chapters,
         selected=selected,
         rows=rows,
         all_locations=all_locations,
+        in_chapter_dup_names=in_chapter_dup_names,
+        char_overlap_loc_ids=char_overlap_loc_ids,
         csrf_form=_CsrfOnlyForm(),
     )
 

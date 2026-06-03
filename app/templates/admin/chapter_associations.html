@@ -86,6 +86,22 @@
                 {% else %}
                     <span class="badge rounded-pill bg-secondary">{{ ch.name }}</span>
                 {% endif %}
+                {# Same red / green warning icons the chapter prose shows.
+                   Red:   another character in THIS chapter shares this name.
+                   Green: this character's name (or alias) overlaps a
+                          location name (or alias) in this chapter — by
+                          exact match or substring either way. Both
+                          icons can appear together. #}
+                {% if ch.name in in_chapter_dup_names %}
+                <i class="fa-solid fa-circle-exclamation text-danger ms-1"
+                   title="Another character in this chapter has the same name"
+                   aria-label="Another character in this chapter has the same name"></i>
+                {% endif %}
+                {% if ch.id in loc_overlap_char_ids %}
+                <i class="fa-solid fa-circle-exclamation text-success ms-1"
+                   title="This character's name overlaps a location in this chapter"
+                   aria-label="This character's name overlaps a location in this chapter"></i>
+                {% endif %}
                 {% if ch.courtesty_name %}
                     <div class="small text-muted">{{ ch.courtesty_name }}</div>
                 {% endif %}

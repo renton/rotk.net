@@ -446,6 +446,57 @@ def build_event_ref_html(event, match_text=None):
     )
 
 
+def find_location_character_overlap(locations, characters):
+    """Cross-product the needles (name + aliases / courtesy / etc.) of
+    every Location against every Character in the given lists.  Return
+    `(loc_overlap_ids, char_overlap_ids)` — the sets of ids whose
+    needles partially or completely overlap *any* needle on the other
+    side, where "partial" means substring containment in either
+    direction.
+
+    Used by the chapter view + the admin association listings to
+    surface a green warning icon next to entities whose name shares
+    text with a cross-type entity in the same chapter. Pure-Python and
+    quadratic in (sum of needles per side) — chapter-scoped lists are
+    small enough that this stays fast.  Make sure to *only* call this
+    when there's an admin to render to; the work is wasted otherwise.
+    """
+    char_needles_by_id = {}
+    for c in characters:
+        ns = {n for n in c.get_all_name_labels() if n}
+        if ns:
+            char_needles_by_id[c.id] = ns
+
+    loc_needles_by_id = {}
+    for loc in locations:
+        ns = set()
+        if loc.name:
+            ns.add(loc.name)
+        for alias in (loc.aliases or '').split(','):
+            alias = alias.strip()
+            if alias:
+                ns.add(alias)
+        if ns:
+            loc_needles_by_id[loc.id] = ns
+
+    loc_overlap = set()
+    char_overlap = set()
+    for loc_id, ln_set in loc_needles_by_id.items():
+        for char_id, cn_set in char_needles_by_id.items():
+            hit = False
+            for ln in ln_set:
+                for cn in cn_set:
+                    if (ln in cn) or (cn in ln):
+                        loc_overlap.add(loc_id)
+                        char_overlap.add(char_id)
+                        hit = True
+                        break
+                if hit:
+                    break
+
+    return loc_overlap, char_overlap
+
+
 def build_location_ref_html(
     location,
     match_text=None,

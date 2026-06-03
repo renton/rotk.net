@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm, MergeLocationForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv, find_location_character_overlap
 
 
 def _normalize_csv(s):
@@ -189,31 +189,14 @@ def chapter(chapter_num):
     # spot ambiguity between location and character mentions so they
     # can refine per-(chapter, location) keywords. Both warnings can
     # appear on the same pill — they're independent.
+    #
+    # find_location_character_overlap is admin-gated: skip the cross-
+    # product for public readers since they don't see the icon.
     loc_char_overlap_ids = set()
     if is_admin:
-        char_needles = set()
-        for c in characters:
-            for n in c.get_all_name_labels():
-                if n:
-                    char_needles.add(n)
-        char_needles = {n for n in char_needles if n}
-
-        for loc in locations_for_render:
-            loc_needles = set()
-            if loc.name:
-                loc_needles.add(loc.name)
-            for alias in (loc.aliases or '').split(','):
-                alias = alias.strip()
-                if alias:
-                    loc_needles.add(alias)
-            # Substring overlap in either direction. Quadratic over a
-            # small set (chapter rarely has more than ~30 locations ×
-            # ~3 needles each times ~20 characters × ~5 needles each),
-            # so the python loop is plenty fast.
-            for ln in loc_needles:
-                if any((ln in cn) or (cn in ln) for cn in char_needles):
-                    loc_char_overlap_ids.add(loc.id)
-                    break
+        loc_char_overlap_ids, _ = find_location_character_overlap(
+            locations_for_render, characters,
+        )
 
     for loc in locations_for_render:
         loc_warn_url = loc_dup_url if (loc_dup_url and loc.name in loc_dup_names) else None

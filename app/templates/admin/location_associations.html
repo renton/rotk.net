@@ -51,7 +51,25 @@
         {% set loc = row.location %}
         <tr>
             <td>
-                <div>{{ loc.name }}</div>
+                <div>
+                    {{ loc.name }}
+                    {# Same red / green warning icons the chapter prose
+                       shows. Red:   another location in THIS chapter
+                       shares this name. Green: this location's name (or
+                       an alias) overlaps a character's name (substring
+                       either way) in this chapter. Both can appear
+                       together. #}
+                    {% if loc.name in in_chapter_dup_names %}
+                    <i class="fa-solid fa-circle-exclamation text-danger ms-1"
+                       title="Another location in this chapter has the same name"
+                       aria-label="Another location in this chapter has the same name"></i>
+                    {% endif %}
+                    {% if loc.id in char_overlap_loc_ids %}
+                    <i class="fa-solid fa-circle-exclamation text-success ms-1"
+                       title="This location's name overlaps a character in this chapter"
+                       aria-label="This location's name overlaps a character in this chapter"></i>
+                    {% endif %}
+                </div>
                 {% if loc.aliases %}
                 <div class="small text-muted">Aliases: {{ loc.aliases }}</div>
                 {% endif %}
