@@ -124,26 +124,48 @@
     }
   });
 
-  // Event / location inline refs open the matching sidebar accordion and
-  // briefly highlight the specific row. Deliberately NO scrollIntoView:
-  // on mobile that would yank the whole page down to the stacked sidebar,
-  // which is more jarring than helpful — the highlight gives the visual
-  // cue, the reader can flick down to the sidebar themselves if they
-  // want to see more.
+  // Event / location inline refs open the matching sidebar accordion,
+  // briefly highlight the specific row, and (on desktop only) scroll
+  // the page so the row is in view. We skip scrollIntoView on mobile
+  // — the sidebar stacks under the prose there, and scrolling would
+  // yank the user away from the paragraph they were reading. On
+  // desktop the sidebar sits next to the prose, so the page scroll
+  // brings the row into view without losing the reader's place.
   function showAccordionItem(collapseId, itemId) {
     var collapseEl = document.getElementById(collapseId);
-    if (collapseEl && typeof bootstrap !== 'undefined') {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false }).show();
-    }
     var item = itemId ? document.getElementById(itemId) : null;
     if (!item) return;
+
     // CSS animates a yellow-fade-out via the .sidebar-flash class.
-    // Re-trigger by removing + re-adding so a second click flashes again.
+    // Re-trigger by removing + re-adding (with a reflow in between) so
+    // a second click on the same item flashes again.
     item.classList.remove('sidebar-flash');
-    // Force a reflow so the browser actually treats the next add as a
-    // fresh class change rather than a no-op.
     void item.offsetWidth;
     item.classList.add('sidebar-flash');
+
+    var scrollToItem = function () {
+      if (isMobile()) return;
+      // block: 'nearest' scrolls only as much as needed — won't jump
+      // up when the item is already visible. behavior: 'smooth' keeps
+      // the motion intentional rather than jolty.
+      item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+
+    if (collapseEl && typeof bootstrap !== 'undefined') {
+      var inst = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+      if (collapseEl.classList.contains('show')) {
+        // Already open — the layout's settled, scroll right away.
+        scrollToItem();
+      } else {
+        // Defer scrolling until the accordion finishes expanding,
+        // otherwise the item's final position isn't known yet and
+        // the scroll lands short.
+        collapseEl.addEventListener('shown.bs.collapse', scrollToItem, { once: true });
+        inst.show();
+      }
+    } else {
+      scrollToItem();
+    }
   }
 
   document.addEventListener('click', function (event) {
