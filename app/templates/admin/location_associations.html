@@ -74,6 +74,9 @@
                        title="{{ tooltip }}" aria-label="{{ tooltip }}"></i>
                     {% endif %}
                 </div>
+                {% if loc.location_type %}
+                <div class="mt-1">{{ macros.badge_widget(loc.location_type) }}</div>
+                {% endif %}
                 {% if loc.aliases %}
                 <div class="small text-muted">Aliases: {{ loc.aliases }}</div>
                 {% endif %}
