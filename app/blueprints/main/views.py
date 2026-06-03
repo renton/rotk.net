@@ -7,7 +7,7 @@ from sqlalchemy.orm import selectinload
 from werkzeug.utils import secure_filename
 
 from app import db
-from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Location, Event
+from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Location, LocationType, Event
 from app.models.character import Portrait, PORTRAIT_DIR
 from . import main
 from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
@@ -922,21 +922,121 @@ def edit_role(id):
 
 @main.route('/locations', methods=['GET'])
 def locations():
+    from collections import defaultdict
+    from sqlalchemy.orm import aliased
+
     page = request.args.get('page', 1, type=int)
     q = (request.args.get('q') or '').strip()
+    type_id = request.args.get('type_id', type=int)
+    province_id = request.args.get('province_id', type=int)
+    commandery_id = request.args.get('commandery_id', type=int)
+    county_id = request.args.get('county_id', type=int)
+
+    # Type lookup by name powers the cascade — we filter the
+    # Province / Commandery / County dropdowns by the matching type id.
+    type_by_name = {
+        t.name: t for t in
+        LocationType.query
+        .filter(LocationType.is_deleted.is_(False))
+        .filter(LocationType.is_hidden.is_(False))
+        .order_by(LocationType.name).all()
+    }
+    province_type_id   = type_by_name.get('Province').id   if 'Province'   in type_by_name else None
+    commandery_type_id = type_by_name.get('Commandery').id if 'Commandery' in type_by_name else None
+    county_type_id     = type_by_name.get('County').id     if 'County'     in type_by_name else None
+
+    # ----- Cascade dropdown contents -------------------------------------
+    # Each level is filtered by the level above (if selected) so picking a
+    # province narrows the commandery dropdown to that province's
+    # commanderies, etc.
+    def _by_type(tid):
+        return (Location.query
+                .filter(Location.is_deleted.is_(False))
+                .filter(Location.location_type_id == tid)
+                .order_by(Location.name).all())
+
+    provinces = _by_type(province_type_id) if province_type_id else []
+
+    commanderies = []
+    if commandery_type_id:
+        cq = (Location.query
+              .filter(Location.is_deleted.is_(False))
+              .filter(Location.location_type_id == commandery_type_id))
+        if province_id:
+            cq = cq.filter(Location.parent_id == province_id)
+        commanderies = cq.order_by(Location.name).all()
+
+    counties = []
+    if county_type_id:
+        cq = (Location.query
+              .filter(Location.is_deleted.is_(False))
+              .filter(Location.location_type_id == county_type_id))
+        if commandery_id:
+            cq = cq.filter(Location.parent_id == commandery_id)
+        elif province_id:
+            # Counties whose commandery sits under the chosen province.
+            com_alias = aliased(Location)
+            cq = (cq.join(com_alias, Location.parent_id == com_alias.id)
+                    .filter(com_alias.parent_id == province_id))
+        counties = cq.order_by(Location.name).all()
+
+    # ----- Build the main listing query ---------------------------------
     query = Location.query.filter(Location.is_deleted.is_(False))
     if q:
         query = query.filter(Location.name.ilike(f"%{q}%"))
+    if type_id:
+        query = query.filter(Location.location_type_id == type_id)
+
+    # Scope filter: limit results to the descendants of the most-specific
+    # ancestor the user has selected. Falls through county → commandery
+    # → province so partial selections still narrow the listing.
+    scope_ancestor_id = county_id or commandery_id or province_id
+    if scope_ancestor_id:
+        # Fetch every (id, parent_id) pair once and BFS in Python — at
+        # ~800 rows this is cheaper and clearer than a recursive CTE.
+        pairs = db.session.execute(
+            db.select(Location.id, Location.parent_id)
+            .where(Location.is_deleted.is_(False))
+        ).all()
+        kids_of = defaultdict(list)
+        for cid, pid in pairs:
+            if pid is not None:
+                kids_of[pid].append(cid)
+        descendants = {scope_ancestor_id}
+        stack = [scope_ancestor_id]
+        while stack:
+            node = stack.pop()
+            for child in kids_of.get(node, ()):
+                if child not in descendants:
+                    descendants.add(child)
+                    stack.append(child)
+        query = query.filter(Location.id.in_(descendants))
+
+    # Avoid N+1 on the row render — every row reads its type + parent.
+    query = query.options(
+        selectinload(Location.location_type),
+        selectinload(Location.parent).selectinload(Location.location_type),
+    )
+
     pagination = query.order_by(Location.name).paginate(
         page=page,
         per_page=current_app.config['CHARACTERS_PER_PAGE'],
         error_out=False,
     )
+
     return render_template(
         'locations/locations.html',
         pagination=pagination,
         q=q,
         page=page,
+        types=list(type_by_name.values()),
+        provinces=provinces,
+        commanderies=commanderies,
+        counties=counties,
+        selected_type_id=type_id,
+        selected_province_id=province_id,
+        selected_commandery_id=commandery_id,
+        selected_county_id=county_id,
     )
 
 

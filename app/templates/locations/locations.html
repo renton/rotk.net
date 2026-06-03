@@ -1,6 +1,19 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
 
 {% block title %}rotk.net - Locations{% endblock %}
+
+{# Pagination links preserve every non-blank filter so paging doesn't
+   drop the user's chosen scope. #}
+{% macro page_link(p) -%}
+    {{ url_for('main.locations',
+               page=p,
+               q=q or None,
+               type_id=selected_type_id or None,
+               province_id=selected_province_id or None,
+               commandery_id=selected_commandery_id or None,
+               county_id=selected_county_id or None) }}
+{%- endmacro %}
 
 {% block page_content %}
 {% set is_admin = current_user.is_authenticated and current_user.is_administrator %}
@@ -9,8 +22,10 @@
     <div>
         <h1 class="mb-0">Locations</h1>
         <p class="text-muted small mb-0">
-            Places mentioned in the book — real or fictional. Used by
-            Events for the future map render.
+            Places mentioned in the book — real or fictional. Filter by
+            type or drill into the Province → Commandery → County
+            hierarchy; the deeper dropdowns narrow once a higher level
+            is selected.
         </p>
     </div>
     {% if is_admin %}
@@ -18,14 +33,51 @@
     {% endif %}
 </div>
 
-<form method="GET" class="row g-2 align-items-end mb-3">
+<form method="GET" action="{{ url_for('main.locations') }}" class="row g-2 align-items-end mb-3">
+    <div class="col-6 col-md-3">
+        <label class="form-label" for="filter-type">Type</label>
+        <select id="filter-type" name="type_id" class="form-select">
+            <option value="">— Any type —</option>
+            {% for t in types %}
+            <option value="{{ t.id }}" {% if t.id == selected_type_id %}selected{% endif %}>{{ t.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 col-md-3">
+        <label class="form-label" for="filter-province">Province</label>
+        <select id="filter-province" name="province_id" class="form-select">
+            <option value="">— Any province —</option>
+            {% for p in provinces %}
+            <option value="{{ p.id }}" {% if p.id == selected_province_id %}selected{% endif %}>{{ p.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 col-md-3">
+        <label class="form-label" for="filter-commandery">Commandery</label>
+        <select id="filter-commandery" name="commandery_id" class="form-select">
+            <option value="">— Any commandery —</option>
+            {% for c in commanderies %}
+            <option value="{{ c.id }}" {% if c.id == selected_commandery_id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 col-md-3">
+        <label class="form-label" for="filter-county">County</label>
+        <select id="filter-county" name="county_id" class="form-select">
+            <option value="">— Any county —</option>
+            {% for c in counties %}
+            <option value="{{ c.id }}" {% if c.id == selected_county_id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
     <div class="col-md-6">
         <label class="form-label" for="location-search">Search name</label>
         <input type="search" id="location-search" name="q" class="form-control"
                value="{{ q or '' }}" autocomplete="off">
     </div>
     <div class="col-md-3 d-flex gap-2">
-        <button type="submit" class="btn btn-primary flex-grow-1">Search</button>
+        <button type="submit" class="btn btn-primary flex-grow-1">Filter</button>
         <a href="{{ url_for('main.locations') }}" class="btn btn-outline-secondary">Clear</a>
     </div>
     <div class="col-md-3 text-end text-muted small">
@@ -38,9 +90,11 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th class="d-none d-md-table-cell">Aliases</th>
-            <th class="d-none d-md-table-cell text-end">Lat</th>
-            <th class="d-none d-md-table-cell text-end">Lng</th>
+            <th>Type</th>
+            <th class="d-none d-md-table-cell">Parent</th>
+            <th class="d-none d-lg-table-cell">Aliases</th>
+            <th class="d-none d-lg-table-cell text-end">Lat</th>
+            <th class="d-none d-lg-table-cell text-end">Lng</th>
             {% if is_admin %}<th class="text-end">Actions</th>{% endif %}
         </tr>
     </thead>
@@ -55,9 +109,37 @@
                 {% endif %}
                 {% if loc.chinese_name %}<div class="small text-muted">{{ loc.chinese_name }}</div>{% endif %}
             </td>
-            <td class="d-none d-md-table-cell small text-muted">{{ loc.aliases }}</td>
-            <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.latitude) if loc.latitude is not none else '' }}</td>
-            <td class="d-none d-md-table-cell text-end small">{{ '%.4f'|format(loc.longitude) if loc.longitude is not none else '' }}</td>
+            <td>
+                {% if loc.location_type %}
+                {{ macros.badge_widget(loc.location_type) }}
+                {% else %}
+                <span class="text-muted small">—</span>
+                {% endif %}
+            </td>
+            <td class="d-none d-md-table-cell small">
+                {# Click-through: jump the listing to everything under
+                   this parent. The right URL kwarg depends on the
+                   parent's type so the cascade dropdowns light up
+                   matching the new scope. Non-hierarchical parents
+                   (Pass, Mountain, ...) render as plain text. #}
+                {% if loc.parent %}
+                    {% set ptype = loc.parent.location_type.name if loc.parent.location_type else '' %}
+                    {% if ptype == 'Province' %}
+                        <a href="{{ url_for('main.locations', province_id=loc.parent.id) }}">{{ loc.parent.name }}</a>
+                    {% elif ptype == 'Commandery' %}
+                        <a href="{{ url_for('main.locations', commandery_id=loc.parent.id) }}">{{ loc.parent.name }}</a>
+                    {% elif ptype == 'County' %}
+                        <a href="{{ url_for('main.locations', county_id=loc.parent.id) }}">{{ loc.parent.name }}</a>
+                    {% else %}
+                        {{ loc.parent.name }}
+                    {% endif %}
+                {% else %}
+                    <span class="text-muted">—</span>
+                {% endif %}
+            </td>
+            <td class="d-none d-lg-table-cell small text-muted">{{ loc.aliases }}</td>
+            <td class="d-none d-lg-table-cell text-end small">{{ '%.4f'|format(loc.latitude) if loc.latitude is not none else '' }}</td>
+            <td class="d-none d-lg-table-cell text-end small">{{ '%.4f'|format(loc.longitude) if loc.longitude is not none else '' }}</td>
             {% if is_admin %}
             <td class="text-end">
                 <a href="{{ url_for('main.edit_location', id=loc.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
@@ -66,10 +148,35 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="5" class="text-muted">No locations yet{% if q %} matching that search{% endif %}.</td>
+            <td colspan="7" class="text-muted">
+                No locations match the current filters.
+                <a href="{{ url_for('main.locations') }}">Clear filters</a>.
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 </div>
+
+{% if pagination.pages > 1 %}
+<nav>
+    <ul class="pagination">
+        <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+            <a class="page-link" href="{{ page_link(pagination.prev_num) if pagination.has_prev else '#' }}">&laquo;</a>
+        </li>
+        {% for p in pagination.iter_pages(left_edge=2, left_current=3, right_current=3, right_edge=2) %}
+            {% if p %}
+                <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ page_link(p) }}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">…</a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+            <a class="page-link" href="{{ page_link(pagination.next_num) if pagination.has_next else '#' }}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
 {% endblock %}
