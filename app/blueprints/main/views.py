@@ -28,6 +28,23 @@ def _normalize_csv(s):
     return ','.join(part.strip() for part in s.split(',') if part.strip())
 
 
+def _back_arg():
+    """Return a safe `?back=` URL from the current request, or None.
+
+    Listing pages tag every edit link with `?back=<filtered-listing>`
+    so the edit page can render a 1-click "Back to listing" button
+    that returns the admin to the exact page + filters they came
+    from. The back value rides along through form save → redirect so
+    the link still works after multiple edits.
+
+    Only relative paths (start with '/' but NOT '//') are accepted —
+    blocks open-redirect attempts via crafted external URLs."""
+    back = request.args.get('back') or ''
+    if back.startswith('/') and not back.startswith('//'):
+        return back
+    return None
+
+
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
 # higher to leave room for multipart overhead; this is the post-parse limit
 # we apply to the file itself.
@@ -469,7 +486,7 @@ def edit_character(id):
         db.session.add(character)
         db.session.commit()
         flash('The character has been updated.')
-        return redirect(url_for("main.edit_character", id=character.id))
+        return redirect(url_for("main.edit_character", id=character.id, back=_back_arg()))
 
     # Admin view of the edit page surfaces hidden portraits too (with a
     # visual marker), so the admin can promote / unhide them from here
@@ -498,6 +515,7 @@ def edit_character(id):
         add_url_form=add_url_form,
         urls=urls,
         csrf_form=csrf_form,
+        back=_back_arg(),
     )
 
 
@@ -774,7 +792,9 @@ def edit_faction(id):
         db.session.add(faction)
         db.session.commit()
         flash('The faction has been updated.')
-        return redirect(url_for("main.factions"))
+        # If the admin came from a filtered listing, send them back to
+        # the exact filter/page they were on; otherwise the bare list.
+        return redirect(_back_arg() or url_for("main.factions"))
 
     # Merge form + its target picker datalist. Excludes the source itself
     # and anything already hidden.
@@ -795,6 +815,7 @@ def edit_faction(id):
         urls=[u for u in faction.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),
+        back=_back_arg(),
     )
 
 
@@ -1109,7 +1130,7 @@ def edit_location(id):
         db.session.add(location)
         db.session.commit()
         flash("Location updated.")
-        return redirect(url_for('main.edit_location', id=location.id))
+        return redirect(url_for('main.edit_location', id=location.id, back=_back_arg()))
     # Merge picker — same shape as edit_faction. Show every active
     # location other than this one as a candidate target.
     merge_form = MergeLocationForm()
@@ -1128,6 +1149,7 @@ def edit_location(id):
         csrf_form=FlaskForm(),
         merge_form=merge_form,
         mergeable_locations=mergeable_locations,
+        back=_back_arg(),
     )
 
 

@@ -6,7 +6,11 @@ rotk.net - {% if faction %}Edit faction: {{ faction.name }}{% else %}New faction
 
 {% block page_header %}
 <div class="mb-3">
-    <a href="{{ url_for('main.factions') }}" class="btn btn-sm btn-outline-secondary">&larr; Back to factions</a>
+    {# `back` is the filtered listing URL passed in via ?back=… when
+       the admin arrived from the listing. Falls back to the bare
+       listing when this page was hit directly. #}
+    <a href="{{ back if back else url_for('main.factions') }}"
+       class="btn btn-sm btn-outline-secondary">&larr; Back to factions</a>
 </div>
 <div class="page-header mb-3">
     <h1>{% if faction %}Edit faction: {{ faction.name }}{% else %}New faction{% endif %}</h1>
