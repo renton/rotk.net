@@ -94,6 +94,13 @@ class Location(AbstractObject):
         'Location',
         remote_side='Location.id',
         back_populates='children',
+        # Self-referential FK — without post_update, SQLAlchemy's
+        # unit-of-work sorter can't always pick an order when several
+        # parent/child Locations are in the same flush (the bulk CSV
+        # import hit this on the first pass).  post_update means
+        # SQLAlchemy issues a separate UPDATE for parent_id after the
+        # row itself has been inserted/updated, breaking the cycle.
+        post_update=True,
     )
     children = db.relationship(
         'Location',
