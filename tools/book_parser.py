@@ -446,17 +446,31 @@ def build_event_ref_html(event, match_text=None):
     )
 
 
-def build_location_ref_html(location, match_text=None, duplicate_warning_url=None):
+def build_location_ref_html(
+    location,
+    match_text=None,
+    duplicate_warning_url=None,
+    character_overlap_url=None,
+):
     """Inline span for a location mention in chapter prose.
 
     Same as build_event_ref_html — plain underlined text, clickable
     (chapter.js opens the Locations accordion in the sidebar) — plus
-    an optional duplicate-warning anchor mirroring build_name_ref_html.
-    Pass `duplicate_warning_url` (typically the chapter's
-    /admin/location-associations URL) and the renderer appends a small
-    red circle-exclamation icon next to the pill so the admin can see
-    at a glance which inline matches have multiple Locations sharing
-    the same name in this chapter."""
+    up to two optional admin warning anchors:
+
+      * `duplicate_warning_url`: red circle-exclamation when multiple
+        Locations in this chapter share the same `name`. Click to
+        jump to /admin/location-associations and disambiguate.
+      * `character_overlap_url`: green circle-exclamation when any of
+        the location's needles (name + aliases) overlaps — by exact
+        match OR substring containment in either direction — with any
+        character's needles (name + courtesy name + aliases) tagged
+        on this chapter. Surfaces ambiguity between location and
+        character mentions so admins can refine the per-(chapter,
+        location) keywords without staring at every page.
+
+    Both warnings can show on the same pill — they're independent
+    signals."""
     label = match_text if match_text is not None else location.name
     pill = (
         f"<span class='location-ref' data-location-id='{location.id}'>"
@@ -470,6 +484,18 @@ def build_location_ref_html(location, match_text=None, duplicate_warning_url=Non
         pill += (
             f"<a href='{duplicate_warning_url}' "
             f"class='location-dup-warning text-danger ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    if character_overlap_url:
+        msg = (
+            f'&quot;{location.name}&quot; overlaps a character name '
+            f'in this chapter — click to review'
+        )
+        pill += (
+            f"<a href='{character_overlap_url}' "
+            f"class='location-char-overlap-warning text-success ms-1 text-decoration-none' "
             f"title='{msg}' aria-label='{msg}'>"
             f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
             f"</a>"

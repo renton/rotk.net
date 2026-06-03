@@ -177,19 +177,54 @@ def chapter(chapter_num):
         n for n, count in Counter(l.name for l in locations_for_render).items()
         if count > 1
     }
-    loc_dup_url = (
+    loc_admin_url = (
         url_for('admin.location_associations', chapter_num=chapter.chapter_num)
-        if is_admin and loc_dup_names
-        else None
+        if is_admin else None
     )
+    loc_dup_url = loc_admin_url if loc_dup_names else None
+
+    # Second admin signal — green: which locations have at least one
+    # name / alias that overlaps (exact OR substring in either
+    # direction) a character needle in THIS chapter? Helps the admin
+    # spot ambiguity between location and character mentions so they
+    # can refine per-(chapter, location) keywords. Both warnings can
+    # appear on the same pill — they're independent.
+    loc_char_overlap_ids = set()
+    if is_admin:
+        char_needles = set()
+        for c in characters:
+            for n in c.get_all_name_labels():
+                if n:
+                    char_needles.add(n)
+        char_needles = {n for n in char_needles if n}
+
+        for loc in locations_for_render:
+            loc_needles = set()
+            if loc.name:
+                loc_needles.add(loc.name)
+            for alias in (loc.aliases or '').split(','):
+                alias = alias.strip()
+                if alias:
+                    loc_needles.add(alias)
+            # Substring overlap in either direction. Quadratic over a
+            # small set (chapter rarely has more than ~30 locations ×
+            # ~3 needles each times ~20 characters × ~5 needles each),
+            # so the python loop is plenty fast.
+            for ln in loc_needles:
+                if any((ln in cn) or (cn in ln) for cn in char_needles):
+                    loc_char_overlap_ids.add(loc.id)
+                    break
 
     for loc in locations_for_render:
         loc_warn_url = loc_dup_url if (loc_dup_url and loc.name in loc_dup_names) else None
+        loc_overlap_url = loc_admin_url if loc.id in loc_char_overlap_ids else None
         for needle in _location_needles(loc):
             if needle in replacements or needle_to_character_ids.get(needle):
                 continue
             replacements[needle] = build_location_ref_html(
-                loc, match_text=needle, duplicate_warning_url=loc_warn_url,
+                loc, match_text=needle,
+                duplicate_warning_url=loc_warn_url,
+                character_overlap_url=loc_overlap_url,
             )
             needle_to_location_id[needle] = loc.id
 
