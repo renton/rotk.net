@@ -95,6 +95,7 @@ class ProductionConfig(Config):
     SESSION_COOKIE_SAMESITE = 'Lax'
     REMEMBER_COOKIE_SECURE = True
     REMEMBER_COOKIE_HTTPONLY = True
+    SQLALCHEMY_ECHO = False
 
     @classmethod
     def init_app(cls, app):
