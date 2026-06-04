@@ -148,6 +148,7 @@ Full walkthrough in `README.md`.
 | `flask import-admin-divisions [PATH] [--dry-run]` | Walk a Province/Commandery/County/City CSV (default `data/3k_admin_divisions.csv`) and create the corresponding `Location` rows with `parent_id` + `location_type_id` wired. Idempotent: matches by English name first, Chinese name second; fills in NULL fields on existing rows but never overwrites values already set. |
 | `flask make-admin EMAIL` | Promote a user to admin (also marks them confirmed) |
 | `flask create-user EMAIL USERNAME [--admin]` | Create a user directly; prompts for the password |
+| `flask dump-chapter-triage N` | Dump every tagged character/location/event match in chapter N (with snippet, via, and same-needle swap candidates) as JSON to stdout. Read-only — for piping into an LLM triage pass. |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
 
 **When you add a new `@app.cli.command()`, also add it to this table AND to the matching table in `README.md`.** The README table is the one users see; this one is what future Claude sessions read first.

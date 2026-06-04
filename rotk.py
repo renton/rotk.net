@@ -1131,6 +1131,156 @@ def backfill_association_keywords(dry_run):
 
 
 @app.cli.command()
+@click.argument('chapter_num', type=int)
+def dump_chapter_triage(chapter_num):
+    """Dump every tagged association in a chapter as JSON for LLM triage.
+
+    Read-only. Emits one JSON document to stdout containing:
+      - chapter.{num, name}
+      - chapter.prose                (stripped-HTML, full text)
+      - matches[]: one entry per (entity, snippet) currently tagged, with
+            entity {type, id, name, type_label, via, needles, candidates}
+            snippet {match, before, after}
+        where `via` is 'm2m' for a direct chapter_X association or
+        'event:<event name>' for a location pulled in by an event's
+        location FK, and `candidates` lists OTHER entities (id+name+type)
+        that share at least one of this entity's chapter-scoped needles
+        — used by the triage layer to suggest swap targets.
+
+    Designed to be piped to a file or pasted into an LLM context. Safe
+    to run in any environment: no writes, no network."""
+    import json as _json
+    from app.models.chapter import Chapter as ChapterModel
+    from tools.book_parser import (
+        find_location_mentions, find_character_mentions, find_event_mentions,
+        load_chapter_keywords, split_keywords_csv, load_match_exclusions,
+        strip_html_tags, location_needles, find_shared_needle_ids,
+    )
+
+    ch = ChapterModel.query.filter_by(chapter_num=chapter_num).first()
+    if ch is None:
+        raise click.ClickException(f"No chapter with chapter_num={chapter_num}")
+
+    loc_kw = load_chapter_keywords(ch.id, 'chapter_location', 'location_id')
+    char_kw = load_chapter_keywords(ch.id, 'chapter_character', 'character_id')
+    event_kw = load_chapter_keywords(ch.id, 'event_chapter', 'event_id')
+
+    # Build the same union the chapter view does so 'via' attribution
+    # matches what the user sees in the sidebar.
+    direct_loc_ids = {l.id for l in ch.locations}
+    event_pinned = {}
+    for e in ch.events:
+        if e.location_id and e.location and not e.location.is_deleted:
+            event_pinned.setdefault(e.location_id, e.name)
+    seen_loc = set()
+    locs = []
+    for loc in [*(e.location for e in ch.events if e.location), *ch.locations]:
+        if loc is None or loc.id in seen_loc or loc.is_deleted:
+            continue
+        seen_loc.add(loc.id)
+        locs.append(loc)
+
+    chars = [c for c in ch.characters if not c.is_deleted]
+    events = sorted(ch.events, key=lambda e: e.name)
+
+    def _loc_needles(loc):
+        return (split_keywords_csv(loc_kw.get(loc.id, ''))
+                or location_needles(loc))
+    def _char_needles(c):
+        return (split_keywords_csv(char_kw.get(c.id, ''))
+                or c.get_all_name_labels())
+    def _event_needles(e):
+        from tools.book_parser import get_event_labels
+        return (split_keywords_csv(event_kw.get(e.id, ''))
+                or get_event_labels(e))
+
+    # Candidate swaps: any other entity (same type) sharing a needle.
+    def _candidates(entity, all_entities, needles_for):
+        my_needles = set(needles_for(entity))
+        out = []
+        for other in all_entities:
+            if other.id == entity.id:
+                continue
+            if my_needles & set(needles_for(other)):
+                ot = (other.location_type.name
+                      if hasattr(other, 'location_type') and other.location_type
+                      else (other.event_type.name
+                            if hasattr(other, 'event_type') and other.event_type
+                            else ''))
+                out.append({'id': other.id, 'name': other.name, 'type': ot})
+        return out
+
+    matches = []
+
+    for loc in locs:
+        excl = load_match_exclusions(ch.id, 'location', loc.id)
+        needles = _loc_needles(loc)
+        mentions = find_location_mentions(ch, loc, limit=None,
+                                          exclusions=excl, needles=needles)
+        via = 'm2m' if loc.id in direct_loc_ids else f'event:{event_pinned.get(loc.id, "?")}'
+        cand = _candidates(loc, locs, _loc_needles)
+        for m in mentions:
+            matches.append({
+                'entity_type': 'location',
+                'entity_id': loc.id,
+                'entity_name': loc.name,
+                'type_label': loc.location_type.name if loc.location_type else None,
+                'via': via,
+                'needles': needles,
+                'candidates': cand,
+                'snippet': {'match': m['match'], 'before': m['before'], 'after': m['after']},
+            })
+
+    for c in chars:
+        excl = load_match_exclusions(ch.id, 'character', c.id)
+        needles = _char_needles(c)
+        mentions = find_character_mentions(ch, c, limit=None,
+                                           exclusions=excl, needles=needles)
+        cand = _candidates(c, chars, _char_needles)
+        for m in mentions:
+            matches.append({
+                'entity_type': 'character',
+                'entity_id': c.id,
+                'entity_name': c.name,
+                'type_label': None,
+                'via': 'm2m',
+                'needles': needles,
+                'candidates': cand,
+                'snippet': {'match': m['match'], 'before': m['before'], 'after': m['after']},
+            })
+
+    for e in events:
+        if e.is_deleted:
+            continue
+        excl = load_match_exclusions(ch.id, 'event', e.id)
+        needles = _event_needles(e)
+        mentions = find_event_mentions(ch, e, limit=None,
+                                       exclusions=excl, needles=needles)
+        cand = _candidates(e, events, _event_needles)
+        for m in mentions:
+            matches.append({
+                'entity_type': 'event',
+                'entity_id': e.id,
+                'entity_name': e.name,
+                'type_label': e.event_type.name if e.event_type else None,
+                'via': 'm2m',
+                'needles': needles,
+                'candidates': cand,
+                'snippet': {'match': m['match'], 'before': m['before'], 'after': m['after']},
+            })
+
+    payload = {
+        'chapter': {
+            'num': ch.chapter_num,
+            'name': ch.name,
+            'prose': strip_html_tags(ch.content or ''),
+        },
+        'matches': matches,
+    }
+    click.echo(_json.dumps(payload, ensure_ascii=False, indent=2))
+
+
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     pass
