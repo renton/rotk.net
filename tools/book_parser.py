@@ -55,6 +55,22 @@ def load_chapter_keywords(chapter_id, table_name, target_id_column):
     return {row[0]: (row[1] or '') for row in rows}
 
 
+def load_chapter_character_summaries(chapter_id):
+    """Return {character_id: summary_text} for every chapter_character
+    row belonging to `chapter_id`. Mirrors load_chapter_keywords but
+    pulls the `summary` column added by migration 0017."""
+    from app import db
+    from sqlalchemy import text
+    rows = db.session.execute(
+        text(
+            "SELECT character_id, summary FROM chapter_character "
+            "WHERE chapter_id = :cid"
+        ),
+        {'cid': chapter_id},
+    ).all()
+    return {row[0]: (row[1] or '') for row in rows}
+
+
 def split_keywords_csv(s):
     """Split a comma-delimited keyword string into a deduped, stripped
     list. Used by both the chapter render path and the admin association

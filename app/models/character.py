@@ -65,10 +65,14 @@ class Character(AbstractObject):
     # list — fills the role that `character.aliases` used to play
     # globally. The chapter renderer reads from here; admin sets it via
     # the Character/Chapter Association page.
+    # `summary` is a short editorial writeup of what this character
+    # actually does in this chapter — shown in the chapter sidebar's
+    # Characters accordion when set, edited from the same admin page.
     chapter_character = db.Table('chapter_character',
         db.Column('chapter_id', db.Integer, db.ForeignKey('chapter.id'), primary_key=True),
         db.Column('character_id', db.Integer, db.ForeignKey('character.id'), primary_key=True),
         db.Column('keywords', db.Text, nullable=False, default=''),
+        db.Column('summary', db.Text, nullable=False, default=''),
     )
 
     chapters = db.relationship(

@@ -42,6 +42,14 @@ body.is-admin span.location-ref {
     border-radius: 0.25rem;
 }
 
+/* Editorial per-(chapter, character) summary shown in the chapter
+   sidebar's Characters accordion. A muted italic line that visually
+   sits between the character name and the mention-count metadata. */
+.chapter-char-summary {
+    color: #495057;
+    line-height: 1.4;
+}
+
 /* Location items in the chapter sidebar that have geo data become
    keyboard-focusable rows; the hover state hints they're clickable. */
 .location-item-clickable {

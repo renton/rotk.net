@@ -272,6 +272,7 @@
                         {% for character in characters %}
                             {% set chapter_count = mention_counts.get(character.id, 0) %}
                             {% set book_count = character.book_mention_count or 0 %}
+                            {% set char_summary = char_summary_by_id.get(character.id, '') %}
                             <tr class="chapter-character-link"
                                 data-character-id="{{ character.id }}"
                                 role="button"
@@ -285,6 +286,14 @@
                                            aria-label="fictional"></i>
                                         {% endif %}
                                     </div>
+                                    {% if char_summary %}
+                                    {# Editorial summary of this character's role
+                                       in this chapter — set per (chapter, character)
+                                       on /admin/chapter-associations. #}
+                                    <div class="small fst-italic mt-1 mb-1 chapter-char-summary">
+                                        {{ char_summary }}
+                                    </div>
+                                    {% endif %}
                                     <div class="small text-muted">
                                         {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
                                     </div>

@@ -14,7 +14,7 @@ from app import db
 from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
@@ -280,6 +280,7 @@ def chapter_associations(chapter_num=None):
         )
         # Per-(chapter, character) keyword overrides for this chapter.
         per_char_kw = load_chapter_keywords(selected.id, 'chapter_character', 'character_id')
+        per_char_summary = load_chapter_character_summaries(selected.id)
         seen_factions = {}
         for character in associated:
             exclusions = load_match_exclusions(selected.id, 'character', character.id)
@@ -303,6 +304,7 @@ def chapter_associations(chapter_num=None):
                 'roles': list(character.roles),
                 'faction': character.primary_faction,
                 'keywords': kw_csv,
+                'summary': per_char_summary.get(character.id, ''),
             })
             if character.primary_faction is not None:
                 seen_factions[character.primary_faction.id] = character.primary_faction
@@ -378,6 +380,42 @@ def chapter_associations(chapter_num=None):
         factions_by_char=factions_by_char,
         roles_by_char=roles_by_char,
         csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/chapter-associations/<int:chapter_num>/<int:character_id>/summary', methods=['POST'])
+@login_required
+@admin_required
+def chapter_associations_summary(chapter_num, character_id):
+    """Write the per-(chapter, character) `summary` text. Empty string
+    clears it. Idempotent — re-posting the same value is a no-op."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    character = Character.query.get_or_404(character_id)
+    if character not in chapter.characters:
+        flash(f"{character.name!r} is not associated with chapter "
+              f"{chapter.chapter_num}; can't save a summary.")
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+    new_summary = (request.form.get('summary') or '').strip()
+    # Direct UPDATE on the association row — same pattern the keyword
+    # writer uses (no ORM mapping on the chapter_character M2M).
+    from sqlalchemy import text
+    db.session.execute(
+        text("UPDATE chapter_character SET summary = :s "
+             "WHERE chapter_id = :cid AND character_id = :charid"),
+        {'s': new_summary, 'cid': chapter.id, 'charid': character.id},
+    )
+    db.session.commit()
+    flash(f"Saved chapter-{chapter.chapter_num} summary for "
+          f"{character.name!r}.")
+    # Anchor back at the row that was just edited so the admin lands
+    # right where they started.
+    return redirect(
+        url_for('admin.chapter_associations', chapter_num=chapter_num)
+        + f'#assoc-row-{character_id}'
     )
 
 

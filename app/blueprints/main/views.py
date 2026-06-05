@@ -15,7 +15,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm, MergeLocationForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
 from tools.date_parser import parse_date_range
 
 
@@ -637,6 +637,10 @@ def chapter(chapter_num):
             'geojson':       loc.geojson if (has_geo and not has_point) else None,
         })
 
+    # Per-(chapter, character) editorial summaries — shown in the
+    # Characters accordion when set.
+    char_summary_by_id = load_chapter_character_summaries(chapter.id)
+
     return render_template(
         'book/chapter.html',
         chapter=chapter,
@@ -649,6 +653,7 @@ def chapter(chapter_num):
         prev_chapter=prev_chapter,
         next_chapter=next_chapter,
         chapter_map_items=chapter_map_items,
+        char_summary_by_id=char_summary_by_id,
     )
 
 @main.route('/characters', methods=['GET', 'POST'])
