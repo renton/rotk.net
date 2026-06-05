@@ -348,6 +348,32 @@
               </div>
             </div>
 
+            {# Map accordion: mini Leaflet view scoped to just this
+               chapter's positioned locations. Sits above Locations
+               so clicking a location item below opens this accordion
+               and pans / highlights the chosen pin or polygon. #}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-map">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseMap"
+                        aria-expanded="false" aria-controls="collapseMap">
+                  Map ({{ chapter_map_items|length }})
+                </button>
+              </h2>
+              <div id="collapseMap" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  {% if not chapter_map_items %}
+                  <div class="text-muted small">No positioned locations for this chapter yet.</div>
+                  {% else %}
+                  <div id="chapter-map" class="chapter-map"></div>
+                  <script id="chapter-map-items"
+                          type="application/json"
+                          nonce="{{ csp_nonce }}">{{ chapter_map_items|tojson }}</script>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
             {# Locations accordion: deduped locations from the events
                above (a location can be pinned by many events). Same
                URL-list pattern. #}
@@ -366,12 +392,21 @@
                   {% else %}
                   <ul class="list-unstyled mb-0">
                     {% for loc in chapter_locations %}
-                    <li class="border rounded p-2 mb-2 bg-light" id="location-item-{{ loc.id }}">
+                    {% set has_geo = (loc.latitude is not none and loc.longitude is not none) or loc.geojson is not none %}
+                    <li class="border rounded p-2 mb-2 bg-light {% if has_geo %}location-item-clickable{% endif %}"
+                        id="location-item-{{ loc.id }}"
+                        {% if has_geo %}data-show-on-map="{{ loc.id }}"
+                        role="button" tabindex="0"
+                        title="Click to show on map"{% endif %}>
                       <div class="d-flex justify-content-between align-items-start gap-2">
                         <div>
                           <strong>{{ loc.name }}</strong>
                           {% if loc.location_type %}
                           <span class="ms-1">{{ macros.badge_widget(loc.location_type) }}</span>
+                          {% endif %}
+                          {% if has_geo %}
+                          <i class="fa-solid fa-map-pin text-muted ms-1 small"
+                             aria-hidden="true" title="Positioned on map"></i>
                           {% endif %}
                           {% if loc.latitude is not none and loc.longitude is not none %}
                           <div class="text-muted small mt-1">
@@ -458,4 +493,14 @@
 {{ super() }}
 <script src="{{ url_for('static', filename='js/chapter.js') }}"></script>
 <script src="{{ url_for('static', filename='js/chapter_style.js') }}"></script>
+{# Leaflet + the shared RotkMap module are only needed when this
+   chapter has at least one positioned location. We keep the unconditional
+   load for simplicity — both are cached after the first chapter view.
+   Total weight is ~50 KB gzipped. #}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/map_base.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chapter_map.js') }}"></script>
 {% endblock %}

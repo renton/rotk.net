@@ -28,6 +28,18 @@
     pointer-events: none;
 }
 
+/* Brief yellow-ring pulse on a pin after a sidebar location-item
+   click. The map_base.js helper toggles this class on .map-pin and
+   relies on the animation to auto-clean. */
+@keyframes map-pin-flash {
+    0%   { box-shadow: 0 0 0 0   rgba(255,193,7,0.0), 0 1px 3px rgba(0,0,0,0.3); }
+    20%  { box-shadow: 0 0 0 8px rgba(255,193,7,0.8), 0 1px 3px rgba(0,0,0,0.3); }
+    100% { box-shadow: 0 0 0 16px rgba(255,193,7,0.0), 0 1px 3px rgba(0,0,0,0.3); }
+}
+.map-pin.map-pin-flash {
+    animation: map-pin-flash 0.8s ease-out 1;
+}
+
 /* Polygon overlays for area Locations. The actual fill / stroke
    colours come from JS based on the location-type's palette, but
    default to a translucent grey so unstyled polygons are still

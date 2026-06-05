@@ -34,6 +34,26 @@ body.is-admin span.location-ref {
     margin-left: 2rem;
 }
 
+/* Chapter-page Map accordion mini-Leaflet. Same default tile-source
+   as /map but sized down to fit the sidebar column. */
+.chapter-map {
+    height: 320px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+/* Location items in the chapter sidebar that have geo data become
+   keyboard-focusable rows; the hover state hints they're clickable. */
+.location-item-clickable {
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+.location-item-clickable:hover,
+.location-item-clickable:focus-visible {
+    background-color: #e9ecef !important;
+    outline: none;
+}
+
 /* Tinted card-style background for the Faction / Past Factions / Links
    blocks in the chapter sidebar's Character Info panel. Sits halfway
    between white and Bootstrap's accordion-active blue (#cfe2ff) so

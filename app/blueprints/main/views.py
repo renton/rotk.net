@@ -612,6 +612,31 @@ def chapter(chapter_num):
         Chapter.query.filter(Chapter.chapter_num == chapter.chapter_num + 1).first()
     )
 
+    # Map payload for the chapter sidebar's mini-map — same item
+    # shape as the /map view (so map_base.js renders both identically).
+    # Locations without lat/lng AND without geojson are omitted; they
+    # still appear in the Locations accordion but can't be placed.
+    chapter_map_items = []
+    for loc in chapter_locations:
+        has_point = loc.latitude is not None and loc.longitude is not None
+        has_geo = loc.geojson is not None
+        if not has_point and not has_geo:
+            continue
+        lt = loc.location_type
+        chapter_map_items.append({
+            'id':            loc.id,
+            'name':          loc.name or '',
+            'chinese_name':  loc.chinese_name or '',
+            'type_name':     (lt.name if lt else '') or '',
+            'icon':          (lt.icon if lt else '') or '',
+            'bg_colour':     (lt.bg_colour if lt else '') or '#6c757d',
+            'font_colour':   (lt.font_colour if lt else '') or '#ffffff',
+            'border_colour': (lt.border_colour if lt else '') or '#6c757d',
+            'latitude':      loc.latitude if has_point else None,
+            'longitude':     loc.longitude if has_point else None,
+            'geojson':       loc.geojson if (has_geo and not has_point) else None,
+        })
+
     return render_template(
         'book/chapter.html',
         chapter=chapter,
@@ -623,6 +648,7 @@ def chapter(chapter_num):
         ancestry_by_loc_id=ancestry_by_loc_id,
         prev_chapter=prev_chapter,
         next_chapter=next_chapter,
+        chapter_map_items=chapter_map_items,
     )
 
 @main.route('/characters', methods=['GET', 'POST'])
