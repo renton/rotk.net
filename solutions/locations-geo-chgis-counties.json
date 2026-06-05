@@ -1,0 +1,2256 @@
+[
+  {
+    "id": 1220,
+    "_note": "name='Ailao County' matched -> Ailao Xian / 哀牢县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ailao Xian\" 哀牢县 (BEG=69 END=478). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.70752,
+    "longitude": 97.936791
+  },
+  {
+    "id": 1109,
+    "_note": "name='Anguan County' matched -> Anguang Xian / 安广县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Anguang Xian\" 安广县 (BEG=-111 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 22.892843,
+    "longitude": 109.071693
+  },
+  {
+    "id": 1190,
+    "_note": "name='Anguo County' matched -> Anguo Xian / 安国县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Anguo Xian\" 安国县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.36392,
+    "longitude": 115.38495
+  },
+  {
+    "id": 1346,
+    "_note": "name='Anshang County' matched -> Anshang Xian / 安上县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Anshang Xian\" 安上县 (BEG=223 END=239). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.64716,
+    "longitude": 104.160423
+  },
+  {
+    "id": 1393,
+    "_note": "name='Anyang County' matched -> Anyang Xian / 安阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Anyang Xian\" 安阳县 (BEG=224 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.955879,
+    "longitude": 108.330002
+  },
+  {
+    "id": 1250,
+    "_note": "name='Anyi County' matched -> Anyi Xian / 安邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Anyi Xian\" 安邑县 (BEG=23 END=485). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.180275,
+    "longitude": 111.160118
+  },
+  {
+    "id": 1188,
+    "_note": "name='Bairen County' matched -> Bairen Xian / 柏人县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bairen Xian\" 柏人县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.37645,
+    "longitude": 114.64215
+  },
+  {
+    "id": 1261,
+    "_note": "name='Baling County' matched -> Baling Xian / 霸陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Baling Xian\" 霸陵县 (BEG=23 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.36034,
+    "longitude": 109.06952
+  },
+  {
+    "id": 1366,
+    "_note": "name='Banshi County' matched -> Banshi Xian / 班氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Banshi Xian\" 班氏县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.844845,
+    "longitude": 113.390366
+  },
+  {
+    "id": 1191,
+    "_note": "name='Beiping County' matched -> Beiping Xian / 北平县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Beiping Xian\" 北平县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.95788,
+    "longitude": 115.30381
+  },
+  {
+    "id": 1367,
+    "_note": "name='Beipingyi County' matched -> Beipingyi Xian / 北平邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Beipingyi Xian\" 北平邑县 (BEG=97 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.029327,
+    "longitude": 113.748863
+  },
+  {
+    "id": 1166,
+    "_note": "name='Beiqiu County' matched -> Beiqiu Xian / 贝丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Beiqiu Xian\" 贝丘县 (BEG=-198 END=438). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.75987,
+    "longitude": 115.73064
+  },
+  {
+    "id": 1381,
+    "_note": "name='Beixincheng County' matched -> Beixincheng Xian / 北新城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Beixincheng Xian\" 北新城县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.96057,
+    "longitude": 115.57202
+  },
+  {
+    "id": 1233,
+    "_note": "name='Bengu County' matched -> Bengu Xian / 贲古县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bengu Xian\" 贲古县 (BEG=-109 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.31267,
+    "longitude": 103.44472
+  },
+  {
+    "id": 1356,
+    "_note": "name='Bi County' matched -> Bi Xian / 鄨县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bi Xian\" 鄨县 (BEG=-111 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.73053,
+    "longitude": 106.80657
+  },
+  {
+    "id": 1390,
+    "_note": "name='Bian County' matched -> Bian Xian / 卞县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bian Xian\" 卞县 (BEG=-182 END=355). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.62962,
+    "longitude": 117.4981
+  },
+  {
+    "id": 1221,
+    "_note": "name='Bisu County' matched -> Bisu Xian / 比苏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bisu Xian\" 比苏县 (BEG=-109 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.89317,
+    "longitude": 99.37489
+  },
+  {
+    "id": 1302,
+    "_note": "name='Bo County' matched -> Bo Xian / 博县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bo Xian\" 博县 (BEG=-187 END=468). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.10761,
+    "longitude": 117.19949
+  },
+  {
+    "id": 1248,
+    "_note": "name='Bocheng County' matched -> Bochang Xian / 博昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bochang Xian\" 博昌县 (BEG=-110 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.10773,
+    "longitude": 118.20644
+  },
+  {
+    "id": 1338,
+    "_note": "name='Bodao County' matched -> Bodao Xian / 僰道县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bodao Xian\" 僰道县 (BEG=-135 END=562). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.756193,
+    "longitude": 104.607478
+  },
+  {
+    "id": 1282,
+    "_note": "name='Boma County' matched -> Baima Xian / 白马县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Baima Xian\" 白马县 (BEG=-242 END=588). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.5351,
+    "longitude": 114.70915
+  },
+  {
+    "id": 1222,
+    "_note": "name='Bonan County' matched -> Bonan Xian / 博南县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bonan Xian\" 博南县 (BEG=69 END=341). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.38211,
+    "longitude": 99.45359
+  },
+  {
+    "id": 1110,
+    "_note": "name='Bushan County' matched -> Bushan Xian / 布山县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Bushan Xian\" 布山县 (BEG=-214 END=605). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.215336,
+    "longitude": 109.926575
+  },
+  {
+    "id": 1223,
+    "_note": "name='Buwei County' matched -> Buwei Xian / 不韦县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Buwei Xian\" 不韦县 (BEG=-109 END=342). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.15477,
+    "longitude": 99.25789
+  },
+  {
+    "id": 1348,
+    "_note": "name='Chan County' matched -> Chan Xian / 阐县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chan Xian\" 阐县 (BEG=-111 END=268). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.716929,
+    "longitude": 102.594382
+  },
+  {
+    "id": 1262,
+    "_note": "name=\"Chang'an County\" matched -> Changan Xian / 长安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Changan Xian\" 长安县 (BEG=23 END=582). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.24642,
+    "longitude": 108.90698
+  },
+  {
+    "id": 1402,
+    "_note": "name='Changshe County' matched -> Changshe Xian / 长社县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Changshe Xian\" 长社县 (BEG=-230 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.03139,
+    "longitude": 113.81975
+  },
+  {
+    "id": 1298,
+    "_note": "name='Changyi County' matched -> Changyi Xian / 昌邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Changyi Xian\" 昌邑县 (BEG=-225 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.139549,
+    "longitude": 116.126541
+  },
+  {
+    "id": 1025,
+    "_note": "name='Changzi County' matched -> Changzi Xian / 长子县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Changzi Xian\" 长子县 (BEG=-247 END=397). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.116395,
+    "longitude": 112.863149
+  },
+  {
+    "id": 1342,
+    "_note": "name='Chengdu County' matched -> Chengdu Xian / 成都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chengdu Xian\" 成都县 (BEG=-314 END=1911). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.666059,
+    "longitude": 104.075401
+  },
+  {
+    "id": 1394,
+    "_note": "name='Chengfu County' matched -> Chengfu Xian / 城父县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chengfu Xian\" 城父县 (BEG=23 END=384). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.63886,
+    "longitude": 115.992537
+  },
+  {
+    "id": 60,
+    "_note": "name='Chenggao County' matched -> Chenggao Xian / 成皋县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chenggao Xian\" 成皋县 (BEG=-205 END=534). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.85169,
+    "longitude": 113.19088
+  },
+  {
+    "id": 1218,
+    "_note": "name='Chenggu County' matched -> Chenggu Xian / 成固县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chenggu Xian\" 成固县 (BEG=-325 END=433). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.143723,
+    "longitude": 107.383949
+  },
+  {
+    "id": 1145,
+    "_note": "name='Chengping County' matched -> Chengping Xian / 成平县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chengping Xian\" 成平县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.24448,
+    "longitude": 116.80206
+  },
+  {
+    "id": 1294,
+    "_note": "name='Chengwu County' matched -> Chengwu Xian / 成武县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chengwu Xian\" 成武县 (BEG=23 END=453). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.96223,
+    "longitude": 115.87518
+  },
+  {
+    "id": 1173,
+    "_note": "name='Chiqiu County' matched -> Chiqiu Xian / 斥丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chiqiu Xian\" 斥丘县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.40456,
+    "longitude": 114.75715
+  },
+  {
+    "id": 1155,
+    "_note": "name='Chizhang County' matched -> Chizhang Xian / 斥章县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chizhang Xian\" 斥章县 (BEG=-203 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.70308,
+    "longitude": 115.07701
+  },
+  {
+    "id": 1125,
+    "_note": "name='Chonghe County' matched -> Zhonghe Xian / 重合县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhonghe Xian\" 重合县 (BEG=190 END=451). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.82469,
+    "longitude": 117.09338
+  },
+  {
+    "id": 1242,
+    "_note": "name='Chunyu County' matched -> Chunyu Xian / 淳于县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Chunyu Xian\" 淳于县 (BEG=97 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.54303,
+    "longitude": 119.32261
+  },
+  {
+    "id": 1557,
+    "_note": "name='Congyang' matched -> Congyang Xian / 枞阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Congyang Xian\" 枞阳县 (BEG=280 END=597). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.69371,
+    "longitude": 117.210587
+  },
+  {
+    "id": 1206,
+    "_note": "name='Cuo County' matched -> Zan Xian / 酇县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zan Xian\" 酇县 (BEG=39 END=430). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.95912,
+    "longitude": 116.10895
+  },
+  {
+    "id": 1044,
+    "_note": "name='Daling County' matched -> Daling Xian / 大陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Daling Xian\" 大陵县 (BEG=23 END=447). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.473747,
+    "longitude": 112.110969
+  },
+  {
+    "id": 1369,
+    "_note": "name='Dangcheng County' matched -> Dangcheng Xian / 当城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dangcheng Xian\" 当城县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.96149,
+    "longitude": 114.76077
+  },
+  {
+    "id": 1368,
+    "_note": "name='Daoren County' matched -> Daoren Xian / 道人县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Daoren Xian\" 道人县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.119073,
+    "longitude": 113.968287
+  },
+  {
+    "id": 1208,
+    "_note": "name='Deng County' matched -> Deng Xian / 邓县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Deng Xian\" 邓县 (BEG=220 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.08813,
+    "longitude": 112.09982
+  },
+  {
+    "id": 1324,
+    "_note": "name='Dianchi County' matched -> Dianchi Xian / 滇池县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dianchi Xian\" 滇池县 (BEG=-109 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.70312,
+    "longitude": 102.74321
+  },
+  {
+    "id": 1313,
+    "_note": "name='Dianjiang County' matched -> Dianjiang Xian / 垫江县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dianjiang Xian\" 垫江县 (BEG=-314 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.001688,
+    "longitude": 106.266624
+  },
+  {
+    "id": 1016,
+    "_note": "name='Diaoyin County' matched -> Diaoyin Xian / 雕阴县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Diaoyin Xian\" 雕阴县 (BEG=-122 END=315). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.22775,
+    "longitude": 107.96592
+  },
+  {
+    "id": 1403,
+    "_note": "name='Dingling County' matched -> Dingling Xian / 定陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dingling Xian\" 定陵县 (BEG=23 END=466). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.61924,
+    "longitude": 113.68587
+  },
+  {
+    "id": 1295,
+    "_note": "name='Dingtao County' matched -> Dingtao Xian / 定陶县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dingtao Xian\" 定陶县 (BEG=-242 END=626). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.08947,
+    "longitude": 115.55242
+  },
+  {
+    "id": 1017,
+    "_note": "name='Dingyang County' matched -> Dingyang Xian / 定阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dingyang Xian\" 定阳县 (BEG=218 END=618). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.816265,
+    "longitude": 118.601013
+  },
+  {
+    "id": 1370,
+    "_note": "name='Donganyang County' matched -> Donganyang Xian / 东安阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Donganyang Xian\" 东安阳县 (BEG=23 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.02716,
+    "longitude": 114.24615
+  },
+  {
+    "id": 1126,
+    "_note": "name='Dongguang County' matched -> Dongguang Xian / 东光县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dongguang Xian\" 东光县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.85282,
+    "longitude": 116.6434
+  },
+  {
+    "id": 1246,
+    "_note": "name='Dongpingling County' matched -> Dongpingling Xian / 东平陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dongpingling Xian\" 东平陵县 (BEG=-201 END=423). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.71219,
+    "longitude": 117.52242
+  },
+  {
+    "id": 1146,
+    "_note": "name='Dongpingshu County' matched -> Dongpingshu Xian / 东平舒县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dongpingshu Xian\" 东平舒县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.693912,
+    "longitude": 116.633247
+  },
+  {
+    "id": 1167,
+    "_note": "name='Dongwucheng County' matched -> Dongwucheng Xian / 东武城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dongwucheng Xian\" 东武城县 (BEG=-198 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.19822,
+    "longitude": 115.84629
+  },
+  {
+    "id": 1283,
+    "_note": "name='Dongwuyang County' matched -> Dongwuyang Xian / 东武阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dongwuyang Xian\" 东武阳县 (BEG=191 END=404). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.06738,
+    "longitude": 115.47488
+  },
+  {
+    "id": 1251,
+    "_note": "name='Dongyuan County' matched -> Dongyuan Xian / 东垣县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dongyuan Xian\" 东垣县 (BEG=-221 END=197). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.1012,
+    "longitude": 114.53077
+  },
+  {
+    "id": 1243,
+    "_note": "name='Duchang County' matched -> Duchang Xian / 都昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Duchang Xian\" 都昌县 (BEG=-148 END=455). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.86346,
+    "longitude": 119.37875
+  },
+  {
+    "id": 1263,
+    "_note": "name='Duling County' matched -> Duling / 杜陵",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Duling\" 杜陵 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.1845,
+    "longitude": 108.92208
+  },
+  {
+    "id": 1284,
+    "_note": "name='Dunqiu County' matched -> Dunqiu Xian / 顿丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Dunqiu Xian\" 顿丘县 (BEG=23 END=493). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.86877,
+    "longitude": 115.0365
+  },
+  {
+    "id": 1286,
+    "_note": "name='Fan County' matched -> Fan Xian / 范县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fan Xian\" 范县 (BEG=23 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.84589,
+    "longitude": 116.05293
+  },
+  {
+    "id": 1299,
+    "_note": "name='Fangyu County' matched -> Fangyu Xian / 方与县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fangyu Xian\" 方与县 (BEG=-224 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.08306,
+    "longitude": 116.61735
+  },
+  {
+    "id": 1134,
+    "_note": "name='Fangzi County' matched -> Fangzi Xian / 房子县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fangzi Xian\" 房子县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.580647,
+    "longitude": 114.562317
+  },
+  {
+    "id": 1174,
+    "_note": "name='Fanyang County' matched -> Fanyang Xian / 繁阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fanyang Xian\" 繁阳县 (BEG=-203 END=444). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.07414,
+    "longitude": 114.86162
+  },
+  {
+    "id": 1303,
+    "_note": "name='Fei County' matched -> Fei Xian / 费县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fei Xian\" 费县 (BEG=190 END=456). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.35534,
+    "longitude": 117.93291
+  },
+  {
+    "id": 1378,
+    "_note": "name='Feiru County' matched -> Feiru Xian / 肥如县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Feiru Xian\" 肥如县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.07726,
+    "longitude": 118.863537
+  },
+  {
+    "id": 1391,
+    "_note": "name='Feng County' matched -> Feng Xian / 丰县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Feng Xian\" 丰县 (BEG=23 END=404). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.703617,
+    "longitude": 116.584183
+  },
+  {
+    "id": 1276,
+    "_note": "name='Fengqiu County' matched -> Fengqiu Xian / 封丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fengqiu Xian\" 封丘县 (BEG=-196 END=446). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.03968,
+    "longitude": 114.40883
+  },
+  {
+    "id": 1321,
+    "_note": "name='Fu County' matched -> Fu Xian / 符县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fu Xian\" 符县 (BEG=280 END=362). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.80854,
+    "longitude": 105.834999
+  },
+  {
+    "id": 1114,
+    "_note": "name='Fucheng County' matched -> Fucheng Xian / 阜城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fucheng Xian\" 阜城县 (BEG=265 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.88284,
+    "longitude": 116.26762
+  },
+  {
+    "id": 1311,
+    "_note": "name='Fuchun County' matched -> Fuchun Xian / 富春县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fuchun Xian\" 富春县 (BEG=226 END=227). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.09357,
+    "longitude": 119.937245
+  },
+  {
+    "id": 1115,
+    "_note": "name='Fuliu County' matched -> Fuliu Xian / 扶柳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fuliu Xian\" 扶柳县 (BEG=-203 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.61451,
+    "longitude": 115.39907
+  },
+  {
+    "id": 1018,
+    "_note": "name='Fushi County' matched -> Fushi Xian / 肤施县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fushi Xian\" 肤施县 (BEG=-221 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.7793,
+    "longitude": 110.11311
+  },
+  {
+    "id": 1127,
+    "_note": "name='Fuyang County' matched -> Fuyang Xian / 浮阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fuyang Xian\" 浮阳县 (BEG=220 END=597). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.204594,
+    "longitude": 117.025986
+  },
+  {
+    "id": 1168,
+    "_note": "name='Ganling County' matched -> Ganling Guo / 甘陵国",
+    "notes_append": "Map geometry derived from CHGIS v6 (Guo) \"Ganling Guo\" 甘陵国 (BEG=148 END=189). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.85962,
+    "longitude": 115.7219
+  },
+  {
+    "id": 1128,
+    "_note": "name='Gaocheng County' matched -> Gaocheng Xian / 高城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaocheng Xian\" 高城县 (BEG=220 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.03779,
+    "longitude": 117.32016
+  },
+  {
+    "id": 1026,
+    "_note": "name='Gaodou County' matched -> Gaodu Xian / 高都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaodu Xian\" 高都县 (BEG=-247 END=463). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.504318,
+    "longitude": 112.839157
+  },
+  {
+    "id": 1371,
+    "_note": "name='Gaoliu County' matched -> Gaoliu Xian / 高柳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaoliu Xian\" 高柳县 (BEG=265 END=534). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.353703,
+    "longitude": 113.75209
+  },
+  {
+    "id": 1300,
+    "_note": "name='Gaoping marquisate County' matched -> Gaoping Xian / 高平县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaoping Xian\" 高平县 (BEG=222 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.475006,
+    "longitude": 111.140053
+  },
+  {
+    "id": 34,
+    "_note": "name='Gaotang County' matched -> Gaotang Xian / 高唐县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaotang Xian\" 高唐县 (BEG=-153 END=315). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.77739,
+    "longitude": 116.55947
+  },
+  {
+    "id": 1147,
+    "_note": "name='Gaoyang County' matched -> Gaoyang Xian / 高阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaoyang Xian\" 高阳县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.677597,
+    "longitude": 115.918289
+  },
+  {
+    "id": 1423,
+    "_note": "name='Gaoyi' matched -> Gaoyi Xian / 高邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gaoyi Xian\" 高邑县 (BEG=25 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.53046,
+    "longitude": 114.73261
+  },
+  {
+    "id": 1148,
+    "_note": "name='Gonggao County' matched -> Gonggao Xian / 弓高县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gonggao Xian\" 弓高县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.81619,
+    "longitude": 116.15143
+  },
+  {
+    "id": 1382,
+    "_note": "name=\"Gu'an County\" matched -> Guan Xian / 故安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guan Xian\" 故安县 (BEG=-117 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.288,
+    "longitude": 115.56625
+  },
+  {
+    "id": 1192,
+    "_note": "name='Guangchang County' matched -> Guangchang Xian / 广昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangchang Xian\" 广昌县 (BEG=210 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 29.578493,
+    "longitude": 116.766586
+  },
+  {
+    "id": 1169,
+    "_note": "name='Guangchuan County' matched -> Guangchuan Xian / 广川县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangchuan Xian\" 广川县 (BEG=-203 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.55929,
+    "longitude": 115.9133
+  },
+  {
+    "id": 1106,
+    "_note": "name='Guanghua County' matched -> Guanghua Xian / 广化县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guanghua Xian\" 广化县 (BEG=265 END=589). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 21.956139,
+    "longitude": 111.67717
+  },
+  {
+    "id": 1156,
+    "_note": "name='Guangnian County' matched -> Guangnian Xian / 广年县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangnian Xian\" 广年县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.79166,
+    "longitude": 114.64535
+  },
+  {
+    "id": 1273,
+    "_note": "name='Guangqi County' matched -> Guangqi Xian / 广戚县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangqi Xian\" 广戚县 (BEG=23 END=315). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.752017,
+    "longitude": 116.979914
+  },
+  {
+    "id": 1357,
+    "_note": "name='Guangtan County' matched -> Guangtan Xian / 广谈县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangtan Xian\" 广谈县 (BEG=265 END=547). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 26.35812,
+    "longitude": 106.23938
+  },
+  {
+    "id": 1082,
+    "_note": "name='Guangwu County' matched -> Guangwu Xian / 广武县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangwu Xian\" 广武县 (BEG=215 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.526272,
+    "longitude": 104.824524
+  },
+  {
+    "id": 1104,
+    "_note": "name='Guangxin County' matched -> Guangxin Xian / 广信县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangxin Xian\" 广信县 (BEG=23 END=589). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.486898,
+    "longitude": 111.308571
+  },
+  {
+    "id": 4,
+    "_note": "name='Guangzong County' matched -> Guangzong Xian / 广宗县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guangzong Xian\" 广宗县 (BEG=93 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.97043,
+    "longitude": 115.35706
+  },
+  {
+    "id": 1116,
+    "_note": "name='Guanjin County' matched -> Guanjin Xian / 观津县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guanjin Xian\" 观津县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.80529,
+    "longitude": 116.03427
+  },
+  {
+    "id": 1175,
+    "_note": "name='Guantao County' matched -> Guantao Xian / 馆陶县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guantao Xian\" 馆陶县 (BEG=-152 END=1188). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.526093,
+    "longitude": 115.315872
+  },
+  {
+    "id": 1325,
+    "_note": "name='Guchang County' matched -> Guchang Xian / 谷昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guchang Xian\" 谷昌县 (BEG=-74 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.96896,
+    "longitude": 102.79455
+  },
+  {
+    "id": 1285,
+    "_note": "name='Gucheng County' matched -> Gucheng Xian / 谷城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Gucheng Xian\" 谷城县 (BEG=25 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.16695,
+    "longitude": 116.25224
+  },
+  {
+    "id": 1083,
+    "_note": "name='Guo County' matched -> Guo Xian / 崞县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Guo Xian\" 崞县 (BEG=265 END=396). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.707035,
+    "longitude": 113.567261
+  },
+  {
+    "id": 1027,
+    "_note": "name='Guyuan County' matched -> Yuyuan Xian / 穀远县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yuyuan Xian\" 穀远县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.497116,
+    "longitude": 112.329559
+  },
+  {
+    "id": 1376,
+    "_note": "name='Haiyang County' matched -> Haiyang Xian / 海阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Haiyang Xian\" 海阳县 (BEG=258 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 29.782717,
+    "longitude": 118.224747
+  },
+  {
+    "id": 1322,
+    "_note": "name=\"Han'an County\" matched -> Han'an Xian / 汉安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Han'an Xian\" 汉安县 (BEG=44 END=303). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 29.586777,
+    "longitude": 105.060347
+  },
+  {
+    "id": 1193,
+    "_note": "name='Hanchang County' matched -> Hanchang Xian / 汉昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Hanchang Xian\" 汉昌县 (BEG=147 END=221). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.573446,
+    "longitude": 113.658905
+  },
+  {
+    "id": 1185,
+    "_note": "name='Handan County' matched -> Handan Xian / 邯郸县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Handan Xian\" 邯郸县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.591038,
+    "longitude": 114.516373
+  },
+  {
+    "id": 1235,
+    "_note": "name='Hanxing County' matched -> Hanxing Xian / 汉兴县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Hanxing Xian\" 汉兴县 (BEG=196 END=259). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.924686,
+    "longitude": 118.536255
+  },
+  {
+    "id": 1061,
+    "_note": "name='Heyin County' matched -> Heyin Xian / 河阴县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Heyin Xian\" 河阴县 (BEG=220 END=421). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.81825,
+    "longitude": 112.94898
+  },
+  {
+    "id": 1020,
+    "_note": "name='Houguan County' matched -> Houguan Xian / 候官县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Houguan Xian\" 候官县 (BEG=260 END=588). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 26.073954,
+    "longitude": 119.321577
+  },
+  {
+    "id": 1071,
+    "_note": "name='Huanyin County' matched -> Huanyin Xian / 圜阴县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Huanyin Xian\" 圜阴县 (BEG=23 END=199). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.21846,
+    "longitude": 108.37369
+  },
+  {
+    "id": 1028,
+    "_note": "name='Huguan County' matched -> Huguan Xian / 壶关县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Huguan Xian\" 壶关县 (BEG=-247 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.183537,
+    "longitude": 113.103485
+  },
+  {
+    "id": 1210,
+    "_note": "name='Huyang County' matched -> Huyang Xian / 湖阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Huyang Xian\" 湖阳县 (BEG=-272 END=265). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.40853,
+    "longitude": 112.745
+  },
+  {
+    "id": 1404,
+    "_note": "name='Jia County' matched -> Jia Xian / 郏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jia Xian\" 郏县 (BEG=-207 END=497). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.84697,
+    "longitude": 113.25924
+  },
+  {
+    "id": 1269,
+    "_note": "name='Jiangdu County' matched -> Jiangdu Xian / 江都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiangdu Xian\" 江都县 (BEG=-153 END=254). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.271192,
+    "longitude": 119.449408
+  },
+  {
+    "id": 1204,
+    "_note": "name='Jiangling County' matched -> Jiangling Xian / 江陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiangling Xian\" 江陵县 (BEG=23 END=1911). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.35044,
+    "longitude": 112.19077
+  },
+  {
+    "id": 1343,
+    "_note": "name='Jiangyuan County' matched -> Jiangyuan Xian / 江原县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiangyuan Xian\" 江原县 (BEG=23 END=311). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.59065,
+    "longitude": 103.80243
+  },
+  {
+    "id": 1314,
+    "_note": "name='Jiangzhou County' matched -> Jiangzhou Xian / 江州县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiangzhou Xian\" 江州县 (BEG=201 END=486). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 29.560455,
+    "longitude": 106.556999
+  },
+  {
+    "id": 1326,
+    "_note": "name='Jianling County' matched -> Jianling Xian / 建伶县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jianling Xian\" 建伶县 (BEG=25 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.67154,
+    "longitude": 102.59208
+  },
+  {
+    "id": 1045,
+    "_note": "name='Jiexiu County' matched -> Jiexiu Xian / 界休县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiexiu Xian\" 界休县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.026474,
+    "longitude": 111.912163
+  },
+  {
+    "id": 1117,
+    "_note": "name='Jing County' matched -> Jing Xian / 经县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jing Xian\" 经县 (BEG=-144 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.08461,
+    "longitude": 115.15894
+  },
+  {
+    "id": 1047,
+    "_note": "name='Jingling County' matched -> Jingling Xian / 京陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jingling Xian\" 京陵县 (BEG=23 END=447). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.204185,
+    "longitude": 112.231478
+  },
+  {
+    "id": 1202,
+    "_note": "name='Jingling marquisate County' matched -> Jingling Xian / 竟陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jingling Xian\" 竟陵县 (BEG=208 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.48291,
+    "longitude": 112.84528
+  },
+  {
+    "id": 1135,
+    "_note": "name='Jingxing County' matched -> Jingjing Xian / 井陉县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jingjing Xian\" 井陉县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.187488,
+    "longitude": 114.05126
+  },
+  {
+    "id": 1136,
+    "_note": "name='Jiumen County' matched -> Jiumen Xian / 九门县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiumen Xian\" 九门县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.107,
+    "longitude": 114.73146
+  },
+  {
+    "id": 1062,
+    "_note": "name='Jiuyuan County' matched -> Jiuyuan Xian / 九原县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Jiuyuan Xian\" 九原县 (BEG=215 END=445). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.398563,
+    "longitude": 112.731201
+  },
+  {
+    "id": 1270,
+    "_note": "name='Ju County' matched -> Ju Xian / 莒县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ju Xian\" 莒县 (BEG=23 END=1368). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.58189,
+    "longitude": 118.83442
+  },
+  {
+    "id": 1296,
+    "_note": "name='Juancheng County' matched -> Juancheng Xian / 鄄城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Juancheng Xian\" 鄄城县 (BEG=23 END=434). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.668041,
+    "longitude": 115.50486
+  },
+  {
+    "id": 1310,
+    "_note": "name='Juchao marquisate County' matched -> Juchao Xian / 居巢县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Juchao Xian\" 居巢县 (BEG=151 END=239). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.854535,
+    "longitude": 117.012504
+  },
+  {
+    "id": 1237,
+    "_note": "name='Juting County' matched -> Judian Xian / 句町县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Judian Xian\" 句町县 (BEG=-111 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.05282,
+    "longitude": 105.062
+  },
+  {
+    "id": 1085,
+    "_note": "name='Juyang County' matched -> Juyang Xian / 剧阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Juyang Xian\" 剧阳县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.663681,
+    "longitude": 113.310241
+  },
+  {
+    "id": 1386,
+    "_note": "name='Ku County' matched -> Ku Xian / 苦县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ku Xian\" 苦县 (BEG=23 END=336). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.86077,
+    "longitude": 115.48136
+  },
+  {
+    "id": 1048,
+    "_note": "name='Langmeng County' matched -> Langmeng Xian / 狼孟县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Langmeng Xian\" 狼孟县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.063313,
+    "longitude": 112.66719
+  },
+  {
+    "id": 1266,
+    "_note": "name='Lanling County' matched -> Lanling Xian / 兰陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lanling Xian\" 兰陵县 (BEG=23 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.74049,
+    "longitude": 117.854942
+  },
+  {
+    "id": 1149,
+    "_note": "name='Lecheng County' matched -> Lecheng Xian / 乐成县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lecheng Xian\" 乐成县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.177269,
+    "longitude": 116.204193
+  },
+  {
+    "id": 1304,
+    "_note": "name='Liangfu marquisate County' matched -> Liangfu Xian / 梁甫县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liangfu Xian\" 梁甫县 (BEG=190 END=468). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.88888,
+    "longitude": 117.66343
+  },
+  {
+    "id": 1176,
+    "_note": "name='Liangqi County' matched -> Liangqi Xian / 梁期县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liangqi Xian\" 梁期县 (BEG=-93 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.40314,
+    "longitude": 114.42727
+  },
+  {
+    "id": 1383,
+    "_note": "name='Liangxiang County' matched -> Liangxiang Xian / 良乡县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liangxiang Xian\" 良乡县 (BEG=-202 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.74125,
+    "longitude": 116.13558
+  },
+  {
+    "id": 1327,
+    "_note": "name='Lianran County' matched -> Lianran Xian / 连然县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lianran Xian\" 连然县 (BEG=-109 END=483). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.91844,
+    "longitude": 102.47412
+  },
+  {
+    "id": 1287,
+    "_note": "name='Liaocheng County' matched -> Liaocheng Xian / 聊城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liaocheng Xian\" 聊城县 (BEG=-196 END=498). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.50843,
+    "longitude": 115.94583
+  },
+  {
+    "id": 1086,
+    "_note": "name='Lie County' matched -> Lie Xian / 埒县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lie Xian\" 埒县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.272099,
+    "longitude": 111.792015
+  },
+  {
+    "id": 1157,
+    "_note": "name='Lieren County' matched -> Lieren Xian / 列人县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lieren Xian\" 列人县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.64355,
+    "longitude": 114.86673
+  },
+  {
+    "id": 1170,
+    "_note": "name='Ling County' matched -> Ling Xian / 灵县（零县）",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ling Xian\" 灵县（零县） (BEG=97 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.71814,
+    "longitude": 116.23503
+  },
+  {
+    "id": 1137,
+    "_note": "name='Lingshou County' matched -> Lingshou Xian / 灵寿县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lingshou Xian\" 灵寿县 (BEG=33 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.31058,
+    "longitude": 114.35564
+  },
+  {
+    "id": 1377,
+    "_note": "name='Lingzhi County' matched -> Lingzhi Xian / 令支县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lingzhi Xian\" 令支县 (BEG=23 END=281). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.995408,
+    "longitude": 118.638549
+  },
+  {
+    "id": 1315,
+    "_note": "name='Linjiang County' matched -> Linjiang Xian / 临江县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Linjiang Xian\" 临江县 (BEG=280 END=280). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.86377,
+    "longitude": 118.595634
+  },
+  {
+    "id": 1219,
+    "_note": "name='Linqiang County' matched -> Linqiang Xian / 临羌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Linqiang Xian\" 临羌县 (BEG=-81 END=460). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.48724,
+    "longitude": 102.39441
+  },
+  {
+    "id": 1344,
+    "_note": "name='Linqiong County' matched -> Linqiong Xian / 临邛县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Linqiong Xian\" 临邛县 (BEG=23 END=305). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.41287,
+    "longitude": 103.455681
+  },
+  {
+    "id": 1297,
+    "_note": "name='Linqiu County' matched -> Linqiu Xian / 廪丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Linqiu Xian\" 廪丘县 (BEG=-242 END=606). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.63647,
+    "longitude": 115.72617
+  },
+  {
+    "id": 14,
+    "_note": "name='Lintao County' matched -> Lintao Xian / 临洮县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lintao Xian\" 临洮县 (BEG=-221 END=544). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.43646,
+    "longitude": 104.03025
+  },
+  {
+    "id": 1379,
+    "_note": "name='Linyu County' matched -> Linyu Xian / 临渝县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Linyu Xian\" 临渝县 (BEG=220 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.91299,
+    "longitude": 119.55477
+  },
+  {
+    "id": 1309,
+    "_note": "name=\"Liu'an County\" matched -> Liu'an Xian / 六安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liu'an Xian\" 六安县 (BEG=199 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.820169,
+    "longitude": 116.517601
+  },
+  {
+    "id": 1194,
+    "_note": "name='Liwu County' matched -> Liwu Xian / 蠡吾县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liwu Xian\" 蠡吾县 (BEG=196 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.53824,
+    "longitude": 115.35641
+  },
+  {
+    "id": 1177,
+    "_note": "name='Liyang County' matched -> Liyang Xian / 黎阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Liyang Xian\" 黎阳县 (BEG=23 END=421). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.68427,
+    "longitude": 114.59687
+  },
+  {
+    "id": 1087,
+    "_note": "name='Loufan County' matched -> Loufan Xian / 楼烦县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Loufan Xian\" 楼烦县 (BEG=265 END=309). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.934845,
+    "longitude": 112.226234
+  },
+  {
+    "id": 1238,
+    "_note": "name='Louwo County' matched -> Louwo Xian / 漏卧县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Louwo Xian\" 漏卧县 (BEG=-111 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.88309,
+    "longitude": 104.30344
+  },
+  {
+    "id": 1030,
+    "_note": "name='Lu County' matched -> Lu Xian / 潞县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lu Xian\" 潞县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.01222,
+    "longitude": 116.98839
+  },
+  {
+    "id": 1138,
+    "_note": "name='Luancheng County' matched -> Luancheng Xian / 栾城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Luancheng Xian\" 栾城县 (BEG=58 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.91348,
+    "longitude": 114.62434
+  },
+  {
+    "id": 1088,
+    "_note": "name='Lucheng County' matched -> Lucheng Xian / 卤城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lucheng Xian\" 卤城县 (BEG=23 END=214). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.294864,
+    "longitude": 113.777092
+  },
+  {
+    "id": 1405,
+    "_note": "name='Lunshi County' matched -> Lunshi Xian / 轮氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lunshi Xian\" 轮氏县 (BEG=79 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.37446,
+    "longitude": 112.55961
+  },
+  {
+    "id": 1195,
+    "_note": "name='Lunu County' matched -> Lunu Xian / 卢奴县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lunu Xian\" 卢奴县 (BEG=-203 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.52006,
+    "longitude": 114.97504
+  },
+  {
+    "id": 1256,
+    "_note": "name='Luoyang County' matched -> Luoyang Xian / 洛阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Luoyang Xian\" 洛阳县 (BEG=265 END=604). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.73157,
+    "longitude": 112.5963
+  },
+  {
+    "id": 1211,
+    "_note": "name='Luyang County' matched -> Luyang Xian / 鲁阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Luyang Xian\" 鲁阳县 (BEG=-272 END=497). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.740314,
+    "longitude": 112.898079
+  },
+  {
+    "id": 1049,
+    "_note": "name='Lüsi County' matched -> Lvti Xian / 虑虒县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Lvti Xian\" 虑虒县 (BEG=-247 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.725698,
+    "longitude": 113.265759
+  },
+  {
+    "id": 1372,
+    "_note": "name='Macheng County' matched -> Macheng Xian / 马城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Macheng Xian\" 马城县 (BEG=-201 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.67043,
+    "longitude": 114.4053
+  },
+  {
+    "id": 1150,
+    "_note": "name='Mao County' matched -> Mao Xian / 鄚县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Mao Xian\" 鄚县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.857948,
+    "longitude": 116.111542
+  },
+  {
+    "id": 1089,
+    "_note": "name='Mayi County' matched -> Mayi Xian / 马邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Mayi Xian\" 马邑县 (BEG=221 END=309). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.308067,
+    "longitude": 112.421524
+  },
+  {
+    "id": 1317,
+    "_note": "name='Mianzhu County' matched -> Mianzhu Xian / 绵竹县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Mianzhu Xian\" 绵竹县 (BEG=-201 END=552). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.242928,
+    "longitude": 104.418457
+  },
+  {
+    "id": 1329,
+    "_note": "name='Muma County' matched -> Muma Xian / 牧麻县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Muma Xian\" 牧麻县 (BEG=225 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.5622,
+    "longitude": 103.25372
+  },
+  {
+    "id": 1312,
+    "_note": "name='Nanchang County' matched -> Nanchang Xian / 南昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanchang Xian\" 南昌县 (BEG=214 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.442734,
+    "longitude": 104.870643
+  },
+  {
+    "id": 1118,
+    "_note": "name='Nangong County' matched -> Nangong Xian / 南宫县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nangong Xian\" 南宫县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.36563,
+    "longitude": 115.367
+  },
+  {
+    "id": 1363,
+    "_note": "name='Nanguang County' matched -> Nanguang Xian / 南广县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanguang Xian\" 南广县 (BEG=-104 END=543). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.074324,
+    "longitude": 104.241493
+  },
+  {
+    "id": 1158,
+    "_note": "name='Nanhe County' matched -> Nanhe Xian / 南和县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanhe Xian\" 南和县 (BEG=-203 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.997658,
+    "longitude": 114.68615
+  },
+  {
+    "id": 1129,
+    "_note": "name='Nanpi County' matched -> Nanpi Xian / 南皮县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanpi Xian\" 南皮县 (BEG=23 END=549). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.066607,
+    "longitude": 116.743185
+  },
+  {
+    "id": 1301,
+    "_note": "name='Nanpingyang marquisate County' matched -> nanpingyang Xian / 南平阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"nanpingyang Xian\" 南平阳县 (BEG=23 END=420). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.40276,
+    "longitude": 116.96727
+  },
+  {
+    "id": 1119,
+    "_note": "name='Nanshenze County' matched -> Nanshenze Xian / 南深泽县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanshenze Xian\" 南深泽县 (BEG=-117 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.16261,
+    "longitude": 115.22048
+  },
+  {
+    "id": 1305,
+    "_note": "name='Nanwuyang County' matched -> Nanwuyang Houguo / 南武阳侯国",
+    "notes_append": "Map geometry derived from CHGIS v6 (Houguo) \"Nanwuyang Houguo\" 南武阳侯国 (BEG=80 END=456). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.50589,
+    "longitude": 117.62941
+  },
+  {
+    "id": 1139,
+    "_note": "name='Nanxingtang County' matched -> Nanhangtang Xian / 南行唐县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanhangtang Xian\" 南行唐县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.55172,
+    "longitude": 114.52825
+  },
+  {
+    "id": 1203,
+    "_note": "name='Nanxinshi marquisate County' matched -> Nanxinshi Xian / 南新市县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nanxinshi Xian\" 南新市县 (BEG=208 END=298). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.14939,
+    "longitude": 113.34492
+  },
+  {
+    "id": 1178,
+    "_note": "name='Neihuang County' matched -> Neihuang Xian / 内黄县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Neihuang Xian\" 内黄县 (BEG=-203 END=533). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.98288,
+    "longitude": 114.6647
+  },
+  {
+    "id": 1031,
+    "_note": "name='Nie County' matched -> Nie Xian / 涅县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Nie Xian\" 涅县 (BEG=-204 END=527). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.944366,
+    "longitude": 112.663254
+  },
+  {
+    "id": 1339,
+    "_note": "name='Niubing County' matched -> Niubing Xian / 牛鞞县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Niubing Xian\" 牛鞞县 (BEG=-115 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.39023,
+    "longitude": 104.54475
+  },
+  {
+    "id": 1108,
+    "_note": "name='Panyu County' matched -> Fanyu Xian / 番禺县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fanyu Xian\" 番禺县 (BEG=-214 END=589). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.134624,
+    "longitude": 113.256066
+  },
+  {
+    "id": 1345,
+    "_note": "name='Pi County' matched -> Pi Xian / 郫县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pi Xian\" 郫县 (BEG=-314 END=1911). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.80707,
+    "longitude": 103.88877
+  },
+  {
+    "id": 1244,
+    "_note": "name='Pingchang marquisate County' matched -> Pingchang Xian / 平昌县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingchang Xian\" 平昌县 (BEG=239 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.587894,
+    "longitude": 119.263466
+  },
+  {
+    "id": 1090,
+    "_note": "name='Pingcheng County' matched -> Pingcheng Xian / 平城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingcheng Xian\" 平城县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.105744,
+    "longitude": 113.307537
+  },
+  {
+    "id": 1179,
+    "_note": "name='Pingen County' matched -> Pingen Xian / 平恩县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingen Xian\" 平恩县 (BEG=23 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.70308,
+    "longitude": 115.07701
+  },
+  {
+    "id": 1140,
+    "_note": "name='Pingji County' matched -> Pingji Xian / 平棘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingji Xian\" 平棘县 (BEG=-62 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.71736,
+    "longitude": 114.77829
+  },
+  {
+    "id": 1458,
+    "_note": "name='Pinglin' matched -> Pinglin Xian / 平林县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pinglin Xian\" 平林县 (BEG=222 END=468). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.04552,
+    "longitude": 113.50555
+  },
+  {
+    "id": 1212,
+    "_note": "name='Pingshi County' matched -> Pingshi Xian / 平氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingshi Xian\" 平氏县 (BEG=23 END=315). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.53161,
+    "longitude": 113.07872
+  },
+  {
+    "id": 1245,
+    "_note": "name='Pingshou County' matched -> Pingshou Xian / 平寿县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingshou Xian\" 平寿县 (BEG=-155 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.58534,
+    "longitude": 119.01411
+  },
+  {
+    "id": 1373,
+    "_note": "name='Pingshu County' matched -> Pingshu Xian / 平舒县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingshu Xian\" 平舒县 (BEG=23 END=525). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.733494,
+    "longitude": 114.172462
+  },
+  {
+    "id": 1159,
+    "_note": "name='Pingxiang County' matched -> Pingxiang Xian / 平乡县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingxiang Xian\" 平乡县 (BEG=-203 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.982155,
+    "longitude": 114.912384
+  },
+  {
+    "id": 1358,
+    "_note": "name='Pingyi County' matched -> Pingyi Xian / 平夷县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingyi Xian\" 平夷县 (BEG=264 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 22.500208,
+    "longitude": 112.847214
+  },
+  {
+    "id": 1395,
+    "_note": "name='Pingyu County' matched -> Pingyu Xian / 平舆县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pingyu Xian\" 平舆县 (BEG=-206 END=550). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.19308,
+    "longitude": 114.19977
+  },
+  {
+    "id": 1252,
+    "_note": "name='Pishi County' matched -> Pishi Xian / 皮氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Pishi Xian\" 皮氏县 (BEG=23 END=445). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.576092,
+    "longitude": 110.662392
+  },
+  {
+    "id": 1141,
+    "_note": "name='Puwu County' matched -> Puwu Xian / 蒲吾县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Puwu Xian\" 蒲吾县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.24928,
+    "longitude": 114.21235
+  },
+  {
+    "id": 1196,
+    "_note": "name='Puyin County' matched -> Puyin Xian / 蒲阴县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Puyin Xian\" 蒲阴县 (BEG=76 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.7945,
+    "longitude": 115.22289
+  },
+  {
+    "id": 1051,
+    "_note": "name='Qi County' matched -> Qi Xian / 祁县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qi Xian\" 祁县 (BEG=23 END=492). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.344517,
+    "longitude": 112.357109
+  },
+  {
+    "id": 1160,
+    "_note": "name='Qiao County' matched -> Qiao Xian / 鄡县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qiao Xian\" 鄡县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.87761,
+    "longitude": 115.26253
+  },
+  {
+    "id": 1359,
+    "_note": "name='Qielan County' matched -> Qielan Xian / 且兰县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qielan Xian\" 且兰县 (BEG=265 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 26.80155,
+    "longitude": 107.75547
+  },
+  {
+    "id": 1229,
+    "_note": "name='Qingling County' matched -> Qingling Xian / 青蛉县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qingling Xian\" 青蛉县 (BEG=-111 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.72573,
+    "longitude": 101.32531
+  },
+  {
+    "id": 1180,
+    "_note": "name='Qingyuan County' matched -> Qingyuan Xian / 清渊县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qingyuan Xian\" 清渊县 (BEG=-106 END=396). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.70026,
+    "longitude": 115.35797
+  },
+  {
+    "id": 1352,
+    "_note": "name='Qiongdu County' matched -> Qiongdu Xian / 邛都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qiongdu Xian\" 邛都县 (BEG=-111 END=486). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.871663,
+    "longitude": 102.274129
+  },
+  {
+    "id": 1267,
+    "_note": "name='Qu County' matched -> Qu Xian / 朐县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qu Xian\" 朐县 (BEG=-223 END=351). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.563102,
+    "longitude": 119.123381
+  },
+  {
+    "id": 1181,
+    "_note": "name='Quliang County' matched -> Quliang Xian / 曲梁县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Quliang Xian\" 曲梁县 (BEG=196 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.70103,
+    "longitude": 114.72307
+  },
+  {
+    "id": 1161,
+    "_note": "name='Quzhou County' matched -> Qu Zhou Xian / 曲周县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Qu Zhou Xian\" 曲周县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.7793,
+    "longitude": 114.94965
+  },
+  {
+    "id": 1120,
+    "_note": "name='Raoyang County' matched -> Raoyang Xian / 饶阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Raoyang Xian\" 饶阳县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.23054,
+    "longitude": 115.75054
+  },
+  {
+    "id": 1162,
+    "_note": "name='Ren County' matched -> Ren Xian / 任县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ren Xian\" 任县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.11118,
+    "longitude": 114.71617
+  },
+  {
+    "id": 1257,
+    "_note": "name='Rongyang County' matched -> Yang Xian / 荥阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yang Xian\" 荥阳县 (BEG=-221 END=492). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.87436,
+    "longitude": 113.53442
+  },
+  {
+    "id": 1205,
+    "_note": "name='Ruo marquisate County' matched -> Ruo Xian / 鄀县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ruo Xian\" 鄀县 (BEG=208 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.49742,
+    "longitude": 112.44061
+  },
+  {
+    "id": 1396,
+    "_note": "name='Ruyang County' matched -> Ruyang Xian / 汝阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ruyang Xian\" 汝阳县 (BEG=25 END=605). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.59461,
+    "longitude": 114.46083
+  },
+  {
+    "id": 1182,
+    "_note": "name='Sha County' matched -> Sha Houguo / 沙侯国",
+    "notes_append": "Map geometry derived from CHGIS v6 (Guo) \"Sha Houguo\" 沙侯国 (BEG=25 END=195). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.61033,
+    "longitude": 113.61689
+  },
+  {
+    "id": 1213,
+    "_note": "name='Shandu marquisate County' matched -> Shandu Xian / 山都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shandu Xian\" 山都县 (BEG=208 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.12441,
+    "longitude": 111.78699
+  },
+  {
+    "id": 1142,
+    "_note": "name=\"Shang'ai County\" matched -> Shangai Xian / 上艾县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shangai Xian\" 上艾县 (BEG=-241 END=447). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.802036,
+    "longitude": 113.622269
+  },
+  {
+    "id": 1197,
+    "_note": "name='Shangquyang County' matched -> Shangquyang Xian / 上曲阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shangquyang Xian\" 上曲阳县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.61595,
+    "longitude": 114.64456
+  },
+  {
+    "id": 1308,
+    "_note": "name='Shangyu County' matched -> Shangyu Xian / 上虞县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shangyu Xian\" 上虞县 (BEG=23 END=588). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.017284,
+    "longitude": 120.876747
+  },
+  {
+    "id": 1397,
+    "_note": "name='Shansang County' matched -> Shansang Xian / 山桑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shansang Xian\" 山桑县 (BEG=220 END=384). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.407986,
+    "longitude": 116.552597
+  },
+  {
+    "id": 1011,
+    "_note": "name='Shanwu County' matched -> Shanwu Xian / 善无县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shanwu Xian\" 善无县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 40.16037,
+    "longitude": 112.343582
+  },
+  {
+    "id": 1214,
+    "_note": "name='She County' matched -> Ye Xian / 叶县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ye Xian\" 叶县 (BEG=-272 END=1135). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.50015,
+    "longitude": 113.30023
+  },
+  {
+    "id": 1398,
+    "_note": "name='Shen County' matched -> Shen Xian / 慎县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shen Xian\" 慎县 (BEG=23 END=412). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.789749,
+    "longitude": 116.199021
+  },
+  {
+    "id": 1293,
+    "_note": "name='Sheqiu County' matched -> Sheqiu Xian / 蛇丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Sheqiu Xian\" 蛇丘县 (BEG=-122 END=604). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.07212,
+    "longitude": 116.92899
+  },
+  {
+    "id": 1306,
+    "_note": "name='Shicheng County' matched -> Shicheng Xian / 石城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shicheng Xian\" 石城县 (BEG=-201 END=588). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.482548,
+    "longitude": 117.227623
+  },
+  {
+    "id": 1318,
+    "_note": "name='Shifang County' matched -> Shifang Xian / 什邡县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shifang Xian\" 什邡县 (BEG=23 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.13427,
+    "longitude": 104.17404
+  },
+  {
+    "id": 1290,
+    "_note": "name='Shouzhang County' matched -> Shouzhang Xian / 寿张县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shouzhang Xian\" 寿张县 (BEG=76 END=456). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.88143,
+    "longitude": 116.27509
+  },
+  {
+    "id": 1171,
+    "_note": "name='Shu County' matched -> Shu Xian / 鄃县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shu Xian\" 鄃县 (BEG=227 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.064869,
+    "longitude": 116.345459
+  },
+  {
+    "id": 1331,
+    "_note": "name='Shuangbai County' matched -> Shuangbai Xian / 双柏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shuangbai Xian\" 双柏县 (BEG=-109 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.67262,
+    "longitude": 102.14977
+  },
+  {
+    "id": 1151,
+    "_note": "name='Shuzhou County' matched -> Shu Zhou Xian / 束州县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Shu Zhou Xian\" 束州县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.53423,
+    "longitude": 116.37783
+  },
+  {
+    "id": 1105,
+    "_note": "name='Sipin County' matched -> Siping Xian / 思平县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Siping Xian\" 思平县 (BEG=263 END=500). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 22.238137,
+    "longitude": 112.351949
+  },
+  {
+    "id": 1215,
+    "_note": "name='Sui County' matched -> Sui Xian / 随县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Sui Xian\" 随县 (BEG=-476 END=468). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.71511,
+    "longitude": 113.36982
+  },
+  {
+    "id": 1230,
+    "_note": "name='Suijiu County' matched -> Suijiu Xian / 遂久县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Suijiu Xian\" 遂久县 (BEG=-111 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 26.87603,
+    "longitude": 100.23212
+  },
+  {
+    "id": 1420,
+    "_note": "name='Suiren' matched -> Junren Xian / 葰人县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Junren Xian\" 葰人县 (BEG=265 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.194142,
+    "longitude": 113.311678
+  },
+  {
+    "id": 1389,
+    "_note": "name='Suiyang County' matched -> Suiyang Xian / 睢阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Suiyang Xian\" 睢阳县 (BEG=-225 END=597). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.44766,
+    "longitude": 115.64607
+  },
+  {
+    "id": 1198,
+    "_note": "name='Tang County' matched -> Tang Xian / 唐县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tang Xian\" 唐县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.82413,
+    "longitude": 115.02761
+  },
+  {
+    "id": 1364,
+    "_note": "name='Tanglang County' matched -> Tanglang Xian / 堂狼县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tanglang Xian\" 堂狼县 (BEG=221 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 26.93341,
+    "longitude": 103.29665
+  },
+  {
+    "id": 1121,
+    "_note": "name='Tangyang County' matched -> Tangyang Xian / 堂阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tangyang Xian\" 堂阳县 (BEG=-196 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.52855,
+    "longitude": 115.23875
+  },
+  {
+    "id": 1360,
+    "_note": "name='Tanzhi County' matched -> Tanzhi Xian / 谈指县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tanzhi Xian\" 谈指县 (BEG=-111 END=547). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.59868,
+    "longitude": 105.62939
+  },
+  {
+    "id": 1032,
+    "_note": "name='Tongdi County' matched -> Tongdi Xian / 铜鞮县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tongdi Xian\" 铜鞮县 (BEG=-247 END=395). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.533705,
+    "longitude": 112.833912
+  },
+  {
+    "id": 1334,
+    "_note": "name='Tonglai County' matched -> Tonglai Xian / 同濑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tonglai Xian\" 同濑县 (BEG=25 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.42843,
+    "longitude": 103.58021
+  },
+  {
+    "id": 1335,
+    "_note": "name='Tonglao County' matched -> Tonglao Xian / 同劳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tonglao Xian\" 同劳县 (BEG=-109 END=288). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.04599,
+    "longitude": 103.56492
+  },
+  {
+    "id": 1033,
+    "_note": "name='Tonliu County' matched -> Tunliu Xian / 屯留县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tunliu Xian\" 屯留县 (BEG=-247 END=527). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.257992,
+    "longitude": 112.898415
+  },
+  {
+    "id": 1380,
+    "_note": "name='Tuyin County' matched -> Tuyin Xian / 土垠县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Tuyin Xian\" 土垠县 (BEG=-201 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.819256,
+    "longitude": 118.187103
+  },
+  {
+    "id": 1216,
+    "_note": "name='Wan County' matched -> Wan Xian / 宛县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wan Xian\" 宛县 (BEG=23 END=576). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.00168,
+    "longitude": 112.53547
+  },
+  {
+    "id": 1385,
+    "_note": "name='Wancheng County' matched -> Fangcheng Xian / 方城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Fangcheng Xian\" 方城县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.37329,
+    "longitude": 116.25701
+  },
+  {
+    "id": 1199,
+    "_note": "name='Wangdu County' matched -> Wangdou Xian / 望都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wangdou Xian\" 望都县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.74389,
+    "longitude": 115.11769
+  },
+  {
+    "id": 1265,
+    "_note": "name='Wannian County' matched -> Wannian Xian / 万年县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wannian Xian\" 万年县 (BEG=23 END=502). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.36034,
+    "longitude": 109.06952
+  },
+  {
+    "id": 1239,
+    "_note": "name='Wanwen County' matched -> Wanwen Xian / 宛温县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wanwen Xian\" 宛温县 (BEG=-111 END=346). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.80985,
+    "longitude": 104.24997
+  },
+  {
+    "id": 1289,
+    "_note": "name='Wei duchy County' matched -> Wei Guo / 卫国",
+    "notes_append": "Map geometry derived from CHGIS v6 (Guo) \"Wei Guo\" 卫国 (BEG=37 END=265). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.88519,
+    "longitude": 115.11117
+  },
+  {
+    "id": 1260,
+    "_note": "name='Wen County' matched -> Wen Xian / 温县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wen Xian\" 温县 (BEG=-221 END=533). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.91056,
+    "longitude": 112.95067
+  },
+  {
+    "id": 1152,
+    "_note": "name=\"Wen'an County\" matched -> Wenan Xian / 文安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wenan Xian\" 文安县 (BEG=-221 END=626). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.96083,
+    "longitude": 116.54331
+  },
+  {
+    "id": 1253,
+    "_note": "name='Wenxi County' matched -> Wenxi Xian / 闻喜县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wenxi Xian\" 闻喜县 (BEG=106 END=560). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.357723,
+    "longitude": 111.217209
+  },
+  {
+    "id": 1052,
+    "_note": "name='Wu County' matched -> Wu Xian / 邬县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wu Xian\" 邬县 (BEG=-247 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.102703,
+    "longitude": 112.030983
+  },
+  {
+    "id": 1107,
+    "_note": "name=\"Wu'an County\" matched -> Wu'an Xian / 武安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wu'an Xian\" 武安县 (BEG=274 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 24.146194,
+    "longitude": 109.718429
+  },
+  {
+    "id": 1431,
+    "_note": "name='Wucheng' matched -> Wucheng Xian / 武城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wucheng Xian\" 武城县 (BEG=280 END=424). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.514658,
+    "longitude": 110.581725
+  },
+  {
+    "id": 1100,
+    "_note": "name='Wujin County' matched -> Wujin Xian / 武进县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wujin Xian\" 武进县 (BEG=234 END=281). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.19529,
+    "longitude": 119.514992
+  },
+  {
+    "id": 1361,
+    "_note": "name='Wulian County' matched -> Wulian Xian / 毋敛县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wulian Xian\" 毋敛县 (BEG=23 END=547). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.82953,
+    "longitude": 107.54277
+  },
+  {
+    "id": 1122,
+    "_note": "name='Wusui County' matched -> Wusui Xian / 武遂县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wusui Xian\" 武遂县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.12764,
+    "longitude": 115.90305
+  },
+  {
+    "id": 1340,
+    "_note": "name='Wuyang County' matched -> Wuyang Xian / 武阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wuyang Xian\" 武阳县 (BEG=23 END=504). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.232104,
+    "longitude": 103.908872
+  },
+  {
+    "id": 1422,
+    "_note": "name='Wuyi' matched -> Wuyi Xian / 武邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Wuyi Xian\" 武邑县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.80599,
+    "longitude": 115.89066
+  },
+  {
+    "id": 1092,
+    "_note": "name='Wuzhou County' matched -> Wuzhou Xian / 武州县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Zhou) \"Wuzhou Xian\" 武州县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.551894,
+    "longitude": 112.021766
+  },
+  {
+    "id": 1123,
+    "_note": "name='Xiabo County' matched -> Xiabo Xian / 下博县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiabo Xian\" 下博县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.94186,
+    "longitude": 115.690956
+  },
+  {
+    "id": 1307,
+    "_note": "name='Xiacai County' matched -> Xiacai Xian / 下蔡县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiacai Xian\" 下蔡县 (BEG=-222 END=310). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.705585,
+    "longitude": 116.720093
+  },
+  {
+    "id": 1494,
+    "_note": "name='Xiaguixian' matched -> Xiagui Xian / 下邽县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiagui Xian\" 下邽县 (BEG=159 END=385). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.62462,
+    "longitude": 109.67984
+  },
+  {
+    "id": 33,
+    "_note": "name='Xiami County' matched -> Xiami Xian / 下密县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiami Xian\" 下密县 (BEG=107 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.84386,
+    "longitude": 119.47108
+  },
+  {
+    "id": 1187,
+    "_note": "name='Xiangguo County' matched -> Xiangguo Xian / 襄国县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiangguo Xian\" 襄国县 (BEG=-203 END=588). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.06636,
+    "longitude": 114.49426
+  },
+  {
+    "id": 1279,
+    "_note": "name='Xiangyi County' matched -> Xiangyi Xian / 襄邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiangyi Xian\" 襄邑县 (BEG=37 END=216). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.4305,
+    "longitude": 115.06597
+  },
+  {
+    "id": 1034,
+    "_note": "name='Xiangyuan County' matched -> Xiangyuan Xian / 襄垣县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiangyuan Xian\" 襄垣县 (BEG=23 END=432). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.538223,
+    "longitude": 113.048134
+  },
+  {
+    "id": 1392,
+    "_note": "name='Xiao County' matched -> Xiao Xian / 洨县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiao Xian\" 洨县 (BEG=23 END=310). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.320442,
+    "longitude": 117.549431
+  },
+  {
+    "id": 1280,
+    "_note": "name='Xiaohuang County' matched -> Xiaohuang Xian / 小黄县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiaohuang Xian\" 小黄县 (BEG=-221 END=446). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.78681,
+    "longitude": 114.47829
+  },
+  {
+    "id": 1274,
+    "_note": "name='Xiaqiu County' matched -> Xiaqiu Xian / 夏丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiaqiu Xian\" 夏丘县 (BEG=23 END=525). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.478375,
+    "longitude": 117.878876
+  },
+  {
+    "id": 1163,
+    "_note": "name='Xiaquyang County' matched -> Xiaquyang Xian / 下曲阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiaquyang Xian\" 下曲阳县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.03206,
+    "longitude": 115.00242
+  },
+  {
+    "id": 1254,
+    "_note": "name='Xie County' matched -> Xie Xian / 西鄂县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xie Xian\" 西鄂县 (BEG=-207 END=452). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.17732,
+    "longitude": 112.61277
+  },
+  {
+    "id": 1240,
+    "_note": "name='Xifeng County' matched -> Xifeng Xian / 西丰县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xifeng Xian\" 西丰县 (BEG=280 END=588). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.768604,
+    "longitude": 116.357267
+  },
+  {
+    "id": 1399,
+    "_note": "name='Xihua County' matched -> Xihua Xian / 西华县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xihua Xian\" 西华县 (BEG=121 END=265). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.68238,
+    "longitude": 114.35185
+  },
+  {
+    "id": 1400,
+    "_note": "name='Xincai County' matched -> Xincai Xian / 新蔡县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xincai Xian\" 新蔡县 (BEG=-221 END=526). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 32.07893,
+    "longitude": 114.14755
+  },
+  {
+    "id": 1124,
+    "_note": "name='Xindou County' matched -> Xindou Xian / 信都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xindou Xian\" 信都县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.56598,
+    "longitude": 115.56381
+  },
+  {
+    "id": 1319,
+    "_note": "name='Xindu County' matched -> Xindu Xian / 新都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xindu Xian\" 新都县 (BEG=-201 END=597). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.83234,
+    "longitude": 104.17057
+  },
+  {
+    "id": 1264,
+    "_note": "name='Xinping County' matched -> Xinfeng Xian / 新丰县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xinfeng Xian\" 新丰县 (BEG=188 END=556). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.39948,
+    "longitude": 109.28425
+  },
+  {
+    "id": 1201,
+    "_note": "name='Xinshi County' matched -> Xinshi Xian / 新市县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xinshi Xian\" 新市县 (BEG=33 END=606). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.26879,
+    "longitude": 114.68176
+  },
+  {
+    "id": 1130,
+    "_note": "name='Xiu County' matched -> Xiu Xian / 修县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xiu Xian\" 修县 (BEG=23 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.63865,
+    "longitude": 116.25345
+  },
+  {
+    "id": 1035,
+    "_note": "name='Xuanshi County' matched -> Xuanshi Xian / 泫氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Xuanshi Xian\" 泫氏县 (BEG=-247 END=549). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.792057,
+    "longitude": 112.919586
+  },
+  {
+    "id": 1036,
+    "_note": "name=\"Yang'a County\" matched -> Yanga Xian / 阳阿县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yanga Xian\" 阳阿县 (BEG=-204 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.6065,
+    "longitude": 112.305124
+  },
+  {
+    "id": 1401,
+    "_note": "name=\"Yang'an County\" matched -> Yang'an Xian / 阳安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yang'an Xian\" 阳安县 (BEG=222 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.954624,
+    "longitude": 113.410301
+  },
+  {
+    "id": 17,
+    "_note": "name='Yangcheng County' matched -> Yangcheng Xian / 阳城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangcheng Xian\" 阳城县 (BEG=191 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 27.159164,
+    "longitude": 115.517029
+  },
+  {
+    "id": 1406,
+    "_note": "name='Yangdi County' matched -> Yangzhai Xian / 阳翟县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangzhai Xian\" 阳翟县 (BEG=23 END=1637). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.16249,
+    "longitude": 113.46706
+  },
+  {
+    "id": 1271,
+    "_note": "name='Yangdu County' matched -> Yangdu Xian / 阳都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangdu Xian\" 阳都县 (BEG=-164 END=419). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.49289,
+    "longitude": 118.52669
+  },
+  {
+    "id": 1375,
+    "_note": "name='Yangle County' matched -> Yangle Xian / 阳乐县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangle Xian\" 阳乐县 (BEG=225 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 28.295439,
+    "longitude": 114.553398
+  },
+  {
+    "id": 1053,
+    "_note": "name='Yangqu County' matched -> Yangqu Xian / 阳曲县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangqu Xian\" 阳曲县 (BEG=215 END=528). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.989605,
+    "longitude": 112.568672
+  },
+  {
+    "id": 1320,
+    "_note": "name='Yangquan County' matched -> Yangquan Xian / 阳泉县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangquan Xian\" 阳泉县 (BEG=223 END=265). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 31.250032,
+    "longitude": 104.276138
+  },
+  {
+    "id": 1164,
+    "_note": "name='Yangshi County' matched -> Yangshi Xian / 杨氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangshi Xian\" 杨氏县 (BEG=23 END=264). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.62109,
+    "longitude": 114.9154
+  },
+  {
+    "id": 1131,
+    "_note": "name='Yangxin County' matched -> Yangxin Xian / 阳信县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangxin Xian\" 阳信县 (BEG=122 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.80676,
+    "longitude": 117.63208
+  },
+  {
+    "id": 1054,
+    "_note": "name='Yangyi County' matched -> Yangyi Xian / 阳邑县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yangyi Xian\" 阳邑县 (BEG=23 END=447). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.43362,
+    "longitude": 112.663475
+  },
+  {
+    "id": 1183,
+    "_note": "name='Ye County' matched -> Ye Xian / 邺县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Ye Xian\" 邺县 (BEG=-421 END=312). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.268683,
+    "longitude": 114.396105
+  },
+  {
+    "id": 1362,
+    "_note": "name='Yelang County' matched -> Yelang Xian / 夜郎县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yelang Xian\" 夜郎县 (BEG=23 END=547). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.87149,
+    "longitude": 105.38912
+  },
+  {
+    "id": 1232,
+    "_note": "name='Yeyu County' matched -> Yeyu Xian / 楪榆县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yeyu Xian\" 楪榆县 (BEG=-109 END=548). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 25.85473,
+    "longitude": 100.13114
+  },
+  {
+    "id": 1153,
+    "_note": "name='Yi County' matched -> Yi Xian / 易县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yi Xian\" 易县 (BEG=-221 END=219). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.9959,
+    "longitude": 116.06742
+  },
+  {
+    "id": 1172,
+    "_note": "name='Yimu County' matched -> Yimu Xian / 绎幕县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yimu Xian\" 绎幕县 (BEG=-198 END=441). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.22564,
+    "longitude": 116.28563
+  },
+  {
+    "id": 1432,
+    "_note": "name=\"Yin'an\" matched -> Yinan Xian / 阴安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yinan Xian\" 阴安县 (BEG=-110 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.98888,
+    "longitude": 115.08187
+  },
+  {
+    "id": 1093,
+    "_note": "name='Yinguan County' matched -> Yinguan Xian / 阴馆县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yinguan Xian\" 阴馆县 (BEG=265 END=309). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.242294,
+    "longitude": 112.727287
+  },
+  {
+    "id": 1407,
+    "_note": "name='Yingyang County' matched -> Yingyang Xian / 颍阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yingyang Xian\" 颍阳县 (BEG=92 END=265). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.75076,
+    "longitude": 114.07458
+  },
+  {
+    "id": 1268,
+    "_note": "name='Yinping County' matched -> Yinping Xian / 阴平县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yinping Xian\" 阴平县 (BEG=264 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.099092,
+    "longitude": 109.608444
+  },
+  {
+    "id": 1186,
+    "_note": "name='Yiyang County' matched -> Yiyang Xian / 易阳县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yiyang Xian\" 易阳县 (BEG=-221 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.77038,
+    "longitude": 114.50987
+  },
+  {
+    "id": 1316,
+    "_note": "name=\"Yong'an County\" matched -> Yong'an Xian / 永安县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yong'an Xian\" 永安县 (BEG=194 END=279). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.550453,
+    "longitude": 119.964065
+  },
+  {
+    "id": 1281,
+    "_note": "name='Yongqiu County' matched -> Yongqiu Xian / 雍丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yongqiu Xian\" 雍丘县 (BEG=-242 END=936). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.549263,
+    "longitude": 114.775696
+  },
+  {
+    "id": 1226,
+    "_note": "name='Yongshou County' matched -> Yongshou Xian / 永寿县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yongshou Xian\" 永寿县 (BEG=225 END=547). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 23.54048,
+    "longitude": 99.39639
+  },
+  {
+    "id": 1055,
+    "_note": "name='Yu County' matched -> Yu Xian / 盂县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yu Xian\" 盂县 (BEG=-247 END=395). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.178188,
+    "longitude": 112.712067
+  },
+  {
+    "id": 1184,
+    "_note": "name='Yuancheng County' matched -> Yuancheng Xian / 元城县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yuancheng Xian\" 元城县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.33703,
+    "longitude": 115.29563
+  },
+  {
+    "id": 1291,
+    "_note": "name='Yuanju County' matched -> Yuanju Xian / 冤句县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yuanju Xian\" 冤句县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 35.05329,
+    "longitude": 115.23864
+  },
+  {
+    "id": 1094,
+    "_note": "name='Yuanping County' matched -> Yuanping Xian / 原平县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yuanping Xian\" 原平县 (BEG=-247 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.728821,
+    "longitude": 112.698708
+  },
+  {
+    "id": 1143,
+    "_note": "name='Yuanshi County' matched -> Yuanshi Xian / 元氏县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yuanshi Xian\" 元氏县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.828678,
+    "longitude": 114.457861
+  },
+  {
+    "id": 1056,
+    "_note": "name='Yuci County' matched -> Yuci Xian / 榆次县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Yuci Xian\" 榆次县 (BEG=23 END=447). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.678467,
+    "longitude": 112.744682
+  },
+  {
+    "id": 1272,
+    "_note": "name='Zeng County' matched -> Zeng Xian / 缯县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zeng Xian\" 缯县 (BEG=23 END=317). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.900347,
+    "longitude": 117.909053
+  },
+  {
+    "id": 1038,
+    "_note": "name='Zhan County' matched -> Zhan Xian / 沾县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhan Xian\" 沾县 (BEG=-204 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.59565,
+    "longitude": 113.57386
+  },
+  {
+    "id": 1292,
+    "_note": "name='Zhang County' matched -> Zhang Xian / 鄣县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhang Xian\" 鄣县 (BEG=25 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.83723,
+    "longitude": 104.4497
+  },
+  {
+    "id": 1132,
+    "_note": "name='Zhangwu County' matched -> Zhangwu Xian / 章武县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhangwu Xian\" 章武县 (BEG=23 END=555). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.28038,
+    "longitude": 117.31271
+  },
+  {
+    "id": 1144,
+    "_note": "name='Zhending County' matched -> Zhending Xian / 真定县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhending Xian\" 真定县 (BEG=23 END=620). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.1012,
+    "longitude": 114.53077
+  },
+  {
+    "id": 1217,
+    "_note": "name='Zhi County' matched -> Zhi Xian / 雉县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhi Xian\" 雉县 (BEG=-272 END=422). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 33.34375,
+    "longitude": 112.65376
+  },
+  {
+    "id": 1341,
+    "_note": "name='Zhizhong County' matched -> Zizhong Xian / 资中县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zizhong Xian\" 资中县 (BEG=-135 END=501). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 30.12302,
+    "longitude": 104.647072
+  },
+  {
+    "id": 1058,
+    "_note": "name='Zhongdu County' matched -> Zhongdu Xian / 中都县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhongdu Xian\" 中都县 (BEG=-247 END=447). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.191928,
+    "longitude": 112.127835
+  },
+  {
+    "id": 1014,
+    "_note": "name='Zhongling County' matched -> Zhongling Xian / 中陵县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhongling Xian\" 中陵县 (BEG=23 END=212). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 39.934681,
+    "longitude": 112.327334
+  },
+  {
+    "id": 1602,
+    "_note": "name='Zhongmou' matched -> Zhongmou Xian / 中牟县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhongmou Xian\" 中牟县 (BEG=-112 END=446). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.725469,
+    "longitude": 114.061757
+  },
+  {
+    "id": 1258,
+    "_note": "name='Zhongmou County' matched -> Zhongmou Xian / 中牟县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhongmou Xian\" 中牟县 (BEG=-112 END=446). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 34.725469,
+    "longitude": 114.061757
+  },
+  {
+    "id": 1189,
+    "_note": "name='Zhongqiu County' matched -> Zhongqiu Xian / 中丘县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhongqiu Xian\" 中丘县 (BEG=23 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 37.29572,
+    "longitude": 114.50199
+  },
+  {
+    "id": 1154,
+    "_note": "name='Zhongshui County' matched -> Zhongshui Xian / 中水县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhongshui Xian\" 中水县 (BEG=-202 END=316). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 38.22616,
+    "longitude": 115.94853
+  },
+  {
+    "id": 1249,
+    "_note": "name=\"Zhou'a County\" matched -> Zhua Xian / 祝阿县",
+    "notes_append": "Map geometry derived from CHGIS v6 (Xian) \"Zhua Xian\" 祝阿县 (BEG=23 END=423). Licensed CC BY-NC-SA-equivalent; non-commercial use only.",
+    "latitude": 36.65294,
+    "longitude": 116.9259
+  }
+]

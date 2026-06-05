@@ -1,0 +1,409 @@
+[
+  {
+    "id": 85,
+    "name": "Si Province",
+    "_note": "司隸州 — Capital district around Luoyang (east) and Chang'an (west), narrow E-W corridor across central Henan and Shaanxi.",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            107.5,
+            34.0
+          ],
+          [
+            108.5,
+            33.6
+          ],
+          [
+            110.0,
+            33.4
+          ],
+          [
+            112.0,
+            33.5
+          ],
+          [
+            114.0,
+            33.7
+          ],
+          [
+            115.0,
+            34.2
+          ],
+          [
+            115.0,
+            34.9
+          ],
+          [
+            114.0,
+            35.2
+          ],
+          [
+            112.0,
+            35.1
+          ],
+          [
+            110.0,
+            35.0
+          ],
+          [
+            108.5,
+            34.8
+          ],
+          [
+            107.5,
+            34.5
+          ],
+          [
+            107.5,
+            34.0
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, drawn from training-data knowledge of Han geography rather than CHGIS data. Covers the corridor between the two capitals (Luoyang in the east, Chang'an in the west); not CHGIS-precise and may need refinement."
+  },
+  {
+    "id": 62,
+    "name": "Yu Province",
+    "_note": "豫州 — central Henan + western Anhui, centered on Xuchang and Runan.",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            112.0,
+            31.5
+          ],
+          [
+            113.5,
+            31.3
+          ],
+          [
+            115.0,
+            31.5
+          ],
+          [
+            116.5,
+            32.0
+          ],
+          [
+            117.0,
+            33.0
+          ],
+          [
+            116.5,
+            33.7
+          ],
+          [
+            115.0,
+            34.0
+          ],
+          [
+            113.5,
+            33.8
+          ],
+          [
+            112.5,
+            33.2
+          ],
+          [
+            112.0,
+            32.3
+          ],
+          [
+            112.0,
+            31.5
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, training-data sourced (not CHGIS). Covers central Henan around Xuchang and Runan; not boundary-precise."
+  },
+  {
+    "id": 63,
+    "name": "Yan Province",
+    "_note": "兗州 — western Shandong + eastern Henan, centered on Dongjun/Puyang.",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            114.0,
+            34.5
+          ],
+          [
+            115.5,
+            34.3
+          ],
+          [
+            117.0,
+            34.7
+          ],
+          [
+            117.5,
+            35.5
+          ],
+          [
+            117.0,
+            36.3
+          ],
+          [
+            115.7,
+            36.5
+          ],
+          [
+            114.5,
+            36.2
+          ],
+          [
+            114.0,
+            35.5
+          ],
+          [
+            114.0,
+            34.5
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, training-data sourced (not CHGIS). Covers western Shandong and the Henan/Shandong border; not boundary-precise."
+  },
+  {
+    "id": 8,
+    "name": "Qing Province",
+    "_note": "青州 — Shandong peninsula east of Yan Province.",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            117.0,
+            35.5
+          ],
+          [
+            118.5,
+            35.3
+          ],
+          [
+            120.5,
+            35.5
+          ],
+          [
+            121.8,
+            36.0
+          ],
+          [
+            122.5,
+            37.0
+          ],
+          [
+            122.0,
+            37.8
+          ],
+          [
+            120.5,
+            38.0
+          ],
+          [
+            118.5,
+            37.7
+          ],
+          [
+            117.3,
+            37.0
+          ],
+          [
+            117.0,
+            36.0
+          ],
+          [
+            117.0,
+            35.5
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, training-data sourced (not CHGIS). Covers the Shandong peninsula east of modern Jinan; not boundary-precise."
+  },
+  {
+    "id": 18,
+    "name": "Ji Province",
+    "_note": "冀州 — southern Hebei + northern Henan, centered on Yejun (modern Linzhang).",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            113.5,
+            35.3
+          ],
+          [
+            115.5,
+            35.2
+          ],
+          [
+            117.0,
+            35.7
+          ],
+          [
+            117.5,
+            37.0
+          ],
+          [
+            117.0,
+            38.5
+          ],
+          [
+            115.5,
+            38.7
+          ],
+          [
+            114.0,
+            38.5
+          ],
+          [
+            113.5,
+            37.3
+          ],
+          [
+            113.5,
+            35.3
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, training-data sourced (not CHGIS). Covers southern Hebei around Ye and Handan; not boundary-precise."
+  },
+  {
+    "id": 2,
+    "name": "You Province",
+    "_note": "幽州 — northeastern frontier: northern Hebei, Beijing, Liaoning west.",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            114.0,
+            38.5
+          ],
+          [
+            115.5,
+            38.5
+          ],
+          [
+            117.5,
+            38.8
+          ],
+          [
+            119.5,
+            39.5
+          ],
+          [
+            121.5,
+            40.0
+          ],
+          [
+            123.5,
+            40.5
+          ],
+          [
+            125.0,
+            41.5
+          ],
+          [
+            124.5,
+            42.8
+          ],
+          [
+            122.0,
+            43.0
+          ],
+          [
+            119.5,
+            42.5
+          ],
+          [
+            117.0,
+            41.5
+          ],
+          [
+            115.0,
+            40.8
+          ],
+          [
+            114.0,
+            40.0
+          ],
+          [
+            114.0,
+            38.5
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, training-data sourced (not CHGIS). Covers the northeastern frontier from northern Hebei through Liaoning's west; not boundary-precise."
+  },
+  {
+    "id": 90,
+    "name": "Yong Province",
+    "_note": "雍州 — split off Liang around 213 AD: modern Shaanxi + parts of Gansu southeast. Overlaps Si Province's western half.",
+    "geojson": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            105.5,
+            32.5
+          ],
+          [
+            107.0,
+            32.3
+          ],
+          [
+            109.0,
+            32.7
+          ],
+          [
+            110.5,
+            33.5
+          ],
+          [
+            111.0,
+            34.5
+          ],
+          [
+            110.5,
+            36.0
+          ],
+          [
+            109.0,
+            37.5
+          ],
+          [
+            107.0,
+            38.0
+          ],
+          [
+            105.5,
+            37.5
+          ],
+          [
+            105.0,
+            36.0
+          ],
+          [
+            105.0,
+            34.0
+          ],
+          [
+            105.5,
+            32.5
+          ]
+        ]
+      ]
+    },
+    "notes_append": "Map polygon: approximate Han-era extent, training-data sourced (not CHGIS). Covers Shaanxi and parts of southern Gansu; overlaps with Si and Liang because the historical division shifted; not boundary-precise."
+  }
+]
