@@ -135,6 +135,8 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
 | `check-date-parsing [--only chapter\|event\|character]` | Print every free-form date string the timeline parser can't read, grouped by source. Read-only — used to find which strings need parser tweaks. |
+| `dump-chapters-for-dating START [END]` | Dump chapter prose + dated context (tagged characters/events with known dates, neighboring chapter names) as JSON on stdout. Read-only — feeds an LLM-assisted chapter dating workflow. |
+| `apply-chapter-dates FILE [--apply]` | Apply `[{chapter_num, date, _note?}]` JSON to `chapter.date`. Dry-run by default; `--apply` writes. Idempotent. |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
 ---

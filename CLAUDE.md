@@ -150,6 +150,8 @@ Full walkthrough in `README.md`.
 | `flask create-user EMAIL USERNAME [--admin]` | Create a user directly; prompts for the password |
 | `flask dump-chapter-triage N` | Dump every tagged character/location/event match in chapter N (with snippet, via, full disambiguation facts — courtesy names, dates, ancestral home, roles, factions, chapter list, URLs — and same-needle candidates carrying the same facts) as JSON to stdout. Read-only — for piping into an LLM triage pass. |
 | `flask apply-triage-decisions FILE [--apply]` | Batch-apply triage decisions (`exclude` / `restore` / `remove_m2m`) from a JSON file. Default is dry-run; pass `--apply` to write. Removal-class actions trigger a stronger y/N confirm. Idempotent. |
+| `flask dump-chapters-for-dating START [END]` | Dump chapter prose + dated context (tagged characters/events with known dates, neighboring chapter names) as a JSON array on stdout. For LLM-assisted chapter dating — pipe to a file. Read-only. |
+| `flask apply-chapter-dates FILE [--apply]` | Apply `[{chapter_num, date, _note?}]` JSON to `chapter.date`. Dry-run by default; `--apply` writes. Idempotent (no-ops for unchanged rows). Audit columns + Edit log are stamped automatically. |
 | `flask check-date-parsing [--only chapter\|event\|character]` | Sweep every free-form date string (chapter.date, event.date, character.birth_date/death_date) and print the ones `tools.date_parser` can't parse. Read-only — used to spot which strings need parser tweaks for the Timeline view. |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
 

@@ -1617,6 +1617,173 @@ def apply_triage_decisions(decisions_file, apply, no_confirm):
 
 
 @app.cli.command()
+@click.argument('start', type=int)
+@click.argument('end', type=int, required=False)
+def dump_chapters_for_dating(start, end):
+    """Dump chapter prose + dated context as JSON for LLM-assisted dating.
+
+    For each chapter in [start, end] (or just `start` if `end` omitted),
+    emits an object with:
+      - chapter_num, name, current_date
+      - prev_chapter / next_chapter {num, name, date}     (context)
+      - prose                                              (HTML-stripped)
+      - dated_characters[]: tagged characters that have a birth or
+        death date set — likely anchors for the chapter year
+      - dated_events[]: tagged events that have a date set
+
+    Output is a JSON array on stdout. Pipe to a file and share with
+    the dating workflow (mirrors how `dump-chapter-triage` feeds the
+    triage workflow). Read-only — no writes."""
+    import json as _json
+    from app.models.chapter import Chapter as ChapterModel
+    from tools.book_parser import strip_html_tags
+
+    if end is None:
+        end = start
+    if end < start:
+        raise click.ClickException(f"end ({end}) must be >= start ({start})")
+
+    chapters = (
+        ChapterModel.query
+        .filter(ChapterModel.chapter_num >= start)
+        .filter(ChapterModel.chapter_num <= end)
+        .order_by(ChapterModel.chapter_num)
+        .all()
+    )
+    by_num = {c.chapter_num: c for c in ChapterModel.query.order_by(ChapterModel.chapter_num).all()}
+
+    out = []
+    for ch in chapters:
+        prev_ch = by_num.get(ch.chapter_num - 1)
+        next_ch = by_num.get(ch.chapter_num + 1)
+
+        dated_chars = []
+        for c in sorted(ch.characters or [], key=lambda x: x.name):
+            if c.is_deleted:
+                continue
+            if not (c.birth_date or c.death_date):
+                continue
+            dated_chars.append({
+                'name': c.name,
+                'chinese_name': c.chinese_name or '',
+                'birth_date': c.birth_date or '',
+                'death_date': c.death_date or '',
+            })
+
+        dated_events = []
+        for e in sorted(ch.events or [], key=lambda x: x.name):
+            if e.is_deleted or not e.date:
+                continue
+            dated_events.append({
+                'name': e.name,
+                'date': e.date,
+            })
+
+        out.append({
+            'chapter_num': ch.chapter_num,
+            'name': ch.name or '',
+            'current_date': ch.date or '',
+            'prev_chapter': {
+                'num': prev_ch.chapter_num,
+                'name': prev_ch.name or '',
+                'date': prev_ch.date or '',
+            } if prev_ch else None,
+            'next_chapter': {
+                'num': next_ch.chapter_num,
+                'name': next_ch.name or '',
+                'date': next_ch.date or '',
+            } if next_ch else None,
+            'dated_characters': dated_chars,
+            'dated_events': dated_events,
+            'prose': strip_html_tags(ch.content or ''),
+        })
+
+    click.echo(_json.dumps(out, ensure_ascii=False, indent=2))
+
+
+@app.cli.command()
+@click.argument('decisions_file', type=click.Path(exists=True, dir_okay=False))
+@click.option('--apply/--dry-run', default=False,
+              help='Default is dry-run (prints what would change). Pass --apply to write.')
+def apply_chapter_dates(decisions_file, apply):
+    """Apply chapter date strings from a JSON file.
+
+    Input file schema (one flat list — keep it small, dates are tiny):
+
+        [
+          {"chapter_num": 1, "date": "184",       "_note": "Yellow Turbans rise"},
+          {"chapter_num": 2, "date": "184-185",   "_note": "..."},
+          ...
+        ]
+
+    `date` may be any free-form string the timeline parser accepts —
+    a single year ("184"), a month + year ("February 184"), or a
+    range ("184-185").  An empty string clears the chapter's date.
+
+    Idempotent: rows whose `date` already matches the chapter are
+    reported as no-ops. Default is dry-run; pass --apply to write.
+    The existing audit hooks (app/models/audit.py + edit log) stamp
+    the rest — no per-row plumbing needed here."""
+    import json as _json
+
+    payload = _json.loads(open(decisions_file).read())
+    if not isinstance(payload, list):
+        raise click.ClickException("File must contain a JSON list of {chapter_num, date} objects.")
+
+    by_num = {c.chapter_num: c for c in Chapter.query.order_by(Chapter.chapter_num).all()}
+
+    plan = []
+    for i, entry in enumerate(payload):
+        if not isinstance(entry, dict):
+            raise click.ClickException(f"entry[{i}]: expected an object, got {type(entry).__name__}")
+        num = entry.get('chapter_num')
+        new_date = entry.get('date')
+        if not isinstance(num, int):
+            raise click.ClickException(f"entry[{i}]: missing/invalid 'chapter_num'")
+        if not isinstance(new_date, str):
+            raise click.ClickException(f"entry[{i}]: missing/invalid 'date' (must be a string)")
+        ch = by_num.get(num)
+        if ch is None:
+            raise click.ClickException(f"entry[{i}]: no chapter with chapter_num={num}")
+        new_date = new_date.strip()
+        plan.append({
+            'chapter': ch,
+            'old_date': ch.date or '',
+            'new_date': new_date,
+            'note': entry.get('_note') or '',
+        })
+
+    changes = [p for p in plan if p['old_date'] != p['new_date']]
+    noops = len(plan) - len(changes)
+
+    click.echo(f"Loaded {len(plan)} chapter date assignment(s) "
+               f"({len(changes)} change, {noops} no-op).\n")
+
+    for p in plan:
+        ch = p['chapter']
+        if p['old_date'] == p['new_date']:
+            click.echo(f"  Chapter {ch.chapter_num:>3}: {p['new_date']!r:24s}  (unchanged)")
+        else:
+            click.echo(
+                f"  Chapter {ch.chapter_num:>3}: {p['old_date']!r:24s} -> {p['new_date']!r}"
+                + (f"  # {p['note']}" if p['note'] else "")
+            )
+
+    if not apply:
+        click.echo("\nDry-run. Pass --apply to write.")
+        return
+
+    if not changes:
+        click.echo("\nNothing to change.")
+        return
+
+    for p in changes:
+        p['chapter'].date = p['new_date']
+    db.session.commit()
+    click.echo(f"\nWrote {len(changes)} chapter date(s).")
+
+
+@app.cli.command()
 @click.option('--only', type=click.Choice(['chapter', 'event', 'character']), default=None,
               help='Restrict the report to a single source table.')
 def check_date_parsing(only):
