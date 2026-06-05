@@ -88,6 +88,14 @@ def timeline():
     lifeline range per dated character below."""
 
     # --- Chapters ---
+    # Chapter names carry an embedded <br> to break the two-clause
+    # title across two lines on the chapter page; for the timeline
+    # detail tooltip we want a single flowing line, so collapse it
+    # (and any HTML-escaped variant) into a space.
+    _br_re = re.compile(r'<\s*br\s*/?\s*>', re.IGNORECASE)
+    def _timeline_title(s):
+        return _br_re.sub(' ', s or '').strip()
+
     chapter_items = []
     for c in Chapter.query.order_by(Chapter.chapter_num).all():
         span = parse_date_range(c.date)
@@ -97,7 +105,7 @@ def timeline():
         chapter_items.append({
             'id': c.id,
             'num': c.chapter_num,
-            'name': c.name or '',
+            'name': _timeline_title(c.name),
             'date_str': c.date,
             'year_lo': lo,
             'year_hi': hi,
