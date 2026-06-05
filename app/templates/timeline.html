@@ -19,7 +19,7 @@
         <h1 class="mb-1">Timeline</h1>
         <p class="text-muted mb-0">
             Chapters, events, and character lifespans on a shared axis.
-            Drag to pan; Ctrl + scroll (or pinch) to zoom.
+            Drag to pan; use the +/− buttons (or pinch) to zoom.
             Fuzzy date ranges render with faded edges.
         </p>
     </div>
@@ -53,6 +53,16 @@
         </select>
     </div>
     <div class="col-md-12 col-lg-4 d-flex gap-2 justify-content-md-end">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Zoom">
+            <button type="button" id="timeline-zoom-out" class="btn btn-outline-secondary" title="Zoom out">
+                <i class="fa-solid fa-magnifying-glass-minus" aria-hidden="true"></i>
+                <span class="visually-hidden">Zoom out</span>
+            </button>
+            <button type="button" id="timeline-zoom-in" class="btn btn-outline-secondary" title="Zoom in">
+                <i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i>
+                <span class="visually-hidden">Zoom in</span>
+            </button>
+        </div>
         <button type="button" id="timeline-fit" class="btn btn-sm btn-outline-secondary">Fit all</button>
         <button type="button" id="timeline-reset" class="btn btn-sm btn-outline-secondary">Reset filters</button>
     </div>

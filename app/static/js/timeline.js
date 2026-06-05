@@ -270,6 +270,14 @@
   document.getElementById('timeline-fit').addEventListener('click', () => {
     timeline.fit();
   });
+  // vis-timeline's zoomIn/zoomOut take a percentage (0..1). 0.4 is a
+  // comfortable step — roughly 1.5× per click in either direction.
+  document.getElementById('timeline-zoom-in').addEventListener('click', () => {
+    timeline.zoomIn(0.4);
+  });
+  document.getElementById('timeline-zoom-out').addEventListener('click', () => {
+    timeline.zoomOut(0.4);
+  });
   document.getElementById('timeline-reset').addEventListener('click', () => {
     filters.search = '';
     filters.faction = '';
