@@ -1770,6 +1770,176 @@ def dump_locations(type_filter):
 @click.argument('decisions_file', type=click.Path(exists=True, dir_okay=False))
 @click.option('--apply/--dry-run', default=False,
               help='Default is dry-run (prints what would change). Pass --apply to write.')
+def apply_location_geo(decisions_file, apply):
+    """Apply geo data (lat/lng points OR GeoJSON polygons) to Location rows.
+
+    Input file is a flat JSON list. Each entry references a Location
+    by id and provides EITHER a point OR a polygon (or both — the
+    /map view prefers the point at render time):
+
+        [
+          {"id": 925, "latitude": 36.5, "longitude": 105.7,
+           "_note": "approximate centroid, CHGIS 140 AD"},
+          {"id": 1004, "geojson": {"type": "Polygon",
+                                   "coordinates": [[[...], ...]]},
+           "_note": "Eastern Han commandery, CHGIS v6"},
+          ...
+        ]
+
+    Validation:
+      - `id` must reference an existing Location (soft-deleted ones
+        are rejected so accidental writes against deleted rows don't
+        silently land).
+      - `geojson` must be a GeoJSON Geometry object — its `type` has
+        to be Polygon or MultiPolygon (Point goes via lat/lng).
+      - At least one of (latitude+longitude) or geojson must be
+        present.
+
+    Idempotent: rows whose stored value already matches the proposed
+    one are reported as no-ops. Default is dry-run; pass --apply to
+    write. The audit hooks in app/models/audit.py stamp
+    `last_edited_by` automatically."""
+    import json as _json
+    from app.models import Location
+
+    payload = _json.loads(open(decisions_file).read())
+    if not isinstance(payload, list):
+        raise click.ClickException(
+            "File must contain a JSON list of {id, ...} objects."
+        )
+
+    by_id = {
+        loc.id: loc
+        for loc in Location.query.filter(Location.is_deleted.is_(False)).all()
+    }
+
+    plan = []
+    for i, entry in enumerate(payload):
+        if not isinstance(entry, dict):
+            raise click.ClickException(
+                f"entry[{i}]: expected an object, got {type(entry).__name__}"
+            )
+        loc_id = entry.get('id')
+        if not isinstance(loc_id, int):
+            raise click.ClickException(f"entry[{i}]: missing/invalid 'id'")
+        loc = by_id.get(loc_id)
+        if loc is None:
+            raise click.ClickException(
+                f"entry[{i}]: no active Location with id={loc_id}"
+            )
+
+        lat = entry.get('latitude')
+        lng = entry.get('longitude')
+        geom = entry.get('geojson')
+
+        has_point = lat is not None and lng is not None
+        has_geom = geom is not None
+
+        if not has_point and not has_geom:
+            raise click.ClickException(
+                f"entry[{i}] (id={loc_id}): provide latitude+longitude, "
+                "geojson, or both"
+            )
+
+        if has_point:
+            if not isinstance(lat, (int, float)) or not isinstance(lng, (int, float)):
+                raise click.ClickException(
+                    f"entry[{i}] (id={loc_id}): latitude/longitude must be numbers"
+                )
+        if has_geom:
+            if not isinstance(geom, dict):
+                raise click.ClickException(
+                    f"entry[{i}] (id={loc_id}): geojson must be an object"
+                )
+            if geom.get('type') not in ('Polygon', 'MultiPolygon'):
+                raise click.ClickException(
+                    f"entry[{i}] (id={loc_id}): geojson.type must be Polygon "
+                    "or MultiPolygon (got {!r})".format(geom.get('type'))
+                )
+            if not isinstance(geom.get('coordinates'), list):
+                raise click.ClickException(
+                    f"entry[{i}] (id={loc_id}): geojson.coordinates must be a list"
+                )
+
+        plan.append({
+            'loc': loc,
+            'new_lat': float(lat) if has_point else None,
+            'new_lng': float(lng) if has_point else None,
+            'set_point': has_point,
+            'new_geom': geom if has_geom else None,
+            'set_geom': has_geom,
+            'note': entry.get('_note') or '',
+        })
+
+    changes = 0
+    for p in plan:
+        loc = p['loc']
+        actions = []
+        if p['set_point']:
+            if loc.latitude != p['new_lat'] or loc.longitude != p['new_lng']:
+                actions.append(
+                    f"lat/lng {loc.latitude!r},{loc.longitude!r} -> "
+                    f"{p['new_lat']},{p['new_lng']}"
+                )
+        if p['set_geom']:
+            had = loc.geojson is not None
+            if not had or loc.geojson != p['new_geom']:
+                coord_count = _coord_point_count(p['new_geom'])
+                actions.append(
+                    f"geojson {'(replace)' if had else '(set)'} "
+                    f"{p['new_geom']['type']}, {coord_count} pts"
+                )
+        if actions:
+            changes += 1
+            click.echo(
+                f"  [{loc.id:>5}] {loc.name!s:35s}  " + "; ".join(actions)
+                + (f"  # {p['note']}" if p['note'] else "")
+            )
+        else:
+            click.echo(
+                f"  [{loc.id:>5}] {loc.name!s:35s}  (unchanged)"
+            )
+
+    click.echo(f"\n{changes} change(s), {len(plan) - changes} no-op(s) "
+               f"across {len(plan)} entry/entries.")
+
+    if not apply:
+        click.echo("\nDry-run. Pass --apply to write.")
+        return
+
+    if not changes:
+        click.echo("\nNothing to change.")
+        return
+
+    for p in plan:
+        loc = p['loc']
+        if p['set_point']:
+            loc.latitude = p['new_lat']
+            loc.longitude = p['new_lng']
+        if p['set_geom']:
+            loc.geojson = p['new_geom']
+    db.session.commit()
+    click.echo(f"\nWrote {changes} Location row(s).")
+
+
+def _coord_point_count(geom):
+    """Count vertex points in a GeoJSON Polygon / MultiPolygon. Just
+    for the dry-run report — gives a sense of polygon resolution
+    without dumping the whole array."""
+    coords = geom.get('coordinates') or []
+    if geom.get('type') == 'Polygon':
+        # coords is [[[x,y], ...], ...]  (outer ring + holes)
+        return sum(len(ring) for ring in coords)
+    if geom.get('type') == 'MultiPolygon':
+        # coords is [[[[x,y], ...], ...], ...]
+        return sum(len(ring) for poly in coords for ring in poly)
+    return 0
+
+
+@app.cli.command()
+@click.argument('decisions_file', type=click.Path(exists=True, dir_okay=False))
+@click.option('--apply/--dry-run', default=False,
+              help='Default is dry-run (prints what would change). Pass --apply to write.')
 def apply_chapter_dates(decisions_file, apply):
     """Apply chapter date strings from a JSON file.
 

@@ -63,3 +63,15 @@
     font-size: 0.85rem;
     margin-left: 4px;
 }
+
+/* Attribution panel below the map. Lives outside the Leaflet
+   canvas so it stays readable at any zoom and doesn't fight the
+   tile-corner default attribution control. */
+.map-credits {
+    line-height: 1.5;
+    max-width: 100ch;
+}
+.map-credits a {
+    color: inherit;
+    text-decoration: underline;
+}

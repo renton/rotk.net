@@ -153,6 +153,7 @@ Full walkthrough in `README.md`.
 | `flask dump-chapters-for-dating START [END]` | Dump chapter prose + dated context (tagged characters/events with known dates, neighboring chapter names) as a JSON array on stdout. For LLM-assisted chapter dating — pipe to a file. Read-only. |
 | `flask apply-chapter-dates FILE [--apply]` | Apply `[{chapter_num, date, _note?}]` JSON to `chapter.date`. Dry-run by default; `--apply` writes. Idempotent (no-ops for unchanged rows). Audit columns + Edit log are stamped automatically. |
 | `flask dump-locations [--type Province\|Commandery\|...]` | Dump every active Location as a JSON array (id, name, chinese_name, type, parent_chain, lat/lng, has_geojson flag) on stdout. For LLM-assisted boundary sourcing on the /map view. Read-only. |
+| `flask apply-location-geo FILE [--apply]` | Apply `[{id, latitude?, longitude?, geojson?, _note?}]` JSON to Location rows. Each entry must include a point and/or a Polygon/MultiPolygon GeoJSON geometry. Dry-run by default; `--apply` writes. Idempotent (no-ops for unchanged values). |
 | `flask check-date-parsing [--only chapter\|event\|character]` | Sweep every free-form date string (chapter.date, event.date, character.birth_date/death_date) and print the ones `tools.date_parser` can't parse. Read-only — used to spot which strings need parser tweaks for the Timeline view. |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
 
