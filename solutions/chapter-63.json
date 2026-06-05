@@ -1,0 +1,191 @@
+{
+  "chapter_num": 63,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "2"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "1 Yi Ji"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "3 Wu Lan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "9 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "75 Wei Yan/Yan Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "25 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "5 Peng Yang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "7 Wu Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "1 Jian Yong/Jiang Wan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "17 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "1 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 915,
+      "action": "remove_m2m",
+      "_note": "1 Lingling person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "1 western Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "75 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "25 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "3 Wu Lan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "9 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "2 Wu Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "7 Zhang Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "7 Ling Bao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "1 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "2 Jiang Wan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "5 Peng Yang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "44 Zhang Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "35 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "5 River Fu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "1 Liu Feng"
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2419,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2792,
+      "action": "remove_m2m",
+      "_note": "cn=閻晏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3206,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}

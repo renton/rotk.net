@@ -1,0 +1,167 @@
+{
+  "chapter_num": 66,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "9"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "4 Marquis of Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 49,
+      "action": "remove_m2m",
+      "_note": "2 Bing Yuan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "24 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "3 Jia Xu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "15 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 89,
+      "action": "remove_m2m",
+      "_note": "13 Gan Ning"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "6 Wei Kai"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "3 Zhang Zhao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "1 Dong Cheng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "15 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "37 Lu Su"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "37 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "4 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "24 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1073,
+      "action": "remove_m2m",
+      "_note": "2 Lin Xiangru"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "3 Cao Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "3 She"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "10 Fu Wan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "4 Zhang Zhao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "12 Fu family"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "1 Jia Xu"
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2401,
+      "action": "remove_m2m",
+      "_note": "cn=衛楷."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3273,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}
