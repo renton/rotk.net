@@ -69,28 +69,33 @@
     font-variant-numeric: tabular-nums;
 }
 
-/* Event markers — bare icon, no background or border. The icon's
-   colour comes from the inline style (event-type bg_colour). A
-   default fallback colour sits behind the inline style so that an
-   event-type with all-white colours (the model default) still shows
-   something instead of being white-on-white invisible. */
+/* Event markers — coloured circular badge with a white icon inside.
+   Background, border, and icon colour all come from the inline
+   style (event-type bg_colour / border_colour / font_colour);
+   fallbacks here cover event-types that haven't been recoloured. */
 .vis-item.tl-event {
-    background: transparent;
-    border: none;
-    color: #6c757d;
+    background: #6c757d;
+    border: 1px solid #6c757d;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
     cursor: pointer;
     transition: transform 0.1s ease;
 }
 .vis-item.tl-event:hover {
-    transform: translateY(-1px) scale(1.15);
+    transform: translateY(-1px) scale(1.1);
+    filter: brightness(1.1);
 }
 .vis-item.tl-event.vis-selected {
-    text-shadow: 0 0 6px #ffc107, 0 0 2px #ffc107;
+    box-shadow: 0 0 0 2px #ffc107;
 }
 .vis-item.tl-event .vis-item-content {
     padding: 0;
-    font-size: 1.15rem;
+    font-size: 0.85rem;
     line-height: 1;
+    width: 100%;
+    height: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;

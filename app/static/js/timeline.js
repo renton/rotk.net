@@ -128,7 +128,13 @@
       start: yearToDate(mid),
       type: 'box',
       className: 'tl-event',
-      style: `color: ${e.bg_colour};`,
+      // Inverted-pill look: badge background = event-type colour,
+      // icon glyph painted in the type's font_colour (defaults to
+      // white, which reads well on any non-white bg).
+      style:
+        `background: ${e.bg_colour};` +
+        `border-color: ${e.border_colour};` +
+        `color: ${e.font_colour};`,
       _filterText: e.name.toLowerCase(),
       _data: e,
     });
