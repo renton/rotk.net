@@ -251,6 +251,12 @@
     // groups carry their birth_lo (a positive AD year), so they fall
     // below in earliest-born → latest-born order.
     groupOrder: 'order',
+    // vis-timeline 7+ runs an XSS filter on item / group `content`
+    // by default that strips `class` attributes and the `<i>` tags
+    // we use to render Font Awesome icons. We escape any
+    // user-supplied strings ourselves (escapeHtml / escapeAttr), so
+    // it's safe to disable the built-in filter.
+    xss: { disabled: true },
   });
 
   // --- filter handlers ---
