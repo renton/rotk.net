@@ -1,0 +1,203 @@
+{
+  "chapter_num": 78,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "7"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "2 Ji Ping"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "12 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "7 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "5 Jia Xu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "4 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 84,
+      "action": "remove_m2m",
+      "_note": "2 Chen Jiao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "2 Sima Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "7 Wei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "2 Consort Dong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "7 Chen Deng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "4 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "1 Qiao Hua Tuo"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "12 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "7 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "2 Sima Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1160,
+      "action": "remove_m2m",
+      "_note": "1 Qiao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "3 Chen Deng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "1 Fu Wan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1217,
+      "action": "remove_m2m",
+      "_note": "2 Cao Zhi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "1 King Wen"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "4 Cao Zhang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "3 Empress Fu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1345,
+      "action": "remove_m2m",
+      "_note": "4 Cao Pi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1390,
+      "action": "remove_m2m",
+      "_note": "3 Bian Que"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "5 Jia Xu"
+    },
+    {
+      "target_type": "character",
+      "target_id": 240,
+      "action": "remove_m2m",
+      "_note": "dup."
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 225,
+      "action": "remove_m2m",
+      "_note": "cn=陳焦."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1301,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3457,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}
