@@ -1211,7 +1211,7 @@ def dump_chapter_triage(chapter_num):
             {
                 'url': u.url,
                 'type': u.url_type.name if u.url_type else None,
-                'description': u.description or None,
+                'label': u.name or None,
             }
             for u in (entity.urls or [])
             if not u.is_deleted
