@@ -1775,7 +1775,10 @@ def apply_location_geo(decisions_file, apply):
 
     Input file is a flat JSON list. Each entry references a Location
     by id and provides EITHER a point OR a polygon (or both — the
-    /map view prefers the point at render time):
+    /map view prefers the point at render time). Entries can also
+    carry a `notes_append` string that gets appended to the
+    Location's `notes` column (never clobbering existing content),
+    handy for recording WHY a location couldn't be geocoded:
 
         [
           {"id": 925, "latitude": 36.5, "longitude": 105.7,
@@ -1783,6 +1786,10 @@ def apply_location_geo(decisions_file, apply):
           {"id": 1004, "geojson": {"type": "Polygon",
                                    "coordinates": [[[...], ...]]},
            "_note": "Eastern Han commandery, CHGIS v6"},
+          {"id": 7777,
+           "notes_append": "Unable to place — no surviving record of \
+this county's seat; mentioned only once in Sanguozhi vol. 36.",
+           "_note": "skip on map until source available"},
           ...
         ]
 
@@ -1792,13 +1799,15 @@ def apply_location_geo(decisions_file, apply):
         silently land).
       - `geojson` must be a GeoJSON Geometry object — its `type` has
         to be Polygon or MultiPolygon (Point goes via lat/lng).
-      - At least one of (latitude+longitude) or geojson must be
-        present.
+      - At least one of (latitude+longitude), geojson, or
+        notes_append must be present.
 
     Idempotent: rows whose stored value already matches the proposed
-    one are reported as no-ops. Default is dry-run; pass --apply to
-    write. The audit hooks in app/models/audit.py stamp
-    `last_edited_by` automatically."""
+    one are reported as no-ops. `notes_append` always appends, so
+    re-running an entry will add the same line twice — only include
+    it on first writes (or remove the line once accepted). Default
+    is dry-run; pass --apply to write. The audit hooks in
+    app/models/audit.py stamp `last_edited_by` automatically."""
     import json as _json
     from app.models import Location
 
@@ -1831,14 +1840,16 @@ def apply_location_geo(decisions_file, apply):
         lat = entry.get('latitude')
         lng = entry.get('longitude')
         geom = entry.get('geojson')
+        notes_append = entry.get('notes_append')
 
         has_point = lat is not None and lng is not None
         has_geom = geom is not None
+        has_notes = isinstance(notes_append, str) and notes_append.strip()
 
-        if not has_point and not has_geom:
+        if not has_point and not has_geom and not has_notes:
             raise click.ClickException(
                 f"entry[{i}] (id={loc_id}): provide latitude+longitude, "
-                "geojson, or both"
+                "geojson, notes_append, or some combination"
             )
 
         if has_point:
@@ -1868,6 +1879,8 @@ def apply_location_geo(decisions_file, apply):
             'set_point': has_point,
             'new_geom': geom if has_geom else None,
             'set_geom': has_geom,
+            'notes_append': notes_append.strip() if has_notes else None,
+            'set_notes': has_notes,
             'note': entry.get('_note') or '',
         })
 
@@ -1889,6 +1902,10 @@ def apply_location_geo(decisions_file, apply):
                     f"geojson {'(replace)' if had else '(set)'} "
                     f"{p['new_geom']['type']}, {coord_count} pts"
                 )
+        if p['set_notes']:
+            preview = p['notes_append'][:60].replace('\n', ' ')
+            ellipsis = '...' if len(p['notes_append']) > 60 else ''
+            actions.append(f'notes += "{preview}{ellipsis}"')
         if actions:
             changes += 1
             click.echo(
@@ -1918,6 +1935,13 @@ def apply_location_geo(decisions_file, apply):
             loc.longitude = p['new_lng']
         if p['set_geom']:
             loc.geojson = p['new_geom']
+        if p['set_notes']:
+            # Append with a separating blank line so the auto-added
+            # line stays visually distinct from any prior text and
+            # the [geo] tag makes it greppable later.
+            existing = (loc.notes or '').rstrip()
+            addition = f"[geo] {p['notes_append']}"
+            loc.notes = f"{existing}\n\n{addition}" if existing else addition
     db.session.commit()
     click.echo(f"\nWrote {changes} Location row(s).")
 
