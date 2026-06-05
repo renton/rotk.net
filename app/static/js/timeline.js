@@ -173,6 +173,18 @@
   const dataHi = allHi.length ? Math.max(...allHi) : 280;
   const pad = Math.max(5, (dataHi - dataLo) * 0.05);
 
+  // --- filter state ---
+  //
+  // Declared BEFORE the DataView constructors below — vis-data invokes
+  // the filter callback during construction, so `filters` must already
+  // be in scope (const hoisting puts it in the temporal dead zone
+  // until this line is reached).
+  const filters = {
+    search:  '',
+    faction: '',
+    show:    'all',
+  };
+
   // --- DataView for filtering ---
   const itemView = new vis.DataView(items, {
     filter: function (it) { return shouldShowItem(it); },
@@ -203,13 +215,7 @@
     },
   });
 
-  // --- filter state + handlers ---
-  const filters = {
-    search:  '',
-    faction: '',
-    show:    'all',
-  };
-
+  // --- filter handlers ---
   function shouldShowItem(it) {
     if (filters.show === 'chapters'   && it.kind === 'event')     return false;
     if (filters.show === 'events'     && it.kind === 'chapter')   return false;
