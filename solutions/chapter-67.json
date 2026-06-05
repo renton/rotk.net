@@ -1,0 +1,239 @@
+{
+  "chapter_num": 67,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "7"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "4 Yi Ji"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "5 Marquis of Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "3 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "20 Yan Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "23 Xu Chu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "3 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "22 Yang Ang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 89,
+      "action": "remove_m2m",
+      "_note": "15 Gan Ning"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "12 Zhang Wei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "1 Zhang Zhao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 947,
+      "action": "remove_m2m",
+      "_note": "2 Chang Qi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "4 Dong Xi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "3 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "20 Yan Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "1 Chen Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "3 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "39 Zhang Lu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "39 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1051,
+      "action": "remove_m2m",
+      "_note": "2 Chang Qi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "5 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "3 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "6 Yue Jing"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "6 Sima Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "17 Cao Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "13 Ling Tong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "3 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "2 Liu Ye"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "22 Yang Ang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "62 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "1 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "3 Jia Xu"
+    },
+    {
+      "target_type": "character",
+      "target_id": 973,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 673,
+      "action": "remove_m2m",
+      "_note": "cn=顧禮."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3216,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3217,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3273,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3457,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}

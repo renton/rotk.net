@@ -1,0 +1,173 @@
+{
+  "chapter_num": 70,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "15"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "1 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "43 Yan Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "16 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 881,
+      "action": "remove_m2m",
+      "_note": "9 Xiahou Shang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "14 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "5 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "4 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "43 Yan Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "16 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "1 Zhang Lu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "1 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "1 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "3 Guo Huai"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "4 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "120 Zhang He/Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "41 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "4 Liu Feng"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 680,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1059,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2061,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 735,
+      "action": "remove_m2m",
+      "_note": "cn=郭槐."
+    },
+    {
+      "target_type": "character",
+      "target_id": 736,
+      "action": "remove_m2m",
+      "_note": "cn=郭懷."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1660,
+      "action": "remove_m2m",
+      "_note": "dup."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2419,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2792,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}
