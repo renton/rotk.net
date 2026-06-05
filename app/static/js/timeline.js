@@ -88,12 +88,14 @@
     content: 'Chapters',
     className: 'tl-group-chapters',
     order: -2,
+    style: 'min-height: 110px;',
   });
   groups.add({
     id: '__events__',
     content: 'Events',
     className: 'tl-group-events',
     order: -1,
+    style: 'min-height: 110px;',
   });
 
   // Chapter markers — scroll icon, click for details.
@@ -191,12 +193,13 @@
   const dataHi = allHi.length ? Math.max(...allHi) : 280;
   const pad = Math.max(5, (dataHi - dataLo) * 0.05);
 
-  // Initial window — focus on the first ~40 years of the data so the
-  // page lands zoomed in instead of fitting the whole 130-year era.
-  // "Fit all" expands back to dataLo..dataHi on demand.
-  const initialWindow = Math.min(40, Math.max(15, (dataHi - dataLo) * 0.35));
-  const initialStart = dataLo - pad;
-  const initialEnd = dataLo + initialWindow;
+  // Initial window — hard-anchored to the opening of the RotK era
+  // (184 AD Yellow Turban Rebellion through ~200 AD around Guandu)
+  // so the page lands zoomed into the busiest, most populated stretch
+  // instead of dispersing icons across a century. "Fit all" expands
+  // back to dataLo..dataHi on demand.
+  const initialStart = 184;
+  const initialEnd = 200;
 
   // --- filter state ---
   //

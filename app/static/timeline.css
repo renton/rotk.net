@@ -100,11 +100,47 @@
     justify-content: center;
 }
 
-/* The vertical connecting line under box items, recoloured to match
-   the marker's border instead of vis-timeline's default grey. */
 .vis-item.tl-chapter .vis-item-overflow,
 .vis-item.tl-event .vis-item-overflow {
     overflow: visible;
+}
+
+/* For chapter and event box items: hide vis-timeline's vertical
+   connector line + axis dot — the icon itself is the marker, and
+   stacking position carries enough meaning without a line redrawing
+   the same horizontal time everywhere. */
+.vis-item.tl-chapter ~ .vis-line,
+.vis-item.tl-chapter ~ .vis-dot,
+.vis-item.tl-event ~ .vis-line,
+.vis-item.tl-event ~ .vis-dot {
+    display: none !important;
+}
+/* Belt-and-braces: the line/dot are actually siblings drawn as part
+   of the same .vis-item box in some vis-timeline versions. */
+.vis-item.tl-chapter .vis-line,
+.vis-item.tl-chapter .vis-dot,
+.vis-item.tl-event .vis-line,
+.vis-item.tl-event .vis-dot {
+    display: none !important;
+}
+/* Final catch — vis-timeline renders .vis-line and .vis-dot as
+   independent elements parented to .vis-foreground for box items.
+   Hide them globally; we never use the default box-with-line style. */
+.vis-foreground .vis-line,
+.vis-foreground .vis-dot {
+    display: none !important;
+}
+
+/* Give the chapter and event group rails more vertical room so a
+   bunch of icons clustering in the same year can stack without
+   getting jammed up against the row boundary. */
+.vis-labelset .vis-label.tl-group-chapters,
+.vis-labelset .vis-label.tl-group-events {
+    min-height: 110px;
+}
+.vis-foreground .vis-group.tl-group-chapters,
+.vis-foreground .vis-group.tl-group-events {
+    min-height: 110px;
 }
 
 /* Group label (left rail). */
