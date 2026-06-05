@@ -1408,8 +1408,15 @@ def new_location():
 @admin_required
 def edit_location(id):
     from flask_wtf import FlaskForm
+    import json as _json
     location = Location.query.get_or_404(id)
     form = EditLocationForm(obj=location)
+    # The model stores geojson as a JSONB dict; the form field is a
+    # TextAreaField holding the pretty-printed JSON string. Translate
+    # both ways here so the user sees JSON text and we still write
+    # the dict on save.
+    if request.method == 'GET' and location.geojson is not None:
+        form.geojson.data = _json.dumps(location.geojson, ensure_ascii=False, indent=2)
     if form.validate_on_submit():
         # Cycle guard: parent must not be self, and must not be any
         # descendant of self (which would close a loop). Walk the
@@ -1442,6 +1449,10 @@ def edit_location(id):
 
         form.populate_obj(location)
         location.aliases = _normalize_csv(location.aliases)
+        # `form.geojson.parsed` is set by the form's validate_geojson
+        # — either the parsed dict or None. populate_obj wrote the
+        # raw string; overwrite with the dict (or null).
+        location.geojson = getattr(form.geojson, 'parsed', None)
         db.session.add(location)
         db.session.commit()
         flash("Location updated.")

@@ -107,6 +107,11 @@
             <td>
                 {% if is_admin %}
                 <a href="{{ url_for('main.edit_location', id=loc.id, back=back_url) }}">{{ loc.name }}</a>
+                {%- if loc.latitude is none and loc.longitude is none and loc.geojson is none %}
+                <i class="fa-solid fa-circle-question text-warning ms-1"
+                   title="No geo data — does not appear on /map"
+                   aria-label="No geo data"></i>
+                {%- endif %}
                 {% else %}
                 {{ loc.name }}
                 {% endif %}

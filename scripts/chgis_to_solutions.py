@@ -449,6 +449,69 @@ emit('locations-geo-commanderies.json', commanderies)
 emit('locations-geo-counties.json',     counties)
 
 # ---------------------------------------------------------------------------
+# Notes-only solutions file for every UNMATCHED location. Each entry
+# carries a single notes_append line explaining why we couldn't
+# geocode the row — keeps the audit trail visible and gives the user
+# something to grep for when reviewing the /admin location list.
+
+def miss_reason(loc):
+    t = (loc.get('type') or '').strip()
+    name_en = loc.get('name', '')
+    name_ch = loc.get('chinese_name', '')
+    base = (f"Map: no CHGIS v6 record matched (name={name_en!r}, "
+            f"chinese_name={name_ch!r}) in the 184-280 AD era window.")
+    if t == 'Province':
+        return (base + " CHGIS time-series doesn't carry this province's "
+                "boundary for our era; falls back to hand-drawn polygon in "
+                "solutions/locations-geo-fallback-provinces.json if listed there.")
+    if t == 'Commandery':
+        return (base + " May be a transliteration mismatch (check NAME_PY / "
+                "NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely "
+                "absent from CHGIS commandery polygons for our era.")
+    if t == 'County':
+        return (base + " County points file checked; either renamed before "
+                "or after the CHGIS-recorded window, or our transliteration "
+                "differs from CHGIS NAME_PY.")
+    if t in ('City', 'Settlement', 'Pass', 'Structure/Building'):
+        return (base + " CHGIS v6 doesn't cover sub-county locations; "
+                "ISSUES #51 plans a hand-curate + Wikidata follow-up.")
+    if not t:
+        return (base + " Location has no LocationType assigned, so the "
+                "matcher had no specific layer to query.")
+    return base + f" Type={t!r} has no dedicated CHGIS layer."
+
+misses = []
+for bucket in (prov_outputs, commanderies, counties):
+    for loc, m, kind in bucket:
+        if m is None:
+            misses.append({
+                'id': loc['id'],
+                '_note': f"unmatched: {loc.get('name','')}",
+                'notes_append': miss_reason(loc),
+            })
+
+# Also pick up any Locations the matcher never even saw (no entry in
+# our buckets — unusual but possible if the dump grew between runs).
+seen_ids = set()
+for bucket in (prov_outputs, commanderies, counties):
+    for loc, _, _ in bucket:
+        seen_ids.add(loc['id'])
+for loc in locations:
+    if loc['id'] in seen_ids:
+        continue
+    if loc.get('latitude') is not None or loc.get('has_geojson'):
+        continue
+    misses.append({
+        'id': loc['id'],
+        '_note': f"untyped: {loc.get('name','')}",
+        'notes_append': miss_reason(loc),
+    })
+
+with open(f'{OUT_DIR}/locations-geo-unmatched-notes.json', 'w') as f:
+    json.dump(misses, f, ensure_ascii=False, indent=2)
+print(f'  wrote {OUT_DIR}/locations-geo-unmatched-notes.json   ({len(misses)} entries)')
+
+# ---------------------------------------------------------------------------
 # Match report — every location, matched or not, with reason.
 
 with open(f'{OUT_DIR}/match-report.txt', 'w') as fp:

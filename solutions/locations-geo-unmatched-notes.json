@@ -1,0 +1,1927 @@
+[
+  {
+    "id": 18,
+    "_note": "unmatched: Ji Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Ji Province', chinese_name='冀州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 8,
+    "_note": "unmatched: Qing Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qing Province', chinese_name='青州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 85,
+    "_note": "unmatched: Si Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Si Province', chinese_name='司隸州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 63,
+    "_note": "unmatched: Yan Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yan Province', chinese_name='兗州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 90,
+    "_note": "unmatched: Yong Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yong Province', chinese_name='雍州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 2,
+    "_note": "unmatched: You Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='You Province', chinese_name='幽州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 62,
+    "_note": "unmatched: Yu Province",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yu Province', chinese_name='豫州') in the 184-280 AD era window. CHGIS time-series doesn't carry this province's boundary for our era; falls back to hand-drawn polygon in solutions/locations-geo-fallback-provinces.json if listed there."
+  },
+  {
+    "id": 1004,
+    "_note": "unmatched: Anfeng Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Anfeng Commandery', chinese_name='安豐') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 900,
+    "_note": "unmatched: Anping Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Anping Commandery', chinese_name='安平') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 991,
+    "_note": "unmatched: Changli Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Changli Commandery', chinese_name='昌黎') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 943,
+    "_note": "unmatched: Chengyang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chengyang Commandery', chinese_name='城陽') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 993,
+    "_note": "unmatched: Daifang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Daifang Commandery', chinese_name='帶方') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 967,
+    "_note": "unmatched: Danyang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Danyang Commandery', chinese_name='丹楊') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 960,
+    "_note": "unmatched: Dong Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dong Commandery', chinese_name='東') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 891,
+    "_note": "unmatched: Gaoliang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaoliang Commandery', chinese_name='鬱林') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 968,
+    "_note": "unmatched: Huainan Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huainan Commandery', chinese_name='淮南') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 897,
+    "_note": "unmatched: Jiaozhi Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiaozhi Commandery', chinese_name='交趾') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 969,
+    "_note": "unmatched: Jiujiang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiujiang Commandery', chinese_name='九江') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 898,
+    "_note": "unmatched: Jiuzhen Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiuzhen Commandery', chinese_name='九眞') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 905,
+    "_note": "unmatched: Julu Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Julu Commandery', chinese_name='鉅鹿') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 996,
+    "_note": "unmatched: Lelang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lelang Commandery', chinese_name='楽浪') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 997,
+    "_note": "unmatched: Liaodong Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Liaodong Commandery', chinese_name='遼東') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 1007,
+    "_note": "unmatched: Lu Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lu Commandery', chinese_name='魯') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 971,
+    "_note": "unmatched: Lujiang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lujiang Commandery', chinese_name='廬江') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 895,
+    "_note": "unmatched: Northern Hepu Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Northern Hepu Commandery', chinese_name='合浦北部尉') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 10,
+    "_note": "unmatched: Pei Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pei Commandery', chinese_name='沛郡') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 1008,
+    "_note": "unmatched: Qiao Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qiao Commandery', chinese_name='譙') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 899,
+    "_note": "unmatched: Rinan Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Rinan Commandery', chinese_name='日南') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 883,
+    "_note": "unmatched: Shuofang Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shuofang Commandery', chinese_name='朔方') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 885,
+    "_note": "unmatched: Wuyuan Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wuyuan Commandery', chinese_name='五原') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 935,
+    "_note": "unmatched: Xihai Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xihai Commandery', chinese_name='西海') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 1000,
+    "_note": "unmatched: Xuantu Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xuantu Commandery', chinese_name='玄菟') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 909,
+    "_note": "unmatched: Yangping Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yangping Commandery', chinese_name='陽平') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 952,
+    "_note": "unmatched: Youfufeng Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Youfufeng Commandery', chinese_name='右扶風') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 981,
+    "_note": "unmatched: Yuexi Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuexi Commandery', chinese_name='越巂') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 889,
+    "_note": "unmatched: Yunzhong Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yunzhong Commandery', chinese_name='雲中') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 1003,
+    "_note": "unmatched: Zhuo Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhuo Commandery', chinese_name='诼') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 953,
+    "_note": "unmatched: Zuopingyi Commandery",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zuopingyi Commandery', chinese_name='左馮翊') in the 184-280 AD era window. May be a transliteration mismatch (check NAME_PY / NAME_CH in /tmp/chgis/out/match-report.txt) or genuinely absent from CHGIS commandery polygons for our era."
+  },
+  {
+    "id": 28,
+    "_note": "unmatched: Anxi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Anxi County', chinese_name='安溪县') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1421,
+    "_note": "unmatched: Baideng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baideng', chinese_name='白登') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1365,
+    "_note": "unmatched: Baishui County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baishui County', chinese_name='白水') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1564,
+    "_note": "unmatched: Baishuiguan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baishuiguan', chinese_name='白水關') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1461,
+    "_note": "unmatched: Baishuixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baishuixiang', chinese_name='白水鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1591,
+    "_note": "unmatched: Baiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baiting', chinese_name='柏亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1015,
+    "_note": "unmatched: Baitu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baitu County', chinese_name='白土') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1478,
+    "_note": "unmatched: Baogucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Baogucheng', chinese_name='薄姑城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1347,
+    "_note": "unmatched: Beishui County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Beishui County', chinese_name='卑水') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1095,
+    "_note": "unmatched: Beiyu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Beiyu County', chinese_name='北輿') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1479,
+    "_note": "unmatched: Beizhongju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Beizhongju', chinese_name='貝中聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1551,
+    "_note": "unmatched: Bengting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Bengting', chinese_name='祊亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 43,
+    "_note": "unmatched: Blue Flower Lodge",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Blue Flower Lodge', chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1555,
+    "_note": "unmatched: Bo'an",
+    "notes_append": "Map: no CHGIS v6 record matched (name=\"Bo'an\", chinese_name='博安') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1516,
+    "_note": "unmatched: Cangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Cangting', chinese_name='倉亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1623,
+    "_note": "unmatched: Chang'an (Capital City)",
+    "notes_append": "Map: no CHGIS v6 record matched (name=\"Chang'an (Capital City)\", chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1490,
+    "_note": "unmatched: Changmenting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Changmenting', chinese_name='長門亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1412,
+    "_note": "unmatched: Changpingting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Changpingting', chinese_name='長平亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1275,
+    "_note": "unmatched: Changyuan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Changyuan County', chinese_name='長垣') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1511,
+    "_note": "unmatched: Chengkuangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chengkuangcheng', chinese_name='枣匡城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1096,
+    "_note": "unmatched: Chengle County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chengle County', chinese_name='成樂') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1060,
+    "_note": "unmatched: Chengyi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chengyi County', chinese_name='成宜') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1419,
+    "_note": "unmatched: Chouyang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chouyang', chinese_name='稠陽') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1521,
+    "_note": "unmatched: Chucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chucheng', chinese_name='鉏城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1587,
+    "_note": "unmatched: Chuihuiju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chuihuiju', chinese_name='垂惠聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1540,
+    "_note": "unmatched: Chuiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chuiting', chinese_name='垂亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1495,
+    "_note": "unmatched: Cishiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Cishiting', chinese_name='次室亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1323,
+    "_note": "unmatched: Cun County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Cun County', chinese_name='存') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1039,
+    "_note": "unmatched: Dacheng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dacheng County', chinese_name='大城') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1507,
+    "_note": "unmatched: Dajixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dajixiang', chinese_name='大棘鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1588,
+    "_note": "unmatched: Dalüting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dalüting', chinese_name='大呂亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1207,
+    "_note": "unmatched: Danshui County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Danshui County', chinese_name='丹水') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1442,
+    "_note": "unmatched: Danyangju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Danyangju', chinese_name='丹陽聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1593,
+    "_note": "unmatched: Daoting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Daoting', chinese_name='道亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1581,
+    "_note": "unmatched: Dazexiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dazexiang', chinese_name='大澤鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1565,
+    "_note": "unmatched: Deyangguzhi",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Deyangguzhi', chinese_name='德阳故治') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1464,
+    "_note": "unmatched: Dingyuan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dingyuan', chinese_name='定遠') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1349,
+    "_note": "unmatched: Dingzha County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dingzha County', chinese_name='定苲') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1594,
+    "_note": "unmatched: Dongbugeng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dongbugeng', chinese_name='東不羹') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1498,
+    "_note": "unmatched: Donglingting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Donglingting', chinese_name='東陵亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1463,
+    "_note": "unmatched: Dongwuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dongwuting', chinese_name='東武亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1457,
+    "_note": "unmatched: Duansheqiu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Duansheqiu', chinese_name='斷蛇丘') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1234,
+    "_note": "unmatched: Duofeng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Duofeng County', chinese_name='鐸封') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1133,
+    "_note": "unmatched: Duxiang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Duxiang County', chinese_name='都鄉') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1488,
+    "_note": "unmatched: Duyou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Duyou', chinese_name='杜邮') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1413,
+    "_note": "unmatched: Eyuju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Eyuju', chinese_name='阏与聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1532,
+    "_note": "unmatched: Fangmen",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fangmen', chinese_name='防門') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1589,
+    "_note": "unmatched: Fanyangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fanyangting', chinese_name='繁陽亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1569,
+    "_note": "unmatched: Fanyuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fanyuting', chinese_name='樊輿亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1081,
+    "_note": "unmatched: Fanzhi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fanzhi County', chinese_name='繁峙') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1533,
+    "_note": "unmatched: Feichengxian",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Feichengxian', chinese_name='肥城縣') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1447,
+    "_note": "unmatched: Fengxiangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fengxiangcheng', chinese_name='豐鄉城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1601,
+    "_note": "unmatched: Fenqiu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fenqiu', chinese_name='汾丘') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1415,
+    "_note": "unmatched: Fenyang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fenyang', chinese_name='汾陽') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1580,
+    "_note": "unmatched: Fenyuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fenyuting', chinese_name='枌榆亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1599,
+    "_note": "unmatched: Fushuju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fushuju', chinese_name='负黍聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1209,
+    "_note": "unmatched: Fuyang marquisate County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fuyang marquisate County', chinese_name='復陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1502,
+    "_note": "unmatched: Gaiteng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaiteng', chinese_name='概亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1582,
+    "_note": "unmatched: Gaixiaju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaixiaju', chinese_name='垓下聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1517,
+    "_note": "unmatched: Gancheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gancheng', chinese_name='竿城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1537,
+    "_note": "unmatched: Gaocheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaocheng', chinese_name='郜城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1068,
+    "_note": "unmatched: Gaolang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaolang County', chinese_name='皋狼') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1485,
+    "_note": "unmatched: Gaoliangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaoliangting', chinese_name='高梁亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1019,
+    "_note": "unmatched: Gaonu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaonu County', chinese_name='高奴') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1513,
+    "_note": "unmatched: Gaoyangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaoyangting', chinese_name='高陽亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1541,
+    "_note": "unmatched: Gaoyucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gaoyucheng', chinese_name='高魚城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1622,
+    "_note": "unmatched: Gate of Pervading Peace",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gate of Pervading Peace', chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1428,
+    "_note": "unmatched: Ge",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Ge', chinese_name='葛') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1427,
+    "_note": "unmatched: Gecheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gecheng', chinese_name='葛城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1590,
+    "_note": "unmatched: Geling",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Geling', chinese_name='葛陵') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1426,
+    "_note": "unmatched: Gengxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gengxiang', chinese_name='耿鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1570,
+    "_note": "unmatched: Gexiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gexiang', chinese_name='阁乡') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1388,
+    "_note": "unmatched: Gexiang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gexiang County', chinese_name='葛鄉') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1534,
+    "_note": "unmatched: Guangli",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Guangli', chinese_name='光裡') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1040,
+    "_note": "unmatched: Guangmu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Guangmu County', chinese_name='廣牧') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1069,
+    "_note": "unmatched: Guangyan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Guangyan County', chinese_name='廣衍') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1227,
+    "_note": "unmatched: Gufu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gufu County', chinese_name='姑復') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1465,
+    "_note": "unmatched: Guixu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Guixu', chinese_name='媯墟') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1575,
+    "_note": "unmatched: Gulingju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gulingju', chinese_name='固陵聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1568,
+    "_note": "unmatched: Guzhucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Guzhucheng', chinese_name='孤竹城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1560,
+    "_note": "unmatched: Hanguan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hanguan', chinese_name='扞關') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1471,
+    "_note": "unmatched: Hanting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hanting', chinese_name='寒亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1523,
+    "_note": "unmatched: Hemucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hemucheng', chinese_name='河牧城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1491,
+    "_note": "unmatched: Hongmenting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hongmenting', chinese_name='鸿門亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1506,
+    "_note": "unmatched: Huangchiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huangchiting', chinese_name='黄池亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1558,
+    "_note": "unmatched: Huangjincai",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huangjincai', chinese_name='黄金采') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1559,
+    "_note": "unmatched: Huangyou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huangyou', chinese_name='黃右') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1070,
+    "_note": "unmatched: Huanyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huanyang County', chinese_name='圜陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1514,
+    "_note": "unmatched: Huating",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huating', chinese_name='滑亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1455,
+    "_note": "unmatched: Hucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hucheng', chinese_name='和城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1350,
+    "_note": "unmatched: Huiwu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huiwu County', chinese_name='會無') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1410,
+    "_note": "unmatched: Hukou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hukou', chinese_name='壺口') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1483,
+    "_note": "unmatched: Huqiuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huqiuting', chinese_name='壺丘亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1583,
+    "_note": "unmatched: Jiangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiangting', chinese_name='江亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1084,
+    "_note": "unmatched: Jiangyin County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiangyin County', chinese_name='彊陰') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1497,
+    "_note": "unmatched: Jianyang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jianyang', chinese_name='建陽') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1417,
+    "_note": "unmatched: Jicheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jicheng', chinese_name='箕城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1097,
+    "_note": "unmatched: Jiling County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiling County', chinese_name='箕陵') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1236,
+    "_note": "unmatched: Jincheng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jincheng County', chinese_name='進乘') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1443,
+    "_note": "unmatched: Jinxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jinxiang', chinese_name='津鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1046,
+    "_note": "unmatched: Jinyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jinyang County', chinese_name='晉陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1484,
+    "_note": "unmatched: Jishanting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jishanting', chinese_name='禝山亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1429,
+    "_note": "unmatched: Jiuhoucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiuhoucheng', chinese_name='九侯城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1277,
+    "_note": "unmatched: Jiyu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jiyu County', chinese_name='己吾') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1456,
+    "_note": "unmatched: Juancheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Juancheng', chinese_name='卷城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1475,
+    "_note": "unmatched: Julicheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Julicheng', chinese_name='巨裡城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 6,
+    "_note": "unmatched: Julu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Julu County', chinese_name='鉅鹿') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1597,
+    "_note": "unmatched: Kangxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Kangxiang', chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1509,
+    "_note": "unmatched: Kuangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Kuangcheng', chinese_name='匡城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1574,
+    "_note": "unmatched: Laixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Laixiang', chinese_name='赖鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1444,
+    "_note": "unmatched: Lankouju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lankouju', chinese_name='蓝口聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1072,
+    "_note": "unmatched: Lejie County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lejie County', chinese_name='樂街') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1544,
+    "_note": "unmatched: Liangqiucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Liangqiucheng', chinese_name='梁丘城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1247,
+    "_note": "unmatched: Licheng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Licheng County', chinese_name='歷城') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1073,
+    "_note": "unmatched: Lin County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lin County', chinese_name='藺') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1508,
+    "_note": "unmatched: Linjiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Linjiting', chinese_name='臨濟亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1041,
+    "_note": "unmatched: Linrong County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Linrong County', chinese_name='臨戎') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1063,
+    "_note": "unmatched: Linwo County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Linwo County', chinese_name='臨沃') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1571,
+    "_note": "unmatched: Linxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Linxiang', chinese_name='臨鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1445,
+    "_note": "unmatched: Liqiucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Liqiucheng', chinese_name='犁丘城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1074,
+    "_note": "unmatched: Lishi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lishi County', chinese_name='離石') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1029,
+    "_note": "unmatched: Liting County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Liting County', chinese_name='黎亭') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1567,
+    "_note": "unmatched: Liucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Liucheng', chinese_name='柳城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1566,
+    "_note": "unmatched: Liuqiuxian",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Liuqiuxian', chinese_name='灵丘縣') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1441,
+    "_note": "unmatched: Lixiangju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lixiangju', chinese_name='離鄉聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1111,
+    "_note": "unmatched: Longbian County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Longbian County', chinese_name='龍編') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1228,
+    "_note": "unmatched: Longdong County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Longdong County', chinese_name='梇棟') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1466,
+    "_note": "unmatched: Longqicheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Longqicheng', chinese_name='龍耆城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1549,
+    "_note": "unmatched: Longxiangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Longxiangcheng', chinese_name='龍鄉城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1504,
+    "_note": "unmatched: Louting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Louting', chinese_name='楼亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1472,
+    "_note": "unmatched: Louxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Louxiang', chinese_name='蔞鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1438,
+    "_note": "unmatched: Luju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Luju', chinese_name='卢聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1577,
+    "_note": "unmatched: Luncheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Luncheng', chinese_name='綸城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1010,
+    "_note": "unmatched: Luo County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Luo County', chinese_name='駱') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1548,
+    "_note": "unmatched: Lüqiuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Lüqiuting', chinese_name='闾丘亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1064,
+    "_note": "unmatched: Manbai County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Manbai County', chinese_name='曼柏') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1547,
+    "_note": "unmatched: Maoxiangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Maoxiangcheng', chinese_name='茅鄉城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1075,
+    "_note": "unmatched: Meiji County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Meiji County', chinese_name='美稷') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1611,
+    "_note": "unmatched: Meiwo",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Meiwo', chinese_name='郿塢') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1414,
+    "_note": "unmatched: Mianshangju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Mianshangju', chinese_name='绵上聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1512,
+    "_note": "unmatched: Mingyanting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Mingyanting', chinese_name='鳴雁亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1474,
+    "_note": "unmatched: Mixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Mixiang', chinese_name='密鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1501,
+    "_note": "unmatched: Moutai",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Moutai', chinese_name='牟台') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1418,
+    "_note": "unmatched: Mu'er",
+    "notes_append": "Map: no CHGIS v6 record matched (name=\"Mu'er\", chinese_name='木耳') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1328,
+    "_note": "unmatched: Mudan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Mudan County', chinese_name='母單') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1224,
+    "_note": "unmatched: Nanfu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Nanfu County', chinese_name='南涪') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1459,
+    "_note": "unmatched: Nanjiuju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Nanjiuju', chinese_name='南就聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1439,
+    "_note": "unmatched: Neifang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Neifang', chinese_name='內方') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1545,
+    "_note": "unmatched: Nimuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Nimuting', chinese_name='泥母亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1387,
+    "_note": "unmatched: Ningling County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Ningling County', chinese_name='甯陵') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1452,
+    "_note": "unmatched: Niulanleiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Niulanleiting', chinese_name='牛兰累亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1554,
+    "_note": "unmatched: Niuzhu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Niuzhu', chinese_name='牛渚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1563,
+    "_note": "unmatched: Pengwangju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pengwangju', chinese_name='彭亡聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1614,
+    "_note": "unmatched: Phoenix Pavilion",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Phoenix Pavilion', chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1076,
+    "_note": "unmatched: Pingding County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingding County', chinese_name='平定') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1077,
+    "_note": "unmatched: Pinglu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pinglu County', chinese_name='平陸') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1278,
+    "_note": "unmatched: Pingqiu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingqiu County', chinese_name='平丘') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1050,
+    "_note": "unmatched: Pingtao County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingtao County', chinese_name='平陶') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1430,
+    "_note": "unmatched: Pingyangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingyangcheng', chinese_name='平陽城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1561,
+    "_note": "unmatched: Pingyangxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingyangxiang', chinese_name='平陽鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1535,
+    "_note": "unmatched: Pingyincheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingyincheng', chinese_name='平陰城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1524,
+    "_note": "unmatched: Pingyuanting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingyuanting', chinese_name='平原亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1078,
+    "_note": "unmatched: Pingzhou County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pingzhou County', chinese_name='平周') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1499,
+    "_note": "unmatched: Pixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pixiang', chinese_name='邳鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1505,
+    "_note": "unmatched: Pucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Pucheng', chinese_name='葡城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1288,
+    "_note": "unmatched: Puyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Puyang County', chinese_name='濮陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1351,
+    "_note": "unmatched: Qianjie County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qianjie County', chinese_name='潛街') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1424,
+    "_note": "unmatched: Qianquting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qianquting', chinese_name='千秋亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1408,
+    "_note": "unmatched: Qiaomen",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qiaomen', chinese_name='橋門') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1518,
+    "_note": "unmatched: Qingting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qingting', chinese_name='清亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1519,
+    "_note": "unmatched: Qinting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qinting', chinese_name='秦亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1330,
+    "_note": "unmatched: Qinzang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qinzang County', chinese_name='秦臧') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1384,
+    "_note": "unmatched: Qiu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qiu County', chinese_name='遒') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1021,
+    "_note": "unmatched: Qiuci County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qiuci County', chinese_name='龜茲') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1022,
+    "_note": "unmatched: Qiyuan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qiyuan County', chinese_name='漆垣') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1469,
+    "_note": "unmatched: Quqiuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Quqiuting', chinese_name='渠丘亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1492,
+    "_note": "unmatched: Quyou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Quyou', chinese_name='曲邮') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1598,
+    "_note": "unmatched: Rongyang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Rongyang', chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1585,
+    "_note": "unmatched: Runan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Runan', chinese_name='汝南') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1042,
+    "_note": "unmatched: Sanfeng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sanfeng County', chinese_name='三封') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1470,
+    "_note": "unmatched: Sangdu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sangdu', chinese_name='桑犢') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1374,
+    "_note": "unmatched: Sanggan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sanggan County', chinese_name='桑乾') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1448,
+    "_note": "unmatched: Sanhuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sanhuting', chinese_name='三戶亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1099,
+    "_note": "unmatched: Sha'nan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name=\"Sha'nan County\", chinese_name='沙南') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1098,
+    "_note": "unmatched: Shaling County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shaling County', chinese_name='沙陵') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1462,
+    "_note": "unmatched: Shangtangxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shangtangxiang', chinese_name='上唐鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1620,
+    "_note": "unmatched: Shanxi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shanxi County', chinese_name='') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1259,
+    "_note": "unmatched: Shanyangyi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shanyangyi County', chinese_name='山陽邑') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1433,
+    "_note": "unmatched: Shating",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shating', chinese_name='沙亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1446,
+    "_note": "unmatched: Sheduxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sheduxiang', chinese_name='涉都鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1332,
+    "_note": "unmatched: Shengxiu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shengxiu County', chinese_name='勝休') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1586,
+    "_note": "unmatched: Shenting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shenting', chinese_name='沈亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1486,
+    "_note": "unmatched: Shequanju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shequanju', chinese_name='射犬聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1023,
+    "_note": "unmatched: Sheyan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sheyan County', chinese_name='奢延') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1595,
+    "_note": "unmatched: Shichexiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shichexiang', chinese_name='市車鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1503,
+    "_note": "unmatched: Sishuiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Sishuiting', chinese_name='泗水亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1225,
+    "_note": "unmatched: Suitang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Suitang County', chinese_name='巂唐') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1536,
+    "_note": "unmatched: Suixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Suixiang', chinese_name='遂鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1353,
+    "_note": "unmatched: Suqi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Suqi County', chinese_name='蘇祁') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1354,
+    "_note": "unmatched: Taideng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Taideng County', chinese_name='臺登') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1476,
+    "_note": "unmatched: Tancheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tancheng', chinese_name='谭城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1592,
+    "_note": "unmatched: Tangxiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tangxiting', chinese_name='棠溪亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1530,
+    "_note": "unmatched: Tangyangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tangyangting', chinese_name='堂陽亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1435,
+    "_note": "unmatched: Tantai",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tantai', chinese_name='檀台') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1525,
+    "_note": "unmatched: Taocheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Taocheng', chinese_name='桃城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1543,
+    "_note": "unmatched: Taoju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Taoju', chinese_name='桃聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1539,
+    "_note": "unmatched: Taoqiu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Taoqiu', chinese_name='陶丘') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1619,
+    "_note": "unmatched: Terrace of Abdication",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Terrace of Abdication', chinese_name='') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1409,
+    "_note": "unmatched: Tiankai",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tiankai', chinese_name='天開') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1012,
+    "_note": "unmatched: Tongguo County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tongguo County', chinese_name='桐過') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1333,
+    "_note": "unmatched: Tongjing County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tongjing County', chinese_name='同井') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1510,
+    "_note": "unmatched: Tonglaoting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tonglaoting', chinese_name='桐牢亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1578,
+    "_note": "unmatched: Tongting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tongting', chinese_name='桐亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1556,
+    "_note": "unmatched: Tongxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tongxiang', chinese_name='桐鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1552,
+    "_note": "unmatched: Tuqiuju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tuqiuju', chinese_name='菟裘聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1091,
+    "_note": "unmatched: Wangtao County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wangtao County', chinese_name='汪陶') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1526,
+    "_note": "unmatched: Wating",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wating', chinese_name='瓦亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1515,
+    "_note": "unmatched: Weixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Weixiang', chinese_name='韋鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1065,
+    "_note": "unmatched: Wenguo County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wenguo County', chinese_name='文國') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1043,
+    "_note": "unmatched: Woye County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Woye County', chinese_name='沃野') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1013,
+    "_note": "unmatched: Wucheng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wucheng County', chinese_name='武成') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1425,
+    "_note": "unmatched: Wuchengmo",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wuchengmo', chinese_name='五成陌') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1200,
+    "_note": "unmatched: Wuji County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wuji County', chinese_name='無極') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1434,
+    "_note": "unmatched: Wulucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wulucheng', chinese_name='五鹿城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1101,
+    "_note": "unmatched: Wuquan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wuquan County', chinese_name='武泉') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1572,
+    "_note": "unmatched: Wuruanguan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wuruanguan', chinese_name='五阮關') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1546,
+    "_note": "unmatched: Wutangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wutangting', chinese_name='武唐亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1579,
+    "_note": "unmatched: Wuxiangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wuxiangcheng', chinese_name='郚鄉城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1066,
+    "_note": "unmatched: Xi'anyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name=\"Xi'anyang County\", chinese_name='西安陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1550,
+    "_note": "unmatched: Xiahuanting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiahuanting', chinese_name='下讙亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1522,
+    "_note": "unmatched: Xiancheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiancheng', chinese_name='咸城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1102,
+    "_note": "unmatched: Xianyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xianyang County', chinese_name='咸陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1437,
+    "_note": "unmatched: Xianyuting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xianyuting', chinese_name='鮮虞亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1231,
+    "_note": "unmatched: Xielong County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xielong County', chinese_name='邪龍') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1538,
+    "_note": "unmatched: Xifang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xifang', chinese_name='西防') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1489,
+    "_note": "unmatched: Xiliu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiliu', chinese_name='细柳') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1355,
+    "_note": "unmatched: Xindao County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xindao County', chinese_name='新道') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1450,
+    "_note": "unmatched: Xingju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xingju', chinese_name='杏聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1241,
+    "_note": "unmatched: Xisui County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xisui County', chinese_name='西隨') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1493,
+    "_note": "unmatched: Xiting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiting', chinese_name='戏亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1336,
+    "_note": "unmatched: Xiuyun County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiuyun County', chinese_name='修雲') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1460,
+    "_note": "unmatched: Xiyangju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiyangju', chinese_name='夕陽聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1436,
+    "_note": "unmatched: Xiyangting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiyangting', chinese_name='昔陽亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1112,
+    "_note": "unmatched: Xupu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xupu County', chinese_name='胥浦') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1255,
+    "_note": "unmatched: Yang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yang County', chinese_name='楊') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1600,
+    "_note": "unmatched: Yangguan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yangguan', chinese_name='陽關') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1576,
+    "_note": "unmatched: Yangliangju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yangliangju', chinese_name='陽梁聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1573,
+    "_note": "unmatched: Yangxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yangxiang', chinese_name='陽鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1596,
+    "_note": "unmatched: Yangyinli",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yangyinli', chinese_name='奍陰裡') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1481,
+    "_note": "unmatched: Yanjian",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yanjian', chinese_name='監') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1480,
+    "_note": "unmatched: Yejingting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yejingting', chinese_name='野井亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1079,
+    "_note": "unmatched: Yilan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yilan County', chinese_name='益蘭') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1067,
+    "_note": "unmatched: Yiliang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yiliang County', chinese_name='宜梁') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1496,
+    "_note": "unmatched: Yiluxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yiluxiang', chinese_name='伊卢乡') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1165,
+    "_note": "unmatched: Yingtao County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yingtao County', chinese_name='癭陶') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1454,
+    "_note": "unmatched: Yiqiuju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yiqiuju', chinese_name='宜秋聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1037,
+    "_note": "unmatched: Yishi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yishi County', chinese_name='陭氏') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1520,
+    "_note": "unmatched: Yiyiju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yiyiju', chinese_name='夷仪聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1449,
+    "_note": "unmatched: Youju",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Youju', chinese_name='鄾聚') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1467,
+    "_note": "unmatched: Yuanjie",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuanjie', chinese_name='允街') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1468,
+    "_note": "unmatched: Yuanya",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuanya', chinese_name='允吾') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1103,
+    "_note": "unmatched: Yuanyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuanyang County', chinese_name='原陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1482,
+    "_note": "unmatched: Yucheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yucheng', chinese_name='虞城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1562,
+    "_note": "unmatched: Yufujin",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yufujin', chinese_name='魚涪津') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1057,
+    "_note": "unmatched: Yuli County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuli County', chinese_name='於離') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1542,
+    "_note": "unmatched: Yuncheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuncheng', chinese_name='運城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1500,
+    "_note": "unmatched: Yunting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yunting', chinese_name='郓亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1440,
+    "_note": "unmatched: Yunxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yunxiang', chinese_name='鄖鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1411,
+    "_note": "unmatched: Yuwu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuwu', chinese_name='余吾') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1337,
+    "_note": "unmatched: Yuyuan County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yuyuan County', chinese_name='俞元') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1531,
+    "_note": "unmatched: Zhangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhangcheng', chinese_name='鄣城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1584,
+    "_note": "unmatched: Zhanghuatai",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhanghuatai', chinese_name='章華台') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1453,
+    "_note": "unmatched: Zhangmixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhangmixiang', chinese_name='章密鄉') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1473,
+    "_note": "unmatched: Zhencheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhencheng', chinese_name='斟城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1024,
+    "_note": "unmatched: Zhenlin County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhenlin County', chinese_name='楨林') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1487,
+    "_note": "unmatched: Zhidaoting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhidaoting', chinese_name='枳道亭') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1528,
+    "_note": "unmatched: Zhimicheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhimicheng', chinese_name='緻密城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1477,
+    "_note": "unmatched: Zhongcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhongcheng', chinese_name='钟城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1080,
+    "_note": "unmatched: Zhongyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhongyang County', chinese_name='中陽') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1553,
+    "_note": "unmatched: Zhuanyucheng =",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhuanyucheng =', chinese_name='顓臾城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1,
+    "_note": "unmatched: Zhuo County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhuo County', chinese_name='诼') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1113,
+    "_note": "unmatched: Zhuwu County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhuwu County', chinese_name='朱吾') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1529,
+    "_note": "unmatched: Zhuzaocheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zhuzaocheng', chinese_name='煮枣城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 1059,
+    "_note": "unmatched: Zishi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zishi County', chinese_name='茲氏') in the 184-280 AD era window. County points file checked; either renamed before or after the CHGIS-recorded window, or our transliteration differs from CHGIS NAME_PY."
+  },
+  {
+    "id": 1527,
+    "_note": "unmatched: Zuocheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Zuocheng', chinese_name='胙城') in the 184-280 AD era window. CHGIS v6 doesn't cover sub-county locations; ISSUES #51 plans a hand-curate + Wikidata follow-up."
+  },
+  {
+    "id": 38,
+    "_note": "untyped: Aoxiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Aoxiang', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 45,
+    "_note": "untyped: Beimang Hills",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Beimang Hills', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1621,
+    "_note": "untyped: Black Lock Gate",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Black Lock Gate', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1616,
+    "_note": "untyped: Chu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Chu', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 105,
+    "_note": "untyped: Daigu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Daigu', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 30,
+    "_note": "untyped: Daizhou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Daizhou', chinese_name='代州') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 106,
+    "_note": "untyped: Danshi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Danshi County', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 7,
+    "_note": "untyped: Daxing'anling Prefecture",
+    "notes_append": "Map: no CHGIS v6 record matched (name=\"Daxing'anling Prefecture\", chinese_name='大兴安岭地区') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1606,
+    "_note": "untyped: Dengcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dengcheng', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 98,
+    "_note": "untyped: Dongting Lake",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dongting Lake', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 96,
+    "_note": "untyped: Dynastic Temple",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Dynastic Temple', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1605,
+    "_note": "untyped: Fankou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Fankou', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 42,
+    "_note": "untyped: Forbidden City",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Forbidden City', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 41,
+    "_note": "untyped: Gate of Grand Virtue",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gate of Grand Virtue', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1416,
+    "_note": "untyped: Gengyangcheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Gengyangcheng', chinese_name='梗陽城') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 74,
+    "_note": "untyped: Guanxi",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Guanxi', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 101,
+    "_note": "untyped: Hall of Paragons",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hall of Paragons', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 55,
+    "_note": "untyped: Hall of Virtue",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hall of Virtue', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1607,
+    "_note": "untyped: Han River",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Han River', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 93,
+    "_note": "untyped: Hangu Pass",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hangu Pass', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 52,
+    "_note": "untyped: Hu",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Hu', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 104,
+    "_note": "untyped: Huanyuan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huanyuan', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 99,
+    "_note": "untyped: Huaying",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huaying', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1610,
+    "_note": "untyped: Huazhou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Huazhou', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 19,
+    "_note": "untyped: Jinan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jinan', chinese_name='济南市') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 97,
+    "_note": "untyped: Jing Mountains",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Jing Mountains', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 94,
+    "_note": "untyped: Longyou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Longyou', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 109,
+    "_note": "untyped: Luting",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Luting', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 102,
+    "_note": "untyped: Mengching",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Mengching', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 39,
+    "_note": "untyped: Mianchi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Mianchi County', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 44,
+    "_note": "untyped: North Palace",
+    "notes_append": "Map: no CHGIS v6 record matched (name='North Palace', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 56,
+    "_note": "untyped: Palace of Forever Calm",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Palace of Forever Calm', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 40,
+    "_note": "untyped: Palace of Prolonging Happiness",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Palace of Prolonging Happiness', chinese_name='延禧宫') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1615,
+    "_note": "untyped: Palace of the Moon",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Palace of the Moon', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1613,
+    "_note": "untyped: Peony Pavilion",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Peony Pavilion', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 23,
+    "_note": "untyped: Qiantang River",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qiantang River', chinese_name='钱塘江') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1617,
+    "_note": "untyped: Qin",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qin', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 13,
+    "_note": "untyped: Qingfeng County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Qingfeng County', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1609,
+    "_note": "untyped: Que",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Que', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 16,
+    "_note": "untyped: Quyang County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Quyang County', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1603,
+    "_note": "untyped: River Pan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='River Pan', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 73,
+    "_note": "untyped: River Si Pass",
+    "notes_append": "Map: no CHGIS v6 record matched (name='River Si Pass', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1612,
+    "_note": "untyped: Royal Gate",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Royal Gate', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 53,
+    "_note": "untyped: Shandong Mountains",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Shandong Mountains', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 103,
+    "_note": "untyped: Suanzao",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Suanzao', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 47,
+    "_note": "untyped: Taishan Mountains",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Taishan Mountains', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1451,
+    "_note": "untyped: Tangzixiang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tangzixiang', chinese_name='唐子鄉') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 79,
+    "_note": "untyped: Tiger Trap Pass",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tiger Trap Pass', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 50,
+    "_note": "untyped: Tong Palace",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Tong Palace', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 48,
+    "_note": "untyped: Wenming Garden",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wenming Garden', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 108,
+    "_note": "untyped: Wu Pass",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wu Pass', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 75,
+    "_note": "untyped: Wujun",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Wujun', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1608,
+    "_note": "untyped: Xian Hills",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xian Hills', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 80,
+    "_note": "untyped: Xichuan",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xichuan', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 70,
+    "_note": "untyped: Xiliang",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xiliang', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 107,
+    "_note": "untyped: Xilin County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xilin County', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 37,
+    "_note": "untyped: Xizhou",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xizhou', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 25,
+    "_note": "untyped: Xuyi County",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Xuyi County', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 24,
+    "_note": "untyped: Yancheng",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yancheng', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 110,
+    "_note": "untyped: Yanping",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yanping', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 92,
+    "_note": "untyped: Yaohan Mountains",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yaohan Mountains', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  },
+  {
+    "id": 1604,
+    "_note": "untyped: Yellow River",
+    "notes_append": "Map: no CHGIS v6 record matched (name='Yellow River', chinese_name='') in the 184-280 AD era window. Location has no LocationType assigned, so the matcher had no specific layer to query."
+  }
+]

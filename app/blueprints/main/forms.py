@@ -230,9 +230,48 @@ class EditLocationForm(FlaskForm):
         validators=[Optional(), NumberRange(min=-180, max=180)],
         render_kw={"step": "any", "placeholder": "e.g. 113.6253"},
     )
+    # JSONB column shown as a JSON string in the admin UI. Validated
+    # on submit (empty allowed; otherwise must parse and be a
+    # Polygon or MultiPolygon GeoJSON Geometry).
+    geojson = TextAreaField(
+        "GeoJSON polygon",
+        description="Optional. GeoJSON Geometry object (Polygon or "
+                    "MultiPolygon). Used to draw a boundary on /map. "
+                    "Ignored at render time if latitude + longitude "
+                    "are also set.",
+        render_kw={"rows": 6, "placeholder":
+                   '{"type":"Polygon","coordinates":[[[lng,lat], ...]]}',
+                   "spellcheck": "false",
+                   "style": "font-family: ui-monospace, monospace; font-size: 0.85rem;"},
+    )
     notes = TextAreaField("Notes")
     is_deleted = BooleanField("Is Deleted?")
     submit = SubmitField("Save")
+
+    def validate_geojson(self, field):
+        """Allow empty, otherwise require valid GeoJSON Polygon/
+        MultiPolygon JSON. Parsed value is exposed on the field so
+        the view can write the dict (not the string) into JSONB."""
+        import json as _json
+        from wtforms.validators import ValidationError
+        raw = (field.data or '').strip()
+        if not raw:
+            field.parsed = None
+            return
+        try:
+            obj = _json.loads(raw)
+        except _json.JSONDecodeError as e:
+            raise ValidationError(f"Not valid JSON: {e.msg} (line {e.lineno} col {e.colno})")
+        if not isinstance(obj, dict):
+            raise ValidationError("GeoJSON must be a JSON object")
+        if obj.get('type') not in ('Polygon', 'MultiPolygon'):
+            raise ValidationError(
+                "GeoJSON 'type' must be 'Polygon' or 'MultiPolygon' "
+                "(use the latitude/longitude fields for single points)"
+            )
+        if not isinstance(obj.get('coordinates'), list):
+            raise ValidationError("'coordinates' must be an array")
+        field.parsed = obj
 
 
 class EditEventForm(FlaskForm):
