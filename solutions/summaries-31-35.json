@@ -1,0 +1,937 @@
+[
+  {
+    "chapter_num": 31,
+    "character_id": 86,
+    "summary": "Crushes Yuan Shao's remnant army at Cangting; uses Cheng Yu's 'ten-side ambush' formation that ends the post-Guandu campaigns. Then drives south to defeat Liu Bei at Runan, forcing Liu Bei to take refuge with Liu Biao at Jingzhou."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3006,
+    "summary": "Yuan Shao; broken at Cangting; flees north to Jizhou bleeding from the mouth. Murders Tian Feng in prison so as not to face him on return. Vacillates over which son should succeed him as his health crumbles."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2176,
+    "summary": "Tian Feng; murdered in his cell on Peng Ji's slander when Yuan Shao returns from Cangting — vindicated by the defeat but unable to enjoy it."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1107,
+    "summary": "Ju Shou; named in passing — already dead at Guandu."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1311,
+    "summary": "Liu Bei; defeated at Runan; flees south through Jingmen toward Liu Biao with the brothers and Zhao Yun. Welcomed at Jingzhou — the start of his seven-year exile."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1313,
+    "summary": "Liu Biao; receives Liu Bei into his court at Jingzhou; gives him Xinye as a base."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 68,
+    "summary": "Cai Mao; Liu Biao's brother-in-law and the chapter's first portrait of him as the regime's spider — already counsel against accepting Liu Bei."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 704,
+    "summary": "Guan Yu; with Liu Bei in the Runan defeat and Jingzhou flight."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3106,
+    "summary": "Zhang Fei; with Liu Bei in the Runan defeat and Jingzhou flight."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3334,
+    "summary": "Zhao Yun; with Liu Bei in the Runan defeat and Jingzhou flight."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 698,
+    "summary": "Guan Ping; with Guan Yu in the flight south."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1390,
+    "summary": "Liu Pi; killed at Runan when Cao Cao's army overruns it."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 642,
+    "summary": "Gong Du; killed at Runan alongside Liu Pi."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2102,
+    "summary": "Sun Qian; with Liu Bei in the flight south."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2103,
+    "summary": "Sun Qian (duplicate record)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1053,
+    "summary": "Jian Yong; with Liu Bei in the flight south."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1678,
+    "summary": "Mi Fang; with Liu Bei in the flight south."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 100,
+    "summary": "Cao Hong; with Cao Cao at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 101,
+    "summary": "Cao Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; with Cao Cao at Cangting and Runan."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2556,
+    "summary": "Xiahou Yuan; with Cao Cao at Cangting and Runan."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 309,
+    "summary": "Cheng Yu; designs the ten-side ambush that finishes Yuan Shao's army at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 310,
+    "summary": "Cheng Yu (duplicate record)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1158,
+    "summary": "Li Dian; with Cao Cao at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2953,
+    "summary": "Yu Jin; with Cao Cao at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2624,
+    "summary": "Xu Chu; with Cao Cao at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2637,
+    "summary": "Xu Huang; with Cao Cao at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3120,
+    "summary": "Zhang He; with Cao Cao at Cangting (now serving Wei since Guandu)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 612,
+    "summary": "Gao Lan; with Cao Cao at Cangting (now serving Wei since Guandu)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3166,
+    "summary": "Zhang Liao; with Cao Cao at Cangting."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3005,
+    "summary": "Yuan Shang; rallies his father's remnants and is set up to inherit Jizhou."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3011,
+    "summary": "Yuan Tan; Yuan Shao's eldest; resents Yuan Shang's elevation — the seed of the brothers' coming feud."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 3013,
+    "summary": "Yuan Xi; Yuan Shao's second son; holds Youzhou."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 604,
+    "summary": "Gao Gan; Yuan Shao's nephew; holds Bingzhou as one of the four Yuan-territory holders."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1299,
+    "summary": "Lady Liu; Yuan Shao's wife; pushes Yuan Shang's succession after his death."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1301,
+    "summary": "Lady Liu (duplicate record)."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1925,
+    "summary": "Shen Pei; Yuan Shang's chief adviser."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1078,
+    "summary": "Jiang Yiqu; minor Yuan officer named in passing."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 756,
+    "summary": "Guo Tu; aligns with Yuan Tan in the coming brothers' feud."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1948,
+    "summary": "Shi Huan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2105,
+    "summary": "Sun Quan; named in passing in the southern strategic roll."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2608,
+    "summary": "Xin Ping; Yuan Tan's adviser."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2905,
+    "summary": "Yin Kui; minor figure named in passing."
+  },
+  {
+    "chapter_num": 31,
+    "character_id": 2906,
+    "summary": "Yin Kui (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3006,
+    "summary": "Yuan Shao; dies of grief and illness this chapter, blood streaming from his mouth. The last great obstacle to Cao Cao's north is gone, but the succession war among his sons keeps Hebei contested for several more chapters."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3005,
+    "summary": "Yuan Shang; Lady Liu pushes through his succession as Yuan Shao dies; takes Jizhou and Yejun. Defeats his brother Yuan Tan in initial fighting before Cao Cao intervenes."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3011,
+    "summary": "Yuan Tan; resents the bypass for succession; appeals to Cao Cao for help against his brother — letting Cao Cao split the Yuan house and pick it off piecemeal."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1925,
+    "summary": "Shen Pei; Yuan Shang's chief defender at Yejun. Will hold the city to the bitter end."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1299,
+    "summary": "Lady Liu; engineers Yuan Shang's succession over Yuan Tan; massacres Yuan Shao's other consorts after his death."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1301,
+    "summary": "Lady Liu (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1311,
+    "summary": "Liu Bei; in Jingzhou; the brothers' feud is the news of the day."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 86,
+    "summary": "Welcomes Yuan Tan's appeal and intervenes — uses the brothers' division to peel off the Yuan territory step by step. Begins the long siege of Yejun where Shen Pei holds out."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 121,
+    "summary": "Cao Pi; eighteen years old; enters the action when Yejun finally falls. Strides into the Yuan household after the fall, finds Lady Liu and her daughter-in-law Lady Zhen weeping, and takes Lady Zhen for himself — the marriage that begins his arc."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 100,
+    "summary": "Cao Hong; with Cao Cao in the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 101,
+    "summary": "Cao Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1158,
+    "summary": "Li Dian; with Cao Cao in the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2624,
+    "summary": "Xu Chu; with Cao Cao in the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2637,
+    "summary": "Xu Huang; with Cao Cao in the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3166,
+    "summary": "Zhang Liao; with Cao Cao in the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 737,
+    "summary": "Guo Jia; advises Cao Cao through the Hebei campaign — counsels patience and lets the brothers exhaust each other."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 309,
+    "summary": "Cheng Yu; advises Cao Cao through the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 310,
+    "summary": "Cheng Yu (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1048,
+    "summary": "Jia Xu; advises Cao Cao through the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1049,
+    "summary": "Jia Xu (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2754,
+    "summary": "Xun You; advises Cao Cao through the Hebei campaign."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1107,
+    "summary": "Ju Shou; named in passing — long dead."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 231,
+    "summary": "Chen Lin; captured among Yuan Shao's senior officers when Yejun falls; Cao Cao spares him for his literary brilliance, makes him court secretary."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 756,
+    "summary": "Guo Tu; with Yuan Tan in the brothers' feud."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2607,
+    "summary": "Xin Pi; Yuan Tan's envoy to Cao Cao; eventually defects to Cao Cao and becomes a key Wei adviser."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2608,
+    "summary": "Xin Ping; Xin Pi's brother; with Yuan Tan."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 604,
+    "summary": "Gao Gan; Yuan Shao's nephew at Bingzhou; nominally neutral in the brothers' feud."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3013,
+    "summary": "Yuan Xi; Yuan Shao's second son at Youzhou; allies with Yuan Shang."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1313,
+    "summary": "Liu Biao; sends Liu Bei back to Xinye after the Yuan brothers' news arrives."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1638,
+    "summary": "Man Chong; among Cao Cao's officials."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 553,
+    "summary": "Feng Li; Yuan Shang officer named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1197,
+    "summary": "Li Mu; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1627,
+    "summary": "Ma Yan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1923,
+    "summary": "Shen Heng; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1926,
+    "summary": "Shen Rong; with Shen Pei at the defense of Yejun."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 1948,
+    "summary": "Shi Huan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2044,
+    "summary": "Su You; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2346,
+    "summary": "Wang Xiu; loyal Yuan officer who refuses to abandon Yuan Shang."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2347,
+    "summary": "Wang Xiu (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2348,
+    "summary": "Wang Xiu (duplicate record)."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2376,
+    "summary": "Wang Zhao; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 2904,
+    "summary": "Yin Kai; minor figure named in passing."
+  },
+  {
+    "chapter_num": 32,
+    "character_id": 3283,
+    "summary": "Zhang Zi; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 86,
+    "summary": "Finishes off the Yuan brothers — Yuan Tan killed; Yuan Shang and Yuan Xi flee to Liaodong. Cao Cao then marches north against the Wuhuan tribes with Guo Jia's plan to finish the Yuan line at Liucheng — wins the climactic Battle of White Wolf Mountain. Loses Guo Jia to illness on the return."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 737,
+    "summary": "Guo Jia dies in this chapter — at 37, on the return from the Wuhuan campaign. Leaves a sealed letter that prevents Cao Cao from pursuing the Yuans into Liaodong: 'Gongsun Kang will deliver their heads to you for fear of you.' The prediction holds within months."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3011,
+    "summary": "Yuan Tan; killed in the Pingyuan campaign — Cao Hong rides him down."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3005,
+    "summary": "Yuan Shang; flees to Wuhuan tribesmen with Yuan Xi after Cao Cao's victory; killed in Liaodong by Gongsun Kang who sends the head to Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3013,
+    "summary": "Yuan Xi; flees to Wuhuan with Yuan Shang; killed in Liaodong with him."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 657,
+    "summary": "Gongsun Kang; Liaodong's regional lord; kills the fugitive Yuan Shang and Yuan Xi and sends their heads to Cao Cao to forestall invasion — exactly as Guo Jia predicted."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 650,
+    "summary": "Gongsun Du; Gongsun Kang's father; named in the chapter's Liaodong background."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 653,
+    "summary": "Gongsun Gong; Gongsun Kang's uncle; named in the same background."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 604,
+    "summary": "Gao Gan; Yuan Shao's nephew; killed when Cao Cao mops up the last Yuan-territory holdouts at Bingzhou."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 121,
+    "summary": "Cao Pi; takes Lady Zhen as wife when Yejun falls. The chapter's romance set piece."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3345,
+    "summary": "Lady Zhen; Yuan Xi's wife; found weeping in the Yuan household at Yejun by the eighteen-year-old Cao Pi who immediately marries her — the rare named female figure in the early book."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2175,
+    "summary": "Tian Chou; mountain-dwelling scholar who guides Cao Cao's army through the swamps of Liaoxi to surprise the Wuhuan at Liucheng. Critical to the campaign's success."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1311,
+    "summary": "Liu Bei; in Xinye; watches the news of Cao Cao's northern victories with rising urgency. The seven years at Xinye are now compressing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2683,
+    "summary": "Xu You; arrogant after his Wuchao tip; finally killed for his repeated insults to Cao Cao — struck down by Xu Chu after one boast too many at the Yejun gate."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2684,
+    "summary": "Xu You (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2685,
+    "summary": "Xu You (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2624,
+    "summary": "Xu Chu; kills Xu You at the Yejun gate after the latter's repeated boasts."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1313,
+    "summary": "Liu Biao; named in passing — the southern lord watching Cao Cao's north consolidate."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 336,
+    "summary": "Cui Yan; Yuan Shao's senior counsellor; accepted by Cao Cao after Yejun's fall."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 100,
+    "summary": "Cao Hong; rides down Yuan Tan in the Pingyuan campaign."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 101,
+    "summary": "Cao Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; with Cao Cao through the Hebei finishing campaign."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1158,
+    "summary": "Li Dian; with Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2953,
+    "summary": "Yu Jin; with Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2637,
+    "summary": "Xu Huang; with Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3166,
+    "summary": "Zhang Liao; with Cao Cao on the Wuhuan campaign."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 309,
+    "summary": "Cheng Yu; with Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 310,
+    "summary": "Cheng Yu (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2754,
+    "summary": "Xun You; with Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2607,
+    "summary": "Xin Pi; defects from Yuan Tan to Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2608,
+    "summary": "Xin Ping; Xin Pi's brother."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 756,
+    "summary": "Guo Tu; killed with Yuan Tan."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1299,
+    "summary": "Lady Liu; survives the fall of Yejun."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1301,
+    "summary": "Lady Liu (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1923,
+    "summary": "Shen Heng; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 790,
+    "summary": "Han Heng; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1081,
+    "summary": "Jiao Chu; Wuhuan officer named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 1627,
+    "summary": "Ma Yan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2074,
+    "summary": "Sun He; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2346,
+    "summary": "Wang Xiu; named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2347,
+    "summary": "Wang Xiu (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2348,
+    "summary": "Wang Xiu (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 2352,
+    "summary": "Wang Yan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3242,
+    "summary": "Zhang Yan; Black Mountain bandit chief; surrenders to Cao Cao."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3243,
+    "summary": "Zhang Yan (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3244,
+    "summary": "Zhang Yan (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3245,
+    "summary": "Zhang Yan (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3246,
+    "summary": "Zhang Yan (duplicate record)."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3283,
+    "summary": "Zhang Zi; minor figure named in passing."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1311,
+    "summary": "Liu Bei; at a banquet for the Jingzhou notables overhears Cai Mao plotting his death; flees the city on his horse Dilu (the 'unlucky steed'), is cornered at the Tan Torrent and makes the famous leap — Dilu clears the gorge at a single bound. The novel's most-quoted miracle escape."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1313,
+    "summary": "Liu Biao; pressed by his second wife Lady Cai and her brother Cai Mao to make their son Liu Cong (not Liu Qi) the heir; the chapter is the long mid-court intrigue scene. Lady Cai's eavesdropping on Liu Biao's heir conversation with Liu Bei begins the plot to remove him."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 61,
+    "summary": "Lady Cai; Liu Biao's second wife; eavesdrops on Liu Biao and Liu Bei's heir discussion. Pushes Cai Mao to kill Liu Bei at the Xiangyang banquet."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 68,
+    "summary": "Cai Mao; Lady Cai's brother and Jingzhou's chief commander; engineers the failed assassination of Liu Bei at the Xiangyang banquet."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1129,
+    "summary": "Kuai Liang; Liu Biao's senior adviser; aware of the plot but stays neutral."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1131,
+    "summary": "Kuai Yue; Liu Biao's other adviser; sides with Cai Mao."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1395,
+    "summary": "Liu Qi; Liu Biao's elder son; close to Liu Bei and out of favour with his stepmother Lady Cai. Begins seeking Liu Bei's counsel about his own survival."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1401,
+    "summary": "Liu Shan; born in this chapter — Liu Bei's first son by Lady Gan. Will be the future second emperor of Shu Han."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 592,
+    "summary": "Lady Gan; gives birth to Liu Shan after a dream of swallowing the Big Dipper."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 704,
+    "summary": "Guan Yu; with Liu Bei at Xinye."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 3106,
+    "summary": "Zhang Fei; with Liu Bei at Xinye."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 3334,
+    "summary": "Zhao Yun; with Liu Bei at Xinye."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 86,
+    "summary": "Cao Cao; returns to Xuchang from the Wuhuan campaign; orders the construction of the Bronze Bird Tower on the river Zhang as monument to his northern triumph. Will spend the next year planning the southern campaign."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 121,
+    "summary": "Cao Pi; helps supervise the Bronze Bird Tower at Yejun."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 160,
+    "summary": "Cao Zhi; Cao Cao's third son — already showing literary brilliance; helps supervise the Bronze Bird Tower with his brother. The line that becomes Tu Mu's poem first appears here."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 737,
+    "summary": "Guo Jia; named in passing in the chapter's recap of his recent death and posthumous honours."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2754,
+    "summary": "Xun You; advises Cao Cao on the southern strategy."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2105,
+    "summary": "Sun Quan; named in passing in the strategic roll."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2102,
+    "summary": "Sun Qian; with Liu Bei at Xinye; rides ahead to negotiate with Liu Biao after the assassination attempt."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2103,
+    "summary": "Sun Qian (duplicate record)."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2336,
+    "summary": "Wang Wei; Liu Biao officer named in passing."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2439,
+    "summary": "Wen Pin; Liu Biao officer named in passing — will defect to Cao Cao later."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 2888,
+    "summary": "Yi Ji; Jingzhou official who warns Liu Bei of the assassination plot in time for him to flee the banquet."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 3169,
+    "summary": "Zhang Lu; named in passing as Hanzhong's Daoist lord."
+  },
+  {
+    "chapter_num": 34,
+    "character_id": 3221,
+    "summary": "Zhang Wu; bandit chief defeated by Zhao Yun in the chapter — earns him the horse Dilu that will save Liu Bei at Tan Torrent."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1311,
+    "summary": "After leaping the Tan Torrent and pausing at the recluse Sima Hui's hut, Liu Bei is told the famous prophecy 'when Sleeping Dragon or Young Phoenix is yours, the empire is yours.' Returns to Xinye and meets Shan Fu (Xu Shu) on the road — the start of his strategist's life."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1993,
+    "summary": "Sima Hui's debut — 'Water Mirror' — recluse near Nanzhang who points Liu Bei toward Sleeping Dragon (Zhuge Liang) and Young Phoenix (Pang Tong) but won't reveal who or where. The chapter's key prophetic scene."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1895,
+    "summary": "Shan Fu (Xu Shu); meets Liu Bei on the Xinye road singing of his loneliness. Becomes Liu Bei's first strategist and immediately deploys at Fancheng against Cao Ren — appears in chapter 36."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1726,
+    "summary": "Pang Degong; Pang Tong's uncle; senior recluse of the same Xiangyang circle as Sima Hui. Briefly named in the chapter's Sima Hui visit."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1739,
+    "summary": "Pang Tong; named in passing by Sima Hui as Young Phoenix. Will arrive in person later in chapter 57."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1313,
+    "summary": "Liu Biao; receives Liu Bei back at Jingzhou after the Tan Torrent leap; restores him to Xinye despite Cai Mao's plotting."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 61,
+    "summary": "Lady Cai; continues to push for Cai Mao's plans against Liu Bei."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 68,
+    "summary": "Cai Mao; embarrassed by the failure of the Xiangyang banquet plot; still chief commander at Jingzhou."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1395,
+    "summary": "Liu Qi; Liu Biao's elder son; tied to Liu Bei's cause."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 86,
+    "summary": "Cao Cao; dispatches Cao Ren against Liu Bei at Xinye — the engagement that will be the first showcase of Shan Fu's strategy in chapter 36."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 123,
+    "summary": "Cao Ren; ordered to attack Xinye; arrives at Fancheng to begin his campaign."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1158,
+    "summary": "Li Dian; with Cao Ren against Xinye."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 704,
+    "summary": "Guan Yu; at Xinye with Liu Bei."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 3106,
+    "summary": "Zhang Fei; at Xinye with Liu Bei."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 3334,
+    "summary": "Zhao Yun; at Xinye with Liu Bei; the chapter portrays him as the brothers' equal-rank fourth Tiger."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1682,
+    "summary": "Mi Zhu; with Liu Bei at Xinye."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 2102,
+    "summary": "Sun Qian; with Liu Bei at Xinye."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 2103,
+    "summary": "Sun Qian (duplicate record)."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1053,
+    "summary": "Jian Yong; with Liu Bei at Xinye."
+  },
+  {
+    "chapter_num": 35,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3006,
+    "summary": "Yuan Shao; named in passing in the chapter's recap — long dead by this point."
+  },
+  {
+    "chapter_num": 33,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  }
+]
