@@ -266,18 +266,27 @@ sure the shape lands in the right region.
 
 ## Base map tiles
 
-[OpenStreetMap](https://www.openstreetmap.org/) raster tiles via
-`*.tile.openstreetmap.org` are the base layer. License:
-[Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/)
-— free, with attribution required. The Leaflet attribution control
-shows the standard "© OpenStreetMap contributors" badge in the
-bottom-right of every map tile area; the credits panel below the
-canvas on `/map` includes a fuller credit + link to the ODbL.
+[Esri ArcGIS Online](https://www.esri.com/) **World Terrain Base** —
+shaded relief plus water bodies, **no roads and no labels**. URL
+pattern:
+
+```
+https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}
+```
+
+This is deliberately label-free so modern Chinese road networks and
+present-day place names don't overlay our Three Kingdoms era data.
+Esri terms allow free use of the basemap tiles for non-commercial
+applications with attribution.
 
 The CSP at `app/__init__.py:_build_csp()` allows
-`https://*.tile.openstreetmap.org` under `img-src`. If we ever swap
-to a different tile provider (MapTiler, Stadia, Carto), update both
-the Leaflet tile URL in `app/static/js/map.js` and the CSP entry.
+`server.arcgisonline.com` and `services.arcgisonline.com` under
+`img-src`. If we swap to a different tile provider (Carto, MapTiler,
+Stadia, OpenTopoMap), update both the Leaflet tile URL in
+`app/static/js/map.js` and the CSP entry. OSM standard tiles were
+the original base layer (still ODbL-friendly) but had Chinese road
+networks and labels that cluttered the historical view; we moved
+off them at commit time.
 
 ---
 
@@ -293,9 +302,8 @@ must include both of the following:
    originally derived from CHGIS (i.e. any row whose `notes` includes
    the `[geo]` `CHGIS v6` line).
 
-2. *"Map tiles © OpenStreetMap contributors, licensed under
-   [ODbL](https://opendatacommons.org/licenses/odbl/)."* — for the
-   base map.
+2. *"Map tiles © Esri (World Terrain Base) — sources: USGS, NOAA,
+   AAFC, NRCan."* — for the base map.
 
 The `/map` page itself does this in the credits panel below the
 canvas; this file is the longer-form record.

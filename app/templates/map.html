@@ -28,9 +28,11 @@
 <div class="map-credits text-muted small mt-2">
     <strong>Data &amp; tiles:</strong>
     Base map tiles &copy;
-    <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>
-    contributors, licensed under
-    <a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener">ODbL</a>.
+    <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>
+    (World Terrain Base) &mdash; sources: USGS, NOAA, AAFC, NRCan.
+    A label-free shaded-relief layer is used here so modern
+    Chinese roads and place names don't overlay the historical
+    geography.
     Historical administrative boundaries (where present) derived from the
     <a href="https://sites.fas.harvard.edu/~chgis/" target="_blank" rel="noopener">China Historical GIS</a>
     project (Harvard / Fudan), released under
@@ -40,7 +42,9 @@
     mix of CHGIS centroids and editorial additions. Era covered: Late
     Eastern Han through Three Kingdoms (~184&ndash;280&nbsp;AD), with
     border snapshots drawn primarily from the Eastern Han (~140&nbsp;AD)
-    and Western Jin (~280&nbsp;AD) CHGIS layers.
+    and Western Jin (~280&nbsp;AD) CHGIS layers. See
+    <a href="https://github.com/" target="_blank" rel="noopener">GEO.md</a>
+    in the project repo for the full sourcing methodology.
 </div>
 
 <script id="map-items" type="application/json" nonce="{{ csp_nonce }}">{{ map_items_json|tojson }}</script>

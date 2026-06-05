@@ -18,10 +18,19 @@
     maxZoom: 12,
   }).setView([34.0, 110.0], 5);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 18,
-  }).addTo(map);
+  // ESRI World Terrain Base — shaded relief + water with no roads or
+  // labels, so modern Chinese geography doesn't clutter a Three
+  // Kingdoms era map. Tile URL pattern uses {y}/{x} order
+  // (server.arcgisonline.com is ArcGIS-style, not OSM-style).
+  L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
+    {
+      attribution:
+        'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>' +
+        ' &mdash; sources: USGS, NOAA, AAFC, NRCan',
+      maxZoom: 13,
+    }
+  ).addTo(map);
 
   const layers = [];
 
@@ -42,11 +51,16 @@
   }
 
   function addPin(it) {
+    // Per-location-type colour: hash the type_name into a stable HSL
+    // hue so all "Commandery" pins share one colour, all "County"
+    // pins another, etc. Falls back to the type's stored bg_colour
+    // when it's set to something other than white.
+    const typeColor = colorForType(it.type_name, it.bg_colour);
     const html =
       `<div class="map-pin" style="` +
-        `background:${escapeAttr(it.bg_colour)};` +
-        `border-color:${escapeAttr(it.border_colour)};` +
-        `color:${escapeAttr(it.font_colour)};">` +
+        `background:${typeColor};` +
+        `border-color:${darkenHex(typeColor)};` +
+        `color:#ffffff;">` +
         (it.icon ? `<i class="${escapeAttr(it.icon)}" aria-hidden="true"></i>` : '') +
       `</div>`;
     const icon = L.divIcon({
@@ -61,17 +75,62 @@
   }
 
   function addPolygon(it) {
+    // Per-polygon colour: hash the location name. Translucent fill
+    // (alpha 0.3) so terrain shows through; full-opacity border in
+    // the same hue for crispness. Same name → same colour every
+    // page load.
+    const hue = hashHue(it.name);
+    const fill = `hsl(${hue}, 65%, 50%)`;
     const layer = L.geoJSON(it.geojson, {
       style: () => ({
-        color: it.border_colour,
-        weight: 1,
-        fillColor: it.bg_colour,
-        fillOpacity: 0.25,
+        color: fill,
+        weight: 1.5,
+        fillColor: fill,
+        fillOpacity: 0.3,
       }),
     });
     layer.bindPopup(popupHtml(it));
     layer.addTo(map);
     return layer;
+  }
+
+  // -------- colour helpers --------
+
+  // djb2-ish hash → HSL hue 0..359. Deterministic per string, so the
+  // colour assignment is stable across page loads.
+  function hashHue(s) {
+    let h = 5381;
+    s = String(s || '');
+    for (let i = 0; i < s.length; i++) {
+      h = ((h * 33) ^ s.charCodeAt(i)) | 0;
+    }
+    return ((h % 360) + 360) % 360;
+  }
+
+  function colorForType(typeName, fallback) {
+    // If the LocationType had a real (non-white) bg_colour configured
+    // via the admin UI, use it. Otherwise hash the type name to get a
+    // stable per-type colour. We deliberately don't trust an
+    // unconfigured "#ffffff" since it would render the pin invisible.
+    const norm = (fallback || '').toLowerCase().replace(/[^a-f0-9]/g, '');
+    const isWhite = norm === '' || norm === 'fff' || norm === 'ffffff';
+    if (!isWhite) return fallback;
+    const hue = hashHue('type:' + (typeName || 'unknown'));
+    return `hsl(${hue}, 55%, 45%)`;
+  }
+
+  // Darken an HSL string (or hex) by ~12% for the border. Cheap
+  // implementation: parse the lightness out of "hsl(h, s%, l%)" and
+  // drop it; for anything else just fall back to a fixed darker grey.
+  function darkenHex(s) {
+    const m = /hsl\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)%\s*,\s*(-?\d+(?:\.\d+)?)%\s*\)/i.exec(s);
+    if (m) {
+      const h = parseFloat(m[1]);
+      const sat = parseFloat(m[2]);
+      const li = Math.max(0, parseFloat(m[3]) - 12);
+      return `hsl(${h}, ${sat}%, ${li}%)`;
+    }
+    return '#444';
   }
 
   function popupHtml(it) {
