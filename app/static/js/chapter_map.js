@@ -56,6 +56,25 @@
     return initIfNeeded();
   });
 
+  // Public API so chapter.js can route inline .location-ref clicks to
+  // the map (open accordion + highlight) without redoing the open /
+  // highlight dance itself.
+  window.rotkChapterMap = {
+    showLocation(id) {
+      const collapse = bootstrap.Collapse.getOrCreateInstance(accordionEl, { toggle: false });
+      collapse.show();
+      if (accordionEl.classList.contains('show')) {
+        initIfNeeded().highlight(id);
+      } else {
+        const onShown = () => {
+          accordionEl.removeEventListener('shown.bs.collapse', onShown);
+          initIfNeeded().highlight(id);
+        };
+        accordionEl.addEventListener('shown.bs.collapse', onShown);
+      }
+    },
+  };
+
   function bindLocationClicks(ensureMapReady) {
     document.querySelectorAll('[data-show-on-map]').forEach(row => {
       const id = parseInt(row.getAttribute('data-show-on-map'), 10);

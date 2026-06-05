@@ -91,6 +91,7 @@
                     {% set tab_set = 'char-' ~ character.id %}
                     {% set chapter_count = mention_counts.get(character.id, 0) %}
                     {% set book_count = character.book_mention_count or 0 %}
+                    {% set panel_char_summary = char_summary_by_id.get(character.id, '') %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                       <div class="d-flex align-items-center gap-2 mb-0">
                         <h6 class="mb-0">
@@ -132,6 +133,19 @@
                       <div class="small text-muted mb-3">
                         {{ book_count }} mention{{ '' if book_count == 1 else 's' }} in the book
                       </div>
+
+                      {# Per-(chapter, character) editorial summary — the same
+                         text shown next to the name in the Chapter Characters
+                         list, repeated here so a reader who jumped straight to
+                         the panel still sees the chapter-scoped framing. #}
+                      {% if panel_char_summary %}
+                      <div class="chapter-section-card rounded p-2 mb-3">
+                        <div class="small text-muted fw-bold mb-1">In this chapter:</div>
+                        <div class="small fst-italic chapter-char-summary">
+                          {{ panel_char_summary }}
+                        </div>
+                      </div>
+                      {% endif %}
 
                       {% if portraits %}
                         {% if portraits|length > 1 %}

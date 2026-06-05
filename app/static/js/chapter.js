@@ -100,12 +100,26 @@
     });
     panel.style.display = 'block';
 
+    // Scroll the freshly-shown panel into view within the sticky sidebar
+    // so the user lands on the character info even when the click came
+    // from the Chapter Characters list further down the column. Defer
+    // until after the accordion finishes expanding (otherwise the
+    // target's final position is wrong and the scroll lands short).
+    var doScrollPanel = function () {
+      panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+
     var collapseElement = document.getElementById('collapseOne');
     if (collapseElement && !collapseElement.classList.contains('show')) {
       var accordionButton = document.querySelector('#sidebar-character-info .accordion-button');
       if (accordionButton) {
+        collapseElement.addEventListener('shown.bs.collapse', doScrollPanel, { once: true });
         accordionButton.click();
+      } else {
+        doScrollPanel();
       }
+    } else {
+      doScrollPanel();
     }
   }
 
@@ -168,6 +182,29 @@
     }
   }
 
+  // Open the Map accordion, highlight the location on the map, and
+  // scroll the map container into view. Used when an inline .location-ref
+  // is clicked for a geo-positioned location; non-geo locations fall
+  // back to the old Locations-accordion behaviour.
+  function showLocationOnMap(locationId) {
+    var mapApi = window.rotkChapterMap;
+    if (!mapApi) return false;
+    mapApi.showLocation(parseInt(locationId, 10));
+    if (isMobile()) return true;
+    var mapAccordion = document.getElementById('collapseMap');
+    var mapEl = document.getElementById('chapter-map');
+    if (!mapAccordion || !mapEl) return true;
+    var doScroll = function () {
+      mapEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+    if (mapAccordion.classList.contains('show')) {
+      doScroll();
+    } else {
+      mapAccordion.addEventListener('shown.bs.collapse', doScroll, { once: true });
+    }
+    return true;
+  }
+
   document.addEventListener('click', function (event) {
     var ev = event.target.closest('.event-ref');
     if (ev) {
@@ -178,7 +215,14 @@
     var loc = event.target.closest('.location-ref');
     if (loc) {
       var lid = loc.getAttribute('data-location-id');
-      showAccordionItem('collapseLocations', lid ? 'location-item-' + lid : null);
+      if (!lid) return;
+      // Geo-positioned locations get the map treatment; others (no
+      // lat/lng AND no geojson) have no pin to show, so fall back to
+      // the Locations accordion + row-flash like before.
+      var item = document.getElementById('location-item-' + lid);
+      var hasGeo = item && item.hasAttribute('data-show-on-map');
+      if (hasGeo && showLocationOnMap(lid)) return;
+      showAccordionItem('collapseLocations', 'location-item-' + lid);
     }
   });
 
