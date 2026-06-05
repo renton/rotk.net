@@ -1302,6 +1302,25 @@ def dump_chapter_triage(chapter_num):
 
     matches = []
 
+    def _zero_match_entry(kind, entity, type_label, needles, via, facts, cand):
+        """Placeholder match row for an entity that's M2M'd to the chapter
+        but produces ZERO live snippets after exclusions / needle filtering.
+        Without this the triage layer has no signal that an orphan
+        association exists — every reader of the dump should also see
+        the dead M2M rows so they can be removed."""
+        return {
+            'entity_type': kind,
+            'entity_id': entity.id,
+            'entity_name': entity.name,
+            'type_label': type_label,
+            'via': via,
+            'needles': needles,
+            'facts': facts,
+            'candidates': cand,
+            'snippet': None,
+            'zero_matches': True,
+        }
+
     for loc in locs:
         excl = load_match_exclusions(ch.id, 'location', loc.id)
         needles = _loc_needles(loc)
@@ -1310,12 +1329,18 @@ def dump_chapter_triage(chapter_num):
         via = 'm2m' if loc.id in direct_loc_ids else f'event:{event_pinned.get(loc.id, "?")}'
         cand = _candidates(loc, locs, _loc_needles, 'location')
         facts = _location_facts(loc)
+        type_label = loc.location_type.name if loc.location_type else None
+        if not mentions:
+            matches.append(_zero_match_entry(
+                'location', loc, type_label, needles, via, facts, cand,
+            ))
+            continue
         for m in mentions:
             matches.append({
                 'entity_type': 'location',
                 'entity_id': loc.id,
                 'entity_name': loc.name,
-                'type_label': loc.location_type.name if loc.location_type else None,
+                'type_label': type_label,
                 'via': via,
                 'needles': needles,
                 'facts': facts,
@@ -1330,6 +1355,11 @@ def dump_chapter_triage(chapter_num):
                                            exclusions=excl, needles=needles)
         cand = _candidates(c, chars, _char_needles, 'character')
         facts = _character_facts(c)
+        if not mentions:
+            matches.append(_zero_match_entry(
+                'character', c, None, needles, 'm2m', facts, cand,
+            ))
+            continue
         for m in mentions:
             matches.append({
                 'entity_type': 'character',
@@ -1352,12 +1382,18 @@ def dump_chapter_triage(chapter_num):
                                        exclusions=excl, needles=needles)
         cand = _candidates(e, events, _event_needles, 'event')
         facts = _event_facts(e)
+        type_label = e.event_type.name if e.event_type else None
+        if not mentions:
+            matches.append(_zero_match_entry(
+                'event', e, type_label, needles, 'm2m', facts, cand,
+            ))
+            continue
         for m in mentions:
             matches.append({
                 'entity_type': 'event',
                 'entity_id': e.id,
                 'entity_name': e.name,
-                'type_label': e.event_type.name if e.event_type else None,
+                'type_label': type_label,
                 'via': 'm2m',
                 'needles': needles,
                 'facts': facts,
