@@ -304,3 +304,19 @@ There's no single command that takes a fresh checkout to "site has content". The
 
 ### 49. ⬜ `link` table missing `created_by` / `last_edited_by`
 Every other `AbstractObject` subclass has the audit columns; the `link` table in prod doesn't. Any code path that lazy-loads `Character.links` raises `psycopg.errors.UndefinedColumn: column link.created_by does not exist` (hit by `flask dump-chapter-triage`). The Link model is not actively rendered anywhere in the current admin UI, so the workaround was to skip `links` in the triage dump. Fix is a one-line `ALTER TABLE link ADD COLUMN ...` migration matching `0006_audit_columns.sql` (or whichever pattern was used elsewhere). Until then, do not call `c.links` in any new code.
+
+### 50. ⬜ Temporal data — places, factions, and associations all change over the era
+The 184-280 AD span isn't static. Many records are currently modeled as if they hold for the whole era, when in reality they only hold for a window:
+
+- **Location boundaries shift between Eastern Han and Three Kingdoms.** The `/map` view stores a single `geojson` polygon per location; in reality some commanderies were created, abolished, renamed, or had borders redrawn mid-period. The Tan Qixiang atlas / CHGIS distinguishes Eastern Han (~140 AD) and Western Jin (~280 AD) snapshots; we'd want at least those two states per location, and ideally a `(valid_from, valid_to, geometry)` tuple list so the map can be scrubbed by year.
+- **Locations themselves had lifespans.** Some counties only existed for parts of the period. A nullable `(founded, abolished)` year pair on Location would let the map filter out places that didn't exist yet.
+- **Character ↔ Faction associations have a strong time dimension.** Today a character has `primary_faction_id` + an M2M to all factions they were ever in. That throws away the *order* — Liu Bei's path through Gongsun Zan → Tao Qian → Cao Cao → Yuan Shao → Liu Biao → Shu-Han is just a flat set. A `character_factions` association row carrying `(joined, left)` years (free-form like the date columns we already have, or parsed range) would let the timeline view colour a character lifeline by faction *at that time* and would obsolete the `primary_faction` hack.
+- **Character ↔ Role and Character ↔ Location ("based at") are similarly time-keyed.** Same shape — add an optional date range to the association table.
+- **Faction lifetimes** themselves are bounded (Wei: 220-265, Shu: 221-263, Wu: 222-280). Stored as plain `(founded, dissolved)` strings on Faction so the timeline and map can shade the era accordingly.
+
+Design notes for whoever picks this up:
+- Reuse the free-form date string convention (mirrors `character.birth_date` / `event.date` / `chapter.date`) parsed via `tools/date_parser.py` so the storage layer stays flexible and the UI can keep accepting "190 AD", "circa 200", "190-200" without a calendar widget.
+- A single "year-cursor" control on `/timeline` and `/map` (slider or year input) is the unifying UX — moving it filters out anything whose validity window doesn't include the selected year.
+- Migrations are additive (nullable date columns + new association tables) so existing data carries no `valid_from` / `valid_to` and is treated as "valid for the whole era" by default.
+
+Not urgent — most readers don't notice the difference, and the current static-state model is good enough to launch with. But the *shape* of this affects multiple models, so the design is worth thinking through in one pass before piecemeal additions accumulate.
