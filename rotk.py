@@ -1617,6 +1617,54 @@ def apply_triage_decisions(decisions_file, apply, no_confirm):
 
 
 @app.cli.command()
+@click.option('--only', type=click.Choice(['chapter', 'event', 'character']), default=None,
+              help='Restrict the report to a single source table.')
+def check_date_parsing(only):
+    """Report which free-form date strings the timeline parser rejects.
+
+    Sweeps `chapter.date`, `event.date`, and `character.birth_date` /
+    `character.death_date`, runs each through `tools.date_parser`, and
+    prints anything that comes back None. Use this to spot which
+    real-world strings the parser is missing so the patterns can be
+    widened. Read-only — no writes."""
+    from tools.date_parser import parse_date_range
+    from app.models import Event
+    sources = []
+    if only in (None, 'chapter'):
+        sources.append(('chapter', Chapter.query.order_by(Chapter.chapter_num).all(),
+                        [('date', 'date')]))
+    if only in (None, 'event'):
+        sources.append(('event',
+                        Event.query.filter(Event.is_deleted.is_(False)).order_by(Event.name).all(),
+                        [('date', 'date')]))
+    if only in (None, 'character'):
+        sources.append(('character',
+                        Character.query.filter(Character.is_deleted.is_(False)).order_by(Character.name).all(),
+                        [('birth_date', 'birth'), ('death_date', 'death')]))
+
+    grand_total = 0
+    grand_failed = 0
+    for label, rows, fields in sources:
+        filled = 0
+        failed = 0
+        for row in rows:
+            for attr, kind in fields:
+                value = (getattr(row, attr) or '').strip()
+                if not value:
+                    continue
+                filled += 1
+                if parse_date_range(value) is None:
+                    failed += 1
+                    print(f"  [{label}/{kind}] {row.name!r:40s}  ->  {value!r}")
+        grand_total += filled
+        grand_failed += failed
+        print(f"{label}: {filled - failed}/{filled} parsed "
+              f"({failed} unparseable)")
+    print(f"\nTotal: {grand_total - grand_failed}/{grand_total} parsed "
+          f"({grand_failed} unparseable)")
+
+
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     pass

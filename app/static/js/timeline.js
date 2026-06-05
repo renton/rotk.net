@@ -13,13 +13,6 @@
   const eventsData     = readJson('timeline-events');
   const charactersData = readJson('timeline-characters');
 
-  if (!chaptersData.length && !eventsData.length && !charactersData.length) {
-    document.getElementById('timeline').innerHTML =
-      '<div class="alert alert-info">No dated chapters, events, or characters yet. ' +
-      'Add dates via the admin pages to see them here.</div>';
-    return;
-  }
-
   // --- year → Date (avoids the JS Date <100 fallback to 1900s) ---
   function yearToDate(y) {
     const whole = Math.floor(y);
@@ -173,6 +166,9 @@
     ...eventsData.map(e => e.year_hi),
     ...charactersData.map(c => c.death_hi),
   ];
+  // Fall back to the RotK era (Yellow Turbans → Jin) when no data
+  // is available yet, so the empty timeline still renders a meaningful
+  // numeric axis instead of collapsing to a single point.
   const dataLo = allLo.length ? Math.min(...allLo) : 150;
   const dataHi = allHi.length ? Math.max(...allHi) : 280;
   const pad = Math.max(5, (dataHi - dataLo) * 0.05);

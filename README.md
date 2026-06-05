@@ -134,6 +134,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `import-admin-divisions [PATH] [--dry-run]` | Import the Province/Commandery/County/City hierarchy from a CSV (default `data/3k_admin_divisions.csv`). Inserts as "X Province" / "X Commandery" / "X County" with `parent_id` wired up; column-4 entries keep their raw cell name. Idempotent — existing rows matched by English or Chinese name are reused, with their `parent_id` / `location_type_id` filled in if currently NULL. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
+| `check-date-parsing [--only chapter\|event\|character]` | Print every free-form date string the timeline parser can't read, grouped by source. Read-only — used to find which strings need parser tweaks. |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
 ---

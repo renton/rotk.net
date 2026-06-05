@@ -118,7 +118,9 @@ _NOISE = re.compile(r'\b(?:the\s+year\s+of|year\s+of|in|of|on|year)\b', re.IGNOR
 _WS = re.compile(r'\s+')
 
 _QUALIFIERS = r'(?:circa|approximately|approx\.?|around|early|mid|middle|late|c\.?|ca\.?|~|\?)'
-_QUALIFIER_RE = re.compile(rf'^\s*({_QUALIFIERS})\s+', re.IGNORECASE)
+# `\s*` (not `\s+`) so "c.208" without a space still parses. The
+# trailing `\.?\s*` swallows any punctuation between qualifier and year.
+_QUALIFIER_RE = re.compile(rf'^\s*({_QUALIFIERS})\s*', re.IGNORECASE)
 
 _ERA = r'(?:AD|A\.?D\.?|CE|BC|B\.?C\.?|BCE)'
 _YEAR = r'\d{1,4}'
@@ -149,8 +151,9 @@ _PATTERNS = [
         re.IGNORECASE,
     ),
     # "168-172 AD" / "168 AD - 172 AD" / "168 BC - 167 BC" / "168–172"
+    # / "168/172"  -- includes en/em dash, slash, and the word "to".
     re.compile(
-        rf'(?:({_ERA})\s+)?({_YEAR})\s*({_ERA})?\s*(?:-|–|to)\s*({_YEAR})\s*({_ERA})?',
+        rf'(?:({_ERA})\s+)?({_YEAR})\s*({_ERA})?\s*(?:-|–|—|to|/)\s*({_YEAR})\s*({_ERA})?',
         re.IGNORECASE,
     ),
     # "168 AD" / "AD 168" / "168 BC" / "168"
