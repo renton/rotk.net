@@ -210,16 +210,17 @@
     show:    'all',
   };
 
-  // --- DataView for filtering ---
-  const itemView = new vis.DataView(items, {
-    filter: function (it) { return shouldShowItem(it); },
-  });
-  const groupView = new vis.DataView(groups, {
-    filter: function (g) { return shouldShowGroup(g); },
-  });
+  // Visible-only DataSets that get rebuilt on every refresh().
+  //
+  // Started with DataView+filter callback but vis-timeline's bookkeeping
+  // didn't always re-add items that moved from filtered-out → visible
+  // (e.g. switching "Faction: Wei" back to "All factions" left non-Wei
+  // characters hidden). Rebuilding from scratch sidesteps that.
+  const visibleItems = new vis.DataSet();
+  const visibleGroups = new vis.DataSet();
 
   const container = document.getElementById('timeline');
-  const timeline = new vis.Timeline(container, itemView, groupView, {
+  const timeline = new vis.Timeline(container, visibleItems, visibleGroups, {
     stack: true,
     stackSubgroups: true,
     orientation: 'top',
@@ -269,19 +270,28 @@
   }
 
   function refresh() {
-    itemView.refresh();
-    groupView.refresh();
-    updateStats();
+    const nextGroups = groups.get().filter(shouldShowGroup);
+    const nextGroupIds = new Set(nextGroups.map(g => g.id));
+    const nextItems = items.get().filter(
+      it => nextGroupIds.has(it.group) && shouldShowItem(it)
+    );
+    // clear() + add() is the safe rebuild path — assigning straight
+    // through `set` would leave behind stale ids that the new payload
+    // doesn't mention.
+    visibleGroups.clear();
+    visibleGroups.add(nextGroups);
+    visibleItems.clear();
+    visibleItems.add(nextItems);
+    updateStats(nextGroups, nextItems);
   }
 
-  function updateStats() {
-    const visible = groupView.getIds().filter(id => id !== '__chapters__' && id !== '__events__').length;
+  function updateStats(curGroups, curItems) {
+    const visible = curGroups.filter(g => g.id !== '__chapters__' && g.id !== '__events__').length;
     const total = charactersData.length;
-    const itemsCount = itemView.length;
     const stats = document.getElementById('timeline-stats');
     if (stats) {
       stats.textContent =
-        `${visible} of ${total} characters · ${itemsCount} items on screen`;
+        `${visible} of ${total} characters · ${curItems.length} items on screen`;
     }
   }
 
