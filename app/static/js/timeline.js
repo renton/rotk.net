@@ -401,9 +401,38 @@
   timeline.on('click', (props) => {
     if (props.what === 'item' && props.item != null) {
       const it = items.get(props.item);
-      if (it) renderDetail(it);
+      if (it && renderDetail(it)) positionDetail(props.event);
     }
   });
+
+  // Position the detail card near the click point, clamping to the
+  // viewport so it never spills off-screen. Called AFTER renderDetail
+  // unhides the card, so offsetWidth/Height are real.
+  function positionDetail(domEvent) {
+    if (!domEvent) return;
+    const margin = 8;
+    const offset = 14;          // distance from the cursor
+    const w = detailEl.offsetWidth;
+    const h = detailEl.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const x = (domEvent.clientX != null ? domEvent.clientX : domEvent.pageX - window.scrollX);
+    const y = (domEvent.clientY != null ? domEvent.clientY : domEvent.pageY - window.scrollY);
+
+    // Default: place card to the lower-right of the cursor. If it
+    // would clip the right edge, flip to the left of the cursor; same
+    // story vertically.
+    let left = x + offset;
+    if (left + w > vw - margin) left = x - offset - w;
+    if (left < margin) left = margin;
+
+    let top = y + offset;
+    if (top + h > vh - margin) top = y - offset - h;
+    if (top < margin) top = margin;
+
+    detailEl.style.left = `${Math.round(left)}px`;
+    detailEl.style.top  = `${Math.round(top)}px`;
+  }
 
   document.getElementById('timeline-detail-close').addEventListener('click', () => {
     detailEl.hidden = true;
