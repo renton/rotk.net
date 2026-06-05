@@ -3,87 +3,189 @@
   "decisions": [
     {
       "target_type": "location",
-      "target_id": 62,
+      "target_id": 1,
       "action": "remove_m2m",
-      "_note": "short \"Yu\" needle matched inside person names only (Ma Yu, Xun Yu, Cheng Yu, Yu Jin); no legit Yu Province reference in the prose"
+      "_note": "all matches were \"Dong Zhuo\" (warlord)"
     },
     {
       "target_type": "location",
-      "target_id": 1055,
+      "target_id": 2,
       "action": "remove_m2m",
-      "_note": "short \"Yu\" needle matched inside person names only; no legit Yu County reference"
+      "_note": "all matches were the English pronoun \"you\" or \"Xun You\" (character)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Zhang Ji\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Yu\" inside person names (Ma Yu, Xun Yu, Cheng Yu, Yu Jin)"
     },
     {
       "target_type": "location",
       "target_id": 82,
       "action": "remove_m2m",
-      "_note": "only match was \"Liang\" inside \"Zhang Liang\" (Han-era strategist)"
-    },
-    {
-      "target_type": "location",
-      "target_id": 1006,
-      "action": "remove_m2m",
-      "_note": "only match was \"Liang\" inside \"Zhang Liang\""
-    },
-    {
-      "target_type": "location",
-      "target_id": 1007,
-      "action": "remove_m2m",
-      "_note": "only match was \"Lu\" inside \"Lu Qian\" (person)"
-    },
-    {
-      "target_type": "location",
-      "target_id": 1030,
-      "action": "remove_m2m",
-      "_note": "only match was \"Lu\" inside \"Lu Qian\""
-    },
-    {
-      "target_type": "location",
-      "target_id": 1,
-      "action": "remove_m2m",
-      "_note": "only matches were \"Zhuo\" inside \"Dong Zhuo\""
-    },
-    {
-      "target_type": "location",
-      "target_id": 1003,
-      "action": "remove_m2m",
-      "_note": "only matches were \"Zhuo\" inside \"Dong Zhuo\""
-    },
-    {
-      "target_type": "location",
-      "target_id": 1013,
-      "action": "remove_m2m",
-      "_note": "\"Wucheng\" — text refers to Lu Qian's home in Shanyang Commandery, not Bing Province's Wucheng County"
-    },
-    {
-      "target_type": "location",
-      "target_id": 1431,
-      "action": "remove_m2m",
-      "_note": "\"Wucheng\" — text refers to Lu Qian's home in Shanyang Commandery, not Jing Province's Wucheng Settlement"
-    },
-    {
-      "target_type": "location",
-      "target_id": 1292,
-      "action": "remove_m2m",
-      "_note": "\"Zhang\" matched inside Zhang Ji / Zhang Liang / Zhang Miao / Zhang Kai person names only"
+      "_note": "only match was \"Zhang Liang\" (Han strategist)"
     },
     {
       "target_type": "location",
       "target_id": 908,
       "action": "remove_m2m",
-      "_note": "\"Wei\" matched inside \"Dian Wei\" only (Cao Cao's general)"
+      "_note": "all matches were \"Dian Wei\" (Cao Cao's general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "only match was \"Liu Dai\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Dong Zhuo\""
     },
     {
       "target_type": "location",
       "target_id": 1005,
       "action": "remove_m2m",
-      "_note": "\"Chen\" matched inside \"Chen Gong\" only (Cao Cao's defector)"
+      "_note": "all matches were \"Chen Gong\" (defector)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "only match was \"Zhang Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "only match was \"Lu Qian\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1013,
+      "action": "remove_m2m",
+      "_note": "only match was Lu Qian's home Wucheng — that's the Shanyang Wucheng, not this Bing Province one"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "only match was \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Yu\" inside person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "all 12 matches were \"Guo Si\" or \"Guo Jia\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "only match was \"Liu Xiu\" (Han founder, person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "only match was \"Mao Jie\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "both matches were \"Liu Ye\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1215,
+      "action": "remove_m2m",
+      "_note": "all 12 matches were \"Han Sui\" (warlord)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "all 16 matches were \"Fan Chou\" or \"Liu Fan\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Zhang\" inside Zhang Ji / Liang / Miao / Kai person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1390,
+      "action": "remove_m2m",
+      "_note": "all 3 matches were \"Bian Rang\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Jia Xu\" or \"Guo Jia\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1431,
+      "action": "remove_m2m",
+      "_note": "wrong Wucheng — text refers to Shanyang Commandery's Wucheng, not Jing Province's"
     },
     {
       "target_type": "location",
       "target_id": 1456,
       "action": "remove_m2m",
-      "_note": "Juancheng Settlement (Nanyang) is the wrong place — chapter 10 means Juancheng County [1296] in Yan Province (Cao Cao's base)"
+      "_note": "wrong Juancheng — text means Juancheng County [1296] in Yan Province"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "exclude",
+      "match_text": "Dong",
+      "before_snippet": "…ranks. And once more the capital was free of troops. \n ",
+      "after_snippet": " Zhuo's followers, having so far succeeded, did not forget…",
+      "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "exclude",
+      "match_text": "Dong",
+      "before_snippet": "…may be said justly that Heaven was exceedingly angry with ",
+      "after_snippet": " Zhuo. \n So now Li Jue and Guo Si wielded the real power of…",
+      "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "exclude",
+      "match_text": "Dong",
+      "before_snippet": "…dared attempt an attack on the party newly risen from ",
+      "after_snippet": " Zhuo's disaffection, while on the other hand Jia Xu never…",
+      "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1256,
+      "action": "exclude",
+      "match_text": "Capital District",
+      "before_snippet": "…of the Flying Chariots, Lord of Chiyang, Commander of ",
+      "after_snippet": ", Court Administrator, and granted Military Insignia. \n Guo…",
+      "_note": "\"Capital District\" alias here refers to Chang'an (where Guo Si's title applies in 192), not Luoyang"
     },
     {
       "target_type": "character",
@@ -137,7 +239,7 @@
       "target_type": "character",
       "target_id": 310,
       "action": "remove_m2m",
-      "_note": "cn=程郁 — different Cheng Yu (Liu Zhang faction from Sichuan)."
+      "_note": "cn=程郁 — different Cheng Yu (Liu Zhang faction)."
     },
     {
       "target_type": "character",
@@ -167,7 +269,7 @@
       "target_type": "character",
       "target_id": 1631,
       "action": "remove_m2m",
-      "_note": "cn=馬玉 — different Ma Yu (Shu Han era general)."
+      "_note": "cn=馬玉 — different Ma Yu (Shu Han era)."
     },
     {
       "target_type": "character",
@@ -179,13 +281,13 @@
       "target_type": "character",
       "target_id": 3164,
       "action": "remove_m2m",
-      "_note": "cn=張梁 (Yellow Turban, died 184). Wrong — the metaphor is 張良 the Han strategist, missing from DB."
+      "_note": "cn=張梁 (Yellow Turban, died 184). Wrong; metaphor is 張良 the Han strategist, missing from DB."
     },
     {
       "target_type": "character",
       "target_id": 3165,
       "action": "remove_m2m",
-      "_note": "cn=張梁 (Eastern Wu general). Wrong — the metaphor is 張良 the Han strategist, missing from DB."
+      "_note": "cn=張梁 (Eastern Wu general). Wrong; metaphor is 張良 the Han strategist, missing from DB."
     }
   ]
 }
