@@ -320,3 +320,14 @@ Design notes for whoever picks this up:
 - Migrations are additive (nullable date columns + new association tables) so existing data carries no `valid_from` / `valid_to` and is treated as "valid for the whole era" by default.
 
 Not urgent — most readers don't notice the difference, and the current static-state model is good enough to launch with. But the *shape* of this affects multiple models, so the design is worth thinking through in one pass before piecemeal additions accumulate.
+
+### 51. ⬜ Sub-county Locations on /map — fill the ~190 gap
+CHGIS v6 stops at county level (Xian), so cities, settlements, passes, mountains, battlefields, and fictional buildings (~199 rows, roughly a quarter of all Locations) don't get geocoded by `scripts/chgis_to_solutions.py`. The first batch caught 9 of them via name-coincidence with the county-points file; the other ~190 are silent.
+
+Once the CHGIS data has been applied and verified on `/map`, evaluate two follow-ups (probably in this order):
+
+1. **Training-data hand-curate the famous landmarks.** Names like Chibi / Red Cliffs, Hulao Pass, Bowang Slope, Wuzhang Plains, Sleeping Dragon Ridge, Linju, Maicheng, etc. are well-known enough to source from training data alone — no network needed. Write a `solutions/locations-geo-landmarks.json` with ~20-40 of the most-referenced sub-county places, hand-checked. Same workflow as the chapter-dating: produce → spot-check on `/map` → apply.
+
+2. **Wikidata SPARQL pull for the rest.** Many historical Chinese places have Wikidata entries (`P625` coordinate-location property). A single SPARQL query against `query.wikidata.org` can return lat/lng for hundreds of entities at once, matched by their Chinese-name label (`rdfs:label` or `skos:altLabel` filtered to `@zh`). Requires a heads-up network fetch (one HTTP request) and the results need a spot-check pass, but raises the hit rate substantially over training data alone.
+
+Anything still unmatched after (1) and (2) gets a `notes_append` flag explaining why so the row at least has a reason and stays gracefully off the map.
