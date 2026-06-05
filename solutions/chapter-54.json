@@ -1,0 +1,158 @@
+{
+  "chapter_num": 54,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "11 You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "1 Marquis of Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "18 Zhou Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "17 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "9 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 947,
+      "action": "remove_m2m",
+      "_note": "1 Liu Qi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "17 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "33 Lu Su"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "14 State Patriarch Qiao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "33 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1051,
+      "action": "remove_m2m",
+      "_note": "1 Liu Qi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "1 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "18 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "1 Emperor Jing"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1160,
+      "action": "remove_m2m",
+      "_note": "14 State Patriarch Qiao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "1 Sun Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "3 She pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "14 Lu Fan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "1 Liu Zhang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "2 Jia Hua"
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1500,
+      "action": "remove_m2m",
+      "_note": "cn=路蕃."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1501,
+      "action": "remove_m2m",
+      "_note": "cn=盧藩."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙."
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…of the Imperial House, a great great grandson of Emperor ",
+      "after_snippet": ". Now, as the Emperor's Uncle, should he not have a share…",
+      "_note": "\"Jing\" inside \"Emperor Jing\"; Jingzhou matches legit"
+    }
+  ]
+}
