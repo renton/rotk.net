@@ -168,10 +168,12 @@
       content: `<a href="/characters/edit/${ch.id}">${safeName}</a>${chineseSuffix}`,
       // vis-timeline orders groups ascending by this number. birth_lo
       // is the earliest year the character could have been born, so
-      // characters sort earliest-born → latest-born vertically.
-      // Chapters / events live at order -2 / -1, so all characters
-      // (whose birth_lo is positive AD years) stay below them.
-      order: ch.birth_lo,
+      // characters sort earliest-born -> latest-born vertically.
+      // Chapters / events live at order -2 / -1; shift all character
+      // orders into a strictly-positive band (offset 10000) so that
+      // BCE-born figures like Liu Bang (birth_lo = -256) still sort
+      // BELOW chapters / events instead of above them.
+      order: ch.birth_lo + 10000,
       _factionId: ch.faction_id,
       _filterText: `${ch.name} ${ch.chinese_name || ''}`.toLowerCase(),
     });

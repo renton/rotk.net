@@ -183,19 +183,28 @@
   }
 
   // Open the Map accordion, highlight the location on the map, and
-  // scroll the map container into view. Used when an inline .location-ref
-  // is clicked for a geo-positioned location; non-geo locations fall
-  // back to the old Locations-accordion behaviour.
+  // scroll the Map section to the top of the sticky sidebar. Used
+  // when an inline .location-ref is clicked for a geo-positioned
+  // location; non-geo locations fall back to the old Locations-
+  // accordion behaviour.
+  //
+  // We deliberately use block:'start' against the accordion-header
+  // (#sidebar-map) rather than block:'nearest' against the map div:
+  // 'nearest' is a no-op whenever any ancestor scroll container
+  // already shows the target, which is most of the time given the
+  // sidebar's max-height:100vh layout. 'start' guarantees the user
+  // sees the "Map" heading at the top of the sidebar viewport every
+  // click, which is the requested UX.
   function showLocationOnMap(locationId) {
     var mapApi = window.rotkChapterMap;
     if (!mapApi) return false;
     mapApi.showLocation(parseInt(locationId, 10));
     if (isMobile()) return true;
     var mapAccordion = document.getElementById('collapseMap');
-    var mapEl = document.getElementById('chapter-map');
-    if (!mapAccordion || !mapEl) return true;
+    var mapHeader = document.getElementById('sidebar-map');
+    if (!mapAccordion || !mapHeader) return true;
     var doScroll = function () {
-      mapEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      mapHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
     };
     if (mapAccordion.classList.contains('show')) {
       doScroll();
