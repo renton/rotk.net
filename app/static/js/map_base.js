@@ -15,7 +15,11 @@
   function create({ containerId, items, fitBounds = true, mapOptions = {} }) {
     const defaults = {
       minZoom: 3,
-      maxZoom: 12,
+      // Capped at 8 because the Physical Map tile service stops
+      // rendering above that; zooming further would just stretch
+      // the last tile. Country-scale historical context only needs
+      // 4–7 anyway.
+      maxZoom: 8,
       center: [34.0, 110.0],
       zoom: 5,
     };
@@ -25,13 +29,17 @@
       maxZoom: opts.maxZoom,
     }).setView(opts.center, opts.zoom);
 
+    // ESRI World_Physical_Map — shows terrain shading, rivers, lakes,
+    // ocean bathymetry. No modern roads; very few labels. Zoom is
+    // capped at 8 by the service (Physical Map is rendered at small
+    // scales only — that's fine for a country-scale historical view).
     L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}',
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}',
       {
         attribution:
           'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>' +
-          ' &mdash; sources: USGS, NOAA, AAFC, NRCan',
-        maxZoom: 13,
+          ' &mdash; sources: U.S. National Park Service',
+        maxZoom: 8,
       }
     ).addTo(map);
 

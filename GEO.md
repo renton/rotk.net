@@ -266,16 +266,24 @@ sure the shape lands in the right region.
 
 ## Base map tiles
 
-[Esri ArcGIS Online](https://www.esri.com/) **World Terrain Base** —
-shaded relief plus water bodies, **no roads and no labels**. URL
+[Esri ArcGIS Online](https://www.esri.com/) **World Physical Map** —
+terrain shading **with rivers, lakes, and ocean bathymetry**, no
+modern roads and only a handful of physical-feature labels. URL
 pattern:
 
 ```
-https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}
+https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}
 ```
 
-This is deliberately label-free so modern Chinese road networks and
-present-day place names don't overlay our Three Kingdoms era data.
+This is deliberately road-free and label-light so modern Chinese
+infrastructure and present-day place names don't overlay our Three
+Kingdoms era data. Rivers matter for the period — the Yellow River,
+the Han, the Yangtze, the Wei, and the Huai are all named theatres in
+the novel, so a base layer that shows them visibly is worth the
+trade-off of a lower maximum zoom (Physical Map is rendered at scales
+1:1M and smaller; the tile service caps at zoom level 8). For a
+country-scale historical view, zoom 4–7 is the sweet spot anyway.
+
 Esri terms allow free use of the basemap tiles for non-commercial
 applications with attribution.
 
@@ -302,8 +310,8 @@ must include both of the following:
    originally derived from CHGIS (i.e. any row whose `notes` includes
    the `[geo]` `CHGIS v6` line).
 
-2. *"Map tiles © Esri (World Terrain Base) — sources: USGS, NOAA,
-   AAFC, NRCan."* — for the base map.
+2. *"Map tiles © Esri (World Physical Map) — sources: U.S. National
+   Park Service."* — for the base map.
 
 The `/map` page itself does this in the credits panel below the
 canvas; this file is the longer-form record.
