@@ -145,6 +145,12 @@
     groups.add({
       id: groupId,
       content: `<a href="/characters/edit/${ch.id}">${safeName}</a>${chineseSuffix}`,
+      // vis-timeline orders groups ascending by this number. birth_lo
+      // is the earliest year the character could have been born, so
+      // characters sort earliest-born → latest-born vertically.
+      // Chapters / events live at order -2 / -1, so all characters
+      // (whose birth_lo is positive AD years) stay below them.
+      order: ch.birth_lo,
       _factionId: ch.faction_id,
       _filterText: `${ch.name} ${ch.chinese_name || ''}`.toLowerCase(),
     });
@@ -241,6 +247,11 @@
     horizontalScroll: false,
     zoomKey: 'altKey',
     showCurrentTime: false,
+    // Sort group rows top → bottom by each group's `order` field.
+    // Chapters (-2) and Events (-1) stay pinned at the top; character
+    // groups carry their birth_lo (a positive AD year), so they fall
+    // below in earliest-born → latest-born order.
+    groupOrder: 'order',
   });
 
   // --- filter handlers ---
