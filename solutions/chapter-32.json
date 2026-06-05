@@ -1,0 +1,446 @@
+{
+  "chapter_num": 32,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 10,
+      "action": "remove_m2m",
+      "_note": "33 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "2 mixed \"Cheng Yu\" + \"Yuzhou\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "5 \"Ma Yan\" (Yuan Shang general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 881,
+      "action": "remove_m2m",
+      "_note": "52 \"Yuan Shang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "3 \"Wang Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "5 \"Ma Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "4 \"Chen Lin\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "16 \"Lu Xiang\" / \"Lu Kuang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "16 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "1 \"Cheng Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1073,
+      "action": "remove_m2m",
+      "_note": "4 \"Chen Lin\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "18 \"Guo Tu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "1 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "3 \"Wang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "14 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "3 \"River Fu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1345,
+      "action": "remove_m2m",
+      "_note": "17 \"Xin Pi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1356,
+      "action": "remove_m2m",
+      "_note": "4 \"Cen Bi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1386,
+      "action": "remove_m2m",
+      "_note": "1 \"Yin Ku\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "5 \"Feng Li\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1398,
+      "action": "remove_m2m",
+      "_note": "36 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "2 \"Jia Xu\" / \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…be in great danger.\" \n Finally Shen Pei and General Su ",
+      "after_snippet": " were left to take care of the defense of the city, and…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…Yuan Tan opened on Yuan Shang with a volley of abuse. \n \"",
+      "after_snippet": " poisoned my father and usurped the succession. Now you…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…Put no trust in him.\" \n Lu Qian and Man Chong said, \"",
+      "after_snippet": " have led your armies here for a special purpose. How can…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…not one of you is giving good advice,\" interposed Xun ",
+      "after_snippet": ". \"This is how I regard it. Since there is universal…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…people, and at the same time he intends evil toward us. ",
+      "after_snippet": ", my lord, should have two generals' seals engraved and…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…this time.\" \n Just at this time it happened that Xun ",
+      "after_snippet": " came down from the capital. When he heard that Yuan Shang…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…his brother Yuan Tan, he sought Cao Cao and said, \"",
+      "after_snippet": ", Sir, sit here on guard. Are you waiting till Heaven's…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…Cao came to attack Jizhou City, and to help out this Xun ",
+      "after_snippet": " suggested drowning the city by turning the course of the…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…the head with his whip, crying, \"Murder! Blood drinker! ",
+      "after_snippet": " will meet your death!\" \n Shen Pei retorted, \"Traitor!…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…hurrying forward a prisoner who proved to be Chen Lin. \n \"",
+      "after_snippet": " wrote that manifesto for Yuan Shao. If you had only…",
+      "_note": "\"You\" pronoun inside; \"Youzhou\" matches legit if present"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…to prepare for the end. So she sent for Shen Pei and Peng ",
+      "after_snippet": " that the succession might be settled. They came and stood…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…lest they should avenge their deaths. \n Shen Pei and Peng ",
+      "after_snippet": " declared Yuan Shang successor with the titles of Regent…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…you must act quickly.\" \n \"Those two, Shen Pei and Peng ",
+      "after_snippet": ", have already laid their plans,\" said Xin Ping. \"If you…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…Guo Tu. \"I wish to have the services of Shen Pei and Peng ",
+      "after_snippet": ".\" \n \"I also need the help of these two,\" said Yuan Shang.…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…so he bade the two men cast lots who should go. Peng ",
+      "after_snippet": " drew the lot and was appointed, receiving a seal of…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…him, saying, \"Cao Cao is on the borders, and Peng ",
+      "after_snippet": " must be kept here to allay your brother's suspicions.…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…destruction, he was very wrath and roundly abused Peng ",
+      "after_snippet": ". \n Peng Ji replied, \"Let me write to my lord and pray him…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…he was very wrath and roundly abused Peng Ji. \n Peng ",
+      "after_snippet": " replied, \"Let me write to my lord and pray him to come…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…write to my lord and pray him to come himself.\" \n So Peng ",
+      "after_snippet": " wrote and the letter was sent. When it arrived, Yuan Shang…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…Yuan Tan was very angry and showed it by putting Peng ",
+      "after_snippet": " to death. He also began to talk of surrendering to Cao…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…difficult to transport. I must turn the waters of River ",
+      "after_snippet": " into the White River whereby to convey my grain and…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Wang Zhao and, when Wang Zhao rode out, Cao Cao sent ",
+      "after_snippet": " Huang to meet him. These two had fought but a few bouts…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…matter.\" \n Cao Cao approved of the plan. So leaving Jia ",
+      "after_snippet": " as Governor of Liyang and Cao Hong as guard at Guandu, the…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Yin Kai could make no adequate defense and was killed by ",
+      "after_snippet": " Chu. His soldiers ran away and presently joined Cao Cao's…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…will follow behind them.\" \n Cao Cao bade Zhang Liao and ",
+      "after_snippet": " Huang laid an ambush of three thousand troops on both…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…red flag, and the ambushing soldiers led by Zhang Liao and ",
+      "after_snippet": " Huang fell upon the sortie. The troops tried to return and…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…feigned to consent, but that night he sent Zhang Liao and ",
+      "after_snippet": " Huang to raid Yuan Shang's camp. Then it became flight,…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and dashed toward them. He was met and captured by ",
+      "after_snippet": " Huang who bound him and led him outside the city. \n On the…",
+      "_note": "\"Xu\" inside \"Xu Huang\"; \"Xuzhou\" legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…of the dispatch of this meager force sent Li Dian and Yue ",
+      "after_snippet": " to waylay them, and the half legion was destroyed. When…",
+      "_note": "\"Jing\" inside \"Yue Jing\"; \"Jingzhou\" legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1301,
+      "action": "remove_m2m",
+      "_note": "different Lady Liu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2347,
+      "action": "remove_m2m",
+      "_note": "cn=王休."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2348,
+      "action": "remove_m2m",
+      "_note": "cn=王休."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    },
+    {
+      "target_type": "location",
+      "target_id": 1270,
+      "action": "remove_m2m",
+      "_note": "7 \"Ju Shou\" / \"Ju Gu\""
+    }
+  ]
+}
