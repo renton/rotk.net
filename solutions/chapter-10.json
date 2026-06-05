@@ -179,15 +179,6 @@
       "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
     },
     {
-      "target_type": "location",
-      "target_id": 1256,
-      "action": "exclude",
-      "match_text": "Capital District",
-      "before_snippet": "…of the Flying Chariots, Lord of Chiyang, Commander of ",
-      "after_snippet": ", Court Administrator, and granted Military Insignia. \n Guo…",
-      "_note": "\"Capital District\" alias here refers to Chang'an (where Guo Si's title applies in 192), not Luoyang"
-    },
-    {
       "target_type": "character",
       "target_id": 3132,
       "action": "remove_m2m",
