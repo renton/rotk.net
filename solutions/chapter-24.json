@@ -1,0 +1,194 @@
+{
+  "chapter_num": 24,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "2 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "6 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "13 \"Cheng Yu\" / \"Xun Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "2 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "1 \"Jian Yong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "12 \"Dong Cheng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Dai\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "2 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "1 \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "13 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "2 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "1 \"Mao Jie\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "1 \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "1 \"She\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "9 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "7 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "2 \"Empress Fu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "5 \"Tian Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…troops. From east, west, north, south were Zhang Liao, ",
+      "after_snippet": " Chu, Li Dian, and Yu Jin. From northeast, northwest,…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…southeast, southwest were Xiahou Dun, Xiahou Yuan, ",
+      "after_snippet": " Huang, and Yue Jing. \n Zhang Fei, dashing this way and…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…The position became very desperate. \n Zhang Fei met ",
+      "after_snippet": " Huang and engaged him, but his rear was also attacked by…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1326,
+      "action": "remove_m2m",
+      "_note": "different Liu Dai."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    }
+  ]
+}

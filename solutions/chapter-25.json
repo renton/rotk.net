@@ -1,0 +1,167 @@
+{
+  "chapter_num": 25,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "18 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "87 \"Guan Yu\" / \"Cheng Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "17 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "17 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "2 \"Wei Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "17 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "17 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "87 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1270,
+      "action": "remove_m2m",
+      "_note": "3 \"Ju Shou\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "23 \"Zhang Liao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "4 \"Tian Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the left and right out moved two bodies of troops led by ",
+      "after_snippet": " Huang and Xu Chu who barred his way. Guan Yu hastened…",
+      "_note": "\"Xu\" inside \"Xu Huang\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…right out moved two bodies of troops led by Xu Huang and ",
+      "after_snippet": " Chu who barred his way. Guan Yu hastened along a road that…",
+      "_note": "\"Xu\" inside \"Xu Huang\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…my comrade, I want to go and avenge him,\" then cried Wei ",
+      "after_snippet": ". \n Cao Cao bade him go and he rode out, spear set, and in…",
+      "_note": "\"Xu\" inside \"Xu Huang\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and at the first blow from Yan Liang's sword, Wei ",
+      "after_snippet": "'s forehead was halved. \n \"Now, who again dares face him?\"…",
+      "_note": "\"Xu\" inside \"Xu Huang\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"Now, who again dares face him?\" cried Cao Cao. \n ",
+      "after_snippet": " Huang took up the challenge and he went out. The combat…",
+      "_note": "\"Xu\" inside \"Xu Huang\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and he went out. The combat endured twenty bouts, and then ",
+      "after_snippet": " Huang fled back to his own side. The other generals were…",
+      "_note": "\"Xu\" inside \"Xu Huang\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    }
+  ]
+}
