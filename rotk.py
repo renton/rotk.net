@@ -2043,6 +2043,142 @@ def apply_chapter_dates(decisions_file, apply):
 
 
 @app.cli.command()
+@click.argument('decisions_file', type=click.Path(exists=True, dir_okay=False))
+@click.option('--apply/--dry-run', default=False,
+              help='Default is dry-run (prints what would change). Pass --apply to write.')
+def apply_chapter_character_summaries(decisions_file, apply):
+    """Apply per-(chapter, character) `summary` strings in bulk.
+
+    Input file is a flat JSON list. Each entry references the
+    association by `chapter_num` + `character_id` and provides the
+    new summary text (empty allowed — clears the field):
+
+        [
+          {"chapter_num": 1, "character_id": 17,
+           "summary": "Liu Bei swears brotherhood with Guan Yu and Zhang Fei...",
+           "_note": "Three Heroes founding"},
+          {"chapter_num": 1, "character_id": 42,
+           "summary": "Zhang Jue raises the Yellow Turban rebellion...",
+           "_note": "antagonist"},
+          ...
+        ]
+
+    Validation:
+      - chapter_num must reference an existing Chapter.
+      - character_id must reference a Character actively associated
+        with that chapter (i.e. the chapter_character row already
+        exists). Entries referencing characters not tagged in the
+        chapter are reported and skipped — we never auto-create the
+        association from here; use /admin/chapter-associations for
+        that.
+
+    Idempotent: rows whose stored summary already matches the
+    proposed text report as no-ops. Direct UPDATE on
+    chapter_character (no ORM-mapped association class), so this
+    bypasses ORM hooks — same pattern the keyword writer uses."""
+    import json as _json
+    from sqlalchemy import text as _sql
+    from app.models import Chapter, Character
+
+    payload = _json.loads(open(decisions_file).read())
+    if not isinstance(payload, list):
+        raise click.ClickException("File must contain a JSON list of "
+                                   "{chapter_num, character_id, summary} objects.")
+
+    # Pre-load chapters by num so we can validate without a query per row.
+    chapters_by_num = {c.chapter_num: c for c in Chapter.query.all()}
+
+    plan = []
+    skipped = []
+    for i, entry in enumerate(payload):
+        if not isinstance(entry, dict):
+            raise click.ClickException(
+                f"entry[{i}]: expected an object, got {type(entry).__name__}"
+            )
+        cn = entry.get('chapter_num')
+        cid = entry.get('character_id')
+        new_summary = entry.get('summary')
+        if not isinstance(cn, int):
+            raise click.ClickException(f"entry[{i}]: missing/invalid 'chapter_num'")
+        if not isinstance(cid, int):
+            raise click.ClickException(f"entry[{i}]: missing/invalid 'character_id'")
+        if not isinstance(new_summary, str):
+            raise click.ClickException(f"entry[{i}]: 'summary' must be a string")
+        ch = chapters_by_num.get(cn)
+        if ch is None:
+            raise click.ClickException(f"entry[{i}]: no chapter with chapter_num={cn}")
+        # Verify the association exists; the row's summary column lives
+        # on chapter_character, so it has to be present.
+        row = db.session.execute(
+            _sql("SELECT summary FROM chapter_character "
+                 "WHERE chapter_id = :cid AND character_id = :charid"),
+            {'cid': ch.id, 'charid': cid},
+        ).first()
+        if row is None:
+            char = Character.query.get(cid)
+            skipped.append({
+                'i': i, 'cn': cn, 'cid': cid,
+                'char_name': (char.name if char else f'<id {cid}>'),
+                'reason': 'character not associated with this chapter',
+            })
+            continue
+        plan.append({
+            'chapter': ch,
+            'char_id': cid,
+            'old_summary': row[0] or '',
+            'new_summary': new_summary,
+            'note': entry.get('_note') or '',
+        })
+
+    changes = [p for p in plan if p['old_summary'] != p['new_summary']]
+    noops = len(plan) - len(changes)
+
+    click.echo(f"Loaded {len(plan)} summary assignment(s); "
+               f"{len(changes)} change, {noops} no-op, "
+               f"{len(skipped)} skipped.\n")
+
+    for p in plan:
+        ch = p['chapter']
+        char_label = f"char {p['char_id']}"
+        if p['old_summary'] == p['new_summary']:
+            click.echo(f"  Ch {ch.chapter_num:>3} / {char_label:>10}  (unchanged)")
+        else:
+            preview = (p['new_summary'][:80] + ('…' if len(p['new_summary']) > 80 else ''))
+            preview = preview.replace('\n', ' ')
+            old_len = len(p['old_summary'])
+            click.echo(
+                f"  Ch {ch.chapter_num:>3} / {char_label:>10}  "
+                f"[was {old_len} chars] -> {preview!r}"
+                + (f"  # {p['note']}" if p['note'] else "")
+            )
+
+    if skipped:
+        click.echo("\nSkipped (character not in chapter):")
+        for s in skipped:
+            click.echo(f"  entry[{s['i']}]: Ch {s['cn']} / "
+                       f"char {s['cid']} ({s['char_name']}) — {s['reason']}")
+
+    if not apply:
+        click.echo("\nDry-run. Pass --apply to write.")
+        return
+
+    if not changes:
+        click.echo("\nNothing to change.")
+        return
+
+    # Bulk update. One UPDATE per change is fine at this scale
+    # (~5K rows total across all 120 chapters).
+    for p in changes:
+        db.session.execute(
+            _sql("UPDATE chapter_character SET summary = :s "
+                 "WHERE chapter_id = :cid AND character_id = :charid"),
+            {'s': p['new_summary'], 'cid': p['chapter'].id, 'charid': p['char_id']},
+        )
+    db.session.commit()
+    click.echo(f"\nWrote {len(changes)} chapter_character summary row(s).")
+
+
+@app.cli.command()
 @click.option('--only', type=click.Choice(['chapter', 'event', 'character']), default=None,
               help='Restrict the report to a single source table.')
 def check_date_parsing(only):

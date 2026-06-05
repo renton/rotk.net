@@ -137,6 +137,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `check-date-parsing [--only chapter\|event\|character]` | Print every free-form date string the timeline parser can't read, grouped by source. Read-only — used to find which strings need parser tweaks. |
 | `dump-chapters-for-dating START [END]` | Dump chapter prose + dated context (tagged characters/events with known dates, neighboring chapter names) as JSON on stdout. Read-only — feeds an LLM-assisted chapter dating workflow. |
 | `apply-chapter-dates FILE [--apply]` | Apply `[{chapter_num, date, _note?}]` JSON to `chapter.date`. Dry-run by default; `--apply` writes. Idempotent. |
+| `apply-chapter-character-summaries FILE [--apply]` | Apply `[{chapter_num, character_id, summary, _note?}]` JSON to `chapter_character.summary`. Dry-run by default; `--apply` writes. Skips entries whose character isn't tagged in the chapter. Idempotent. |
 | `dump-locations [--type ...]` | Dump every active Location as JSON on stdout (id, name, chinese_name, type, parent_chain, lat/lng, has_geojson). Read-only — feeds the boundary-sourcing workflow for the /map view. |
 | `apply-location-geo FILE [--apply]` | Apply `[{id, latitude?, longitude?, geojson?, _note?}]` JSON to Location rows. Each entry must include a point and/or a Polygon/MultiPolygon GeoJSON. Dry-run by default; `--apply` writes. Idempotent. |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
