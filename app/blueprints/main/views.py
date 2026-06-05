@@ -16,6 +16,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
 
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from tools.date_parser import parse_date_range
 
 
 def _normalize_csv(s):
@@ -73,6 +74,121 @@ def index():
     return render_template(
         'book/table_of_contents.html',
         chapters=chapters
+    )
+
+
+@main.route('/timeline', methods=['GET'])
+def timeline():
+    """Public timeline view.
+
+    Pulls every chapter, event, and character whose free-form date
+    field(s) parse cleanly into a year range, then ships them as JSON
+    to the client. vis-timeline (CDN) handles pan/zoom; the page
+    renders chapter + event points on top groups and one character
+    lifeline range per dated character below."""
+
+    # --- Chapters ---
+    chapter_items = []
+    for c in Chapter.query.order_by(Chapter.chapter_num).all():
+        span = parse_date_range(c.date)
+        if span is None:
+            continue
+        lo, hi = span
+        chapter_items.append({
+            'id': c.id,
+            'num': c.chapter_num,
+            'name': c.name or '',
+            'date_str': c.date,
+            'year_lo': lo,
+            'year_hi': hi,
+        })
+
+    # --- Events ---
+    event_items = []
+    events = (
+        Event.query
+        .filter(Event.is_deleted.is_(False))
+        .options(selectinload(Event.event_type))
+        .order_by(Event.name)
+        .all()
+    )
+    for e in events:
+        span = parse_date_range(e.date)
+        if span is None:
+            continue
+        lo, hi = span
+        # Optional event-type colour for the marker.
+        et = getattr(e, 'event_type', None)
+        event_items.append({
+            'id': e.id,
+            'name': e.name or '',
+            'date_str': e.date,
+            'year_lo': lo,
+            'year_hi': hi,
+            'bg_colour': (et.bg_colour if et else '') or '#6c757d',
+            'font_colour': (et.font_colour if et else '') or '#ffffff',
+            'border_colour': (et.border_colour if et else '') or '#6c757d',
+        })
+
+    # --- Characters ---
+    # Eager-load primary_faction so the per-character colour lookup
+    # doesn't fire one query per row.
+    character_items = []
+    factions_seen = {}
+    chars = (
+        Character.query
+        .filter(Character.is_deleted.is_(False))
+        .filter((Character.birth_date != '') | (Character.death_date != ''))
+        .options(selectinload(Character.primary_faction))
+        .order_by(Character.name)
+        .all()
+    )
+    for ch in chars:
+        b = parse_date_range(ch.birth_date)
+        d = parse_date_range(ch.death_date)
+        if b is None and d is None:
+            continue
+        # Single-ended lifelines aren't supported in v1 — without one
+        # end the bar would either extend off-screen or guess a
+        # lifespan, both confusing. Skip until we have a UI for it.
+        if b is None or d is None:
+            continue
+        f = ch.primary_faction
+        faction_id = f.id if f else 0
+        faction_name = f.name if f else 'Unaffiliated'
+        if f and not f.is_hidden:
+            factions_seen[faction_id] = faction_name
+        elif not f:
+            factions_seen[0] = 'Unaffiliated'
+
+        character_items.append({
+            'id': ch.id,
+            'name': ch.name or '',
+            'chinese_name': ch.chinese_name or '',
+            'birth_str': ch.birth_date,
+            'death_str': ch.death_date,
+            'birth_lo': b[0],
+            'birth_hi': b[1],
+            'death_lo': d[0],
+            'death_hi': d[1],
+            'faction_id': faction_id,
+            'faction_name': faction_name,
+            'bg_colour': (f.bg_colour if f else '') or '#6c757d',
+            'font_colour': (f.font_colour if f else '') or '#ffffff',
+            'border_colour': (f.border_colour if f else '') or '#6c757d',
+        })
+
+    factions = [
+        {'id': fid, 'name': fname}
+        for fid, fname in sorted(factions_seen.items(), key=lambda kv: kv[1].lower())
+    ]
+
+    return render_template(
+        'timeline.html',
+        chapters_json=chapter_items,
+        events_json=event_items,
+        characters_json=character_items,
+        factions_json=factions,
     )
 
 @main.route('/chapter/<int:chapter_num>', methods=['GET'])

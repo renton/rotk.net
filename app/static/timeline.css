@@ -1,0 +1,99 @@
+/* Timeline view — overrides + custom item styling on top of
+   vis-timeline's default theme. */
+
+#timeline {
+    height: calc(100vh - 240px);
+    min-height: 480px;
+    background-color: #fafafa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+/* Character lifeline ranges. The inline `style=` attr from JS supplies
+   the linear-gradient background; this rule provides the structural
+   bits (radius, border, label position). */
+.vis-item.tl-life {
+    border-width: 1px;
+    border-radius: 3px;
+    height: 22px;
+    padding: 0;
+}
+.vis-item.tl-life .vis-item-content {
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    line-height: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 2px rgba(0,0,0,0.35);
+}
+.tl-life-label {
+    font-weight: 500;
+    pointer-events: none;
+}
+
+/* Chapter point markers — small numbered badges. */
+.vis-item.tl-chapter {
+    background: #0d6efd;
+    border-color: #0a58ca;
+    color: #fff;
+}
+.vis-item.tl-chapter .vis-item-content {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 1px 4px;
+}
+.vis-item.tl-chapter .vis-item-content a {
+    color: inherit;
+    text-decoration: none;
+}
+.vis-item.tl-chapter.vis-point .vis-dot {
+    border-color: #0a58ca;
+    background-color: #0d6efd;
+    border-width: 4px;
+}
+
+/* Event point markers. Colour comes from the inline style's CSS vars
+   so each event can inherit its EventType palette. */
+.vis-item.tl-event {
+    background: var(--tl-dot, #6c757d);
+    border-color: var(--tl-dot-border, #6c757d);
+    color: #fff;
+}
+.vis-item.tl-event .vis-item-content {
+    font-size: 0.75rem;
+    padding: 1px 6px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.vis-item.tl-event.vis-point .vis-dot {
+    border-color: var(--tl-dot-border, #6c757d);
+    background-color: var(--tl-dot, #6c757d);
+    border-width: 4px;
+}
+
+/* Group label (left rail). */
+.vis-labelset .vis-label.tl-group-chapters,
+.vis-labelset .vis-label.tl-group-events {
+    background-color: #f1f3f5;
+    font-weight: 600;
+}
+.vis-labelset .vis-label {
+    font-size: 0.85rem;
+}
+.vis-labelset .vis-label .vis-inner {
+    padding: 4px 8px;
+}
+.vis-labelset .vis-label a {
+    color: inherit;
+    text-decoration: none;
+}
+.vis-labelset .vis-label a:hover {
+    text-decoration: underline;
+}
+.tl-zh {
+    color: #888;
+    font-size: 0.75rem;
+    margin-left: 4px;
+}
