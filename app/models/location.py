@@ -8,6 +8,8 @@ Locations can also be associated directly with chapters via the
 chapter_location M2M, for places that get mentioned in a chapter
 independent of any specific Event. The chapter sidebar de-dupes
 event-pinned + directly-associated locations into one list."""
+from sqlalchemy.dialects.postgresql import JSONB
+
 from app import db
 from app.models.abstract import AbstractObject, AbstractTag
 from app.models.chapter import Chapter
@@ -67,6 +69,13 @@ class Location(AbstractObject):
 
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
+
+    # GeoJSON Geometry object — typically a Polygon or MultiPolygon
+    # tracing the administrative boundary for area-shaped Locations
+    # (provinces, commanderies). The /map view treats latitude +
+    # longitude as taking precedence: if both lat/lng AND geojson are
+    # present on a row, the pin wins and the polygon is ignored.
+    geojson = db.Column(JSONB, nullable=True)
 
     # Tag-style classification. Nullable so existing rows survive the
     # migration; admins backfill from the edit page. ON DELETE SET NULL

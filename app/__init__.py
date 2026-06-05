@@ -39,6 +39,9 @@ def _build_csp(nonce):
         "default-src 'self'; "
         "img-src 'self' https://cdn.jsdelivr.net "
             "https://www.google-analytics.com https://www.googletagmanager.com "
+            # OpenStreetMap raster tiles for the /map view. Tiles are
+            # served from three load-balanced subdomains (a/b/c).
+            "https://*.tile.openstreetmap.org "
             "data:; "
         f"script-src 'self' https://cdn.jsdelivr.net "
             f"https://www.googletagmanager.com 'nonce-{nonce}'; "

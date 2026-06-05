@@ -1702,6 +1702,71 @@ def dump_chapters_for_dating(start, end):
 
 
 @app.cli.command()
+@click.option('--type', 'type_filter', default=None,
+              help='Only dump locations whose LocationType.name matches '
+                   '(e.g. Province, Commandery). Case-insensitive.')
+def dump_locations(type_filter):
+    """Dump every active Location as a JSON array on stdout.
+
+    Output per row:
+      - id, name, chinese_name, aliases, notes
+      - type: LocationType.name (or null)
+      - parent_chain: ["Hebei Province", "Zhongshan Commandery", ...]
+      - latitude, longitude            (may be null)
+      - has_geojson                    (true/false — full polygon
+                                        omitted to keep the dump small)
+
+    Pipe to a file and share with the mapping workflow (mirrors
+    `dump-chapters-for-dating`). Read-only — no writes."""
+    import json as _json
+    from app.models import Location, LocationType
+
+    q = (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .order_by(Location.name)
+    )
+    if type_filter:
+        q = (
+            q.join(LocationType, Location.location_type_id == LocationType.id)
+             .filter(db.func.lower(LocationType.name) == type_filter.lower())
+        )
+
+    rows = q.all()
+
+    # Build a parent map once so each row's parent_chain is a single
+    # walk, not N queries.
+    all_active = {l.id: l for l in Location.query.filter(Location.is_deleted.is_(False)).all()}
+
+    def parent_chain(loc):
+        chain = []
+        seen = set()
+        cur = loc.parent_id and all_active.get(loc.parent_id)
+        while cur is not None and cur.id not in seen:
+            seen.add(cur.id)
+            chain.append(cur.name)
+            cur = cur.parent_id and all_active.get(cur.parent_id)
+        return chain
+
+    out = []
+    for loc in rows:
+        out.append({
+            'id': loc.id,
+            'name': loc.name or '',
+            'chinese_name': loc.chinese_name or '',
+            'aliases': loc.aliases or '',
+            'notes': loc.notes or '',
+            'type': loc.location_type.name if loc.location_type else None,
+            'parent_chain': parent_chain(loc),
+            'latitude': loc.latitude,
+            'longitude': loc.longitude,
+            'has_geojson': loc.geojson is not None,
+        })
+
+    click.echo(_json.dumps(out, ensure_ascii=False, indent=2))
+
+
+@app.cli.command()
 @click.argument('decisions_file', type=click.Path(exists=True, dir_okay=False))
 @click.option('--apply/--dry-run', default=False,
               help='Default is dry-run (prints what would change). Pass --apply to write.')

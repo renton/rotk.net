@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Map{% endblock %}
+
+{% block container_class %}container-fluid{% endblock %}
+
+{% block head %}
+{{ super() }}
+{# Leaflet CSS — already in the CSP style-src allowlist for jsdelivr. #}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}">
+{% endblock %}
+
+{% block page_content %}
+<div class="mb-3">
+    <h1 class="mb-1">Map</h1>
+    <p class="text-muted mb-0">
+        Three Kingdoms-era locations on a modern base map. Provinces
+        and commanderies will fill in as administrative-boundary
+        polygons get added; for now most rows render as labelled pins
+        at their lat/lng.
+    </p>
+</div>
+
+<div id="map"></div>
+
+<script id="map-items" type="application/json" nonce="{{ csp_nonce }}">{{ map_items_json|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% endblock %}

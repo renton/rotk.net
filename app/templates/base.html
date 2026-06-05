@@ -44,6 +44,7 @@
         {% set event_eps    = ('main.events', 'main.edit_event', 'main.new_event') %}
         {% set loc_eps      = ('main.locations', 'main.edit_location', 'main.new_location') %}
         {% set timeline_eps = ('main.timeline',) %}
+        {% set map_eps      = ('main.map_view',) %}
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link {% if ep in book_eps %}active{% endif %}"
@@ -74,6 +75,11 @@
             <a class="nav-link {% if ep in timeline_eps %}active{% endif %}"
                {% if ep in timeline_eps %}aria-current="page"{% endif %}
                href="{{ url_for('main.timeline') }}">Timeline</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if ep in map_eps %}active{% endif %}"
+               {% if ep in map_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.map_view') }}">Map</a>
           </li>
         </ul>
 

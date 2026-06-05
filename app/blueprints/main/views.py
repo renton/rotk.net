@@ -77,6 +77,51 @@ def index():
     )
 
 
+@main.route('/map', methods=['GET'])
+def map_view():
+    """Public map view.
+
+    Plots every Location that has either lat/lng or a stored GeoJSON
+    polygon. Precedence on the rendering side:
+
+      1. lat + lng present  → single pin
+      2. geojson present    → polygon overlay
+      3. neither            → omitted
+
+    A Location is the same object that powers the chapter sidebar, so
+    every pin / polygon is clickable through to its location page."""
+    rows = (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .options(selectinload(Location.location_type))
+        .order_by(Location.name)
+        .all()
+    )
+
+    map_items = []
+    for loc in rows:
+        has_point = loc.latitude is not None and loc.longitude is not None
+        has_geojson = loc.geojson is not None
+        if not has_point and not has_geojson:
+            continue
+        lt = loc.location_type
+        map_items.append({
+            'id':            loc.id,
+            'name':          loc.name or '',
+            'chinese_name':  loc.chinese_name or '',
+            'type_name':     (lt.name if lt else '') or '',
+            'icon':          (lt.icon if lt else '') or '',
+            'bg_colour':     (lt.bg_colour if lt else '') or '#6c757d',
+            'font_colour':   (lt.font_colour if lt else '') or '#ffffff',
+            'border_colour': (lt.border_colour if lt else '') or '#6c757d',
+            'latitude':      loc.latitude if has_point else None,
+            'longitude':     loc.longitude if has_point else None,
+            'geojson':       loc.geojson if (has_geojson and not has_point) else None,
+        })
+
+    return render_template('map.html', map_items_json=map_items)
+
+
 @main.route('/timeline', methods=['GET'])
 def timeline():
     """Public timeline view.
