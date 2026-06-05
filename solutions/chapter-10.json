@@ -1,0 +1,527 @@
+{
+  "chapter_num": 10,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…had conspired with three officials---Court Counselors Ma ",
+      "after_snippet": " and Chong Shao, and Imperial Commander Liu Fan---to be…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…retreat. \n Just at this juncture a household servant of Ma ",
+      "after_snippet": "'s family betrayed his master and told of the conspiracy of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…and Guo Si in revenge seized the three conspirators---Ma ",
+      "after_snippet": ", Chong Shao, and Liu Fan---, with every member of their…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…came at the same time, both from Yingchuan, named Xun ",
+      "after_snippet": " and Xun You. The uncle had once been in the service of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…when he had won the elder Xun to his side, saying, \"Xun ",
+      "after_snippet": " is my Zhang Liang!\" \n He made Xun Yu a Field Commander.…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…side, saying, \"Xun Yu is my Zhang Liang!\" \n He made Xun ",
+      "after_snippet": " a Field Commander. The nephew Xun You was famed for his…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…his village. Cao Cao made him a Military Instructor. \n Xun ",
+      "after_snippet": " said to Cao Cao, \"There is a certain wise person of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…not know in whose service he is.\" \n \"Who is he?\" \n \"Cheng ",
+      "after_snippet": ". He belongs to the eastern part of Yanzhou.\" \n \"Yes, I…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…a messenger was sent to his native place to inquire. Cheng ",
+      "after_snippet": " was away in the hills engaged in study. Cao Cao sent the…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…study. Cao Cao sent the messenger to the hills, and Cheng ",
+      "after_snippet": " came at the invitation. \n \"I shall prove unworthy of your…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…shall prove unworthy of your recommendation,\" said Cheng ",
+      "after_snippet": " to his friend Xun Yu, \"for I am rough and ignorant. But…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…of your recommendation,\" said Cheng Yu to his friend Xun ",
+      "after_snippet": ", \"for I am rough and ignorant. But have you forgotten a…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…net to catch him?\" \n \"I had nearly forgotten!\" said Xun ",
+      "after_snippet": " suddenly. \n So he told Cao Cao of this man, who was at…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…troop of some hundreds, arrived to offer service. This was ",
+      "after_snippet": " Jin of Taishan, an expert horseman and archer, and skilled…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Cao Cao left one small army of thirty thousand under Xun ",
+      "after_snippet": " and Cheng Yu to guard the east headquarters and the three…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…one small army of thirty thousand under Xun Yu and Cheng ",
+      "after_snippet": " to guard the east headquarters and the three counties of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…to destroy Xuzhou and avenge his father. Xiahou Dun, ",
+      "after_snippet": " Jin, and Dian Wei were Van Leaders with Cao Cao's orders…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…had conspired with three officials---Court Counselors Ma ",
+      "after_snippet": " and Chong Shao, and Imperial Commander Liu Fan---to be…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…retreat. \n Just at this juncture a household servant of Ma ",
+      "after_snippet": "'s family betrayed his master and told of the conspiracy of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…and Guo Si in revenge seized the three conspirators---Ma ",
+      "after_snippet": ", Chong Shao, and Liu Fan---, with every member of their…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…came at the same time, both from Yingchuan, named Xun ",
+      "after_snippet": " and Xun You. The uncle had once been in the service of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…when he had won the elder Xun to his side, saying, \"Xun ",
+      "after_snippet": " is my Zhang Liang!\" \n He made Xun Yu a Field Commander.…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…side, saying, \"Xun Yu is my Zhang Liang!\" \n He made Xun ",
+      "after_snippet": " a Field Commander. The nephew Xun You was famed for his…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…his village. Cao Cao made him a Military Instructor. \n Xun ",
+      "after_snippet": " said to Cao Cao, \"There is a certain wise person of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…not know in whose service he is.\" \n \"Who is he?\" \n \"Cheng ",
+      "after_snippet": ". He belongs to the eastern part of Yanzhou.\" \n \"Yes, I…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…a messenger was sent to his native place to inquire. Cheng ",
+      "after_snippet": " was away in the hills engaged in study. Cao Cao sent the…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…study. Cao Cao sent the messenger to the hills, and Cheng ",
+      "after_snippet": " came at the invitation. \n \"I shall prove unworthy of your…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…shall prove unworthy of your recommendation,\" said Cheng ",
+      "after_snippet": " to his friend Xun Yu, \"for I am rough and ignorant. But…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…of your recommendation,\" said Cheng Yu to his friend Xun ",
+      "after_snippet": ", \"for I am rough and ignorant. But have you forgotten a…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…net to catch him?\" \n \"I had nearly forgotten!\" said Xun ",
+      "after_snippet": " suddenly. \n So he told Cao Cao of this man, who was at…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…troop of some hundreds, arrived to offer service. This was ",
+      "after_snippet": " Jin of Taishan, an expert horseman and archer, and skilled…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Cao Cao left one small army of thirty thousand under Xun ",
+      "after_snippet": " and Cheng Yu to guard the east headquarters and the three…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…one small army of thirty thousand under Xun Yu and Cheng ",
+      "after_snippet": " to guard the east headquarters and the three counties of…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…to destroy Xuzhou and avenge his father. Xiahou Dun, ",
+      "after_snippet": " Jin, and Dian Wei were Van Leaders with Cao Cao's orders…",
+      "_note": "short \"Yu\" needle matched inside a person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "exclude",
+      "match_text": "Liang",
+      "before_snippet": "…won the elder Xun to his side, saying, \"Xun Yu is my Zhang ",
+      "after_snippet": "!\" \n He made Xun Yu a Field Commander. The nephew Xun You…",
+      "_note": "\"Liang\" matched inside \"Zhang Liang\" — the historical strategist, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "exclude",
+      "match_text": "Liang",
+      "before_snippet": "…won the elder Xun to his side, saying, \"Xun Yu is my Zhang ",
+      "after_snippet": "!\" \n He made Xun Yu a Field Commander. The nephew Xun You…",
+      "_note": "\"Liang\" matched inside \"Zhang Liang\" — the historical strategist, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "exclude",
+      "match_text": "Lu",
+      "before_snippet": "…means of inviting two more: Man Chong from Shanyang and ",
+      "after_snippet": " Qian from Wucheng, who were already known to Cao Cao by…",
+      "_note": "\"Lu\" matched inside \"Lu Qian\" — person, not location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "exclude",
+      "match_text": "Lu",
+      "before_snippet": "…means of inviting two more: Man Chong from Shanyang and ",
+      "after_snippet": " Qian from Wucheng, who were already known to Cao Cao by…",
+      "_note": "\"Lu\" matched inside \"Lu Qian\" — person, not location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "exclude",
+      "match_text": "Zhuo",
+      "before_snippet": "…And once more the capital was free of troops. \n Dong ",
+      "after_snippet": "'s followers, having so far succeeded, did not forget their…",
+      "_note": "\"Zhuo\" matched inside \"Dong Zhuo\" — the warlord, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "exclude",
+      "match_text": "Zhuo",
+      "before_snippet": "…be said justly that Heaven was exceedingly angry with Dong ",
+      "after_snippet": ". \n So now Li Jue and Guo Si wielded the real power of the…",
+      "_note": "\"Zhuo\" matched inside \"Dong Zhuo\" — the warlord, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "exclude",
+      "match_text": "Zhuo",
+      "before_snippet": "…dared attempt an attack on the party newly risen from Dong ",
+      "after_snippet": "'s disaffection, while on the other hand Jia Xu never…",
+      "_note": "\"Zhuo\" matched inside \"Dong Zhuo\" — the warlord, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "exclude",
+      "match_text": "Zhuo",
+      "before_snippet": "…And once more the capital was free of troops. \n Dong ",
+      "after_snippet": "'s followers, having so far succeeded, did not forget their…",
+      "_note": "\"Zhuo\" matched inside \"Dong Zhuo\" — the warlord, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "exclude",
+      "match_text": "Zhuo",
+      "before_snippet": "…be said justly that Heaven was exceedingly angry with Dong ",
+      "after_snippet": ". \n So now Li Jue and Guo Si wielded the real power of the…",
+      "_note": "\"Zhuo\" matched inside \"Dong Zhuo\" — the warlord, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "exclude",
+      "match_text": "Zhuo",
+      "before_snippet": "…dared attempt an attack on the party newly risen from Dong ",
+      "after_snippet": "'s disaffection, while on the other hand Jia Xu never…",
+      "_note": "\"Zhuo\" matched inside \"Dong Zhuo\" — the warlord, not a location"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1013,
+      "action": "exclude",
+      "match_text": "Wucheng",
+      "before_snippet": "…two more: Man Chong from Shanyang and Lu Qian from ",
+      "after_snippet": ", who were already known to Cao Cao by reputation. These…",
+      "_note": "Wucheng in Shanyang Commandery (Lu Qian's home) — neither tagged Wucheng is right"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1431,
+      "action": "exclude",
+      "match_text": "Wucheng",
+      "before_snippet": "…two more: Man Chong from Shanyang and Lu Qian from ",
+      "after_snippet": ", who were already known to Cao Cao by reputation. These…",
+      "_note": "Wucheng in Shanyang Commandery (Lu Qian's home) — neither tagged Wucheng is right"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1456,
+      "action": "remove_m2m",
+      "_note": "Juancheng (Settlement) is in Nanyang — chapter 10 means Juancheng County [1296] in Yan Province (Cao Cao's base)"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3132,
+      "action": "remove_m2m",
+      "_note": "cn=張緝 — Wei politician, died 254. Not chapter 10's Zhang Ji."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3133,
+      "action": "remove_m2m",
+      "_note": "cn=張既 — Cao Cao's official, died 223. Not chapter 10's Zhang Ji."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3135,
+      "action": "remove_m2m",
+      "_note": "cn=張機 — Zhang Zhongjing the physician. Not a Dong Zhuo lieutenant."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3136,
+      "action": "remove_m2m",
+      "_note": "cn=張吉 — Han dynasty politician. Not chapter 10's Zhang Ji."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3175,
+      "action": "remove_m2m",
+      "_note": "cn=張邈 different person, Gaoling/Fengyi, Cao Wei era."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3176,
+      "action": "remove_m2m",
+      "_note": "cn=張邈 different person, Jin dynasty."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2233,
+      "action": "remove_m2m",
+      "_note": "cn=王訪 — different person, Han dynasty."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different person, Han dynasty general from Jiangxia."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different person, Liu Zhang faction from Sichuan."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "cn=賈詡/賈栩/賈嗣 — different person (aliases Jia Si), Cao Wei general."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1325,
+      "action": "remove_m2m",
+      "_note": "Liu Dai the Yanzhou governor died 192 (before this scene). Chapter 10's \"Liu Dai then submitted\" is the Cao Cao general [1326]."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different person, Cao Wei politician (probably Xun Yu's relative)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different person, Cao Wei general."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1631,
+      "action": "remove_m2m",
+      "_note": "cn=馬玉 — different person, Shu Han era general."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different person, Cao Wei general."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3164,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 — Yellow Turban rebel, died 184. Wrong person; metaphor is 張良 the Han strategist."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3165,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 — Eastern Wu general. Wrong person; metaphor is 張良 the Han strategist (missing from DB)."
+    }
+  ]
+}
