@@ -1,0 +1,560 @@
+{
+  "chapter_num": 15,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "10 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "2 \"Ji Ling\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "12 \"Wu Jing\" / \"Chen Wu\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "29 \"Zhou Yu\" / \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "3 \"Zhang Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "3 \"Dong Zhuo\" / \"Dong Xi\" (no Dongjun)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "24 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Dai\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "22 \"Yan Baihu\" / \"Yan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "10 \"Chen Gong\" / \"Chen Wu\" / \"Chen Heng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "19 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "CONTEXT OVERRIDE: 2 matches — \"Hua Tuo from Qiao\" and \"Qiao Rui\". Qiao here = Qiao County [1160] of Pei Commandery (Hua Tuo's real birthplace); Qiao Commandery didn't exist until 220 AD. The Qiao Rui match is a person name anyway."
+    },
+    {
+      "target_type": "location",
+      "target_id": 1013,
+      "action": "remove_m2m",
+      "_note": "CONTEXT OVERRIDE: 2 \"Wucheng\" matches refer to Sun Ce's Wujun campaign (Wucheng in Wujun). Neither this [1013] (Bing Province) nor [1431] (Jing Province) is the right Wucheng. DB is missing a Wujun Wucheng."
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "19 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "12 \"Wu Jing\" / \"Chen Wu\" (persons, same as Wu Commandery [22])"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "29 \"Zhou Yu\" / \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "6 \"Wu Jing\" / \"Sun Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "2 \"Liu Xiu\" (Han founder Emperor Guangwu)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "4 \"Ji Ling\" / \"Ling Cao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "24 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1217,
+      "action": "remove_m2m",
+      "_note": "5 \"Zhu Zhi\" (Sun Ce's adviser)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "3 \"Yang Dajiang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "12 \"Lu Fan\" / \"Fan Neng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "21 Zhang surnames (Fei, Hong, Zhao, Ying, Xun)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1302,
+      "action": "remove_m2m",
+      "_note": "1 \"Lei Bo\" (general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "5 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1431,
+      "action": "remove_m2m",
+      "_note": "wrong Wucheng — Sun Ce campaign's Wucheng is in Wujun; this Settlement is in Nanyang area"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1585,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Fan, from Runan\" — should tag Runan Commandery [12], not this City duplicate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…south to reduce Wujun. \n At that time there was a certain ",
+      "after_snippet": " Baihu, or the White Tiger, who styled himself King of East…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…at Wucheng and Jiaxing. Hearing of Sun Ce's approach, ",
+      "after_snippet": " Baihu sent his brother, Yan Yu, with an army against Sun…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…Hearing of Sun Ce's approach, Yan Baihu sent his brother, ",
+      "after_snippet": " Yu, with an army against Sun Ce, and they met at Maple…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…an army against Sun Ce, and they met at Maple Bridge. \n ",
+      "after_snippet": " Yu, sword in hand, took his stand on the bridge, and this…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…on the bank, the two men rushed up and fiercely attacked ",
+      "after_snippet": " Yu as he stood on the bridge. Yan Yu fled and Han Dang…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…up and fiercely attacked Yan Yu as he stood on the bridge. ",
+      "after_snippet": " Yu fled and Han Dang went in pursuit. But Yan Yu smote up…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…the bridge. Yan Yu fled and Han Dang went in pursuit. But ",
+      "after_snippet": " Yu smote up to the west gate of the city into which he…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…marksmanship. \n The wounded man was taken away. \n When ",
+      "after_snippet": " Baihu the White Tiger heard of the exploit, he said, \"How…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…his thoughts turned toward a peace. He sent his brother ",
+      "after_snippet": " Yu out to see Sun Ce, who received him civilly, invited…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…Sun Ce. \n Sun Ce commanded to put the messenger to death. ",
+      "after_snippet": " Yu started up and drew his sword; but out flew Sun Ce's…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…sent into the city to his brother. \n This had its effect. ",
+      "after_snippet": " Baihu saw resistance was hopeless, so he abandoned Wujun…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…cities were fallen. The territory was quickly subdued. ",
+      "after_snippet": " Baihu rushed off toward Yuhang in the east, plundering on…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…of one Ling Cao checked his career of robbery there. ",
+      "after_snippet": " Baihu then fled toward Kuaiji. \n Ling Cao and his son then…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…joint forces crossed the Great River. \n The White Tiger, ",
+      "after_snippet": " Baihu, gathered his scattered forces and took up a…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…as Kuaiji. The Governor of the place, Wang Lang, was on ",
+      "after_snippet": " Baihu's side and inclined to support him actively. \n But,…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…flank, so that he was in a hopeless position, and he and ",
+      "after_snippet": " Baihu and Zhou Xin, fighting desperately to cut an alley…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…fiercely attacked, Wang Lang was for making a sortie, but ",
+      "after_snippet": " Baihu opposed this as hopeless against so strong a force…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…until hunger forces the besiegers to retire,\" said ",
+      "after_snippet": " Baihu. \n Wang Lang agreed, and the siege went on. For…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…this is only a strategy. Let us go out and smite them.\" \n ",
+      "after_snippet": " Baihu said, \"If he has gone, it is to attack Chadu. Let us…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…two lead the way, and I will follow with reserves.\" \n So ",
+      "after_snippet": " Baihu and Zhou Xin went forth with five thousand soldiers…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…the drums beat and lighted torches sprang up on all sides. ",
+      "after_snippet": " Baihu was frightened, turned his horse and started to…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…fell under Sun Ce's spear. The men surrendered. However, ",
+      "after_snippet": " Baihu managed to cut his way out and fled to Yuhang.…",
+      "_note": "\"Yan\" inside \"Yan Baihu\" or \"Yan Yu\" (Sun Ce's opponent); the \"Yanzhou\" match is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…broke out between his mother's brother, Governor Wu ",
+      "after_snippet": " of Dangyang, and the late Imperial Protector of Xuzhou,…",
+      "_note": "\"Jing\" inside \"Wu Jing\" or \"Sun Jing\" (persons); the \"Jingzhou\" match (Liu Biao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…an army under the pretense of an expedition to relieve Wu ",
+      "after_snippet": "? Escape the shadow of Yuan Shu and take control of…",
+      "_note": "\"Jing\" inside \"Wu Jing\" or \"Sun Jing\" (persons); the \"Jingzhou\" match (Liu Biao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…Yu was on his way to visit Sun Ce's uncle, Governor Wu ",
+      "after_snippet": " of Dangyang, when the happy meeting took place.…",
+      "_note": "\"Jing\" inside \"Wu Jing\" or \"Sun Jing\" (persons); the \"Jingzhou\" match (Liu Biao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…River. He retired to Que and now was battling with Wu ",
+      "after_snippet": " in Linyang. \n Hearing of the meditated attack on him, Liu…",
+      "_note": "\"Jing\" inside \"Wu Jing\" or \"Sun Jing\" (persons); the \"Jingzhou\" match (Liu Biao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…maintained, but with little success. \n In a council, Sun ",
+      "after_snippet": ", who was the uncle of Sun Ce, said, \"Since they are…",
+      "_note": "\"Jing\" inside \"Wu Jing\" or \"Sun Jing\" (persons); the \"Jingzhou\" match (Liu Biao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "exclude",
+      "match_text": "Jing",
+      "before_snippet": "…reigned in all the southeast. Sun Ce placed his uncle Sun ",
+      "after_snippet": " in command of the city and made Zhu Zhi Governor of Wujun.…",
+      "_note": "\"Jing\" inside \"Wu Jing\" or \"Sun Jing\" (persons); the \"Jingzhou\" match (Liu Biao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…of his officers to a council. Among them were Adviser ",
+      "after_snippet": " Dajiang and Generals Zhang Xun, Ji Ling, Qiao Rui, Lei Bo,…",
+      "_note": "\"Yang\" inside \"Yang Dajiang\" (Yuan Shu's adviser); the 3 \"Yangzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…he is a boor, and what steps can I take to destroy him?\" \n ",
+      "after_snippet": " Dajiang replied, \"You cannot do any thing against him, for…",
+      "_note": "\"Yang\" inside \"Yang Dajiang\" (Yuan Shu's adviser); the 3 \"Yangzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…instead\r\n Against a dragon forth his army led. \n The means ",
+      "after_snippet": " Dajiang employed will be made plain in the next chapter. \n",
+      "_note": "\"Yang\" inside \"Yang Dajiang\" (Yuan Shu's adviser); the 3 \"Yangzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "character",
+      "target_id": 973,
+      "action": "remove_m2m",
+      "_note": "cn=黃蓋 — different Huang Gai (Han politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different Chen Gong."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1326,
+      "action": "remove_m2m",
+      "_note": "cn=劉岱 — different Liu Dai (Cao Cao general). Chapter 15 references the Yanzhou-governor Liu Dai [1325] (deceased) in past tense."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1451,
+      "action": "remove_m2m",
+      "_note": "cn=劉曜 — different Liu Yao."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1500,
+      "action": "remove_m2m",
+      "_note": "cn=路蕃 — different Lu Fan. Historical Sun Ce adviser is 呂範, not in DB."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1501,
+      "action": "remove_m2m",
+      "_note": "cn=盧藩 — different Lu Fan. Historical Sun Ce adviser is 呂範, not in DB."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2280,
+      "action": "remove_m2m",
+      "_note": "different Wang Lang (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2793,
+      "action": "remove_m2m",
+      "_note": "cn=閻宇 — different Yan Yu (Shu Han general, born later); the right one is 嚴輿 [2794] (Yan Baihu's brother)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different Yuan Shao."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3124,
+      "action": "remove_m2m",
+      "_note": "cn=張弘 — different Zhang Hong (Lü Bu general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3125,
+      "action": "remove_m2m",
+      "_note": "cn=張弘 — different Zhang Hong (Jin general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3260,
+      "action": "remove_m2m",
+      "_note": "cn=張瑛 — different Zhang Ying (Shu Han politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3261,
+      "action": "remove_m2m",
+      "_note": "cn=張潁 — different Zhang Ying (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3273,
+      "action": "remove_m2m",
+      "_note": "different Zhang Zhao (Han politician), not the Sun Quan adviser 張昭."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3457,
+      "action": "remove_m2m",
+      "_note": "cn=州泰 — different Zhou Tai (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3517,
+      "action": "remove_m2m",
+      "_note": "cn=朱志 — different Zhu Zhi (Eastern Wu)."
+    }
+  ]
+}

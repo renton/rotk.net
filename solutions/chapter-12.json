@@ -1,0 +1,290 @@
+{
+  "chapter_num": 12,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "only match was English pronoun \"You\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "3 matches all \"Yu\" inside Xun Yu / Cheng Yu / Yu Jin"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "8 matches all \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "7 matches all \"He Yi\" (Yellow Scarves leader)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "31 matches all \"Dian Wei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 975,
+      "action": "remove_m2m",
+      "_note": "1 match \"Zang Ba\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "1 match \"Yuan Shu\" (Zhang Miao fleeing to)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "11 matches all \"Chen Gong\" / \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "33 matches all \"Lu Bu\" / \"Lu Qian\"; no \"state of Lu\" reference in this chapter"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "CONTEXT OVERRIDE: \"I am from Qiao\" (Xu Chu's origin) — historically Qiao County of Pei Commandery in 195 AD; Qiao Commandery wasn't established until 220 AD. The match belongs to Qiao County [1160]. Anachronistic tag for chapter 12."
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "33 matches all \"Lu Bu\" / \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "3 matches all \"Yu\" inside person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "2 matches \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "8 matches all \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "1 match \"Liu Xiu\" (Han founder)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "7 matches all \"He Yi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "2 matches \"Cao Ren\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "1 match \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "3 matches all \"Liu Ye\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "1 match \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "5 matches all Zhang surname persons (Liao, Miao, Chao)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "2 matches \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1456,
+      "action": "remove_m2m",
+      "_note": "wrong Juancheng (Settlement in Nanyang) — chapter 12 means Juancheng County [1296] in Yan Province (Cao Cao's base)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1585,
+      "action": "remove_m2m",
+      "_note": "CONTEXT OVERRIDE: all 3 matches refer to Runan as a geographic region — Runan Commandery [12] is the correct tag. Runan as a \"City\" type doesn't fit the prose (\"eastern counties of Chencheng, Yingchuan, and Runan\")."
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and asked who he was and whence he came. \n \"I am named ",
+      "after_snippet": " Chu. I am from Qiao. When the rebellion broke out, my…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…you join my army?\" \n \"That is my strongest desire,\" said ",
+      "after_snippet": " Chu. \n So Xu Chu called up his clan, some hundreds in all,…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…army?\" \n \"That is my strongest desire,\" said Xu Chu. \n So ",
+      "after_snippet": " Chu called up his clan, some hundreds in all, and they…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…hundreds in all, and they formally submitted to Cao Cao. ",
+      "after_snippet": " Chu received the rank of General and got ample rewards.…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and Li Fang, hurried out their few soldiers to fight. \n ",
+      "after_snippet": " Chu, the latest recruit, said, \"I wish to capture these…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…he rode forth. Li Fang with his halberd advanced to meet ",
+      "after_snippet": " Chu. The combat was brief as Li Fang fell in the second…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…out in perfect order. The Van Leaders were Dian Wei and ",
+      "after_snippet": " Chu; Xiahou Dun and Xiahou Yuan led the left wing; Li Dian…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…He met his foes and began to revile them. The redoubtable ",
+      "after_snippet": " Chu went to fight with him, but after twenty bouts neither…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…all their leaders dashed forward. Xiahou Dun, Xiahou Yuan, ",
+      "after_snippet": " Chu, Dian Wei, Li Dian, and Yue Jing all attacked at once.…",
+      "_note": "\"Xu\" matched inside \"Xu Chu\" (Cao Cao's new general); the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3175,
+      "action": "remove_m2m",
+      "_note": "Zhang Miao — different person (Gaoling, Cao Wei era)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3176,
+      "action": "remove_m2m",
+      "_note": "Zhang Miao — different person (Jin dynasty)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏 — different Cao Hong (Tao Qian politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 140,
+      "action": "remove_m2m",
+      "_note": "cn=曹興 — different Cao Xing (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different Chen Gong (Han dynasty general from Jiangxia)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different Cheng Yu (Liu Zhang faction)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different Xun Yu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different Xun Yu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙 — different Sun Qian (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3081,
+      "action": "remove_m2m",
+      "_note": "Zhang Chao — different person (Hejian scholar), not Zhang Miao's brother."
+    }
+  ]
+}
