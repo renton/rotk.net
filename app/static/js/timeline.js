@@ -98,35 +98,46 @@
     style: 'min-height: 110px;',
   });
 
-  // Chapter markers — scroll icon, click for details.
+  // A span > ~1.5 years is treated as a real range; everything else
+  // (a single year, "February 168", "February 3 168") shows as a
+  // point-sized badge centered on the midpoint.
+  const RANGE_THRESHOLD_YEARS = 1.5;
+  function isRangeSpan(lo, hi) { return (hi - lo) > RANGE_THRESHOLD_YEARS; }
+
+  // Chapter markers — scroll icon + number. Single-year chapters
+  // render as a small box at the midpoint; multi-year chapters
+  // ("184-189", etc.) render as a range bar stretching across the
+  // years with the icon + number pinned to the left edge.
   chaptersData.forEach(c => {
-    const mid = midYear(c.year_lo, c.year_hi);
-    items.add({
+    const ranged = isRangeSpan(c.year_lo, c.year_hi);
+    const base = {
       id: `ch-${c.id}`,
       group: '__chapters__',
       kind: 'chapter',
       content: `<i class="fa-solid fa-scroll" aria-hidden="true"></i><span class="tl-num">${c.num}</span>`,
-      start: yearToDate(mid),
-      type: 'box',
       className: 'tl-chapter',
       _filterText: `${c.num} ${c.name}`.toLowerCase(),
       _data: c,
-    });
+    };
+    if (ranged) {
+      items.add({ ...base, start: yearToDate(c.year_lo), end: yearToDate(c.year_hi), type: 'range' });
+    } else {
+      items.add({ ...base, start: yearToDate(midYear(c.year_lo, c.year_hi)), type: 'box' });
+    }
   });
 
-  // Event markers — bare event-type FA icon, painted in the type's
-  // colour. No surrounding box or badge — the icon glyph itself is
-  // the marker.
+  // Event markers — colored badge with FA icon. Single-year events
+  // render as a circular pip at the midpoint; multi-year events
+  // render as a coloured bar across the span with the icon pinned
+  // to the left edge.
   eventsData.forEach(e => {
-    const mid = midYear(e.year_lo, e.year_hi);
     const icon = e.icon || 'fa-solid fa-flag';
-    items.add({
+    const ranged = isRangeSpan(e.year_lo, e.year_hi);
+    const base = {
       id: `ev-${e.id}`,
       group: '__events__',
       kind: 'event',
       content: `<i class="${escapeAttr(icon)}" aria-hidden="true"></i>`,
-      start: yearToDate(mid),
-      type: 'box',
       className: 'tl-event',
       // Inverted-pill look: badge background = event-type colour,
       // icon glyph painted in the type's font_colour (defaults to
@@ -137,7 +148,12 @@
         `color: ${e.font_colour};`,
       _filterText: e.name.toLowerCase(),
       _data: e,
-    });
+    };
+    if (ranged) {
+      items.add({ ...base, start: yearToDate(e.year_lo), end: yearToDate(e.year_hi), type: 'range' });
+    } else {
+      items.add({ ...base, start: yearToDate(midYear(e.year_lo, e.year_hi)), type: 'box' });
+    }
   });
 
   // Character groups + lifeline ranges.

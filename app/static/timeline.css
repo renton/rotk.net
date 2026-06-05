@@ -5,6 +5,19 @@
     position: relative;
 }
 
+/* Filter + zoom controls stick to the top of the viewport while the
+   timeline canvas scrolls beneath them. Background + bottom border so
+   the controls stay readable when items scroll past underneath. */
+.timeline-controls {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: #ffffff;
+    padding: 0.75rem 0;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
 #timeline {
     height: calc(100vh - 240px);
     min-height: 480px;
@@ -65,6 +78,14 @@
 .vis-item.tl-chapter .vis-item-content i {
     font-size: 0.85rem;
 }
+/* When a chapter span is a real range, vis-timeline stretches the
+   item across years — left-justify the content so the icon + number
+   sit at the start of the bar instead of being centered in dead
+   space. */
+.vis-item.tl-chapter.vis-range .vis-item-content {
+    justify-content: flex-start;
+    padding-left: 7px;
+}
 .tl-num {
     font-variant-numeric: tabular-nums;
 }
@@ -99,6 +120,19 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+/* For multi-year events the badge becomes a horizontal bar — switch
+   to a rounded-rectangle shape, left-justify the icon, and let the
+   width grow naturally with the year span. */
+.vis-item.tl-event.vis-range {
+    width: auto;
+    border-radius: 13px;
+    padding-left: 6px;
+    padding-right: 8px;
+}
+.vis-item.tl-event.vis-range .vis-item-content {
+    width: auto;
+    justify-content: flex-start;
 }
 
 .vis-item.tl-chapter .vis-item-overflow,
