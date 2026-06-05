@@ -36,66 +36,58 @@
     pointer-events: none;
 }
 
-/* Chapter markers — square boxes with a scroll icon. */
+/* Chapter markers — a single small badge holding the scroll icon
+   plus the chapter number side-by-side. */
 .vis-item.tl-chapter {
     background: #0d6efd;
     border: 1px solid #0a58ca;
     color: #fff;
-    border-radius: 4px;
-    min-width: 32px;
-    height: 28px;
+    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     transition: transform 0.1s ease;
 }
 .vis-item.tl-chapter:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    filter: brightness(1.1);
 }
 .vis-item.tl-chapter.vis-selected {
-    box-shadow: 0 0 0 2px #ffc107, 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 0 0 2px #ffc107;
 }
 .vis-item.tl-chapter .vis-item-content {
-    padding: 4px 8px;
-    font-size: 0.85rem;
+    padding: 2px 7px;
+    font-size: 0.75rem;
     font-weight: 600;
     line-height: 1;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 .vis-item.tl-chapter .vis-item-content i {
-    font-size: 1rem;
+    font-size: 0.85rem;
 }
 .tl-num {
     font-variant-numeric: tabular-nums;
 }
-.vis-item.tl-chapter.vis-box {
-    border-top: 1px solid #0a58ca;
-}
 
-/* Event markers — colored boxes with the event-type FA icon. */
+/* Event markers — bare icon, no background or border. The icon's
+   colour comes from the inline style (event-type bg_colour). */
 .vis-item.tl-event {
-    border: 1px solid;
-    border-radius: 4px;
-    min-width: 28px;
-    height: 28px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     transition: transform 0.1s ease;
 }
 .vis-item.tl-event:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transform: translateY(-1px) scale(1.15);
 }
 .vis-item.tl-event.vis-selected {
-    box-shadow: 0 0 0 2px #ffc107, 0 2px 5px rgba(0,0,0,0.2);
+    text-shadow: 0 0 6px #ffc107, 0 0 2px #ffc107;
 }
 .vis-item.tl-event .vis-item-content {
-    padding: 4px 8px;
-    font-size: 1rem;
+    padding: 0;
+    font-size: 1.15rem;
     line-height: 1;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 }

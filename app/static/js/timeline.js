@@ -114,7 +114,9 @@
     });
   });
 
-  // Event markers — event-type FA icon, colored to match the type.
+  // Event markers — bare event-type FA icon, painted in the type's
+  // colour. No surrounding box or badge — the icon glyph itself is
+  // the marker.
   eventsData.forEach(e => {
     const mid = midYear(e.year_lo, e.year_hi);
     const icon = e.icon || 'fa-solid fa-flag';
@@ -126,10 +128,7 @@
       start: yearToDate(mid),
       type: 'box',
       className: 'tl-event',
-      style:
-        `background: ${e.bg_colour};` +
-        `border-color: ${e.border_colour};` +
-        `color: ${e.font_colour};`,
+      style: `color: ${e.bg_colour};`,
       _filterText: e.name.toLowerCase(),
       _data: e,
     });
