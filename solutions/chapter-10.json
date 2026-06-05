@@ -288,6 +288,60 @@
       "target_id": 3165,
       "action": "remove_m2m",
       "_note": "cn=張梁 (Eastern Wu general). Wrong; metaphor is 張良 the Han strategist, missing from DB."
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…their generals as to how to meet the attack. \n Adviser Jia ",
+      "after_snippet": " said, \"Since the attackers are coming from a distance, our…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…ensign!\" \n \"To fight forthwith means defeat,\" said Jia ",
+      "after_snippet": ". \n Li Meng and Wang Fang cried with one voice, \"If we…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…heads! But if we win, then your head is forfeit.\" \n Jia ",
+      "after_snippet": " then suggested to Li Jue and Guo Si, saying, \"Seventy…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…under the hand of one young leader, they knew that Jia ",
+      "after_snippet": " had given good advice and was gifted with clear…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to wreak vengeance on his general. \n But his adviser Jia ",
+      "after_snippet": " again came in, saying, \"The people are yet unsettled: It…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…from Dong Zhuo's disaffection, while on the other hand Jia ",
+      "after_snippet": " never ceased to urge his masters to exert themselves for…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
     }
   ]
 }
