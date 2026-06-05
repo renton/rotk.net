@@ -1,0 +1,215 @@
+{
+  "chapter_num": 29,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "10 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "23 \"Yu Ji\" (Daoist saint)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "8 \"Lady Wu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "43 \"Yu Fan\" / \"Yu Ji\" / \"Yu Rang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "3 \"Sun Jing\"/\"Zhang Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Yi of Qin\" ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "4 \"Gu Yong\"/\"Cai Yong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "11 \"Zhang Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "5 \"Chen Zhen\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "11 \"Lu Fan\" / \"Lu Su\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "1 \"Lady Qiao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "11 \"Lu Fan\" / \"Lu Su\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "8 \"Lady Wu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1053,
+      "action": "remove_m2m",
+      "_note": "1 \"Yangqu Spring\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "43 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhang Jing\"/\"Sun Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Yi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1160,
+      "action": "remove_m2m",
+      "_note": "1 \"Lady Qiao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "1 \"Cao Ren\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "2 \"She\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Wan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "1 \"Wen and Huan\" ancient Protectors"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "2 \"Yu Fan\" / \"Lu Fan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "24 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\""
+    },
+    {
+      "target_type": "character",
+      "target_id": 1500,
+      "action": "remove_m2m",
+      "_note": "cn=路蕃 — different Lu Fan. Historical is 呂範. Both [1500] and [1501] are wrong (already discussed)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1501,
+      "action": "remove_m2m",
+      "_note": "cn=盧藩 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3124,
+      "action": "remove_m2m",
+      "_note": "cn=張弘 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3125,
+      "action": "remove_m2m",
+      "_note": "cn=張弘 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3146,
+      "action": "remove_m2m",
+      "_note": "cn=張京 — different Zhang Jing (Cao Wei)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3149,
+      "action": "remove_m2m",
+      "_note": "cn=張靖 — Zhang Jing in this snippet is \"Imperial Protector Zhang Jing\" of Jiaozhou — different from both records."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3273,
+      "action": "remove_m2m",
+      "_note": "different Zhang Zhao."
+    }
+  ]
+}

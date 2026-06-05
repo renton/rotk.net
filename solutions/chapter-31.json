@@ -1,0 +1,236 @@
+{
+  "chapter_num": 31,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 10,
+      "action": "remove_m2m",
+      "_note": "4 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "10 \"Peng Ji\"/\"Jizhou\" mixed"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "16 \"Yu Jin\"/\"Xun Yu\"/\"Cheng Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "8 \"Xu Chu\"/\"Xu Huang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "6 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "1 \"Jian Yong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 881,
+      "action": "remove_m2m",
+      "_note": "7 \"Yuan Shang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "9 \"Zhao Zilong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "16 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Tu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "3 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "3 \"Cai Mao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1270,
+      "action": "remove_m2m",
+      "_note": "1 \"Ju Shou\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "17 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "8 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1345,
+      "action": "remove_m2m",
+      "_note": "6 \"Liu Pi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "11 \"Tian Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1398,
+      "action": "remove_m2m",
+      "_note": "4 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1585,
+      "action": "remove_m2m",
+      "_note": "7 \"Runan\" duplicate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…Next day the march was resumed, and Yuan Shao met Peng ",
+      "after_snippet": " with reinforcements, to whom he said, \"I disregarded Tian…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…to Tian Feng's prescience roused the jealousy of Peng ",
+      "after_snippet": ", who replied, \"Yes. When he heard the news of your defeat,…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…to be divided in their sympathies: Shen Pei and Peng ",
+      "after_snippet": " being in favor of the youngest son, and Xin Ping and Guo…",
+      "_note": "\"Ji\" inside \"Peng Ji\"; \"Jizhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…Yuan Shao is very hard on the people and they hate him. ",
+      "after_snippet": ", Sir, having raised this army in the cause of humanity and…",
+      "_note": "\"You\" pronoun matches — but most are \"Youzhou\" so this might also be all legit. Skip if no You-only matches"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…did I think to be driven to this. Heaven is afflicting me. ",
+      "after_snippet": " had better return each to his own territory and swear to…",
+      "_note": "\"You\" pronoun matches — but most are \"Youzhou\" so this might also be all legit. Skip if no You-only matches"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…no ties, were content to die for the sake of his ideals. ",
+      "after_snippet": ", Illustrious Sir, like Liu Bei, are a scion of the…",
+      "_note": "\"You\" pronoun matches — but most are \"Youzhou\" so this might also be all legit. Skip if no You-only matches"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "exclude",
+      "match_text": "You",
+      "before_snippet": "…against Xuchang, but Shen Pei dissuaded him, saying, \"",
+      "after_snippet": " are not yet recovered from the fatigues of last year. It…",
+      "_note": "\"You\" pronoun matches — but most are \"Youzhou\" so this might also be all legit. Skip if no You-only matches"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan / Zilong."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1301,
+      "action": "remove_m2m",
+      "_note": "different Lady Liu (Shu Han noble lady)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2906,
+      "action": "remove_m2m",
+      "_note": "cn=殷馗 — different Yin Kui (astrologer); Yin Kui of Liaodong [2905] is the right one."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    }
+  ]
+}
