@@ -68,6 +68,17 @@
       .replace(/'/g, '&#39;');
   }
 
+  // Looser than escapeHtml — for values going into an attribute value
+  // where we still need to neutralise quotes but want to keep spaces
+  // and slashes intact (Font Awesome class strings).
+  function escapeAttr(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   // --- build groups + items ---
   const groups = new vis.DataSet();
   const items  = new vis.DataSet();
@@ -85,34 +96,40 @@
     order: -1,
   });
 
-  // Chapter points.
+  // Chapter markers — scroll icon, click for details.
   chaptersData.forEach(c => {
     const mid = midYear(c.year_lo, c.year_hi);
     items.add({
       id: `ch-${c.id}`,
       group: '__chapters__',
       kind: 'chapter',
-      content: `<a href="/chapter/${c.num}" title="${escapeHtml(c.name)} — ${escapeHtml(c.date_str)}">${c.num}</a>`,
+      content: `<i class="fa-solid fa-scroll" aria-hidden="true"></i><span class="tl-num">${c.num}</span>`,
       start: yearToDate(mid),
-      type: 'point',
+      type: 'box',
       className: 'tl-chapter',
       _filterText: `${c.num} ${c.name}`.toLowerCase(),
+      _data: c,
     });
   });
 
-  // Event points.
+  // Event markers — event-type FA icon, colored to match the type.
   eventsData.forEach(e => {
     const mid = midYear(e.year_lo, e.year_hi);
+    const icon = e.icon || 'fa-solid fa-flag';
     items.add({
       id: `ev-${e.id}`,
       group: '__events__',
       kind: 'event',
-      content: `<span title="${escapeHtml(e.name)} — ${escapeHtml(e.date_str)}">${escapeHtml(e.name)}</span>`,
+      content: `<i class="${escapeAttr(icon)}" aria-hidden="true"></i>`,
       start: yearToDate(mid),
-      type: 'point',
+      type: 'box',
       className: 'tl-event',
-      style: `--tl-dot: ${e.bg_colour}; --tl-dot-border: ${e.border_colour};`,
+      style:
+        `background: ${e.bg_colour};` +
+        `border-color: ${e.border_colour};` +
+        `color: ${e.font_colour};`,
       _filterText: e.name.toLowerCase(),
+      _data: e,
     });
   });
 
@@ -152,6 +169,7 @@
         ` — ${ch.faction_name}\n` +
         `Born: ${ch.birth_str}\n` +
         `Died: ${ch.death_str}`,
+      _data: ch,
     });
   });
 
@@ -172,6 +190,13 @@
   const dataLo = allLo.length ? Math.min(...allLo) : 150;
   const dataHi = allHi.length ? Math.max(...allHi) : 280;
   const pad = Math.max(5, (dataHi - dataLo) * 0.05);
+
+  // Initial window — focus on the first ~40 years of the data so the
+  // page lands zoomed in instead of fitting the whole 130-year era.
+  // "Fit all" expands back to dataLo..dataHi on demand.
+  const initialWindow = Math.min(40, Math.max(15, (dataHi - dataLo) * 0.35));
+  const initialStart = dataLo - pad;
+  const initialEnd = dataLo + initialWindow;
 
   // --- filter state ---
   //
@@ -200,19 +225,18 @@
     orientation: 'top',
     min: yearToDate(dataLo - pad * 4),
     max: yearToDate(dataHi + pad * 4),
-    start: yearToDate(dataLo - pad),
-    end: yearToDate(dataHi + pad),
+    start: yearToDate(initialStart),
+    end: yearToDate(initialEnd),
     zoomMin: 1000 * 60 * 60 * 24 * 30,         // ~1 month
     zoomMax: 1000 * 60 * 60 * 24 * 365 * 1000, // 1000 years
     margin: { item: { vertical: 4 } },
-    horizontalScroll: true,
-    zoomKey: 'ctrlKey',
+    // Alt + wheel zooms the timeline; plain wheel passes through to the
+    // page so the browser's vertical scroll keeps working normally.
+    // horizontalScroll is also gated on a wheel-with-modifier, so we
+    // leave it off and rely on click-drag for panning.
+    horizontalScroll: false,
+    zoomKey: 'altKey',
     showCurrentTime: false,
-    format: {
-      // The default formatter renders the year axis fine for AD dates;
-      // it auto-falls back through years/months/days as the zoom level
-      // changes. Nothing to override unless we add BC-era display.
-    },
   });
 
   // --- filter handlers ---
@@ -284,6 +308,72 @@
   document.getElementById('timeline-zoom-out').addEventListener('click', () => {
     timeline.zoomOut(0.4);
   });
+
+  // --- detail panel ---
+  const detailEl = document.getElementById('timeline-detail');
+  const detailBody = detailEl.querySelector('.timeline-detail-body');
+
+  function fmtRange(lo, hi) {
+    const span = hi - lo;
+    if (span <= 1.01) return String(Math.floor((lo + hi) / 2));
+    return `${Math.floor(lo)}–${Math.ceil(hi)}`;
+  }
+
+  function renderDetail(it) {
+    const d = it._data || {};
+    if (it.kind === 'chapter') {
+      detailBody.innerHTML =
+        `<div class="timeline-detail-kind">Chapter</div>` +
+        `<h5 class="timeline-detail-title">` +
+          `<a href="/chapter/${d.num}">Chapter ${d.num} — ${escapeHtml(d.name)}</a>` +
+        `</h5>` +
+        `<dl class="timeline-detail-meta">` +
+          `<dt>Year</dt><dd>${escapeHtml(d.date_str || '')} <span class="text-muted">(${fmtRange(d.year_lo, d.year_hi)})</span></dd>` +
+        `</dl>`;
+    } else if (it.kind === 'event') {
+      const typeBadge = d.type_name
+        ? `<span class="badge" style="background:${d.bg_colour};color:${d.font_colour};border:1px solid ${d.border_colour};">` +
+            (d.icon ? `<i class="${escapeAttr(d.icon)} me-1" aria-hidden="true"></i>` : '') +
+            escapeHtml(d.type_name) +
+          `</span>`
+        : '<span class="text-muted">No type</span>';
+      detailBody.innerHTML =
+        `<div class="timeline-detail-kind">Event</div>` +
+        `<h5 class="timeline-detail-title">${escapeHtml(d.name)}</h5>` +
+        `<dl class="timeline-detail-meta">` +
+          `<dt>Type</dt><dd>${typeBadge}</dd>` +
+          `<dt>Year</dt><dd>${escapeHtml(d.date_str || '')} <span class="text-muted">(${fmtRange(d.year_lo, d.year_hi)})</span></dd>` +
+        `</dl>`;
+    } else if (it.kind === 'character') {
+      detailBody.innerHTML =
+        `<div class="timeline-detail-kind">Character</div>` +
+        `<h5 class="timeline-detail-title">` +
+          `<a href="/characters/edit/${d.id}">${escapeHtml(d.name)}</a>` +
+          (d.chinese_name ? ` <span class="text-muted">${escapeHtml(d.chinese_name)}</span>` : '') +
+        `</h5>` +
+        `<dl class="timeline-detail-meta">` +
+          `<dt>Faction</dt><dd>${escapeHtml(d.faction_name || '—')}</dd>` +
+          `<dt>Born</dt><dd>${escapeHtml(d.birth_str || '—')} <span class="text-muted">(${fmtRange(d.birth_lo, d.birth_hi)})</span></dd>` +
+          `<dt>Died</dt><dd>${escapeHtml(d.death_str || '—')} <span class="text-muted">(${fmtRange(d.death_lo, d.death_hi)})</span></dd>` +
+        `</dl>`;
+    } else {
+      return false;
+    }
+    detailEl.hidden = false;
+    return true;
+  }
+
+  timeline.on('click', (props) => {
+    if (props.what === 'item' && props.item != null) {
+      const it = items.get(props.item);
+      if (it) renderDetail(it);
+    }
+  });
+
+  document.getElementById('timeline-detail-close').addEventListener('click', () => {
+    detailEl.hidden = true;
+    timeline.setSelection([]);
+  });
   document.getElementById('timeline-reset').addEventListener('click', () => {
     filters.search = '';
     filters.faction = '';
@@ -292,7 +382,7 @@
     document.getElementById('timeline-faction').value = '';
     document.getElementById('timeline-show').value = 'all';
     refresh();
-    timeline.fit();
+    timeline.setWindow(yearToDate(initialStart), yearToDate(initialEnd));
   });
 
   refresh();

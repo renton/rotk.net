@@ -117,7 +117,7 @@ def timeline():
         if span is None:
             continue
         lo, hi = span
-        # Optional event-type colour for the marker.
+        # Optional event-type colour + icon for the marker.
         et = getattr(e, 'event_type', None)
         event_items.append({
             'id': e.id,
@@ -125,6 +125,8 @@ def timeline():
             'date_str': e.date,
             'year_lo': lo,
             'year_hi': hi,
+            'type_name': (et.name if et else '') or '',
+            'icon': (et.icon if et else '') or '',
             'bg_colour': (et.bg_colour if et else '') or '#6c757d',
             'font_colour': (et.font_colour if et else '') or '#ffffff',
             'border_colour': (et.border_colour if et else '') or '#6c757d',

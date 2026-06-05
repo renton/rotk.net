@@ -19,7 +19,7 @@
         <h1 class="mb-1">Timeline</h1>
         <p class="text-muted mb-0">
             Chapters, events, and character lifespans on a shared axis.
-            Drag to pan; use the +/− buttons (or pinch) to zoom.
+            Drag to pan, scroll to zoom, click any marker for details.
             Fuzzy date ranges render with faded edges.
         </p>
     </div>
@@ -70,7 +70,13 @@
 
 <div id="timeline-stats" class="text-muted small mb-2"></div>
 
-<div id="timeline"></div>
+<div class="timeline-shell">
+    <div id="timeline-detail" class="timeline-detail" hidden>
+        <button type="button" class="btn-close" aria-label="Close" id="timeline-detail-close"></button>
+        <div class="timeline-detail-body"></div>
+    </div>
+    <div id="timeline"></div>
+</div>
 
 {# All three payloads ship inline as JSON so the page is fully populated
    on first paint — no second fetch round-trip. #}
