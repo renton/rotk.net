@@ -372,6 +372,44 @@
     return `${Math.floor(lo)}–${Math.ceil(hi)}`;
   }
 
+  // Mirror app/templates/_url_list.html for the event detail panel:
+  // favicon img -> url_type Font Awesome icon -> generic fa-link icon,
+  // followed by the link text and an optional UrlType badge. Returns
+  // empty string when there are no URLs, so the caller can concat it
+  // unconditionally.
+  function renderEventUrls(urls) {
+    if (!urls || !urls.length) return '';
+    const rows = urls.map(u => {
+      let icon;
+      if (u.favicon) {
+        icon = `<img src="${escapeAttr(u.favicon)}" alt="" style="width:16px;height:16px;object-fit:contain;">`;
+      } else if (u.type_icon) {
+        icon = `<i class="${escapeAttr(u.type_icon)}" aria-hidden="true" style="width:16px;text-align:center;"></i>`;
+      } else {
+        icon = `<i class="fa-solid fa-link text-muted" aria-hidden="true" style="width:16px;text-align:center;"></i>`;
+      }
+      const badge = u.type_name
+        ? ` <span class="badge" style="background:${u.type_bg || '#6c757d'};color:${u.type_font || '#ffffff'};border:1px solid ${u.type_border || '#6c757d'};">` +
+            (u.type_icon ? `<i class="${escapeAttr(u.type_icon)} me-1" aria-hidden="true"></i>` : '') +
+            escapeHtml(u.type_name) +
+          `</span>`
+        : '';
+      return (
+        `<li class="d-flex align-items-center gap-2 py-1">` +
+          icon +
+          `<a href="${escapeAttr(u.url)}" target="_blank" rel="noopener">${escapeHtml(u.name)}</a>` +
+          badge +
+        `</li>`
+      );
+    }).join('');
+    return (
+      `<div class="timeline-detail-urls mt-2">` +
+        `<div class="small text-muted fw-bold mb-1">Links:</div>` +
+        `<ul class="list-unstyled mb-0 small">${rows}</ul>` +
+      `</div>`
+    );
+  }
+
   function renderDetail(it) {
     const d = it._data || {};
     if (it.kind === 'chapter') {
@@ -396,7 +434,8 @@
         `<dl class="timeline-detail-meta">` +
           `<dt>Type</dt><dd>${typeBadge}</dd>` +
           `<dt>Year</dt><dd>${escapeHtml(d.date_str || '')} <span class="text-muted">(${fmtRange(d.year_lo, d.year_hi)})</span></dd>` +
-        `</dl>`;
+        `</dl>` +
+        renderEventUrls(d.urls);
     } else if (it.kind === 'character') {
       detailBody.innerHTML =
         `<div class="timeline-detail-kind">Character</div>` +

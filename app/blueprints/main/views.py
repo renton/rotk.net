@@ -181,6 +181,39 @@ def timeline():
         .order_by(Event.name)
         .all()
     )
+
+    # Bulk-load every event's external URLs in one query (and their
+    # UrlTypes for the badge colours / icon). Mirrors the data shape
+    # _url_list.html renders on chapter pages, so the timeline detail
+    # panel can show the same favicon -> type-icon -> link rows.
+    event_ids = [e.id for e in events]
+    urls_by_event_id = {}
+    if event_ids:
+        url_rows = (
+            Url.query
+            .filter(Url.is_deleted.is_(False))
+            .filter(Url.target_type == 'event')
+            .filter(Url.target_id.in_(event_ids))
+            .options(selectinload(Url.url_type))
+            .order_by(Url.name)
+            .all()
+        )
+        for u in url_rows:
+            ut = u.url_type
+            urls_by_event_id.setdefault(u.target_id, []).append({
+                'name':    u.name or u.url or '',
+                'url':     u.url or '',
+                'favicon': (
+                    url_for('static', filename=u.favicon)
+                    if u.favicon else ''
+                ),
+                'type_name':     (ut.name if ut else '') or '',
+                'type_icon':     (ut.icon if ut else '') or '',
+                'type_bg':       (ut.bg_colour     if ut else '') or '',
+                'type_font':     (ut.font_colour   if ut else '') or '',
+                'type_border':   (ut.border_colour if ut else '') or '',
+            })
+
     for e in events:
         span = parse_date_range(e.date)
         if span is None:
@@ -199,6 +232,7 @@ def timeline():
             'bg_colour':     _visible_colour(et.bg_colour     if et else None),
             'font_colour':   et.font_colour                   if et else '#ffffff',
             'border_colour': _visible_colour(et.border_colour if et else None),
+            'urls':          urls_by_event_id.get(e.id, []),
         })
 
     # --- Characters ---
