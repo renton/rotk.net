@@ -333,6 +333,15 @@
       "before_snippet": "…from Dong Zhuo's disaffection, while on the other hand Jia ",
       "after_snippet": " never ceased to urge his masters to exert themselves for…",
       "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1256,
+      "action": "exclude",
+      "match_text": "Capital District",
+      "before_snippet": "…of the Flying Chariots, Lord of Chiyang, Commander of ",
+      "after_snippet": ", Court Administrator, and granted Military Insignia. \n Guo…",
+      "_note": "CONTEXT OVERRIDE: \"Capital District\" is configured as an alias on Luoyang County (canonical Sili Province = Luoyang area). But in this snippet, Guo Si is appointed \"Commander of Capital District\" by Dong Zhuo's lieutenants ruling from Chang'an in 192 AD — the court physically moved there in 190. The metropolitan area Guo Si actually commands is the Chang'an region, not Luoyang. Excluding this snippet from Luoyang; ideally \"Capital District\" should also be a chapter-10 keyword on Chang'an County [1262] (admin UI fix)."
     }
   ]
 }
