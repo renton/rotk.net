@@ -1,0 +1,155 @@
+{
+  "chapter_num": 51,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "6 You / River You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "1 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "67 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "4 Xu Sheng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "11 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 84,
+      "action": "remove_m2m",
+      "_note": "5 Chen Jiao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 89,
+      "action": "remove_m2m",
+      "_note": "10 Gan Ning"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "2 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "6 Chen Jiao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "11 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "10 Lu Su"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "10 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "1 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "67 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "43 Cao Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "6 Ling Tong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "3 Pan Zhang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "1 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "6 Ding Feng"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan."
+    },
+    {
+      "target_type": "character",
+      "target_id": 225,
+      "action": "remove_m2m",
+      "_note": "cn=陳焦 — different Chen Jiao (Eastern Wu)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 383,
+      "action": "remove_m2m",
+      "_note": "cn=丁封."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3457,
+      "action": "remove_m2m",
+      "_note": "cn=州泰."
+    }
+  ]
+}
