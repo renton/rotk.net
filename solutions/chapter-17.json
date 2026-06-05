@@ -1,0 +1,497 @@
+{
+  "chapter_num": 17,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "11 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "7 \"Ji Ling\" / \"Chen Ji\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "2 \"Wu Xi\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "1 \"Yan Xiang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "3 \"Liang Gang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 881,
+      "action": "remove_m2m",
+      "_note": "4 matches all \"Shang Dynasty\" (ancient) or \"Jin Shang\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "4 \"Wei Xu\" / \"Dian Wei\" / \"Duan Wei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhang Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 975,
+      "action": "remove_m2m",
+      "_note": "1 \"Zang Ba\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "29 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "1 \"Yan Xiang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "26 Chen-surname persons"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "3 \"Liang Gang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "29 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "5 \"Qiao Rui\" (Yuan Shu general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "29 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "2 \"Wu Xi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "8 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "2 \"Guo Si\" / \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "8 \"Zhang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1160,
+      "action": "remove_m2m",
+      "_note": "5 \"Qiao Rui\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "2 \"Cao Ren\" / \"Ren Jun\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "3 \"Ji Ling\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "29 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "16 \"Li Deng\" / \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "11 \"Yang Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "1 \"King Wen\" (ancient Zhou ruler)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "19 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1302,
+      "action": "remove_m2m",
+      "_note": "2 \"Lei Bo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "10 \"Yang Feng\" / \"Feng Fang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\" / \"Jia Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…troops had not gone far when a strong army, led by Guan ",
+      "after_snippet": ", appeared barring his way. \n \"Traitor! Why have they not…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…way. \n \"Traitor! Why have they not slain you?\" cried Guan ",
+      "after_snippet": ". \n Whereat Yuan Shu fled in great trepidation, and his…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Victory being now secure, Lu Bu, in company with Guan ",
+      "after_snippet": ", Yang Feng, and Han Xian returned to Xuzhou, where there…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…soldiers and generals of five divisions. These over, Guan ",
+      "after_snippet": " took his leave and returned to Yuzhou, while Han Xian was…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…before Cao Cao. In the meantime, after the defeat at River ",
+      "after_snippet": ", Cao Cao had reached Xuchang where his first thought was…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…left wing, and Liu Bei to the right wing. Xiahou Dun and ",
+      "after_snippet": " Jin were Leaders of the Van. \n On Yuan Shu's side, General…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…of crossing the river in pursuit of Yuan Shu came up, Xun ",
+      "after_snippet": " opposed it, saying, \"The country has suffered from short…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…of the third year of Rebuilt Tranquillity (AD 198). Xun ",
+      "after_snippet": " was in chief military command in Xuchang. \n The army…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; 1 \"Yuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and Zang Ba to Langye against Lei Bo; Song Xian and Wei ",
+      "after_snippet": " to Jieshi against Chen Lan. Lu Bu himself led against the…",
+      "_note": "\"Xu\" inside \"Wei Xu\" / \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Zhang Xiu led out his troops, with his two generals, Lei ",
+      "after_snippet": " and Zhang Xian. \n When the array was complete Zhang Xiu…",
+      "_note": "\"Xu\" inside \"Wei Xu\" / \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…devoid of humanity.\" \n This annoyed Cao Cao who sent out ",
+      "after_snippet": " Chu against the insulter. Zhang Xian came to meet him and…",
+      "_note": "\"Xu\" inside \"Wei Xu\" / \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…at that point. He was observed from within the city by Jia ",
+      "after_snippet": ". \n Jia Xu went to Zhang Xiu and said, \"I know what Cao Cao…",
+      "_note": "\"Xu\" inside \"Wei Xu\" / \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…He was observed from within the city by Jia Xu. \n Jia ",
+      "after_snippet": " went to Zhang Xiu and said, \"I know what Cao Cao intends,…",
+      "_note": "\"Xu\" inside \"Wei Xu\" / \"Xu Chu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…Ji, First Right Army; Chen Lan, Second Right Army; and ",
+      "after_snippet": " Feng, the Third Right Army. Each commander was instructed…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…\"Let us have it.\" \n Chen Deng said, \"Han Xian and ",
+      "after_snippet": " Feng, two of the leaders of our enemies, are old servants…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…I know. You may return to your master and say General ",
+      "after_snippet": " Feng and I will turn our weapons and smite Yuan Shu. Look…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…That night, in the second watch, Han Xian and ",
+      "after_snippet": " Feng arrived, and soon the flare was lighted as arranged.…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…each other; but at the very beginning of the engagement ",
+      "after_snippet": " Feng and Han Xian also attacked, and Ji Ling was forced to…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…Victory being now secure, Lu Bu, in company with Guan Yu, ",
+      "after_snippet": " Feng, and Han Xian returned to Xuzhou, where there were…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…Yuzhou, while Han Xian was appointed Governor of Yidu, and ",
+      "after_snippet": " Feng Governor of Langye. \n There had been a question of…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…which will be all yours within a year.\" \n So Han Xian and ",
+      "after_snippet": " Feng were sent to these two cities in the meantime to…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…him before I deal with the others.\" \n But his adviser, ",
+      "after_snippet": " Dajiang, dissuaded him from this course. \n Having refused…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…asked Cao Cao in surprise. \n \"The heads of Han Xian and ",
+      "after_snippet": " Feng.\" \n \"Why did this happen?\" \n \"They were sent to…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "exclude",
+      "match_text": "Yang",
+      "before_snippet": "…At this juncture Yuan Shu summoned his officers. \n ",
+      "after_snippet": " Dajiang explained the case, \"Shouchun has suffered from…",
+      "_note": "\"Yang\" inside \"Yang Feng\"; \"Yangzhou\" match legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 222,
+      "action": "remove_m2m",
+      "_note": "cn=陳紀 — different (Han dynasty politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 223,
+      "action": "remove_m2m",
+      "_note": "cn=陳濟 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "different Jia Xu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2787,
+      "action": "remove_m2m",
+      "_note": "cn=嚴象 — different. The Yuan Shu Secretary who opposed self-coronation is 閻象 [2788]."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2815,
+      "action": "remove_m2m",
+      "_note": "cn=楊鳳 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2817,
+      "action": "remove_m2m",
+      "_note": "cn=楊豐 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3225,
+      "action": "remove_m2m",
+      "_note": "cn=張咸 — different (Eastern Wu)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3230,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3231,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different (Shu Han)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3232,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different (Cao Wei)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3273,
+      "action": "remove_m2m",
+      "_note": "different Zhang Zhao."
+    }
+  ]
+}

@@ -1,0 +1,404 @@
+{
+  "chapter_num": 19,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "2 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "25 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "1 \"Wu Dun\" (Taishan bandit)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "15 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "4 \"Zhang Yang\" / \"Yang Chou\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "1 \"Jian Yong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "8 \"Wei Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "2 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "11 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "1 \"Lady Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "2 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "54 \"Chen Gui\" / \"Chen Deng\" / \"Chen Gong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "95 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "95 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "1 \"Wu Dun\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "14 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "2 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "2 \"Cao Ren\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "11 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "16 \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "2 English pronoun \"She\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "4 \"Zhang Yang\" / \"Yang Chou\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "29 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "11 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1348,
+      "action": "remove_m2m",
+      "_note": "1 \"Diao Chan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "2 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…take plenty of wadded clothing to keep them warm. Lady ",
+      "after_snippet": ", his wife, heard of it and came to ask whither he was…",
+      "_note": "\"Yan\" inside \"Lady Yan\" (Lu Bu's wife); \"Yanzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and Chang Xi who rode out with their spears set. However, ",
+      "after_snippet": " Chu plunged into the battle and easily beat them back and…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…said Lu Bu. \n The family left under escort of Wei ",
+      "after_snippet": " and Song Xian, and with them was sent much grain and…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…freely to dissipate his sorrows. \n Two of his advisers, ",
+      "after_snippet": " Si and Wang Kai, went in and proposed, \"Yuan Shu in the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…So Lu Bu wrote and bade these two take the letter. \n ",
+      "after_snippet": " Si said, \"You ought to send a strong escort with us to…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…pray you, Illustrious Sir, consider it carefully,\" replied ",
+      "after_snippet": " Si. \n \"But if your master was not hemmed in by his enemy…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…back to Xiapi. \n When the party reached Liu Bei's camp, ",
+      "after_snippet": " Si decided, \"We must wait the night falls, and Wang Kai…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…They promised obedience and withdrew. In the meantime ",
+      "after_snippet": " Si and Wang Kai had got back to Lu Bu and told him what…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…should go. \n \"But how can she be sent?\" said Lu Bu. \n ",
+      "after_snippet": " Si said, \"That is the difficulty. He Meng's capture means…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the officer to instant execution. However, Song Xian, Wei ",
+      "after_snippet": ", and other officers came in and interceded, and after a…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…We are no more than the weeds by the roadside.\" \n Wei ",
+      "after_snippet": " said, \"The city is besieged; the water is drowning us out.…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…be to seize him and hand him over to Cao Cao,\" said Wei ",
+      "after_snippet": ". \n \"I was punished because I got my horses back again, yet…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…gate inspecting the defenses and guards, he censured Wei ",
+      "after_snippet": " for letting Hou Cheng escape and get away with his horse.…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…get away with his horse. Lu Bu threatened to punish Wei ",
+      "after_snippet": ". But just then the besiegers began a fierce attack as the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…halberd in which he trusted. Then Song Xian and Wei ",
+      "after_snippet": " fell upon Lu Bu together and before he was well awake had…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Gong made a dash to the south gate but was also taken by ",
+      "after_snippet": " Huang. Presently Cao Cao entered and at once gave orders…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…replied Cao Cao. \n Seeing Hou Cheng, Song Xian, and Wei ",
+      "after_snippet": " standing there looking pleased at their success, Lu Bu…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Wei Xu\"; \"Xuzhou\" matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "2 \"Yi\" inside \"River Yi\" (geographic river)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "2 \"Yi\" inside \"River Yi\""
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2270,
+      "action": "remove_m2m",
+      "_note": "cn=王凱 — different Wang Kai."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2271,
+      "action": "remove_m2m",
+      "_note": "cn=王愷 — different Wang Kai."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2908,
+      "action": "remove_m2m",
+      "_note": "cn=殷禮 — different Yin Li."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3230,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3231,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3232,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    }
+  ]
+}

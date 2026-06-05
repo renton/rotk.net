@@ -1,0 +1,245 @@
+{
+  "chapter_num": 20,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "9 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "5 \"Chong Ji\" (Commander)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "5 \"Wu Dun\" / \"Wu Zilan\" / \"Wu Shi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "10 \"Guan Yu\" / \"Xun Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhao Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhang Liang, Lord of Liu\" (ancient Han strategist)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Jing\" (ancient Han emperor)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "6 \"Yang Biao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhao Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "39 \"Dong Zhuo\" / \"Dong Cheng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 975,
+      "action": "remove_m2m",
+      "_note": "1 \"Zang Ba\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "1 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhao Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhang Liang\" (ancient)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "5 person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "10 \"Guan Yu\" / \"Xun Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "1 \"Guo Si\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "1 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1206,
+      "action": "remove_m2m",
+      "_note": "1 \"Xiao He, Lord of Cuo\" — but Lord of Cuo is an ancient Han title; not clearly the Han county"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "4 \"Wan shui\" (long live cheer) and \"Fu Wan\" (Empress father)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "6 \"Yang Biao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "5 \"Zhang Liao\" / \"Zhang Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "5 \"Empress Fu\" / \"Fu Wan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1392,
+      "action": "remove_m2m",
+      "_note": "1 \"Xiao He\" (ancient Han minister)"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3165,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 (Eastern Wu) — Zhang Liang in the snippet is 張良 the Han strategist, missing from DB."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3164,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 (Yellow Turban, died 184) — same."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1352,
+      "action": "remove_m2m",
+      "_note": "cn=劉宏 — different Liu Hong (Jin dynasty)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1353,
+      "action": "remove_m2m",
+      "_note": "cn=劉宏 — different (Han politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1354,
+      "action": "remove_m2m",
+      "_note": "cn=劉弘 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1355,
+      "action": "remove_m2m",
+      "_note": "cn=劉弘 — different (Jin general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2908,
+      "action": "remove_m2m",
+      "_note": "cn=殷禮 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3326,
+      "action": "remove_m2m",
+      "_note": "cn=趙彥 — different Zhao Yan."
+    }
+  ]
+}

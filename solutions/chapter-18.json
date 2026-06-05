@@ -1,0 +1,284 @@
+{
+  "chapter_num": 18,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "12 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "2 \"Lord of Wu\" (Sun Ce title) + \"Wu Dun\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "17 \"Yu\" inside persons (Lu Qian, Yu Jin, Xun Yu, Cao Cao at River Yu—River Yu is geographic but Yu Province isn't it)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "1 \"Kuai Liang\" (Liu Biao's adviser)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "2 \"Dian Wei\" / \"Wei Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "1 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "6 \"Chen Deng\" / \"Chen Gui\" / \"Chen Gong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "1 \"Kuai Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "19 \"Lu Bu\" / \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "19 \"Lu Bu\" / \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "2 \"Lord of Wu\" / \"Wu Dun\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "17 \"Yu\" inside persons"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "6 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "17 \"Zhang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "1 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "1 \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "32 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "6 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "14 \"Jia Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1585,
+      "action": "remove_m2m",
+      "_note": "3 \"Runan\" — should tag Runan Commandery [12], not City duplicate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": " Jia ",
+      "after_snippet": ", as he had guessed the enemy's intention, had also devised…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and Yu Jin were wounded. \n Cao Cao being thus worsted, Jia ",
+      "after_snippet": " advised Zhang Xiu to write off to Liu Biao to cut off Cao…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…been informed of the movement of Liu Biao, went with Jia ",
+      "after_snippet": " to smite Cao Cao on the rear. \n In the meantime Cao Cao's…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…his scouts, he wished to follow the retreating army. \n Jia ",
+      "after_snippet": " opposed it and said, \"It will lead to a defeat.\"…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…off and went home discomfited. \n Zhang Xiu said to Jia ",
+      "after_snippet": ", \"This defeat comes from my not following your advice.\"…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"Now set your army in order and pursue,\" said Jia ",
+      "after_snippet": ". \n \"But we have just suffered defeat!\" cried both leaders.…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…if you go now. I will venture my head on that,\" said Jia ",
+      "after_snippet": ". \n Zhang Xiu had confidence, but Liu Biao was afraid and…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…understanding of the conditions. On the advice of Jia ",
+      "after_snippet": " then Liu Biao returned to Jingzhou, while Zhang Xiu took…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Liao went to attack Liu Bei in Xiaopei. Song Xian and Wei ",
+      "after_snippet": " went west to attack Runan and Yingchuan. And Lu Bu took…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Wei Xu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "5 \"Jian Yong\" (Liu Bei's townsman secretary)"
+    },
+    {
+      "target_type": "character",
+      "target_id": 1225,
+      "action": "remove_m2m",
+      "_note": "cn=李通 — different Li Tong (Shu Han)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 140,
+      "action": "remove_m2m",
+      "_note": "cn=曹興 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "different Jia Xu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2908,
+      "action": "remove_m2m",
+      "_note": "cn=殷禮 — different Yin Li (Eastern Wu diviner)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3230,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3231,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3232,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    }
+  ]
+}
