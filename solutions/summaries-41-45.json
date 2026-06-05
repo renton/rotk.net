@@ -1,0 +1,1017 @@
+[
+  {
+    "chapter_num": 41,
+    "character_id": 1311,
+    "summary": "Liu Bei; the chapter of the great southern exodus — refuses to abandon the Xinye/Fancheng populace, marches at the rate of 10 li a day with 100,000 civilians, is overtaken at Changban Slope; loses his wives and child in the chaos. Crosses the river at the closing pages to safety."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3334,
+    "summary": "Zhao Yun; the chapter's headline feat. Searches the burning chaos of Changban Slope for Liu Bei's wives and son; finds Lady Mi wounded, who entrusts the infant Liu Shan to him before throwing herself into a well; carries Liu Shan in his bosom and cuts through 50 named Cao Cao officers in a single charge. Cao Cao watches from a hill and orders no arrow shall touch him."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1677,
+    "summary": "Lady Mi; gravely wounded at Changban, refuses Zhao Yun's horse and throws herself into a well rather than burden him with two adults and the baby. Dies in the chapter's most affecting moment."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1401,
+    "summary": "Liu Shan; the infant carried in Zhao Yun's bosom through Changban — sleeping the whole battle through. When delivered to Liu Bei, his father hurls him to the ground saying 'for this little one I nearly lost a great general!' — Zhao Yun catches him."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 592,
+    "summary": "Lady Gan; rescued by Zhao Yun before Lady Mi; brought safely across the river."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 86,
+    "summary": "Cao Cao; watches Changban Slope from a hill; orders that the red-coated single rider (Zhao Yun) shall not be shot at — 'I want him alive'. The hesitation that lets Zhao Yun escape."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 704,
+    "summary": "Guan Yu; off-stage on a different road from Xiakou trying to fetch the elder Liu Qi's relief."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3106,
+    "summary": "Zhang Fei; deploys at Long Slope Bridge with 20 horsemen to cover Liu Bei's retreat — the setup for chapter 42."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2418,
+    "summary": "Wei Yan's debut — defects from Han Xuan at Xiangyang and opens the city gate, demanding Liu Bei take it. Liu Bei refuses to fight Wei Yan's lord and rides past; Wei Yan escapes to Changsha. Will join Liu Bei at chapter 53."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2419,
+    "summary": "Wei Yan (duplicate record)."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2439,
+    "summary": "Wen Pin; defends Xiangyang against Wei Yan's open-gate offer; defects to Cao Cao soon after."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1336,
+    "summary": "Liu Feng; commands part of the retreating column."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1395,
+    "summary": "Liu Qi; sends boats to ferry Liu Bei's column across the river at the chapter's end."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1313,
+    "summary": "Liu Biao; named in passing — long dead by this point."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 61,
+    "summary": "Lady Cai; named in passing — murdered earlier on Cao Cao's road."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 68,
+    "summary": "Cai Mao; with Cao Cao as nominal admiral."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 72,
+    "summary": "Cai Yang; with Cao Cao."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3267,
+    "summary": "Zhang Yun; with Cao Cao as nominal co-admiral."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3268,
+    "summary": "Zhang Yun (duplicate record)."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1131,
+    "summary": "Kuai Yue; with Cao Cao after the Jingzhou surrender."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 100,
+    "summary": "Cao Hong; with Cao Cao at Changban."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 101,
+    "summary": "Cao Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 123,
+    "summary": "Cao Ren; with Cao Cao at Changban."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2624,
+    "summary": "Xu Chu; engages Zhao Yun briefly at Changban before being recalled."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2953,
+    "summary": "Yu Jin; commands part of the Cao pursuit."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3120,
+    "summary": "Zhang He; engages Zhao Yun at Changban — fights but cannot stop him."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2754,
+    "summary": "Xun You; with Cao Cao at Changban."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1453,
+    "summary": "Liu Ye; with Cao Cao at Changban."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1053,
+    "summary": "Jian Yong; with Liu Bei on the exodus."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1678,
+    "summary": "Mi Fang; with Liu Bei on the exodus."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1682,
+    "summary": "Mi Zhu; with Liu Bei on the exodus."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2102,
+    "summary": "Sun Qian; with Liu Bei on the exodus."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2103,
+    "summary": "Sun Qian (duplicate record)."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3529,
+    "summary": "Zhuge Liang; coordinates the river crossing at chapter's end; advises Liu Bei to wait at Liu Qi's Jiangxia for a Wu alliance."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 808,
+    "summary": "Han Xuan; Wei Yan's old commander at Xiangyang; named in the chapter for the gate-opening incident."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 809,
+    "summary": "Han Xuan (duplicate record)."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2661,
+    "summary": "Xu Shu; with Cao Cao; silent."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2336,
+    "summary": "Wang Wei; Jingzhou officer named in passing."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 2215,
+    "summary": "Wang Can; named in passing."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1627,
+    "summary": "Ma Yan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 1081,
+    "summary": "Jiao Chu; minor figure named in passing."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 582,
+    "summary": "Fu Xuan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 41,
+    "character_id": 3283,
+    "summary": "Zhang Zi; minor figure named in passing."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 3106,
+    "summary": "Zhang Fei alone at Long Slope Bridge — ties branches to his horsemen's tails to raise dust like a great army; bellows three times so loud that Xiahou Jie falls dead of fright. Cao Cao retreats; Cao Cao's army loses a general to a shout. The chapter's signature feat."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 86,
+    "summary": "Halts at Long Slope Bridge for Zhang Fei's three-bellow stand; loses Xiahou Jie to the shout alone. The chapter's defining lesson on overestimating Liu Bei's apparent strength."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1311,
+    "summary": "Reaches the river safely with Zhao Yun and the remnant of the brothers' column; meets Lu Su, sent by Sun Quan, at Jiangxia. The Wu alliance overtures begin."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1523,
+    "summary": "Lu Su; arrives at Jiangxia ostensibly to mourn Liu Biao but really to scout the Liu Bei / Liu Qi position. Becomes Zhuge Liang's escort back to Sun Quan's court."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 3529,
+    "summary": "Zhuge Liang; agrees to accompany Lu Su to Chaisang to court Sun Quan's alliance. 'I can persuade Sun Quan to join us; that is my plan,' he tells Liu Bei."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 3524,
+    "summary": "Zhuge Jin; named in passing — already at Sun Quan's court."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 704,
+    "summary": "Guan Yu; rejoins Liu Bei at Jiangxia with reinforcements from Liu Qi."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 3334,
+    "summary": "Zhao Yun; arrives at Liu Bei's camp with Liu Shan (presented to his father after the famous baby-throwing scene)."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1395,
+    "summary": "Liu Qi; receives Liu Bei at Jiangxia with full honour — Liu Bei effectively succeeds Liu Biao's son in nominal Jingzhou leadership."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1313,
+    "summary": "Liu Biao; named in passing — long dead."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1436,
+    "summary": "Liu Cong (Liu Xin); named in passing — murdered."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1677,
+    "summary": "Lady Mi; named in passing — buried at Changban."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2105,
+    "summary": "Sun Quan; sends Lu Su north as an overture — the southern alliance setup."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 123,
+    "summary": "Cao Ren; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1158,
+    "summary": "Li Dian; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2556,
+    "summary": "Xiahou Yuan; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2624,
+    "summary": "Xu Chu; Cao Cao's bodyguard."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 3120,
+    "summary": "Zhang He; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 3166,
+    "summary": "Zhang Liao; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2754,
+    "summary": "Xun You; with Cao Cao."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 369,
+    "summary": "Deng Yi; minor figure named in passing."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 804,
+    "summary": "Han Song; named in passing."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2102,
+    "summary": "Sun Qian; with Liu Bei."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2103,
+    "summary": "Sun Qian (duplicate record)."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2081,
+    "summary": "Sun Jian; named in passing as Sun Quan's late father."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2060,
+    "summary": "Sun Ce; named in passing as Sun Quan's late brother."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2439,
+    "summary": "Wen Pin; with Cao Cao after the Jingzhou surrender."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2467,
+    "summary": "Wu Ju; minor figure named in passing."
+  },
+  {
+    "chapter_num": 42,
+    "character_id": 2468,
+    "summary": "Wu Ju (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3529,
+    "summary": "Zhuge Liang at Chaisang debates Sun Quan's pacifist scholars one by one — Zhang Zhao, Yu Fan, Lu Ji, Bu Zhi, Xue Zong, Yan Jun, Cheng Bing — and demolishes their case for surrender. The chapter's set piece argument."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3272,
+    "summary": "Zhang Zhao; leads the pacifist scholars; argues Cao Cao's army is unstoppable and surrender is wisdom. Zhuge Liang's first major target in the debate."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3273,
+    "summary": "Zhang Zhao (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2950,
+    "summary": "Yu Fan; second pacifist; demolished after Zhang Zhao."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1505,
+    "summary": "Lu Ji; third pacifist."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1506,
+    "summary": "Lu Ji (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 58,
+    "summary": "Bu Zhi; fourth pacifist."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2720,
+    "summary": "Xue Zong; fifth pacifist."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2772,
+    "summary": "Yan Jun; sixth pacifist."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2773,
+    "summary": "Yan Jun (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2777,
+    "summary": "Yan Jun (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 281,
+    "summary": "Cheng Bing; last of the pacifist scholars to challenge Zhuge Liang."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1592,
+    "summary": "Luo Tong; among the scholars at the council; not a pacifist."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1523,
+    "summary": "Lu Su; sponsors Zhuge Liang's entry to the council and quietly pushes Sun Quan toward war."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2105,
+    "summary": "Sun Quan; torn between the scholars' surrender argument and Lu Su's war argument; in private receives his mother's reminder ('for external matters consult Zhou Yu'). Chapter ends with Zhou Yu summoned."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2450,
+    "summary": "Lady Wu; named in passing — her dying injunction is invoked when Sun Quan recalls 'consult Zhou Yu for external matters'."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 683,
+    "summary": "Gu Yong; among the scholars in the council."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3466,
+    "summary": "Zhou Yu; summoned at chapter's end — about to arrive at Chaisang for the decisive war meeting."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3524,
+    "summary": "Zhuge Jin; with Sun Quan; tactfully neutral."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1311,
+    "summary": "Liu Bei; at Jiangxia; awaits the outcome of Zhuge Liang's embassy."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 86,
+    "summary": "Cao Cao; at the Han River with 830,000 troops (claimed); sends his demand for Sun Quan's submission — the letter that triggers the council debate."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 100,
+    "summary": "Cao Hong; with Cao Cao."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 101,
+    "summary": "Cao Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 123,
+    "summary": "Cao Ren; with Cao Cao."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; with Cao Cao."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 972,
+    "summary": "Huang Gai; with Sun Quan; among the senior generals who back Zhou Yu's war argument."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 973,
+    "summary": "Huang Gai (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1313,
+    "summary": "Liu Biao; named in passing."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1395,
+    "summary": "Liu Qi; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 704,
+    "summary": "Guan Yu; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3106,
+    "summary": "Zhang Fei; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3334,
+    "summary": "Zhao Yun; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3164,
+    "summary": "Zhang Liang the Han strategist; cited in the debate as historical example."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3165,
+    "summary": "Zhang Liang (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3006,
+    "summary": "Yuan Shao; cited in the debate as a comparison case."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3008,
+    "summary": "Yuan Shu; cited in the debate."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3183,
+    "summary": "Zhang Ni; among the scholars at the council."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3218,
+    "summary": "Zhang Wen; among the scholars at the council."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3219,
+    "summary": "Zhang Wen (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3248,
+    "summary": "Zhang Yi; among the scholars at the council."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3249,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3250,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3251,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3252,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3253,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3390,
+    "summary": "Zheng Yu; minor figure named in passing."
+  },
+  {
+    "chapter_num": 43,
+    "character_id": 3391,
+    "summary": "Zheng Yu (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3466,
+    "summary": "Zhou Yu arrives at Chaisang. Initially pretends to favour surrender to draw Zhuge Liang out — then Zhuge Liang quotes the Bronze Bird Tower's lines about taking the 'two Qiao' women (referring to Da Qiao = Sun Ce's wife / Xiao Qiao = Zhou Yu's wife). Zhou Yu erupts in rage and commits to war that very night. Convinces Sun Quan with a single audience."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3529,
+    "summary": "Zhuge Liang; tricks Zhou Yu into war by deliberately misquoting Cao Zhi's Bronze Bird Tower poem to imply Cao Cao wants Zhou Yu's wife and Sun Ce's widow. The brilliant inflammation that closes the alliance."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 2105,
+    "summary": "Sun Quan; receives Zhou Yu's commitment to war and finally draws his sword and cuts the corner off his writing table — 'whoever speaks of surrender again shares this table's fate'. The decision that makes Red Cliffs possible."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1523,
+    "summary": "Lu Su; orchestrates the introduction of Zhou Yu to Zhuge Liang."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 160,
+    "summary": "Cao Zhi; named only as the author of the Bronze Bird Tower poem Zhuge Liang misquotes."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1795,
+    "summary": "Elder Qiao (Qiao Xuan, in Brewitt-Taylor's translation); the father-in-law of both Sun Ce and Zhou Yu; named in the misquoted poem aside."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3524,
+    "summary": "Zhuge Jin; sent by Sun Quan to argue with his brother Zhuge Liang to come over to Wu — talked out of his own argument instead. 'Now I see who has talked over whom'."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1311,
+    "summary": "Liu Bei; off-stage at Jiangxia."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 86,
+    "summary": "At the Han River; awaits Sun Quan's response."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 295,
+    "summary": "Cheng Pu; veteran general; with Zhou Yu at the war council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 972,
+    "summary": "Huang Gai; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 973,
+    "summary": "Huang Gai (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 785,
+    "summary": "Han Dang; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 596,
+    "summary": "Gan Ning; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1064,
+    "summary": "Jiang Qin; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1723,
+    "summary": "Pan Zhang; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 435,
+    "summary": "Dong Xi; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1530,
+    "summary": "Lu Xun; with the council — not yet a major player."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3456,
+    "summary": "Zhou Tai; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3457,
+    "summary": "Zhou Tai (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 2142,
+    "summary": "Taishi Ci; war-faction general at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3272,
+    "summary": "Zhang Zhao; pacifist; with the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3273,
+    "summary": "Zhang Zhao (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3123,
+    "summary": "Zhang Hong; with the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3124,
+    "summary": "Zhang Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3125,
+    "summary": "Zhang Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 683,
+    "summary": "Gu Yong; pacifist; with the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 58,
+    "summary": "Bu Zhi; pacifist; with the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 311,
+    "summary": "Cheng Zi; minor figure named in passing."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1500,
+    "summary": "Lu Fan; civil officer at the council."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1501,
+    "summary": "Lu Fan (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3516,
+    "summary": "Zhu Zhi; named in passing."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3517,
+    "summary": "Zhu Zhi (duplicate record)."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1619,
+    "summary": "Ma Teng; named in passing in the regional roll."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 805,
+    "summary": "Han Sui; named in passing in the regional roll."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 444,
+    "summary": "Dong Zhuo; named in passing in the chapter's recap."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 2450,
+    "summary": "Lady Wu; named in passing — her dying advice still echoes."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 2060,
+    "summary": "Sun Ce; named in passing — Da Qiao is his widow."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 1263,
+    "summary": "Liang Da; minor figure named in passing."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3006,
+    "summary": "Yuan Shao; named in passing."
+  },
+  {
+    "chapter_num": 44,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 86,
+    "summary": "Cao Cao; in this chapter falls for Zhou Yu's Jiang Gan ruse — believes a planted letter showing Cai Mao and Zhang Yun in correspondence with Wu, and executes his admirals on the spot. Recognises the trick moments later but cannot recall the heads. The single greatest blunder of the Red Cliffs campaign."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3466,
+    "summary": "Zhou Yu; designs the Jiang Gan trick — leaves a planted letter visible where Jiang Gan can find it during a pretended drunken night in the camp. The execution of Cai Mao and Zhang Yun removes the only experienced naval commanders from Cao Cao's fleet."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1056,
+    "summary": "Jiang Gan's debut — old schoolfriend of Zhou Yu; sent by Cao Cao to talk Zhou Yu into surrender, but instead is set up to find the planted letter. Falls for the ruse completely."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 68,
+    "summary": "Cai Mao; executed by Cao Cao on the planted-letter evidence — Cao Cao realises his mistake moments after the heads roll."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3267,
+    "summary": "Zhang Yun; co-admiral; executed alongside Cai Mao on the same planted evidence."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3268,
+    "summary": "Zhang Yun (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1647,
+    "summary": "Mao Jie; appointed co-admiral after Cai Mao and Zhang Yun's deaths — an inexperienced replacement that effectively cripples Cao Cao's navy."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 2953,
+    "summary": "Yu Jin; appointed co-admiral with Mao Jie — also lacks naval experience."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3529,
+    "summary": "Zhuge Liang; reads through Zhou Yu's Jiang Gan ruse instantly; counsels Lu Su not to tell Zhou Yu so his ally doesn't become his enemy. The first sign of the chapter's strategic-rivalry undercurrent."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1523,
+    "summary": "Lu Su; visits Zhuge Liang and is unnerved that he sees through every Wu plan instantly."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 295,
+    "summary": "Cheng Pu; with Zhou Yu — initially resentful that he's not in command."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 596,
+    "summary": "Gan Ning; with Zhou Yu at the Three Gorges camp."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 785,
+    "summary": "Han Dang; with Zhou Yu at the Three Gorges camp."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1064,
+    "summary": "Jiang Qin; with Zhou Yu at the Three Gorges camp."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 2142,
+    "summary": "Taishi Ci; with Zhou Yu at the Three Gorges camp."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 2105,
+    "summary": "Sun Quan; at Chaisang sending reinforcements."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1311,
+    "summary": "Liu Bei; at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1395,
+    "summary": "Liu Qi; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 704,
+    "summary": "Guan Yu; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3106,
+    "summary": "Zhang Fei; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3334,
+    "summary": "Zhao Yun; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1682,
+    "summary": "Mi Zhu; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1053,
+    "summary": "Jian Yong; with Liu Bei at Jiangxia."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3524,
+    "summary": "Zhuge Jin; with Sun Quan at Chaisang."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1956,
+    "summary": "Shi Kuang; minor figure named in passing."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 1938,
+    "summary": "Shentu Pan; minor figure named in passing."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 2779,
+    "summary": "Yan Liang; named in passing — long dead."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 2430,
+    "summary": "Wen Chou; named in passing — long dead."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 2754,
+    "summary": "Xun You; with Cao Cao."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3006,
+    "summary": "Yuan Shao; named in passing in the chapter's recap."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3183,
+    "summary": "Zhang Ni; minor figure named in passing."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3248,
+    "summary": "Zhang Yi; named in passing."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3249,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3250,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3251,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3252,
+    "summary": "Zhang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 45,
+    "character_id": 3253,
+    "summary": "Zhang Yi (duplicate record)."
+  }
+]
