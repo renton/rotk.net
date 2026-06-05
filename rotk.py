@@ -1243,7 +1243,11 @@ def dump_chapter_triage(chapter_num):
             'factions': [f.name for f in c.factions.all()],
             'primary_faction': c.primary_faction.name if c.primary_faction else None,
             'tagged_in_chapters': _chapter_nums(c),
-            'links': [l.name for l in (c.links or []) if not l.is_deleted],
+            # `links` (Character.links → Link table) deliberately
+            # omitted: the link table in prod is missing the
+            # created_by/last_edited_by columns the ORM expects, so
+            # any lazy-load explodes. Track this in ISSUES.md as a
+            # migration gap.
             'urls': _urls(c),
             'notes': c.notes or None,
         }
