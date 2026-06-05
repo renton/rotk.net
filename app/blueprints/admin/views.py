@@ -211,6 +211,42 @@ def delete_user(user_id):
     )
 # ----- Chapter ↔ Character association editor -----------------------------
 
+@admin.route('/chapter-dates', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def chapter_dates():
+    """Bulk-edit the free-form `date` string on every chapter.
+
+    Single page lists all chapters in order with an input per row.
+    POST persists only the rows whose date string actually changed,
+    so the Edit audit log isn't flooded with no-op writes on every
+    save."""
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    csrf_form = _CsrfOnlyForm()
+
+    if request.method == 'POST':
+        if not csrf_form.validate_on_submit():
+            abort(400)
+        updated = 0
+        for chapter in chapters:
+            new_value = (request.form.get(f'date_{chapter.id}') or '').strip()
+            if new_value != (chapter.date or ''):
+                chapter.date = new_value
+                updated += 1
+        if updated:
+            db.session.commit()
+            flash(f"Updated dates on {updated} chapter{'s' if updated != 1 else ''}.")
+        else:
+            flash("No changes.")
+        return redirect(url_for('admin.chapter_dates'))
+
+    return render_template(
+        'admin/chapter_dates.html',
+        chapters=chapters,
+        csrf_form=csrf_form,
+    )
+
+
 @admin.route('/chapter-associations', methods=['GET'])
 @admin.route('/chapter-associations/<int:chapter_num>', methods=['GET'])
 @login_required
