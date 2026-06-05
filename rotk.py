@@ -1194,8 +1194,87 @@ def dump_chapter_triage(chapter_num):
         return (split_keywords_csv(event_kw.get(e.id, ''))
                 or get_event_labels(e))
 
+    # Per-entity disambiguation fields. Used both on the main entity
+    # entry AND on each `candidates` row so an LLM (or human) can tell
+    # two Zhang Jis / Wuchengs apart without a second round-trip.
+    def _walk_ancestry(loc):
+        chain, seen, cur, depth = [], set(), loc.parent, 0
+        while cur is not None and cur.id not in seen and depth < 10:
+            chain.append(cur.name)
+            seen.add(cur.id)
+            cur = cur.parent
+            depth += 1
+        return chain  # closest parent first
+
+    def _urls(entity):
+        return [
+            {
+                'url': u.url,
+                'type': u.url_type.name if u.url_type else None,
+                'description': u.description or None,
+            }
+            for u in (entity.urls or [])
+            if not u.is_deleted
+        ]
+
+    def _chapter_nums(entity):
+        # Sorted list of chapter_nums the entity is tagged in. The
+        # cleanest disambiguator for same-name records — if one Zhang Ji
+        # has [9,10,13,14] and the other has [82,90], they're not the
+        # same person.
+        return sorted({c.chapter_num for c in (entity.chapters or [])
+                       if not c.is_deleted})
+
+    def _character_facts(c):
+        return {
+            'is_fictional': bool(c.is_fictional),
+            'chinese_name': c.chinese_name or None,
+            # NB: column is misspelled `courtesty_name` in the schema
+            # (see ISSUES.md #19) — exposing it under the corrected key
+            # in JSON so consumers don't propagate the typo.
+            'courtesy_name': c.courtesty_name or None,
+            'chinese_courtesy_name': c.chinese_courtesty_name or None,
+            'birth_date': c.birth_date or None,
+            'death_date': c.death_date or None,
+            'ancestral_home': c.ancestral_home or None,
+            'book_mention_count': c.book_mention_count,
+            'aliases': c.aliases or None,
+            'roles': [r.name for r in c.roles],
+            'factions': [f.name for f in c.factions.all()],
+            'primary_faction': c.primary_faction.name if c.primary_faction else None,
+            'tagged_in_chapters': _chapter_nums(c),
+            'links': [l.name for l in (c.links or []) if not l.is_deleted],
+            'urls': _urls(c),
+            'notes': c.notes or None,
+        }
+
+    def _location_facts(loc):
+        return {
+            'chinese_name': loc.chinese_name or None,
+            'aliases': loc.aliases or None,
+            'ancestry': _walk_ancestry(loc),  # closest parent first; reverse for root->leaf
+            'latitude': loc.latitude,
+            'longitude': loc.longitude,
+            'tagged_in_chapters': _chapter_nums(loc),
+            'urls': _urls(loc),
+            'notes': loc.notes or None,
+        }
+
+    def _event_facts(e):
+        return {
+            'chinese_name': e.chinese_name or None,
+            'aliases': e.aliases or None,
+            'date': e.date or None,
+            'location_name': e.location.name if e.location else None,
+            'tagged_in_chapters': _chapter_nums(e),
+            'urls': _urls(e),
+            'notes': e.notes or None,
+        }
+
     # Candidate swaps: any other entity (same type) sharing a needle.
-    def _candidates(entity, all_entities, needles_for):
+    # Carries the full disambiguation facts so two same-name records
+    # are distinguishable at a glance.
+    def _candidates(entity, all_entities, needles_for, kind):
         my_needles = set(needles_for(entity))
         out = []
         for other in all_entities:
@@ -1207,7 +1286,14 @@ def dump_chapter_triage(chapter_num):
                       else (other.event_type.name
                             if hasattr(other, 'event_type') and other.event_type
                             else ''))
-                out.append({'id': other.id, 'name': other.name, 'type': ot})
+                row = {'id': other.id, 'name': other.name, 'type_label': ot}
+                if kind == 'character':
+                    row['facts'] = _character_facts(other)
+                elif kind == 'location':
+                    row['facts'] = _location_facts(other)
+                elif kind == 'event':
+                    row['facts'] = _event_facts(other)
+                out.append(row)
         return out
 
     matches = []
@@ -1218,7 +1304,8 @@ def dump_chapter_triage(chapter_num):
         mentions = find_location_mentions(ch, loc, limit=None,
                                           exclusions=excl, needles=needles)
         via = 'm2m' if loc.id in direct_loc_ids else f'event:{event_pinned.get(loc.id, "?")}'
-        cand = _candidates(loc, locs, _loc_needles)
+        cand = _candidates(loc, locs, _loc_needles, 'location')
+        facts = _location_facts(loc)
         for m in mentions:
             matches.append({
                 'entity_type': 'location',
@@ -1227,6 +1314,7 @@ def dump_chapter_triage(chapter_num):
                 'type_label': loc.location_type.name if loc.location_type else None,
                 'via': via,
                 'needles': needles,
+                'facts': facts,
                 'candidates': cand,
                 'snippet': {'match': m['match'], 'before': m['before'], 'after': m['after']},
             })
@@ -1236,7 +1324,8 @@ def dump_chapter_triage(chapter_num):
         needles = _char_needles(c)
         mentions = find_character_mentions(ch, c, limit=None,
                                            exclusions=excl, needles=needles)
-        cand = _candidates(c, chars, _char_needles)
+        cand = _candidates(c, chars, _char_needles, 'character')
+        facts = _character_facts(c)
         for m in mentions:
             matches.append({
                 'entity_type': 'character',
@@ -1245,6 +1334,7 @@ def dump_chapter_triage(chapter_num):
                 'type_label': None,
                 'via': 'm2m',
                 'needles': needles,
+                'facts': facts,
                 'candidates': cand,
                 'snippet': {'match': m['match'], 'before': m['before'], 'after': m['after']},
             })
@@ -1256,7 +1346,8 @@ def dump_chapter_triage(chapter_num):
         needles = _event_needles(e)
         mentions = find_event_mentions(ch, e, limit=None,
                                        exclusions=excl, needles=needles)
-        cand = _candidates(e, events, _event_needles)
+        cand = _candidates(e, events, _event_needles, 'event')
+        facts = _event_facts(e)
         for m in mentions:
             matches.append({
                 'entity_type': 'event',
@@ -1265,6 +1356,7 @@ def dump_chapter_triage(chapter_num):
                 'type_label': e.event_type.name if e.event_type else None,
                 'via': 'm2m',
                 'needles': needles,
+                'facts': facts,
                 'candidates': cand,
                 'snippet': {'match': m['match'], 'before': m['before'], 'after': m['after']},
             })
@@ -1278,6 +1370,210 @@ def dump_chapter_triage(chapter_num):
         'matches': matches,
     }
     click.echo(_json.dumps(payload, ensure_ascii=False, indent=2))
+
+
+@app.cli.command()
+@click.argument('decisions_file', type=click.Path(exists=True, dir_okay=False))
+@click.option('--apply/--dry-run', default=False,
+              help='Default is dry-run (prints what would happen). Pass --apply to write.')
+@click.option('--no-confirm', is_flag=True, default=False,
+              help='Skip the interactive confirm before --apply writes (for scripted use).')
+def apply_triage_decisions(decisions_file, apply, no_confirm):
+    """Apply a batch of per-snippet exclusions / M2M removals from a JSON
+    file produced by `dump-chapter-triage` triage.
+
+    Saves a ton of clicking when triage produces ~50+ per-chapter actions.
+    Idempotent: exclude is skipped if the (chapter, target, fingerprint)
+    row already exists; remove_m2m is a no-op if the association
+    already isn't there. The same audit ORM hooks the admin pages use
+    stamp `created_by` / `last_edited_by` on the new rows.
+
+    Input file schema:
+
+        {
+          "chapter_num": 10,
+          "decisions": [
+            {"target_type": "location", "target_id": 62,
+             "action": "exclude",
+             "match_text": "Yu",
+             "before_snippet": "...", "after_snippet": "..."},
+            {"target_type": "location", "target_id": 1456,
+             "action": "remove_m2m"},
+            ...
+          ]
+        }
+
+    Valid `action`s:
+      - exclude    : add MatchExclusion (needs match_text + before/after)
+      - restore    : delete MatchExclusion matching that fingerprint
+      - remove_m2m : drop the chapter↔target association
+
+    Valid `target_type`s: 'character', 'location', 'event'.
+
+    Default is dry-run: prints every action with current/proposed state
+    and exits without writes. Pass --apply (plus the y/N confirm, or
+    --no-confirm) to actually write. Removals trigger a stronger prompt
+    because they delete association rows."""
+    import json as _json
+    from app.models import Chapter, MatchExclusion, Location, Event
+    from app.models.character import Character as CharacterModel
+
+    payload = _json.loads(open(decisions_file).read())
+    chapter_num = payload.get('chapter_num')
+    decisions = payload.get('decisions') or []
+    if chapter_num is None:
+        raise click.ClickException("Input file missing top-level 'chapter_num'.")
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first()
+    if chapter is None:
+        raise click.ClickException(f"No chapter with chapter_num={chapter_num}.")
+
+    target_models = {
+        'character': CharacterModel,
+        'location': Location,
+        'event': Event,
+    }
+    m2m_attr = {
+        'character': 'characters',
+        'location': 'locations',
+        'event': 'events',
+    }
+
+    # First pass: validate + classify into buckets so we can report
+    # cleanly and confirm removals separately.
+    plan = []
+    for i, d in enumerate(decisions):
+        ttype = d.get('target_type')
+        tid = d.get('target_id')
+        action = d.get('action')
+        if ttype not in target_models:
+            raise click.ClickException(f"decision[{i}]: bad target_type {ttype!r}")
+        if action not in ('exclude', 'restore', 'remove_m2m'):
+            raise click.ClickException(f"decision[{i}]: bad action {action!r}")
+        target = target_models[ttype].query.get(tid)
+        if target is None:
+            raise click.ClickException(f"decision[{i}]: no {ttype} with id={tid}")
+        entry = {'ttype': ttype, 'target': target, 'action': action}
+        if action in ('exclude', 'restore'):
+            match_text = (d.get('match_text') or '').strip()
+            before = d.get('before_snippet') or ''
+            after = d.get('after_snippet') or ''
+            if not match_text:
+                raise click.ClickException(
+                    f"decision[{i}]: {action} needs non-empty match_text"
+                )
+            entry.update({
+                'match_text': match_text,
+                'before_snippet': before,
+                'after_snippet': after,
+            })
+        plan.append(entry)
+
+    # Pre-compute proposed status (would-create / would-delete / no-op).
+    excl_creates = []
+    excl_skips = []
+    rest_deletes = []
+    rest_skips = []
+    m2m_removes = []
+    m2m_skips = []
+
+    for p in plan:
+        ttype, target, action = p['ttype'], p['target'], p['action']
+        if action == 'exclude':
+            existing = MatchExclusion.query.filter_by(
+                chapter_id=chapter.id,
+                target_type=ttype,
+                target_id=target.id,
+                match_text=p['match_text'],
+                before_snippet=p['before_snippet'],
+                after_snippet=p['after_snippet'],
+            ).first()
+            (excl_skips if existing else excl_creates).append(p)
+        elif action == 'restore':
+            existing = MatchExclusion.query.filter_by(
+                chapter_id=chapter.id,
+                target_type=ttype,
+                target_id=target.id,
+                match_text=p['match_text'],
+                before_snippet=p['before_snippet'],
+                after_snippet=p['after_snippet'],
+            ).first()
+            if existing:
+                p['_existing_id'] = existing.id
+                rest_deletes.append(p)
+            else:
+                rest_skips.append(p)
+        elif action == 'remove_m2m':
+            coll = getattr(chapter, m2m_attr[ttype])
+            (m2m_removes if target in coll else m2m_skips).append(p)
+
+    click.echo(f"Chapter {chapter.chapter_num}: {chapter.name}")
+    click.echo(f"  exclude   create:{len(excl_creates)} skip-existing:{len(excl_skips)}")
+    click.echo(f"  restore   delete:{len(rest_deletes)} skip-missing:{len(rest_skips)}")
+    click.echo(f"  remove_m2m drop:{len(m2m_removes)} skip-absent:{len(m2m_skips)}")
+    click.echo()
+
+    def _line(p, verb):
+        target = p['target']
+        s = f"  {verb} {p['ttype']} [{target.id}] {target.name}"
+        if 'match_text' in p:
+            s += f"  match={p['match_text']!r}"
+        return s
+
+    for p in excl_creates: click.echo(_line(p, 'EXCLUDE'))
+    for p in rest_deletes: click.echo(_line(p, 'RESTORE'))
+    for p in m2m_removes:  click.echo(_line(p, 'REMOVE-M2M'))
+
+    if not apply:
+        click.echo("\n(dry-run; pass --apply to write)")
+        return
+
+    if (m2m_removes or rest_deletes) and not no_confirm:
+        # Removal-class actions get the harder prompt because they
+        # delete association rows (per user's deletion-confirm rule).
+        if not click.confirm(
+            f"\n{len(m2m_removes)} M2M removal(s) and {len(rest_deletes)} "
+            f"exclusion-restore(s) will be applied. Continue?",
+            default=False,
+        ):
+            click.echo("Aborted; nothing written.")
+            return
+    elif not no_confirm and excl_creates:
+        if not click.confirm(
+            f"\n{len(excl_creates)} exclusion(s) will be written. Continue?",
+            default=True,
+        ):
+            click.echo("Aborted; nothing written.")
+            return
+
+    # Apply.
+    written_excl = 0
+    deleted_excl = 0
+    removed_m2m = 0
+    for p in excl_creates:
+        db.session.add(MatchExclusion(
+            chapter_id=chapter.id,
+            target_type=p['ttype'],
+            target_id=p['target'].id,
+            match_text=p['match_text'],
+            before_snippet=p['before_snippet'],
+            after_snippet=p['after_snippet'],
+        ))
+        written_excl += 1
+    for p in rest_deletes:
+        row = MatchExclusion.query.get(p['_existing_id'])
+        if row:
+            db.session.delete(row)
+            deleted_excl += 1
+    for p in m2m_removes:
+        getattr(chapter, m2m_attr[p['ttype']]).remove(p['target'])
+        removed_m2m += 1
+
+    db.session.commit()
+    click.echo(
+        f"\nWrote {written_excl} exclusion(s), deleted {deleted_excl}, "
+        f"removed {removed_m2m} M2M association(s)."
+    )
 
 
 @app.cli.command()
