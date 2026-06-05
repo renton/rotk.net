@@ -1,0 +1,281 @@
+{
+  "chapter_num": 95,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "10"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "1 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "18 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "40 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "2 Yang Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "49 Sima Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "5 Su Yong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "41 Wei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "21 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "16 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "3 Ma Dai"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "18 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "1 Chen Zao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "40 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "1 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "15 Guo Huai"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "49 Sima Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "16 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "4 Deng Xian"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "9 Wan Zheng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1217,
+      "action": "remove_m2m",
+      "_note": "3 Deng Zhi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "2 Yang Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "24 Zhang He"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1345,
+      "action": "remove_m2m",
+      "_note": "3 Xin Pi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1398,
+      "action": "remove_m2m",
+      "_note": "8 Shen Yi"
+    },
+    {
+      "target_type": "character",
+      "target_id": 158,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 159,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3070,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3071,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3072,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 125,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 735,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 736,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1660,
+      "action": "remove_m2m",
+      "_note": "dup."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2011,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2419,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2869,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2870,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3248,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3249,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3250,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3251,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3252,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3253,
+      "action": "remove_m2m",
+      "_note": "."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3183,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}
