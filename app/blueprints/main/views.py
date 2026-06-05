@@ -112,6 +112,22 @@ def timeline():
         })
 
     # --- Events ---
+    # AbstractTag defaults bg/font/border colour to '#ffffff' (white).
+    # On the timeline an event renders as JUST its FA icon painted in
+    # the event-type's bg colour, so a default-white event-type means
+    # white-on-white-row → invisible icons. Treat white (or empty) as
+    # "no colour configured" and substitute a visible default.
+    _DEFAULT_EVENT_COLOUR = '#6c757d'
+
+    def _visible_colour(raw, fallback=_DEFAULT_EVENT_COLOUR):
+        if not raw:
+            return fallback
+        # Normalise (#FFF / #ffffff variants).
+        n = raw.strip().lower()
+        if n in ('#fff', '#ffffff', 'white'):
+            return fallback
+        return raw
+
     event_items = []
     events = (
         Event.query
@@ -135,9 +151,9 @@ def timeline():
             'year_hi': hi,
             'type_name': (et.name if et else '') or '',
             'icon': (et.icon if et else '') or '',
-            'bg_colour': (et.bg_colour if et else '') or '#6c757d',
-            'font_colour': (et.font_colour if et else '') or '#ffffff',
-            'border_colour': (et.border_colour if et else '') or '#6c757d',
+            'bg_colour':     _visible_colour(et.bg_colour     if et else None),
+            'font_colour':   et.font_colour                   if et else '#ffffff',
+            'border_colour': _visible_colour(et.border_colour if et else None),
         })
 
     # --- Characters ---

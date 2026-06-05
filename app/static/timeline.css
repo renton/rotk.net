@@ -70,10 +70,14 @@
 }
 
 /* Event markers — bare icon, no background or border. The icon's
-   colour comes from the inline style (event-type bg_colour). */
+   colour comes from the inline style (event-type bg_colour). A
+   default fallback colour sits behind the inline style so that an
+   event-type with all-white colours (the model default) still shows
+   something instead of being white-on-white invisible. */
 .vis-item.tl-event {
     background: transparent;
     border: none;
+    color: #6c757d;
     cursor: pointer;
     transition: transform 0.1s ease;
 }
