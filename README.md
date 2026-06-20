@@ -44,30 +44,45 @@ Then populate the empty DB — see [Populating the data](#populating-the-data) b
 
 ## Populating the data
 
-After first boot the database is empty. The app needs four commands to fill in the schema and pull the source content. Run them **in order** — later commands depend on rows that earlier commands insert.
+After first boot the database is empty. The app needs a handful of commands to fill in the schema and pull the source content. Run them **in order** — later commands depend on rows that earlier commands insert.
 
 > Compose v2 users (most installs these days) should substitute `docker compose` (space) for `docker-compose` (hyphen). Same commands, same arguments.
 
 ```bash
-# 1. Create the tables from the current SQLAlchemy models.
-#    Idempotent; safe to re-run.
+# 1. Create the tables from the current SQLAlchemy models. Idempotent.
 docker-compose exec app flask create-all
 
-# 2. Scrape all 120 chapter texts from threekingdoms.com.
-#    Hits the source site ~120 times; takes a few minutes.
+# 2. Apply every SQL file in migrations/ that hasn't run yet (tracked in
+#    the _schema_migrations table). Idempotent — re-runnable any time.
+docker-compose exec app flask apply-migrations
+
+# 3. Scrape all 120 chapter texts from threekingdoms.com (~120 fetches).
 docker-compose exec app flask scrape-book
 
-# 3. Scrape character index pages from Wikipedia (26 alphabetised pages).
-#    Populates `character`, `faction`, and `role` tables.
+# 4. Scrape the Wikipedia character index pages (~26 fetches). Populates
+#    `character`, `faction`, and `role`.
 docker-compose exec app flask scrape-characters
 
-# 4. Build the chapter↔character association cache.
-#    Regex-scans each chapter for every character's names and aliases.
-#    Required for the chapter view's sidebar to work.
+# 5. Build the chapter↔character association cache. Required for the
+#    chapter view sidebar to work.
 docker-compose exec app flask build-chapter-character-association
 ```
 
-After step 4 finishes, visit `http://localhost/` for the table of contents.
+After step 5 finishes, visit `http://localhost/` for the table of contents.
+
+**Optional — seed the Location hierarchy from the bundled CSV** so chapter sidebars and the `/locations` page show admin-division ancestry:
+
+```bash
+# 6. Seed the standard LocationType rows (Province, Commandery, County, City, ...).
+docker-compose exec app flask seed-location-types
+
+# 7. Import the Province/Commandery/County hierarchy from data/3k_admin_divisions.csv.
+#    Adds ~800 locations with parent_id + location_type_id wired. Idempotent.
+docker-compose exec app flask import-admin-divisions
+
+# 8. Build the chapter↔location association cache (mirror of step 5 for locations).
+docker-compose exec app flask build-location-chapter-association
+```
 
 ### Re-running individual jobs
 
@@ -111,13 +126,22 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `rescrape-all-chapters` | Loop `rescrape-chapter` across every chapter currently in the DB. Idempotent (prints `unchanged` when source matches) |
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
+| `build-location-chapter-association` | Same idea for the `chapter_location` M2M — populates `Chapter.locations` from each location's name + aliases. Idempotent. Skips soft-deleted Locations. |
 | `recount-book-mentions` | Recompute `Character.book_mention_count` (total mentions across all chapters). Run after scraping new chapters or editing aliases. |
 | `assign-default-portraits [--preferred-tag 1MROTK] [--seed N] [--dry-run]` | For each character that has portraits but none visible, promote one to default (which also makes it visible). Prefers portraits tagged with `--preferred-tag`; falls back to a random pick. |
 | `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |
 | `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
 | `randomize-role-colours [--role-id N] [--seed N] [--dry-run]` | Same as `randomize-faction-colours` but for `Role` rows. |
+| `seed-location-types` | Insert the standard `LocationType` rows (Province, Commandery, County, City, Settlement, Pass, Landmark, Building, Mountain, River, Battlefield). Idempotent — skips any already present. |
+| `import-admin-divisions [PATH] [--dry-run]` | Import the Province/Commandery/County/City hierarchy from a CSV (default `data/3k_admin_divisions.csv`). Inserts as "X Province" / "X Commandery" / "X County" with `parent_id` wired up; column-4 entries keep their raw cell name. Idempotent — existing rows matched by English or Chinese name are reused, with their `parent_id` / `location_type_id` filled in if currently NULL. |
 | `make-admin EMAIL` | Promote the user with the given email to administrator (also marks them confirmed) |
 | `create-user EMAIL USERNAME [--admin]` | Create a new user directly; prompts for the password |
+| `check-date-parsing [--only chapter\|event\|character]` | Print every free-form date string the timeline parser can't read, grouped by source. Read-only — used to find which strings need parser tweaks. |
+| `dump-chapters-for-dating START [END]` | Dump chapter prose + dated context (tagged characters/events with known dates, neighboring chapter names) as JSON on stdout. Read-only — feeds an LLM-assisted chapter dating workflow. |
+| `apply-chapter-dates FILE [--apply]` | Apply `[{chapter_num, date, _note?}]` JSON to `chapter.date`. Dry-run by default; `--apply` writes. Idempotent. |
+| `apply-chapter-character-summaries FILE [--apply]` | Apply `[{chapter_num, character_id, summary, _note?}]` JSON to `chapter_character.summary`. Dry-run by default; `--apply` writes. Skips entries whose character isn't tagged in the chapter. Idempotent. |
+| `dump-locations [--type ...]` | Dump every active Location as JSON on stdout (id, name, chinese_name, type, parent_chain, lat/lng, has_geojson). Read-only — feeds the boundary-sourcing workflow for the /map view. |
+| `apply-location-geo FILE [--apply]` | Apply `[{id, latitude?, longitude?, geojson?, _note?}]` JSON to Location rows. Each entry must include a point and/or a Polygon/MultiPolygon GeoJSON. Dry-run by default; `--apply` writes. Idempotent. |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
 ---
@@ -320,6 +344,6 @@ examples/
 
 See [ISSUES.md](./ISSUES.md) for the running list of design notes. Highlights still relevant:
 
-- No Flask-Migrate / Alembic — schema changes require manual SQL or drop/recreate
-- "courtesty" is misspelled throughout (model fields, forms, templates)
-- No tests
+- "courtesty" is misspelled throughout (model fields, forms, templates) — coordinated rename pending
+- No tests — pytest fixtures for the regex-tagging pipeline would catch a lot
+- Plain-SQL migrations only; no Alembic. Fine for a single-author project, but a fresh contributor would need to read the `migrations/` directory rather than rely on auto-generated diffs.

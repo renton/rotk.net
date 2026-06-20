@@ -17,12 +17,49 @@ span.location-ref:hover {
     text-decoration-thickness: 2px;
 }
 
+/* Admin-only signal: tag every inline location-ref red so the admin
+   can see at a glance which pills came from the location scanner —
+   useful for spotting noisy matches that want a snippet exclusion.
+   The `is-admin` class lives on <body> only for authenticated admins
+   (bootstrap_base.html); public readers keep the plain black underline. */
+body.is-admin span.location-ref {
+    color: #c00;
+}
+
 /* Consistent 2rem indent for URL lists nested under a faction /
    character / event / location in the chapter sidebar. Bootstrap's
    ms-5 (3rem) was too wide; ms-4 (1.5rem) too tight — 2rem sits
    between them and matches the visual rhythm of the section cards. */
 .sidebar-url-indent {
     margin-left: 2rem;
+}
+
+/* Chapter-page Map accordion mini-Leaflet. Same default tile-source
+   as /map but sized down to fit the sidebar column. */
+.chapter-map {
+    height: 320px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+/* Editorial per-(chapter, character) summary shown in the chapter
+   sidebar's Characters accordion. A muted italic line that visually
+   sits between the character name and the mention-count metadata. */
+.chapter-char-summary {
+    color: #495057;
+    line-height: 1.4;
+}
+
+/* Location items in the chapter sidebar that have geo data become
+   keyboard-focusable rows; the hover state hints they're clickable. */
+.location-item-clickable {
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+.location-item-clickable:hover,
+.location-item-clickable:focus-visible {
+    background-color: #e9ecef !important;
+    outline: none;
 }
 
 /* Tinted card-style background for the Faction / Past Factions / Links

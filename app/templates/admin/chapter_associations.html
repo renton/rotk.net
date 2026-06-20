@@ -71,6 +71,7 @@
         {% set ch = row.character %}
         {% set f = row.faction %}
         <tr class="association-row"
+            id="assoc-row-{{ ch.id }}"
             data-name="{{ ch.name|lower }}"
             data-aliases="{{ (ch.aliases or '')|lower }} {{ (ch.courtesty_name or '')|lower }}"
             data-faction-id="{{ f.id if f else '__none__' }}"
@@ -85,6 +86,28 @@
                     </span>
                 {% else %}
                     <span class="badge rounded-pill bg-secondary">{{ ch.name }}</span>
+                {% endif %}
+                {# Same red / green warning icons the chapter prose shows.
+                   Red:   this character shares at least one needle (name,
+                          courtesy name, or alias) with another character
+                          tagged in this chapter.
+                   Green: this character's name (or alias) overlaps a
+                          location name (or alias) in this chapter — by
+                          exact match or substring either way. Both
+                          icons can appear together. #}
+                {% if ch.id in in_chapter_dup_ids %}
+                <i class="fa-solid fa-circle-exclamation text-danger ms-1"
+                   title="Shares a name or alias with another character in this chapter"
+                   aria-label="Shares a name or alias with another character in this chapter"></i>
+                {% endif %}
+                {% set overlap_locs = loc_overlap_by_char_id.get(ch.id, []) %}
+                {% if overlap_locs %}
+                  {%- set shown   = overlap_locs[:3] -%}
+                  {%- set extra   = overlap_locs|length - shown|length -%}
+                  {%- set joined  = shown | map(attribute='name') | join(', ') -%}
+                  {%- set tooltip = 'Overlaps locations: ' ~ joined ~ ((' (+' ~ extra ~ ' more)') if extra else '') -%}
+                <i class="fa-solid fa-circle-exclamation text-success ms-1"
+                   title="{{ tooltip }}" aria-label="{{ tooltip }}"></i>
                 {% endif %}
                 {% if ch.courtesty_name %}
                     <div class="small text-muted">{{ ch.courtesty_name }}</div>
@@ -203,6 +226,37 @@
                         <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
                     </form>
                 </div>
+            </td>
+        </tr>
+        {# Companion row — per-(chapter, character) summary editor. Hidden
+           by default behind a <details>; expanded the row carries the
+           textarea + Save button. Empty `summary` shows nothing
+           visible besides the disclosure triangle. #}
+        <tr class="association-summary-row">
+            <td colspan="7" class="bg-light border-top-0 py-1">
+                <details {% if row.summary %}open{% endif %}>
+                    <summary class="small text-muted py-1" style="cursor: pointer;">
+                        <i class="fa-solid fa-feather-pointed me-1" aria-hidden="true"></i>
+                        Role summary for <strong>{{ ch.name }}</strong> in this chapter
+                        {% if row.summary %}
+                        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle ms-1">set</span>
+                        {% else %}
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle ms-1">empty</span>
+                        {% endif %}
+                    </summary>
+                    <form method="POST"
+                          action="{{ url_for('admin.chapter_associations_summary', chapter_num=selected.chapter_num, character_id=ch.id) }}"
+                          class="mt-2">
+                        {{ csrf_form.hidden_tag() }}
+                        <textarea name="summary"
+                                  class="form-control form-control-sm"
+                                  rows="3"
+                                  placeholder="e.g. Sun Quan's brother-in-law; brokers the marriage alliance with Liu Bei and escorts Lady Sun back to Jingzhou.">{{ row.summary }}</textarea>
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="submit" class="btn btn-sm btn-primary">Save summary</button>
+                        </div>
+                    </form>
+                </details>
             </td>
         </tr>
         {% else %}

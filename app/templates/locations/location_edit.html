@@ -5,6 +5,13 @@ rotk.net - {% if location %}Edit {{ location.name }}{% else %}New location{% end
 {% endblock %}
 
 {% block page_header %}
+<div class="mb-3">
+    {# `back` is the filtered listing URL passed in via ?back=… when
+       the admin arrived from the listing. Falls back to the bare
+       listing when this page was hit directly. #}
+    <a href="{{ back if back else url_for('main.locations') }}"
+       class="btn btn-sm btn-outline-secondary">&larr; Back to locations</a>
+</div>
 <div class="page-header mb-4">
     <h1>{% if location %}Edit location: {{ location.name }}{% else %}New location{% endif %}</h1>
     {% if not location %}
@@ -22,6 +29,56 @@ rotk.net - {% if location %}Edit {{ location.name }}{% else %}New location{% end
     {% include '_url_section.html' %}
 {% endif %}
 
+{% if location and merge_form is defined %}
+<fieldset class="border rounded p-3 mt-4">
+    <legend class="float-none w-auto fs-5 px-2">Merge into another location</legend>
+    <p class="text-muted small mb-3">
+        Merging hides <strong>{{ location.name }}</strong> from all
+        listings and moves every reference onto the target:
+        chapter ↔ location links (with per-chapter keywords merged),
+        events pinned here, child locations (re-parented), and any
+        polymorphic URLs / per-snippet exclusions. The target also
+        inherits <strong>{{ location.name }}</strong>'s name +
+        Chinese name + every alias on the source (added to the
+        target's aliases, deduped). Blank fields on the target —
+        Chinese name, type, lat/lng — are filled in from the source;
+        already-set values are never overwritten.
+        Refused when the target is a descendant of this location
+        (would create a cycle). To undo, flip
+        <code>is_deleted=false</code> directly in the DB — there's
+        no UI for un-hiding.
+    </p>
+    <form method="POST"
+          action="{{ url_for('main.merge_location', id=location.id) }}"
+          class="row g-2 align-items-end">
+        {{ merge_form.hidden_tag() }}
+        <div class="col-md-8">
+            <label for="merge-target-search" class="form-label">Merge into location</label>
+            <input type="text" id="merge-target-search"
+                   class="form-control"
+                   list="all-locations-datalist"
+                   data-picker-target="target_location_id"
+                   placeholder="Type to search…"
+                   autocomplete="off" required>
+            <input type="hidden" name="target_location_id">
+        </div>
+        <div class="col-md-4 text-end">
+            <button type="submit" class="btn btn-warning"
+                    data-confirm="Merge '{{ location.name|e }}' into the chosen location and hide it? Action can't be undone from the UI.">
+                {{ merge_form.submit.label.text }}
+            </button>
+        </div>
+    </form>
+
+    <datalist id="all-locations-datalist">
+        {% for l in mergeable_locations %}
+        <option value="{{ l.name }} #{{ l.id }}"
+                label="{{ l.name }}{% if l.location_type %} ({{ l.location_type.name }}){% endif %}"></option>
+        {% endfor %}
+    </datalist>
+</fieldset>
+{% endif %}
+
 <div class="mt-3">
     <a href="{{ url_for('main.locations') }}" class="btn btn-link">&larr; Back to locations</a>
 </div>
@@ -29,5 +86,6 @@ rotk.net - {% if location %}Edit {{ location.name }}{% else %}New location{% end
 
 {% block scripts %}
 {{ super() }}
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
 {% endblock %}

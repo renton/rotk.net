@@ -1,0 +1,215 @@
+{
+  "chapter_num": 48,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "9 You/Xun You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 47,
+      "action": "remove_m2m",
+      "_note": "1 Taishan Mts metaphor"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "16 Zhou Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "12 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "1 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 84,
+      "action": "remove_m2m",
+      "_note": "4 Jiao Chu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "1 Yue Jing"
+    },
+    {
+      "target_type": "location",
+      "target_id": 966,
+      "action": "remove_m2m",
+      "_note": "1 Taishan metaphor"
+    },
+    {
+      "target_type": "location",
+      "target_id": 975,
+      "action": "remove_m2m",
+      "_note": "2 Zang Ba"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "11 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "1 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "3 Lu Su/Lu Bu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1008,
+      "action": "remove_m2m",
+      "_note": "3 Qiao family"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "3 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "16 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "1 Yue Jing"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "2 Mao Jie"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1160,
+      "action": "remove_m2m",
+      "_note": "3 Qiao family"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "11 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1198,
+      "action": "remove_m2m",
+      "_note": "1 Tang dynasty"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1215,
+      "action": "remove_m2m",
+      "_note": "2 Han Sui"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "5 Wen Ping"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "1 Fan Mountains"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "8 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "4 Liu Fu"
+    },
+    {
+      "target_type": "character",
+      "target_id": 1225,
+      "action": "remove_m2m",
+      "_note": "cn=李通 Shu Han different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1339,
+      "action": "remove_m2m",
+      "_note": "cn=柳甫."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1341,
+      "action": "remove_m2m",
+      "_note": "cn=劉阜."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1423,
+      "action": "remove_m2m",
+      "_note": "duplicate Liu Xi."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1424,
+      "action": "remove_m2m",
+      "_note": "duplicate."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1425,
+      "action": "remove_m2m",
+      "_note": "duplicate."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3457,
+      "action": "remove_m2m",
+      "_note": "cn=州泰."
+    }
+  ]
+}

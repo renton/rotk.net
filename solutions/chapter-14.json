@@ -1,0 +1,479 @@
+{
+  "chapter_num": 14,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "15 matches all \"You\" pronoun + \"Xun You\" (Xun Yu's nephew)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "8 matches all \"Ji Ling\" (Yuan Shu's general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "18 matches all Yu in person names (Xun Yu, Guan Yu, Cheng Yu, Yu Jin)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "2 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "19 Yang surnames (Yang Feng, Yang Biao, Zhang Yang)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Yi of Chu\" (ancient ruler)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "4 matches: Dian Wei + ancient \"states of Jin and Wei\" / \"Wei must increase\" prophecy — neither references the Han commandery"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "6 \"Dong Zhao\" (Cao Cao's new adviser)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "8 matches all \"Dong Cheng\" / \"Dong Zhao\"; no Dongjun match"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "7 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "1 \"guards of Yan\" — if real, references Yan Province [63], not this Commandery"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "7 \"Chen Deng\" / \"Chen Gong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "27 \"Lu Bu\" / \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "27 \"Lu Bu\" / \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "18 Yu inside person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "8 \"Guo Si\" / \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "2 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "1 \"Mao Jie\" (Minister of Agriculture appointee)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Yi of Chu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "3 \"Cao Ren\" / \"Ren Jun\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "8 \"Ji Ling\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "7 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Ye\" (Minister of Works)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "4 \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "19 person names (same Yang-surnames)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "2 \"Duke Wen of Jin\" — ancient Zhou-era figure, not the Han county"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "1 \"Fan Kuai\" (ancient general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "33 Zhang surnames (Zhang Yang, Zhang Fei)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "30 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "15 \"Yang Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "4 \"Jia Xu\" / \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and said, \"This is only the cohort of Li Yue!\" \n He bade ",
+      "after_snippet": " Huang go out to fight him. Xu Huang went and in the first…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…cohort of Li Yue!\" \n He bade Xu Huang go out to fight him. ",
+      "after_snippet": " Huang went and in the first bout the traitor fell. The…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Soon after Xiahou Dun and his staff arrived. Xiahou Dun, ",
+      "after_snippet": " Chu, and Dian Wei were presented to the Emperor, who…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…fatigued from its long march. \n But their adviser, Jia ",
+      "after_snippet": ", opposed this, saying, \"There was no hope of victory. He…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to dishearten the army?\" \n And he drew his sword on Jia ",
+      "after_snippet": ". But the other officers interceded and saved the adviser.…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…interceded and saved the adviser. That same night Jia ",
+      "after_snippet": " stole out of the camp and, quite alone, took his way home…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…rebels decided to offer battle. In reply, Cao Cao sent out ",
+      "after_snippet": " Chu, Cao Ren, and Dian Wei with three hundred horse. These…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Li Jue, rode out. At once from Cao Cao's side dashed out ",
+      "after_snippet": " Chu and cut down Li Xian. Li Bie was so startled that he…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…he fell out of the saddle. He too was slain. The victor ",
+      "after_snippet": " Chu rode back to his own side with the two heads. \n When…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Chu rode back to his own side with the two heads. \n When ",
+      "after_snippet": " Chu offered them to the chief, Cao Cao patted him on the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Xian came out and barred the way. In front of all stood ",
+      "after_snippet": " Huang, who shouted, \"Cao Cao is stealing away the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…him, although he was an enemy. Then Cao Cao ordered ",
+      "after_snippet": " Chu to go and fight Xu Huang. The combat was battle-ax…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…was an enemy. Then Cao Cao ordered Xu Chu to go and fight ",
+      "after_snippet": " Huang. The combat was battle-ax against broadsword, and…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"The two rebels themselves need not be discussed; but ",
+      "after_snippet": " Huang is a fine general, and I was unwilling to use any…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…got over to the other side and made his way to the tent of ",
+      "after_snippet": " Huang, who sat there by the light of a candle. Xu Huang…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…tent of Xu Huang, who sat there by the light of a candle. ",
+      "after_snippet": " Huang was still wearing his coat of mail. \n Suddenly Man…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"You have been well since we parted, old friend?\" \n ",
+      "after_snippet": " Huang jumped up in surprise, gazed into the face of the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the risk of stealing in this evening, and here I am.\" \n ",
+      "after_snippet": " Huang invited Man Chong in, and they sat down. \n Then said…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…for light and help him in his magnificent task?\" \n ",
+      "after_snippet": " Huang sat a long time pondering over the offer. \n Then he…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…very reckless.\" \n \"I am willing to do what you say,\" said ",
+      "after_snippet": " Huang, rising. \n \"Why not put these two to death as an…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…not do that.\" \n \"True. You are really a good man.\" \n Then ",
+      "after_snippet": " Huang, taking only a few horsemen of his own men with him,…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Cao Ren, Cao Hong, Lu Qian, Li Dian, Yue Jing, Yu Jin, and ",
+      "after_snippet": " Huang were made Commanders; Xu Chu and Dian Wei,…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Dian, Yue Jing, Yu Jin, and Xu Huang were made Commanders; ",
+      "after_snippet": " Chu and Dian Wei, Commanders of Capital District. All good…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…most serious. What precautions can be taken?\" \n Then rose ",
+      "after_snippet": " Chu, saying, \"Give me fifty thousand of picked soldiers,…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\" / \"Jia Xu\"; the 6 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏 — different Cao Hong (Tao Qian politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different Chen Gong (Han general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different Cheng Yu (Liu Zhang faction)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "Jia Xu — different person (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different Xun Yu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different Xun Yu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙 — different Sun Qian."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2283,
+      "action": "remove_m2m",
+      "_note": "cn=王黎 — different Wang Li (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2284,
+      "action": "remove_m2m",
+      "_note": "cn=王離 — different Wang Li (Shu Han general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2815,
+      "action": "remove_m2m",
+      "_note": "cn=楊鳳 — different person (rebel), not the escort general 楊奉."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2817,
+      "action": "remove_m2m",
+      "_note": "cn=楊豐 — different Yang Feng (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different Yuan Shao."
+    }
+  ]
+}

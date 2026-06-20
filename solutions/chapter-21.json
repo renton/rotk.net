@@ -1,0 +1,524 @@
+{
+  "chapter_num": 21,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "13 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "3 \"Wu Shi\" / \"Wu Zilan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhang Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "6 \"Zhao Zilong\" / \"Lu Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "12 \"Dong Cheng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 975,
+      "action": "remove_m2m",
+      "_note": "1 \"Xiang Ba\" (ancient figure)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "24 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhang Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "12 \"Chen Lan\" / \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "6 \"Zhang Lu\" / \"Lu Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "6 \"Zhang Lu\" / \"Lu Zhao\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "3 person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "23 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "7 \"Zhu Ling\" / \"Ji Ling\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "24 \"Yuan Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "8 \"Chen Deng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1215,
+      "action": "remove_m2m",
+      "_note": "1 \"Han Sui\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "1 \"Fan Kuais\" (ancient figure plural)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "18 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1302,
+      "action": "remove_m2m",
+      "_note": "3 \"Lei Bo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "10 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "3 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…names to it, and these were Dong Cheng, Wang Zifu, Chong ",
+      "after_snippet": ", Wu Shi, Wu Zilan, and Ma Teng. \n \"Since you have a decree…",
+      "_note": "\"Ji\" inside \"Chong Ji\" / \"Ji Ling\"; Jizhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…Yu, Zhang Fei, Zhu Ling, and Lu Zhao. Yuan Shu sent out ",
+      "after_snippet": " Ling to force a way through. But Zhang Fei opposed him and…",
+      "_note": "\"Ji\" inside \"Chong Ji\" / \"Ji Ling\"; Jizhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…without a parley. In the tenth bout Zhang Fei cut down ",
+      "after_snippet": " Ling. The defeated troops fled in all directions. \n Then…",
+      "_note": "\"Ji\" inside \"Chong Ji\" / \"Ji Ling\"; Jizhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…due to the Emperor, Liu Bei's sworn brother Guan ",
+      "after_snippet": " was behind him, and grasped his sword as if to cut down…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…However, Liu Bei signed to him to hold his hand and Guan ",
+      "after_snippet": " did. Liu Bei would willingly destroy Cao Cao, only he…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…presumption of the man that made my brother so angry. Guan ",
+      "after_snippet": " could not help it.\" \n The visitor covered his face and…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…\"Ah,\" said he, \"if all the court ministers were like Guan ",
+      "after_snippet": ", there would be no sighs for lack of tranquillity.\" \n Now…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…vegetables, and watering them with his own hands. Guan ",
+      "after_snippet": " and Zhang Fei ventured to remonstrate with him for taking…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…to the pavilion where sat the two friends. They were Guan ",
+      "after_snippet": " and Zhang Fei. \n The two brothers had been outside the…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…\"We were nearly frightened to death,\" said Guan ",
+      "after_snippet": ". \n The story of the dropped chopsticks was told. The two…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Zhao to march the troops faster. \n Now Guo Jia and Cheng ",
+      "after_snippet": " had been absent inspecting stores and supplies when Liu…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…What control will you have in future?\" \n So spoke Cheng ",
+      "after_snippet": ", and Guo Jia followed in the same strain, saying, \"Even if…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…\"This refusal to return means enmity,\" said Cheng ",
+      "after_snippet": " and Guo Jia. \n \"Still, two of my people are with him,\"…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…force of fifty thousand soldiers and four generals---Guan ",
+      "after_snippet": ", Zhang Fei, Zhu Ling, and Lu Zhao. Yuan Shu sent out Ji…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Zhu Ling and Lu Zhao in command of the left wing, Guan ",
+      "after_snippet": " and Zhang Fei the right wing, and himself in the center,…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…without their man and was going to put them to death. Xun ",
+      "after_snippet": " reasoned with him. \n \"The power was in Liu Bei's hands,…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…hands, and so these two had no alternative,\" said Xun ",
+      "after_snippet": ". \n So they were pardoned. \n \"You should instruct Che Zhou,…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Imperial Protector, to try to destroy him,\" said Xun ",
+      "after_snippet": ". \n Accordingly he sent secret orders to Che Zhou, who took…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Deng at once rode away to do so. Before long he met Guan ",
+      "after_snippet": " and Zhang Fei, to whom he told his story. \n Now Liu Bei…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…of the plot, he wanted to attack the ambush, but Guan ",
+      "after_snippet": " proposed another plan. \n Said he, \"Attacking the ambush…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Liao?\" \n Then lights blazed around, and he recognized Guan ",
+      "after_snippet": " with his sword drawn. \n \"Wretch!\" cried Guan Yu. \"You…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…Guan Yu with his sword drawn. \n \"Wretch!\" cried Guan ",
+      "after_snippet": ". \"You would plot to slay my brother, would you?\" \n Che…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…turned aside and galloped along under the wall. But Guan ",
+      "after_snippet": " came quickly in pursuit. His sword was raised aloft, and…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…and as it came down, Che Zhou fell to the earth. \n Guan ",
+      "after_snippet": " cut off his head and returned, shouting, \"I have slain the…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…and gave in. As soon as the excitement had calmed, Guan ",
+      "after_snippet": " took the head to show Liu Bei and told him the story of…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "exclude",
+      "match_text": "Yu",
+      "before_snippet": "…he may come.\" \n \"If he does, we can meet him,\" said Guan ",
+      "after_snippet": ". \n But Liu Bei was grieved beyond measure. When he entered…",
+      "_note": "\"Yu\" inside \"Guan Yu\"; Yuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Liu Bei was busy in his garden, two generals of Cao Cao, ",
+      "after_snippet": " Chu and Zhang Liao, with an escort came from Cao Cao,…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…recognized that these were prudent counsels, so he sent ",
+      "after_snippet": " Chu with five hundred horsemen and imperative orders to…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…found himself in the midst of an army ready for battle. ",
+      "after_snippet": " Chu dismounted and entered the camp to speak with Liu Bei.…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…You may return forthwith and take that as my reply.\" \n ",
+      "after_snippet": " Chu was undecided what action to take. He thought, \"The…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…return with this reply and ask further instructions.\" \n So ",
+      "after_snippet": " Chu left. When he related what had occurred, Cao Cao still…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…children, sought shelter in Lujiang. There the Magistrate, ",
+      "after_snippet": " Liu, slew all the survivors. Among the possessions Xu Liu…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Xu Liu, slew all the survivors. Among the possessions ",
+      "after_snippet": " Liu found the Imperial Hereditary Seal, which he at once…",
+      "_note": "\"Xu\" inside \"Xu Chu\"; Xuzhou matches legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan — shares courtesy name \"Zilong\" with Zhao Yun [3334]."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3230,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3231,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3232,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3243,
+      "action": "remove_m2m",
+      "_note": "cn=張延 — different Zhang Yan (Han politician, died 186)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3244,
+      "action": "remove_m2m",
+      "_note": "cn=張儼 — different (Eastern Wu)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3245,
+      "action": "remove_m2m",
+      "_note": "cn=張琰 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3246,
+      "action": "remove_m2m",
+      "_note": "cn=張晏 — different."
+    }
+  ]
+}

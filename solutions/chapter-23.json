@@ -1,0 +1,350 @@
+{
+  "chapter_num": 23,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "37 \"You\" pronoun + \"Xun You\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "27 \"Ji Ping\" (physician)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "3 \"Wu Zilan\" / \"Ma Wu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 31,
+      "action": "remove_m2m",
+      "_note": "1 \"Tolling of Yuyang\" (ancient drum piece)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "11 \"Xun Yu\" / \"Cheng Yu\" / \"Guo Jia\" listed together"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "1 \"Kuai Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "4 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "2 \"Yang Huo\" / \"Yang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "25 \"Dong Cheng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Dai\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "1 \"Chen Ping\" (ancient minister)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "1 \"Kuai Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "3 person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "11 same as Yu Province"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "2 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "2 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "10 \"Zhang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "2 \"Cao Ren\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "5 \"Liu Ye\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1215,
+      "action": "remove_m2m",
+      "_note": "1 \"Han Sui\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "2 \"Yang Huo\" / \"Yang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "13 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "1 \"Fu Yue\" (ancient figure)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1392,
+      "action": "remove_m2m",
+      "_note": "1 \"Xiao He\" (ancient)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "11 \"Jia Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…time reached Xiangyang. He first had an interview with Jia ",
+      "after_snippet": ", Zhang Xiu's adviser, whereat he dwelt upon Cao Cao's…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…whereat he dwelt upon Cao Cao's virtues so that Jia ",
+      "after_snippet": " was impressed. Jia Xu kept Liu Ye as a guest and undertook…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…upon Cao Cao's virtues so that Jia Xu was impressed. Jia ",
+      "after_snippet": " kept Liu Ye as a guest and undertook to smooth his way.…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…letters and, when they also proposed terms of peace, Jia ",
+      "after_snippet": " asked what their success had been lately against Cao Cao.…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the state, I have been sent to request your help.\" \n Jia ",
+      "after_snippet": " laughed, \"You can return to your master and say that as he…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Shao come?\" \n \"Better join hands with Cao Cao,\" said Jia ",
+      "after_snippet": ". \n \"But there is still between us an unavenged enmity. We…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…unavenged enmity. We could not suffer each other.\" \n Jia ",
+      "after_snippet": " said, \"There are three advantages in joining hands with…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the title of General Who Possesses Prowess, and Jia ",
+      "after_snippet": " was appointed Counselor. \n Cao Cao then directed his…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to draft letters inviting the support of Liu Biao. \n Jia ",
+      "after_snippet": " said, \"Liu Biao loves to have to do with famous people. If…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…long views, superior to Xiao He and Chen Ping. Zhang Liao, ",
+      "after_snippet": " Chu, Li Dian, and Yue Jing are bravest of the brave,…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Wu. Lu Qian and Man Chong are my secretaries; Yu Jin and ",
+      "after_snippet": " Huang are my van leaders; Xiahou Dun is one of the world's…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…of poems; Zhang Liao might beat drums and clang gongs; ",
+      "after_snippet": " Chu might lead cattle to pasture; Yue Jing would make a…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Yu Jin might be of use to carry planks and build walls; ",
+      "after_snippet": " Huang might be employed to kill pigs and slay dogs; Xiahou…",
+      "_note": "\"Xu\" inside \"Jia Xu\" / \"Xu Chu\"; \"Xuzhou\" legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1326,
+      "action": "remove_m2m",
+      "_note": "different Liu Dai."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2383,
+      "action": "remove_m2m",
+      "_note": "different Wang Zhong."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2862,
+      "action": "remove_m2m",
+      "_note": "cn=羊琇 — different Yang Xiu (Jin)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3230,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3231,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3232,
+      "action": "remove_m2m",
+      "_note": "cn=張休 — different."
+    }
+  ]
+}

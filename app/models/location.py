@@ -8,9 +8,49 @@ Locations can also be associated directly with chapters via the
 chapter_location M2M, for places that get mentioned in a chapter
 independent of any specific Event. The chapter sidebar de-dupes
 event-pinned + directly-associated locations into one list."""
+from sqlalchemy.dialects.postgresql import JSONB
+
 from app import db
-from app.models.abstract import AbstractObject
+from app.models.abstract import AbstractObject, AbstractTag
 from app.models.chapter import Chapter
+
+
+# Conventional parent-type chain for the hierarchical types. Looked up
+# by name (the AbstractTag UNIQUE field), not id, so seed-order doesn't
+# matter. Used by the admin form to pre-filter the parent picker — the
+# database itself stays permissive (parent_id is a free FK to any
+# Location), so e.g. a PASS or BATTLEFIELD can attach to any ancestor
+# the source actually mentions.
+LOCATION_TYPE_PARENT_HIERARCHY = {
+    'Province':   None,
+    'Commandery': 'Province',
+    'County':     'Commandery',
+    'City':       'County',
+}
+
+
+def expected_parent_type_name(child_type_name):
+    """Return the LocationType.name conventionally above `child_type_name`,
+    or None for Province (top of the chain) and for non-hierarchical types
+    (Settlement, Pass, Landmark, Building, Mountain, River, Battlefield —
+    they can parent to anything)."""
+    return LOCATION_TYPE_PARENT_HIERARCHY.get(child_type_name)
+
+
+class LocationType(AbstractTag):
+    """A category for Locations (Province, Commandery, County, City,
+    Settlement, Pass, Landmark, Building, Mountain, River, Battlefield).
+    Inherits AbstractTag for the unique name, three colour columns, and
+    Font Awesome icon string.
+
+    The first four types form the conventional administrative hierarchy
+    (see LOCATION_TYPE_PARENT_HIERARCHY); the rest are free-form.
+
+    Seeded via `flask seed-location-types` (idempotent)."""
+    locations = db.relationship('Location', back_populates='location_type')
+
+    def __repr__(self):
+        return f'<LocationType {self.name}>'
 
 
 chapter_location = db.Table(
@@ -29,6 +69,53 @@ class Location(AbstractObject):
 
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
+
+    # GeoJSON Geometry object — typically a Polygon or MultiPolygon
+    # tracing the administrative boundary for area-shaped Locations
+    # (provinces, commanderies). The /map view treats latitude +
+    # longitude as taking precedence: if both lat/lng AND geojson are
+    # present on a row, the pin wins and the polygon is ignored.
+    geojson = db.Column(JSONB, nullable=True)
+
+    # Tag-style classification. Nullable so existing rows survive the
+    # migration; admins backfill from the edit page. ON DELETE SET NULL
+    # — losing a LocationType detaches its locations rather than
+    # cascading. Same pattern as event.event_type_id.
+    location_type_id = db.Column(
+        db.Integer,
+        db.ForeignKey('location_type.id', ondelete='SET NULL'),
+        nullable=True,
+        index=True,
+    )
+    location_type = db.relationship('LocationType', back_populates='locations')
+
+    # Self-referential parent. Convention is one level up the
+    # admin-division chain (CITY → COUNTY → COMMANDERY → PROVINCE), but
+    # there's no structural constraint here — a PASS or BATTLEFIELD can
+    # parent to any ancestor type the source happens to mention.
+    parent_id = db.Column(
+        db.Integer,
+        db.ForeignKey('location.id', ondelete='SET NULL'),
+        nullable=True,
+        index=True,
+    )
+    parent = db.relationship(
+        'Location',
+        remote_side='Location.id',
+        back_populates='children',
+        # Self-referential FK — without post_update, SQLAlchemy's
+        # unit-of-work sorter can't always pick an order when several
+        # parent/child Locations are in the same flush (the bulk CSV
+        # import hit this on the first pass).  post_update means
+        # SQLAlchemy issues a separate UPDATE for parent_id after the
+        # row itself has been inserted/updated, breaking the cycle.
+        post_update=True,
+    )
+    children = db.relationship(
+        'Location',
+        back_populates='parent',
+        order_by='Location.name',
+    )
 
     chapters = db.relationship(
         'Chapter',

@@ -11,7 +11,7 @@ from app.models.tag import Tag, TagAssociation
 
 from app.models.url import Url, UrlType
 
-from app.models.location import Location
+from app.models.location import Location, LocationType
 
 from app.models.event import Event, EventType
 

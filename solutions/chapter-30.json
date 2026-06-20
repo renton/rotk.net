@@ -1,0 +1,560 @@
+{
+  "chapter_num": 30,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "36 \"You\" / \"Xun You\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 10,
+      "action": "remove_m2m",
+      "_note": "8 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "5 \"Peng Ji\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "5 \"Xun Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 881,
+      "action": "remove_m2m",
+      "_note": "2 \"Shang\" ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "2 \"Wei\" ancient state"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "4 \"Zhao Rui\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 947,
+      "action": "remove_m2m",
+      "_note": "8 \"Jiang Qi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "1 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Weihuang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Weihuang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1051,
+      "action": "remove_m2m",
+      "_note": "8 \"Jiang Qi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "5 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "5 \"Guo Tu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "2 \"Cao Ren\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "3 \"Liu Ye\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1242,
+      "action": "remove_m2m",
+      "_note": "10 \"Chunyu Qiong\" LEGIT KEEP — Chunyu Qiong is a person but Chunyu County is also a place; matches are inside person name"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1270,
+      "action": "remove_m2m",
+      "_note": "9 \"Ju Shou\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "23 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "6 \"Tian Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1398,
+      "action": "remove_m2m",
+      "_note": "8 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "1 \"Jia Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…with his staff of doughty leaders all fully armed---",
+      "after_snippet": " Chu, Zhang Liao, Xu Huang, Li Dian, and others. \n Pointing…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…of doughty leaders all fully armed---Xu Chu, Zhang Liao, ",
+      "after_snippet": " Huang, Li Dian, and others. \n Pointing with his whip at…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…In his heart Cao Cao thought the contest amazing. Then ",
+      "after_snippet": " Chu whirled up his sword and went to help. From the other…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…sent out scouts to ascertain his new dispositions. One of ",
+      "after_snippet": " Huang's officers, Shi Huan, captured an enemy spy and sent…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Shi Huan, captured an enemy spy and sent him to his chief. ",
+      "after_snippet": " Huang interrogated him and found out that a convoy of…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…been sent to find out what the risks of the route were. ",
+      "after_snippet": " Huang went at once to tell Cao Cao. \n When Xun You heard…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"Whom should I send?\" asked Cao Cao. \n \"You might send ",
+      "after_snippet": " Huang. He is capable of such a task.\" \n So Xu Huang was…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…might send Xu Huang. He is capable of such a task.\" \n So ",
+      "after_snippet": " Huang was deputed, and he took with him Shi Huan, who had…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…company. And this party was supported by Zhang Liao and ",
+      "after_snippet": " Chu. \n It was night when the commissariat train of many…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…near Yuan Shao's camp. As they passed through a defile, ",
+      "after_snippet": " Huang and Shi Huan came out and stopped the train. Han…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Lan to try to intercept the raiders, and they came upon ",
+      "after_snippet": " Huang and his company. Just as Zhang He and Gao Lan were…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Gao Lan were attacking, reinforcements from Zhang Liao and ",
+      "after_snippet": " Chu came up, and the Yuan Shao's troops were between two…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…hands of Yuan Shao's guards, who took him to the adviser ",
+      "after_snippet": " You. \n Seeing from the letter that Cao Cao was short of…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Seeing from the letter that Cao Cao was short of supplies, ",
+      "after_snippet": " You went to Yuan Shao and told him, saying, \"Cao Cao and…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…forwarding of grain, Shen Pei said he had discovered that ",
+      "after_snippet": " You had been in the habit of receiving bribes while in…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…nephew were then in prison. \n At this Yuan Shao turned on ",
+      "after_snippet": " You angrily and said, \"How can you have the face to stand…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…how can I look my fellow folks in the face again?\" \n And ",
+      "after_snippet": " You drew his sword to end his life. But his people…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…shade for the sunlight?\" \n Just these few words awakened ",
+      "after_snippet": " You to consciousness of his position, and he decided to…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…lost\r\n Yuan Shao sighs; once he was great.\r\n Had he taken ",
+      "after_snippet": " You's advice,\r\n Cao Cao had not set up a state. \n Xu You…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…taken Xu You's advice,\r\n Cao Cao had not set up a state. \n ",
+      "after_snippet": " You stealthily left the camp and set out for Cao Cao's…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…of the Prime Minister. Go and tell the Prime Minister that ",
+      "after_snippet": " You of Nanyang wishes to see him.\" \n They did so. Cao Cao…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…joyfully and hastily ran out, on bare feet, to receive ",
+      "after_snippet": " You. Cao Cao went forth to greet him. They saw each other…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…bowing to the ground when near enough to his visitor. \n ",
+      "after_snippet": " You hastened to help him rise, saying, \"Sir, you, a great…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"Enough for a year.\" \n \"I think not quite,\" said ",
+      "after_snippet": " You, smiling. \n \"Well, half a year.\" \n The visitor shook…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…are a marvel of wickedness, and indeed it is true,\" said ",
+      "after_snippet": " You. \n \"But who does not know that in war there is no…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to deceit?\" replied Cao Cao. \n Then whispering in ",
+      "after_snippet": " You's ear, he said, \"Actually here I have only supplies…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…he was in. \n \"How did you find that out?\" said Cao Cao. \n ",
+      "after_snippet": " You produced the captured letter, saying, \"Who wrote…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"Who wrote that?\" \n \"Where did you get it?\" \n Whereupon ",
+      "after_snippet": " You told Cao Cao the story of the captured messenger.…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…you to me, I hope you have some plan to suggest to me.\" \n ",
+      "after_snippet": " You said, \"To oppose a great army with a small one is to…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Shao is no more.\" \n Cao Cao greatly approved. He treated ",
+      "after_snippet": " You very liberally and kept him in his camp. Forthwith he…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…victims of the treachery on the part of the newly arrived ",
+      "after_snippet": " You.\" \n \"Xu You is no traitor,\" said Cao Cao. \"He has come…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the treachery on the part of the newly arrived Xu You.\" \n \"",
+      "after_snippet": " You is no traitor,\" said Cao Cao. \"He has come sent by…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…care to ensure success. Cao Cao assigned Xun You, Jia ",
+      "after_snippet": ", and Cao Hong to guard the main camp, together with Xu…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Jia Xu, and Cao Hong to guard the main camp, together with ",
+      "after_snippet": " You; Xiahou Dun and Xiahou Yuan to guard the left camp;…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…out, Cao Cao himself in the center, with Zhang Liao and ",
+      "after_snippet": " Chu as van leaders and Xu Huang and Yu Jin as rear guard.…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the center, with Zhang Liao and Xu Chu as van leaders and ",
+      "after_snippet": " Huang and Yu Jin as rear guard. The army showed the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Qi hastened on. But soon Jiang Qi came to Zhang Liao and ",
+      "after_snippet": " Chu who cried out, \"Stop!\" \n And before Jiang Qi could…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…And so as Yuan Shao had formerly driven sway his adviser, ",
+      "after_snippet": " You, so now he had alienated two leaders and had lost his…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and his army was depressed and down-hearted. \n When ",
+      "after_snippet": " You advised Cao Cao to attack Yuan Shao as promptly as he…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…followed him. Four of the enemy generals---Zhang Liao, ",
+      "after_snippet": " Chu, Xu Huang, and Yu Jin---with their forces pressed in…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…him. Four of the enemy generals---Zhang Liao, Xu Chu, ",
+      "after_snippet": " Huang, and Yu Jin---with their forces pressed in his rear,…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Huang\"; Xuzhou matches legit if any"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2684,
+      "action": "remove_m2m",
+      "_note": "different Xu You."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2685,
+      "action": "remove_m2m",
+      "_note": "cn=許游."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    }
+  ]
+}

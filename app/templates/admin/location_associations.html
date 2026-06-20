@@ -51,7 +51,32 @@
         {% set loc = row.location %}
         <tr>
             <td>
-                <div>{{ loc.name }}</div>
+                <div>
+                    {{ loc.name }}
+                    {# Same red / green warning icons the chapter prose
+                       shows. Red:   another location in THIS chapter
+                       shares this name. Green: this location's name (or
+                       an alias) overlaps a character's name (substring
+                       either way) in this chapter. Both can appear
+                       together. #}
+                    {% if loc.id in in_chapter_dup_ids %}
+                    <i class="fa-solid fa-circle-exclamation text-danger ms-1"
+                       title="Shares a name or alias with another location in this chapter"
+                       aria-label="Shares a name or alias with another location in this chapter"></i>
+                    {% endif %}
+                    {% set overlap_chars = char_overlap_by_loc_id.get(loc.id, []) %}
+                    {% if overlap_chars %}
+                      {%- set shown   = overlap_chars[:3] -%}
+                      {%- set extra   = overlap_chars|length - shown|length -%}
+                      {%- set joined  = shown | map(attribute='name') | join(', ') -%}
+                      {%- set tooltip = 'Overlaps characters: ' ~ joined ~ ((' (+' ~ extra ~ ' more)') if extra else '') -%}
+                    <i class="fa-solid fa-circle-exclamation text-success ms-1"
+                       title="{{ tooltip }}" aria-label="{{ tooltip }}"></i>
+                    {% endif %}
+                </div>
+                {% if loc.location_type %}
+                <div class="mt-1">{{ macros.badge_widget(loc.location_type) }}</div>
+                {% endif %}
                 {% if loc.aliases %}
                 <div class="small text-muted">Aliases: {{ loc.aliases }}</div>
                 {% endif %}

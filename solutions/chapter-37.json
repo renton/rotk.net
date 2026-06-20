@@ -1,0 +1,242 @@
+{
+  "chapter_num": 37,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "12 You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "9 \"Xun Yu\"/\"Cheng Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "20 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "2 Yue Yi ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "9 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "20 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "2 \"Lu Wang\" ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "2 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "6 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "1 Liu Xiu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "2 Yue Yi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "9 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "1 She pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "10 Zhang Liang/Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "7 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1585,
+      "action": "remove_m2m",
+      "_note": "1 Runan dup"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": " As has been said ",
+      "after_snippet": " Shu hastened to the capital. When Cao Cao knew Xu Shu had…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…said Xu Shu hastened to the capital. When Cao Cao knew ",
+      "after_snippet": " Shu had arrived, he sent two of his confidants, Xun Yu and…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Cheng Yu to receive the newcomer at the city gate, and so ",
+      "after_snippet": " Shu was led first to the Prime Minister's palace. \n \"Why…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…may have the privilege of receiving your instructions.\" \n ",
+      "after_snippet": " Shu then took his leave and hastened to his mother's…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the servants came out to say Lady Xun had hanged herself. ",
+      "after_snippet": " Shu rushed in to try to save her, but was too late. A…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…time rolls on, shall never. \n At sight of his mother dead, ",
+      "after_snippet": " Shu fell in a swoon and only recovered consciousness after…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…hope this dereliction of duty may be pardoned.\" \n \"I hear ",
+      "after_snippet": " Shu is here. I have come expressly to see him,\" replied…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…think you of him?\" \n Water Mirror laughed, saying, \"If ",
+      "after_snippet": " Shu wanted to go, he was free to go. But why did he want…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Shi Guangyuan of Yingchuan, Meng Gongwei of Runan, and ",
+      "after_snippet": " Shu of Yingchuan were the closest of friends. They formed…",
+      "_note": "Xu Shu; Xuzhou legit if any"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3164,
+      "action": "remove_m2m",
+      "_note": "cn=張梁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3165,
+      "action": "remove_m2m",
+      "_note": "cn=張梁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 273,
+      "action": "remove_m2m",
+      "_note": "cn=陳瑀 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1666,
+      "action": "remove_m2m",
+      "_note": "cn=孟建 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3243,
+      "action": "remove_m2m",
+      "_note": "cn=張延."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3494,
+      "action": "remove_m2m",
+      "_note": "cn=朱儁 — different Zhu Jun (Han general, but mentioned in this chapter context perhaps)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2906,
+      "action": "remove_m2m",
+      "_note": "cn=殷馗."
+    }
+  ]
+}

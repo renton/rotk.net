@@ -1,0 +1,326 @@
+{
+  "chapter_num": 33,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "24 \"You\" pronoun + \"Xu You\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "2 \"Yu Jin\" / \"Cheng Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "9 mixed — \"Yan and Dai\" ancient regions + \"Cui Yan\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 84,
+      "action": "remove_m2m",
+      "_note": "2 \"Jiao Chu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 86,
+      "action": "remove_m2m",
+      "_note": "4 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 881,
+      "action": "remove_m2m",
+      "_note": "16 \"Yuan Shang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "1 \"Dai\" (ancient region)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "9 same as Yan Province"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "1 \"Chen Ping\" (ancient)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "4 \"Lu Xiang\"/\"Lu Kuang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1010,
+      "action": "remove_m2m",
+      "_note": "1 \"River Luo\" geographic"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "4 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "2 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "14 \"Guo Tu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "4 \"Yue Jing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "4 \"Wang Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "3 \"King Mao Dun\" (Wuhuan chieftain)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "1 \"She\" pronoun (Lady Zhen)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "1 \"Fan Li\" (ancient figure)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "11 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1345,
+      "action": "remove_m2m",
+      "_note": "4 \"Cao Pi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "11 \"Guo Jia\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Cao was entering the gate of the conquered city of Yejun, ",
+      "after_snippet": " You rode up very quickly, passed him, and pointed with his…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…formally became Imperial Protector of Jizhou. \n One day ",
+      "after_snippet": " Chu, riding in at the east gate, met Xu You, who called…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Jizhou. \n One day Xu Chu, riding in at the east gate, met ",
+      "after_snippet": " You, who called out to him, \"Would you fellows be riding…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…be riding through here if it had not been for me?\" \n ",
+      "after_snippet": " Chu replied, \"We fellows, those who survive and those who…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…are a lot of blockheads, not worth talking about,\" said ",
+      "after_snippet": " You. \n Xu Chu in his anger drew his sword and ran Xu You…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…of blockheads, not worth talking about,\" said Xu You. \n ",
+      "after_snippet": " Chu in his anger drew his sword and ran Xu You through.…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…said Xu You. \n Xu Chu in his anger drew his sword and ran ",
+      "after_snippet": " You through. Then he took Xu You's head and went to tell…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…anger drew his sword and ran Xu You through. Then he took ",
+      "after_snippet": " You's head and went to tell Cao Cao the reason. \n Said Cao…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…joke together. Why did you kill him?\" \n Cao Cao blamed ",
+      "after_snippet": " Chu very severely and gave orders that Xu You should be…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Cao Cao blamed Xu Chu very severely and gave orders that ",
+      "after_snippet": " You should be buried honorably. \n Cao Cao inquired for any…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…you accuse me of turning against you!\" \n Cao Cao ordered ",
+      "after_snippet": " Huang to go out and give battle. Yuan Tan bade Peng An…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…handed over his ensign of command to Zhang Liao who, with ",
+      "after_snippet": " Chu, Yu Jin, and Xu Huang, made a vigorous attack from…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…of command to Zhang Liao who, with Xu Chu, Yu Jin, and ",
+      "after_snippet": " Huang, made a vigorous attack from four different points,…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu You\" / \"Xu Huang\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1301,
+      "action": "remove_m2m",
+      "_note": "different Lady Liu."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2347,
+      "action": "remove_m2m",
+      "_note": "cn=王休."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2348,
+      "action": "remove_m2m",
+      "_note": "cn=王休."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2684,
+      "action": "remove_m2m",
+      "_note": "different Xu You."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2685,
+      "action": "remove_m2m",
+      "_note": "cn=許游."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3243,
+      "action": "remove_m2m",
+      "_note": "cn=張延."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3244,
+      "action": "remove_m2m",
+      "_note": "cn=張儼."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3245,
+      "action": "remove_m2m",
+      "_note": "cn=張琰."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3246,
+      "action": "remove_m2m",
+      "_note": "cn=張晏."
+    }
+  ]
+}

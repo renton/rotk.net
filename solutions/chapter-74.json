@@ -1,0 +1,89 @@
+{
+  "chapter_num": 74,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "6"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "68 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "1 Jia Xu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "10 Wei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "9 Dong Heng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 966,
+      "action": "remove_m2m",
+      "_note": "1 Taishan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "2 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "68 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "3 Cao Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "2 Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "1 Jia Xu"
+    },
+    {
+      "target_type": "character",
+      "target_id": 408,
+      "action": "remove_m2m",
+      "_note": "cn=董朝."
+    },
+    {
+      "target_type": "character",
+      "target_id": 409,
+      "action": "remove_m2m",
+      "_note": "cn=董超."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "."
+    }
+  ]
+}

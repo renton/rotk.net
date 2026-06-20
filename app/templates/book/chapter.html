@@ -38,10 +38,37 @@
 
 <hr>
 
-<div class="page-copy mt-4">
+<div class="page-copy mt-4 pb-5">
     <div class="row">
         <div class="col-12 col-lg-8">
             {{ chapter_content | safe }}
+
+            {# Prev / Next chapter nav under the prose. Either side
+               renders as an invisible spacer when there's no
+               neighbour (chapter 1 lacks prev; final chapter lacks
+               next) so the remaining button stays anchored to its
+               edge of the row. #}
+            <nav class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top"
+                 aria-label="Chapter navigation">
+                {% if prev_chapter %}
+                <a href="{{ url_for('main.chapter', chapter_num=prev_chapter.chapter_num) }}"
+                   class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1" aria-hidden="true"></i>
+                    Chapter {{ prev_chapter.chapter_num }}
+                </a>
+                {% else %}
+                <span></span>
+                {% endif %}
+                {% if next_chapter %}
+                <a href="{{ url_for('main.chapter', chapter_num=next_chapter.chapter_num) }}"
+                   class="btn btn-outline-secondary">
+                    Chapter {{ next_chapter.chapter_num }}
+                    <i class="fa-solid fa-arrow-right ms-1" aria-hidden="true"></i>
+                </a>
+                {% else %}
+                <span></span>
+                {% endif %}
+            </nav>
         </div>
         {# Sticky sidebar at lg+ (styles.css → .chapter-sidebar @media). On
            phones/tablets it stacks below the prose as a normal column. #}
@@ -64,6 +91,7 @@
                     {% set tab_set = 'char-' ~ character.id %}
                     {% set chapter_count = mention_counts.get(character.id, 0) %}
                     {% set book_count = character.book_mention_count or 0 %}
+                    {% set panel_char_summary = char_summary_by_id.get(character.id, '') %}
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                       <div class="d-flex align-items-center gap-2 mb-0">
                         <h6 class="mb-0">
@@ -105,6 +133,19 @@
                       <div class="small text-muted mb-3">
                         {{ book_count }} mention{{ '' if book_count == 1 else 's' }} in the book
                       </div>
+
+                      {# Per-(chapter, character) editorial summary — the same
+                         text shown next to the name in the Chapter Characters
+                         list, repeated here so a reader who jumped straight to
+                         the panel still sees the chapter-scoped framing. #}
+                      {% if panel_char_summary %}
+                      <div class="chapter-section-card rounded p-2 mb-3">
+                        <div class="small text-muted fw-bold mb-1">In this chapter:</div>
+                        <div class="small fst-italic chapter-char-summary">
+                          {{ panel_char_summary }}
+                        </div>
+                      </div>
+                      {% endif %}
 
                       {% if portraits %}
                         {% if portraits|length > 1 %}
@@ -245,6 +286,7 @@
                         {% for character in characters %}
                             {% set chapter_count = mention_counts.get(character.id, 0) %}
                             {% set book_count = character.book_mention_count or 0 %}
+                            {% set char_summary = char_summary_by_id.get(character.id, '') %}
                             <tr class="chapter-character-link"
                                 data-character-id="{{ character.id }}"
                                 role="button"
@@ -258,6 +300,14 @@
                                            aria-label="fictional"></i>
                                         {% endif %}
                                     </div>
+                                    {% if char_summary %}
+                                    {# Editorial summary of this character's role
+                                       in this chapter — set per (chapter, character)
+                                       on /admin/chapter-associations. #}
+                                    <div class="small fst-italic mt-1 mb-1 chapter-char-summary">
+                                        {{ char_summary }}
+                                    </div>
+                                    {% endif %}
                                     <div class="small text-muted">
                                         {{ chapter_count }} mention{{ '' if chapter_count == 1 else 's' }} in this chapter
                                     </div>
@@ -321,6 +371,32 @@
               </div>
             </div>
 
+            {# Map accordion: mini Leaflet view scoped to just this
+               chapter's positioned locations. Sits above Locations
+               so clicking a location item below opens this accordion
+               and pans / highlights the chosen pin or polygon. #}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="sidebar-map">
+                <button class="accordion-button collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#collapseMap"
+                        aria-expanded="false" aria-controls="collapseMap">
+                  Map ({{ chapter_map_items|length }})
+                </button>
+              </h2>
+              <div id="collapseMap" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  {% if not chapter_map_items %}
+                  <div class="text-muted small">No positioned locations for this chapter yet.</div>
+                  {% else %}
+                  <div id="chapter-map" class="chapter-map"></div>
+                  <script id="chapter-map-items"
+                          type="application/json"
+                          nonce="{{ csp_nonce }}">{{ chapter_map_items|tojson }}</script>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
             {# Locations accordion: deduped locations from the events
                above (a location can be pinned by many events). Same
                URL-list pattern. #}
@@ -339,15 +415,64 @@
                   {% else %}
                   <ul class="list-unstyled mb-0">
                     {% for loc in chapter_locations %}
-                    <li class="mb-3" id="location-item-{{ loc.id }}">
-                      <div>
-                        <strong>{{ loc.name }}</strong>
-                        {% if loc.latitude is not none and loc.longitude is not none %}
-                        <span class="text-muted small ms-1">
-                          ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
-                        </span>
+                    {% set has_geo = (loc.latitude is not none and loc.longitude is not none) or loc.geojson is not none %}
+                    <li class="border rounded p-2 mb-2 bg-light {% if has_geo %}location-item-clickable{% endif %}"
+                        id="location-item-{{ loc.id }}"
+                        {% if has_geo %}data-show-on-map="{{ loc.id }}"
+                        role="button" tabindex="0"
+                        title="Click to show on map"{% endif %}>
+                      <div class="d-flex justify-content-between align-items-start gap-2">
+                        <div>
+                          <strong>{{ loc.name }}</strong>
+                          {% if loc.location_type %}
+                          <span class="ms-1">{{ macros.badge_widget(loc.location_type) }}</span>
+                          {% endif %}
+                          {% if has_geo %}
+                          <i class="fa-solid fa-map-pin text-muted ms-1 small"
+                             aria-hidden="true" title="Positioned on map"></i>
+                          {% endif %}
+                          {% if loc.latitude is not none and loc.longitude is not none %}
+                          <div class="text-muted small mt-1">
+                            ({{ '%.4f'|format(loc.latitude) }}, {{ '%.4f'|format(loc.longitude) }})
+                          </div>
+                          {% endif %}
+                        </div>
+                        {% if current_user.is_authenticated and current_user.is_administrator %}
+                        {# Admin-only quick edit: small pencil icon on the right.
+                           Carries the chapter URL through ?back so the
+                           edit page's "Back" button lands the admin
+                           right back on the chapter they were reading. #}
+                        <a href="{{ url_for('main.edit_location', id=loc.id, back=url_for('main.chapter', chapter_num=chapter.chapter_num)) }}"
+                           class="btn btn-sm btn-outline-secondary py-0 px-1 lh-1"
+                           title="Edit this location" aria-label="Edit this location">
+                          <i class="fa-solid fa-pencil" aria-hidden="true"></i>
+                        </a>
                         {% endif %}
                       </div>
+                      {# Hierarchy chain: render closest-parent-last so
+                         the breadcrumb reads root → leaf, e.g.
+                         "Bing Province › Dingxiang Commandery › Luo County".
+                         Each crumb links to /locations filtered by that
+                         ancestor's id (matching the parent-link cells on
+                         the listing page). #}
+                      {% set chain = ancestry_by_loc_id.get(loc.id, []) %}
+                      {% if chain %}
+                      <div class="small text-muted mt-1">
+                        {% for ancestor in chain|reverse %}
+                          {%- set atype = ancestor.location_type.name if ancestor.location_type else '' -%}
+                          {%- if atype == 'Province' -%}
+                            <a href="{{ url_for('main.locations', province_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                          {%- elif atype == 'Commandery' -%}
+                            <a href="{{ url_for('main.locations', commandery_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                          {%- elif atype == 'County' -%}
+                            <a href="{{ url_for('main.locations', county_id=ancestor.id) }}">{{ ancestor.name }}</a>
+                          {%- else -%}
+                            {{ ancestor.name }}
+                          {%- endif -%}
+                          {% if not loop.last %} <span class="mx-1">›</span> {% endif %}
+                        {% endfor %}
+                      </div>
+                      {% endif %}
                       {% set list_urls = loc.urls %}
                       {% if list_urls %}
                       <div class="sidebar-url-indent mt-1">
@@ -391,4 +516,14 @@
 {{ super() }}
 <script src="{{ url_for('static', filename='js/chapter.js') }}"></script>
 <script src="{{ url_for('static', filename='js/chapter_style.js') }}"></script>
+{# Leaflet + the shared RotkMap module are only needed when this
+   chapter has at least one positioned location. We keep the unconditional
+   load for simplicity — both are cached after the first chapter view.
+   Total weight is ~50 KB gzipped. #}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='map.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/map_base.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chapter_map.js') }}"></script>
 {% endblock %}

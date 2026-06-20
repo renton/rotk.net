@@ -1,0 +1,395 @@
+{
+  "chapter_num": 36,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "10 \"You\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "12 \"Guan Yu\" / \"River Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "9 \"Zhang Liang\" ancient / \"Zhuge Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "1 \"Yin Yang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "1 \"Yue Yi\" ancient sage"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "6 \"Zhao Zilong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "24 \"Xu Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "1 \"Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "9 \"Zhang Liang\" / \"Zhuge Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Wang\" ancient sage"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1010,
+      "action": "remove_m2m",
+      "_note": "1 \"Lord Kou of Luo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "1 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "11 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "1 \"Yue Yi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "20 \"Cao Ren\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "1 \"Emperor Ling\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "24 \"Xu Shu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "3 \"She\" pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "1 \"Yin Yang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "3 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "2 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "14 \"Shan Fu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "4 \"Kou Feng\" / \"Liu Feng\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…He was a regular disputant with Sima Hui. His real name is ",
+      "after_snippet": " Shu and he comes from Yingchuan. Shan Fu is merely an…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Liu Bei, his wings will soon grow. What is to be done?\" \n \"",
+      "after_snippet": " Shu is there now. But if you wanted him, it would not be…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…add a keen desire for revenge to the motives which led ",
+      "after_snippet": " Shu to labor in the interest of Liu Bei. You had better…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…interest of Liu Bei. You had better keep her here so that ",
+      "after_snippet": " Shu's body and his thoughts may be in different places. He…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Shan Fu quickly tore it open and read: \n Tears gushed from ",
+      "after_snippet": " Shu's eyes as he read, and with the letter in his hand he…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…of receiving your instruction.\" \n Having said farewell, ",
+      "after_snippet": " Shu prepared to leave at once. However, at Liu Bei's wish,…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the night. \n Then Sun Qian said privately to his master, \"",
+      "after_snippet": " Shu is indeed a genius, but he has been here long enough…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…him at all costs and not let him go. When Cao Cao sees ",
+      "after_snippet": " Shu does not come, he will put the mother to death, and…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…come, he will put the mother to death, and that will make ",
+      "after_snippet": " Shu the more zealous in your service, for he will burn to…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…you may serve well your new lord and become famous.\" \n ",
+      "after_snippet": " Shu wept as he replied, \"I am but a poor ignorant person…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…in the hills and hide in the forests,\" said Liu Bei. \n ",
+      "after_snippet": " Shu said, \"I had in my heart for you the position of…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…\"How can I permit such extravagant praise?\" said ",
+      "after_snippet": " Shu. \"I am only a useless blockhead.\" \n As he moved off,…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…him a little further, and yet a little further, till ",
+      "after_snippet": " Shu said, \"I will not trouble you, O Princely One, to come…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Let us say our farewell here.\" \n Liu Bei dismounted, took ",
+      "after_snippet": " Shu by the hands, and said, \"Alas! We part. Each goes his…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…if we shall meet again?\" \n His tears fell like rain and ",
+      "after_snippet": " Shu wept also. But the last goodbyes were said. When the…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…said his officers. \n \"Because they hinder my sight of ",
+      "after_snippet": " Shu.\" \n Suddenly they saw Xu Shu galloping back. \n Said…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…they hinder my sight of Xu Shu.\" \n Suddenly they saw ",
+      "after_snippet": " Shu galloping back. \n Said Liu Bei, \"He is returning: Can…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…he is going to stay?\" \n So he hastened forward to meet ",
+      "after_snippet": " Shu, and when they got near enough, he cried, \"This return…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…is surely for no slight reason.\" \n Checking his horse, ",
+      "after_snippet": " Shu said, \"In the turmoil of my feelings, I forgot to say…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…he. \n Someone has celebrated in verse this interview where ",
+      "after_snippet": " Shu from horseback recommended Zhuge Liang: \n Liu Bei…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…sleep. \n Thus was Zhuge Liang recommended to Liu Bei, and ",
+      "after_snippet": " Shu rode away. \n Now Liu Bei understood the speech of the…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Nanyang. \n Under the influence of his emotions at parting, ",
+      "after_snippet": " Shu had mentioned the name and betrayed the retreat of his…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to play the part of helper in Liu Bei's scheme, so ",
+      "after_snippet": " Shu determined to go to visit him. He therefore took his…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and dismounted at the cottage. \n Asked why he had come, ",
+      "after_snippet": " Shu replied, \"I wished to serve Liu Bei of Yuzhou, but my…",
+      "_note": "\"Xu\" inside \"Xu Shu\"; Xuzhou legit if any"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3164,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 — not 張良 the Han strategist (in DB as missing)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3165,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 — same."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙."
+    }
+  ]
+}

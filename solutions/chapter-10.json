@@ -1,0 +1,347 @@
+{
+  "chapter_num": 10,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Dong Zhuo\" (warlord)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "all matches were the English pronoun \"you\" or \"Xun You\" (character)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Zhang Ji\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Yu\" inside person names (Ma Yu, Xun Yu, Cheng Yu, Yu Jin)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "only match was \"Zhang Liang\" (Han strategist)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Dian Wei\" (Cao Cao's general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "only match was \"Liu Dai\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Chen Gong\" (defector)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "only match was \"Zhang Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "only match was \"Lu Qian\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1013,
+      "action": "remove_m2m",
+      "_note": "only match was Lu Qian's home Wucheng — that's the Shanyang Wucheng, not this Bing Province one"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "only match was \"Lu Qian\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Yu\" inside person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "all 12 matches were \"Guo Si\" or \"Guo Jia\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "only match was \"Liu Xiu\" (Han founder, person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "only match was \"Mao Jie\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "both matches were \"Liu Ye\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1215,
+      "action": "remove_m2m",
+      "_note": "all 12 matches were \"Han Sui\" (warlord)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1286,
+      "action": "remove_m2m",
+      "_note": "all 16 matches were \"Fan Chou\" or \"Liu Fan\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Zhang\" inside Zhang Ji / Liang / Miao / Kai person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1390,
+      "action": "remove_m2m",
+      "_note": "all 3 matches were \"Bian Rang\" (person)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "all matches were \"Jia Xu\" or \"Guo Jia\" (persons)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1431,
+      "action": "remove_m2m",
+      "_note": "wrong Wucheng — text refers to Shanyang Commandery's Wucheng, not Jing Province's"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1456,
+      "action": "remove_m2m",
+      "_note": "wrong Juancheng — text means Juancheng County [1296] in Yan Province"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "exclude",
+      "match_text": "Dong",
+      "before_snippet": "…ranks. And once more the capital was free of troops. \n ",
+      "after_snippet": " Zhuo's followers, having so far succeeded, did not forget…",
+      "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "exclude",
+      "match_text": "Dong",
+      "before_snippet": "…may be said justly that Heaven was exceedingly angry with ",
+      "after_snippet": " Zhuo. \n So now Li Jue and Guo Si wielded the real power of…",
+      "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "exclude",
+      "match_text": "Dong",
+      "before_snippet": "…dared attempt an attack on the party newly risen from ",
+      "after_snippet": " Zhuo's disaffection, while on the other hand Jia Xu never…",
+      "_note": "\"Dong\" matched inside \"Dong Zhuo\" (the warlord); the 4 \"Dongjun\" matches are legitimate"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3132,
+      "action": "remove_m2m",
+      "_note": "cn=張緝 — Wei politician (died 254). Not chapter 10's Zhang Ji."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3133,
+      "action": "remove_m2m",
+      "_note": "cn=張既 — Cao Cao's official (died 223). Not chapter 10's Zhang Ji."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3135,
+      "action": "remove_m2m",
+      "_note": "cn=張機 — Zhang Zhongjing the physician. Not a Dong Zhuo lieutenant."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3136,
+      "action": "remove_m2m",
+      "_note": "cn=張吉 — Han dynasty politician. Not chapter 10's Zhang Ji."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3175,
+      "action": "remove_m2m",
+      "_note": "Zhang Miao — different person (Gaoling, Cao Wei era)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3176,
+      "action": "remove_m2m",
+      "_note": "Zhang Miao — different person (Jin dynasty)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2233,
+      "action": "remove_m2m",
+      "_note": "cn=王訪 — different Wang Fang (Han dynasty)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different Chen Gong (Han dynasty general from Jiangxia)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁 — different Cheng Yu (Liu Zhang faction)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "Jia Xu — different person (Cao Wei general, aliases Jia Si)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1325,
+      "action": "remove_m2m",
+      "_note": "Liu Dai the Yanzhou governor died 192. Chapter 10's \"Liu Dai then submitted\" is the Cao Cao general [1326]."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2756,
+      "action": "remove_m2m",
+      "_note": "cn=荀俁 — different Xun Yu (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2758,
+      "action": "remove_m2m",
+      "_note": "cn=荀禹 — different Xun Yu (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1631,
+      "action": "remove_m2m",
+      "_note": "cn=馬玉 — different Ma Yu (Shu Han era)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different Yuan Shao (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3164,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 (Yellow Turban, died 184). Wrong; metaphor is 張良 the Han strategist, missing from DB."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3165,
+      "action": "remove_m2m",
+      "_note": "cn=張梁 (Eastern Wu general). Wrong; metaphor is 張良 the Han strategist, missing from DB."
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…their generals as to how to meet the attack. \n Adviser Jia ",
+      "after_snippet": " said, \"Since the attackers are coming from a distance, our…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…ensign!\" \n \"To fight forthwith means defeat,\" said Jia ",
+      "after_snippet": ". \n Li Meng and Wang Fang cried with one voice, \"If we…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…heads! But if we win, then your head is forfeit.\" \n Jia ",
+      "after_snippet": " then suggested to Li Jue and Guo Si, saying, \"Seventy…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…under the hand of one young leader, they knew that Jia ",
+      "after_snippet": " had given good advice and was gifted with clear…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to wreak vengeance on his general. \n But his adviser Jia ",
+      "after_snippet": " again came in, saying, \"The people are yet unsettled: It…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…from Dong Zhuo's disaffection, while on the other hand Jia ",
+      "after_snippet": " never ceased to urge his masters to exert themselves for…",
+      "_note": "\"Xu\" matched inside \"Jia Xu\" the person; the 5 \"Xuzhou\" matches are legitimate Xu Province references"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1256,
+      "action": "exclude",
+      "match_text": "Capital District",
+      "before_snippet": "…of the Flying Chariots, Lord of Chiyang, Commander of ",
+      "after_snippet": ", Court Administrator, and granted Military Insignia. \n Guo…",
+      "_note": "CONTEXT OVERRIDE: \"Capital District\" is configured as an alias on Luoyang County (canonical Sili Province = Luoyang area). But in this snippet, Guo Si is appointed \"Commander of Capital District\" by Dong Zhuo's lieutenants ruling from Chang'an in 192 AD — the court physically moved there in 190. The metropolitan area Guo Si actually commands is the Chang'an region, not Luoyang. Excluding this snippet from Luoyang; ideally \"Capital District\" should also be a chapter-10 keyword on Chang'an County [1262] (admin UI fix)."
+    }
+  ]
+}

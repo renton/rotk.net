@@ -7,6 +7,11 @@
 
 {% block page_content %}
 
+{# Full current URL with query string — threaded through every Edit link
+   as ?back=… so the edit page can return the admin to the exact filters
+   + page they were on. #}
+{% set back_url = request.path + ('?' + request.query_string.decode() if request.query_string else '') %}
+
 {# Filter state — set once and reused for tab links + pagination so URLs
    stay consistent. Each may be a Model object (from QuerySelectField)
    or None; we pass `.id` when present, else blank string. #}
@@ -97,7 +102,7 @@
                 <td>
                     <div>
                         {% if current_user.is_authenticated and current_user.is_administrator %}
-                            <a href="{{ url_for('main.edit_character', id=character.id) }}">{{ character.name }}</a>
+                            <a href="{{ url_for('main.edit_character', id=character.id, back=back_url) }}">{{ character.name }}</a>
                         {% else %}
                             {{ character.name }}
                         {% endif %}

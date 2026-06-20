@@ -100,12 +100,26 @@
     });
     panel.style.display = 'block';
 
+    // Scroll the freshly-shown panel into view within the sticky sidebar
+    // so the user lands on the character info even when the click came
+    // from the Chapter Characters list further down the column. Defer
+    // until after the accordion finishes expanding (otherwise the
+    // target's final position is wrong and the scroll lands short).
+    var doScrollPanel = function () {
+      panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+
     var collapseElement = document.getElementById('collapseOne');
     if (collapseElement && !collapseElement.classList.contains('show')) {
       var accordionButton = document.querySelector('#sidebar-character-info .accordion-button');
       if (accordionButton) {
+        collapseElement.addEventListener('shown.bs.collapse', doScrollPanel, { once: true });
         accordionButton.click();
+      } else {
+        doScrollPanel();
       }
+    } else {
+      doScrollPanel();
     }
   }
 
@@ -124,26 +138,80 @@
     }
   });
 
-  // Event / location inline refs open the matching sidebar accordion and
-  // briefly highlight the specific row. Deliberately NO scrollIntoView:
-  // on mobile that would yank the whole page down to the stacked sidebar,
-  // which is more jarring than helpful — the highlight gives the visual
-  // cue, the reader can flick down to the sidebar themselves if they
-  // want to see more.
+  // Event / location inline refs open the matching sidebar accordion,
+  // briefly highlight the specific row, and (on desktop only) scroll
+  // the page so the row is in view. We skip scrollIntoView on mobile
+  // — the sidebar stacks under the prose there, and scrolling would
+  // yank the user away from the paragraph they were reading. On
+  // desktop the sidebar sits next to the prose, so the page scroll
+  // brings the row into view without losing the reader's place.
   function showAccordionItem(collapseId, itemId) {
     var collapseEl = document.getElementById(collapseId);
-    if (collapseEl && typeof bootstrap !== 'undefined') {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false }).show();
-    }
     var item = itemId ? document.getElementById(itemId) : null;
     if (!item) return;
+
     // CSS animates a yellow-fade-out via the .sidebar-flash class.
-    // Re-trigger by removing + re-adding so a second click flashes again.
+    // Re-trigger by removing + re-adding (with a reflow in between) so
+    // a second click on the same item flashes again.
     item.classList.remove('sidebar-flash');
-    // Force a reflow so the browser actually treats the next add as a
-    // fresh class change rather than a no-op.
     void item.offsetWidth;
     item.classList.add('sidebar-flash');
+
+    var scrollToItem = function () {
+      if (isMobile()) return;
+      // block: 'nearest' scrolls only as much as needed — won't jump
+      // up when the item is already visible. behavior: 'smooth' keeps
+      // the motion intentional rather than jolty.
+      item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+
+    if (collapseEl && typeof bootstrap !== 'undefined') {
+      var inst = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+      if (collapseEl.classList.contains('show')) {
+        // Already open — the layout's settled, scroll right away.
+        scrollToItem();
+      } else {
+        // Defer scrolling until the accordion finishes expanding,
+        // otherwise the item's final position isn't known yet and
+        // the scroll lands short.
+        collapseEl.addEventListener('shown.bs.collapse', scrollToItem, { once: true });
+        inst.show();
+      }
+    } else {
+      scrollToItem();
+    }
+  }
+
+  // Open the Map accordion, highlight the location on the map, and
+  // scroll the Map section to the top of the sticky sidebar. Used
+  // when an inline .location-ref is clicked for a geo-positioned
+  // location; non-geo locations fall back to the old Locations-
+  // accordion behaviour.
+  //
+  // We deliberately use block:'start' against the accordion-header
+  // (#sidebar-map) rather than block:'nearest' against the map div:
+  // 'nearest' is a no-op whenever any ancestor scroll container
+  // already shows the target, which is most of the time given the
+  // sidebar's max-height:100vh layout. 'start' guarantees the user
+  // sees the "Map" heading at the top of the sidebar viewport every
+  // click, which is the requested UX.
+  function showLocationOnMap(locationId) {
+    var mapApi = window.rotkChapterMap;
+    if (!mapApi) return false;
+    mapApi.showLocation(parseInt(locationId, 10));
+    if (isMobile()) return true;
+    var mapAccordion = document.getElementById('collapseMap');
+    var mapHeader = document.getElementById('sidebar-map');
+    if (!mapAccordion || !mapHeader) return true;
+    var doScroll = function () {
+      mapHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    if (mapAccordion.classList.contains('show')) {
+      doScroll();
+    } else {
+      mapAccordion.addEventListener('shown.bs.collapse', doScroll, { once: true });
+    }
+    return true;
   }
 
   document.addEventListener('click', function (event) {
@@ -156,7 +224,14 @@
     var loc = event.target.closest('.location-ref');
     if (loc) {
       var lid = loc.getAttribute('data-location-id');
-      showAccordionItem('collapseLocations', lid ? 'location-item-' + lid : null);
+      if (!lid) return;
+      // Geo-positioned locations get the map treatment; others (no
+      // lat/lng AND no geojson) have no pin to show, so fall back to
+      // the Locations accordion + row-flash like before.
+      var item = document.getElementById('location-item-' + lid);
+      var hasGeo = item && item.hasAttribute('data-show-on-map');
+      if (hasGeo && showLocationOnMap(lid)) return;
+      showAccordionItem('collapseLocations', 'location-item-' + lid);
     }
   });
 

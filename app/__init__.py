@@ -39,6 +39,13 @@ def _build_csp(nonce):
         "default-src 'self'; "
         "img-src 'self' https://cdn.jsdelivr.net "
             "https://www.google-analytics.com https://www.googletagmanager.com "
+            # ESRI ArcGIS Online tile services for the /map view —
+            # World_Terrain_Base gives shaded relief + water with no
+            # roads / labels, which keeps the modern Chinese road
+            # network and place names from cluttering a Three Kingdoms
+            # era map. Served from server.arcgisonline.com.
+            "https://server.arcgisonline.com "
+            "https://services.arcgisonline.com "
             "data:; "
         f"script-src 'self' https://cdn.jsdelivr.net "
             f"https://www.googletagmanager.com 'nonce-{nonce}'; "

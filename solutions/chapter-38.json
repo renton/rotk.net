@@ -1,0 +1,323 @@
+{
+  "chapter_num": 38,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "2 Zhuo"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "9 You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "remove_m2m",
+      "_note": "1 \"Lu Ji of same place\" same as Runan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 49,
+      "action": "remove_m2m",
+      "_note": "1 \"Cheng Bing\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "9 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "1 Yan Jun person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "remove_m2m",
+      "_note": "7 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "18 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 89,
+      "action": "remove_m2m",
+      "_note": "11 Gan Ning"
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "2 Gu Yong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "1 River Wei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "4 Zhang Zhao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 947,
+      "action": "remove_m2m",
+      "_note": "1 Prince Huan of Qi ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "4 mixed"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "4 Xu Shu / Ba and Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 992,
+      "action": "remove_m2m",
+      "_note": "3 \"Dai Yuan\" person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "1 Yan Jun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "2 Zhuo"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "4 Chen Jiu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "18 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "9 Lu Wang/Lu Ji"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1010,
+      "action": "remove_m2m",
+      "_note": "1 Luo Tong person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1013,
+      "action": "remove_m2m",
+      "_note": "1 Wucheng — KEEP if right"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "9 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1051,
+      "action": "remove_m2m",
+      "_note": "1 Prince Huan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "9 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "1 Wu Jing person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "1 Liu Xiu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "4 mixed"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "5 Huan and Ling/Ling Cao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "4 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1208,
+      "action": "remove_m2m",
+      "_note": "3 Deng Long"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "2 She pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "3 King Wen / Wen Ping"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "16 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "12 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "2 Fu Ying person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1390,
+      "action": "remove_m2m",
+      "_note": "3 Bian Hong person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "1 Ding Feng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1431,
+      "action": "remove_m2m",
+      "_note": "1 Wucheng wrong place"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1585,
+      "action": "remove_m2m",
+      "_note": "2 Runan dup"
+    },
+    {
+      "target_type": "character",
+      "target_id": 2122,
+      "action": "remove_m2m",
+      "_note": "cn=孫異 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2123,
+      "action": "remove_m2m",
+      "_note": "cn=孫怡 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3218,
+      "action": "remove_m2m",
+      "_note": "cn=張溫 — different Zhang Wen."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1506,
+      "action": "remove_m2m",
+      "_note": "cn=陸機 — different Lu Ji (Jin dynasty scholar)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2773,
+      "action": "remove_m2m",
+      "_note": "cn=嚴峻 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2777,
+      "action": "remove_m2m",
+      "_note": "cn=顏俊 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3124,
+      "action": "remove_m2m",
+      "_note": "cn=張弘."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3125,
+      "action": "remove_m2m",
+      "_note": "cn=張弘."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3273,
+      "action": "remove_m2m",
+      "_note": "different Zhang Zhao."
+    },
+    {
+      "target_type": "character",
+      "target_id": 383,
+      "action": "remove_m2m",
+      "_note": "cn=丁封 — different Ding Feng (Ding Feng's brother, not the same person)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2619,
+      "action": "remove_m2m",
+      "_note": "Duplicate Lady Xu record — keep [2618]."
+    }
+  ]
+}

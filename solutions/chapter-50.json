@@ -1,0 +1,269 @@
+{
+  "chapter_num": 50,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "3 \"Zi Zhuo\" ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "8 You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 22,
+      "action": "remove_m2m",
+      "_note": "2 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "22 Zhou Yu/Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "4 Ma Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "10 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 89,
+      "action": "remove_m2m",
+      "_note": "6 Gan Ning"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "1 Wei state ancient"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "4 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "4 Ma Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "3 Zi Zhuo"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "10 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "5 Lu Meng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "5 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1052,
+      "action": "remove_m2m",
+      "_note": "2 Wu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "22 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "4 Guo Jia"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1117,
+      "action": "remove_m2m",
+      "_note": "1 Yue Jing"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "1 Mao Jie"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "4 Cao Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "1 Ling Tong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "1 Wen Ping"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "16 Zhang Liao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "3 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "4 Guo Jia"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…Minister, I am here to rescue you!\" \n The speaker was ",
+      "after_snippet": " Huang, and he attacked the pursuers and held them off. \n A…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to promise escape, but soon they saw a camp on a hill top. ",
+      "after_snippet": " Huang went ahead to reconnoiter and found the officers in…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and long have I been waiting here!\" \n Cao Cao ordered ",
+      "after_snippet": " Huang and Zhang He to engage this new opponent, and he…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…was terrified. However, these proved to be Li Dian and ",
+      "after_snippet": " Chu escorting some of his advisers whom he saw with joy.…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…grew cold within at the sight of the terrible warrior. ",
+      "after_snippet": " Chu, mounted on a bare-backed horse, rode up to engage…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…horse, rode up to engage him, and Zhang Liao and ",
+      "after_snippet": " Huang galloped up to his aid. The three gathered about…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…fear of pursuit, a party of one hundred under Zhang Liao, ",
+      "after_snippet": " Chu, and Xu Huang was told off to hasten the workers and…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…a party of one hundred under Zhang Liao, Xu Chu, and ",
+      "after_snippet": " Huang was told off to hasten the workers and slay any that…",
+      "_note": "Xu Huang; Xuzhou legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 973,
+      "action": "remove_m2m",
+      "_note": "Han diff."
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan."
+    },
+    {
+      "target_type": "character",
+      "target_id": 310,
+      "action": "remove_m2m",
+      "_note": "cn=程郁."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2142,
+      "action": "remove_m2m",
+      "_note": "wait Taishi Ci IS in chapter — but Zhang Zi cluster, skip"
+    },
+    {
+      "target_type": "character",
+      "target_id": 3283,
+      "action": "remove_m2m",
+      "_note": "cn=張咨 — different."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵."
+    }
+  ]
+}

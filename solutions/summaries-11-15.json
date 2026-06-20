@@ -1,0 +1,1287 @@
+[
+  {
+    "chapter_num": 11,
+    "character_id": 1311,
+    "summary": "Liu Bei; arrives at Beihai to rescue Kong Rong from the Yellow Turban siege at the head of Zhao Yun's relief force. Then moves on to Xuzhou at Mi Zhu's request to lift Cao Cao's siege of Tao Qian - Liu Bei's first major appearance as an independent leader, and the start of his alignment with Xuzhou."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1117,
+    "summary": "Kong Rong; Governor of Beihai; besieged by Yellow Turban remnants under Guan Hai. Sends Mi Zhu south for help and personally welcomes Liu Bei when Taishi Ci and Zhao Yun's combined relief breaks the siege."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2142,
+    "summary": "Taishi Ci; cuts his way alone through the besieging Yellow Turbans at Beihai to fetch help, returns and slays the rebel chief Guan Hai. The chapter's spotlight warrior."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 692,
+    "summary": "Guan Hai; Yellow Turban chief besieging Beihai; killed by Taishi Ci in single combat."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1682,
+    "summary": "Mi Zhu's debut - wealthy Donghai merchant whose family Tao Qian has just appointed to office. Rides north to fetch Kong Rong and Liu Bei to lift the Cao Cao siege; carries the offer to make Liu Bei Governor of Xuzhou. The Mi family will follow Liu Bei for the rest of his career."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2161,
+    "summary": "Tao Qian; old, ailing, and besieged by Cao Cao's vengeance army at Xuzhou. Offers Liu Bei the governorship three times in this chapter - Liu Bei refuses each time. Tao Qian's two sons are mentioned as too weak to inherit."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 86,
+    "summary": "Besieging Xuzhou with the vengeance army for his father's murder; persuaded to lift the siege when Lu Bu attacks Yanzhou behind him at Chen Gong's invitation. Turns the army around to recover his base - the rest of the chapter is the start of his war with Lu Bu."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 214,
+    "summary": "Chen Gong; opens the Lu Bu/Cao Cao war by inviting Lu Bu to seize Yanzhou while Cao Cao is besieging Xuzhou. Sets the strategy that will tie Cao Cao up for two years."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3242,
+    "summary": "Zhang Yan; Black Mountain bandit chief; defeated by Yuan Shao and Lu Bu's coalition before Lu Bu drifts to Cao Cao's territory."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 620,
+    "summary": "Gao Shun; Lu Bu's general; enters Lu Bu's command structure in the early Yanzhou raid."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3166,
+    "summary": "Zhang Liao; one of Lu Bu's eight named generals as the Yanzhou raid takes shape."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 824,
+    "summary": "Hao Meng; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 293,
+    "summary": "Cheng Lian; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 882,
+    "summary": "Hou Cheng; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2026,
+    "summary": "Song Xian; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2416,
+    "summary": "Wei Xu; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2707,
+    "summary": "Xue Lan; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3042,
+    "summary": "Zang Ba; one of Lu Bu's eight named generals."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 139,
+    "summary": "Cao Xing; Lu Bu's general; later puts the arrow into Xiahou Dun's eye but here just enters the field at Puyang."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 207,
+    "summary": "Chen Deng; named in the chapter - his role with the Chen family of Xuzhou will expand."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 376,
+    "summary": "Dian Wei; rescues Cao Cao at Puyang from Lu Bu's encirclement - battles down the line with twin halberds, axes, then his fists. The chapter's signature feat."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 100,
+    "summary": "Cao Hong; serves under Cao Cao in the Yanzhou recovery."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 123,
+    "summary": "Cao Ren; serves under Cao Cao in the Yanzhou recovery."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1158,
+    "summary": "Li Dian; serves under Cao Cao at Puyang."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; serves under Cao Cao at Puyang."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2953,
+    "summary": "Yu Jin; serves under Cao Cao at Puyang."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 309,
+    "summary": "Cheng Yu; advises Cao Cao to lift the Xuzhou siege the moment news of Lu Bu's Yanzhou raid arrives."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 737,
+    "summary": "Guo Jia; joins Cheng Yu's argument for retreat from Xuzhou."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2755,
+    "summary": "Xun Yu; sends the urgent warning that triggers Cao Cao's withdrawal from Xuzhou."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1647,
+    "summary": "Mao Jie; among Cao Cao's officers in the Yanzhou recovery."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3334,
+    "summary": "Zhao Yun; in this chapter still serves Gongsun Zan; leads Liu Bei's relief column to Beihai and fights at his side at Xuzhou. Will leave Gongsun Zan's service for good in a few chapters."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 704,
+    "summary": "Guan Yu; rides with Liu Bei on the Beihai relief and the Xuzhou intervention."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3106,
+    "summary": "Zhang Fei; rides with Liu Bei on the Beihai relief and the Xuzhou intervention."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 664,
+    "summary": "Gongsun Zan; lends Liu Bei the 2,000 troops and Zhao Yun for the Beihai/Xuzhou expedition."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 130,
+    "summary": "Cao Song; named only as the murdered father whose death drives Cao Cao's earlier siege."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3159,
+    "summary": "Zhang Kai; the escort captain who murdered Cao Song; named only in recap."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1452,
+    "summary": "Liu Yao; mentioned in passing as a regional governor in the south."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 2178,
+    "summary": "Tian Kai; Imperial Protector of Qingzhou; named among the regional powers Mi Zhu also seeks help from."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1247,
+    "summary": "Li Ying; minor figure named in passing."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1738,
+    "summary": "Pang Shu; minor figure named in passing."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 255,
+    "summary": "Chen Wei; minor figure named in passing."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3082,
+    "summary": "Zhang Chao; named in passing among the coalition-era warlords."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3174,
+    "summary": "Zhang Miao; Governor of Chenliu; aligns secretly with Lu Bu and helps engineer the Yanzhou raid."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3247,
+    "summary": "Zhang Yang; named in passing in the chapter's regional roll."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 444,
+    "summary": "Dong Zhuo; named in passing in the chapter's recap of Lu Bu's career."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 1185,
+    "summary": "Li Jue; named in passing in the regional power roll."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 753,
+    "summary": "Guo Si; named in passing alongside Li Jue."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3006,
+    "summary": "Yuan Shao; defeats Black Mountain bandits with Lu Bu's help in the chapter's setup of the Yanzhou raid."
+  },
+  {
+    "chapter_num": 11,
+    "character_id": 3008,
+    "summary": "Yuan Shu; named in passing in the regional roll."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 1311,
+    "summary": "Liu Bei; relieves Xuzhou with the help of his brothers and is finally pressed by Tao Qian into accepting the governorship at his deathbed. Takes the seal of office only after Tao Qian's third dying request, and brings the city under his control - the foundation of his independent career."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2161,
+    "summary": "Tao Qian; dies during this chapter, leaving Xuzhou to Liu Bei in his will. The handover that gives Liu Bei his first real territory."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 1682,
+    "summary": "Mi Zhu; orchestrates the handover, presenting the seal of Xuzhou to Liu Bei at Tao Qian's deathbed and then in council."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2102,
+    "summary": "Sun Qian's debut as a counsellor in Xuzhou; backs Mi Zhu's case that Liu Bei must accept the region."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 86,
+    "summary": "Drives Lu Bu out of Yanzhou via the fire trap at Puyang - pretending to be killed in the blaze to lure Lu Bu's army out of position, then routing it. By chapter's end Yanzhou is again his, and he begins planning the next move."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 214,
+    "summary": "Chen Gong; engineers the Puyang ambush that nearly kills Cao Cao, then loses the city to Cao Cao's counter-ruse and retreats with Lu Bu south."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 376,
+    "summary": "Dian Wei; carries the unconscious Cao Cao out of the Puyang flames on his shoulders - saving him a second time."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2624,
+    "summary": "Xu Chu's debut - towering bandit-chief of Qiao who Cao Cao recruits after watching him single-handedly drag two oxen back-to-back. Will replace Dian Wei as Cao Cao's bodyguard captain."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 620,
+    "summary": "Gao Shun; serves under Lu Bu at Puyang; covers the retreat to Xuzhou's borders."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 882,
+    "summary": "Hou Cheng; serves under Lu Bu at Puyang."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 824,
+    "summary": "Hao Meng; serves under Lu Bu at Puyang."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 293,
+    "summary": "Cheng Lian; serves under Lu Bu at Puyang."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2707,
+    "summary": "Xue Lan; serves under Lu Bu at Puyang; killed in the Yanzhou recovery."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 100,
+    "summary": "Cao Hong; serves under Cao Cao in the Puyang counter-attack."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 123,
+    "summary": "Cao Ren; serves under Cao Cao in the Puyang counter-attack."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 1158,
+    "summary": "Li Dian; serves under Cao Cao in the Puyang counter-attack."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; serves under Cao Cao in the Puyang counter-attack."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2556,
+    "summary": "Xiahou Yuan; serves under Cao Cao in the Puyang counter-attack."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2953,
+    "summary": "Yu Jin; serves under Cao Cao in the Puyang counter-attack."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 309,
+    "summary": "Cheng Yu; advises Cao Cao on the Puyang ruse and the Yanzhou recovery."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 737,
+    "summary": "Guo Jia; advises Cao Cao through the Puyang sequence."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 1453,
+    "summary": "Liu Ye; among Cao Cao's advisers during the recovery."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 2755,
+    "summary": "Xun Yu; among Cao Cao's advisers during the recovery."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 207,
+    "summary": "Chen Deng; in this chapter aligns closely with Liu Bei's faction during Tao Qian's last days."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 850,
+    "summary": "He Man; Yellow Turban remnant chief at Runan; killed when Liu Bei's brothers sweep the area in the chapter's setup."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 864,
+    "summary": "He Yi; Yellow Turban remnant chief; named in the same Runan sweep."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 982,
+    "summary": "Huang Shao; Yellow Turban remnant chief; named in the same Runan sweep."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 139,
+    "summary": "Cao Xing; serves under Lu Bu in the Puyang fighting."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 3082,
+    "summary": "Zhang Chao; killed in the Yanzhou recovery - burns himself in his besieged hall rather than surrender."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 3166,
+    "summary": "Zhang Liao; serves under Lu Bu through the Puyang campaign."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 3174,
+    "summary": "Zhang Miao; flees to Yuan Shu when Yanzhou collapses around him; killed by his own men en route."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 1438,
+    "summary": "Liu Xiu; opening-frame reference to the Latter Han founder as the chapter sets up Liu Bei's accession at Xuzhou."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1185,
+    "summary": "Li Jue; falls out spectacularly with Guo Si over rival concubines and starts a private war inside Changan. Holds the emperor hostage; finally lets him escape under Yang Feng's protection and pursues."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 753,
+    "summary": "Guo Si; falls out with Li Jue over a quarrel his wife stages with a poisoned bean; holds the empress and ministers hostage to balance Li Jue's hold on the emperor. Their feud lays waste to Changan."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1048,
+    "summary": "Jia Xu; once again the dispassionate strategist - counsels Li Jue toward reconciliation, then quietly disengages from both factions when the war becomes total."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1049,
+    "summary": "Jia Xu (duplicate character record; same person - see id 1048)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2815,
+    "summary": "Yang Feng's debut - White Wave commander who switches sides to escort the emperor east out of Changan toward Luoyang. Defeats Li Jue's pursuit at Wei Hua before settling at Anyi."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2816,
+    "summary": "Yang Feng (duplicate record; same person - see 2815)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2817,
+    "summary": "Yang Feng (duplicate record; same person - see 2815)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2637,
+    "summary": "Xu Huang's debut - captain under Yang Feng, big-axe wielder who cleaves through Li Jue's vanguard during the emperor's escape. Will defect to Cao Cao later but here saves the imperial column."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 807,
+    "summary": "Han Xian; White Wave commander; joins Yang Feng in protecting the imperial column east."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1229,
+    "summary": "Li Xian; White Wave commander; joins Yang Feng."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 410,
+    "summary": "Dong Cheng's first major appearance - Imperial Father-in-Law; coordinates the imperial column's flight east, raises ferries on the Yellow River, and reaches the ruins of Luoyang. The plot that arrives in chapter 21 starts here as he watches the emperor reduced to begging meals."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3247,
+    "summary": "Zhang Yang; Governor of Henei; sends grain and clothing to the starving imperial cavalcade in the Luoyang ruins, for which he is made a Regent General."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1438,
+    "summary": "Liu Xiu; named in the chapter's frame as the founder whose Luoyang capital now lies in waste."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 484,
+    "summary": "Duan Wei; Imperial Protector of Liang Province who appears with reinforcements during the imperial flight."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1001,
+    "summary": "Huangfu Li; relative of Huangfu Song who negotiates between Li Jue and Guo Si - both refuse to give up the emperor."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 894,
+    "summary": "Hu Cai; Li Jue's lieutenant; killed in the inter-faction fighting."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 909,
+    "summary": "Hu Miao; Li Jue's lieutenant; named in the fighting."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1925,
+    "summary": "Shen Pei; named in passing - adviser in Yuan Shao's camp watching the Changan situation."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2016,
+    "summary": "Song Guo; minor figure named in passing."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 565,
+    "summary": "Fu De; later a Wei general; first named here as a captain in Li Jue's army."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 799,
+    "summary": "Han Rong; envoy in the Changan negotiations."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 800,
+    "summary": "Han Rong (duplicate character record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2358,
+    "summary": "Wang Yi (NOT Wang Yun); minister/envoy named in the negotiations between Li Jue and Guo Si."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2359,
+    "summary": "Wang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2361,
+    "summary": "Wang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2362,
+    "summary": "Wang Yi (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2370,
+    "summary": "Wang Yun; named in passing in the chapter's recap of the events leading up to Dong Zhuo's death."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2371,
+    "summary": "Wang Yun (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2372,
+    "summary": "Wang Yun (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2803,
+    "summary": "Yang Biao; senior minister who tries to mediate Li Jue and Guo Si's feud; held briefly by both sides before escaping with the emperor's column."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2840,
+    "summary": "Yang Mi; minister caught up in the Changan fighting."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2841,
+    "summary": "Yang Mi (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2848,
+    "summary": "Yang Qi; loyal officer who escorts the imperial column."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3132,
+    "summary": "Zhang Ji; brother of Zhang Xiu; arrives mid-feud and brokers a truce after a fashion. His own ambitions emerge later at Wancheng."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3133,
+    "summary": "Zhang Ji (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3134,
+    "summary": "Zhang Ji (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3135,
+    "summary": "Zhang Ji (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3136,
+    "summary": "Zhang Ji (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3569,
+    "summary": "Zuo Ling; minor figure named in passing."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 215,
+    "summary": "Chen Gong (duplicate record - see 214)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 214,
+    "summary": "Chen Gong; named in passing - Lu Bu's adviser; faction tracked from the Yanzhou loss."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1682,
+    "summary": "Mi Zhu; named in passing - Liu Bei's Xuzhou now a fixed point."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2161,
+    "summary": "Tao Qian; named in passing - already dead at this chapter's start."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 444,
+    "summary": "Dong Zhuo; named in passing in the recap of the Changan situation."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 844,
+    "summary": "He Jin; named in passing in the recap."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 1311,
+    "summary": "Liu Bei; named in passing - Xuzhou stable under his rule by this chapter."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 704,
+    "summary": "Guan Yu; named in passing."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3106,
+    "summary": "Zhang Fei; named in passing."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3494,
+    "summary": "Zhu Jun; named among the senior loyalist ministers."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 86,
+    "summary": "Cao Cao; named in passing - Yanzhou now firmly his, watching events at Changan."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3006,
+    "summary": "Yuan Shao; named in passing as the lord watching the Changan disaster from Jizhou."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 13,
+    "character_id": 2779,
+    "summary": "Yan Liang; named in passing in Yuan Shao's circle."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 86,
+    "summary": "Welcomes the emperor when the imperial column reaches Luoyang's ruins, then on Xun Yu's advice escorts the court to his own Xuchang and crowns the policy that defines his career: 'control the emperor and command the lords.' Receives sweeping ministerial appointments by the chapter's end."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2755,
+    "summary": "Xun Yu; tells Cao Cao bluntly that whoever holds the emperor commands the realm - sealing the move to Xuchang. The strategic line that defines Cao Cao's rise."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2756,
+    "summary": "Xun Yu (duplicate record; same person - see 2755)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2754,
+    "summary": "Xun You; adviser at Cao Cao's side during the Xuchang relocation."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 309,
+    "summary": "Cheng Yu; advises on the Xuchang relocation."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 310,
+    "summary": "Cheng Yu (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 737,
+    "summary": "Guo Jia; advises on the Xuchang relocation."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1453,
+    "summary": "Liu Ye; advises on the Xuchang relocation."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 441,
+    "summary": "Dong Zhao's debut - sent ahead to scout the imperial column at Luoyang and brokers the imperial move to Xuchang. Becomes a key Cao Cao adviser."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 410,
+    "summary": "Dong Cheng; rides with the imperial column from Luoyang to Xuchang, named Wagon-General and given the imperial trust that becomes the seed of the belt-decree conspiracy in chapter 20."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2815,
+    "summary": "Yang Feng; defeated when Cao Cao's army intercepts him and Han Xian for trying to block the imperial column's relocation. Flees south."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2816,
+    "summary": "Yang Feng (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2817,
+    "summary": "Yang Feng (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 807,
+    "summary": "Han Xian; partners Yang Feng in the failed attempt to keep the emperor in his hands."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1229,
+    "summary": "Li Xian; minor White Wave commander; killed by Xu Huang in the chapter's opening defection scene."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2637,
+    "summary": "Xu Huang; defects to Cao Cao via Man Chong's secret negotiation - beheading Li Xian to seal his crossing. Cao Cao's army is significantly stronger for it."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1638,
+    "summary": "Man Chong; sent in disguise to recruit Xu Huang and bring him over to Cao Cao."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2535,
+    "summary": "Xiahou Dun; takes the imperial column under armed escort during the move."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2556,
+    "summary": "Xiahou Yuan; with Xiahou Dun in the escort force."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 100,
+    "summary": "Cao Hong; with the escort force from Xuchang."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 101,
+    "summary": "Cao Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 123,
+    "summary": "Cao Ren; with the escort force."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1158,
+    "summary": "Li Dian; with the escort force."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2953,
+    "summary": "Yu Jin; with the escort force."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 376,
+    "summary": "Dian Wei; commands Cao Cao's personal guard at Xuchang."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2624,
+    "summary": "Xu Chu; commands Cao Cao's personal guard alongside Dian Wei."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1647,
+    "summary": "Mao Jie; appointed civil officer in the new Xuchang administration."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1865,
+    "summary": "Ren Jun; appointed agricultural administrator - institutes the famous tuntian farm-colony system on Cao Cao's army-supply problem."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1185,
+    "summary": "Li Jue; left behind in the west after the emperor escapes, now an enemy of the regime that holds the throne."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 753,
+    "summary": "Guo Si; left behind in the west with Li Jue."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1048,
+    "summary": "Jia Xu; quietly leaves Li Jue's circle and resurfaces with Zhang Xiu in the next chapters."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1049,
+    "summary": "Jia Xu (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1311,
+    "summary": "Liu Bei; now Governor of Xuzhou; in this chapter receives Lu Bu as a refugee after Lu Bu's collapse - sets up his trust-and-betrayal arc for the next few chapters."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 704,
+    "summary": "Guan Yu; serves under Liu Bei at Xuzhou."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 3106,
+    "summary": "Zhang Fei; falls drunk to Lu Bu's night raid that loses Xuzhou - the disgrace that drives the chapter's closing tragedy when Liu Bei loses both his city and his wives. (Liu Bei famously forgives him: 'a sworn brother is to me as my hands and feet; wives and children are clothing.')"
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 82,
+    "summary": "Cao Bao; Zhang Fei's father-in-law and Lu Bu's inside man; engineers the night raid that takes Xuzhou. Killed by Zhang Fei as he flees toward the moat."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1024,
+    "summary": "Ji Ling's debut - Yuan Shu's general dispatched to attack Liu Bei at Xiaopei in the chapter's closing manoeuvre."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 207,
+    "summary": "Chen Deng; serves in Xuzhou's administration under Liu Bei."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 1682,
+    "summary": "Mi Zhu; serves in Xuzhou's administration."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2102,
+    "summary": "Sun Qian; serves in Xuzhou's administration."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2103,
+    "summary": "Sun Qian (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 214,
+    "summary": "Chen Gong; adviser to Lu Bu during the Xuzhou betrayal - encourages the night raid."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 215,
+    "summary": "Chen Gong (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 620,
+    "summary": "Gao Shun; serves under Lu Bu in the Xuzhou raid."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2282,
+    "summary": "Wang Li; named in passing in the chapter."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2283,
+    "summary": "Wang Li (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2284,
+    "summary": "Wang Li (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2803,
+    "summary": "Yang Biao; senior minister; arrives safely with the imperial column at Xuchang."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 2758,
+    "summary": "Xun Yu (duplicate record - see 2755)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 3006,
+    "summary": "Yuan Shao; named in passing - watching the imperial column move to Cao Cao's territory and recognising what it means."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 3008,
+    "summary": "Yuan Shu; named in passing - his expansionist appetite is the engine of the chapter's closing Xiaopei manoeuvre."
+  },
+  {
+    "chapter_num": 14,
+    "character_id": 3247,
+    "summary": "Zhang Yang; named in passing - his Henei holdings still nominally loyal to the throne."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2060,
+    "summary": "Sun Ce; the chapter's lead. Pledges the imperial seal to Yuan Shu in exchange for 3,000 troops and rides south of the river to begin the Jiangdong conquest. Defeats Liu Yao, single-combats Taishi Ci on Shenting Hill, crushes Yan Baihu and Wang Lang of Kuaiji - and takes the southeast with his own hand. The 'Little Conqueror' chapter."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2142,
+    "summary": "Taishi Ci; defects to Sun Ce after the famous evening-long single combat on Shenting Hill in which neither could best the other. The recruitment that ratifies Sun Ce's rise."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1451,
+    "summary": "Liu Yao; Imperial Protector of Yangzhou; defeated by Sun Ce's southern campaign and chased into Yuzhang."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1452,
+    "summary": "Liu Yao (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3466,
+    "summary": "Zhou Yu's debut beside Sun Ce - childhood friend who joins him with 500 troops and recommends both the 'two Zhangs' (Zhang Zhao + Zhang Hong) and Lu Su. Will become the architect of Wu's strategy."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3272,
+    "summary": "Zhang Zhao; recruited by Zhou Yu's recommendation; one of the two Zhangs who anchor Sun Ce's civil administration."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3273,
+    "summary": "Zhang Zhao (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3123,
+    "summary": "Zhang Hong; the other of the two Zhangs; serves alongside Zhang Zhao in Sun Ce's growing court."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3124,
+    "summary": "Zhang Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3125,
+    "summary": "Zhang Hong (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2762,
+    "summary": "Yan Baihu; warlord of Wujun ('White Tiger'); defeated by Sun Ce after holding out at the Bailing fords. Eventually killed."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2793,
+    "summary": "Yan Yu; brother of Yan Baihu; tries to sue for peace and is killed by Sun Ce on the spot at the meeting."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2794,
+    "summary": "Yan Yu (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2279,
+    "summary": "Wang Lang; Governor of Kuaiji; the last warlord standing against Sun Ce in the southeast. Defeated and forced to flee by sea - appears later as a Wei minister."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2280,
+    "summary": "Wang Lang (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3456,
+    "summary": "Zhou Tai's debut - riverside warrior whose skill at swimming saves Sun Quan during a bandit raid. Carries fourteen wound scars by chapter's end."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3457,
+    "summary": "Zhou Tai (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1290,
+    "summary": "Ling Cao; recruited to Sun Ce in the southern campaign; father of Ling Tong who appears later."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 940,
+    "summary": "Hua Tuo's first appearance - physician who treats Zhou Tai's many wounds. Will reappear later treating Guan Yu and Cao Cao."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 258,
+    "summary": "Chen Wu; recruited to Sun Ce's army during the Jiangdong sweep."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 435,
+    "summary": "Dong Xi; recruited to Sun Ce's army in the same sweep."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1064,
+    "summary": "Jiang Qin; recruited to Sun Ce's army."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 510,
+    "summary": "Fan Neng; brigand chief subdued by Sun Ce."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3053,
+    "summary": "Ze Rong; remnant warlord in Jiangdong; killed by Sun Ce's army."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 295,
+    "summary": "Cheng Pu; continues to serve as senior general in Sun Ce's army; veteran of Sun Jian's campaigns."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 785,
+    "summary": "Han Dang; veteran general continuing under Sun Ce."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 972,
+    "summary": "Huang Gai; veteran general continuing under Sun Ce."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 973,
+    "summary": "Huang Gai (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2466,
+    "summary": "Wu Jing; Sun Ce's uncle (his mother's brother); supplies the initial troops as the chapter opens."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2105,
+    "summary": "Sun Quan; sixteen years old; rides with his brother on the southern conquest and survives the bandit attack thanks to Zhou Tai. Foreshadowed as Sun Ce's eventual successor."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2084,
+    "summary": "Sun Jing; Sun Ce's uncle; lieutenant in the southern conquest."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2950,
+    "summary": "Yu Fan; defects from Wang Lang to Sun Ce after the Kuaiji defeat; one of Wu's senior advisers thereafter."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2957,
+    "summary": "Yu Mi; surrendered Yan Baihu commander; killed by Cheng Pu."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2708,
+    "summary": "Xue Li; surrendered Yan Baihu commander; killed by Cheng Pu in the same engagement."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1500,
+    "summary": "Lu Fan; recruited to Sun Ce's army in the Jiangdong campaign."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1501,
+    "summary": "Lu Fan (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3516,
+    "summary": "Zhu Zhi; recruited to Sun Ce's army."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3517,
+    "summary": "Zhu Zhi (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3008,
+    "summary": "Yuan Shu; receives the imperial seal in pledge from Sun Ce; lends 3,000 troops; will declare himself emperor in chapter 17 on the strength of the seal he now holds."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3239,
+    "summary": "Zhang Xun; one of Yuan Shu's generals named in the chapter as the empire-aspiring court takes shape."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1024,
+    "summary": "Ji Ling; Yuan Shu's general continuing to threaten Liu Bei at Xiaopei."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1311,
+    "summary": "Liu Bei; back at Xuyi after fleeing the night raid; held off Lu Bu's pressure and ultimately accepted Chen Gong's compromise to settle at Xiaopei as Lu Bu's nominal subordinate."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 704,
+    "summary": "Guan Yu; with Liu Bei at Xuyi/Xiaopei."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3106,
+    "summary": "Zhang Fei; with Liu Bei at Xuyi; tries to take his own life from shame over losing Xuzhou before being talked down by Liu Bei's famous 'brothers are as hands and feet' speech."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 214,
+    "summary": "Chen Gong; persuades Lu Bu to keep Liu Bei alive at Xiaopei as a useful subordinate rather than crushing him outright."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 215,
+    "summary": "Chen Gong (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 620,
+    "summary": "Gao Shun; sent by Lu Bu to Xiaopei to demand the gifts Yuan Shu promised but never delivered."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 592,
+    "summary": "Lady Gan; Liu Bei's wife; captured at Xuzhou and protected by Lu Bu in his residence."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1677,
+    "summary": "Lady Mi; Liu Bei's other wife (Mi Zhu's sister); also captured and protected by Lu Bu."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1117,
+    "summary": "Kong Rong; named in passing as one of the regional players watching events unfold."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1325,
+    "summary": "Liu Dai; named in passing as one of the now-dead governors of Yanzhou whose memory recurs in the chapter."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1326,
+    "summary": "Liu Dai (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1438,
+    "summary": "Liu Xiu; opening-frame reference to the Latter Han founder."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1313,
+    "summary": "Liu Biao; named in passing in the regional power roll."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1263,
+    "summary": "Liang Da; minor figure named in passing."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 444,
+    "summary": "Dong Zhuo; named in passing in the recap."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2081,
+    "summary": "Sun Jian; named in passing as Sun Ce's late father whose legacy he is fulfilling."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 2161,
+    "summary": "Tao Qian; named in passing as the late governor of Xuzhou."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3006,
+    "summary": "Yuan Shao; named in passing among the great regional powers."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3007,
+    "summary": "Yuan Shao (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 1798,
+    "summary": "Qiao Rui; minor figure named in passing."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3259,
+    "summary": "Zhang Ying; minor figure named in passing."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3260,
+    "summary": "Zhang Ying (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3261,
+    "summary": "Zhang Ying (duplicate record)."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3394,
+    "summary": "Zheng Zhou; minor figure named in passing."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 3459,
+    "summary": "Zhou Xin; minor figure named in passing."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 228,
+    "summary": "Chen Lan; bandit / minor figure named in passing."
+  },
+  {
+    "chapter_num": 15,
+    "character_id": 86,
+    "summary": "Cao Cao; named in passing - emperor secured at Xuchang while events unfold in the south."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 3008,
+    "summary": "Yuan Shu; receives the imperial seal as Sun Ce's pledge in the next chapter but here is named in passing among regional players."
+  },
+  {
+    "chapter_num": 12,
+    "character_id": 3042,
+    "summary": "Zang Ba; one of Lu Bu's eight named generals; takes part in the Puyang campaign."
+  }
+]

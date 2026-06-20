@@ -11,11 +11,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, Edit, MatchExclusion
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, split_keywords_csv
-from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
 
@@ -211,6 +211,42 @@ def delete_user(user_id):
     )
 # ----- Chapter ↔ Character association editor -----------------------------
 
+@admin.route('/chapter-dates', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def chapter_dates():
+    """Bulk-edit the free-form `date` string on every chapter.
+
+    Single page lists all chapters in order with an input per row.
+    POST persists only the rows whose date string actually changed,
+    so the Edit audit log isn't flooded with no-op writes on every
+    save."""
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    csrf_form = _CsrfOnlyForm()
+
+    if request.method == 'POST':
+        if not csrf_form.validate_on_submit():
+            abort(400)
+        updated = 0
+        for chapter in chapters:
+            new_value = (request.form.get(f'date_{chapter.id}') or '').strip()
+            if new_value != (chapter.date or ''):
+                chapter.date = new_value
+                updated += 1
+        if updated:
+            db.session.commit()
+            flash(f"Updated dates on {updated} chapter{'s' if updated != 1 else ''}.")
+        else:
+            flash("No changes.")
+        return redirect(url_for('admin.chapter_dates'))
+
+    return render_template(
+        'admin/chapter_dates.html',
+        chapters=chapters,
+        csrf_form=csrf_form,
+    )
+
+
 @admin.route('/chapter-associations', methods=['GET'])
 @admin.route('/chapter-associations/<int:chapter_num>', methods=['GET'])
 @login_required
@@ -236,9 +272,15 @@ def chapter_associations(chapter_num=None):
         if selected is None:
             abort(404)
 
-        associated = sorted(selected.characters, key=lambda c: c.name)
+        # The M2M doesn't filter `is_deleted` — drop soft-deleted
+        # characters here so they don't appear in the listing.
+        associated = sorted(
+            (c for c in selected.characters if not c.is_deleted),
+            key=lambda c: c.name,
+        )
         # Per-(chapter, character) keyword overrides for this chapter.
         per_char_kw = load_chapter_keywords(selected.id, 'chapter_character', 'character_id')
+        per_char_summary = load_chapter_character_summaries(selected.id)
         seen_factions = {}
         for character in associated:
             exclusions = load_match_exclusions(selected.id, 'character', character.id)
@@ -262,6 +304,7 @@ def chapter_associations(chapter_num=None):
                 'roles': list(character.roles),
                 'faction': character.primary_faction,
                 'keywords': kw_csv,
+                'summary': per_char_summary.get(character.id, ''),
             })
             if character.primary_faction is not None:
                 seen_factions[character.primary_faction.id] = character.primary_faction
@@ -282,6 +325,48 @@ def chapter_associations(chapter_num=None):
     factions_by_char = _factions_by_character_id(char_ids)
     roles_by_char = _roles_by_character_id(char_ids)
 
+    # Per-chapter warning signals — same shape the public chapter view
+    # uses to render red/green icons on inline pills. Surfacing them
+    # here so admins can spot the same ambiguity at a glance from the
+    # association listing.
+    #
+    #   in_chapter_dup_ids      : ids of characters sharing at least one
+    #                             needle (name / courtesy / alias) with
+    #                             ANOTHER character TAGGED IN THIS
+    #                             chapter. Needle-based (not name-only)
+    #                             so e.g. two characters whose aliases
+    #                             both include "Yu" both get flagged.
+    #   loc_overlap_by_char_id  : dict[character.id -> list[Location]]
+    #                             of cross-type needle overlaps. Templates
+    #                             use the list to name the matched
+    #                             locations in the hover tooltip.
+    in_chapter_dup_ids = set()
+    loc_overlap_by_char_id = {}
+    if selected is not None:
+        chapter_chars = [r['character'] for r in rows]
+        # Use the SAME chapter-scoped keywords the inline tagger uses
+        # (chapter_character.keywords / chapter_location.keywords when
+        # set, else the entity's global labels). Pure-global aliases
+        # produce green-icon overlaps that don't reflect what's
+        # actually tagged in the prose.
+        char_kw_csv_by_id = {r['character'].id: r['keywords'] for r in rows}
+        def _char_needles(c):
+            return (split_keywords_csv(char_kw_csv_by_id.get(c.id, ''))
+                    or c.get_all_name_labels())
+        chapter_locs = [l for l in selected.locations if not l.is_deleted]
+        loc_kw_lookup = load_chapter_keywords(
+            selected.id, 'chapter_location', 'location_id',
+        )
+        def _loc_needles(loc):
+            return (split_keywords_csv(loc_kw_lookup.get(loc.id, ''))
+                    or location_needles(loc))
+        in_chapter_dup_ids = find_shared_needle_ids(chapter_chars, _char_needles)
+        _loc_map, loc_overlap_by_char_id = find_location_character_overlap(
+            chapter_locs, chapter_chars,
+            location_needles_for=_loc_needles,
+            character_needles_for=_char_needles,
+        )
+
     return render_template(
         'admin/chapter_associations.html',
         chapters=chapters,
@@ -290,9 +375,47 @@ def chapter_associations(chapter_num=None):
         faction_options=faction_options,
         all_characters=all_characters,
         duplicate_names=duplicate_names,
+        in_chapter_dup_ids=in_chapter_dup_ids,
+        loc_overlap_by_char_id=loc_overlap_by_char_id,
         factions_by_char=factions_by_char,
         roles_by_char=roles_by_char,
         csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/chapter-associations/<int:chapter_num>/<int:character_id>/summary', methods=['POST'])
+@login_required
+@admin_required
+def chapter_associations_summary(chapter_num, character_id):
+    """Write the per-(chapter, character) `summary` text. Empty string
+    clears it. Idempotent — re-posting the same value is a no-op."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    character = Character.query.get_or_404(character_id)
+    if character not in chapter.characters:
+        flash(f"{character.name!r} is not associated with chapter "
+              f"{chapter.chapter_num}; can't save a summary.")
+        return redirect(url_for('admin.chapter_associations', chapter_num=chapter_num))
+
+    new_summary = (request.form.get('summary') or '').strip()
+    # Direct UPDATE on the association row — same pattern the keyword
+    # writer uses (no ORM mapping on the chapter_character M2M).
+    from sqlalchemy import text
+    db.session.execute(
+        text("UPDATE chapter_character SET summary = :s "
+             "WHERE chapter_id = :cid AND character_id = :charid"),
+        {'s': new_summary, 'cid': chapter.id, 'charid': character.id},
+    )
+    db.session.commit()
+    flash(f"Saved chapter-{chapter.chapter_num} summary for "
+          f"{character.name!r}.")
+    # Anchor back at the row that was just edited so the admin lands
+    # right where they started.
+    return redirect(
+        url_for('admin.chapter_associations', chapter_num=chapter_num)
+        + f'#assoc-row-{character_id}'
     )
 
 
@@ -863,7 +986,13 @@ def location_associations(chapter_num=None):
         if selected is None:
             abort(404)
 
-        associated = sorted(selected.locations, key=lambda l: l.name)
+        # Drop soft-deleted locations — the M2M relationship doesn't
+        # filter `is_deleted` so deleted rows would otherwise still
+        # appear in the listing.
+        associated = sorted(
+            (l for l in selected.locations if not l.is_deleted),
+            key=lambda l: l.name,
+        )
         per_loc_kw = load_chapter_keywords(selected.id, 'chapter_location', 'location_id')
         for loc in associated:
             exclusions = load_match_exclusions(selected.id, 'location', loc.id)
@@ -898,12 +1027,49 @@ def location_associations(chapter_num=None):
             .all()
         )
 
+    # Same warning signals as chapter_associations, swapped sides.
+    #
+    #   in_chapter_dup_ids      : ids of locations sharing at least one
+    #                             needle (name or alias) with ANOTHER
+    #                             location TAGGED IN THIS chapter. This
+    #                             is the canonical case for the admin-
+    #                             division import — "Yu Province" and
+    #                             "Yu County" both carry the alias "Yu"
+    #                             so a name-only check missed them.
+    #   char_overlap_by_loc_id  : dict[location.id -> list[Character]]
+    #                             of cross-type needle overlaps. Templates
+    #                             use the list to name the matched
+    #                             characters in the hover tooltip.
+    in_chapter_dup_ids = set()
+    char_overlap_by_loc_id = {}
+    if selected is not None:
+        chapter_locs = [r['location'] for r in rows]
+        loc_kw_csv_by_id = {r['location'].id: r['keywords'] for r in rows}
+        def _loc_needles(loc):
+            return (split_keywords_csv(loc_kw_csv_by_id.get(loc.id, ''))
+                    or location_needles(loc))
+        chapter_chars = [c for c in selected.characters if not c.is_deleted]
+        char_kw_lookup = load_chapter_keywords(
+            selected.id, 'chapter_character', 'character_id',
+        )
+        def _char_needles(c):
+            return (split_keywords_csv(char_kw_lookup.get(c.id, ''))
+                    or c.get_all_name_labels())
+        in_chapter_dup_ids = find_shared_needle_ids(chapter_locs, _loc_needles)
+        char_overlap_by_loc_id, _char_map = find_location_character_overlap(
+            chapter_locs, chapter_chars,
+            location_needles_for=_loc_needles,
+            character_needles_for=_char_needles,
+        )
+
     return render_template(
         'admin/location_associations.html',
         chapters=chapters,
         selected=selected,
         rows=rows,
         all_locations=all_locations,
+        in_chapter_dup_ids=in_chapter_dup_ids,
+        char_overlap_by_loc_id=char_overlap_by_loc_id,
         csrf_form=_CsrfOnlyForm(),
     )
 
@@ -1900,3 +2066,132 @@ def delete_event_type(event_type_id):
     db.session.commit()
     flash(f"Deleted event type {name!r}.")
     return redirect(url_for('admin.event_types'))
+
+
+_LOCATION_TYPE_SORTS = ('name', 'created_at', 'location_count')
+_LOCATION_TYPES_PER_PAGE = 50
+
+
+@admin.route('/location-types', methods=['GET'])
+@login_required
+@admin_required
+def location_types():
+    """List location types with their usage count, search + sort. Same
+    shape as /admin/event-types."""
+    page = request.args.get('page', 1, type=int)
+    search = (request.args.get('q') or '').strip()
+    sort = request.args.get('sort', 'name')
+    direction = request.args.get('dir', 'asc')
+
+    if sort not in _LOCATION_TYPE_SORTS:
+        sort = 'name'
+    if direction not in ('asc', 'desc'):
+        direction = 'asc'
+
+    location_counts = (
+        db.session.query(
+            Location.location_type_id.label('location_type_id'),
+            func.count(Location.id).label('location_count'),
+        )
+        .filter(Location.is_deleted.is_(False))
+        .group_by(Location.location_type_id)
+        .subquery()
+    )
+    location_count_expr = func.coalesce(location_counts.c.location_count, 0)
+
+    query = (
+        LocationType.query
+        .outerjoin(location_counts, LocationType.id == location_counts.c.location_type_id)
+        .add_columns(location_count_expr.label('location_count'))
+        .filter(LocationType.is_hidden.is_(False))
+    )
+    if search:
+        query = query.filter(LocationType.name.ilike(f"%{search}%"))
+
+    if sort == 'location_count':
+        order_col = location_count_expr
+    else:
+        order_col = getattr(LocationType, sort)
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+    if sort != 'name':
+        query = query.order_by(LocationType.name.asc())
+
+    pagination = query.paginate(page=page, per_page=_LOCATION_TYPES_PER_PAGE, error_out=False)
+
+    return render_template(
+        'admin/location_types.html',
+        pagination=pagination,
+        search=search,
+        sort=sort,
+        direction=direction,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/location-types/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_location_type():
+    form = EditLocationTypeForm()
+    if form.validate_on_submit():
+        loc_type = LocationType()
+        form.populate_obj(loc_type)
+        db.session.add(loc_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A location type named {loc_type.name!r} already exists.")
+            return redirect(url_for('admin.new_location_type'))
+        flash(f"Created location type {loc_type.name!r}.")
+        return redirect(url_for('admin.location_types'))
+
+    return render_template('admin/location_type_edit.html', form=form, location_type=None)
+
+
+@admin.route('/location-types/<int:location_type_id>/edit', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_location_type(location_type_id):
+    loc_type = LocationType.query.get_or_404(location_type_id)
+    form = EditLocationTypeForm(obj=loc_type)
+    if form.validate_on_submit():
+        form.populate_obj(loc_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A location type named {loc_type.name!r} already exists.")
+            return redirect(url_for('admin.edit_location_type', location_type_id=loc_type.id))
+        flash(f"Updated location type {loc_type.name!r}.")
+        return redirect(url_for('admin.location_types'))
+
+    return render_template('admin/location_type_edit.html', form=form, location_type=loc_type)
+
+
+@admin.route('/location-types/<int:location_type_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def delete_location_type(location_type_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    loc_type = LocationType.query.get_or_404(location_type_id)
+    name = loc_type.name
+
+    # Refuse if any Location still uses this type. FK is ON DELETE SET NULL
+    # so cascading would silently strip the type — force the admin to
+    # untangle on purpose. Same safety pattern as delete_event_type.
+    in_use = Location.query.filter_by(location_type_id=loc_type.id, is_deleted=False).count()
+    if in_use > 0:
+        flash(
+            f"Can't delete {name!r}: it's assigned to {in_use} location"
+            f"{'' if in_use == 1 else 's'}. Reassign or delete those first."
+        )
+        return redirect(url_for('admin.location_types'))
+
+    db.session.delete(loc_type)
+    db.session.commit()
+    flash(f"Deleted location type {name!r}.")
+    return redirect(url_for('admin.location_types'))

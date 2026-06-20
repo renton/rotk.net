@@ -1,0 +1,89 @@
+/* Map page — Leaflet container + custom pin styling. */
+
+#map {
+    height: calc(100vh - 200px);
+    min-height: 500px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+/* Pin used for point-only Locations. The pin is a colored circle
+   centered on the lat/lng with the location-type's FA icon inside;
+   inline `style=` from JS supplies the per-type palette. */
+.map-pin {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid #6c757d;
+    background: #6c757d;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+.map-pin i {
+    pointer-events: none;
+}
+
+/* Brief yellow-ring pulse on a pin after a sidebar location-item
+   click. The map_base.js helper toggles this class on .map-pin and
+   relies on the animation to auto-clean. */
+@keyframes map-pin-flash {
+    0%   { box-shadow: 0 0 0 0   rgba(255,193,7,0.0), 0 1px 3px rgba(0,0,0,0.3); }
+    20%  { box-shadow: 0 0 0 8px rgba(255,193,7,0.8), 0 1px 3px rgba(0,0,0,0.3); }
+    100% { box-shadow: 0 0 0 16px rgba(255,193,7,0.0), 0 1px 3px rgba(0,0,0,0.3); }
+}
+.map-pin.map-pin-flash {
+    animation: map-pin-flash 0.8s ease-out 1;
+}
+
+/* Polygon overlays for area Locations. The actual fill / stroke
+   colours come from JS based on the location-type's palette, but
+   default to a translucent grey so unstyled polygons are still
+   visible. */
+.leaflet-interactive {
+    cursor: pointer;
+}
+
+/* Popup styling — slimmer than Leaflet's default. */
+.leaflet-popup-content {
+    margin: 8px 12px;
+    font-size: 0.9rem;
+    min-width: 180px;
+}
+.map-popup-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+.map-popup-title a {
+    color: inherit;
+    text-decoration: none;
+}
+.map-popup-title a:hover {
+    text-decoration: underline;
+}
+.map-popup-type {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+.map-popup-zh {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-left: 4px;
+}
+
+/* Attribution panel below the map. Lives outside the Leaflet
+   canvas so it stays readable at any zoom and doesn't fight the
+   tile-corner default attribution control. */
+.map-credits {
+    line-height: 1.5;
+    max-width: 100ch;
+}
+.map-credits a {
+    color: inherit;
+    text-decoration: underline;
+}

@@ -1,0 +1,521 @@
+{
+  "chapter_num": 13,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 1,
+      "action": "remove_m2m",
+      "_note": "3 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "15 \"You\" English pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 10,
+      "action": "remove_m2m",
+      "_note": "1 \"Shen Pei\" (Yuan Shao's adviser)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 52,
+      "action": "remove_m2m",
+      "_note": "3 person names \"Hu Miao\" / \"Hu Cai\" (White Wave leader)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "4 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "1 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "42 matches all Yang surnames (Yang Biao, Yang Qi, Yang Mi, Yang Feng, Zhang Yang)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 88,
+      "action": "remove_m2m",
+      "_note": "2 person names \"Hou Yi\" / \"Wang Yi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "2 \"Cui Yong\" (general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "1 \"Duan Wei\" (place commander)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 947,
+      "action": "remove_m2m",
+      "_note": "4 \"Yang Qi\" (court counselor)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 960,
+      "action": "remove_m2m",
+      "_note": "14 matches all \"Dong Zhuo\" / \"Dong Cheng\" (no Dongjun matches in this chapter)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "1 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1003,
+      "action": "remove_m2m",
+      "_note": "3 \"Dong Zhuo\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1005,
+      "action": "remove_m2m",
+      "_note": "4 \"Chen Gong\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "1 \"Yan Liang\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1007,
+      "action": "remove_m2m",
+      "_note": "25 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1030,
+      "action": "remove_m2m",
+      "_note": "25 \"Lu Bu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1051,
+      "action": "remove_m2m",
+      "_note": "4 \"Yang Qi\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "4 \"Guan Yu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1083,
+      "action": "remove_m2m",
+      "_note": "59 matches all \"Guo Si\" (the warlord)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1130,
+      "action": "remove_m2m",
+      "_note": "1 \"Liu Xiu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1153,
+      "action": "remove_m2m",
+      "_note": "2 person names"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1170,
+      "action": "remove_m2m",
+      "_note": "1 \"Zuo Ling\" (Jia Xu's aide carrying Empress)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1216,
+      "action": "remove_m2m",
+      "_note": "1 \"Wan shui!\" — the imperial cheer 萬歲 \"long live\", not the county"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "42 person names (same Yang-surnames)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "17 Zhang surnames (Zhang Fei, Zhang Ji, Zhang Yang)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "8 \"Zhang Fei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "2 \"Fu De\" (Empress's brother)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1348,
+      "action": "remove_m2m",
+      "_note": "3 \"Wang Chan\" (Li Jue's officer)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "25 \"Yang Feng\" (the escort general)"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1398,
+      "action": "remove_m2m",
+      "_note": "1 \"Shen Pei\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 1404,
+      "action": "remove_m2m",
+      "_note": "10 \"Jia Xu\""
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…by Guo Si's frequent attacks. Then came news that Zhang ",
+      "after_snippet": ", at the head of a large army, was coming down from Shanxi…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…from Shanxi to make peace between the two factions. Zhang ",
+      "after_snippet": " vowed he would attack the one who was recalcitrant. Li Jue…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…Jue tried to gain favor by hastening to send to tell Zhang ",
+      "after_snippet": " he was ready to make peace. So did Guo Si. \n So the strife…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…the strife of the rival factions ended at last, and Zhang ",
+      "after_snippet": " memorialized asking the Emperor to go to Hongnong near…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…saying, \"I have longed to go back to the east.\" \n Zhang ",
+      "after_snippet": " was rewarded with the title of Commander of the Flying…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…of the Flying Cavalry and was highly honored. Zhang ",
+      "after_snippet": " saw to it that the Emperor and the court had good supplies…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…Guo Si was very angry, saying, \"I meant to outwit Zhang ",
+      "after_snippet": ", seize the Emperor, and hold him in Meiwo. Why have you…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 18,
+      "action": "exclude",
+      "match_text": "Ji",
+      "before_snippet": "…our whole clans will be in danger,\" said Guo Si. \n \"Zhang ",
+      "after_snippet": " is holding Changan, and we must be careful. There is…",
+      "_note": "\"Ji\" inside \"Zhang Ji\" the warlord; the 1 \"Jizhou\" match (Yuan Shao's territory) is legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "exclude",
+      "match_text": "Yan",
+      "before_snippet": "…you should help to crush him.\" \n Wherefore Yuan Shao sent ",
+      "after_snippet": " Liang with fifty thousand troops to destroy Lu Bu. The…",
+      "_note": "\"Yan\" inside \"Yan Liang\" (Yuan Shao's general); the 3 \"Yanzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the Emperor and Empress in two carriages, and assigned Jia ",
+      "after_snippet": " and Zuo Ling to carry them off. The Palace attendants were…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to beat drums and summon spirits, even when in camp. Jia ",
+      "after_snippet": " used to remonstrate with him, but quite uselessly. \n Yang…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…quite uselessly. \n Yang Qi said to the Emperor, \"That Jia ",
+      "after_snippet": ", although a friend of Li Jue, never seems to have lost the…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the sense of loyalty to Your Majesty.\" \n Soon after Jia ",
+      "after_snippet": " himself arrived. \n The Emperor sent away his attendants…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…The Emperor sent away his attendants and said to Jia ",
+      "after_snippet": ", weeping the while, \"Can you not pity the Hans and help…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…the while, \"Can you not pity the Hans and help me?\" \n Jia ",
+      "after_snippet": " prostrated himself, saying, \"That is my dearest wish. But,…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…against you. And all the nobles would join him.\" \n Jia ",
+      "after_snippet": " also persuaded Li Jue, and gradually his wrath cooled…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to say Huangfu Li could not be found. \n Meanwhile Jia ",
+      "after_snippet": " tried to work on the feelings of the tribespeople. \n He…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…they listened readily to the insidious persuasions of Jia ",
+      "after_snippet": " and deserted. \n Then Jia Xu advised the Emperor, \"Li Jue…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…insidious persuasions of Jia Xu and deserted. \n Then Jia ",
+      "after_snippet": " advised the Emperor, \"Li Jue is covetous in nature. He is…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…a volley of abuse. \n Yang Feng turned and said, \"Where is ",
+      "after_snippet": " Huang?\" \n In response out came a valiant warrior gripping…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…asked to see the actual slayer of the rebel leader. So ",
+      "after_snippet": " Huang was led to the chariot, where he bowed and was…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…led to the chariot, where he bowed and was presented as ",
+      "after_snippet": " Huang of Hedong. \n The Emperor recognized the achievement…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…mustered his troops, appeared in front of the camp, and ",
+      "after_snippet": " Huang rode out to engage. But Guo Si threw his army out so…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…southeast, and the rebels fell away at his assault. Then ",
+      "after_snippet": " Huang smote them and so scored a victory. \n When they had…",
+      "_note": "\"Xu\" inside \"Jia Xu\" or \"Xu Huang\"; the 3 \"Xuzhou\" matches are legitimate"
+    },
+    {
+      "target_type": "character",
+      "target_id": 2371,
+      "action": "remove_m2m",
+      "_note": "cn=王惲 — different Wang Yun (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2372,
+      "action": "remove_m2m",
+      "_note": "cn=王贇 — different Wang Yun (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3132,
+      "action": "remove_m2m",
+      "_note": "cn=張緝 — different Zhang Ji (Wei politician, died 254)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3133,
+      "action": "remove_m2m",
+      "_note": "cn=張既 — different Zhang Ji (Cao Cao official)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3135,
+      "action": "remove_m2m",
+      "_note": "cn=張機 — Zhang Zhongjing the physician."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3136,
+      "action": "remove_m2m",
+      "_note": "cn=張吉 — different Zhang Ji (Han politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 215,
+      "action": "remove_m2m",
+      "_note": "cn=陳恭 — different Chen Gong (Han general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 800,
+      "action": "remove_m2m",
+      "_note": "cn=韓榮 — different Han Rong (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1049,
+      "action": "remove_m2m",
+      "_note": "Jia Xu — different person (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2358,
+      "action": "remove_m2m",
+      "_note": "cn=王異 — Wang Yi is Zhao Ang's wife, not the male Governor of Hedong. The Hedong governor in this chapter is historically 王邑, not in DB."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2359,
+      "action": "remove_m2m",
+      "_note": "cn=王乂 — different Wang Yi (Jin general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2361,
+      "action": "remove_m2m",
+      "_note": "cn=王儀 — different Wang Yi (Cao Wei general)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2362,
+      "action": "remove_m2m",
+      "_note": "cn=王廙 — different Wang Yi (Jin politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2815,
+      "action": "remove_m2m",
+      "_note": "cn=楊鳳 — different person (Zhang Yan's rebel), not 楊奉 the Han escort general."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2817,
+      "action": "remove_m2m",
+      "_note": "cn=楊豐 — different Yang Feng (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2841,
+      "action": "remove_m2m",
+      "_note": "cn=羊祕 — different Yang Mi (Cao Wei politician)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3007,
+      "action": "remove_m2m",
+      "_note": "cn=爰邵 — different Yuan Shao (Cao Wei general)."
+    }
+  ]
+}

@@ -9,7 +9,7 @@ Ordered loosely by impact within each section.
 - ✅ = fixed (see git log for the commit)
 - ⬜ = open
 
-**Progress:** 22 / 48 resolved.
+**Progress:** 28 / 48 resolved.
 
 ---
 
@@ -188,8 +188,10 @@ This makes tag lookups case-sensitive. The scraper sometimes lowercases (roles) 
 ### 25. ⬜ No tests
 No `tests/` directory. `rotk.py` has commented-out scaffolding for `unittest` + `coverage`. The whole inline-tagging regex pipeline is exactly the kind of code that benefits from a unit test (name-with-apostrophe, name-at-end-of-paragraph, name-inside-HTML-tag). Pytest + a couple of fixtures is two hours of work.
 
-### 26. ⬜ No Alembic / Flask-Migrate
+### 26. ✅ No Alembic / Flask-Migrate
 Schema changes today are "drop tables, change models, `flask create-all`, re-scrape". With ~150 HTTP fetches per scrape that's slow, brittle, and lossy (you lose any admin edits). Wire up Flask-Migrate with a baseline migration of the current schema.
+
+*(Resolved by a different mechanism: plain-SQL migration files in `migrations/NNNN_*.sql` applied by `flask apply-migrations`, tracked in `_schema_migrations`. Idempotent (`IF NOT EXISTS` / `ON CONFLICT DO NOTHING`). Alembic deliberately not adopted — plain SQL is enough for a single-tenant single-author project. See CLAUDE.md "Plain-SQL migrations" for the working pattern.)*
 
 ### 27. ✅ `Talisman(force_https=True)` unconditionally
 **File:** `app/__init__.py:40`
@@ -208,10 +210,12 @@ Every SQL statement is logged in *prod* as well as dev. Move to `DevelopmentConf
 
 *(Fixed incidentally while sorting out the MySQL non-root user — see commit `6835672`.)*
 
-### 30. ⬜ Two MySQL drivers pinned
+### 30. ✅ Two MySQL drivers pinned
 **File:** `requirements.txt:22-23`
 
 `mysql-connector==2.2.9` (Oracle, last touched 2017) and `mysqlclient==2.2.6` (the C-based one) are both installed. The connection URI uses `mysql+mysqldb://` which is `mysqlclient`. Drop `mysql-connector`.
+
+*(Moot — the project migrated MySQL → PostgreSQL in May 2026. Both MySQL drivers are gone; `psycopg[binary]` is the only DB driver in `requirements.txt`.)*
 
 ### 31. ⬜ `dominate` and `visitor` in requirements look unused
 Grep doesn't show them being imported. They're transitive remnants from Flask-Bootstrap (3.x). Confirm and remove.
@@ -228,10 +232,12 @@ Either implement `deploy` (run migrations, seed admin user, etc.) or remove the 
 
 `--reload` is for dev. In prod it makes gunicorn watch files and restart workers — wasted CPU and a potential foot-gun on a production volume mount. Drop it from the prod path.
 
-### 34. ⬜ `volumes: - .:/rotk.net` in the *production* compose
+### 34. ✅ `volumes: - .:/rotk.net` in the *production* compose
 **File:** `docker-compose.prod.yml:19`
 
 Bind-mounting the source tree into prod means the running container reflects whatever's on disk on the host. Combined with `--reload`, you have a "live" production that updates on `git pull` without a deploy step. Could be intentional, but it's load-bearing magic that's not documented anywhere.
+
+*(Resolved: `docker-compose.prod.yml` was deleted in the MySQL→Postgres migration. Both deployment paths now use overlays — `examples/standalone/docker-compose.tls.yml` resets `volumes: !reset []` so the standalone container runs the image filesystem, and the `stateful_boilerplate` VPS override does the same. No source bind-mount in production any more.)*
 
 ### 35. ⬜ `db-data/` checked into the repo
 **File:** layout (visible in `ls -la`)
@@ -251,11 +257,15 @@ A `.github/workflows/ci.yml` that runs `pytest` + `ruff` + `mypy` on every PR is
 
 ## Things I'd consider adding
 
-### 39. ⬜ A Map / Locations model
+### 39. ✅ A Map / Locations model
 `app/models/location.py` is a placeholder. There's a "Map" link in the navbar that goes nowhere, and a "Map" accordion item in the chapter sidebar that shows lorem-ipsum. If maps are on the roadmap, a `Location` model + a JS map (Leaflet over a stylized China map) would be a striking feature.
 
-### 40. ⬜ Event / Battle model
+*(Done as far as the data model: `Location` has name + Chinese name + aliases + lat/lng + `parent_id` (self-FK for the Province → Commandery → County → City hierarchy) + `location_type_id`. `LocationType` is admin-managed with colours + Font Awesome icons. The CSV import (`flask import-admin-divisions`) seeds ~800 admin-division rows. The chapter sidebar shows type badge + ancestry breadcrumb per location. The actual JS map (Leaflet) is the only remaining piece — that's worth its own ticket when the day comes.)*
+
+### 40. ✅ Event / Battle model
 `app/models/event.py` is also a placeholder. Modelling battles (with date, location, participants, outcome) would let you build a "battles in this chapter" sidebar or a timeline view across all 120 chapters. The novel is *built* on battles — they're a much bigger draw than character bios alone.
+
+*(Done: `Event` has name + aliases + optional `Location` FK + `EventType` FK + per-event geo override + per-event date. `EventType` is admin-managed with colours + icon. Chapter sidebar surfaces them in a dedicated accordion. Cross-chapter timeline view is the next obvious feature.)*
 
 ### 41. ⬜ Front-end tooling
 Not a SPA, not even close — but you do have inline JS (`show_character`) sitting in a Jinja template, and you'll grow more. Consider:
@@ -287,5 +297,37 @@ The codebase is small enough that full type coverage is achievable. Adds maintai
 ### 47. ⬜ SQLAlchemy 2.0-style query API
 Models use `Model.query.all()` (legacy 1.x-style). The 2.0 idiom is `db.session.scalars(select(Model)).all()`. Mixing the two styles is fine but consistency would be a small win.
 
-### 48. ⬜ Docs for the bootstrap dance
+### 48. ✅ Docs for the bootstrap dance
 There's no single command that takes a fresh checkout to "site has content". The README I just wrote sketches it, but a `make bootstrap` target (or a `flask init`-like command that runs `create-all → scrape-book → scrape-characters → build-chapter-character-association`) would make onboarding a one-liner.
+
+*(Resolved by docs, not by a single command: README's "Populating the data" section now walks through the full 5-step + optional Location-import sequence; CLAUDE.md's "How data flows" and "CLI commands" tables list each step with what it does and when to re-run. A single `flask init` wrapper would still be a nice ergonomic win, but the steps are no longer a guessing game.)*
+
+### 49. ⬜ `link` table missing `created_by` / `last_edited_by`
+Every other `AbstractObject` subclass has the audit columns; the `link` table in prod doesn't. Any code path that lazy-loads `Character.links` raises `psycopg.errors.UndefinedColumn: column link.created_by does not exist` (hit by `flask dump-chapter-triage`). The Link model is not actively rendered anywhere in the current admin UI, so the workaround was to skip `links` in the triage dump. Fix is a one-line `ALTER TABLE link ADD COLUMN ...` migration matching `0006_audit_columns.sql` (or whichever pattern was used elsewhere). Until then, do not call `c.links` in any new code.
+
+### 50. ⬜ Temporal data — places, factions, and associations all change over the era
+The 184-280 AD span isn't static. Many records are currently modeled as if they hold for the whole era, when in reality they only hold for a window:
+
+- **Location boundaries shift between Eastern Han and Three Kingdoms.** The `/map` view stores a single `geojson` polygon per location; in reality some commanderies were created, abolished, renamed, or had borders redrawn mid-period. The Tan Qixiang atlas / CHGIS distinguishes Eastern Han (~140 AD) and Western Jin (~280 AD) snapshots; we'd want at least those two states per location, and ideally a `(valid_from, valid_to, geometry)` tuple list so the map can be scrubbed by year.
+- **Locations themselves had lifespans.** Some counties only existed for parts of the period. A nullable `(founded, abolished)` year pair on Location would let the map filter out places that didn't exist yet.
+- **Character ↔ Faction associations have a strong time dimension.** Today a character has `primary_faction_id` + an M2M to all factions they were ever in. That throws away the *order* — Liu Bei's path through Gongsun Zan → Tao Qian → Cao Cao → Yuan Shao → Liu Biao → Shu-Han is just a flat set. A `character_factions` association row carrying `(joined, left)` years (free-form like the date columns we already have, or parsed range) would let the timeline view colour a character lifeline by faction *at that time* and would obsolete the `primary_faction` hack.
+- **Character ↔ Role and Character ↔ Location ("based at") are similarly time-keyed.** Same shape — add an optional date range to the association table.
+- **Faction lifetimes** themselves are bounded (Wei: 220-265, Shu: 221-263, Wu: 222-280). Stored as plain `(founded, dissolved)` strings on Faction so the timeline and map can shade the era accordingly.
+
+Design notes for whoever picks this up:
+- Reuse the free-form date string convention (mirrors `character.birth_date` / `event.date` / `chapter.date`) parsed via `tools/date_parser.py` so the storage layer stays flexible and the UI can keep accepting "190 AD", "circa 200", "190-200" without a calendar widget.
+- A single "year-cursor" control on `/timeline` and `/map` (slider or year input) is the unifying UX — moving it filters out anything whose validity window doesn't include the selected year.
+- Migrations are additive (nullable date columns + new association tables) so existing data carries no `valid_from` / `valid_to` and is treated as "valid for the whole era" by default.
+
+Not urgent — most readers don't notice the difference, and the current static-state model is good enough to launch with. But the *shape* of this affects multiple models, so the design is worth thinking through in one pass before piecemeal additions accumulate.
+
+### 51. ⬜ Sub-county Locations on /map — fill the ~190 gap
+CHGIS v6 stops at county level (Xian), so cities, settlements, passes, mountains, battlefields, and fictional buildings (~199 rows, roughly a quarter of all Locations) don't get geocoded by `scripts/chgis_to_solutions.py`. The first batch caught 9 of them via name-coincidence with the county-points file; the other ~190 are silent.
+
+Once the CHGIS data has been applied and verified on `/map`, evaluate two follow-ups (probably in this order):
+
+1. **Training-data hand-curate the famous landmarks.** Names like Chibi / Red Cliffs, Hulao Pass, Bowang Slope, Wuzhang Plains, Sleeping Dragon Ridge, Linju, Maicheng, etc. are well-known enough to source from training data alone — no network needed. Write a `solutions/locations-geo-landmarks.json` with ~20-40 of the most-referenced sub-county places, hand-checked. Same workflow as the chapter-dating: produce → spot-check on `/map` → apply.
+
+2. **Wikidata SPARQL pull for the rest.** Many historical Chinese places have Wikidata entries (`P625` coordinate-location property). A single SPARQL query against `query.wikidata.org` can return lat/lng for hundreds of entities at once, matched by their Chinese-name label (`rdfs:label` or `skos:altLabel` filtered to `@zh`). Requires a heads-up network fetch (one HTTP request) and the results need a spot-check pass, but raises the hit rate substantially over training data alone.
+
+Anything still unmatched after (1) and (2) gets a `notes_append` flag explaining why so the row at least has a reason and stays gracefully off the map.

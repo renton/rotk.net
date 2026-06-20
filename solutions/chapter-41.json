@@ -1,0 +1,299 @@
+{
+  "chapter_num": 41,
+  "decisions": [
+    {
+      "target_type": "location",
+      "target_id": 2,
+      "action": "remove_m2m",
+      "_note": "8 You"
+    },
+    {
+      "target_type": "location",
+      "target_id": 62,
+      "action": "remove_m2m",
+      "_note": "10 Guan Yu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 63,
+      "action": "remove_m2m",
+      "_note": "9 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 82,
+      "action": "remove_m2m",
+      "_note": "12 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 84,
+      "action": "remove_m2m",
+      "_note": "1 Jiao Chu person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 87,
+      "action": "remove_m2m",
+      "_note": "1 Cai Yang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 90,
+      "action": "remove_m2m",
+      "_note": "9 Jian Yong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 908,
+      "action": "remove_m2m",
+      "_note": "13 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 910,
+      "action": "remove_m2m",
+      "_note": "53 Zhao Zilong"
+    },
+    {
+      "target_type": "location",
+      "target_id": 947,
+      "action": "remove_m2m",
+      "_note": "2 Liu Qi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 980,
+      "action": "remove_m2m",
+      "_note": "8 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1001,
+      "action": "remove_m2m",
+      "_note": "9 Wei Yan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1006,
+      "action": "remove_m2m",
+      "_note": "12 Zhuge Liang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1051,
+      "action": "remove_m2m",
+      "_note": "2 Liu Qi"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1055,
+      "action": "remove_m2m",
+      "_note": "10 same"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1150,
+      "action": "remove_m2m",
+      "_note": "11 Cai Mao"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1162,
+      "action": "remove_m2m",
+      "_note": "2 Cao Ren"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1171,
+      "action": "remove_m2m",
+      "_note": "8 Xu Shu"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1183,
+      "action": "remove_m2m",
+      "_note": "3 Liu Ye"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1186,
+      "action": "remove_m2m",
+      "_note": "1 Yiyang County dup of [1009]"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1214,
+      "action": "remove_m2m",
+      "_note": "3 She pronoun"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1242,
+      "action": "remove_m2m",
+      "_note": "1 Chunyu Dao person"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1255,
+      "action": "remove_m2m",
+      "_note": "1 Cai Yang"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1260,
+      "action": "remove_m2m",
+      "_note": "6 Wen Ping"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1292,
+      "action": "remove_m2m",
+      "_note": "23 Zhang surnames"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1303,
+      "action": "remove_m2m",
+      "_note": "12 Zhang Fei"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1321,
+      "action": "remove_m2m",
+      "_note": "1 Fu Xuan"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1391,
+      "action": "remove_m2m",
+      "_note": "2 Liu Feng"
+    },
+    {
+      "target_type": "location",
+      "target_id": 1398,
+      "action": "remove_m2m",
+      "_note": "1 Zhong Shen"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…had let loose the waters on the doomed army. He met with ",
+      "after_snippet": " Chu and a combat began, but a fight with such a warrior…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…a combat began, but a fight with such a warrior was not to ",
+      "after_snippet": " Chu's taste and he ran away. Zhang Fei followed till he…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…asked who would be a suitable messenger. Liu Ye suggested ",
+      "after_snippet": " Shu. \n \"He is a close friend of Liu Bei, and he is here…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…a laughing stock to the whole world. He will come back.\" \n ",
+      "after_snippet": " Shu was sent for, and Cao Cao said, \"My first intention…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…mission to you, and I trust you will not disappoint me.\" \n ",
+      "after_snippet": " Shu said nothing but accepted his orders and went to the…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…and Zhuge Liang. They enjoyed a talk over old times before ",
+      "after_snippet": " Shu mentioned the object of his mission. \n Then he said,…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…to hold the city. You ought to prepare.\" \n Liu Bei asked ",
+      "after_snippet": " Shu to remain with them, but Xu Shu said, \"That is…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…prepare.\" \n Liu Bei asked Xu Shu to remain with them, but ",
+      "after_snippet": " Shu said, \"That is impossible, for all the world would…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…achievement of your undertaking. But I must go.\" \n And ",
+      "after_snippet": " Shu took his leave. Liu Bei felt he could not press his…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "location",
+      "target_id": 69,
+      "action": "exclude",
+      "match_text": "Xu",
+      "before_snippet": "…leave. Liu Bei felt he could not press his friend to stay. ",
+      "after_snippet": " Shu returned to Cao Cao's camp and reported that Liu Bei…",
+      "_note": "\"Xu\" inside \"Xu Chu\" / \"Xu Shu\"; Xuzhou legit"
+    },
+    {
+      "target_type": "character",
+      "target_id": 101,
+      "action": "remove_m2m",
+      "_note": "cn=曹宏."
+    },
+    {
+      "target_type": "character",
+      "target_id": 1938,
+      "action": "remove_m2m",
+      "_note": "Shentu Pan."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2103,
+      "action": "remove_m2m",
+      "_note": "cn=孫謙."
+    },
+    {
+      "target_type": "character",
+      "target_id": 2419,
+      "action": "remove_m2m",
+      "_note": "cn=衛演 — different Wei Yan (Gongsun Yuan faction)."
+    },
+    {
+      "target_type": "character",
+      "target_id": 3268,
+      "action": "remove_m2m",
+      "_note": "cn=張允 different."
+    }
+  ]
+}

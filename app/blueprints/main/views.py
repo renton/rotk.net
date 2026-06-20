@@ -7,15 +7,16 @@ from sqlalchemy.orm import selectinload
 from werkzeug.utils import secure_filename
 
 from app import db
-from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Location, Event
+from app.models import Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Location, LocationType, Event
 from app.models.character import Portrait, PORTRAIT_DIR
 from . import main
 from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     CharacterFilterForm, UploadPortraitForm, MergeFactionForm, AddUrlForm, \
-    EditLocationForm, EditEventForm
+    EditLocationForm, EditEventForm, MergeLocationForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, split_keywords_csv
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from tools.date_parser import parse_date_range
 
 
 def _normalize_csv(s):
@@ -26,6 +27,23 @@ def _normalize_csv(s):
     if not s:
         return ''
     return ','.join(part.strip() for part in s.split(',') if part.strip())
+
+
+def _back_arg():
+    """Return a safe `?back=` URL from the current request, or None.
+
+    Listing pages tag every edit link with `?back=<filtered-listing>`
+    so the edit page can render a 1-click "Back to listing" button
+    that returns the admin to the exact page + filters they came
+    from. The back value rides along through form save → redirect so
+    the link still works after multiple edits.
+
+    Only relative paths (start with '/' but NOT '//') are accepted —
+    blocks open-redirect attempts via crafted external URLs."""
+    back = request.args.get('back') or ''
+    if back.startswith('/') and not back.startswith('//'):
+        return back
+    return None
 
 
 # Per-portrait upload cap. The WSGI-level MAX_CONTENT_LENGTH is slightly
@@ -56,6 +74,226 @@ def index():
     return render_template(
         'book/table_of_contents.html',
         chapters=chapters
+    )
+
+
+@main.route('/map', methods=['GET'])
+def map_view():
+    """Public map view.
+
+    Plots every Location that has either lat/lng or a stored GeoJSON
+    polygon. Precedence on the rendering side:
+
+      1. lat + lng present  → single pin
+      2. geojson present    → polygon overlay
+      3. neither            → omitted
+
+    A Location is the same object that powers the chapter sidebar, so
+    every pin / polygon is clickable through to its location page."""
+    rows = (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .options(selectinload(Location.location_type))
+        .order_by(Location.name)
+        .all()
+    )
+
+    map_items = []
+    for loc in rows:
+        has_point = loc.latitude is not None and loc.longitude is not None
+        has_geojson = loc.geojson is not None
+        if not has_point and not has_geojson:
+            continue
+        lt = loc.location_type
+        map_items.append({
+            'id':            loc.id,
+            'name':          loc.name or '',
+            'chinese_name':  loc.chinese_name or '',
+            'type_name':     (lt.name if lt else '') or '',
+            'icon':          (lt.icon if lt else '') or '',
+            'bg_colour':     (lt.bg_colour if lt else '') or '#6c757d',
+            'font_colour':   (lt.font_colour if lt else '') or '#ffffff',
+            'border_colour': (lt.border_colour if lt else '') or '#6c757d',
+            'latitude':      loc.latitude if has_point else None,
+            'longitude':     loc.longitude if has_point else None,
+            'geojson':       loc.geojson if (has_geojson and not has_point) else None,
+        })
+
+    return render_template('map.html', map_items_json=map_items)
+
+
+@main.route('/timeline', methods=['GET'])
+def timeline():
+    """Public timeline view.
+
+    Pulls every chapter, event, and character whose free-form date
+    field(s) parse cleanly into a year range, then ships them as JSON
+    to the client. vis-timeline (CDN) handles pan/zoom; the page
+    renders chapter + event points on top groups and one character
+    lifeline range per dated character below."""
+
+    # --- Chapters ---
+    # Chapter names carry an embedded <br> to break the two-clause
+    # title across two lines on the chapter page; for the timeline
+    # detail tooltip we want a single flowing line, so collapse it
+    # (and any HTML-escaped variant) into a space.
+    _br_re = re.compile(r'<\s*br\s*/?\s*>', re.IGNORECASE)
+    def _timeline_title(s):
+        return _br_re.sub(' ', s or '').strip()
+
+    chapter_items = []
+    for c in Chapter.query.order_by(Chapter.chapter_num).all():
+        span = parse_date_range(c.date)
+        if span is None:
+            continue
+        lo, hi = span
+        chapter_items.append({
+            'id': c.id,
+            'num': c.chapter_num,
+            'name': _timeline_title(c.name),
+            'date_str': c.date,
+            'year_lo': lo,
+            'year_hi': hi,
+        })
+
+    # --- Events ---
+    # AbstractTag defaults bg/font/border colour to '#ffffff' (white).
+    # On the timeline an event renders as JUST its FA icon painted in
+    # the event-type's bg colour, so a default-white event-type means
+    # white-on-white-row → invisible icons. Treat white (or empty) as
+    # "no colour configured" and substitute a visible default.
+    _DEFAULT_EVENT_COLOUR = '#6c757d'
+
+    def _visible_colour(raw, fallback=_DEFAULT_EVENT_COLOUR):
+        if not raw:
+            return fallback
+        # Normalise (#FFF / #ffffff variants).
+        n = raw.strip().lower()
+        if n in ('#fff', '#ffffff', 'white'):
+            return fallback
+        return raw
+
+    event_items = []
+    events = (
+        Event.query
+        .filter(Event.is_deleted.is_(False))
+        .options(selectinload(Event.event_type))
+        .order_by(Event.name)
+        .all()
+    )
+
+    # Bulk-load every event's external URLs in one query (and their
+    # UrlTypes for the badge colours / icon). Mirrors the data shape
+    # _url_list.html renders on chapter pages, so the timeline detail
+    # panel can show the same favicon -> type-icon -> link rows.
+    event_ids = [e.id for e in events]
+    urls_by_event_id = {}
+    if event_ids:
+        url_rows = (
+            Url.query
+            .filter(Url.is_deleted.is_(False))
+            .filter(Url.target_type == 'event')
+            .filter(Url.target_id.in_(event_ids))
+            .options(selectinload(Url.url_type))
+            .order_by(Url.name)
+            .all()
+        )
+        for u in url_rows:
+            ut = u.url_type
+            urls_by_event_id.setdefault(u.target_id, []).append({
+                'name':    u.name or u.url or '',
+                'url':     u.url or '',
+                'favicon': (
+                    url_for('static', filename=u.favicon)
+                    if u.favicon else ''
+                ),
+                'type_name':     (ut.name if ut else '') or '',
+                'type_icon':     (ut.icon if ut else '') or '',
+                'type_bg':       (ut.bg_colour     if ut else '') or '',
+                'type_font':     (ut.font_colour   if ut else '') or '',
+                'type_border':   (ut.border_colour if ut else '') or '',
+            })
+
+    for e in events:
+        span = parse_date_range(e.date)
+        if span is None:
+            continue
+        lo, hi = span
+        # Optional event-type colour + icon for the marker.
+        et = getattr(e, 'event_type', None)
+        event_items.append({
+            'id': e.id,
+            'name': e.name or '',
+            'date_str': e.date,
+            'year_lo': lo,
+            'year_hi': hi,
+            'type_name': (et.name if et else '') or '',
+            'icon': (et.icon if et else '') or '',
+            'bg_colour':     _visible_colour(et.bg_colour     if et else None),
+            'font_colour':   et.font_colour                   if et else '#ffffff',
+            'border_colour': _visible_colour(et.border_colour if et else None),
+            'urls':          urls_by_event_id.get(e.id, []),
+        })
+
+    # --- Characters ---
+    # Eager-load primary_faction so the per-character colour lookup
+    # doesn't fire one query per row.
+    character_items = []
+    factions_seen = {}
+    chars = (
+        Character.query
+        .filter(Character.is_deleted.is_(False))
+        .filter((Character.birth_date != '') | (Character.death_date != ''))
+        .options(selectinload(Character.primary_faction))
+        .order_by(Character.name)
+        .all()
+    )
+    for ch in chars:
+        b = parse_date_range(ch.birth_date)
+        d = parse_date_range(ch.death_date)
+        if b is None and d is None:
+            continue
+        # Single-ended lifelines aren't supported in v1 — without one
+        # end the bar would either extend off-screen or guess a
+        # lifespan, both confusing. Skip until we have a UI for it.
+        if b is None or d is None:
+            continue
+        f = ch.primary_faction
+        faction_id = f.id if f else 0
+        faction_name = f.name if f else 'Unaffiliated'
+        if f and not f.is_hidden:
+            factions_seen[faction_id] = faction_name
+        elif not f:
+            factions_seen[0] = 'Unaffiliated'
+
+        character_items.append({
+            'id': ch.id,
+            'name': ch.name or '',
+            'chinese_name': ch.chinese_name or '',
+            'birth_str': ch.birth_date,
+            'death_str': ch.death_date,
+            'birth_lo': b[0],
+            'birth_hi': b[1],
+            'death_lo': d[0],
+            'death_hi': d[1],
+            'faction_id': faction_id,
+            'faction_name': faction_name,
+            'bg_colour': (f.bg_colour if f else '') or '#6c757d',
+            'font_colour': (f.font_colour if f else '') or '#ffffff',
+            'border_colour': (f.border_colour if f else '') or '#6c757d',
+        })
+
+    factions = [
+        {'id': fid, 'name': fname}
+        for fid, fname in sorted(factions_seen.items(), key=lambda kv: kv[1].lower())
+    ]
+
+    return render_template(
+        'timeline.html',
+        chapters_json=chapter_items,
+        events_json=event_items,
+        characters_json=character_items,
+        factions_json=factions,
     )
 
 @main.route('/chapter/<int:chapter_num>', methods=['GET'])
@@ -102,15 +340,73 @@ def chapter(chapter_num):
         kws = split_keywords_csv(chapter_loc_kw.get(loc.id, ''))
         return kws if kws else get_location_labels(loc)
 
-    # Admin-only: flag characters whose `name` is shared with another
-    # character in this same chapter so the inline pill gets a red
-    # circle-exclamation linking to the Character/Chapter Association
-    # editor. Lets the admin spot ambiguous matches without having to
-    # cross-check every name by hand.
-    from collections import Counter
+    # Admin-only: flag characters that share at least one needle (name /
+    # courtesy / alias) with another character in this same chapter so
+    # the inline pill gets a red circle-exclamation linking to the
+    # Character/Chapter Association editor. Lets the admin spot
+    # ambiguous matches without having to cross-check every name by hand.
     is_admin = current_user.is_authenticated and current_user.is_administrator
-    dup_names = {n for n, count in Counter(c.name for c in characters).items() if count > 1}
-    dup_url = url_for('admin.chapter_associations', chapter_num=chapter.chapter_num) if is_admin and dup_names else None
+
+    # Pre-collect the locations for THIS chapter so we can compute the
+    # location ↔ character cross-overlap once and feed both pill loops
+    # below. (The actual location pill loop still runs AFTER the
+    # character loop so characters keep first claim on a shared needle.)
+    seen_loc_ids = set()
+    locations_for_render = []
+    for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
+        # `chapter.locations` and `event.location` are M2M / FK
+        # relationships that don't filter `is_deleted`, so we drop
+        # soft-deleted locations here to keep them out of the prose
+        # tagging AND the sidebar card list.
+        if loc is None or loc.id in seen_loc_ids or loc.is_deleted:
+            continue
+        seen_loc_ids.add(loc.id)
+        locations_for_render.append(loc)
+
+    # Admin warning signals, all computed once up front:
+    #   char_dup_ids      — character ids that share at least one needle
+    #                       (name / courtesy / alias) with ANOTHER
+    #                       character tagged in this chapter.
+    #   loc_dup_ids       — location ids that share at least one needle
+    #                       (name or alias) with another location in
+    #                       this chapter. Catches the canonical-import
+    #                       case where "Yu Province" + "Yu County" both
+    #                       carry the bare alias "Yu" — a name-only
+    #                       check would miss it.
+    #   {loc,char}_loc_overlap_ids — cross-type needle overlap.
+    # Public readers skip the cross-product (find_location_character_overlap
+    # is the expensive bit) since they don't see any of these icons.
+    # Duplicate + cross-overlap checks key off the same chapter-scoped
+    # needles the inline tagger uses (_character_needles / _location_needles
+    # above) — chapter_character.keywords / chapter_location.keywords
+    # when set, else the entity's global labels. Without that, the
+    # global aliases drive a green-icon match that doesn't reflect
+    # what's actually tagged in this chapter's prose.
+    char_dup_ids = find_shared_needle_ids(characters, _character_needles)
+    loc_dup_ids = find_shared_needle_ids(locations_for_render, _location_needles)
+    char_admin_url = (
+        url_for('admin.chapter_associations', chapter_num=chapter.chapter_num)
+        if is_admin else None
+    )
+    loc_admin_url = (
+        url_for('admin.location_associations', chapter_num=chapter.chapter_num)
+        if is_admin else None
+    )
+    dup_url     = char_admin_url if char_dup_ids else None
+    loc_dup_url = loc_admin_url  if loc_dup_ids  else None
+    # loc_char_overlaps : dict[location.id  -> list[Character]]
+    # char_loc_overlaps : dict[character.id -> list[Location]]
+    # Pill renderers feed the matched names into the green icon's
+    # title= attribute so admins can see WHICH cross-type entities
+    # overlap without clicking through.
+    loc_char_overlaps = {}
+    char_loc_overlaps = {}
+    if is_admin:
+        loc_char_overlaps, char_loc_overlaps = find_location_character_overlap(
+            locations_for_render, characters,
+            location_needles_for=_location_needles,
+            character_needles_for=_character_needles,
+        )
 
     # Characters get first claim on a needle so character mentions never
     # get accidentally re-coloured as an event/location with the same word.
@@ -119,11 +415,16 @@ def chapter(chapter_num):
     # at the canonical character — so the sidebar panel + chapter-style
     # switcher / link-style behaviour resolve to the right person.
     for character in characters:
-        warn_url = dup_url if (dup_url and character.name in dup_names) else None
+        warn_url = dup_url if (dup_url and character.id in char_dup_ids) else None
+        overlap_locs = char_loc_overlaps.get(character.id, [])
+        overlap_url = loc_admin_url if overlap_locs else None
+        overlap_names = [l.name for l in overlap_locs]
         for name_needle in _character_needles(character):
             html = build_name_ref_html(
                 character,
                 duplicate_warning_url=warn_url,
+                location_overlap_url=overlap_url,
+                location_overlap_with=overlap_names,
                 display_text=name_needle,
             )
             character_html[(character.id, name_needle)] = html
@@ -142,19 +443,29 @@ def chapter(chapter_num):
                 continue   # character already claimed it
             replacements[needle] = build_event_ref_html(event, match_text=needle)
 
-    # Locations from any source — events that pin to one + direct
-    # chapter ↔ location associations. De-dup by id; first one wins.
-    seen_loc_ids = set()
-    locations_for_render = []
-    for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
-        if loc is None or loc.id in seen_loc_ids:
-            continue
-        seen_loc_ids.add(loc.id)
-        locations_for_render.append(loc)
+    # Locations were pre-collected above (so the cross-overlap with
+    # characters can be computed once and shared between both pill
+    # loops). Now we just claim needles in priority order: events
+    # already ran above, so locations get whatever the character /
+    # event loops didn't claim.
+    for loc in locations_for_render:
+        loc_warn_url = loc_dup_url if (loc_dup_url and loc.id in loc_dup_ids) else None
+        # Both green icons (on character pills AND location pills) link
+        # to the LOCATION admin: that's where the bare-name aliases from
+        # the CSV import live, and that's where most noisy-overlap
+        # cleanup happens regardless of which side took priority.
+        overlap_chars = loc_char_overlaps.get(loc.id, [])
+        loc_overlap_url = loc_admin_url if overlap_chars else None
+        loc_overlap_names = [c.name for c in overlap_chars]
         for needle in _location_needles(loc):
             if needle in replacements or needle_to_character_ids.get(needle):
                 continue
-            replacements[needle] = build_location_ref_html(loc, match_text=needle)
+            replacements[needle] = build_location_ref_html(
+                loc, match_text=needle,
+                duplicate_warning_url=loc_warn_url,
+                character_overlap_url=loc_overlap_url,
+                character_overlap_with=loc_overlap_names,
+            )
             needle_to_location_id[needle] = loc.id
 
     pattern = build_needle_pattern(list(replacements.keys()))
@@ -296,11 +607,73 @@ def chapter(chapter_num):
     # /admin/location-associations tool). Deduped by id, name-sorted.
     chapter_events = sorted(chapter.events, key=lambda e: e.name)
     locations_by_id = {
-        e.location.id: e.location for e in chapter_events if e.location
+        e.location.id: e.location for e in chapter_events
+        if e.location and not e.location.is_deleted
     }
     for loc in chapter.locations:
+        if loc.is_deleted:
+            continue
         locations_by_id.setdefault(loc.id, loc)
     chapter_locations = sorted(locations_by_id.values(), key=lambda loc: loc.name)
+
+    # Pre-walk each chapter location's parent chain so the sidebar can
+    # render the "Province › Commandery › County" breadcrumb without
+    # any tricky chain-walking in Jinja. Closest-parent first; the
+    # template reverses for display. `seen` and max_depth defend
+    # against cycle data even though the merge + cycle-guard logic
+    # forbid them — better to truncate than render forever.
+    ancestry_by_loc_id = {}
+    for loc in chapter_locations:
+        chain = []
+        seen = {loc.id}
+        cur = loc.parent
+        depth = 0
+        while cur is not None and cur.id not in seen and depth < 10:
+            chain.append(cur)
+            seen.add(cur.id)
+            cur = cur.parent
+            depth += 1
+        ancestry_by_loc_id[loc.id] = chain
+
+    # Adjacent chapters for the prev/next nav buttons at the bottom of
+    # the page. `chapter_num` is 1..120 and gapless in this dataset, so
+    # +/-1 lookups are fine — the .first() falls back to None at the
+    # extremes (chapter 1 has no prev; the final chapter has no next).
+    prev_chapter = (
+        Chapter.query.filter(Chapter.chapter_num == chapter.chapter_num - 1).first()
+    )
+    next_chapter = (
+        Chapter.query.filter(Chapter.chapter_num == chapter.chapter_num + 1).first()
+    )
+
+    # Map payload for the chapter sidebar's mini-map — same item
+    # shape as the /map view (so map_base.js renders both identically).
+    # Locations without lat/lng AND without geojson are omitted; they
+    # still appear in the Locations accordion but can't be placed.
+    chapter_map_items = []
+    for loc in chapter_locations:
+        has_point = loc.latitude is not None and loc.longitude is not None
+        has_geo = loc.geojson is not None
+        if not has_point and not has_geo:
+            continue
+        lt = loc.location_type
+        chapter_map_items.append({
+            'id':            loc.id,
+            'name':          loc.name or '',
+            'chinese_name':  loc.chinese_name or '',
+            'type_name':     (lt.name if lt else '') or '',
+            'icon':          (lt.icon if lt else '') or '',
+            'bg_colour':     (lt.bg_colour if lt else '') or '#6c757d',
+            'font_colour':   (lt.font_colour if lt else '') or '#ffffff',
+            'border_colour': (lt.border_colour if lt else '') or '#6c757d',
+            'latitude':      loc.latitude if has_point else None,
+            'longitude':     loc.longitude if has_point else None,
+            'geojson':       loc.geojson if (has_geo and not has_point) else None,
+        })
+
+    # Per-(chapter, character) editorial summaries — shown in the
+    # Characters accordion when set.
+    char_summary_by_id = load_chapter_character_summaries(chapter.id)
 
     return render_template(
         'book/chapter.html',
@@ -310,6 +683,11 @@ def chapter(chapter_num):
         mention_counts=mention_counts,
         chapter_events=chapter_events,
         chapter_locations=chapter_locations,
+        ancestry_by_loc_id=ancestry_by_loc_id,
+        prev_chapter=prev_chapter,
+        next_chapter=next_chapter,
+        chapter_map_items=chapter_map_items,
+        char_summary_by_id=char_summary_by_id,
     )
 
 @main.route('/characters', methods=['GET', 'POST'])
@@ -469,7 +847,7 @@ def edit_character(id):
         db.session.add(character)
         db.session.commit()
         flash('The character has been updated.')
-        return redirect(url_for("main.edit_character", id=character.id))
+        return redirect(url_for("main.edit_character", id=character.id, back=_back_arg()))
 
     # Admin view of the edit page surfaces hidden portraits too (with a
     # visual marker), so the admin can promote / unhide them from here
@@ -498,6 +876,7 @@ def edit_character(id):
         add_url_form=add_url_form,
         urls=urls,
         csrf_form=csrf_form,
+        back=_back_arg(),
     )
 
 
@@ -774,7 +1153,9 @@ def edit_faction(id):
         db.session.add(faction)
         db.session.commit()
         flash('The faction has been updated.')
-        return redirect(url_for("main.factions"))
+        # If the admin came from a filtered listing, send them back to
+        # the exact filter/page they were on; otherwise the bare list.
+        return redirect(_back_arg() or url_for("main.factions"))
 
     # Merge form + its target picker datalist. Excludes the source itself
     # and anything already hidden.
@@ -795,6 +1176,7 @@ def edit_faction(id):
         urls=[u for u in faction.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),
+        back=_back_arg(),
     )
 
 
@@ -922,21 +1304,151 @@ def edit_role(id):
 
 @main.route('/locations', methods=['GET'])
 def locations():
+    from collections import defaultdict
+    from sqlalchemy.orm import aliased
+
     page = request.args.get('page', 1, type=int)
     q = (request.args.get('q') or '').strip()
+    type_id = request.args.get('type_id', type=int)
+    province_id = request.args.get('province_id', type=int)
+    commandery_id = request.args.get('commandery_id', type=int)
+    county_id = request.args.get('county_id', type=int)
+
+    # Type lookup by name powers the cascade — we filter the
+    # Province / Commandery / County dropdowns by the matching type id.
+    type_by_name = {
+        t.name: t for t in
+        LocationType.query
+        .filter(LocationType.is_deleted.is_(False))
+        .filter(LocationType.is_hidden.is_(False))
+        .order_by(LocationType.name).all()
+    }
+    province_type_id   = type_by_name.get('Province').id   if 'Province'   in type_by_name else None
+    commandery_type_id = type_by_name.get('Commandery').id if 'Commandery' in type_by_name else None
+    county_type_id     = type_by_name.get('County').id     if 'County'     in type_by_name else None
+
+    # ----- Cascade dropdown contents -------------------------------------
+    # Each level is filtered by the level above (if selected) so picking a
+    # province narrows the commandery dropdown to that province's
+    # commanderies, etc.
+    def _by_type(tid):
+        return (Location.query
+                .filter(Location.is_deleted.is_(False))
+                .filter(Location.location_type_id == tid)
+                .order_by(Location.name).all())
+
+    provinces = _by_type(province_type_id) if province_type_id else []
+
+    commanderies = []
+    if commandery_type_id:
+        cq = (Location.query
+              .filter(Location.is_deleted.is_(False))
+              .filter(Location.location_type_id == commandery_type_id))
+        if province_id:
+            cq = cq.filter(Location.parent_id == province_id)
+        commanderies = cq.order_by(Location.name).all()
+
+    counties = []
+    if county_type_id:
+        cq = (Location.query
+              .filter(Location.is_deleted.is_(False))
+              .filter(Location.location_type_id == county_type_id))
+        if commandery_id:
+            cq = cq.filter(Location.parent_id == commandery_id)
+        elif province_id:
+            # Counties whose commandery sits under the chosen province.
+            com_alias = aliased(Location)
+            cq = (cq.join(com_alias, Location.parent_id == com_alias.id)
+                    .filter(com_alias.parent_id == province_id))
+        counties = cq.order_by(Location.name).all()
+
+    # ----- Build the main listing query ---------------------------------
     query = Location.query.filter(Location.is_deleted.is_(False))
     if q:
         query = query.filter(Location.name.ilike(f"%{q}%"))
+    if type_id:
+        query = query.filter(Location.location_type_id == type_id)
+
+    # Scope filter: limit results to the descendants of the most-specific
+    # ancestor the user has selected. Falls through county → commandery
+    # → province so partial selections still narrow the listing.
+    scope_ancestor_id = county_id or commandery_id or province_id
+    if scope_ancestor_id:
+        # Fetch every (id, parent_id) pair once and BFS in Python — at
+        # ~800 rows this is cheaper and clearer than a recursive CTE.
+        pairs = db.session.execute(
+            db.select(Location.id, Location.parent_id)
+            .where(Location.is_deleted.is_(False))
+        ).all()
+        kids_of = defaultdict(list)
+        for cid, pid in pairs:
+            if pid is not None:
+                kids_of[pid].append(cid)
+        descendants = {scope_ancestor_id}
+        stack = [scope_ancestor_id]
+        while stack:
+            node = stack.pop()
+            for child in kids_of.get(node, ()):
+                if child not in descendants:
+                    descendants.add(child)
+                    stack.append(child)
+        query = query.filter(Location.id.in_(descendants))
+
+    # Avoid N+1 on the row render — every row reads its type, parent,
+    # and chapter list.
+    query = query.options(
+        selectinload(Location.location_type),
+        selectinload(Location.parent).selectinload(Location.location_type),
+        selectinload(Location.chapters),
+    )
+
     pagination = query.order_by(Location.name).paginate(
         page=page,
         per_page=current_app.config['CHARACTERS_PER_PAGE'],
         error_out=False,
     )
+
+    # Pre-sort chapters per location so the "Chapter References" cell
+    # renders them in book order. Done in Python because the M2M was
+    # selectin-loaded — no extra query.
+    chapter_lists = {
+        loc.id: sorted(loc.chapters, key=lambda c: c.chapter_num)
+        for loc in pagination.items
+    }
+
+    # Walk each row's parent chain so the Parent column can render the
+    # full breadcrumb (closest parent first; template reverses for
+    # root → leaf order). Depth cap + seen-set guard against accidental
+    # parent loops in dirty data. Mirrors the chapter view's
+    # ancestry_by_loc_id helper.
+    ancestry_by_loc_id = {}
+    for loc in pagination.items:
+        chain = []
+        seen = set()
+        cur = loc.parent
+        depth = 0
+        while cur is not None and cur.id not in seen and depth < 10:
+            chain.append(cur)
+            seen.add(cur.id)
+            cur = cur.parent
+            depth += 1
+        ancestry_by_loc_id[loc.id] = chain
+
     return render_template(
         'locations/locations.html',
         pagination=pagination,
         q=q,
         page=page,
+        types=list(type_by_name.values()),
+        provinces=provinces,
+        commanderies=commanderies,
+        counties=counties,
+        selected_type_id=type_id,
+        selected_province_id=province_id,
+        selected_commandery_id=commandery_id,
+        selected_county_id=county_id,
+        chapter_lists=chapter_lists,
+        ancestry_by_loc_id=ancestry_by_loc_id,
     )
 
 
@@ -961,15 +1473,64 @@ def new_location():
 @admin_required
 def edit_location(id):
     from flask_wtf import FlaskForm
+    import json as _json
     location = Location.query.get_or_404(id)
     form = EditLocationForm(obj=location)
+    # The model stores geojson as a JSONB dict; the form field is a
+    # TextAreaField holding the pretty-printed JSON string. Translate
+    # both ways here so the user sees JSON text and we still write
+    # the dict on save.
+    if request.method == 'GET' and location.geojson is not None:
+        form.geojson.data = _json.dumps(location.geojson, ensure_ascii=False, indent=2)
     if form.validate_on_submit():
+        # Cycle guard: parent must not be self, and must not be any
+        # descendant of self (which would close a loop). Walk the
+        # proposed parent's own ancestor chain looking for `location`.
+        proposed_parent = form.parent.data
+        if proposed_parent is not None:
+            if proposed_parent.id == location.id:
+                flash("A location can't be its own parent.")
+                return render_template(
+                    'locations/location_edit.html',
+                    form=form, location=location,
+                    urls=[u for u in location.urls if not u.is_deleted],
+                    add_url_form=AddUrlForm(), csrf_form=FlaskForm(),
+                )
+            cur, seen = proposed_parent, set()
+            while cur is not None and cur.id not in seen:
+                if cur.id == location.id:
+                    flash(
+                        f"That would create a cycle: {proposed_parent.name!r} "
+                        f"already has {location.name!r} as an ancestor."
+                    )
+                    return render_template(
+                        'locations/location_edit.html',
+                        form=form, location=location,
+                        urls=[u for u in location.urls if not u.is_deleted],
+                        add_url_form=AddUrlForm(), csrf_form=FlaskForm(),
+                    )
+                seen.add(cur.id)
+                cur = cur.parent
+
         form.populate_obj(location)
         location.aliases = _normalize_csv(location.aliases)
+        # `form.geojson.parsed` is set by the form's validate_geojson
+        # — either the parsed dict or None. populate_obj wrote the
+        # raw string; overwrite with the dict (or null).
+        location.geojson = getattr(form.geojson, 'parsed', None)
         db.session.add(location)
         db.session.commit()
         flash("Location updated.")
-        return redirect(url_for('main.edit_location', id=location.id))
+        return redirect(url_for('main.edit_location', id=location.id, back=_back_arg()))
+    # Merge picker — same shape as edit_faction. Show every active
+    # location other than this one as a candidate target.
+    merge_form = MergeLocationForm()
+    mergeable_locations = (
+        Location.query
+        .filter(Location.is_deleted.is_(False), Location.id != location.id)
+        .order_by(Location.name)
+        .all()
+    )
     return render_template(
         'locations/location_edit.html',
         form=form,
@@ -977,7 +1538,181 @@ def edit_location(id):
         urls=[u for u in location.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),
+        merge_form=merge_form,
+        mergeable_locations=mergeable_locations,
+        back=_back_arg(),
     )
+
+
+@main.route('/locations/<int:id>/merge', methods=['POST'])
+@login_required
+@admin_required
+def merge_location(id):
+    """Merge location `id` (source) into the target chosen in the form.
+
+    Moves every reference to source onto target before soft-deleting
+    source. References handled:
+
+      - chapter_location M2M (with per-link `keywords` merged)
+      - event.location_id
+      - location.parent_id (children re-parented)
+      - polymorphic Url rows         (target_type='location')
+      - polymorphic MatchExclusion   (target_type='location')
+
+    Target also inherits source's name + chinese_name + every alias on
+    source (added to target.aliases CSV, deduped). location_type, lat,
+    lng, and chinese_name on target are filled in from source ONLY when
+    target currently has them blank/null — pre-set values are never
+    overwritten, same rule the CSV import uses.
+
+    Refuses if target is in source's descendant chain — that would
+    require breaking the hierarchy first to avoid a self-loop. The
+    admin can re-parent and retry.
+
+    Source ends with is_deleted=True; UI listings filter it out.
+    Recovery is a DB-level flip of is_deleted back to false — there's
+    no un-merge UI."""
+    from collections import defaultdict
+    from sqlalchemy import text
+
+    merge_form = MergeLocationForm()
+    if not merge_form.validate_on_submit():
+        abort(400)
+
+    source = Location.query.get_or_404(id)
+
+    raw = (request.form.get('target_location_id') or '').strip()
+    if not raw.isdigit():
+        flash("Pick a location from the dropdown to merge into.")
+        return redirect(url_for('main.edit_location', id=id))
+    target = Location.query.get(int(raw))
+    if target is None or target.is_deleted:
+        flash("Target location is missing or already deleted.")
+        return redirect(url_for('main.edit_location', id=id))
+    if target.id == source.id:
+        flash("Can't merge a location into itself.")
+        return redirect(url_for('main.edit_location', id=id))
+
+    # Cycle guard: refuse if target is a descendant of source. Otherwise
+    # re-parenting source's children to target would loop target back
+    # onto itself via its own ancestry. Same BFS the /locations filter
+    # uses, scoped to active rows.
+    pairs = db.session.execute(
+        db.select(Location.id, Location.parent_id)
+        .where(Location.is_deleted.is_(False))
+    ).all()
+    kids_of = defaultdict(list)
+    for cid, pid in pairs:
+        if pid is not None:
+            kids_of[pid].append(cid)
+    descendants = {source.id}
+    stack = [source.id]
+    while stack:
+        node = stack.pop()
+        for child in kids_of.get(node, ()):
+            if child not in descendants:
+                descendants.add(child)
+                stack.append(child)
+    if target.id in descendants:
+        flash(
+            f"Can't merge: {target.name!r} is a descendant of "
+            f"{source.name!r}. Re-parent it first, then retry."
+        )
+        return redirect(url_for('main.edit_location', id=id))
+
+    # ----- chapter_location M2M ------------------------------------
+    # The M2M carries a per-link `keywords` column. For chapters where
+    # source AND target are both linked, merge the keyword CSVs into
+    # target's row; for chapters where only source is linked, re-point
+    # the row at target.
+    params = {'source_id': source.id, 'target_id': target.id}
+
+    # 1. Merge keywords on chapters where both rows exist (CSVs joined
+    #    with a comma — admin can de-dup later if they care). NULLIF
+    #    keeps a trailing comma from showing up when one side is empty.
+    db.session.execute(text("""
+        UPDATE chapter_location AS tgt
+        SET keywords = TRIM(BOTH ',' FROM
+            COALESCE(NULLIF(tgt.keywords, ''), '')
+            || CASE
+                WHEN tgt.keywords <> '' AND src.keywords <> '' THEN ','
+                ELSE ''
+            END
+            || COALESCE(NULLIF(src.keywords, ''), '')
+        )
+        FROM chapter_location AS src
+        WHERE tgt.chapter_id  = src.chapter_id
+          AND tgt.location_id = :target_id
+          AND src.location_id = :source_id
+    """), params)
+
+    # 2. Re-point chapters that only had source linked.
+    db.session.execute(text("""
+        UPDATE chapter_location
+        SET location_id = :target_id
+        WHERE location_id = :source_id
+          AND chapter_id NOT IN (
+              SELECT chapter_id FROM chapter_location
+              WHERE location_id = :target_id
+          )
+    """), params)
+
+    # 3. Drop any source row that's left (only the dup-chapter ones,
+    #    since step 2 took the rest).
+    db.session.execute(text(
+        "DELETE FROM chapter_location WHERE location_id = :source_id"
+    ), params)
+
+    # ----- Event.location_id ---------------------------------------
+    db.session.execute(text(
+        "UPDATE event SET location_id = :target_id WHERE location_id = :source_id"
+    ), params)
+
+    # ----- Location.parent_id (re-parent source's children) --------
+    db.session.execute(text(
+        "UPDATE location SET parent_id = :target_id WHERE parent_id = :source_id"
+    ), params)
+
+    # ----- Polymorphic relationships -------------------------------
+    db.session.execute(text("""
+        UPDATE url SET target_id = :target_id
+        WHERE target_type = 'location' AND target_id = :source_id
+    """), params)
+    db.session.execute(text("""
+        UPDATE match_exclusion SET target_id = :target_id
+        WHERE target_type = 'location' AND target_id = :source_id
+    """), params)
+
+    # ----- Aliases (target absorbs source's name + chinese + aliases) ---
+    aliases_existing = [a.strip() for a in (target.aliases or '').split(',') if a.strip()]
+    candidates = [source.name, source.chinese_name]
+    candidates += [a.strip() for a in (source.aliases or '').split(',') if a.strip()]
+    for alias in candidates:
+        if alias and alias not in aliases_existing:
+            aliases_existing.append(alias)
+    target.aliases = ','.join(aliases_existing)
+
+    # ----- Fill blank-only fields on target ------------------------
+    if not target.chinese_name and source.chinese_name:
+        target.chinese_name = source.chinese_name
+    if target.location_type_id is None and source.location_type_id is not None:
+        target.location_type_id = source.location_type_id
+    if target.latitude is None and source.latitude is not None:
+        target.latitude = source.latitude
+    if target.longitude is None and source.longitude is not None:
+        target.longitude = source.longitude
+
+    # ----- Soft-delete source --------------------------------------
+    source.is_deleted = True
+
+    db.session.commit()
+
+    flash(
+        f"Merged {source.name!r} into {target.name!r}. "
+        f"Source is now hidden from listings; aliases + references "
+        f"moved to target."
+    )
+    return redirect(url_for('main.edit_location', id=target.id))
 
 
 # ----- Events -------------------------------------------------------------

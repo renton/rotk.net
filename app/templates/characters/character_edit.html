@@ -11,6 +11,13 @@
 {% endblock %}
 
 {% block page_header %}
+<div class="mb-3">
+    {# `back` is the filtered listing URL passed in via ?back=… when
+       the admin arrived from the listing. Falls back to the bare
+       listing when this page was hit directly. #}
+    <a href="{{ back if back else url_for('main.characters') }}"
+       class="btn btn-sm btn-outline-secondary">&larr; Back to characters</a>
+</div>
 <div class="page-header mb-4">
     {% if character %}
     <h1>Edit character: {{ character.name }}</h1>

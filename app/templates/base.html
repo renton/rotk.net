@@ -43,6 +43,8 @@
         {% set faction_eps  = ('main.factions', 'main.edit_faction') %}
         {% set event_eps    = ('main.events', 'main.edit_event', 'main.new_event') %}
         {% set loc_eps      = ('main.locations', 'main.edit_location', 'main.new_location') %}
+        {% set timeline_eps = ('main.timeline',) %}
+        {% set map_eps      = ('main.map_view',) %}
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link {% if ep in book_eps %}active{% endif %}"
@@ -69,6 +71,16 @@
                {% if ep in loc_eps %}aria-current="page"{% endif %}
                href="{{ url_for('main.locations') }}">Locations</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if ep in timeline_eps %}active{% endif %}"
+               {% if ep in timeline_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.timeline') }}">Timeline</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if ep in map_eps %}active{% endif %}"
+               {% if ep in map_eps %}aria-current="page"{% endif %}
+               href="{{ url_for('main.map_view') }}">Map</a>
+          </li>
         </ul>
 
         {% if current_user.is_authenticated %}
@@ -88,12 +100,14 @@
                   <li><a class="dropdown-item" href="{{ url_for('admin.chapter_associations') }}">Character/Chapter Association</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.location_associations') }}">Location/Chapter Association</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.chapter_dates') }}">Chapter Dates</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{{ url_for('main.roles') }}">Roles</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.image_manager') }}">Image Manager</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.tags') }}">Tags</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.url_types') }}">URL Types</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.event_types') }}">Event Types</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('admin.location_types') }}">Location Types</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.duplicate_characters') }}">Duplicates</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{{ url_for('admin.users') }}">Users</a></li>

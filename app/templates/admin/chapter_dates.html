@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Admin: Chapter Dates{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Chapter Dates</h1>
+    <p class="text-muted mb-0">
+        Free-form date string per chapter. Accepts a single year
+        (<code>190 AD</code>), a month + year (<code>February 168</code>),
+        or a range (<code>190-200</code>). Used later to place each
+        chapter on a timeline.
+    </p>
+</div>
+
+<form method="POST" action="{{ url_for('admin.chapter_dates') }}">
+    {{ csrf_form.hidden_tag() }}
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted small">{{ chapters|length }} chapter{{ '' if chapters|length == 1 else 's' }}</span>
+        <button type="submit" class="btn btn-primary">Save all</button>
+    </div>
+
+    <div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th style="width: 6rem;">#</th>
+                <th>Title</th>
+                <th style="width: 18rem;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for chapter in chapters %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">
+                        {{ chapter.chapter_num }}
+                    </a>
+                </td>
+                <td>{{ chapter.name }}</td>
+                <td>
+                    <input type="text"
+                           name="date_{{ chapter.id }}"
+                           value="{{ chapter.date or '' }}"
+                           class="form-control form-control-sm"
+                           placeholder="e.g. 190 AD or 190-200"
+                           autocomplete="off">
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>{# /.table-responsive #}
+
+    <div class="d-flex justify-content-end mt-3">
+        <button type="submit" class="btn btn-primary">Save all</button>
+    </div>
+</form>
+{% endblock %}

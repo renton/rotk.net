@@ -55,6 +55,22 @@ def load_chapter_keywords(chapter_id, table_name, target_id_column):
     return {row[0]: (row[1] or '') for row in rows}
 
 
+def load_chapter_character_summaries(chapter_id):
+    """Return {character_id: summary_text} for every chapter_character
+    row belonging to `chapter_id`. Mirrors load_chapter_keywords but
+    pulls the `summary` column added by migration 0017."""
+    from app import db
+    from sqlalchemy import text
+    rows = db.session.execute(
+        text(
+            "SELECT character_id, summary FROM chapter_character "
+            "WHERE chapter_id = :cid"
+        ),
+        {'cid': chapter_id},
+    ).all()
+    return {row[0]: (row[1] or '') for row in rows}
+
+
 def split_keywords_csv(s):
     """Split a comma-delimited keyword string into a deduped, stripped
     list. Used by both the chapter render path and the admin association
@@ -295,6 +311,41 @@ def scan_chapter_for_characters(chapter):
 
     return list(chapter_characters)
 
+
+def scan_chapter_for_locations(chapter):
+    """Regex-scan the chapter text against every location's name/aliases.
+
+    Mirrors scan_chapter_for_characters for the Location model. Used by
+    `flask build-location-chapter-association` to bulk-populate the
+    chapter_location M2M. Soft-deleted Locations (merge sources, etc.)
+    are skipped so they don't leak back into chapter sidebars.
+    """
+    # Local import keeps the top-of-module import cheap.
+    from app.models import Location
+
+    all_locations = (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .all()
+    )
+    chapter_locations = set()
+
+    for location in all_locations:
+        needles = [location.name]
+        for alias in (location.aliases or '').split(','):
+            alias = alias.strip()
+            if alias and alias != location.name:
+                needles.append(alias)
+        needles = [n for n in needles if n]
+        if not needles:
+            continue
+        pattern = build_needle_pattern(needles)
+        if pattern.search(chapter.content):
+            chapter_locations.add(location)
+
+    return list(chapter_locations)
+
+
 def build_needle_pattern(name_needles):
     """Combined regex over all keyword needles for the chapter renderer.
 
@@ -331,7 +382,30 @@ def build_needle_pattern(name_needles):
         return re.compile(r'(?!)')
     return re.compile(r'\b(' + '|'.join(alternatives) + r')(?=\W|$)')
 
-def build_name_ref_html(character, duplicate_warning_url=None, display_text=None):
+def _overlap_tooltip_phrase(other_kind_plural, other_names, max_show=3):
+    """Render the names of overlapping cross-type entities into a short
+    HTML-attribute-safe phrase for use in a hover tooltip. Caps at
+    `max_show` names + "(+N more)" so the tooltip doesn't grow into a
+    wall of text. `other_kind_plural` is the noun for the listed
+    entities (e.g. "locations", "characters")."""
+    if not other_names:
+        return f'a {other_kind_plural[:-1]} name'  # "a location name" / "a character name"
+    import html as _html
+    shown = other_names[:max_show]
+    extra = len(other_names) - len(shown)
+    joined = ', '.join(_html.escape(n, quote=True) for n in shown)
+    if extra:
+        joined += f' (+{extra} more)'
+    return f'{other_kind_plural}: {joined}'
+
+
+def build_name_ref_html(
+    character,
+    duplicate_warning_url=None,
+    location_overlap_url=None,
+    location_overlap_with=None,
+    display_text=None,
+):
     """Emit the inline character-ref span. Includes:
 
       * The default pill styling inline so no-JS renders / first paint
@@ -344,11 +418,19 @@ def build_name_ref_html(character, duplicate_warning_url=None, display_text=None
       * A shared `text-ref` class so future inline-tagged data types
         (events, locations) can opt into the same style switcher by
         adding the class.
-      * When `duplicate_warning_url` is provided, a small red
-        circle-exclamation anchor follows the pill — for admins, this
-        signals that more than one character in the chapter shares this
-        name, and links to the Character/Chapter Association editor so
-        the admin can pick the right one.
+      * Up to two optional admin warning anchors after the pill (each
+        a no-underline link with its own tooltip + screen-reader
+        label):
+          - `duplicate_warning_url`: red circle-exclamation — more
+            than one character in the chapter shares this `name`.
+          - `location_overlap_url`: green circle-exclamation — this
+            character's needles (name + courtesy name + aliases)
+            overlap (substring either way) a location's needles in
+            the same chapter. Character mentions take priority over
+            location mentions in the scanner, so the character is
+            correctly tagged here — but a location with the same
+            text exists too, which the admin may want to refine.
+        Both icons can appear together; they're independent signals.
       * `display_text` overrides the pill text; default is
         `character.name`. The chapter renderer passes the matched
         alias (courtesy name, nickname, …) so the inline pill reads
@@ -385,11 +467,28 @@ def build_name_ref_html(character, duplicate_warning_url=None, display_text=None
     if duplicate_warning_url:
         # No-underline link so the icon doesn't grow a baseline rule.
         # title= drives the browser tooltip; aria-label echoes it for
-        # screen readers.
-        msg = f'Multiple characters named &quot;{character.name}&quot; in this chapter — click to resolve'
+        # screen readers. "Shared needle" not "shared name" because we
+        # flag overlap on any of name + courtesy + aliases.
+        msg = (
+            f'&quot;{character.name}&quot; shares a name or alias with '
+            f'another character in this chapter — click to resolve'
+        )
         pill += (
             f"<a href='{duplicate_warning_url}' "
             f"class='character-dup-warning text-danger ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    if location_overlap_url:
+        phrase = _overlap_tooltip_phrase('locations', location_overlap_with or [])
+        msg = (
+            f'&quot;{character.name}&quot; overlaps {phrase} in this chapter '
+            f'— click to review'
+        )
+        pill += (
+            f"<a href='{location_overlap_url}' "
+            f"class='character-loc-overlap-warning text-success ms-1 text-decoration-none' "
             f"title='{msg}' aria-label='{msg}'>"
             f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
             f"</a>"
@@ -411,13 +510,206 @@ def build_event_ref_html(event, match_text=None):
     )
 
 
-def build_location_ref_html(location, match_text=None):
-    """Same as build_event_ref_html but for Location."""
+def find_shared_needle_ids(entities, get_needles):
+    """Return the set of entity ids that share at least one needle
+    (name or alias, exact-match) with another entity in the same
+    iterable.
+
+    Used to drive the red admin warning icon on inline pills and
+    association rows. Catches the common case where two Locations
+    have different `name`s but the import has given them the same
+    bare-English alias (e.g. "Yu Province" and "Yu County" both
+    carry the alias "Yu"); a `name`-only Counter would miss it.
+
+    `get_needles(entity)` returns an iterable of strings for the
+    entity. Empty / whitespace-only needles are skipped before
+    comparing. The match is exact equality between needle strings —
+    cross-substring overlap is a separate signal handled by
+    find_location_character_overlap.
+    """
+    from collections import defaultdict
+    needle_to_ids = defaultdict(set)
+    for e in entities:
+        for n in get_needles(e):
+            n = (n or '').strip()
+            if n:
+                needle_to_ids[n].add(e.id)
+    dup_ids = set()
+    for ids in needle_to_ids.values():
+        if len(ids) > 1:
+            dup_ids.update(ids)
+    return dup_ids
+
+
+def location_needles(loc):
+    """Standard needle list for a Location: name + comma-split aliases.
+    Shared by the chapter view + admin listings so the duplicate-name
+    detection and the cross-overlap detection agree on what counts
+    as a 'needle'."""
+    out = []
+    if loc.name:
+        out.append(loc.name)
+    for alias in (loc.aliases or '').split(','):
+        alias = alias.strip()
+        if alias:
+            out.append(alias)
+    return out
+
+
+def _word_boundary_overlap(a, b):
+    """True iff `a` is a word-boundary substring of `b`, or vice versa.
+    Empty strings never overlap. Falls back to plain equality when both
+    sides are the same length and equal.
+
+    Using `\\b ... \\b` mirrors the regex semantics `build_needle_pattern`
+    uses against chapter prose. Without it, the alias 'Yu' would
+    "overlap" the character name 'Xia Yun' purely because 'Yu' is a
+    raw substring of 'Yun' — a false-positive the admin can never
+    resolve because Yu isn't actually competing with Xia Yun in the
+    text.
+    """
+    a = (a or '').strip()
+    b = (b or '').strip()
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    shorter, longer = (a, b) if len(a) <= len(b) else (b, a)
+    return re.search(r'\b' + re.escape(shorter) + r'\b', longer) is not None
+
+
+def find_location_character_overlap(locations, characters,
+                                    location_needles_for=None,
+                                    character_needles_for=None):
+    """Cross-product the needles of every Location against every
+    Character in the given lists.  Return `(loc_overlaps, char_overlaps)`
+    — two dicts mapping an entity id to the list of *other-side*
+    entities whose needles overlap it.
+
+    "Overlap" means *word-boundary* substring containment in either
+    direction: a needle from one side word-boundary-matches inside a
+    needle from the other.  Plain `in` matching produced false
+    positives like 'Yu' (alias of Yu Province) flagging the character
+    'Xia Yun' just because 'Yu' is a substring of 'Yun'.
+
+    Pass `location_needles_for(loc)` / `character_needles_for(char)`
+    to supply chapter-scoped needles (e.g. `chapter_location.keywords`
+    when set, falling back to `location.aliases`).  Defaults to the
+    entity's global labels, which is fine when no chapter context
+    exists.
+
+        loc_overlaps  : dict[location.id  -> list[Character]]
+        char_overlaps : dict[character.id -> list[Location]]
+
+    Used by the chapter view + the admin association listings to
+    surface a green warning icon (with a tooltip naming the matched
+    cross-type entities) next to entries whose needles share text
+    with a cross-type entity in the same chapter. Pure-Python and
+    quadratic in (sum of needles per side) — chapter-scoped lists
+    are small enough that this stays fast.  Only call when an admin
+    is being rendered to; the work is wasted otherwise.
+
+    Membership checks (`id in loc_overlaps`) still work the way the
+    older set-returning version did, so callers that only care about
+    "is this thing overlapping?" don't need to change.
+    """
+    if character_needles_for is None:
+        character_needles_for = lambda c: c.get_all_name_labels()
+    if location_needles_for is None:
+        location_needles_for = location_needles
+
+    char_needles_by_id = {}
+    char_obj_by_id = {}
+    for c in characters:
+        ns = {n for n in character_needles_for(c) if n and n.strip()}
+        if ns:
+            char_needles_by_id[c.id] = ns
+            char_obj_by_id[c.id] = c
+
+    loc_needles_by_id = {}
+    loc_obj_by_id = {}
+    for loc in locations:
+        ns = {n for n in location_needles_for(loc) if n and n.strip()}
+        if ns:
+            loc_needles_by_id[loc.id] = ns
+            loc_obj_by_id[loc.id] = loc
+
+    loc_overlaps = {}
+    char_overlaps = {}
+    for loc_id, ln_set in loc_needles_by_id.items():
+        for char_id, cn_set in char_needles_by_id.items():
+            hit = False
+            for ln in ln_set:
+                for cn in cn_set:
+                    if _word_boundary_overlap(ln, cn):
+                        hit = True
+                        break
+                if hit:
+                    break
+            if hit:
+                loc_overlaps.setdefault(loc_id, []).append(char_obj_by_id[char_id])
+                char_overlaps.setdefault(char_id, []).append(loc_obj_by_id[loc_id])
+
+    return loc_overlaps, char_overlaps
+
+
+def build_location_ref_html(
+    location,
+    match_text=None,
+    duplicate_warning_url=None,
+    character_overlap_url=None,
+    character_overlap_with=None,
+):
+    """Inline span for a location mention in chapter prose.
+
+    Same as build_event_ref_html — plain underlined text, clickable
+    (chapter.js opens the Locations accordion in the sidebar) — plus
+    up to two optional admin warning anchors:
+
+      * `duplicate_warning_url`: red circle-exclamation when multiple
+        Locations in this chapter share the same `name`. Click to
+        jump to /admin/location-associations and disambiguate.
+      * `character_overlap_url`: green circle-exclamation when any of
+        the location's needles (name + aliases) overlaps — by exact
+        match OR substring containment in either direction — with any
+        character's needles (name + courtesy name + aliases) tagged
+        on this chapter. Surfaces ambiguity between location and
+        character mentions so admins can refine the per-(chapter,
+        location) keywords without staring at every page.
+
+    Both warnings can show on the same pill — they're independent
+    signals."""
     label = match_text if match_text is not None else location.name
-    return (
+    pill = (
         f"<span class='location-ref' data-location-id='{location.id}'>"
         f"{label}</span>"
     )
+    if duplicate_warning_url:
+        msg = (
+            f'&quot;{location.name}&quot; shares a name or alias with '
+            f'another location in this chapter — click to resolve'
+        )
+        pill += (
+            f"<a href='{duplicate_warning_url}' "
+            f"class='location-dup-warning text-danger ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    if character_overlap_url:
+        phrase = _overlap_tooltip_phrase('characters', character_overlap_with or [])
+        msg = (
+            f'&quot;{location.name}&quot; overlaps {phrase} in this chapter '
+            f'— click to review'
+        )
+        pill += (
+            f"<a href='{character_overlap_url}' "
+            f"class='location-char-overlap-warning text-success ms-1 text-decoration-none' "
+            f"title='{msg}' aria-label='{msg}'>"
+            f"<i class='fa-solid fa-circle-exclamation' aria-hidden='true'></i>"
+            f"</a>"
+        )
+    return pill
 
 
 def get_event_labels(event):
