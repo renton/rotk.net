@@ -34,6 +34,17 @@ span.location-ref:hover {
     background-color: #eff5ff;
 }
 
+/* Indented italic block for `<p class="quote">` paragraphs — the
+   commentary / quoted-letter passages that threekingdoms.com tags with
+   `<td class="2">`. Mirrors how the source page sets them off from
+   surrounding prose. */
+p.quote {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-style: italic;
+    color: #444;
+}
+
 /* Brief yellow flash on a sidebar row when its inline ref is clicked.
    Used by chapter.js showAccordionItem(): adds .sidebar-flash to the
    target <li>, the CSS animation runs once and fades back. The

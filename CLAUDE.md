@@ -133,7 +133,9 @@ Full walkthrough in `README.md`.
 |---|---|
 | `flask create-all` | `db.create_all()` — create schema |
 | `flask apply-migrations` | Run new `migrations/*.sql` files (tracked in `_schema_migrations`). Each file should be idempotent (`IF NOT EXISTS` / `IF EXISTS`); already-applied files are skipped. |
-| `flask scrape-book` | Pull all 120 chapters from threekingdoms.com |
+| `flask scrape-book` | Pull all 120 chapters from threekingdoms.com (INSERT only — skips chapters already in the DB). |
+| `flask rescrape-chapter <num>` | Re-fetch ONE chapter and UPDATE its row in place. Safe — never touches chapter_character / chapter_location / event_chapter / MatchExclusion. Use after a scraper fix. |
+| `flask rescrape-all-chapters` | Same as above but loops every chapter in the DB. ~120 HTTP fetches; idempotent (prints `unchanged` when source matches). |
 | `flask scrape-characters` | Pull characters from Wikipedia A–Z pages, populate factions + roles |
 | `flask build-chapter-character-association` | Populate the chapter_character join table by regex-scanning each chapter; needs to run after scrape-* |
 | `flask recount-book-mentions` | Recompute `Character.book_mention_count` across the whole book. Run after scraping new chapters or alias changes. |

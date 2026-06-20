@@ -76,22 +76,31 @@ def scrape_chapter(chapter_number):
 
         chapter_html = soup.find('table', id='txt_content')
 
-        paragraphs = chapter_html.find_all('td', {'class':['1', '3b']})
+        # threekingdoms.com uses three relevant `td` classes inside the
+        # chapter table:
+        #   class="1"   — normal prose paragraph
+        #   class="2"   — indented commentary / quoted-letter block
+        #                 (e.g. Xu Gong's secret letter in chapter 29)
+        #   class="3b"  — poem
+        # Anything else (notes textareas, ads, layout chrome) we ignore.
+        paragraphs = chapter_html.find_all('td', {'class': ['1', '2', '3b']})
 
         for paragraph in paragraphs:
-            
+
             paragraph.name = "p"
 
             td_classes = paragraph.get('class', [])
 
-            if len(td_classes) > 1 and ('1' not in td_classes or '3b' not in td_classes):
-                raise Exception("TOO BIG ", td_classes)
-
-            for tag in soup.find_all('a', class_='1'):
+            for tag in soup.find_all('a', class_=td_classes[0]):
                 tag.decompose()
 
             if td_classes[0] == "1":
                 del paragraph['class']
+            elif td_classes[0] == "2":
+                # Rendered with a subtle indent + italic via styles.css
+                # (.quote) so the document treats it as a quotation,
+                # mirroring how the source page indents these blocks.
+                paragraph['class'] = "quote"
             elif td_classes[0] == "3b":
                 paragraph['class'] = "poem"
 

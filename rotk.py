@@ -60,12 +60,71 @@ def scrape_book():
                 name=title,
                 chapter_num=i+1,
                 content=copy,
-            )        
+            )
             db.session.add(chapter)
             db.session.commit()
         except Exception as e:
             print(e)
             db.session.rollback()
+
+
+@app.cli.command()
+@click.argument('chapter_num', type=int)
+def rescrape_chapter(chapter_num):
+    """Re-fetch one chapter and UPDATE the existing row's content/title
+    in place. Use this after a scraper fix to refresh prose without
+    disturbing chapter_character / chapter_location / event_chapter
+    associations or per-snippet MatchExclusion rows — none of which
+    are touched, since the chapter row stays at the same id.
+
+    Refuses if the chapter row doesn't exist yet (use `scrape-book` to
+    create the initial set)."""
+    from tools.scraper import scrape_chapter
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first()
+    if chapter is None:
+        print(f"No chapter {chapter_num} in DB — run `scrape-book` to create.")
+        sys.exit(1)
+    title, content = scrape_chapter(chapter_num)
+    old_len = len(chapter.content or '')
+    chapter.name = title
+    chapter.content = content
+    db.session.commit()
+    new_len = len(content)
+    delta = new_len - old_len
+    sign = '+' if delta >= 0 else ''
+    print(f"chapter {chapter_num}: {old_len} → {new_len} chars ({sign}{delta})")
+
+
+@app.cli.command()
+def rescrape_all_chapters():
+    """Re-fetch every chapter from threekingdoms.com and UPDATE the
+    existing rows in place. Same safety guarantee as `rescrape-chapter`:
+    associations (chapter↔character/event/location), per-association
+    keywords, and MatchExclusion rows are untouched — only the
+    chapter's name + content get refreshed.
+
+    ~120 HTTP fetches; a few minutes. Idempotent — re-runnable as a
+    no-op once chapters match the source."""
+    from tools.scraper import scrape_chapter
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    if not chapters:
+        print("No chapters in DB — run `scrape-book` first.")
+        sys.exit(1)
+    changed = 0
+    for chapter in chapters:
+        title, content = scrape_chapter(chapter.chapter_num)
+        old_len = len(chapter.content or '')
+        if chapter.content == content and chapter.name == title:
+            print(f"  chapter {chapter.chapter_num}: unchanged")
+            continue
+        chapter.name = title
+        chapter.content = content
+        db.session.commit()
+        changed += 1
+        delta = len(content) - old_len
+        sign = '+' if delta >= 0 else ''
+        print(f"  chapter {chapter.chapter_num}: {old_len} → {len(content)} chars ({sign}{delta})")
+    print(f"\nDone. {changed} chapter(s) updated.")
 
 @app.cli.command()
 def scrape_characters():
