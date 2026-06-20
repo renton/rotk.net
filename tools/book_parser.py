@@ -264,23 +264,78 @@ def find_character_mentions(chapter, character, context_chars=60, limit=None, ex
 
 
 def count_mentions_per_character(chapters, characters):
-    """Return {character_id: total_mentions_across_chapters}.
+    """Return {character_id: total_mentions_across_book}, association-
+    aware. For each character we walk only the chapters they're linked
+    to via chapter_character, and use that pair's per-chapter `keywords`
+    column as the needle set (falling back to the character's global
+    name labels when the keywords column is still empty — pre-backfill
+    data).
 
-    HTML is stripped from each chapter content once up front so we don't
-    pay that cost per character. Each character's `get_all_name_labels()`
-    becomes one regex; we scan every chapter and sum findall() counts."""
-    stripped = [strip_html_tags(c.content) for c in chapters]
+    This fixes the historic over-count where two characters with the
+    same name (e.g. two "Lady Cao"s) were each credited with every
+    "Lady Cao" mention anywhere in the book. Now each character only
+    counts mentions in chapters they actually belong to.
+
+    The `chapters` arg is the universe of Chapter rows to scan against;
+    pre-loading all of them once is the efficient way to call this for
+    bulk recounts. Single-character recounts pass the same full list —
+    the inner loop only visits chapters the character is associated
+    with, so unrelated chapters cost nothing per character."""
+    from app import db
+    from sqlalchemy import text
+
+    if not characters:
+        return {}
+
+    chapters_by_id = {c.id: c for c in chapters}
+    stripped_by_id = {cid: strip_html_tags(c.content) for cid, c in chapters_by_id.items()}
+
+    # One query pulls every (character_id, chapter_id, keywords) row
+    # we care about, grouped by character below.
+    rows = db.session.execute(
+        text(
+            "SELECT character_id, chapter_id, keywords FROM chapter_character "
+            "WHERE character_id = ANY(:cids)"
+        ),
+        {'cids': [c.id for c in characters]},
+    ).all()
+    assocs_by_char = {}
+    for character_id, chapter_id, keywords in rows:
+        assocs_by_char.setdefault(character_id, []).append((chapter_id, keywords or ''))
+
     counts = {}
     for character in characters:
-        needles = [n for n in character.get_all_name_labels() if n]
-        if not needles:
-            counts[character.id] = 0
-            continue
-        pattern = build_needle_pattern(needles)
-        counts[character.id] = sum(
-            len(pattern.findall(text)) for text in stripped
-        )
+        total = 0
+        for chapter_id, kw_csv in assocs_by_char.get(character.id, []):
+            stripped = stripped_by_id.get(chapter_id)
+            if stripped is None:
+                continue
+            needles = split_keywords_csv(kw_csv)
+            if not needles:
+                # Backward-compat fallback: per-chapter keywords haven't
+                # been seeded yet for this association. Use the
+                # character's global labels so the count isn't zero.
+                needles = [n for n in character.get_all_name_labels() if n]
+            if not needles:
+                continue
+            pattern = build_needle_pattern(needles)
+            total += len(pattern.findall(stripped))
+        counts[character.id] = total
     return counts
+
+
+def recount_character_book_mentions(character):
+    """Recount one character's `book_mention_count` from scratch by
+    re-querying their current chapter_character associations + per-
+    chapter keywords. Sets the new value on the character row but
+    leaves the commit to the caller — usually the same transaction
+    that mutated the association in the first place.
+
+    Returns the freshly-computed integer."""
+    chapters = Chapter.query.all()
+    counts = count_mentions_per_character(chapters, [character])
+    character.book_mention_count = counts.get(character.id, 0)
+    return character.book_mention_count
 
 
 def get_characters_for_chapter(chapter_id):

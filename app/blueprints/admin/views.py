@@ -14,7 +14,7 @@ from app import db
 from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, recount_character_book_mentions
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
@@ -432,6 +432,10 @@ def chapter_associations_remove(chapter_num, character_id):
 
     if character in chapter.characters:
         chapter.characters.remove(character)
+        # Recount this character's book_mention_count from scratch:
+        # they have one fewer chapter to count from now. Done in the
+        # same transaction as the M2M remove.
+        recount_character_book_mentions(character)
         db.session.commit()
         flash(f"Removed {character.name} from chapter {chapter.chapter_num}.")
     else:
@@ -564,6 +568,11 @@ def chapter_associations_add(chapter_num):
         {'kw': new_kw_csv, 'cid': chapter.id, 'charid': character.id},
     )
 
+    # Recount this character's book_mention_count from scratch — both
+    # paths above (fresh add, keyword resync) can change which matches
+    # are counted, so re-query their chapter_character rows and re-sum.
+    recount_character_book_mentions(character)
+
     db.session.commit()
 
     parts = []
@@ -614,6 +623,12 @@ def chapter_associations_switch(chapter_num, character_id):
         chapter.characters.remove(old_character)
     if new_character not in chapter.characters:
         chapter.characters.append(new_character)
+
+    # Both characters' chapter sets changed — recount each from scratch
+    # so book_mention_count picks up the swap.
+    recount_character_book_mentions(old_character)
+    recount_character_book_mentions(new_character)
+
     db.session.commit()
 
     flash(

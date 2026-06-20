@@ -107,15 +107,23 @@ def rescrape_chapter(chapter_num):
     if chapter is None:
         print(f"No chapter {chapter_num} in DB — run `scrape-book` to create.")
         sys.exit(1)
+    from tools.book_parser import recount_character_book_mentions
     title, content = scrape_chapter(chapter_num)
     old_len = len(chapter.content or '')
     chapter.name = title
     chapter.content = content
+    # Content shifted → every character associated with this chapter
+    # has a potentially-different mention count. Recount them all
+    # before committing in the same transaction.
+    affected = list(chapter.characters)
+    for c in affected:
+        recount_character_book_mentions(c)
     db.session.commit()
     new_len = len(content)
     delta = new_len - old_len
     sign = '+' if delta >= 0 else ''
-    print(f"chapter {chapter_num}: {old_len} → {new_len} chars ({sign}{delta})")
+    print(f"chapter {chapter_num}: {old_len} → {new_len} chars ({sign}{delta}); "
+          f"recounted {len(affected)} character(s)")
 
 
 @app.cli.command()
@@ -124,16 +132,21 @@ def rescrape_all_chapters():
     existing rows in place. Same safety guarantee as `rescrape-chapter`:
     associations (chapter↔character/event/location), per-association
     keywords, and MatchExclusion rows are untouched — only the
-    chapter's name + content get refreshed.
+    chapter's name + content get refreshed. Character book mention
+    counts ARE recounted automatically for any character whose chapters
+    saw content changes.
 
     ~120 HTTP fetches; a few minutes. Idempotent — re-runnable as a
     no-op once chapters match the source."""
     from tools.scraper import scrape_chapter
+    from tools.book_parser import recount_character_book_mentions
+
     chapters = Chapter.query.order_by(Chapter.chapter_num).all()
     if not chapters:
         print("No chapters in DB — run `scrape-book` first.")
         sys.exit(1)
     changed = 0
+    affected_character_ids = set()
     for chapter in chapters:
         title, content = scrape_chapter(chapter.chapter_num)
         old_len = len(chapter.content or '')
@@ -142,12 +155,25 @@ def rescrape_all_chapters():
             continue
         chapter.name = title
         chapter.content = content
+        for c in chapter.characters:
+            affected_character_ids.add(c.id)
         db.session.commit()
         changed += 1
         delta = len(content) - old_len
         sign = '+' if delta >= 0 else ''
         print(f"  chapter {chapter.chapter_num}: {old_len} → {len(content)} chars ({sign}{delta})")
-    print(f"\nDone. {changed} chapter(s) updated.")
+
+    # Recount the affected characters once at the end — cheaper than
+    # per-chapter since the same character may appear in many of the
+    # updated chapters.
+    if affected_character_ids:
+        print(f"\nRecounting {len(affected_character_ids)} character(s) whose chapters changed...")
+        affected_chars = Character.query.filter(Character.id.in_(affected_character_ids)).all()
+        for c in affected_chars:
+            recount_character_book_mentions(c)
+        db.session.commit()
+
+    print(f"\nDone. {changed} chapter(s) updated, {len(affected_character_ids)} character(s) recounted.")
 
 @app.cli.command()
 def scrape_characters():
