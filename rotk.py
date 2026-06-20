@@ -2312,6 +2312,44 @@ def check_date_parsing(only):
 
 
 @app.cli.command()
+@click.option('--dry-run/--no-dry-run', default=False,
+              help='List affected rows without writing.')
+def clean_empty_location_geojson(dry_run):
+    """Scrub Location.geojson rows that hold non-object junk (most
+    commonly the empty string "" written by an earlier new_location
+    bug where form.populate_obj copied the raw form string into the
+    JSONB column).
+
+    Anything that is a JSON string, number, boolean, null-wrapper,
+    or empty object gets reset to SQL NULL. Real Polygon /
+    MultiPolygon objects are left alone."""
+    from sqlalchemy import text
+    rows = db.session.execute(text(
+        "SELECT id, name, geojson::text AS gj "
+        "FROM location "
+        "WHERE geojson IS NOT NULL "
+        "  AND (jsonb_typeof(geojson) != 'object' OR geojson = '{}'::jsonb)"
+    )).all()
+    if not rows:
+        print("No bad geojson rows — nothing to do.")
+        return
+    print(f"Found {len(rows)} location(s) with non-object geojson:")
+    for r in rows:
+        snippet = (r.gj or '')[:60]
+        print(f"  id={r.id}  name={r.name!r:30s}  geojson={snippet}")
+    if dry_run:
+        print("\n(dry-run) Not writing.")
+        return
+    db.session.execute(text(
+        "UPDATE location SET geojson = NULL "
+        "WHERE geojson IS NOT NULL "
+        "  AND (jsonb_typeof(geojson) != 'object' OR geojson = '{}'::jsonb)"
+    ))
+    db.session.commit()
+    print(f"\nDone. {len(rows)} row(s) cleared.")
+
+
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     pass

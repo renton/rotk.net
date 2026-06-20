@@ -101,7 +101,10 @@ def map_view():
     map_items = []
     for loc in rows:
         has_point = loc.latitude is not None and loc.longitude is not None
-        has_geojson = loc.geojson is not None
+        # Truthy (not "is not None") check: an empty string accidentally
+        # stored in this JSONB column would pass `is not None` but isn't
+        # renderable geo. Same below in the chapter sidebar.
+        has_geojson = bool(loc.geojson)
         if not has_point and not has_geojson:
             continue
         lt = loc.location_type
@@ -653,7 +656,7 @@ def chapter(chapter_num):
     chapter_map_items = []
     for loc in chapter_locations:
         has_point = loc.latitude is not None and loc.longitude is not None
-        has_geo = loc.geojson is not None
+        has_geo = bool(loc.geojson)   # see /map view comment
         if not has_point and not has_geo:
             continue
         lt = loc.location_type
@@ -1461,6 +1464,14 @@ def new_location():
         location = Location()
         form.populate_obj(location)
         location.aliases = _normalize_csv(location.aliases)
+        # populate_obj set location.geojson to the raw form string,
+        # which is "" when the admin left the field blank — that
+        # would land in JSONB as the JSON string "" and make
+        # `loc.geojson is not None` true downstream, fooling the
+        # chapter sidebar into treating the location as clickable.
+        # validate_geojson exposes the parsed dict (or None) as
+        # form.geojson.parsed — use that instead. Mirrors edit_location.
+        location.geojson = getattr(form.geojson, 'parsed', None)
         db.session.add(location)
         db.session.commit()
         flash(f"Created location {location.name!r}.")

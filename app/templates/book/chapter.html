@@ -415,7 +415,11 @@
                   {% else %}
                   <ul class="list-unstyled mb-0">
                     {% for loc in chapter_locations %}
-                    {% set has_geo = (loc.latitude is not none and loc.longitude is not none) or loc.geojson is not none %}
+                    {# Truthy check on loc.geojson so an accidental
+                       empty-string in JSONB doesn't fool this into
+                       making the row clickable. Empty dict / empty
+                       string both fall through to "no geo". #}
+                    {% set has_geo = (loc.latitude is not none and loc.longitude is not none) or loc.geojson %}
                     <li class="border rounded p-2 mb-2 bg-light {% if has_geo %}location-item-clickable{% endif %}"
                         id="location-item-{{ loc.id }}"
                         {% if has_geo %}data-show-on-map="{{ loc.id }}"
