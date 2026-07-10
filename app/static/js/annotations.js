@@ -155,13 +155,15 @@
         };
         var sectionKey = currentIcon ? currentIcon.getAttribute('data-section-key') : '';
         // If this is the first annotation on the section, payload[sectionKey]
-        // may not exist yet. Create it.
+        // may not exist yet. Generate a placeholder key and STASH IT ON
+        // THE ICON so subsequent submits in the same session reuse it —
+        // otherwise every submit generates a new key + wipes the visible
+        // thread from prior submits. Next page reload rebuilds keys from
+        // the server-side sha16 hash anyway; this placeholder is
+        // session-local.
         if (!sectionKey) {
-          // Compute a sha16 client-side — we don't strictly need it to
-          // match the server's hash (next page load will rebuild
-          // everything correctly). Use a placeholder key derived from
-          // the section text length + a random suffix.
           sectionKey = 'pending-' + Math.random().toString(36).slice(2, 10);
+          if (currentIcon) currentIcon.setAttribute('data-section-key', sectionKey);
         }
         if (!payload[sectionKey]) {
           payload[sectionKey] = { section_text: currentSectionText, thread: [] };

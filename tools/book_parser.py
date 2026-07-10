@@ -178,18 +178,32 @@ _P_RE = re.compile(r'(<p\b[^>]*>)(.*?)(</p>)', re.DOTALL | re.IGNORECASE)
 
 def normalize_paragraph_text(text):
     """Whitespace-normalised paragraph text used as an Annotation's
-    `section_text` fingerprint. Same normalization on save + render
-    so equality-lookup works reliably."""
+    `section_text` fingerprint. Same normalization must apply on save
+    + render for equality-lookup to work.
+
+    Decodes HTML entities via html.unescape — browsers' `.textContent`
+    on the client side returns already-decoded text (`&amp;` → `&`),
+    so the server has to do the same or fingerprints diverge on any
+    paragraph containing an entity. This bit us on the first pass of
+    the annotation feature."""
     if not text:
         return ''
+    import html as html_mod
+    text = html_mod.unescape(text)
     return _WS_RE.sub(' ', text).strip()
 
 
 def annotation_section_hash(text):
-    """Short SHA-256 hash of the normalised text — used as a DOM-safe
-    key on annotation icons and in the client-side lookup dict."""
+    """Short SHA-256 hash of the normalised, HTML-stripped text —
+    used as a DOM-safe key on annotation icons and in the client-side
+    lookup dict.
+
+    Callers pass in either raw paragraph HTML (with pill/span tags)
+    or the pre-stripped normalized text; both produce the same hash
+    because we always run through strip_html_tags + normalize here."""
     import hashlib
-    return hashlib.sha256(normalize_paragraph_text(text).encode('utf-8')).hexdigest()[:16]
+    canonical = normalize_paragraph_text(strip_html_tags(text))
+    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()[:16]
 
 
 def inject_annotation_icons(html, annotations_by_section, is_admin):
