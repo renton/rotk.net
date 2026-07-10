@@ -66,7 +66,9 @@
                                 role=role_id,
                                 any_faction=anyf_id,
                                 primary_faction=primf_id,
-                                search_query=q_text) }}">{{ display_letter }}</a>
+                                search_query=q_text,
+                                sort=sort or None,
+                                dir=direction if sort else None) }}">{{ display_letter }}</a>
         </li>
     {% endfor %}
 </ul>
@@ -76,6 +78,20 @@
     <thead>
         <th style="width: 80px;">Image</th>
         <th>Name</th>
+        {# Sortable book-wide mention count. First click sorts most-
+           mentioned first; clicking again flips. All other filter
+           state (letter, faction, role, search) is preserved. #}
+        {% set next_dir = 'asc' if (sort == 'mentions' and direction == 'desc') else 'desc' %}
+        <th class="text-nowrap">
+            <a href="{{ url_for('main.characters',
+                                letter=letter,
+                                role=role_id,
+                                any_faction=anyf_id,
+                                primary_faction=primf_id,
+                                search_query=q_text,
+                                sort='mentions',
+                                dir=next_dir) }}">Mentions{% if sort == 'mentions' %} {{ '▼' if direction == 'desc' else '▲' }}{% endif %}</a>
+        </th>
         <th class="d-none d-md-table-cell">Courtesy Name</th>
         <th class="d-none d-md-table-cell">Aliases</th>
         <th class="d-none d-md-table-cell">Birth</th>
@@ -118,6 +134,9 @@
                     <div>
                         {{ character.chinese_name }}
                     </div>
+                </td>
+                <td>
+                    {{ character.book_mention_count or 0 }}
                 </td>
                 <td class="d-none d-md-table-cell">
                     <div>
@@ -168,7 +187,9 @@
                                 role=role_id,
                                 any_faction=anyf_id,
                                 primary_faction=primf_id,
-                                search_query=q_text) }}
+                                search_query=q_text,
+                                sort=sort or None,
+                                dir=direction if sort else None) }}
 </div>
 {% endif %}
 

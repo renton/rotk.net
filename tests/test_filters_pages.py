@@ -134,3 +134,30 @@ class TestRemainingAuthFlows:
             'email': 'nobody@test.example',
         }, follow_redirects=True)
         assert resp.status_code == 200
+
+
+class TestCharactersMentionSort:
+    def test_sort_desc_puts_most_mentioned_first(self, client, db_session):
+        factories.make_character(name='Quiet Fellow', book_mention_count=2)
+        factories.make_character(name='Famous Fellow', book_mention_count=900)
+        resp = client.get('/characters?sort=mentions&dir=desc')
+        assert resp.status_code == 200
+        assert resp.data.find(b'Famous Fellow') < resp.data.find(b'Quiet Fellow')
+
+    def test_sort_asc_reverses(self, client, db_session):
+        factories.make_character(name='Quiet Fellow', book_mention_count=2)
+        factories.make_character(name='Famous Fellow', book_mention_count=900)
+        resp = client.get('/characters?sort=mentions&dir=asc')
+        assert resp.data.find(b'Quiet Fellow') < resp.data.find(b'Famous Fellow')
+
+    def test_default_stays_alphabetical(self, client, db_session):
+        factories.make_character(name='Aardvark Man', book_mention_count=1)
+        factories.make_character(name='Zebra Man', book_mention_count=999)
+        resp = client.get('/characters')
+        assert resp.data.find(b'Aardvark Man') < resp.data.find(b'Zebra Man')
+
+    def test_header_link_and_count_cell(self, client, db_session):
+        factories.make_character(name='Counted Guy', book_mention_count=37)
+        resp = client.get('/characters?sort=mentions&dir=desc')
+        assert b'sort=mentions' in resp.data
+        assert b'>37<' in resp.data.replace(b'\n', b'').replace(b' ', b'')

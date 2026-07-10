@@ -859,8 +859,21 @@ def characters():
         selectinload(Character.chapters),
     )
 
+    # Sortable mentions column: ?sort=mentions&dir=asc|desc. Anything
+    # else falls back to the default name ordering. Name is always the
+    # tiebreaker so equal counts stay stable across pages.
+    sort = request.args.get('sort', '')
+    direction = request.args.get('dir', 'desc')
+    if sort == 'mentions':
+        count_col = Character.book_mention_count
+        order = (count_col.asc() if direction == 'asc' else count_col.desc())
+        query = query.order_by(order, Character.name)
+    else:
+        sort = ''
+        query = query.order_by(Character.name)
+
     # Apply pagination after filtering
-    pagination = query.order_by(Character.name).paginate(
+    pagination = query.paginate(
         page=page,
         per_page=current_app.config['CHARACTERS_PER_PAGE'],
         error_out=False
@@ -891,6 +904,8 @@ def characters():
         alphabet=alphabet,
         form=form,
         letter=letter,
+        sort=sort,
+        direction=direction,
         default_portraits=default_portraits,
         chapter_lists=chapter_lists,
     )
