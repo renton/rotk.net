@@ -78,8 +78,13 @@ rotk.net - {% if faction %}Edit faction: {{ faction.name }}{% else %}New faction
     </form>
 
     <datalist id="all-characters-datalist">
+        {# Faction names ride in the option VALUE (before the #id the
+           picker parses off the end) — datalist `label` rendering is
+           browser-inconsistent, and this way duplicate-name characters
+           disambiguate AND typing a faction name filters the list. #}
         {% for c in leader_picker_characters %}
-        <option value="{{ c.name }} #{{ c.id }}" label="{{ c.name }}"></option>
+        {% set fnames = leader_picker_faction_names.get(c.id) %}
+        <option value="{{ c.name }}{% if fnames %} ({{ fnames|join(', ') }}){% endif %} #{{ c.id }}"></option>
         {% endfor %}
     </datalist>
 </fieldset>

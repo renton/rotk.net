@@ -1320,6 +1320,19 @@ def edit_faction(id):
         .order_by(Character.name)
         .all()
     )
+    # Faction names per character, one query (Character.factions is
+    # lazy='dynamic' — touching it per row would N+1 across ~1000
+    # characters). Shown in the picker options so duplicate names
+    # ("Zhang Wen" the Wu minister vs the Han official) disambiguate.
+    leader_picker_faction_names = {}
+    for cid, fname in (
+        db.session.query(Character.faction_table.c.character_id, Faction.name)
+        .join(Faction, Faction.id == Character.faction_table.c.faction_id)
+        .filter(Faction.is_hidden.is_(False))
+        .order_by(Faction.name)
+        .all()
+    ):
+        leader_picker_faction_names.setdefault(cid, []).append(fname)
 
     return render_template(
         'factions/faction_edit.html',
@@ -1329,6 +1342,7 @@ def edit_faction(id):
         mergeable_factions=mergeable_factions,
         leaders=[c for c in faction.leaders if not c.is_deleted],
         leader_picker_characters=leader_picker_characters,
+        leader_picker_faction_names=leader_picker_faction_names,
         urls=[u for u in faction.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),

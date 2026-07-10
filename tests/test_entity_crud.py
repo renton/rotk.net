@@ -403,3 +403,21 @@ class TestFactionLeaders:
         assert b'Listed Leader' in resp.data
         assert f'/factions/{f.id}/leaders/remove/{c.id}'.encode() in resp.data
         assert b'all-characters-datalist' in resp.data
+
+    def test_picker_options_carry_faction_names(self, admin_client,
+                                                db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        wei = factories.make_faction(name='Wei Banner')
+        shu = factories.make_faction(name='Shu Banner')
+        c = factories.make_character(name='Ambiguous Zhang')
+        c.factions.extend([wei, shu])
+        lonely = factories.make_character(name='Factionless Wanderer')
+        db_session.flush()
+        resp = client.get(f'/factions/edit/{f.id}')
+        # Factions listed (alphabetically) inside the option value,
+        # before the #id suffix the picker parses.
+        assert (f'value="Ambiguous Zhang (Shu Banner, Wei Banner) '
+                f'#{c.id}"').encode() in resp.data
+        # No-faction characters keep the plain form.
+        assert f'value="Factionless Wanderer #{lonely.id}"'.encode() in resp.data
