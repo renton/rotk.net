@@ -67,14 +67,21 @@ body.is-admin span.location-ref {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: -2.25em;
-    width: 2.25em;
-    /* No paint — this element exists only to catch hover. */
+    left: -3.25em;
+    width: 3.25em;
+    /* No paint — this element exists only to catch hover. Wide
+       enough to cover the two-icon red variant too. */
 }
 .page-copy p > .annotation-icon {
     position: absolute;
-    left: -1.75em;
+    /* Anchor the icon's RIGHT edge just left of the paragraph box —
+       a wider icon (red variant carries an extra exclamation mark)
+       grows LEFTWARD into the gutter instead of rightward over the
+       first words of the paragraph. */
+    right: calc(100% + 0.4em);
+    left: auto;
     top: 0.15em;
+    white-space: nowrap;
 }
 
 /* Blue "add" icon lives inside every <p> for admins on paragraphs
