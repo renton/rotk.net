@@ -219,3 +219,20 @@ p.quote {
         font-size: 0.95rem;
     }
 }
+
+/* ------------------------------------------------------------------
+   Yearly territory maps (chapter header).
+
+   The −/+ collapse toggle shows exactly one of its two icons based on
+   aria-expanded, which Bootstrap's collapse plugin keeps in sync on
+   the trigger button — no JS of our own needed.
+   ------------------------------------------------------------------ */
+.yearmap-collapse-toggle .fa-plus {
+    display: none;
+}
+.yearmap-collapse-toggle[aria-expanded="false"] .fa-plus {
+    display: inline-block;
+}
+.yearmap-collapse-toggle[aria-expanded="false"] .fa-minus {
+    display: none;
+}

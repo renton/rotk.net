@@ -10,6 +10,68 @@
         <div class="text-muted small mt-1">{{ chapter.date }}</div>
         {% endif %}
     </div>
+
+    {% if chapter_year_maps %}
+    {# Yearly territory maps: one tab per year in the chapter's date
+       span that has an uploaded YearMap. w-100 gives this flex child
+       its own row between the title and the style pickers. The −/+
+       button collapses the whole thing (icon flip is CSS keyed off
+       aria-expanded, which Bootstrap keeps in sync). #}
+    <div class="w-100 order-3 mt-2" id="yearly-maps-container">
+        <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-sm btn-outline-secondary yearmap-collapse-toggle"
+                    type="button" data-bs-toggle="collapse"
+                    data-bs-target="#yearly-maps-body"
+                    aria-expanded="true" aria-controls="yearly-maps-body"
+                    aria-label="Show or hide the yearly territory maps">
+                <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </button>
+            <span class="text-muted small">Territory maps</span>
+        </div>
+        <div class="collapse show" id="yearly-maps-body">
+            <ul class="nav nav-tabs mt-2" role="tablist">
+                {% for m in chapter_year_maps %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link{% if loop.first %} active{% endif %}"
+                            id="yearmap-tab-{{ m.year }}" type="button"
+                            data-bs-toggle="tab"
+                            data-bs-target="#yearmap-pane-{{ m.year }}"
+                            role="tab" aria-controls="yearmap-pane-{{ m.year }}"
+                            aria-selected="{{ 'true' if loop.first else 'false' }}">{{ m.year }} AD</button>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content border border-top-0 rounded-bottom p-3">
+                {% for m in chapter_year_maps %}
+                <div class="tab-pane fade{% if loop.first %} show active{% endif %}"
+                     id="yearmap-pane-{{ m.year }}" role="tabpanel"
+                     aria-labelledby="yearmap-tab-{{ m.year }}">
+                    <figure class="mb-0 text-center">
+                        <a href="{{ url_for('static', filename=m.static_path) }}" target="_blank">
+                            <img src="{{ url_for('static', filename=m.static_path) }}"
+                                 alt="Territorial map of {{ m.year }} AD"
+                                 class="img-fluid" style="max-height: 60vh;"
+                                 loading="lazy">
+                        </a>
+                        {% if m.source_site or m.source_url %}
+                        <figcaption class="text-muted small mt-2">
+                            Source:
+                            {% if m.source_url %}
+                            <a href="{{ m.source_url }}" target="_blank" rel="noopener">{{ m.source_site or m.source_url }}</a>
+                            {% else %}
+                            {{ m.source_site }}
+                            {% endif %}
+                        </figcaption>
+                        {% endif %}
+                    </figure>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="d-flex align-items-end flex-wrap gap-3">
         {# Inline-tag style switcher. Choice is persisted in localStorage by
            chapter_style.js so it carries across chapter navigations. #}

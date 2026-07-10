@@ -119,6 +119,25 @@ def app():
     _ensure_test_database_exists(uri)
     _attach_cli_commands(application)
 
+    @application.teardown_request
+    def _clear_flask_login_cache(exc=None):
+        # The db_session fixture holds ONE app context open across the
+        # whole test, so Flask reuses it for every test-client request
+        # instead of pushing a fresh one per request (Flask only pushes
+        # a new app context when none is active for the same app).
+        # Flask-Login caches the resolved user on g._login_user — which
+        # lives on that shared app context — so without this hook the
+        # first client to authenticate leaks its user into every later
+        # request in the same test, regardless of which client (or no
+        # cookie at all) sends it. Symptom that found this: an
+        # "anonymous" GET rendered admin-only content, including
+        # private annotations in the payload. Popping the cache after
+        # each request forces re-resolution from each request's own
+        # session cookie, matching production behaviour (where every
+        # request has a fresh app context and g).
+        from flask import g
+        g.pop('_login_user', None)
+
     with application.app_context():
         _assert_test_database(str(_db.engine.url))
         _db.drop_all()

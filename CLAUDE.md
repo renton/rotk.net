@@ -226,7 +226,11 @@ for the run commands). Layout:
   session-scoped schema setup (`db.create_all()` against `rotk_net_test`),
   per-test savepoint-rollback isolation (`db_session`), and `client` /
   `user_client` / `admin_client` fixtures. `admin_client` yields
-  `(client, user)` tuples.
+  `(client, user)` tuples. A `teardown_request` hook pops Flask-Login's
+  `g._login_user` cache after every request: test-client requests reuse
+  the app context `db_session` holds open, so without the hook the first
+  authenticated client's user leaks into every later request in the same
+  test (an "anonymous" client would render admin content).
 - `factories.py` — `make_*` helpers with unique defaults +
   `associate_character/event/location(chapter, entity, keywords=...)`
   which write the per-association keywords column the way the admin

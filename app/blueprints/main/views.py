@@ -1,3 +1,4 @@
+import math
 import os
 import re
 import string
@@ -17,6 +18,22 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
 from tools.decorators import admin_required
 from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
 from tools.date_parser import parse_date_range
+
+
+def _chapter_years(date_str):
+    """Inclusive list of calendar years a chapter's free-form date string
+    spans, or [] when the string is empty / unparseable.
+
+    parse_date_range returns a positive-width (lo, hi) float span where an
+    integer `hi` is an exclusive edge ("208" → (208.0, 209.0) is just the
+    year 208), so the last covered year is ceil(hi) - 1."""
+    span = parse_date_range(date_str)
+    if span is None:
+        return []
+    lo, hi = span
+    first = math.floor(lo)
+    last = max(first, math.ceil(hi) - 1)
+    return list(range(first, last + 1))
 
 
 def _normalize_csv(s):
@@ -323,6 +340,20 @@ def chapter(chapter_num):
     chapter_content = chapter.content
     if hidden_rows:
         chapter_content = apply_hidden_snippets(chapter_content, hidden_rows, admin=False)
+
+    # Yearly territory maps: one tab per year in the chapter's date span
+    # that has an uploaded YearMap image (years without an image get no
+    # tab at all).
+    chapter_year_maps = []
+    span_years = _chapter_years(chapter.date)
+    if span_years:
+        from app.models import YearMap
+        chapter_year_maps = (
+            YearMap.query
+            .filter(YearMap.year.in_(span_years))
+            .order_by(YearMap.year)
+            .all()
+        )
 
     characters = get_characters_for_chapter(chapter.id)
     characters.sort(key=lambda x: x.name)
@@ -773,6 +804,7 @@ def chapter(chapter_num):
         prev_chapter=prev_chapter,
         next_chapter=next_chapter,
         chapter_map_items=chapter_map_items,
+        chapter_year_maps=chapter_year_maps,
         char_summary_by_id=char_summary_by_id,
         annotations_payload=annotations_payload,
         annotation_csrf_form=FlaskForm(),

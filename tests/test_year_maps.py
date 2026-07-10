@@ -231,3 +231,119 @@ class TestRemove:
     def test_non_admin_forbidden(self, user_client, db_session):
         client, _ = user_client
         assert client.post('/admin/yearly-maps/208/remove').status_code == 403
+
+
+class TestChapterYears:
+    """_chapter_years: free-form chapter.date → inclusive year list."""
+
+    def test_bare_year(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('208') == [208]
+
+    def test_year_with_era(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('208 AD') == [208]
+
+    def test_range(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('208-210') == [208, 209, 210]
+
+    def test_range_en_dash(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('189–190 AD') == [189, 190]
+
+    def test_month_within_year(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('February 208') == [208]
+
+    def test_empty_and_none(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('') == []
+        assert _chapter_years(None) == []
+
+    def test_unparseable(self):
+        from app.blueprints.main.views import _chapter_years
+        assert _chapter_years('the distant past') == []
+
+
+class TestChapterPageYearMaps:
+    def _seed(self, db_session, years, date='208', **map_kw):
+        ch = factories.make_chapter(date=date)
+        for y in years:
+            db_session.add(YearMap(year=y, filename=f'{y}.png', **map_kw))
+        db_session.flush()
+        return ch
+
+    def test_tab_and_image_for_matching_year(self, client, db_session):
+        ch = self._seed(db_session, [208], date='208')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert resp.status_code == 200
+        assert b'id="yearly-maps-container"' in resp.data
+        assert b'>208 AD</button>' in resp.data
+        assert b'yearmaps/208.png' in resp.data
+        assert b'alt="Territorial map of 208 AD"' in resp.data
+
+    def test_only_years_with_images_get_tabs(self, client, db_session):
+        # Chapter spans 208-210 but only 208 + 210 have uploaded maps.
+        ch = self._seed(db_session, [208, 210], date='208-210')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'>208 AD</button>' in resp.data
+        assert b'>210 AD</button>' in resp.data
+        assert b'>209 AD</button>' not in resp.data
+
+    def test_map_for_unrelated_year_not_shown(self, client, db_session):
+        ch = self._seed(db_session, [250], date='208')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'id="yearly-maps-container"' not in resp.data
+
+    def test_no_container_without_chapter_date(self, client, db_session):
+        ch = self._seed(db_session, [208], date=None)
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'id="yearly-maps-container"' not in resp.data
+
+    def test_no_container_without_any_maps(self, client, db_session):
+        ch = factories.make_chapter(date='208')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'id="yearly-maps-container"' not in resp.data
+
+    def test_attribution_caption_with_link(self, client, db_session):
+        ch = self._seed(db_session, [208], date='208',
+                        source_site='Wikimedia Commons',
+                        source_url='https://example.org/m208')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'Source:' in resp.data
+        assert b'href="https://example.org/m208"' in resp.data
+        assert b'Wikimedia Commons' in resp.data
+
+    def test_attribution_caption_label_only(self, client, db_session):
+        ch = self._seed(db_session, [208], date='208',
+                        source_site='Some Atlas')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'Source:' in resp.data
+        assert b'Some Atlas' in resp.data
+
+    def test_no_caption_without_attribution(self, client, db_session):
+        ch = self._seed(db_session, [208], date='208')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'id="yearly-maps-container"' in resp.data
+        assert b'Source:' not in resp.data
+
+    def test_collapse_toggle_present(self, client, db_session):
+        ch = self._seed(db_session, [208], date='208')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'yearmap-collapse-toggle' in resp.data
+        assert b'data-bs-target="#yearly-maps-body"' in resp.data
+
+    def test_first_tab_active(self, client, db_session):
+        ch = self._seed(db_session, [208, 209], date='208-209')
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+
+        def pane_classes(year):
+            # The class attribute sits just before id="yearmap-pane-..."
+            # in the pane's opening tag; grab that tag's preceding bytes.
+            idx = resp.data.find(f'id="yearmap-pane-{year}"'.encode())
+            assert idx != -1, f'pane for {year} missing'
+            return resp.data[max(0, idx - 120):idx]
+
+        assert b'show active' in pane_classes(208)
+        assert b'show active' not in pane_classes(209)
