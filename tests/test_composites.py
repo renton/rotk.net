@@ -362,4 +362,16 @@ class TestAllThreeFeaturesStacked:
         resp = aclient.get(f'/chapter/{ch.chapter_num}')
         assert resp.status_code == 200
         prose_region = resp.data.split(b'annotations-payload')[0]
-        assert b'EXTRA BIT' not in prose_region
+        if b'EXTRA BIT' in prose_region:
+            from app.models import ChapterHiddenSnippet
+            idx = prose_region.find(b'EXTRA BIT')
+            context = prose_region[max(0, idx - 300):idx + 100]
+            rows = ChapterHiddenSnippet.query.filter_by(
+                chapter_id=ch.id).all()
+            row_info = [(r.id, r.match_text, repr(r.before_snippet),
+                         repr(r.after_snippet)) for r in rows]
+            raise AssertionError(
+                f'EXTRA BIT leaked into the ADMIN page pre-payload region.\n'
+                f'Hidden rows: {row_info}\n'
+                f'Page context around leak:\n{context!r}'
+            )
