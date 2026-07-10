@@ -169,10 +169,51 @@
     openModal(key, sectionText, chapterId);
   });
 
+  // The id sits in the MIDDLE of the delete/restore paths
+  // (/admin/annotations/<id>/delete), so the server ships the URL
+  // with a literal `0` placeholder segment and we substitute it here.
+  function fillUrlTemplate(template, annotationId) {
+    return template.replace('/0/', '/' + annotationId + '/');
+  }
+
+  // Recompute the paragraph icon's colour state from the thread —
+  // called after every add / delete / restore so the icon reflects
+  // reality without a page reload. Only applies on the chapter page
+  // (the admin lists' buttons aren't paragraph icons).
+  function updateIconState(icon, thread) {
+    if (!icon || !icon.classList || !icon.classList.contains('annotation-icon')) return;
+    var live = (thread || []).filter(function (a) { return !a.is_deleted; });
+    var hasPublic = live.some(function (a) { return a.is_public; });
+    var hasPrivate = live.some(function (a) { return !a.is_public; });
+
+    icon.classList.remove(
+      'annotation-icon-red', 'annotation-icon-black',
+      'annotation-icon-blue', 'annotation-icon-add'
+    );
+    // Drop any existing exclamation prefix; re-added below if needed.
+    var excl = icon.querySelector('.fa-circle-exclamation');
+    if (excl) excl.remove();
+
+    if (meta.is_admin && hasPrivate) {
+      icon.classList.add('annotation-icon-red');
+      var i = document.createElement('i');
+      i.className = 'fa-solid fa-circle-exclamation text-danger me-1';
+      i.setAttribute('aria-hidden', 'true');
+      icon.insertBefore(i, icon.firstChild);
+    } else if (hasPublic) {
+      icon.classList.add('annotation-icon-black');
+    } else {
+      // No live annotations left → back to the hover-revealed blue
+      // "add" affordance (admin only; public users shouldn't ever
+      // reach this state since they can't delete).
+      icon.classList.add('annotation-icon-blue', 'annotation-icon-add');
+    }
+  }
+
   function handleAnnotationDelete(btn) {
     var annotationId = btn.getAttribute('data-annotation-id');
-    if (!annotationId || !meta.delete_url_prefix) return;
-    var url = meta.delete_url_prefix + annotationId;
+    if (!annotationId || !meta.delete_url_template) return;
+    var url = fillUrlTemplate(meta.delete_url_template, annotationId);
     var fd = new URLSearchParams();
     fd.set('csrf_token', getCsrf());
     fetch(url, {
@@ -199,6 +240,7 @@
         // today — a future refinement).
         var view = entry.thread.filter(function (a) { return !a.is_deleted; });
         renderThread(view);
+        updateIconState(currentIcon, entry.thread);
       }
     }).catch(function (err) {
       window.alert('Delete failed: ' + err.message);
@@ -207,8 +249,8 @@
 
   function handleAnnotationRestore(btn) {
     var annotationId = btn.getAttribute('data-annotation-id');
-    if (!annotationId || !meta.restore_url_prefix) return;
-    var url = meta.restore_url_prefix + annotationId;
+    if (!annotationId || !meta.restore_url_template) return;
+    var url = fillUrlTemplate(meta.restore_url_template, annotationId);
     var fd = new URLSearchParams();
     fd.set('csrf_token', getCsrf());
     fetch(url, {
@@ -225,6 +267,7 @@
           if (String(a.id) === String(annotationId)) a.is_deleted = false;
         });
         renderThread(entry.thread);
+        updateIconState(currentIcon, entry.thread);
       }
     }).catch(function (err) {
       window.alert('Restore failed: ' + err.message);
@@ -286,6 +329,9 @@
         var thread = payload[sectionKey].thread;
         if (!meta.is_admin) thread = thread.filter(function (a) { return a.is_public; });
         renderThread(thread);
+        // Flip the paragraph icon colour live — blue→black/red on
+        // first annotation, black→red when a private one lands, etc.
+        updateIconState(currentIcon, payload[sectionKey].thread);
         var bodyInput = addForm.querySelector('#annotation-body');
         if (bodyInput) bodyInput.value = '';
       }).catch(function (err) {

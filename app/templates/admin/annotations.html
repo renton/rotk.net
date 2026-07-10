@@ -171,8 +171,8 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
 {"chapter_id": null,
  "is_admin": true,
  "create_url": "{{ url_for('admin.annotation_create') }}",
- "delete_url_prefix": "{{ url_for('admin.annotation_delete', annotation_id=0)[:-1] }}",
- "restore_url_prefix": "{{ url_for('admin.annotation_restore', annotation_id=0)[:-1] }}"}
+ "delete_url_template": "{{ url_for('admin.annotation_delete', annotation_id=0) }}",
+ "restore_url_template": "{{ url_for('admin.annotation_restore', annotation_id=0) }}"}
 </script>
 {% endblock %}
 
