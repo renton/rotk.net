@@ -43,6 +43,9 @@
         <li class="list-group-item"><a href="#event-types">Event Types (creating + assigning)</a></li>
         <li class="list-group-item"><a href="#chapter-view-tweaks">Chapter page reader controls (Tag style + Link style)</a></li>
         <li class="list-group-item"><a href="#chapter-date">Chapter dates in the header</a></li>
+        <li class="list-group-item"><a href="#chapter-hide-prose">Hiding prose from the public chapter view (Chapter Edit)</a></li>
+        <li class="list-group-item"><a href="#annotations">Annotations (public + private paragraph threads)</a></li>
+        <li class="list-group-item"><a href="#annotation-admin">Managing annotations from the admin lists</a></li>
     </ol>
 </div>
 
@@ -649,5 +652,97 @@
         there's no per-chapter admin form. Ask a developer if a
         specific chapter's date needs updating.
     </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="chapter-hide-prose" class="mb-5">
+    <h2>Hiding prose from the public chapter view (Chapter Edit)</h2>
+    <p>
+        Use <a href="{{ url_for('admin.chapter_edit') }}">Admin → Chapter Edit</a>
+        when a span of prose shouldn't appear on the public site at all
+        (bad OCR, duplicated source text, content we've chosen to omit).
+        This is a <strong>hide</strong>, not an edit — the chapter's
+        underlying text is never modified, and prose can't be added or
+        rewritten from this tool.
+    </p>
+    <h3 class="h6 mt-3">To hide a snippet</h3>
+    <ol>
+        <li>Open <a href="{{ url_for('admin.chapter_edit') }}">Chapter Edit</a> and pick the chapter from the dropdown.</li>
+        <li>Select the text you want to suppress with your mouse. Keep the selection within a single paragraph.</li>
+        <li>Click <strong>Hide selected</strong>. The status indicator at the top-right flips to <em>Saving…</em> and then <em>All changes saved</em> — every hide is saved instantly, there's no separate save step.</li>
+        <li>The hidden span turns strikethrough with a red tint in this editor. On the public chapter page it simply doesn't appear.</li>
+    </ol>
+    <h3 class="h6 mt-3">To restore a hidden snippet</h3>
+    <ol>
+        <li>Open the same chapter in Chapter Edit.</li>
+        <li>Click the strikethrough span. Confirm the dialog. The text returns to normal here and reappears on the public page.</li>
+    </ol>
+    <p class="text-muted small">
+        Don't confuse this with the snippet <em>exclusions</em> on the
+        association pages: an exclusion stops a word from being
+        pill-tagged but the word stays visible; Chapter Edit's hide
+        removes the text from the public page entirely.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="annotations" class="mb-5">
+    <h2>Annotations (public + private paragraph threads)</h2>
+    <p>
+        Annotations are threaded notes attached to a paragraph of a
+        chapter. Each note is either <strong>public</strong> (any
+        reader can open the thread) or <strong>private</strong>
+        (admins only — think editorial to-dos or fact-check flags).
+    </p>
+    <h3 class="h6 mt-3">The icons in the prose</h3>
+    <ul>
+        <li><strong>Blue notepad</strong> (admins only) — appears when you hover a paragraph that has no annotations yet. Click it to start a thread.</li>
+        <li><strong>Black notepad</strong> — the paragraph has at least one public annotation. Everyone sees this icon; clicking opens the thread.</li>
+        <li><strong>Red notepad + exclamation</strong> (admins only) — the paragraph has at least one <em>private</em> annotation. Readers never see this.</li>
+    </ul>
+    <h3 class="h6 mt-3">Adding an annotation</h3>
+    <ol>
+        <li>On any chapter page, hover the paragraph → click the blue icon (or the black/red icon if a thread already exists).</li>
+        <li>The modal shows the section preview, any characters/locations detected in that paragraph, and the thread so far (oldest first).</li>
+        <li>Scroll to the bottom, type your note, and choose visibility. <strong>The checkbox defaults to private</strong> — tick <em>Public</em> only if readers should see it.</li>
+        <li>Click <strong>Add annotation</strong>. The thread updates immediately and the paragraph icon re-colours in place.</li>
+    </ol>
+    <p class="text-muted small">
+        Character and location references are attached automatically —
+        the server scans the paragraph for anything already associated
+        with the chapter. You don't pick them by hand.
+    </p>
+    <h3 class="h6 mt-3">What the public sees</h3>
+    <p>
+        Only public annotations, only via the black icon, and read-only
+        — there's no add form for non-admins. Private notes never
+        render in any public payload.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="annotation-admin" class="mb-5">
+    <h2>Managing annotations from the admin lists</h2>
+    <p>
+        <a href="{{ url_for('admin.annotations_public') }}">Admin → Public Annotations</a>
+        and <a href="{{ url_for('admin.annotations_private') }}">Admin → Private Annotations</a>
+        list every thread of the respective type — one row per
+        (chapter, paragraph) with a count badge, a preview of the
+        thread's first note, and the auto-detected character /
+        location references.
+    </p>
+    <h3 class="h6 mt-3">On each row</h3>
+    <ul>
+        <li><strong>Chapter number</strong> — opens the chapter in a new tab, scrolled to the annotated paragraph.</li>
+        <li><strong>Character pills</strong> — link to the chapter's Character/Chapter Association page.</li>
+        <li><strong>Location links</strong> — link to the chapter's Location/Chapter Association page.</li>
+        <li><strong>View / Add</strong> — opens the same modal as the chapter page, right here. Read the thread, add a note, delete or restore individual entries.</li>
+        <li><strong>Close</strong> (private list only) — resolves the thread like closing a ticket: every private note on that paragraph is deleted in one click (with a confirm).</li>
+    </ul>
+    <h3 class="h6 mt-3">Filters + deleted view</h3>
+    <ul>
+        <li>Filter by chapter, by referenced character, or by referenced location. Sort by latest activity, chapter, or thread size.</li>
+        <li>Deletes are <strong>soft</strong> — tick <em>Show only deleted</em> to see resolved/removed notes, and restore any of them from the modal if a thread was closed prematurely.</li>
+    </ul>
 </section>
 {% endblock %}
