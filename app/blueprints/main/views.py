@@ -705,7 +705,7 @@ def chapter(chapter_num):
         annotation_section_hash,
         normalize_paragraph_text,
     )
-    ann_query = Annotation.query.filter_by(chapter_id=chapter.id)
+    ann_query = Annotation.query.filter_by(chapter_id=chapter.id, is_deleted=False)
     if not is_admin:
         ann_query = ann_query.filter_by(is_public=True)
     annotations_all = ann_query.order_by(Annotation.created_at).all()

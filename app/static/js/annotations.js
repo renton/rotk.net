@@ -39,9 +39,12 @@
     return input ? input.value : '';
   }
 
-  // Current modal state — the section text (for POST payload) and
-  // the DOM icon we clicked (for updating count / colour after add).
+  // Current modal state — the section text (for POST payload), the
+  // chapter_id (per-section in admin list; per-page in chapter view),
+  // and the DOM icon we clicked (for updating count / colour after
+  // add).
   var currentSectionText = '';
+  var currentChapterId = null;
   var currentIcon = null;
 
   function escapeHtml(s) {
@@ -60,26 +63,44 @@
       var badge = a.is_public
         ? '<span class="badge bg-success">Public</span>'
         : '<span class="badge bg-danger">Private</span>';
+      var deletedBadge = a.is_deleted
+        ? '<span class="badge bg-secondary ms-1">Deleted</span>'
+        : '';
+      // Admin-only per-annotation soft-delete / restore control. The
+      // action varies by state; the button carries data-annotation-id
+      // + data-action so the click handler knows what to hit.
+      var deleteBtn = '';
+      if (meta.is_admin && a.id) {
+        if (a.is_deleted) {
+          deleteBtn = '<button type="button" class="btn btn-sm btn-outline-secondary annotation-restore-btn"' +
+                      ' data-annotation-id="' + a.id + '">Restore</button>';
+        } else {
+          deleteBtn = '<button type="button" class="btn btn-sm btn-outline-danger annotation-delete-btn"' +
+                      ' data-annotation-id="' + a.id + '"' +
+                      ' data-confirm="Delete this annotation?">Delete</button>';
+        }
+      }
       return (
-        '<li class="border rounded p-2 mb-2">' +
+        '<li class="border rounded p-2 mb-2" data-annotation-row-id="' + (a.id || '') + '">' +
           '<div class="d-flex justify-content-between align-items-start gap-2 small text-muted mb-1">' +
             '<span>' + escapeHtml(a.created_by) + ' &middot; ' + escapeHtml(a.created_at) + '</span>' +
-            '<span>' + badge + '</span>' +
+            '<span>' + badge + deletedBadge + '</span>' +
           '</div>' +
           '<div class="annotation-body" style="white-space:pre-wrap;">' + escapeHtml(a.body) + '</div>' +
+          (deleteBtn ? '<div class="text-end mt-1">' + deleteBtn + '</div>' : '') +
         '</li>'
       );
     }).join('');
     threadEl.innerHTML = out;
   }
 
-  function openModal(sectionKey, sectionText) {
+  function openModal(sectionKey, sectionText, chapterId) {
     currentSectionText = sectionText;
+    currentChapterId = chapterId != null ? chapterId : meta.chapter_id;
     var entry = payload[sectionKey];
     var thread = (entry && entry.thread) || [];
-    // Public readers only ever see public entries in the thread — the
-    // server already stripped private ones from the payload, but be
-    // defensive.
+    // Public readers only ever see public entries — server already
+    // filtered but be defensive.
     if (!meta.is_admin) {
       thread = thread.filter(function (a) { return a.is_public; });
     }
@@ -100,23 +121,115 @@
   // ---- Click handlers -----------------------------------------------
 
   document.addEventListener('click', function (event) {
+    // Delete / restore buttons inside the modal thread
+    var delBtn = event.target.closest('.annotation-delete-btn');
+    if (delBtn) {
+      event.preventDefault();
+      if (!window.confirm(delBtn.getAttribute('data-confirm') || 'Delete this annotation?')) return;
+      handleAnnotationDelete(delBtn);
+      return;
+    }
+    var restBtn = event.target.closest('.annotation-restore-btn');
+    if (restBtn) {
+      event.preventDefault();
+      handleAnnotationRestore(restBtn);
+      return;
+    }
+
+    // Admin list-page "Open modal" buttons — carry data-section-key
+    // + data-chapter-id. Fall through so the icon handler below can
+    // also match if someone renders both.
+    var listBtn = event.target.closest('.open-annotation-modal-btn');
+    if (listBtn) {
+      event.preventDefault();
+      currentIcon = listBtn;
+      var lKey = listBtn.getAttribute('data-section-key') || '';
+      var lChapterId = parseInt(listBtn.getAttribute('data-chapter-id') || '', 10) || null;
+      var lEntry = payload[lKey];
+      var lText = (lEntry && lEntry.section_text) || '';
+      openModal(lKey, lText, lChapterId);
+      return;
+    }
+
+    // Annotation icons injected into paragraphs on the chapter view
     var icon = event.target.closest('.annotation-icon');
     if (!icon) return;
     event.preventDefault();
     currentIcon = icon;
     var key = icon.getAttribute('data-section-key') || '';
     var entry = key ? payload[key] : null;
-    // For an "add" icon on a paragraph with no annotations yet, the
-    // section_text comes from the <p> the icon lives inside.
+    // For a blue "add" icon (paragraph without annotations yet),
+    // fall back to grabbing section_text from the paragraph itself.
     var sectionText = (entry && entry.section_text) || '';
     if (!sectionText) {
       var p = icon.closest('p');
-      if (p) {
-        sectionText = (p.textContent || '').replace(/\s+/g, ' ').trim();
-      }
+      if (p) sectionText = (p.textContent || '').replace(/\s+/g, ' ').trim();
     }
-    openModal(key, sectionText);
+    var chapterId = (entry && entry.chapter_id) || meta.chapter_id;
+    openModal(key, sectionText, chapterId);
   });
+
+  function handleAnnotationDelete(btn) {
+    var annotationId = btn.getAttribute('data-annotation-id');
+    if (!annotationId || !meta.delete_url_prefix) return;
+    var url = meta.delete_url_prefix + annotationId;
+    var fd = new URLSearchParams();
+    fd.set('csrf_token', getCsrf());
+    fetch(url, {
+      method: 'POST', body: fd, credentials: 'same-origin',
+      headers: { 'Accept': 'application/json' },
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function () {
+      // Flip the row in the in-memory payload → is_deleted = true so
+      // subsequent opens reflect the change. Also re-render the modal.
+      var key = currentIcon ? currentIcon.getAttribute('data-section-key') : '';
+      var entry = payload[key];
+      if (entry && entry.thread) {
+        entry.thread.forEach(function (a) {
+          if (String(a.id) === String(annotationId)) a.is_deleted = true;
+        });
+        // Filter based on the current "show deleted" view — on the
+        // chapter page, deleted annotations shouldn't show at all;
+        // on admin list pages with show_deleted=false, hide it; with
+        // show_deleted=true, keep it visible with Restore.
+        // Simplest: just drop deleted ones from the display unless
+        // we detect show_deleted=true from meta.show_deleted (not set
+        // today — a future refinement).
+        var view = entry.thread.filter(function (a) { return !a.is_deleted; });
+        renderThread(view);
+      }
+    }).catch(function (err) {
+      window.alert('Delete failed: ' + err.message);
+    });
+  }
+
+  function handleAnnotationRestore(btn) {
+    var annotationId = btn.getAttribute('data-annotation-id');
+    if (!annotationId || !meta.restore_url_prefix) return;
+    var url = meta.restore_url_prefix + annotationId;
+    var fd = new URLSearchParams();
+    fd.set('csrf_token', getCsrf());
+    fetch(url, {
+      method: 'POST', body: fd, credentials: 'same-origin',
+      headers: { 'Accept': 'application/json' },
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function () {
+      var key = currentIcon ? currentIcon.getAttribute('data-section-key') : '';
+      var entry = payload[key];
+      if (entry && entry.thread) {
+        entry.thread.forEach(function (a) {
+          if (String(a.id) === String(annotationId)) a.is_deleted = false;
+        });
+        renderThread(entry.thread);
+      }
+    }).catch(function (err) {
+      window.alert('Restore failed: ' + err.message);
+    });
+  }
 
   // ---- Add form submit ----------------------------------------------
 
@@ -132,7 +245,7 @@
       }
       var fd = new URLSearchParams();
       fd.set('csrf_token', getCsrf());
-      fd.set('chapter_id', String(meta.chapter_id));
+      fd.set('chapter_id', String(currentChapterId || meta.chapter_id));
       fd.set('section_text', currentSectionText);
       fd.set('body', body);
       fd.set('is_public', isPublic ? '1' : '0');

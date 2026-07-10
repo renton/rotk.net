@@ -542,9 +542,9 @@
           </div>
           <div class="d-flex align-items-center justify-content-between">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="annotation-is-public" name="is_public" checked>
+              <input class="form-check-input" type="checkbox" id="annotation-is-public" name="is_public">
               <label class="form-check-label" for="annotation-is-public">
-                Public (visible to non-admins)
+                Public (visible to non-admins) — defaults to private
               </label>
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Add annotation</button>
@@ -577,7 +577,9 @@
 <script type="application/json" id="annotations-meta" nonce="{{ csp_nonce }}">
 {"chapter_id": {{ chapter.id }},
  "is_admin": {{ (current_user.is_authenticated and current_user.is_administrator) | tojson }},
- "create_url": "{{ url_for('admin.annotation_create') }}"}
+ "create_url": "{{ url_for('admin.annotation_create') }}",
+ "delete_url_prefix": "{{ url_for('admin.annotation_delete', annotation_id=0)[:-1] }}",
+ "restore_url_prefix": "{{ url_for('admin.annotation_restore', annotation_id=0)[:-1] }}"}
 </script>
 
 {% endblock %}

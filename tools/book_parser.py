@@ -234,22 +234,25 @@ def inject_annotation_icons(html, annotations_by_section, is_admin):
 
         if is_admin and has_private:
             icon_class = 'annotation-icon annotation-icon-red'
-            extra = '<i class="fa-solid fa-circle-exclamation text-danger ms-1" aria-hidden="true"></i>'
+            # Exclamation goes BEFORE the note-sticky so it sits in
+            # the negative-margin gutter and doesn't push into the
+            # paragraph text on the right.
+            prefix = '<i class="fa-solid fa-circle-exclamation text-danger me-1" aria-hidden="true"></i>'
         elif has_public:
             icon_class = 'annotation-icon annotation-icon-black'
-            extra = ''
+            prefix = ''
         else:
             # Admin, no annotations yet → blue "add" affordance,
             # revealed on <p>:hover by CSS.
             icon_class = 'annotation-icon annotation-icon-blue annotation-icon-add'
-            extra = ''
+            prefix = ''
 
         section_hash = annotation_section_hash(inner) if anns else ''
         icon = (
             f'<a href="#" class="{icon_class}" '
             f'data-section-key="{section_hash}" '
             f'aria-label="Annotations">'
-            f'<i class="fa-solid fa-note-sticky" aria-hidden="true"></i>{extra}</a>'
+            f'{prefix}<i class="fa-solid fa-note-sticky" aria-hidden="true"></i></a>'
         )
         # No trailing space after the </a> — icon is absolutely-
         # positioned outside the paragraph, so a trailing space would

@@ -11,17 +11,17 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
     <h1>{% if is_public %}Public{% else %}Private{% endif %} Annotations</h1>
     <p class="text-muted mb-0">
         {% if is_public %}
-        Annotations visible to all readers. Click a chapter link on any row to
-        jump into the chapter view and add to the thread there.
+        Annotations visible to all readers. Rows are stacked by section — one
+        row per (chapter, paragraph) thread. Click <strong>Add</strong> to open
+        the thread modal and reply, delete individual entries, or add a new one.
         {% else %}
-        Annotations visible to admins only. Same shape — jump into a chapter
-        to add to the thread.
+        Annotations visible only to admins. Same shape as the public list.
         {% endif %}
     </p>
 </div>
 
 <form method="GET" action="{{ url_for(page_endpoint) }}" class="row g-2 align-items-end mb-4">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label for="chapter-filter" class="form-label">Filter by chapter</label>
         <select name="chapter_num" id="chapter-filter" class="form-select">
             <option value="">All chapters</option>
@@ -33,11 +33,12 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
             {% endfor %}
         </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <label for="sort-filter" class="form-label">Sort</label>
         <select name="sort" id="sort-filter" class="form-select">
-            <option value="created_at" {% if sort == 'created_at' %}selected{% endif %}>Created</option>
+            <option value="latest" {% if sort == 'latest' %}selected{% endif %}>Latest activity</option>
             <option value="chapter" {% if sort == 'chapter' %}selected{% endif %}>Chapter</option>
+            <option value="count" {% if sort == 'count' %}selected{% endif %}>Count</option>
         </select>
     </div>
     <div class="col-md-2">
@@ -47,14 +48,25 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
             <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Asc</option>
         </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 pt-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="show-deleted"
+                   name="show_deleted" value="1"
+                   {% if show_deleted %}checked{% endif %}>
+            <label class="form-check-label" for="show-deleted">
+                Show <strong>only deleted</strong> annotations
+            </label>
+        </div>
+    </div>
+    <div class="col-md-2">
         <button type="submit" class="btn btn-primary">Apply</button>
         <a href="{{ url_for(page_endpoint) }}" class="btn btn-outline-secondary">Reset</a>
     </div>
 </form>
 
 <div class="text-muted small mb-3">
-    {{ annotations|length }} {% if is_public %}public{% else %}private{% endif %} annotation{{ '' if annotations|length == 1 else 's' }}
+    {{ stacked_rows|length }} stacked thread{{ '' if stacked_rows|length == 1 else 's' }}
+    {% if show_deleted %} (deleted only){% endif %}
 </div>
 
 <div class="table-responsive">
@@ -63,58 +75,105 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
         <tr>
             <th>Chapter</th>
             <th>Section (preview)</th>
-            <th>Body</th>
-            <th>Author</th>
-            <th>Created</th>
+            <th class="text-end">Count</th>
+            <th>Latest</th>
             <th class="text-end">Actions</th>
         </tr>
     </thead>
     <tbody>
-        {% for a in annotations %}
+        {% for row in stacked_rows %}
         <tr>
             <td>
-                <a href="{{ url_for('main.chapter', chapter_num=a.chapter.chapter_num) }}">
-                    {{ a.chapter.chapter_num }}
+                <a href="{{ url_for('main.chapter', chapter_num=row.chapter_num) }}">
+                    {{ row.chapter_num }}
                 </a>
             </td>
-            <td class="small text-muted" style="max-width: 300px;">
-                <div class="text-truncate" title="{{ a.section_text|e }}">
-                    {{ a.section_text }}
+            <td class="small text-muted" style="max-width: 480px;">
+                <div class="text-truncate" title="{{ row.section_text|e }}">
+                    {{ row.section_text }}
                 </div>
             </td>
-            <td style="max-width: 400px;">
-                <div class="text-truncate" title="{{ a.body|e }}">
-                    {{ a.body }}
-                </div>
+            <td class="text-end">
+                <span class="badge bg-primary rounded-pill">{{ row.count }}</span>
             </td>
-            <td class="small text-muted">{{ a.created_by }}</td>
-            <td class="small text-muted">{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td class="text-end" style="min-width: 180px;">
-                <a href="{{ url_for('main.chapter', chapter_num=a.chapter.chapter_num) }}#p"
-                   class="btn btn-sm btn-outline-primary"
-                   title="Open chapter to add to this thread">
-                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
-                    Add
-                </a>
-                <form method="POST" action="{{ url_for('admin.annotation_delete', annotation_id=a.id) }}"
-                      class="d-inline"
-                      data-confirm="Delete this annotation? This can't be undone.">
-                    {{ csrf_form.hidden_tag() }}
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                </form>
+            <td class="small text-muted">{{ row.latest_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td class="text-end">
+                <button type="button"
+                        class="btn btn-sm btn-outline-primary open-annotation-modal-btn"
+                        data-section-key="{{ row.section_key }}"
+                        data-chapter-id="{{ row.chapter_id }}">
+                    <i class="fa-solid fa-comments" aria-hidden="true"></i>
+                    View / Add
+                </button>
             </td>
         </tr>
         {% else %}
         <tr>
-            <td colspan="6" class="text-muted">No annotations{% if selected_chapter_num %} for chapter {{ selected_chapter_num }}{% endif %}.</td>
+            <td colspan="5" class="text-muted">
+                No {% if show_deleted %}deleted{% else %}active{% endif %} threads
+                {% if selected_chapter_num %} for chapter {{ selected_chapter_num }}{% endif %}.
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 </div>
+
+{# Reuse the chapter-view annotations modal + JS. The payload below
+   contains the full thread per row so clicking Add can populate the
+   modal without another HTTP round-trip. #}
+<div class="modal fade" id="annotation-modal" tabindex="-1"
+     aria-labelledby="annotation-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="annotation-modal-label">Annotations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="annotation-section-context" class="small text-muted mb-3"></div>
+        <ul class="list-unstyled mb-3" id="annotation-thread"></ul>
+        <hr>
+        <form id="annotation-add-form">
+          <div class="mb-2">
+            <label for="annotation-body" class="form-label small text-muted">Add to thread</label>
+            <textarea id="annotation-body" name="body" class="form-control" rows="4" required></textarea>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="annotation-is-public" name="is_public"
+                     {% if is_public %}checked{% endif %}>
+              <label class="form-check-label" for="annotation-is-public">
+                Public
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Add annotation</button>
+          </div>
+          <div id="annotation-form-error" class="small text-danger mt-2" hidden></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form id="annotations-csrf-form" style="display:none;">
+  {{ csrf_form.hidden_tag() }}
+</form>
+
+<script type="application/json" id="annotations-payload" nonce="{{ csp_nonce }}">
+{{ threads_by_key | tojson }}
+</script>
+<script type="application/json" id="annotations-meta" nonce="{{ csp_nonce }}">
+{"chapter_id": null,
+ "is_admin": true,
+ "create_url": "{{ url_for('admin.annotation_create') }}",
+ "delete_url_prefix": "{{ url_for('admin.annotation_delete', annotation_id=0)[:-1] }}",
+ "restore_url_prefix": "{{ url_for('admin.annotation_restore', annotation_id=0)[:-1] }}"}
+</script>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/annotations.js') }}"></script>
 {% endblock %}

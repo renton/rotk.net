@@ -2380,40 +2380,101 @@ def delete_location_type(location_type_id):
 
 def _annotation_list(is_public):
     """Shared list-page renderer for public + private annotation admin
-    pages. Both filter on chapter_num and support sort by chapter or
-    created_at."""
+    pages. Stacks annotations by (chapter, section_text) — one row per
+    thread, with a count. Filters: chapter_num, show_deleted (checkbox
+    that inverts to show only soft-deleted rows). Sort: chapter or
+    latest activity."""
+    from sqlalchemy import func
+
     chapter_num = request.args.get('chapter_num', type=int)
-    sort = request.args.get('sort', 'created_at')
+    sort = request.args.get('sort', 'latest')
     direction = request.args.get('dir', 'desc')
-    if sort not in ('created_at', 'chapter'):
-        sort = 'created_at'
+    show_deleted = request.args.get('show_deleted') in ('1', 'true', 'on')
+    if sort not in ('latest', 'chapter', 'count'):
+        sort = 'latest'
     if direction not in ('asc', 'desc'):
         direction = 'desc'
 
-    query = (
-        Annotation.query
-        .join(Chapter, Chapter.id == Annotation.chapter_id)
+    # Group by (chapter_id, section_text) — one stacked row per thread.
+    subq = (
+        db.session.query(
+            Annotation.chapter_id.label('chapter_id'),
+            Annotation.section_text.label('section_text'),
+            func.count(Annotation.id).label('cnt'),
+            func.max(Annotation.created_at).label('latest_at'),
+        )
         .filter(Annotation.is_public.is_(is_public))
+        .filter(Annotation.is_deleted.is_(show_deleted))
     )
     if chapter_num is not None:
-        query = query.filter(Chapter.chapter_num == chapter_num)
+        subq = subq.join(Chapter, Chapter.id == Annotation.chapter_id) \
+                   .filter(Chapter.chapter_num == chapter_num)
+    subq = subq.group_by(Annotation.chapter_id, Annotation.section_text)
 
     if sort == 'chapter':
-        order_col = Chapter.chapter_num
-    else:
-        order_col = Annotation.created_at
-    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+        # Sub-select needs chapter_num for sorting; do it as a Python
+        # sort after the group query since inline ordering on grouped
+        # rows is awkward across SQLAlchemy versions.
+        rows = subq.all()
+        chapter_map = {c.id: c for c in Chapter.query.all()}
+        rows = sorted(rows, key=lambda r: chapter_map[r.chapter_id].chapter_num,
+                      reverse=(direction == 'desc'))
+    elif sort == 'count':
+        rows = subq.order_by(func.count(Annotation.id).desc() if direction == 'desc'
+                             else func.count(Annotation.id).asc()).all()
+    else:  # latest
+        rows = subq.order_by(func.max(Annotation.created_at).desc() if direction == 'desc'
+                             else func.max(Annotation.created_at).asc()).all()
 
-    annotations = query.all()
+    # Build a payload: for each row, the full thread + chapter info so
+    # the admin-list modal can display it without a per-row query.
+    from tools.book_parser import annotation_section_hash
+    threads_by_key = {}
+    chapter_by_id = {c.id: c for c in Chapter.query.all()}
+    stacked_rows = []
+    for r in rows:
+        key = annotation_section_hash(r.section_text)
+        thread_annotations = (
+            Annotation.query
+            .filter_by(chapter_id=r.chapter_id, section_text=r.section_text,
+                       is_public=is_public, is_deleted=show_deleted)
+            .order_by(Annotation.created_at)
+            .all()
+        )
+        threads_by_key[key] = {
+            'section_text': r.section_text,
+            'chapter_id': r.chapter_id,
+            'chapter_num': chapter_by_id[r.chapter_id].chapter_num if r.chapter_id in chapter_by_id else None,
+            'thread': [
+                {
+                    'id': a.id, 'body': a.body, 'is_public': a.is_public,
+                    'is_deleted': a.is_deleted,
+                    'created_at': a.created_at.strftime('%Y-%m-%d %H:%M'),
+                    'created_by': a.created_by,
+                }
+                for a in thread_annotations
+            ],
+        }
+        stacked_rows.append({
+            'section_key': key,
+            'section_text': r.section_text,
+            'chapter_id': r.chapter_id,
+            'chapter_num': chapter_by_id[r.chapter_id].chapter_num if r.chapter_id in chapter_by_id else None,
+            'count': r.cnt,
+            'latest_at': r.latest_at,
+        })
+
     chapters = Chapter.query.order_by(Chapter.chapter_num).all()
 
     return render_template(
         'admin/annotations.html',
-        annotations=annotations,
+        stacked_rows=stacked_rows,
+        threads_by_key=threads_by_key,
         chapters=chapters,
         selected_chapter_num=chapter_num,
         sort=sort,
         direction=direction,
+        show_deleted=show_deleted,
         is_public=is_public,
         csrf_form=_CsrfOnlyForm(),
     )
@@ -2490,13 +2551,35 @@ def annotation_delete(annotation_id):
         abort(400)
 
     row = Annotation.query.get_or_404(annotation_id)
-    db.session.delete(row)
+    # Soft delete — flip the flag so an admin can find + restore
+    # from the "show deleted" view on the list pages.
+    row.is_deleted = True
     db.session.commit()
 
     if _wants_json():
         return jsonify(ok=True)
 
-    # Non-JS fallback: bounce back to whichever list page fits.
     dest = 'admin.annotations_public' if row.is_public else 'admin.annotations_private'
     flash("Annotation deleted.")
+    return redirect(url_for(dest))
+
+
+@admin.route('/annotations/<int:annotation_id>/restore', methods=['POST'])
+@login_required
+@admin_required
+def annotation_restore(annotation_id):
+    """Undo a soft-delete."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    row = Annotation.query.get_or_404(annotation_id)
+    row.is_deleted = False
+    db.session.commit()
+
+    if _wants_json():
+        return jsonify(ok=True)
+
+    dest = 'admin.annotations_public' if row.is_public else 'admin.annotations_private'
+    flash("Annotation restored.")
     return redirect(url_for(dest))

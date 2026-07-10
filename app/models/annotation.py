@@ -20,6 +20,7 @@ class Annotation(db.Model):
     section_text = db.Column(db.Text, nullable=False)
     body = db.Column(db.Text, nullable=False)
     is_public = db.Column(db.Boolean, default=False, nullable=False)
+    is_deleted = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
     created_by = db.Column(db.String(64), nullable=False, default='rotk.net_system')
 
