@@ -74,7 +74,7 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
     <thead>
         <tr>
             <th>Chapter</th>
-            <th>Latest annotation</th>
+            <th>Thread (first annotation)</th>
             <th class="text-end">Count</th>
             <th>Latest</th>
             <th class="text-end">Actions</th>
@@ -93,8 +93,8 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
                 </a>
             </td>
             <td class="small" style="max-width: 480px;">
-                <div class="text-truncate" title="{{ row.latest_body|e }}">
-                    {{ row.latest_body }}
+                <div class="text-truncate" title="{{ row.first_body|e }}">
+                    {{ row.first_body }}
                 </div>
             </td>
             <td class="text-end">

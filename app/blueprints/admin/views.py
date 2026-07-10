@@ -2462,10 +2462,11 @@ def _annotation_list(is_public):
             'chapter_num': chapter_by_id[r.chapter_id].chapter_num if r.chapter_id in chapter_by_id else None,
             'count': r.cnt,
             'latest_at': r.latest_at,
-            # Latest annotation's body — the list column previews this
-            # rather than the section prose (the admin already knows
-            # the prose; what they're scanning for is what was SAID).
-            'latest_body': thread_annotations[-1].body if thread_annotations else '',
+            # First annotation's body — the thread opener is the best
+            # one-line identity for a thread (replies usually reference
+            # it), so the list previews that rather than the section
+            # prose or the newest reply.
+            'first_body': thread_annotations[0].body if thread_annotations else '',
         })
 
     chapters = Chapter.query.order_by(Chapter.chapter_num).all()
