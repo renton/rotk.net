@@ -161,3 +161,14 @@ def cli_runner(app, db_session):
     """Click test runner for @app.cli.command() commands, sharing the
     rollback-isolated session."""
     return app.test_cli_runner()
+
+
+@pytest.fixture(autouse=True)
+def _no_favicon_network(monkeypatch):
+    """add_owner_url best-effort-fetches a favicon over the network when
+    the admin leaves the field blank. Stub it for EVERY test so no HTTP
+    request ever leaves the suite; the favicon tests that want the real
+    function re-patch it themselves with a mocked requests layer."""
+    import tools.favicon_fetcher
+    monkeypatch.setattr(tools.favicon_fetcher, 'fetch_favicon',
+                        lambda target_url, static_folder: None)

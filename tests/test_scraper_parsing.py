@@ -15,14 +15,24 @@ from tools.scraper import (
     scrape_chapter,
 )
 
+# Faithful to the live threekingdoms.com markup (captured 2026-07-10):
+# unquoted class attrs, a t12b title block whose "Chapter NN" text lives
+# inside nested nav links + per-letter <font color=...> tags (ALL nested
+# tags get decomposed by the scraper — only the <br>-separated plain
+# title lines survive), note-anchor <sup> prefixes on prose cells, and
+# <td class=n><textarea class=n> note cells between content cells.
 PAGE = """
 <html><body>
-<font class="t12b">Chapter 29 : The Little Chief; <span>extras</span></font>
-<table id="txt_content">
+<font class=t12b>
+  <a href="chapter.aspx?c=28"><font color=deeppink>&lt;</font></a><u> <font color=red>C</font><font color=green>h</font>apter 29 </u><a href="chapter.aspx?c=30"><font color=hotpink>&gt;</font></a>
+  <br>The Little Chief Of The South Slays Yu Ji;<br>The Green Eyed Boy Lays Hold On The South Land.
+  <br>
+</font>
+<table id=txt_content>
 <tr><td class=1><a class="1" name="1" href="note.aspx?p=1"><sup>1</sup></a> Plain prose paragraph one.</td>
 <td class=n><textarea class=n></textarea></td></tr>
 <tr><td class=2><a class="2" name="2" href="note.aspx?p=2"><sup>2</sup></a> "A quoted letter to the throne."</td>
-<td class=n><textarea class=n></textarea></td></tr>
+<td class=n><textarea class=n onclick=alert(this.value)>Explainer text</textarea></td></tr>
 <tr><td class=3b>Two kingdoms rise;<br>one falls.</td>
 <td class=n><textarea class=n></textarea></td></tr>
 <tr><td class=1>Second prose paragraph.</td>
@@ -70,10 +80,20 @@ class TestScrapeChapter:
         scrape_chapter(29)
         assert mock_get[0].endswith('/029.htm')
 
-    def test_title_extracted(self, mock_get):
+    def test_title_is_plain_br_lines_nested_tags_decomposed(self, mock_get):
+        # Real-site behaviour: the rainbow "Chapter 29" letters live in
+        # nested <font>/<a>/<u> tags which the scraper decomposes; only
+        # the plain-text <br> title lines survive.
         title, _ = scrape_chapter(29)
-        assert 'Chapter 29' in title
-        assert 'extras' not in title   # nested tags decomposed
+        assert 'The Little Chief Of The South Slays Yu Ji' in title
+        assert 'chapter.aspx' not in title       # nav links gone
+        assert 'deeppink' not in title           # colour spam gone
+
+    def test_title_semicolon_gets_br(self, mock_get):
+        # scrape_chapter post-processes: ";" → "; <br>" for two-line
+        # display of the traditional couplet titles.
+        title, _ = scrape_chapter(29)
+        assert '; <br>' in title
 
     def test_prose_paragraphs_become_plain_p(self, mock_get):
         _, content = scrape_chapter(29)
