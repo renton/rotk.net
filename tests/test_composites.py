@@ -128,8 +128,12 @@ class TestExclusionVsContentChange:
         factories.make_match_exclusion(
             chapter=ch, target_type='character', target_id=c.id,
             match_text=m['match'], before=m['before'], after=m['after'])
-        # Change far upstream (>60 chars away from the match).
-        ch.content = ch.content.replace(filler, filler + ' plus more')
+        # Change far upstream — PREPENDED before the 200-char filler so
+        # it stays >60 chars away from the match. (Appending to the
+        # filler's tail would land inside the fingerprint window and
+        # orphan the exclusion — that's the previous test's scenario.)
+        ch.content = ch.content.replace(
+            f'<p>{filler}', f'<p>A brand new opening sentence. {filler}')
         db_session.flush()
         from tools.book_parser import load_match_exclusions
         exclusions = load_match_exclusions(ch.id, 'character', c.id)
@@ -324,15 +328,24 @@ class TestAllThreeFeaturesStacked:
             chapter=ch, target_type='character', target_id=c.id,
             match_text=m[1]['match'], before=m[1]['before'],
             after=m[1]['after'])
-        # Annotate the paragraph.
+        # Annotate the paragraph (PRIVATE — a public annotation's
+        # section_text is embedded in the page's annotations JSON
+        # payload, which would legitimately contain 'EXTRA BIT').
         factories.make_annotation(
             chapter=ch,
             section_text='Cao Cao spoke. Cao Cao left. EXTRA BIT ends.',
-            is_public=True)
+            is_public=False)
         # Hide a chunk.
         hide_via_http(aclient, ch, 'EXTRA BIT',
                       before='Cao Cao left.', after='ends.')
-        for cl in (client, aclient):
-            resp = cl.get(f'/chapter/{ch.chapter_num}')
-            assert resp.status_code == 200
-            assert b'EXTRA BIT' not in resp.data
+        # Public reader: no annotation payload, hidden text fully gone.
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert resp.status_code == 200
+        assert b'EXTRA BIT' not in resp.data
+        # Admin: page renders without error; the prose region has the
+        # text removed (it may still appear inside the annotations JSON
+        # payload, which carries the ORIGINAL section text by design).
+        resp = aclient.get(f'/chapter/{ch.chapter_num}')
+        assert resp.status_code == 200
+        prose_region = resp.data.split(b'annotations-payload')[0]
+        assert b'EXTRA BIT' not in prose_region

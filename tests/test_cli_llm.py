@@ -19,8 +19,10 @@ class TestDumpChapterTriage:
         payload = json.loads(result.output)
         assert payload['chapter']['num'] == ch.chapter_num
         matches = payload['matches']
-        assert any(m['target_type'] == 'character' and
-                   m['target_id'] == c.id for m in matches)
+        # Dump entries use entity_type/entity_id (the apply-side input
+        # uses target_type/target_id — different vocabulary by design).
+        assert any(m['entity_type'] == 'character' and
+                   m['entity_id'] == c.id for m in matches)
 
 
 class TestDumpLocations:

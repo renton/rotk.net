@@ -43,6 +43,10 @@ class TestCharacterCrud:
         client, _ = admin_client
         factories.make_character(name='Dupe', birth_date='1', death_date='2',
                                  ancestral_home='X')
+        # Commit (a savepoint release; still rolled back at teardown) so
+        # the seed row survives however deep the route's
+        # IntegrityError-rollback goes on the shared connection.
+        db_session.commit()
         resp = client.post('/characters/new', data={
             'name': 'Dupe', 'birth_date': '1', 'death_date': '2',
             'ancestral_home': 'X',
@@ -77,6 +81,7 @@ class TestFactionCrud:
     def test_duplicate_faction_name_flashes(self, admin_client, db_session):
         client, _ = admin_client
         factories.make_faction(name='TakenName')
+        db_session.commit()   # see test_duplicate_composite_flashes_not_500
         resp = client.post('/factions/new', data={
             'name': 'TakenName', **COLOURS,
         }, follow_redirects=True)
