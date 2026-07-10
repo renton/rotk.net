@@ -130,6 +130,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `recount-book-mentions` | Recompute `Character.book_mention_count` (association-aware — only counts mentions in chapters the character is linked to via `chapter_character`, using per-chapter keywords with fallback to global aliases). Fires automatically on association add/remove/switch, edit-character label change, and rescrape; this CLI is the bulk one-shot for cases where the auto-triggers weren't in place (e.g. pre-`cdb3180` prod data). |
 | `backfill-association-keywords [--dry-run]` | One-shot seed of `chapter_character.keywords` / `event_chapter.keywords` / `chapter_location.keywords` from each entity's `name + aliases` (whitespace-stripped, deduped). Run after applying migration 0012 to move existing associations into the per-chapter keyword model. Idempotent — only touches rows still on the empty default. |
 | `clean-empty-location-geojson [--dry-run]` | Scrub `Location.geojson` rows that hold non-object JSON (usually the JSON string `""` from a pre-`11f25f9` `new_location` bug). Real Polygon/MultiPolygon objects are left alone; anything else is reset to NULL. |
+| `backfill-annotation-refs [--dry-run]` | Attach auto-detected character/location references to annotations created before migration 0016. Skips annotations that already have refs — it never refreshes existing ones (see the note under Features → Annotations). Idempotent. |
 | `assign-default-portraits [--preferred-tag 1MROTK] [--seed N] [--dry-run]` | For each character that has portraits but none visible, promote one to default (which also makes it visible). Prefers portraits tagged with `--preferred-tag`; falls back to a random pick. |
 | `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |
 | `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
@@ -329,14 +330,24 @@ examples/
 - **URL** — polymorphic external link attachable to any of the above; auto-fetched favicon; categorised by `UrlType`
 - **UrlType** — coloured tag with a Font Awesome icon class; renders as the badge prefix in URL lists
 - **EventType** — coloured tag with a Font Awesome icon class; shows next to each event in the chapter sidebar
-- **MatchExclusion** — per-snippet "don't inline-tag this match" record (currently wired for Location associations)
+- **MatchExclusion** — per-snippet "don't inline-tag this match" record (wired for Character + Location associations)
+- **ChapterHiddenSnippet** — admin-hidden prose span; removed from the public chapter render entirely (fingerprinted like MatchExclusion)
+- **Annotation** — per-paragraph threaded note, public (any reader) or private (admins only), with auto-detected character/location references
 - **Edit log** — every admin save is recorded (model, row, field-by-field diff, who, when) and viewable at `/admin/edits`
 - **Audit stamps** — every first-class row gets `created_by` and `last_edited_by` columns via ORM event hooks
+
+### Annotations
+- Threaded notes attached to a chapter paragraph. Public annotations show a black notepad icon to all readers (click = read-only thread modal); private annotations show a red icon + exclamation to admins only.
+- Admins hover any paragraph to get a blue "add" icon; the modal thread supports add (private by default), per-entry soft-delete, and restore.
+- Character/location references are **auto-detected at create time** from the chapter's associations and stored on M2M tables. **Known + accepted limitation:** if an association (or its keywords) is added to a chapter *after* an annotation already exists on a paragraph mentioning it, the annotation's refs are not retroactively updated — preferable for now since annotations may later gain manual/richer character-location selection. `flask backfill-annotation-refs` only fills annotations with no refs at all.
+- Admin list pages (`/admin/annotations/public`, `/admin/annotations/private`) stack annotations one row per thread with count, first-note preview, character pills + location links (each linking to the chapter's association editor), chapter deep-link (new tab, anchored to the paragraph), filters by chapter / character / location, and a soft-deleted-only view. The private list has a **Close** button that resolves a whole thread ticket-style.
 
 ### Admin tools
 - `/admin/faq` — how-to reference for every common task (linked from the admin dropdown)
 - `/admin/chapter-associations`, `/admin/event-associations`, `/admin/location-associations` — pick a chapter, see what's associated, add/switch/remove. The picker auto-fills the *Keywords* field with `name, aliases…` when you commit a selection.
-- Per-snippet match exclusions on Location associations (red × on each snippet; restore from the *Excluded snippets* fold)
+- Per-snippet match exclusions on Character + Location associations (red × on each snippet; restore from the *Excluded snippets* fold; AJAX, no reload)
+- `/admin/chapter-edit` — highlight prose and hide it from the public chapter view (strikethrough in the editor, absent from the public page; click to restore). Content itself is never editable.
+- `/admin/annotations/public`, `/admin/annotations/private` — see Annotations above
 - `/admin/duplicates` — character rows with name collisions
 - `/admin/edits` — full edit history (filterable by model + row)
 - `/admin/image-manager`, `/admin/tags`, `/admin/url-types`, `/admin/event-types` — CRUD for each tag-shaped type, with usage counts and reassign-before-delete guards

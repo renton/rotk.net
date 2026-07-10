@@ -35,6 +35,8 @@ app/
     tag.py               # Tag + TagAssociation (polymorphic by target_type + target_id)
     url.py               # Url + UrlType (polymorphic Url; FA-iconed UrlType)
     match_exclusion.py   # MatchExclusion — per-snippet "don't inline-tag this match" for a (chapter, target_type, target_id)
+    chapter_hidden_snippet.py  # ChapterHiddenSnippet — admin-hidden prose spans (fingerprinted like MatchExclusion; removed from public render entirely)
+    annotation.py        # Annotation (per-paragraph public/private threads, section_text content-addressed) + annotation_character / annotation_location M2Ms
     edit.py              # Edit (admin save audit log: model, row, field-by-field diffs)
     auth.py              # User, AnonymousUser, login_manager hooks
   blueprints/
@@ -47,7 +49,9 @@ app/
     admin/views.py       # /admin/users, /admin/faq, /admin/duplicates, /admin/edits, /admin/tags,
                          #   /admin/url-types, /admin/event-types, /admin/image-manager,
                          #   /admin/chapter-associations, /admin/event-associations,
-                         #   /admin/location-associations (+ per-snippet exclude / restore)
+                         #   /admin/location-associations (+ per-snippet exclude / restore),
+                         #   /admin/chapter-edit (+ hide / restore prose spans),
+                         #   /admin/annotations/{public,private} (+ create / delete / restore / close-thread)
     admin/forms.py       # EditTagForm, EditUrlTypeForm, EditEventTypeForm, CreateUserForm
   templates/             # Jinja2: book/, characters/, factions/, roles/, events/, locations/, admin/, auth/, errors/
                          # Shared partials: _macros.html (badge_widget with icon prefix),
@@ -57,6 +61,8 @@ app/
     styles.css           # Sidebar sticky rules, event/location ref styling, sidebar-flash animation
     js/                  # chapter.js (refs click + link-style cookie + accordion-flash),
                          #   chapter_style.js (tag-style switcher, localStorage-backed),
+                         #   annotations.js (paragraph-thread modal, icon state updates, AJAX add/delete/restore),
+                         #   admin_chapter_edit.js (highlight-and-hide prose spans),
                          #   admin_picker.js (datalist id resolver + auto-fill keywords field),
                          #   admin_confirm.js (data-confirm submit gate),
                          #   admin_colour_picker.js (Randomize palette button injector)
@@ -107,6 +113,8 @@ db-data/                 # Postgres data volume for local dev (gitignored)
 10. **Polymorphic relationships.** `Url`, `TagAssociation`, and `MatchExclusion` use `(target_type, target_id)` pairs with no FK constraint on `target_id`; each first-class object has a `viewonly` SQLAlchemy relationship filtered to its own table name. Writes happen through the underlying rows directly (admin routes), not through the relationship.
 11. **Audit columns.** `created_by` + `last_edited_by` columns sit on every `AbstractObject` row plus `TagAssociation`. ORM `before_insert` / `before_update` hooks (in `app/models/audit.py`) stamp the current Flask-Login user's username (or `'rotk.net_system'` outside a request).
 12. **Edit log.** Every admin save also writes an `Edit` row with the model name + row id + a JSON diff of changed fields. Visible at `/admin/edits`.
+13. **Hidden prose spans** (`ChapterHiddenSnippet`, `/admin/chapter-edit`). Admin highlights prose → the span is fingerprinted (same `(before, match, after)` shape as MatchExclusion) and REMOVED from the public chapter render entirely (`apply_hidden_snippets(html, rows, admin=False)`); the admin editor renders it as clickable strikethrough instead (`admin=True`). Applied to `chapter.content` BEFORE pill-tagging so hidden text never participates in needle matching, mention counts, or exclusion fingerprints. Distinct concept from MatchExclusion (which keeps text visible, just un-pilled).
+14. **Annotations** (`Annotation`, per-paragraph threads). Section identity is content-addressed: `section_text` stores the readable paragraph text; comparisons and hash keys go through `annotation_section_canonical` (strip tags → unescape entities → **remove all whitespace**). All-whitespace-removal is load-bearing: browser `textContent` inserts nothing at tag boundaries while `strip_html_tags` inserts a space, so collapsed-whitespace forms never agree — deleted-whitespace forms do. Icons are server-injected per `<p>` (`inject_annotation_icons`): black = has public (everyone), red + exclamation = has private (admin only), blue hover-revealed = no annotations yet (admin add affordance). Character/location refs are auto-detected at CREATE time from the chapter's associations (`detect_annotation_refs`) and stored on `annotation_character` / `annotation_location` M2Ms — redundant across a thread by accepted design.
 
 ## Running it
 
@@ -168,6 +176,7 @@ Full walkthrough in `README.md`.
 | `flask dump-locations [--type Province\|Commandery\|...]` | Dump every active Location as a JSON array (id, name, chinese_name, type, parent_chain, lat/lng, has_geojson flag) on stdout. For LLM-assisted boundary sourcing on the /map view. Read-only. |
 | `flask apply-location-geo FILE [--apply]` | Apply `[{id, latitude?, longitude?, geojson?, _note?}]` JSON to Location rows. Each entry must include a point and/or a Polygon/MultiPolygon GeoJSON geometry. Dry-run by default; `--apply` writes. Idempotent (no-ops for unchanged values). |
 | `flask check-date-parsing [--only chapter\|event\|character]` | Sweep every free-form date string (chapter.date, event.date, character.birth_date/death_date) and print the ones `tools.date_parser` can't parse. Read-only — used to spot which strings need parser tweaks for the Timeline view. |
+| `flask backfill-annotation-refs [--dry-run]` | Attach auto-detected character/location refs to annotations that predate migration 0016. Skips rows that already have refs (never refreshes). Idempotent. |
 | `flask deploy` | No-op — `pass` in body (called by `boot.sh`) |
 
 **When you add a new `@app.cli.command()`, also add it to this table AND to the matching table in `README.md`.** The README table is the one users see; this one is what future Claude sessions read first.
@@ -197,6 +206,8 @@ See `ISSUES.md` for the full running list. Highlights still open:
 - **MatchExclusion context-shift after rescrape.** Fingerprints hold ~60 chars around each excluded match. If a rescrape inserts new prose whose text falls within that 60-char window, the stored fingerprint won't match the regenerated one and the exclusion silently stops applying (the row is still there in the DB; it's just orphaned). Re-× via the admin UI re-fingerprints against current content. Affects any chapter whose content changed materially — the `class="2"` scraper fix in `f7a1ab5` recovered 255 blocks across 74 chapters, so historically-excluded snippets near those blocks may need a manual re-flag.
 - **Pre-`cdb3180` `book_mention_count` values are stale.** The counter was a global string-match (over-counted duplicates like two "Lady Cao"s). After that commit it's association-aware, but old prod values persist until `flask recount-book-mentions` runs. Any character created / mutated post-commit is fine — the recount fires at all the trigger points. It's the untouched-since-migration rows that carry stale numbers.
 - **`Location.geojson = ""` legacy rows.** `new_location` used to `form.populate_obj(location)` without overriding `geojson` with the validator's parsed value, so an empty textarea landed the JSON string `""` in JSONB. Fixed in `11f25f9`, and downstream `has_geo` checks are now truthy (not `is not None`), so newer locations behave. Any pre-fix location with the bad value should get cleaned via `flask clean-empty-location-geojson`.
+- **Annotation refs are create-time snapshots — intentionally.** `detect_annotation_refs` runs when the annotation is created. If a character/location association (or its keywords) is added to the chapter AFTER an annotation exists on a paragraph mentioning it, the annotation's refs are NOT retroactively updated. Accepted and preferred for now — annotations may grow richer manual character/location selection later, and auto-resyncing would fight that. `flask backfill-annotation-refs` only fills rows with NO refs at all; it never refreshes existing ones.
+- **Annotation section fingerprints share the content-shift caveat.** Like MatchExclusion and ChapterHiddenSnippet, an annotation is keyed to its paragraph's text. If the paragraph's content changes (rescrape recovering a missing block, a hidden-snippet hide/restore inside that paragraph), the canonical form shifts and the annotation orphans — the icon stops appearing, though the row and its thread stay in the DB and remain visible on the admin lists.
 
 ## Things to ask before doing
 
