@@ -341,7 +341,21 @@ class TestAllThreeFeaturesStacked:
         # Public reader: no annotation payload, hidden text fully gone.
         resp = client.get(f'/chapter/{ch.chapter_num}')
         assert resp.status_code == 200
-        assert b'EXTRA BIT' not in resp.data
+        if b'EXTRA BIT' in resp.data:
+            # Self-diagnosing failure: show WHERE in the page the text
+            # leaked and what the hidden-snippet rows look like.
+            from app.models import ChapterHiddenSnippet
+            idx = resp.data.find(b'EXTRA BIT')
+            context = resp.data[max(0, idx - 300):idx + 100]
+            rows = ChapterHiddenSnippet.query.filter_by(
+                chapter_id=ch.id).all()
+            row_info = [(r.id, r.match_text, repr(r.before_snippet),
+                         repr(r.after_snippet)) for r in rows]
+            raise AssertionError(
+                f'EXTRA BIT leaked into the public page.\n'
+                f'Hidden rows: {row_info}\n'
+                f'Page context around leak:\n{context!r}'
+            )
         # Admin: page renders without error; the prose region has the
         # text removed (it may still appear inside the annotations JSON
         # payload, which carries the ORIGINAL section text by design).
