@@ -74,9 +74,11 @@
                         <div class="col-lg-6">
                             {% if m.factions %}
                             <div class="row g-2">
-                                <div class="col-6">
-                                    {# Two-column pill grid (long faction
-                                       lists) — grid class in styles.css. #}
+                                {# col-md so phones stack: faction list
+                                   full-width, detail pane below it. #}
+                                <div class="col-md-6">
+                                    {# Two-column pill list (long faction
+                                       lists) — column CSS in styles.css. #}
                                     <div class="nav yearmap-faction-list"
                                          role="tablist" aria-orientation="vertical">
                                         {% for f in m.factions %}
@@ -92,7 +94,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-md-6">
                                     <div class="tab-content">
                                         {% for f in m.factions %}
                                         <div class="tab-pane fade{% if loop.first %} show active{% endif %}" id="ymf-pane-{{ m.year }}-{{ f.id }}"

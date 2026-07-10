@@ -273,3 +273,11 @@ p.quote {
     margin-bottom: 0.25rem;
     break-inside: avoid;
 }
+
+/* Faction-pill text wraps inside the badge — Bootstrap badges are
+   nowrap by default, which overflows the narrow list columns on
+   phones (and on long faction names generally). */
+.yearmap-faction-list .badge {
+    white-space: normal;
+    text-align: left;
+}
