@@ -72,3 +72,11 @@ app/static/favicons/*
 # Environment files
 .env
 .env-mysql
+# Admin-uploaded yearly territory maps. Same pattern as portraits —
+# directory tracked, contents ignored.
+app/static/yearmaps/*
+!app/static/yearmaps/.gitkeep
+
+# Local working assets (e.g. source GIF + extracted stills for Yearly Maps).
+# Images are uploaded through /admin/yearly-maps, not committed.
+assets/

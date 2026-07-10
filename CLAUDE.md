@@ -38,6 +38,7 @@ app/
     chapter_hidden_snippet.py  # ChapterHiddenSnippet — admin-hidden prose spans (fingerprinted like MatchExclusion; removed from public render entirely)
     annotation.py        # Annotation (per-paragraph public/private threads, section_text content-addressed) + annotation_character / annotation_location M2Ms
     edit.py              # Edit (admin save audit log: model, row, field-by-field diffs)
+    year_map.py          # YearMap — one territory-map image per year (184–280; `year` UNIQUE; files in static/yearmaps/; Portrait-style source_site/source_url credit pair)
     auth.py              # User, AnonymousUser, login_manager hooks
   blueprints/
     main/views.py        # Public + admin-edit routes for Character / Faction / Role / Event / Location;
@@ -51,7 +52,8 @@ app/
                          #   /admin/chapter-associations, /admin/event-associations,
                          #   /admin/location-associations (+ per-snippet exclude / restore),
                          #   /admin/chapter-edit (+ hide / restore prose spans),
-                         #   /admin/annotations/{public,private} (+ create / delete / restore / close-thread)
+                         #   /admin/annotations/{public,private} (+ create / delete / restore / close-thread),
+                         #   /admin/yearly-maps (+ per-year upload-or-edit modal / remove)
     admin/forms.py       # EditTagForm, EditUrlTypeForm, EditEventTypeForm, CreateUserForm
   templates/             # Jinja2: book/, characters/, factions/, roles/, events/, locations/, admin/, auth/, errors/
                          # Shared partials: _macros.html (badge_widget with icon prefix),
@@ -65,7 +67,8 @@ app/
                          #   admin_chapter_edit.js (highlight-and-hide prose spans),
                          #   admin_picker.js (datalist id resolver + auto-fill keywords field),
                          #   admin_confirm.js (data-confirm submit gate),
-                         #   admin_colour_picker.js (Randomize palette button injector)
+                         #   admin_colour_picker.js (Randomize palette button injector),
+                         #   admin_yearly_maps.js (populate the shared Yearly Maps upload/edit modal per row)
 
 tools/
   scraper.py             # scrape_rotk_book() + scrape_rotk_characters()

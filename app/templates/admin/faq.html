@@ -46,6 +46,7 @@
         <li class="list-group-item"><a href="#chapter-hide-prose">Hiding prose from the public chapter view (Chapter Edit)</a></li>
         <li class="list-group-item"><a href="#annotations">Annotations (public + private paragraph threads)</a></li>
         <li class="list-group-item"><a href="#annotation-admin">Managing annotations from the admin lists</a></li>
+        <li class="list-group-item"><a href="#yearly-maps">Yearly Maps (per-year territory images)</a></li>
     </ol>
 </div>
 
@@ -743,6 +744,33 @@
     <ul>
         <li>Filter by chapter, by referenced character, or by referenced location. Sort by latest activity, chapter, or thread size.</li>
         <li>Deletes are <strong>soft</strong> — tick <em>Show only deleted</em> to see resolved/removed notes, and restore any of them from the modal if a thread was closed prematurely.</li>
+    </ul>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="yearly-maps" class="mb-5">
+    <h2>Yearly Maps (per-year territory images)</h2>
+    <p>
+        <em>Admin → Yearly Maps</em> holds one territory-map image per
+        year, 184&ndash;280 AD. Each year is a row: preview, attribution,
+        and an <strong>Upload</strong>/<strong>Edit</strong> button that
+        opens a modal.
+    </p>
+    <ul>
+        <li><strong>Upload</strong> — pick a file (JPG / JPEG / PNG / GIF /
+            WEBP, max 10 MB, magic-byte checked like portraits), optionally
+            fill in the attribution fields, hit <em>Save</em>.</li>
+        <li><strong>Attribution</strong> — same credit pair as portraits:
+            <em>source name</em> (the label shown) + optional
+            <em>source URL</em> (makes the label a link).</li>
+        <li><strong>Edit</strong> — on a year that already has a map, the
+            modal opens prefilled; leave the file empty to update only the
+            attribution, or pick a new file to replace the image.</li>
+        <li><strong>Remove</strong> — deletes the image and its record for
+            that year (with a confirm). The year stays in the list, ready
+            for a fresh upload.</li>
+        <li>One image per year — saving a new file to an occupied year
+            replaces the old one.</li>
     </ul>
 </section>
 {% endblock %}

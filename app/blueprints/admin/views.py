@@ -13,6 +13,9 @@ from sqlalchemy.orm import selectinload
 from app import db
 from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion, ChapterHiddenSnippet, Annotation
 from app.models.character import Portrait, PORTRAIT_DIR
+from app.models.year_map import YearMap, YEARMAP_DIR, YEARMAP_FIRST_YEAR, YEARMAP_LAST_YEAR
+from werkzeug.utils import secure_filename
+from app.blueprints.main.views import _detect_image_type, _MAX_PORTRAIT_BYTES
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, recount_character_book_mentions, apply_hidden_snippets, strip_and_normalize_with_html_map, _hidden_snippet_context, _WS_RE
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
@@ -2681,3 +2684,154 @@ def annotation_restore(annotation_id):
     dest = 'admin.annotations_public' if row.is_public else 'admin.annotations_private'
     flash("Annotation restored.")
     return redirect(url_for(dest))
+
+
+# ---------------------------------------------------------------------------
+# Yearly Maps — one territory-map image per year (184–280 AD)
+# ---------------------------------------------------------------------------
+
+@admin.route('/yearly-maps', methods=['GET'])
+@login_required
+@admin_required
+def yearly_maps():
+    """Grid of every year in the covered era (184–280) with its uploaded
+    map image, if any. One image per year — `year` is unique on YearMap,
+    so uploading again replaces the previous image."""
+    maps_by_year = {m.year: m for m in YearMap.query.all()}
+    return render_template(
+        'admin/yearly_maps.html',
+        years=range(YEARMAP_FIRST_YEAR, YEARMAP_LAST_YEAR + 1),
+        maps_by_year=maps_by_year,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/yearly-maps/<int:year>/upload', methods=['POST'])
+@login_required
+@admin_required
+def yearly_maps_upload(year):
+    """Save the map image and/or attribution for one year.
+
+    Posted from the Yearly Maps modal. The image file is REQUIRED when the
+    year has no map yet, and OPTIONAL when one exists — omitting it updates
+    only the attribution (source_site / source_url, Portrait's credit pair).
+
+    File handling has the same defense-in-depth as the portrait uploader
+    (main.upload_portrait): CSRF, per-file size cap, magic-byte sniffing,
+    declared-extension consistency, server-constructed filename,
+    path-containment check.
+    """
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+    if not (YEARMAP_FIRST_YEAR <= year <= YEARMAP_LAST_YEAR):
+        abort(404)
+
+    row = YearMap.query.filter_by(year=year).first()
+
+    source_site = (request.form.get('source_site') or '').strip()
+    source_url = (request.form.get('source_url') or '').strip()
+    if len(source_site) > 255 or len(source_url) > 2048:
+        flash("Attribution too long (site max 255, URL max 2048 characters).")
+        return redirect(url_for('admin.yearly_maps'))
+
+    file = request.files.get('image_file')
+    has_file = file is not None and bool(file.filename)
+    if not has_file and row is None:
+        flash(f"No image on file for {year} AD — choose a file to upload.")
+        return redirect(url_for('admin.yearly_maps'))
+
+    if has_file:
+        # ---- Size check --------------------------------------------------
+        file.stream.seek(0, os.SEEK_END)
+        size = file.stream.tell()
+        file.stream.seek(0)
+        if size <= 0:
+            flash("Uploaded file is empty.")
+            return redirect(url_for('admin.yearly_maps'))
+        if size > _MAX_PORTRAIT_BYTES:
+            flash(f"File too large ({size:,} bytes). Max {_MAX_PORTRAIT_BYTES:,} bytes.")
+            return redirect(url_for('admin.yearly_maps'))
+
+        # ---- Magic-byte check --------------------------------------------
+        header = file.stream.read(32)
+        file.stream.seek(0)
+        detected = _detect_image_type(header)
+        if detected is None:
+            flash(
+                "Uploaded file doesn't look like a real image "
+                "(JPEG/PNG/GIF/WEBP signatures didn't match)."
+            )
+            return redirect(url_for('admin.yearly_maps'))
+
+        # ---- Extension consistency ----------------------------------------
+        safe_original = secure_filename(file.filename) or 'upload'
+        declared_ext = os.path.splitext(safe_original)[1].lower()
+        declared = 'jpg' if declared_ext == '.jpeg' else declared_ext.lstrip('.')
+        if declared != detected:
+            flash(
+                f"File extension {declared_ext!r} doesn't match the actual "
+                f"content ({detected!r}). Refusing to save."
+            )
+            return redirect(url_for('admin.yearly_maps'))
+
+        # ---- Save (server-constructed filename, never user input) ----------
+        yearmaps_dir = os.path.join(current_app.static_folder, YEARMAP_DIR)
+        os.makedirs(yearmaps_dir, exist_ok=True)
+        filename = f'{year}.{detected}'
+        path = os.path.join(yearmaps_dir, filename)
+
+        abs_path = os.path.abspath(path)
+        abs_dir = os.path.abspath(yearmaps_dir)
+        if not abs_path.startswith(abs_dir + os.sep):
+            abort(400)
+
+        file.save(path)
+
+        if row is None:
+            row = YearMap(year=year, filename=filename)
+            db.session.add(row)
+            verb = "uploaded"
+        else:
+            # Replacing: if the previous image had a different extension its
+            # file is now stale on disk — remove it so it can't be served.
+            if row.filename != filename:
+                old_path = os.path.join(yearmaps_dir, row.filename)
+                if os.path.abspath(old_path).startswith(abs_dir + os.sep) \
+                        and os.path.exists(old_path):
+                    os.remove(old_path)
+            row.filename = filename
+            verb = "replaced"
+    else:
+        verb = "attribution updated"
+
+    row.source_site = source_site
+    row.source_url = source_url
+    db.session.commit()
+
+    flash(f"Map for {year} AD {verb}.")
+    return redirect(url_for('admin.yearly_maps'))
+
+
+@admin.route('/yearly-maps/<int:year>/remove', methods=['POST'])
+@login_required
+@admin_required
+def yearly_maps_remove(year):
+    """Delete the map image (row + file) for one year."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    row = YearMap.query.filter_by(year=year).first_or_404()
+
+    yearmaps_dir = os.path.join(current_app.static_folder, YEARMAP_DIR)
+    path = os.path.join(yearmaps_dir, row.filename)
+    if os.path.abspath(path).startswith(os.path.abspath(yearmaps_dir) + os.sep) \
+            and os.path.exists(path):
+        os.remove(path)
+
+    db.session.delete(row)
+    db.session.commit()
+
+    flash(f"Map for {year} AD removed.")
+    return redirect(url_for('admin.yearly_maps'))

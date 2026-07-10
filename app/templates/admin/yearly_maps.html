@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Admin: Yearly Maps{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <h1>Yearly Maps</h1>
+    <p class="text-muted mb-0">
+        One territory-map image per year, {{ years[0] }}&ndash;{{ years[-1] }} AD.
+        Saving a new image to a year that already has one replaces it; the
+        attribution fields can be edited without re-uploading.
+    </p>
+</div>
+
+<table class="table table-sm align-middle">
+    <thead>
+        <tr>
+            <th style="width: 6rem;">Year</th>
+            <th style="width: 12rem;">Image</th>
+            <th>Attribution</th>
+            <th style="width: 12rem;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for year in years %}
+        {% set row = maps_by_year.get(year) %}
+        <tr{% if not row %} class="table-light"{% endif %}>
+            <td><strong>{{ year }}</strong> AD</td>
+            <td>
+                {% if row %}
+                    <a href="{{ url_for('static', filename=row.static_path) }}" target="_blank">
+                        <img src="{{ url_for('static', filename=row.static_path) }}"
+                             alt="Map of {{ year }} AD"
+                             style="max-height: 80px; max-width: 160px;"
+                             loading="lazy">
+                    </a>
+                {% else %}
+                    <span class="text-muted">&mdash;</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if row and (row.source_site or row.source_url) %}
+                    {% if row.source_url %}
+                        <a href="{{ row.source_url }}" target="_blank" rel="noopener">{{ row.source_site or row.source_url }}</a>
+                    {% else %}
+                        {{ row.source_site }}
+                    {% endif %}
+                {% else %}
+                    <span class="text-muted">&mdash;</span>
+                {% endif %}
+            </td>
+            <td>
+                <div class="d-flex gap-2">
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#yearmap-modal"
+                            data-year="{{ year }}"
+                            data-action="{{ url_for('admin.yearly_maps_upload', year=year) }}"
+                            data-has-image="{{ '1' if row else '' }}"
+                            data-source-site="{{ row.source_site if row else '' }}"
+                            data-source-url="{{ row.source_url if row else '' }}">{{ 'Edit' if row else 'Upload' }}</button>
+                    {% if row %}
+                    <form method="POST"
+                          action="{{ url_for('admin.yearly_maps_remove', year=year) }}">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                data-confirm="Remove the map for {{ year }} AD?">Remove</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# Shared upload/edit modal — populated per-row by admin_yearly_maps.js #}
+<div class="modal fade" id="yearmap-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" enctype="multipart/form-data" id="yearmap-modal-form">
+                {{ csrf_form.hidden_tag() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="yearmap-modal-title">Map</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="yearmap-modal-file" class="form-label">Image file</label>
+                        <input type="file" name="image_file" id="yearmap-modal-file"
+                               class="form-control"
+                               accept=".jpg,.jpeg,.png,.gif,.webp">
+                        <div class="form-text" id="yearmap-modal-file-help"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="yearmap-modal-site" class="form-label">Attribution — source name</label>
+                        <input type="text" name="source_site" id="yearmap-modal-site"
+                               class="form-control" maxlength="255"
+                               placeholder="e.g. Wikimedia Commons">
+                    </div>
+                    <div class="mb-0">
+                        <label for="yearmap-modal-url" class="form-label">Attribution — source URL</label>
+                        <input type="url" name="source_url" id="yearmap-modal-url"
+                               class="form-control" maxlength="2048"
+                               placeholder="https://...">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_yearly_maps.js') }}"></script>
+{% endblock %}
