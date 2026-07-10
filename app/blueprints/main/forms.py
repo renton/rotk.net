@@ -185,13 +185,30 @@ class AddUrlForm(FlaskForm):
 
 
 def _location_parent_label(loc):
-    """Render a Location option label as "Name (Type)" when the type is
-    set, falling back to just the name. The disambiguator helps admins
-    pick the right parent when several locations share a name across
-    different administrative tiers."""
-    if loc.location_type is not None:
-        return f"{loc.name} ({loc.location_type.name})"
-    return loc.name
+    """Render a Location option label as "Name (Type) — parent › grand-
+    parent › …" (closest tier first), falling back to just the name when
+    type/parents are unset. The breadcrumb disambiguates same-named
+    locations across administrative tiers.
+
+    Cheap despite running per option: the picker's query_factory loads
+    EVERY active location into the session, so the `loc.parent` walks
+    below resolve through the identity map without extra queries. The
+    `seen` set + depth cap defend against cycle data (mirrors the
+    chapter sidebar's ancestry walk)."""
+    label = (f"{loc.name} ({loc.location_type.name})"
+             if loc.location_type is not None else loc.name)
+    chain = []
+    seen = {loc.id}
+    cur = loc.parent
+    depth = 0
+    while cur is not None and cur.id not in seen and depth < 10:
+        chain.append(cur.name)
+        seen.add(cur.id)
+        cur = cur.parent
+        depth += 1
+    if chain:
+        label += ' — ' + ' › '.join(chain)
+    return label
 
 
 class EditLocationForm(FlaskForm):

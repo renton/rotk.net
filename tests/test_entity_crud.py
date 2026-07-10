@@ -421,3 +421,37 @@ class TestFactionLeaders:
                 f'#{c.id}"').encode() in resp.data
         # No-faction characters keep the plain form.
         assert f'value="Factionless Wanderer #{lonely.id}"'.encode() in resp.data
+
+
+class TestLocationParentPickerBreadcrumb:
+    def test_options_show_ancestry_chain(self, admin_client, db_session):
+        client, _ = admin_client
+        province = factories.make_location(name='Yizhou Province')
+        commandery = factories.make_location(name='Shu Commandery',
+                                             parent_id=province.id)
+        county = factories.make_location(name='Chengdu County',
+                                         parent_id=commandery.id)
+        target = factories.make_location(name='Editable Spot')
+        resp = client.get(f'/locations/edit/{target.id}')
+        assert resp.status_code == 200
+        # Deepest location shows its full chain, closest tier first.
+        assert 'Chengdu County — Shu Commandery › Yizhou Province'.encode() \
+            in resp.data
+        # Mid-tier shows just its parent; roots show no dash suffix.
+        assert 'Shu Commandery — Yizhou Province'.encode() in resp.data
+        assert b'Yizhou Province \xe2\x80\x94' not in resp.data
+
+    def test_option_with_type_keeps_type_prefix(self, admin_client,
+                                                db_session):
+        client, _ = admin_client
+        from app.models import LocationType
+        lt = LocationType(name='County')
+        db_session.add(lt)
+        db_session.flush()
+        parent = factories.make_location(name='Parent Region')
+        child = factories.make_location(name='Typed Child',
+                                        parent_id=parent.id,
+                                        location_type_id=lt.id)
+        target = factories.make_location(name='Another Spot')
+        resp = client.get(f'/locations/edit/{target.id}')
+        assert 'Typed Child (County) — Parent Region'.encode() in resp.data
