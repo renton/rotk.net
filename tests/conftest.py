@@ -72,6 +72,20 @@ def _ensure_test_database_exists(uri):
         engine.dispose()
 
 
+def _attach_cli_commands(application):
+    """The project's @app.cli.command()s are registered on rotk.py's
+    module-level app (which is built with the DEV config and must never
+    be used in tests). Importing rotk creates that app object but makes
+    NO database connection — SQLAlchemy connects lazily. We copy the
+    click command objects onto the TEST app; their bodies use `db` and
+    the models, which resolve through whatever app context the CLI
+    runner provides — i.e. the test app and therefore the test DB."""
+    import rotk  # noqa: F401  (import side effect: registers commands on rotk.app)
+    for name, cmd in rotk.app.cli.commands.items():
+        if name not in application.cli.commands:
+            application.cli.add_command(cmd, name)
+
+
 @pytest.fixture(scope='session')
 def app():
     """Session-scoped Flask app bound to the guarded test database,
@@ -80,6 +94,7 @@ def app():
     uri = application.config['SQLALCHEMY_DATABASE_URI']
     _assert_test_database(uri)
     _ensure_test_database_exists(uri)
+    _attach_cli_commands(application)
 
     with application.app_context():
         _assert_test_database(str(_db.engine.url))
@@ -161,6 +176,17 @@ def cli_runner(app, db_session):
     """Click test runner for @app.cli.command() commands, sharing the
     rollback-isolated session."""
     return app.test_cli_runner()
+
+
+@pytest.fixture(autouse=True)
+def _assert_engine_is_test_db(app):
+    """Belt-and-braces: EVERY test re-verifies the live engine points at
+    a *_test database before it runs. If a future refactor breaks the
+    TestingConfig wiring, the whole suite refuses to run rather than
+    silently writing to live data."""
+    with app.app_context():
+        _assert_test_database(str(_db.engine.url))
+    yield
 
 
 @pytest.fixture(autouse=True)
