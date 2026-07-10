@@ -4,6 +4,16 @@ An annotated, browsable web edition of **Romance of the Three Kingdoms** by Luo 
 
 Live at [rotk.net](https://rotk.net).
 
+## Features
+
+- **Annotated chapters** — all 120 chapters with inline character / event / location tagging, per-chapter mention counts, and a sidebar with character panels (portraits, roles, factions, external links).
+- **Per-paragraph annotations** — public reader notes plus private admin threads, anchored to paragraph content.
+- **Yearly territory maps** — chapters dated to a year (or span) show a collapsible map panel: one tab per year with an uploaded territory map, a drag-to-pan / wheel-to-zoom viewer, and the factions present that year with click-through leader panels. Curated at `/admin/yearly-maps`.
+- **Factions with leaders** — factions carry admin-curated leader characters, shown as pills on the factions list and in the map panels.
+- **Map + timeline views** — locations plotted on an interactive map (pins + GeoJSON territories); events and chapters on a parsed-date timeline.
+- **Character explorer** — filter by faction / role / letter / search, sortable by book-wide mention count.
+- **Admin suite** — association editors with per-snippet match exclusions, chapter prose hiding, an image manager, audit trail of every edit, and an in-app how-to FAQ.
+
 ## Stack
 
 - Python 3.12, Flask 3.1, SQLAlchemy 2.0
@@ -355,7 +365,7 @@ examples/
 
 ## Running the tests
 
-A ~380-test pytest suite lives in `tests/` (unit + route + composite
+A ~600-test pytest suite lives in `tests/` (unit + route + composite
 scenarios). It runs against a **dedicated `rotk_net_test` database** —
 never the live one:
 
