@@ -257,3 +257,13 @@ p.quote {
 .yearmap-faction-toggle.active .badge {
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
 }
+
+/* Two-column grid for the yearly-map faction list — the single column
+   got too tall once maps started carrying 15+ factions. minmax(0,1fr)
+   lets long faction names truncate instead of blowing out the column. */
+.yearmap-faction-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem;
+    align-items: start;
+}

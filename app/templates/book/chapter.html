@@ -50,7 +50,7 @@
                     <div class="row g-3">
                         {# Left: drag-to-pan / wheel-to-zoom viewer
                            (image_panzoom.js, Leaflet CRS.Simple). #}
-                        <div class="col-lg-7">
+                        <div class="col-lg-6">
                             <div class="image-panzoom border rounded" style="height: 45vh;"
                                  data-panzoom-src="{{ url_for('static', filename=m.static_path) }}"
                                  data-panzoom-alt="Territorial map of {{ m.year }} AD"></div>
@@ -71,11 +71,13 @@
                            Bootstrap pill trigger; clicking one reveals its
                            detail pane (faction links + leader panel styled
                            like the sidebar character accordion) alongside. #}
-                        <div class="col-lg-5">
+                        <div class="col-lg-6">
                             {% if m.factions %}
                             <div class="row g-2">
-                                <div class="col-4">
-                                    <div class="nav flex-column align-items-start gap-1"
+                                <div class="col-6">
+                                    {# Two-column pill grid (long faction
+                                       lists) — grid class in styles.css. #}
+                                    <div class="nav yearmap-faction-list"
                                          role="tablist" aria-orientation="vertical">
                                         {% for f in m.factions %}
                                         <button class="nav-link p-0 border-0 bg-transparent text-start yearmap-faction-toggle{% if loop.first %} active{% endif %}"
@@ -90,7 +92,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-6">
                                     <div class="tab-content">
                                         {% for f in m.factions %}
                                         <div class="tab-pane fade{% if loop.first %} show active{% endif %}" id="ymf-pane-{{ m.year }}-{{ f.id }}"
