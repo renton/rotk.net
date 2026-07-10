@@ -26,6 +26,23 @@ body.is-admin span.location-ref {
     color: #c00;
 }
 
+/* Chapter Edit admin — the hide-snippet tool wraps admin-hidden prose
+   in <s class="hidden-snippet">. Public chapter view removes these
+   spans entirely; admin view renders them strikethrough + clickable
+   so admin can restore. */
+s.hidden-snippet {
+    text-decoration: line-through;
+    color: #999;
+    background-color: #ffe0e0;
+    cursor: pointer;
+    padding: 0 0.15rem;
+    border-radius: 0.15rem;
+}
+s.hidden-snippet:hover {
+    background-color: #ffc9c9;
+    color: #666;
+}
+
 /* Consistent 2rem indent for URL lists nested under a faction /
    character / event / location in the chapter sidebar. Bootstrap's
    ms-5 (3rem) was too wide; ms-4 (1.5rem) too tight — 2rem sits

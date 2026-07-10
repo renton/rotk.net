@@ -34,6 +34,145 @@ def normalize_snippet(s):
     return _WS_RE.sub(' ', s).strip()
 
 
+def strip_and_normalize_with_html_map(html):
+    """Return (normalized_text, positions) where normalized_text is
+    the whitespace-normalised strip of `html` (tags removed, all
+    whitespace runs collapsed to a single space) and positions[i]
+    is the html index of the character that produced
+    normalized_text[i].
+
+    Used by apply_hidden_snippets to find each hidden fingerprint's
+    location in the stripped text and map back to the html index for
+    removal / wrapping. Different from `strip_html_tags` which does
+    not track positions.
+    """
+    if not html:
+        return '', []
+    out_chars = []
+    positions = []
+    last_was_ws = True  # collapse leading whitespace
+    i = 0
+    n = len(html)
+    while i < n:
+        c = html[i]
+        if c == '<':
+            # Skip the tag; treat as one whitespace boundary.
+            if not last_was_ws:
+                out_chars.append(' ')
+                positions.append(i)
+                last_was_ws = True
+            j = html.find('>', i + 1)
+            if j == -1:
+                break
+            i = j + 1
+        elif c.isspace():
+            if not last_was_ws:
+                out_chars.append(' ')
+                positions.append(i)
+                last_was_ws = True
+            i += 1
+        else:
+            out_chars.append(c)
+            positions.append(i)
+            last_was_ws = False
+            i += 1
+    # Trim trailing whitespace we accumulated.
+    while out_chars and out_chars[-1] == ' ':
+        out_chars.pop()
+        positions.pop()
+    return ''.join(out_chars), positions
+
+
+def _hidden_snippet_context(normalized, idx, match_len, context_chars=60):
+    """Same before/after trim algorithm as find_*_mentions, applied
+    to `normalized` at position idx for a match of `match_len` chars.
+    Returns the trimmed (before, after) pair with ellipses at truncation
+    edges — the fingerprint the client sent at save time and the one
+    the server recomputes at render time must both use this."""
+    before = normalized[max(0, idx - context_chars):idx]
+    end = idx + match_len
+    after = normalized[end:end + context_chars]
+    if idx - context_chars > 0:
+        before = before.split(' ', 1)[1] if ' ' in before else before
+        before = '…' + before.lstrip()
+    if end + context_chars < len(normalized):
+        after = after.rsplit(' ', 1)[0] if ' ' in after else after
+        after = after.rstrip() + '…'
+    return before, after
+
+
+def apply_hidden_snippets(html, hidden_rows, admin=False):
+    """Given raw chapter HTML and a list of ChapterHiddenSnippet rows,
+    return HTML with each snippet either removed (public reader —
+    admin=False) or wrapped in `<s class="hidden-snippet" data-hidden-id="…">`
+    (admin editor — admin=True).
+
+    Match location is found via the (before, match_text, after)
+    fingerprint on the whitespace-normalised strip of the html; the
+    position map from `strip_and_normalize_with_html_map` translates
+    the found normalised index back to html positions for the actual
+    removal/wrap.
+
+    Rows whose fingerprint no longer matches anything in the current
+    content (e.g. because the chapter's been rescraped and the ~60-char
+    context shifted) are silently skipped — the row stays in the DB
+    as an orphan, admin can clean up via the UI.
+    """
+    if not hidden_rows or not html:
+        return html
+    normalized, positions = strip_and_normalize_with_html_map(html)
+    if not normalized:
+        return html
+
+    ranges = []  # (html_start, html_end, hidden_id)
+    for row in hidden_rows:
+        target = (row.match_text or '').strip()
+        if not target:
+            continue
+        # Normalise the target too so a target with weird whitespace
+        # compares apples-to-apples against normalized content.
+        target = _WS_RE.sub(' ', target)
+        stored_before = row.before_snippet or ''
+        stored_after = row.after_snippet or ''
+        start = 0
+        while True:
+            idx = normalized.find(target, start)
+            if idx < 0:
+                break
+            before, after = _hidden_snippet_context(normalized, idx, len(target))
+            if before == stored_before and after == stored_after:
+                html_start = positions[idx]
+                # +1 to include the last matched char in the range
+                html_end = positions[idx + len(target) - 1] + 1
+                ranges.append((html_start, html_end, row.id))
+                break
+            start = idx + 1
+
+    if not ranges:
+        return html
+
+    # Sort ascending by start so we can walk html once, emitting
+    # segments in order.
+    ranges.sort(key=lambda r: r[0])
+    out = []
+    cursor = 0
+    for start, end, hidden_id in ranges:
+        # Guard against overlapping ranges (rare — same fingerprint
+        # matched twice somehow). Skip anything that starts before
+        # the previous range's end.
+        if start < cursor:
+            continue
+        out.append(html[cursor:start])
+        if admin:
+            out.append(f'<s class="hidden-snippet" data-hidden-id="{hidden_id}">')
+            out.append(html[start:end])
+            out.append('</s>')
+        # else: skip the range (public view — hidden means gone)
+        cursor = end
+    out.append(html[cursor:])
+    return ''.join(out)
+
+
 def load_chapter_keywords(chapter_id, table_name, target_id_column):
     """Return {target_id: keyword_csv} for every association row in the
     given M2M table (chapter_character / event_chapter / chapter_location)

@@ -11,10 +11,10 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion, ChapterHiddenSnippet
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
-from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, recount_character_book_mentions
+from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, recount_character_book_mentions, apply_hidden_snippets, strip_and_normalize_with_html_map, _hidden_snippet_context, _WS_RE
 from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
 from . import admin
 
@@ -761,6 +761,170 @@ def _resolve_event_from_form():
             )
     return None, "Couldn't find an event matching that selection."
 
+
+# ----- Chapter Edit (hide-snippet tool) -----------------------------------
+
+@admin.route('/chapter-edit', methods=['GET'])
+@admin.route('/chapter-edit/<int:chapter_num>', methods=['GET'])
+@login_required
+@admin_required
+def chapter_edit(chapter_num=None):
+    """Chapter-editing admin page. Read-only view of the chapter's
+    prose PLUS a highlight-and-hide affordance for suppressing bad
+    snippets from the public reader. Prose can't be edited / added
+    to / deleted from — the ONLY mutation this page supports is
+    marking spans as hidden (or un-hiding previously marked ones)."""
+    if chapter_num is None:
+        # Allow GET-form ?chapter_num=N submissions to redirect to
+        # the path-style URL so the page is shareable.
+        from_query = request.args.get('chapter_num', type=int)
+        if from_query is not None:
+            return redirect(url_for('admin.chapter_edit', chapter_num=from_query))
+
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+    selected = None
+    rendered_content = ''
+    hidden_rows = []
+
+    if chapter_num is not None:
+        selected = Chapter.query.filter_by(chapter_num=chapter_num).first()
+        if selected is None:
+            abort(404)
+        hidden_rows = (
+            ChapterHiddenSnippet.query
+            .filter_by(chapter_id=selected.id)
+            .order_by(ChapterHiddenSnippet.id)
+            .all()
+        )
+        # Wrap hidden spans in <s> for the admin view; public chapter
+        # view uses admin=False to REMOVE them entirely.
+        rendered_content = apply_hidden_snippets(selected.content, hidden_rows, admin=True)
+
+    return render_template(
+        'admin/chapter_edit.html',
+        chapters=chapters,
+        selected=selected,
+        rendered_content=rendered_content,
+        hidden_rows=hidden_rows,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/chapter-edit/<int:chapter_num>/hide', methods=['POST'])
+@login_required
+@admin_required
+def chapter_edit_hide(chapter_num):
+    """Persist a new hidden snippet for this chapter.
+
+    Client POSTs: match_text (the selected prose, plain text), plus
+    100+ chars of context on each side (before, after). Server
+    normalises whitespace, trims to the same 60-char / word-boundary
+    context find_*_mentions uses, and stores the fingerprint. Returns
+    the new row's id (JSON) so the client-side JS can wire up the
+    Restore affordance on the wrapped element.
+    """
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+
+    raw_match = (request.form.get('match_text') or '').strip()
+    raw_before = request.form.get('before') or ''
+    raw_after = request.form.get('after') or ''
+    if not raw_match:
+        return jsonify(error="Empty selection."), 400
+
+    # Normalise the client's text — collapse whitespace and match
+    # exactly what strip_and_normalize_with_html_map produces at
+    # render time.
+    match_text = _WS_RE.sub(' ', raw_match).strip()
+
+    # We want to find where in the CURRENT chapter content this
+    # selection lives, so we can compute the same trimmed
+    # (before, after) fingerprint the render pass will look for.
+    # The client sent generous context; use that to disambiguate
+    # when the selection appears multiple times in the chapter.
+    normalized, _positions = strip_and_normalize_with_html_map(chapter.content)
+    if not match_text or not normalized:
+        return jsonify(error="Match not found in chapter content."), 400
+
+    # Normalise the client-side context the same way we normalise the
+    # chapter content, then use it to pick the right occurrence when
+    # match_text appears more than once.
+    client_before = _WS_RE.sub(' ', raw_before).strip()
+    client_after = _WS_RE.sub(' ', raw_after).strip()
+
+    best_idx = -1
+    start = 0
+    while True:
+        idx = normalized.find(match_text, start)
+        if idx < 0:
+            break
+        # Compare surrounding text against what the client sent — a
+        # loose "endswith / startswith" so trailing/leading noise
+        # doesn't disqualify.
+        actual_before = normalized[max(0, idx - len(client_before)):idx]
+        actual_after = normalized[idx + len(match_text):idx + len(match_text) + len(client_after)]
+        if (not client_before or actual_before.endswith(client_before[-40:])) and \
+           (not client_after or actual_after.startswith(client_after[:40])):
+            best_idx = idx
+            break
+        start = idx + 1
+
+    if best_idx < 0:
+        # Fallback: just take the first occurrence. Client's context
+        # didn't match — usually a whitespace quirk.
+        best_idx = normalized.find(match_text)
+        if best_idx < 0:
+            return jsonify(error="Selection not found in chapter content."), 400
+
+    before, after = _hidden_snippet_context(normalized, best_idx, len(match_text))
+
+    # Idempotency: if an identical fingerprint already exists, return
+    # its id without inserting again.
+    existing = ChapterHiddenSnippet.query.filter_by(
+        chapter_id=chapter.id,
+        match_text=match_text,
+        before_snippet=before,
+        after_snippet=after,
+    ).first()
+    if existing is None:
+        row = ChapterHiddenSnippet(
+            chapter_id=chapter.id,
+            match_text=match_text,
+            before_snippet=before,
+            after_snippet=after,
+        )
+        db.session.add(row)
+        db.session.commit()
+    else:
+        row = existing
+
+    return jsonify(id=row.id, match_text=row.match_text)
+
+
+@admin.route('/chapter-edit/<int:chapter_num>/restore/<int:snippet_id>', methods=['POST'])
+@login_required
+@admin_required
+def chapter_edit_restore(chapter_num, snippet_id):
+    """Un-hide a previously stored ChapterHiddenSnippet — the row is
+    deleted, and the next render (admin + public) shows the prose again."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    row = ChapterHiddenSnippet.query.get_or_404(snippet_id)
+    chapter = Chapter.query.filter_by(chapter_num=chapter_num).first_or_404()
+    if row.chapter_id != chapter.id:
+        abort(404)
+
+    db.session.delete(row)
+    db.session.commit()
+    return jsonify(ok=True)
+
+
+# ----- Chapter ↔ Event association editor ---------------------------------
 
 @admin.route('/event-associations', methods=['GET'])
 @admin.route('/event-associations/<int:chapter_num>', methods=['GET'])

@@ -19,6 +19,8 @@ from app.models.edit import Edit
 
 from app.models.match_exclusion import MatchExclusion
 
+from app.models.chapter_hidden_snippet import ChapterHiddenSnippet
+
 # Importing the `audit` module registers ORM event listeners that stamp
 # created_by / last_edited_by on every model with those columns. Must
 # happen after the models above are imported so mapper config is settled.

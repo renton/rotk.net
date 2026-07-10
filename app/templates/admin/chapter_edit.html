@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Chapter Edit{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-3">
+        <div>
+            <h1 class="mb-0">Chapter Edit</h1>
+            <p class="text-muted mb-0 mt-1">
+                Highlight a span of text and click <strong>Hide selected</strong>
+                to suppress it from the public chapter view. Existing hidden
+                spans render strikethrough — click one to restore it.
+                Prose can't be otherwise edited from here.
+            </p>
+        </div>
+        <div id="chapter-edit-status" class="small text-muted" aria-live="polite">
+            {% if selected %}All changes saved{% endif %}
+        </div>
+    </div>
+</div>
+
+<form method="GET" action="{{ url_for('admin.chapter_edit') }}" class="mb-4">
+    <label for="chapter-picker" class="form-label">Chapter:</label>
+    <div class="d-flex gap-2">
+        <select name="chapter_num" id="chapter-picker" class="form-select">
+            <option value="">— Select a chapter —</option>
+            {% for c in chapters %}
+            <option value="{{ c.chapter_num }}"
+                {% if selected and selected.id == c.id %}selected{% endif %}>
+                {{ c.chapter_num }}. {{ c.name | striptags | truncate(80) }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Go</button>
+    </div>
+</form>
+
+{% if selected %}
+<div class="d-flex align-items-center gap-2 mb-3">
+    <button type="button" id="hide-selected-btn" class="btn btn-warning">
+        <i class="fa-solid fa-eye-slash me-1" aria-hidden="true"></i>
+        Hide selected
+    </button>
+    <span class="text-muted small">
+        Select prose in the chapter below, then click. Selection must sit
+        within a single paragraph.
+    </span>
+</div>
+
+<div id="chapter-edit-content"
+     data-chapter-num="{{ selected.chapter_num }}"
+     data-hide-url="{{ url_for('admin.chapter_edit_hide', chapter_num=selected.chapter_num) }}"
+     data-restore-url-prefix="{{ url_for('admin.chapter_edit_restore', chapter_num=selected.chapter_num, snippet_id=0)[:-1] }}"
+     data-csrf-token="{{ csrf_token() }}"
+     class="border rounded p-3 bg-white">
+    <h2>{{ selected.name | safe }}</h2>
+    {% if selected.date %}
+    <div class="text-muted small mb-3">{{ selected.date }}</div>
+    {% endif %}
+    <hr>
+    <div class="page-copy chapter-edit-prose">
+        {{ rendered_content | safe }}
+    </div>
+</div>
+
+{% if hidden_rows %}
+<div class="mt-4 small text-muted">
+    <strong>{{ hidden_rows|length }}</strong> hidden snippet{{ '' if hidden_rows|length == 1 else 's' }}
+    on this chapter. Click any strikethrough span to restore it.
+</div>
+{% else %}
+<div class="mt-4 small text-muted">
+    No hidden snippets on this chapter yet.
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+<script src="{{ url_for('static', filename='js/admin_chapter_edit.js') }}"></script>
+{% endblock %}

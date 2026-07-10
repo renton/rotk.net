@@ -302,11 +302,26 @@ def timeline():
 @main.route('/chapter/<int:chapter_num>', methods=['GET'])
 def chapter(chapter_num):
     from collections import defaultdict
+    from app.models import ChapterHiddenSnippet
+    from tools.book_parser import apply_hidden_snippets
 
     chapter = Chapter.query.filter(Chapter.chapter_num == chapter_num).first()
 
     if not chapter:
         abort(404)
+
+    # Strip admin-hidden prose BEFORE any character/event/location
+    # pill-tagging. The renderer that follows only ever sees the
+    # visible-to-public version of the content, so exclusions can't
+    # accidentally leak into fingerprint calculations, mention
+    # counts, or the inline pill output.
+    # Assign to a local — don't touch chapter.content on the ORM
+    # instance or the mutated value could get written back on the
+    # next session commit.
+    hidden_rows = ChapterHiddenSnippet.query.filter_by(chapter_id=chapter.id).all()
+    chapter_content = chapter.content
+    if hidden_rows:
+        chapter_content = apply_hidden_snippets(chapter_content, hidden_rows, admin=False)
 
     characters = get_characters_for_chapter(chapter.id)
     characters.sort(key=lambda x: x.name)
@@ -481,7 +496,7 @@ def chapter(chapter_num):
     # tuples should NOT get re-wrapped as inline refs; the replace_match
     # closure consults this skip-set per match.
     needs_stripped = bool(needle_to_character_ids or needle_to_location_id)
-    stripped_content = strip_html_tags(chapter.content) if needs_stripped else ''
+    stripped_content = strip_html_tags(chapter_content) if needs_stripped else ''
 
     def _skip_indices_for(needle, fingerprints):
         """Return the set of 0-indexed occurrences of `needle` (in
@@ -602,7 +617,7 @@ def chapter(chapter_num):
                 return matched
         return replacements[key_str]
 
-    rendered_content = pattern.sub(replace_match, chapter.content) if replacements else chapter.content
+    rendered_content = pattern.sub(replace_match, chapter_content) if replacements else chapter_content
 
     # Events associated with this chapter, plus the unique set of
     # Locations — both event-pinned (from each event.location) AND
