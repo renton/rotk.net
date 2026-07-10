@@ -50,15 +50,26 @@ body.is-admin span.location-ref {
 .annotation-icon-blue  i.fa-note-sticky { color: #0d6efd; }
 
 /* Icons injected as the first child of each <p> in the chapter prose
-   float to the LEFT of the paragraph, OUTSIDE its text-flow box —
-   otherwise the paragraph gained an icon-width indent. Using
-   position:absolute on a position:relative parent takes the icon
-   fully out of flow (subsequent text starts flush at char 0). CSS
-   :hover still resolves through the DOM tree, so hovering the icon
-   keeps <p>:hover active — the blue "add" variant stays visible
-   while the cursor traverses from paragraph → icon. */
+   float to the LEFT of the paragraph, OUTSIDE its text-flow box, so
+   the prose keeps its column-0 alignment.
+
+   The pseudo-element `p::before` extends the paragraph's hoverable
+   area into the left gutter — hovering ::before still triggers
+   p:hover per CSS spec, so the cursor can traverse paragraph → gutter
+   → icon without the icon vanishing mid-motion. The icon sits inside
+   that extended zone, and `<p>:hover` stays true whether the pointer
+   is over the text, the gutter, or the icon itself. */
 .page-copy p {
     position: relative;
+}
+.page-copy p::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -2.25em;
+    width: 2.25em;
+    /* No paint — this element exists only to catch hover. */
 }
 .page-copy p > .annotation-icon {
     position: absolute;
@@ -68,8 +79,7 @@ body.is-admin span.location-ref {
 
 /* Blue "add" icon lives inside every <p> for admins on paragraphs
    that don't yet have annotations. Hidden by default; <p>:hover
-   reveals it. Descendant :hover keeps parent :hover true, so
-   moving the cursor onto the icon doesn't dismiss it. */
+   (extended by the ::before above) reveals it. */
 .page-copy p > .annotation-icon-add {
     visibility: hidden;
     opacity: 0;
