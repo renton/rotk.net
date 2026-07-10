@@ -32,6 +32,59 @@ rotk.net - {% if faction %}Edit faction: {{ faction.name }}{% else %}New faction
     {% include '_url_section.html' %}
 {% endif %}
 
+{% if faction %}
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">Leaders</legend>
+    <p class="text-muted small mb-3">
+        The character(s) who lead this faction. Multiple leaders are
+        allowed (co-founders, succession over time).
+    </p>
+
+    {% if leaders %}
+    <ul class="list-group mb-3">
+        {% for l in leaders %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ l.name }}{% if l.courtesty_name %} <span class="text-muted small">({{ l.courtesty_name }})</span>{% endif %}</span>
+            <form method="POST"
+                  action="{{ url_for('main.remove_faction_leader', id=faction.id, character_id=l.id) }}">
+                {{ csrf_form.hidden_tag() }}
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                        data-confirm="Remove {{ l.name|e }} from {{ faction.name|e }}'s leaders?">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted small">No leaders set yet.</p>
+    {% endif %}
+
+    <form method="POST"
+          action="{{ url_for('main.add_faction_leader', id=faction.id) }}"
+          class="row g-2 align-items-end">
+        {{ csrf_form.hidden_tag() }}
+        <div class="col-md-8">
+            <label for="leader-search" class="form-label">Add a leader</label>
+            <input type="text" id="leader-search" name="character_search"
+                   class="form-control"
+                   list="all-characters-datalist"
+                   data-picker-target="character_id"
+                   placeholder="Type to search characters…"
+                   autocomplete="off" required>
+            <input type="hidden" name="character_id">
+        </div>
+        <div class="col-md-4 text-end">
+            <button type="submit" class="btn btn-primary">Add leader</button>
+        </div>
+    </form>
+
+    <datalist id="all-characters-datalist">
+        {% for c in leader_picker_characters %}
+        <option value="{{ c.name }} #{{ c.id }}" label="{{ c.name }}"></option>
+        {% endfor %}
+    </datalist>
+</fieldset>
+{% endif %}
+
 {% if merge_form is defined %}
 <fieldset class="border rounded p-3 mt-5">
     <legend class="float-none w-auto fs-5 px-2">Merge into another faction</legend>

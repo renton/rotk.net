@@ -19,6 +19,7 @@
     <thead>
         <th>Name</th>
         <th>Preview</th>
+        <th>Leaders</th>
         <th>Count</th>
         {% if is_admin %}<th class="text-end">Actions</th>{% endif %}
     </thead>
@@ -35,6 +36,22 @@
                 </td>
                 <td>
                     {{ macros.badge_widget(faction) }}
+                </td>
+                <td>
+                    {# Vertical stack of leader pills, coloured like the
+                       character's inline chapter pill (primary faction).
+                       Links to the characters list filtered by name. #}
+                    {% for l in leaders_by_faction.get(faction.id, []) %}
+                    <div class="mb-1">
+                        <a href="{{ url_for('main.characters', search_query=l.name) }}"
+                           class="text-decoration-none">
+                            <span class="badge rounded-pill faction-leader-pill"
+                                  style="background-color:{{ l.bg }};color:{{ l.font }};border:2px solid {{ l.border }};">
+                                {{ l.name }}
+                            </span>
+                        </a>
+                    </div>
+                    {% endfor %}
                 </td>
                 <td>
                     {{ faction.characters | length }}

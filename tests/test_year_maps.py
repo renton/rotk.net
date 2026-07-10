@@ -350,3 +350,102 @@ class TestChapterPageYearMaps:
 
         assert b'show active' in pane_classes(208)
         assert b'show active' not in pane_classes(209)
+
+
+class TestYearMapFactions:
+    def test_factions_saved_with_upload(self, admin_client, db_session):
+        client, _ = admin_client
+        f1 = factories.make_faction()
+        f2 = factories.make_faction()
+        resp = client.post(
+            '/admin/yearly-maps/208/upload',
+            data={'source_site': '', 'source_url': '',
+                  'faction_ids': f'{f1.id},{f2.id}',
+                  'image_file': (io.BytesIO(PNG), 'map.png')},
+            content_type='multipart/form-data',
+            follow_redirects=True,
+        )
+        assert resp.status_code == 200
+        row = YearMap.query.filter_by(year=208).first()
+        assert {f.id for f in row.factions} == {f1.id, f2.id}
+
+    def test_factions_replaced_wholesale_on_resave(self, admin_client,
+                                                   db_session):
+        client, _ = admin_client
+        f1 = factories.make_faction()
+        f2 = factories.make_faction()
+        _save(client, 208)
+        row = YearMap.query.filter_by(year=208).first()
+        row.factions = [f1, f2]
+        db_session.flush()
+        # Resave (attribution-only) with just f2 → f1 dropped.
+        client.post('/admin/yearly-maps/208/upload',
+                    data={'source_site': '', 'source_url': '',
+                          'faction_ids': str(f2.id)},
+                    content_type='multipart/form-data',
+                    follow_redirects=True)
+        db_session.expire_all()
+        assert [f.id for f in row.factions] == [f2.id]
+
+    def test_empty_faction_ids_clears(self, admin_client, db_session):
+        client, _ = admin_client
+        f1 = factories.make_faction()
+        _save(client, 208)
+        row = YearMap.query.filter_by(year=208).first()
+        row.factions = [f1]
+        db_session.flush()
+        client.post('/admin/yearly-maps/208/upload',
+                    data={'source_site': '', 'source_url': '',
+                          'faction_ids': ''},
+                    content_type='multipart/form-data',
+                    follow_redirects=True)
+        db_session.expire_all()
+        assert row.factions == []
+
+    def test_unknown_faction_id_refused(self, admin_client, db_session):
+        client, _ = admin_client
+        resp = client.post(
+            '/admin/yearly-maps/208/upload',
+            data={'source_site': '', 'source_url': '',
+                  'faction_ids': '999999',
+                  'image_file': (io.BytesIO(PNG), 'map.png')},
+            content_type='multipart/form-data',
+            follow_redirects=True,
+        )
+        assert b'no longer exist' in resp.data
+        assert YearMap.query.filter_by(year=208).first() is None
+
+    def test_malformed_faction_ids_refused(self, admin_client, db_session):
+        client, _ = admin_client
+        resp = client.post(
+            '/admin/yearly-maps/208/upload',
+            data={'source_site': '', 'source_url': '',
+                  'faction_ids': '1;2',
+                  'image_file': (io.BytesIO(PNG), 'map.png')},
+            content_type='multipart/form-data',
+            follow_redirects=True,
+        )
+        assert b'Bad faction id' in resp.data
+        assert YearMap.query.filter_by(year=208).first() is None
+
+    def test_list_page_shows_faction_count(self, admin_client, db_session):
+        client, _ = admin_client
+        f1 = factories.make_faction()
+        f2 = factories.make_faction()
+        _save(client, 208)
+        row = YearMap.query.filter_by(year=208).first()
+        row.factions = [f1, f2]
+        db_session.flush()
+        resp = client.get('/admin/yearly-maps')
+        assert b'2 factions' in resp.data
+        # Prefill JSON on the row's Edit button.
+        assert f'"id": {f1.id}'.encode() in resp.data.replace(b'&#34;', b'"')
+
+    def test_modal_faction_picker_markup(self, admin_client, db_session):
+        client, _ = admin_client
+        factories.make_faction(name='Pickable Faction')
+        resp = client.get('/admin/yearly-maps')
+        assert b'yearmap-modal-faction-search' in resp.data
+        assert b'yearmap-factions-datalist' in resp.data
+        assert b'Pickable Faction #' in resp.data
+        assert b'name="faction_ids"' in resp.data

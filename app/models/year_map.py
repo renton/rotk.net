@@ -27,6 +27,21 @@ class YearMap(db.Model):
     created_by = db.Column(db.String(64), nullable=False, default='rotk.net_system')
     last_edited_by = db.Column(db.String(64))
 
+    # Factions present on this year's map — admin-curated from the
+    # Yearly Maps modal. The set is REPLACED wholesale on every modal
+    # save (the hidden faction_ids field carries the full list).
+    faction_table = db.Table(
+        'year_map_faction',
+        db.Column('year_map_id', db.ForeignKey('year_map.id', ondelete='CASCADE'), primary_key=True),
+        db.Column('faction_id', db.ForeignKey('faction.id', ondelete='CASCADE'), primary_key=True),
+    )
+
+    factions = db.relationship(
+        'Faction',
+        secondary=faction_table,
+        order_by='Faction.name',
+    )
+
     @property
     def static_path(self):
         return f'{YEARMAP_DIR}/{self.filename}'

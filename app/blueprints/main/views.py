@@ -16,7 +16,7 @@ from .forms import EditCharacterForm, EditFactionForm, EditRoleForm, \
     EditLocationForm, EditEventForm, MergeLocationForm
 
 from tools.decorators import admin_required
-from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles
+from tools.book_parser import get_characters_for_chapter, build_needle_pattern, build_name_ref_html, count_mentions_per_character, build_event_ref_html, build_location_ref_html, get_event_labels, get_location_labels, strip_html_tags, load_match_exclusions, normalize_snippet, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, character_pill_colours
 from tools.date_parser import parse_date_range
 
 
@@ -1227,13 +1227,29 @@ def factions():
     factions = (
         Faction.query
         .filter(Faction.is_hidden.is_(False))
+        .options(selectinload(Faction.leaders))
         .order_by(Faction.name)
         .all()
     )
 
+    # Leader pills, coloured like the character's inline chapter pill
+    # (i.e. by their primary faction) — same precomputed-dict pattern
+    # the admin annotation lists use.
+    leaders_by_faction = {}
+    for f in factions:
+        pills = []
+        for ch in f.leaders:
+            if ch.is_deleted:
+                continue
+            bg, font, border = character_pill_colours(ch)
+            pills.append({'id': ch.id, 'name': ch.name,
+                          'bg': bg, 'font': font, 'border': border})
+        leaders_by_faction[f.id] = pills
+
     return render_template(
         'factions/factions.html',
-        factions=factions
+        factions=factions,
+        leaders_by_faction=leaders_by_faction,
     )
 
 @main.route('/factions/new', methods=['GET', 'POST'])
@@ -1287,17 +1303,78 @@ def edit_faction(id):
         .all()
     )
 
+    # Leaders section: current leaders (with remove buttons) + a picker
+    # datalist over every active character for adding new ones.
+    leader_picker_characters = (
+        Character.query
+        .filter(Character.is_deleted.is_(False))
+        .order_by(Character.name)
+        .all()
+    )
+
     return render_template(
         'factions/faction_edit.html',
         form=form,
         faction=faction,
         merge_form=merge_form,
         mergeable_factions=mergeable_factions,
+        leaders=[c for c in faction.leaders if not c.is_deleted],
+        leader_picker_characters=leader_picker_characters,
         urls=[u for u in faction.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),
         back=_back_arg(),
     )
+
+
+@main.route('/factions/<int:id>/leaders/add', methods=['POST'])
+@login_required
+@admin_required
+def add_faction_leader(id):
+    """Attach a character as a leader of this faction.
+
+    The form ships the picker pair: a hidden `character_id` (filled by
+    admin_picker.js) with a `Name #<id>` suffix fallback in
+    `character_search` when JS hasn't resolved it."""
+    from flask_wtf import FlaskForm
+    if not FlaskForm().validate_on_submit():
+        abort(400)
+    faction = Faction.query.get_or_404(id)
+
+    raw_id = (request.form.get('character_id') or '').strip()
+    if not raw_id.isdigit():
+        m = re.search(r'#(\d+)\s*$', request.form.get('character_search') or '')
+        raw_id = m.group(1) if m else ''
+    character = Character.query.get(int(raw_id)) if raw_id.isdigit() else None
+    if character is None or character.is_deleted:
+        flash("Couldn't resolve that character — pick one from the list.")
+        return redirect(url_for('main.edit_faction', id=faction.id))
+
+    if character in faction.leaders:
+        flash(f"{character.name} is already a leader of {faction.name}.")
+    else:
+        faction.leaders.append(character)
+        db.session.commit()
+        flash(f"Added {character.name} as a leader of {faction.name}.")
+    return redirect(url_for('main.edit_faction', id=faction.id))
+
+
+@main.route('/factions/<int:id>/leaders/remove/<int:character_id>', methods=['POST'])
+@login_required
+@admin_required
+def remove_faction_leader(id, character_id):
+    from flask_wtf import FlaskForm
+    if not FlaskForm().validate_on_submit():
+        abort(400)
+    faction = Faction.query.get_or_404(id)
+    character = Character.query.get_or_404(character_id)
+    if character in faction.leaders:
+        faction.leaders.remove(character)
+        db.session.commit()
+        flash(f"Removed {character.name} from {faction.name}'s leaders.")
+    else:
+        flash(f"{character.name} isn't a leader of {faction.name}.")
+    return redirect(url_for('main.edit_faction', id=faction.id))
 
 
 @main.route('/factions/<int:id>/merge', methods=['POST'])

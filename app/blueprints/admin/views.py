@@ -2697,11 +2697,28 @@ def yearly_maps():
     """Grid of every year in the covered era (184–280) with its uploaded
     map image, if any. One image per year — `year` is unique on YearMap,
     so uploading again replaces the previous image."""
-    maps_by_year = {m.year: m for m in YearMap.query.all()}
+    maps_by_year = {
+        m.year: m
+        for m in YearMap.query.options(selectinload(YearMap.factions)).all()
+    }
+    picker_factions = (
+        Faction.query
+        .filter(Faction.is_hidden.is_(False))
+        .order_by(Faction.name)
+        .all()
+    )
+    # Modal prefill: the Edit button carries the year's current faction
+    # set as JSON (Jinja can't build dict lists inline).
+    modal_factions_by_year = {
+        year: [{'id': f.id, 'name': f.name} for f in m.factions]
+        for year, m in maps_by_year.items()
+    }
     return render_template(
         'admin/yearly_maps.html',
         years=range(YEARMAP_FIRST_YEAR, YEARMAP_LAST_YEAR + 1),
         maps_by_year=maps_by_year,
+        picker_factions=picker_factions,
+        modal_factions_by_year=modal_factions_by_year,
         csrf_form=_CsrfOnlyForm(),
     )
 
@@ -2734,6 +2751,26 @@ def yearly_maps_upload(year):
     if len(source_site) > 255 or len(source_url) > 2048:
         flash("Attribution too long (site max 255, URL max 2048 characters).")
         return redirect(url_for('admin.yearly_maps'))
+
+    # Factions present on this year's map. The modal's chip list ships
+    # the FULL set as a CSV of ids in `faction_ids`, so the M2M is
+    # replaced wholesale — removals are just absent ids.
+    raw_faction_ids = (request.form.get('faction_ids') or '').strip()
+    faction_ids = []
+    for part in raw_faction_ids.split(','):
+        part = part.strip()
+        if not part:
+            continue
+        if not part.isdigit():
+            flash(f"Bad faction id {part!r} in the factions list.")
+            return redirect(url_for('admin.yearly_maps'))
+        faction_ids.append(int(part))
+    factions = []
+    if faction_ids:
+        factions = Faction.query.filter(Faction.id.in_(faction_ids)).all()
+        if len(factions) != len(set(faction_ids)):
+            flash("One or more factions in the list no longer exist.")
+            return redirect(url_for('admin.yearly_maps'))
 
     file = request.files.get('image_file')
     has_file = file is not None and bool(file.filename)
@@ -2807,6 +2844,7 @@ def yearly_maps_upload(year):
 
     row.source_site = source_site
     row.source_url = source_url
+    row.factions = factions
     db.session.commit()
 
     flash(f"Map for {year} AD {verb}.")

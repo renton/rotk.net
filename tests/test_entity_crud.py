@@ -310,3 +310,96 @@ class TestTagShapedTypesCrud:
         et = EventType.query.filter_by(name='Skirmish').first()
         assert et is not None
         assert et.icon == 'fa-solid fa-flag'
+
+
+class TestFactionLeaders:
+    def _add(self, client, faction, character=None, character_id='',
+             character_search=''):
+        if character is not None:
+            character_id = str(character.id)
+        return client.post(f'/factions/{faction.id}/leaders/add', data={
+            'character_id': character_id,
+            'character_search': character_search,
+        }, follow_redirects=True)
+
+    def test_add_leader_via_hidden_id(self, admin_client, db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        c = factories.make_character()
+        resp = self._add(client, f, character=c)
+        assert resp.status_code == 200
+        assert c in f.leaders
+        assert f'Added {c.name}'.encode() in resp.data
+
+    def test_add_leader_via_name_id_suffix(self, admin_client, db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        c = factories.make_character()
+        resp = self._add(client, f, character_search=f'{c.name} #{c.id}')
+        assert c in f.leaders
+
+    def test_add_duplicate_is_noop(self, admin_client, db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        c = factories.make_character()
+        self._add(client, f, character=c)
+        resp = self._add(client, f, character=c)
+        assert b'already a leader' in resp.data
+        assert len(f.leaders) == 1
+
+    def test_add_unresolvable_flashes(self, admin_client, db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        resp = self._add(client, f, character_search='No Such Person')
+        assert b'pick one from the list' in resp.data
+        assert f.leaders == []
+
+    def test_multiple_leaders_allowed(self, admin_client, db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        c1 = factories.make_character()
+        c2 = factories.make_character()
+        self._add(client, f, character=c1)
+        self._add(client, f, character=c2)
+        assert {c1, c2} <= set(f.leaders)
+
+    def test_remove_leader(self, admin_client, db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        c = factories.make_character()
+        self._add(client, f, character=c)
+        resp = client.post(f'/factions/{f.id}/leaders/remove/{c.id}',
+                           follow_redirects=True)
+        assert b'Removed' in resp.data
+        assert f.leaders == []
+
+    def test_non_admin_forbidden(self, user_client, db_session):
+        client, _ = user_client
+        f = factories.make_faction()
+        c = factories.make_character()
+        assert client.post(f'/factions/{f.id}/leaders/add', data={
+            'character_id': str(c.id), 'character_search': '',
+        }).status_code == 403
+        assert client.post(
+            f'/factions/{f.id}/leaders/remove/{c.id}').status_code == 403
+
+    def test_leaders_pills_on_faction_list(self, client, db_session):
+        f = factories.make_faction()
+        c = factories.make_character(name='Leader Pill Guy')
+        f.leaders.append(c)
+        db_session.flush()
+        resp = client.get('/factions')
+        assert b'faction-leader-pill' in resp.data
+        assert b'Leader Pill Guy' in resp.data
+
+    def test_edit_page_lists_leaders_with_remove(self, admin_client,
+                                                 db_session):
+        client, _ = admin_client
+        f = factories.make_faction()
+        c = factories.make_character(name='Listed Leader')
+        f.leaders.append(c)
+        db_session.flush()
+        resp = client.get(f'/factions/edit/{f.id}')
+        assert b'Listed Leader' in resp.data
+        assert f'/factions/{f.id}/leaders/remove/{c.id}'.encode() in resp.data
+        assert b'all-characters-datalist' in resp.data

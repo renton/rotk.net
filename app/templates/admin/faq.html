@@ -47,6 +47,7 @@
         <li class="list-group-item"><a href="#annotations">Annotations (public + private paragraph threads)</a></li>
         <li class="list-group-item"><a href="#annotation-admin">Managing annotations from the admin lists</a></li>
         <li class="list-group-item"><a href="#yearly-maps">Yearly Maps (per-year territory images)</a></li>
+        <li class="list-group-item"><a href="#faction-leaders">Faction leaders</a></li>
     </ol>
 </div>
 
@@ -771,6 +772,24 @@
             for a fresh upload.</li>
         <li>One image per year — saving a new file to an occupied year
             replaces the old one.</li>
+        <li><strong>Factions</strong> — the modal has a "Factions on this
+            map" picker: search a faction, hit <em>Add</em>, repeat; each
+            appears as a chip with an × to remove. The whole set saves
+            with the modal's <em>Save</em> button (the list column shows
+            "x factions" per year).</li>
     </ul>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="faction-leaders" class="mb-5">
+    <h2>Faction leaders</h2>
+    <p>
+        Each faction can have one or more leader characters (co-founders,
+        succession over time). Set them in the <em>Leaders</em> fieldset
+        on the faction edit page: search a character, <em>Add leader</em>,
+        and remove from the list as needed. Leaders show on the public
+        factions list as a vertical stack of character pills (coloured by
+        each character's primary faction, like their chapter pills).
+    </p>
 </section>
 {% endblock %}

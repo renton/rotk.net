@@ -173,6 +173,21 @@ class Role(AbstractTag):
 
 class Faction(AbstractTag):
     characters = db.relationship('Character', secondary=Character.faction_table, back_populates='factions')
+
+    # The character(s) leading this faction — admin-curated on the
+    # faction edit page (multiple allowed: co-founders, succession).
+    leader_table = db.Table(
+        'faction_leader',
+        db.Column('faction_id', db.ForeignKey('faction.id', ondelete='CASCADE'), primary_key=True),
+        db.Column('character_id', db.ForeignKey('character.id', ondelete='CASCADE'), primary_key=True),
+    )
+
+    leaders = db.relationship(
+        'Character',
+        secondary=leader_table,
+        order_by='Character.name',
+    )
+
     urls = db.relationship(
         'Url',
         primaryjoin=(
