@@ -36,7 +36,6 @@ body.is-admin span.location-ref {
    -blue modifier changes the paint. */
 .annotation-icon {
     text-decoration: none;
-    margin-right: 0.25rem;
     display: inline-flex;
     align-items: center;
     line-height: 1;
@@ -50,17 +49,33 @@ body.is-admin span.location-ref {
 .annotation-icon-red   i.fa-note-sticky { color: #c00; }
 .annotation-icon-blue  i.fa-note-sticky { color: #0d6efd; }
 
+/* Icons injected as the first child of each <p> in the chapter prose
+   float to the LEFT of the paragraph, OUTSIDE its text-flow box —
+   otherwise the paragraph gained an icon-width indent. Using
+   position:absolute on a position:relative parent takes the icon
+   fully out of flow (subsequent text starts flush at char 0). CSS
+   :hover still resolves through the DOM tree, so hovering the icon
+   keeps <p>:hover active — the blue "add" variant stays visible
+   while the cursor traverses from paragraph → icon. */
+.page-copy p {
+    position: relative;
+}
+.page-copy p > .annotation-icon {
+    position: absolute;
+    left: -1.75em;
+    top: 0.15em;
+}
+
 /* Blue "add" icon lives inside every <p> for admins on paragraphs
-   that don't yet have annotations. Hidden by default; the parent
-   <p>:hover reveals it. Descendant :hover keeps <p>:hover true, so
-   the mouse can traverse from paragraph to icon without the icon
-   disappearing mid-motion. */
-.page-copy p .annotation-icon-add {
+   that don't yet have annotations. Hidden by default; <p>:hover
+   reveals it. Descendant :hover keeps parent :hover true, so
+   moving the cursor onto the icon doesn't dismiss it. */
+.page-copy p > .annotation-icon-add {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.1s ease;
 }
-.page-copy p:hover .annotation-icon-add {
+.page-copy p:hover > .annotation-icon-add {
     visibility: visible;
     opacity: 1;
 }

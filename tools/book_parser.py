@@ -235,8 +235,11 @@ def inject_annotation_icons(html, annotations_by_section, is_admin):
             f'<a href="#" class="{icon_class}" '
             f'data-section-key="{section_hash}" '
             f'aria-label="Annotations">'
-            f'<i class="fa-solid fa-note-sticky" aria-hidden="true"></i>{extra}</a> '
+            f'<i class="fa-solid fa-note-sticky" aria-hidden="true"></i>{extra}</a>'
         )
+        # No trailing space after the </a> — icon is absolutely-
+        # positioned outside the paragraph, so a trailing space would
+        # push the first real word right by one char.
         return f'{open_tag}{icon}{inner}{close_tag}'
 
     return _P_RE.sub(process, html)
