@@ -547,3 +547,18 @@ class TestChapterPageYearMapFactions:
         ch, m = self._seed_map(db_session, [f])
         resp = client.get(f'/chapter/{ch.chapter_num}')
         assert b'No leaders recorded for this faction.' in resp.data
+
+    def test_first_faction_active_by_default(self, client, db_session):
+        fa = factories.make_faction(name='AAA First Banner')
+        fb = factories.make_faction(name='ZZZ Last Banner')
+        ch, m = self._seed_map(db_session, [fa, fb])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+
+        def pane_classes(fid):
+            idx = resp.data.find(f'id="ymf-pane-208-{fid}"'.encode())
+            assert idx != -1
+            return resp.data[max(0, idx - 120):idx]
+
+        # factions relationship orders by name → AAA first, active.
+        assert b'show active' in pane_classes(fa.id)
+        assert b'show active' not in pane_classes(fb.id)
