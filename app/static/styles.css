@@ -258,12 +258,18 @@ p.quote {
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
 }
 
-/* Two-column grid for the yearly-map faction list — the single column
-   got too tall once maps started carrying 15+ factions. minmax(0,1fr)
-   lets long faction names truncate instead of blowing out the column. */
+/* Two-column layout for the yearly-map faction list — the single
+   column got too tall once maps started carrying 15+ factions.
+   CSS multi-columns (not grid) so the alphabetical order reads DOWN
+   the first column, then continues in the second. */
 .yearmap-faction-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.25rem;
-    align-items: start;
+    display: block;
+    column-count: 2;
+    column-gap: 0.5rem;
+}
+.yearmap-faction-list .yearmap-faction-toggle {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.25rem;
+    break-inside: avoid;
 }
