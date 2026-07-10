@@ -127,7 +127,9 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `scrape-characters` | Fetch character index pages from Wikipedia and populate `character`, `faction`, `role` |
 | `build-chapter-character-association` | Regex-scan each chapter and populate the `chapter_character` join table; chapter view uses this cache when present |
 | `build-location-chapter-association` | Same idea for the `chapter_location` M2M — populates `Chapter.locations` from each location's name + aliases. Idempotent. Skips soft-deleted Locations. |
-| `recount-book-mentions` | Recompute `Character.book_mention_count` (total mentions across all chapters). Run after scraping new chapters or editing aliases. |
+| `recount-book-mentions` | Recompute `Character.book_mention_count` (association-aware — only counts mentions in chapters the character is linked to via `chapter_character`, using per-chapter keywords with fallback to global aliases). Fires automatically on association add/remove/switch, edit-character label change, and rescrape; this CLI is the bulk one-shot for cases where the auto-triggers weren't in place (e.g. pre-`cdb3180` prod data). |
+| `backfill-association-keywords [--dry-run]` | One-shot seed of `chapter_character.keywords` / `event_chapter.keywords` / `chapter_location.keywords` from each entity's `name + aliases` (whitespace-stripped, deduped). Run after applying migration 0012 to move existing associations into the per-chapter keyword model. Idempotent — only touches rows still on the empty default. |
+| `clean-empty-location-geojson [--dry-run]` | Scrub `Location.geojson` rows that hold non-object JSON (usually the JSON string `""` from a pre-`11f25f9` `new_location` bug). Real Polygon/MultiPolygon objects are left alone; anything else is reset to NULL. |
 | `assign-default-portraits [--preferred-tag 1MROTK] [--seed N] [--dry-run]` | For each character that has portraits but none visible, promote one to default (which also makes it visible). Prefers portraits tagged with `--preferred-tag`; falls back to a random pick. |
 | `scrape-koei-images [--character-id N] [--skip-existing/--refresh] [--limit N] [--max-per-character 200] [--delay 0.5]` | Scrape **all** Koei portraits per character (filename starting with the character's name). Downloads to `app/static/portraits/`, creates a `Portrait` row per image, auto-creates a `Tag` from each filename's variant code (e.g. `DW9` from `Cao Cao (DW9).png`) and attaches it. De-duplicates by `image_url` across runs. |
 | `randomize-faction-colours [--faction-id N] [--seed N] [--dry-run]` | Assign each faction a new random `bg_colour` / `font_colour` / `border_colour`. Font colour is chosen for WCAG-readable contrast against the background. |
@@ -339,6 +341,58 @@ examples/
 - `/admin/edits` — full edit history (filterable by model + row)
 - `/admin/image-manager`, `/admin/tags`, `/admin/url-types`, `/admin/event-types` — CRUD for each tag-shaped type, with usage counts and reassign-before-delete guards
 - `/admin/users` — promote / demote (you can't demote yourself or the last remaining admin)
+
+## Ops runbook
+
+Common developer flows on the deployed instance (ambrose). All commands assume `cd ~/projects/rotk.net`.
+
+### After a scraper fix — refresh chapter prose without losing admin work
+
+`rescrape-chapter` and `rescrape-all-chapters` update `chapter.name` + `chapter.content` in place. The chapter row's `id` stays the same, so **every FK-referencing row survives**: `chapter_character` (and its per-chapter `keywords`), `event_chapter`, `chapter_location`, `match_exclusion`, `Edit` log entries. Book-mention counts are auto-recounted for affected characters.
+
+```bash
+git pull
+docker compose exec app flask apply-migrations       # if new SQL files landed
+docker compose restart app                           # if Python changed
+docker compose exec app flask rescrape-chapter 29    # single chapter
+# or:
+docker compose exec app flask rescrape-all-chapters  # every chapter (skips unchanged)
+```
+
+**Never `DELETE FROM chapter WHERE ...` then re-scrape.** The FKs above all `ON DELETE CASCADE`, so a chapter delete wipes every association, keyword, and exclusion for that chapter.
+
+**Caveat — MatchExclusion context shift.** Per-snippet exclusion rows are keyed by a fingerprint of the ~60 chars around each excluded match. When a rescrape inserts new prose inside that 60-char window, the stored fingerprint stops matching the regenerated one and the exclusion silently doesn't apply (the row is still there; it's just orphaned). Chapters recovered by the `class="2"` scraper fix in `f7a1ab5` are the ones most likely affected — spot-check chapters where you'd done a lot of × exclusions and re-flag any snippets that reappeared.
+
+### After migration 0012 — seed per-association keywords
+
+Migration 0012 added `keywords` columns to `chapter_character` / `event_chapter` / `chapter_location`. They start empty; the chapter renderer falls back to the entity's global aliases in that case, so nothing visibly breaks, but the per-chapter keyword model isn't in effect until seeded.
+
+```bash
+docker compose exec app flask apply-migrations
+docker compose exec app flask backfill-association-keywords --dry-run   # preview
+docker compose exec app flask backfill-association-keywords             # apply
+```
+
+Idempotent. Rows already populated (by admin edits on the association pages) are left alone.
+
+### After the `Location.geojson = ""` bug fix — scrub legacy dirty rows
+
+Pre-`11f25f9`, `new_location` wrote the raw form string into the JSONB column, so blank inputs stored the JSON scalar `""`. Downstream `has_geo` checks were fooled and the map blob got garbage. New-location and edit-location now write the validator's parsed value (dict or NULL), and `has_geo` checks are truthy (not `is not None`). Existing dirty rows need one scrub pass:
+
+```bash
+docker compose exec app flask clean-empty-location-geojson --dry-run
+docker compose exec app flask clean-empty-location-geojson
+```
+
+Real Polygon/MultiPolygon rows are untouched.
+
+### After editing many aliases or association keywords — force a full recount
+
+Recount fanout is automatic on the trigger points listed under `recount-book-mentions` in the CLI table. Manual bulk recount is only needed for one-off catch-up (e.g. import from CSV, or the first apply of the association-aware formula on old data):
+
+```bash
+docker compose exec app flask recount-book-mentions
+```
 
 ## Limitations and known issues
 

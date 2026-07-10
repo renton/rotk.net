@@ -43,8 +43,6 @@
         <li class="list-group-item"><a href="#event-types">Event Types (creating + assigning)</a></li>
         <li class="list-group-item"><a href="#chapter-view-tweaks">Chapter page reader controls (Tag style + Link style)</a></li>
         <li class="list-group-item"><a href="#chapter-date">Chapter dates in the header</a></li>
-        <li class="list-group-item"><a href="#rescrape">Re-scraping chapters after a source fix</a></li>
-        <li class="list-group-item"><a href="#backfill-keywords">Backfilling per-association keywords (one-shot after migration 0012)</a></li>
     </ol>
 </div>
 
@@ -364,18 +362,11 @@
     <h5>To permanently remove</h5>
     <p>
         There's no <strong>Delete</strong> button in the UI right now —
-        we intentionally took it out to prevent accidental clicks. If you
-        really need to delete an image:
-    </p>
-    <pre class="small bg-light p-2">-- as the postgres superuser, from stateful_boilerplate:
-docker compose exec -T postgres psql -U rotk_app -d rotk_net \
-  -c "DELETE FROM portrait WHERE id = 123;"
-
--- and (optionally) remove the file from disk:
-docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
-    <p class="text-muted small">
-        If you find yourself doing this often, the delete button could
-        come back behind a confirmation dialog — ask.
+        we intentionally took it out to prevent accidental clicks. If
+        you truly need an image removed from disk + DB, ask a developer
+        to remove it (or reintroduce the delete button behind a confirm).
+        In the meantime <strong>Hide</strong> is functionally equivalent
+        for reader-facing pages.
     </p>
 </section>
 
@@ -646,89 +637,17 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
 <section id="chapter-date" class="mb-5">
     <h2>Chapter dates in the header</h2>
     <p>
-        Every chapter row has a free-form <code>date</code> column
-        (VARCHAR(64), same shape as character birth/death dates).
+        Every chapter row has a free-form <code>date</code> field.
         When set, the chapter view renders it as a small muted line
         directly under the chapter title — e.g. <em>192-200 AD</em>.
-        When empty, no line is shown.
-    </p>
-    <h3 class="h6 mt-3">Setting the date</h3>
-    <p>
-        There's no admin form for individual chapters — dates are
-        managed in bulk via CLI so an LLM-assisted dating pass can
-        write them out and apply them together:
-    </p>
-    <ul>
-        <li><code>flask dump-chapters-for-dating &lt;start&gt; [end]</code> — dump prose + neighbouring context as JSON, pipe into your dating tool.</li>
-        <li><code>flask apply-chapter-dates FILE [--apply]</code> — apply <code>[{chapter_num, date}]</code> JSON to <code>chapter.date</code>. Dry-run by default; pass <code>--apply</code> to write.</li>
-    </ul>
-    <p class="text-muted small">
-        The column is a display string, not a parsed range — arbitrary
-        formats work (<code>"208 AD"</code>, <code>"Winter 208–Spring 209"</code>,
-        <code>"BC 195-190"</code>). Timeline / sortability work uses
-        <code>tools.date_parser</code> on top of this string; run
-        <code>flask check-date-parsing</code> to see which strings the
-        parser currently can't handle.
-    </p>
-</section>
-
-{# ------------------------------------------------------------------- #}
-<section id="rescrape" class="mb-5">
-    <h2>Re-scraping chapters after a source fix</h2>
-    <p>
-        Use this when the scraper's been updated and you need to
-        refresh chapter prose without disturbing any admin work.
-        <strong>Never</strong> do a delete-and-rescrape — the FKs from
-        <code>chapter_character</code>, <code>event_chapter</code>,
-        <code>chapter_location</code>, and <code>match_exclusion</code>
-        all cascade on <code>chapter</code> deletes and you'd lose
-        every association + per-chapter keyword + excluded snippet
-        for those chapters.
-    </p>
-    <ul>
-        <li><code>flask rescrape-chapter &lt;n&gt;</code> — re-fetch one chapter and UPDATE its <code>name</code> + <code>content</code> in place. Associations, keywords, and MatchExclusion rows are untouched (chapter row keeps the same <code>id</code>). Every character associated with the chapter gets a <code>book_mention_count</code> recount at the end.</li>
-        <li><code>flask rescrape-all-chapters</code> — loops the same over every chapter. Skips unchanged chapters (prints <em>unchanged</em>). Recounts affected characters once at the end, deduped.</li>
-    </ul>
-    <p class="text-muted small">
-        <strong>Caveat:</strong> per-snippet MatchExclusion rows are
-        fingerprinted by the ~60 chars of text around the match. If a
-        rescrape recovers a paragraph whose text lands within that
-        window, the stored fingerprint won't match the regenerated
-        one, and the exclusion silently stops applying (the row stays
-        in the DB — it's just orphaned). Re-× the affected snippets in
-        the admin UI to re-fingerprint against the new content. Only
-        exclusions whose <em>before</em> or <em>after</em> window
-        actually crosses the insertion are at risk; most survive.
-    </p>
-</section>
-
-{# ------------------------------------------------------------------- #}
-<section id="backfill-keywords" class="mb-5">
-    <h2>Backfilling per-association keywords (one-shot after migration 0012)</h2>
-    <p>
-        Migration <code>0012_per_association_keywords.sql</code> added a
-        <code>keywords</code> column to <code>chapter_character</code>,
-        <code>event_chapter</code>, and <code>chapter_location</code>.
-        The column starts empty on every existing row — the chapter
-        renderer falls back to the entity's global aliases in that
-        case, so nothing visibly breaks, but the per-chapter keyword
-        model isn't in effect until the column is seeded.
-    </p>
-    <ol>
-        <li><code>flask apply-migrations</code> — applies 0012 (adds the empty column).</li>
-        <li><code>flask backfill-association-keywords --dry-run</code> — preview: shows how many rows would be seeded and a sample of the generated keyword strings.</li>
-        <li><code>flask backfill-association-keywords</code> — seeds every association row whose <code>keywords</code> is still empty. Each character row gets <code>"name,courtesy_name,alias1,alias2,…"</code> (whitespace-stripped, deduped, no leading spaces); events and locations get <code>"name,alias1,alias2,…"</code>. Rows already populated via the admin UI are left alone.</li>
-    </ol>
-    <p>
-        After that, every admin submission on the Character/Event/Location
-        Association page writes to the association row's
-        <code>keywords</code> column, not the global aliases. Resync
-        semantics are per-chapter: editing keywords for chapter 5
-        doesn't affect chapters 1-4 or 6+.
+        When empty, no line is shown. Any format works
+        (<code>"208 AD"</code>, <code>"Winter 208–Spring 209"</code>,
+        <code>"BC 195-190"</code>).
     </p>
     <p class="text-muted small">
-        Idempotent — safe to re-run. Only touches rows with an empty
-        <code>keywords</code> column.
+        Chapter dates are managed in bulk by the dev team via CLI —
+        there's no per-chapter admin form. Ask a developer if a
+        specific chapter's date needs updating.
     </p>
 </section>
 {% endblock %}

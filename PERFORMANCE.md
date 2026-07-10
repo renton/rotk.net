@@ -85,6 +85,28 @@ Character insert / update / delete. Not worth doing now.
 
 ---
 
+## 🟡 Chapter render — skip-index + duplicate-name resolution fanout
+
+**Where:** `app/blueprints/main/views.py:chapter()` — the `_skip_indices_for` pre-scan, the `character_html`-per-`(char_id, needle)` build, and the candidate walk in `replace_match`.
+
+**Cost:** For each character or location with MatchExclusion rows, one full pass over the stripped chapter content with the combined pattern (filtered to matches of that specific needle) to build the skip-index set. Typical chapter with ~5 characters carrying exclusions × one scan each ≈ 5–10 ms extra beyond the base regex sweep. The duplicate-name resolution loop in `replace_match` is O(candidates-per-needle) per match; with the usual single-candidate case, it's negligible.
+
+**Status:** intentionally not cached. Compared to the portrait/tag N+1 above, this is comfortably in the "acceptable per-render cost" bucket. Only becomes interesting if a chapter starts carrying many-dozens of characters with exclusions; the same `Chapter.rendered_content` cache proposal below would neutralise it.
+
+---
+
+## 🟡 `book_mention_count` recount fanout on `rescrape-all-chapters`
+
+**Where:** `rotk.py:rescrape_all_chapters()` — after all chapter content updates, the union of characters whose chapters changed is recounted once.
+
+**Cost:** Bounded but real. Each character's recount walks their full `chapter_character` set (typically ~30 chapters) and does one regex scan per chapter. Union'd across a book-wide rescrape, that's ~1000 characters × ~30 chapters × ~1 ms ≈ **~30 seconds** at the end of a full rescrape. Individual `rescrape-chapter <n>` runs only recount the chapter's associated characters (~50-100 characters, sub-second).
+
+**Status:** OK for a CLI job. Not run on a request path.
+
+**Fix shape if it ever matters:** batch the regex work by chapter instead of by character (pre-strip each chapter's content once across the recount pass), or move to per-`chapter_character` cached counts + `SUM(mention_count) GROUP BY character_id` for the derived scalar.
+
+---
+
 ## ✅ Pages already in a good state
 
 - `/` (table of contents) — one query for 120 chapters; templated.
