@@ -37,6 +37,13 @@
 </form>
 
 {% if selected %}
+{# Hidden form purely to expose the CSRF token to the AJAX JS — same
+   pattern as admin_location_snippets.js (query the DOM for the token
+   input value). #}
+<form id="chapter-edit-csrf-form" style="display:none;">
+    {{ csrf_form.hidden_tag() }}
+</form>
+
 <div class="d-flex align-items-center gap-2 mb-3">
     <button type="button" id="hide-selected-btn" class="btn btn-warning">
         <i class="fa-solid fa-eye-slash me-1" aria-hidden="true"></i>
@@ -52,7 +59,6 @@
      data-chapter-num="{{ selected.chapter_num }}"
      data-hide-url="{{ url_for('admin.chapter_edit_hide', chapter_num=selected.chapter_num) }}"
      data-restore-url-prefix="{{ url_for('admin.chapter_edit_restore', chapter_num=selected.chapter_num, snippet_id=0)[:-1] }}"
-     data-csrf-token="{{ csrf_token() }}"
      class="border rounded p-3 bg-white">
     <h2>{{ selected.name | safe }}</h2>
     {% if selected.date %}

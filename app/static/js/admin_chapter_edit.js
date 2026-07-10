@@ -17,7 +17,10 @@
 
   var hideUrl = content.getAttribute('data-hide-url');
   var restorePrefix = content.getAttribute('data-restore-url-prefix');
-  var csrfToken = content.getAttribute('data-csrf-token') || '';
+  // CSRF lives on a hidden form in the page; read the input value.
+  // Matches how admin_location_snippets.js finds its token.
+  var csrfInput = document.querySelector('#chapter-edit-csrf-form input[name="csrf_token"]');
+  var csrfToken = csrfInput ? csrfInput.value : '';
   var statusEl = document.getElementById('chapter-edit-status');
 
   // Grab the prose scroll container — we scope selection queries to
