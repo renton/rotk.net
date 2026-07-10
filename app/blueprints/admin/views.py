@@ -2632,6 +2632,36 @@ def annotation_delete(annotation_id):
     return redirect(url_for(dest))
 
 
+@admin.route('/annotations/close-thread', methods=['POST'])
+@login_required
+@admin_required
+def annotation_close_thread():
+    """Soft-delete EVERY private annotation on one (chapter, section)
+    thread — the "Close" button on the private annotations list.
+    Public annotations on the same section are untouched."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter_id = request.form.get('chapter_id', type=int)
+    section_text = request.form.get('section_text') or ''
+    if not chapter_id or not section_text:
+        abort(400)
+
+    rows = (
+        Annotation.query
+        .filter_by(chapter_id=chapter_id, section_text=section_text,
+                   is_public=False, is_deleted=False)
+        .all()
+    )
+    for r in rows:
+        r.is_deleted = True
+    db.session.commit()
+
+    flash(f"Closed thread — {len(rows)} private annotation{'' if len(rows) == 1 else 's'} deleted.")
+    return redirect(url_for('admin.annotations_private'))
+
+
 @admin.route('/annotations/<int:annotation_id>/restore', methods=['POST'])
 @login_required
 @admin_required

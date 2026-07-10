@@ -148,7 +148,7 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
                 <span class="badge bg-primary rounded-pill">{{ row.count }}</span>
             </td>
             <td class="small text-muted">{{ row.latest_at.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td class="text-end">
+            <td class="text-end" style="min-width: 220px;">
                 <button type="button"
                         class="btn btn-sm btn-outline-primary open-annotation-modal-btn"
                         data-section-key="{{ row.section_key }}"
@@ -156,6 +156,22 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
                     <i class="fa-solid fa-comments" aria-hidden="true"></i>
                     View / Add
                 </button>
+                {% if not is_public and not show_deleted %}
+                {# "Close the ticket" — soft-deletes every private
+                   annotation on this thread in one go. Recoverable
+                   from the show-deleted view. #}
+                <form method="POST" action="{{ url_for('admin.annotation_close_thread') }}"
+                      class="d-inline"
+                      data-confirm="Close this thread? All {{ row.count }} private annotation{{ '' if row.count == 1 else 's' }} on this snippet will be deleted.">
+                    {{ csrf_form.hidden_tag() }}
+                    <input type="hidden" name="chapter_id" value="{{ row.chapter_id }}">
+                    <input type="hidden" name="section_text" value="{{ row.section_text|e }}">
+                    <button type="submit" class="btn btn-sm btn-outline-success">
+                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                        Close
+                    </button>
+                </form>
+                {% endif %}
             </td>
         </tr>
         {% else %}
