@@ -84,8 +84,12 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
         {% for row in stacked_rows %}
         <tr>
             <td>
-                <a href="{{ url_for('main.chapter', chapter_num=row.chapter_num) }}">
+                {# Deep-link to the annotated paragraph's icon anchor,
+                   in a new tab so the admin keeps their list view. #}
+                <a href="{{ url_for('main.chapter', chapter_num=row.chapter_num) }}#annotation-{{ row.section_key }}"
+                   target="_blank" rel="noopener">
                     {{ row.chapter_num }}
+                    <i class="fa-solid fa-up-right-from-square small text-muted" aria-hidden="true"></i>
                 </a>
             </td>
             <td class="small text-muted" style="max-width: 480px;">

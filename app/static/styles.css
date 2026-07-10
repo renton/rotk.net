@@ -73,6 +73,10 @@ body.is-admin span.location-ref {
        enough to cover the two-icon red variant too. */
 }
 .page-copy p > .annotation-icon {
+    /* Deep-links from the admin annotation lists land on this anchor;
+       leave breathing room above so the target paragraph isn't flush
+       against the viewport top. */
+    scroll-margin-top: 2rem;
     position: absolute;
     /* Anchor the icon's RIGHT edge just left of the paragraph box —
        a wider icon (red variant carries an extra exclamation mark)

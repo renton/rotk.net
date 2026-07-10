@@ -703,26 +703,33 @@ def chapter(chapter_num):
     from tools.book_parser import (
         inject_annotation_icons,
         annotation_section_hash,
-        normalize_paragraph_text,
+        annotation_section_canonical,
     )
     ann_query = Annotation.query.filter_by(chapter_id=chapter.id, is_deleted=False)
     if not is_admin:
         ann_query = ann_query.filter_by(is_public=True)
     annotations_all = ann_query.order_by(Annotation.created_at).all()
+    # Keyed by the CANONICAL form (whitespace-free) so save-time
+    # textContent and render-time tag-strip land on the same key.
     annotations_by_section = {}
     for a in annotations_all:
-        annotations_by_section.setdefault(a.section_text, []).append(a)
+        annotations_by_section.setdefault(
+            annotation_section_canonical(a.section_text), []
+        ).append(a)
 
     rendered_content = inject_annotation_icons(
         rendered_content, annotations_by_section, is_admin=is_admin,
     )
 
     # Client payload — hash keys so the DOM data-attribute is short.
+    # section_text in the payload is the READABLE form (first stored
+    # row's text, spaces intact) — the dict key is canonical/whitespace-
+    # free which would be unreadable in the modal preview.
     annotations_payload = {}
-    for section_text, ann_list in annotations_by_section.items():
-        key = annotation_section_hash(section_text)
+    for canonical_key, ann_list in annotations_by_section.items():
+        key = annotation_section_hash(canonical_key)
         annotations_payload[key] = {
-            'section_text': section_text,
+            'section_text': ann_list[0].section_text,
             'thread': [
                 {
                     'id': a.id,

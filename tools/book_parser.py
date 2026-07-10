@@ -193,17 +193,35 @@ def normalize_paragraph_text(text):
     return _WS_RE.sub(' ', text).strip()
 
 
-def annotation_section_hash(text):
-    """Short SHA-256 hash of the normalised, HTML-stripped text —
-    used as a DOM-safe key on annotation icons and in the client-side
-    lookup dict.
+def annotation_section_canonical(text):
+    """Canonical comparison form for a paragraph's identity: HTML
+    stripped, entities decoded, and ALL whitespace REMOVED (not just
+    collapsed).
 
-    Callers pass in either raw paragraph HTML (with pill/span tags)
-    or the pre-stripped normalized text; both produce the same hash
-    because we always run through strip_html_tags + normalize here."""
+    Why remove instead of collapse: the section_text stored at save
+    time comes from the browser's `textContent`, which inserts NOTHING
+    at tag boundaries ("Wang<br>Yun" → "WangYun"), while the server's
+    strip_html_tags inserts a space per tag ("Wang Yun"). Collapsing
+    whitespace can't reconcile those two — deleting all whitespace
+    can. Keys and hashes derive from this form; the human-readable
+    section_text keeps its spaces."""
+    import html as html_mod
+    if not text:
+        return ''
+    text = strip_html_tags(text)
+    text = html_mod.unescape(text)
+    return _WS_RE.sub('', text)
+
+
+def annotation_section_hash(text):
+    """Short SHA-256 hash of the canonical form — used as a DOM-safe
+    key on annotation icons, anchors, and the client-side lookup dict.
+    Accepts raw paragraph HTML or already-stripped text; both converge
+    via annotation_section_canonical."""
     import hashlib
-    canonical = normalize_paragraph_text(strip_html_tags(text))
-    return hashlib.sha256(canonical.encode('utf-8')).hexdigest()[:16]
+    return hashlib.sha256(
+        annotation_section_canonical(text).encode('utf-8')
+    ).hexdigest()[:16]
 
 
 def inject_annotation_icons(html, annotations_by_section, is_admin):
@@ -223,8 +241,11 @@ def inject_annotation_icons(html, annotations_by_section, is_admin):
 
     def process(match):
         open_tag, inner, close_tag = match.group(1), match.group(2), match.group(3)
-        section = normalize_paragraph_text(strip_html_tags(inner))
-        anns = annotations_by_section.get(section) if annotations_by_section else None
+        # Canonical (all-whitespace-removed) lookup so save-time
+        # textContent and render-time tag-strip agree — see
+        # annotation_section_canonical docstring.
+        canonical = annotation_section_canonical(inner)
+        anns = annotations_by_section.get(canonical) if annotations_by_section else None
         has_public = any(a.is_public for a in anns) if anns else False
         has_private = any(not a.is_public for a in anns) if anns else False
 
@@ -247,10 +268,13 @@ def inject_annotation_icons(html, annotations_by_section, is_admin):
             icon_class = 'annotation-icon annotation-icon-blue annotation-icon-add'
             prefix = ''
 
-        section_hash = annotation_section_hash(inner) if anns else ''
+        section_hash = annotation_section_hash(inner)
+        # id anchor lets the admin-list pages deep-link to the exact
+        # annotated paragraph: /chapter/N#annotation-<hash>.
         icon = (
-            f'<a href="#" class="{icon_class}" '
-            f'data-section-key="{section_hash}" '
+            f'<a href="#" id="annotation-{section_hash}" '
+            f'class="{icon_class}" '
+            f'data-section-key="{section_hash if anns else ""}" '
             f'aria-label="Annotations">'
             f'{prefix}<i class="fa-solid fa-note-sticky" aria-hidden="true"></i></a>'
         )
