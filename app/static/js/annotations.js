@@ -31,7 +31,6 @@
   var threadEl = document.getElementById('annotation-thread');
   var ctxEl = document.getElementById('annotation-section-context');
   var addForm = document.getElementById('annotation-add-form');
-  var addFloater = document.getElementById('annotation-add-floater');
 
   // CSRF token grabbed from the hidden form (admin only — renders if
   // meta.is_admin, but we guard anyway).
@@ -106,80 +105,18 @@
     event.preventDefault();
     currentIcon = icon;
     var key = icon.getAttribute('data-section-key') || '';
-    var entry = payload[key];
-    // If the icon has no payload entry (e.g. the floating add-icon
-    // for an empty paragraph), pull section text off the icon's
-    // ephemeral state.
-    var sectionText = (entry && entry.section_text) || icon.getAttribute('data-section-text') || '';
+    var entry = key ? payload[key] : null;
+    // For an "add" icon on a paragraph with no annotations yet, the
+    // section_text comes from the <p> the icon lives inside.
+    var sectionText = (entry && entry.section_text) || '';
+    if (!sectionText) {
+      var p = icon.closest('p');
+      if (p) {
+        sectionText = (p.textContent || '').replace(/\s+/g, ' ').trim();
+      }
+    }
     openModal(key, sectionText);
   });
-
-  // ---- Selection-triggered add-floater (admin only) -----------------
-
-  function findAncestorP(node) {
-    while (node && node.nodeType !== 1) node = node.parentNode;
-    while (node) {
-      if (node.tagName === 'P') return node;
-      node = node.parentNode;
-    }
-    return null;
-  }
-
-  function isInsideProse(node) {
-    var page = document.querySelector('.page-copy');
-    return page ? page.contains(node) : false;
-  }
-
-  function positionFloater(p) {
-    if (!addFloater) return;
-    var rect = p.getBoundingClientRect();
-    var docTop = window.pageYOffset + rect.top;
-    var docLeft = window.pageXOffset + rect.left - 26;   // ~24px to left
-    addFloater.style.top = docTop + 'px';
-    addFloater.style.left = Math.max(4, docLeft) + 'px';
-    addFloater.style.display = '';
-    var text = (p.textContent || '').replace(/\s+/g, ' ').trim();
-    addFloater.setAttribute('data-section-text', text);
-    // section_key = sha of section_text; simpler to just use empty
-    // string and let openModal fall back to data-section-text.
-    addFloater.setAttribute('data-section-key', '');
-  }
-
-  function hideFloater() {
-    if (addFloater) addFloater.style.display = 'none';
-  }
-
-  if (meta.is_admin && addFloater) {
-    document.addEventListener('selectionchange', function () {
-      var sel = document.getSelection();
-      if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
-        hideFloater();
-        return;
-      }
-      var range = sel.getRangeAt(0);
-      if (!isInsideProse(range.commonAncestorContainer)) {
-        hideFloater();
-        return;
-      }
-      var p = findAncestorP(range.commonAncestorContainer);
-      if (!p) {
-        hideFloater();
-        return;
-      }
-      positionFloater(p);
-    });
-    // Keep the floater in the right spot when the user scrolls.
-    window.addEventListener('scroll', function () {
-      if (addFloater.style.display !== 'none') {
-        // Re-derive from the current selection's paragraph.
-        var sel = document.getSelection();
-        if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
-          var p = findAncestorP(sel.getRangeAt(0).commonAncestorContainer);
-          if (p) positionFloater(p);
-        }
-      }
-    }, { passive: true });
-  }
 
   // ---- Add form submit ----------------------------------------------
 

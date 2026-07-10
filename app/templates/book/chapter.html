@@ -558,16 +558,10 @@
 </div>
 
 {% if current_user.is_authenticated and current_user.is_administrator %}
-{# Floating blue "add annotation" icon that follows the paragraph
-   containing the current text selection. JS positions + shows it. #}
-<a href="#" id="annotation-add-floater" class="annotation-icon annotation-icon-blue"
-   style="position:absolute; display:none; z-index:1050;"
-   aria-label="Add annotation to this paragraph">
-  <i class="fa-solid fa-note-sticky" aria-hidden="true"></i>
-</a>
-
 {# Hidden form to expose the CSRF token to annotations.js — same
-   pattern as admin_chapter_edit + admin_location_snippets. #}
+   pattern as admin_chapter_edit + admin_location_snippets. Blue
+   "add" icons live inside each <p> now (server-injected, CSS-
+   revealed on hover), so no floater DOM node needed. #}
 <form id="annotations-csrf-form" style="display:none;">
   {{ annotation_csrf_form.hidden_tag() }}
 </form>

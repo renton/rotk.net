@@ -50,6 +50,21 @@ body.is-admin span.location-ref {
 .annotation-icon-red   i.fa-note-sticky { color: #c00; }
 .annotation-icon-blue  i.fa-note-sticky { color: #0d6efd; }
 
+/* Blue "add" icon lives inside every <p> for admins on paragraphs
+   that don't yet have annotations. Hidden by default; the parent
+   <p>:hover reveals it. Descendant :hover keeps <p>:hover true, so
+   the mouse can traverse from paragraph to icon without the icon
+   disappearing mid-motion. */
+.page-copy p .annotation-icon-add {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+.page-copy p:hover .annotation-icon-add {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* Chapter Edit admin — the hide-snippet tool wraps admin-hidden prose
    in <s class="hidden-snippet">. Public chapter view removes these
    spans entirely; admin view renders them strikethrough + clickable

@@ -193,45 +193,48 @@ def annotation_section_hash(text):
 
 
 def inject_annotation_icons(html, annotations_by_section, is_admin):
-    """Walk each <p> in `html`; for any paragraph whose normalised text
-    matches a key in `annotations_by_section`, inject a notepad icon
-    at the very start of the <p> content.
+    """Walk each <p> in `html` and inject one annotation icon at the
+    very start of the paragraph.
 
-    Icon colour rules:
-      - Public reader: black icon iff the section has ≥1 public annotation.
-      - Admin: red icon (+ red exclamation) iff the section has ≥1
-        private annotation; otherwise black icon iff there are public.
-      - No icon otherwise.
-
-    `annotations_by_section` maps normalised section text → list of
-    Annotation-shaped objects (need `.is_public`).
+    Icon rules:
+      - Public reader: black icon iff the section has ≥1 public
+        annotation. Nothing otherwise.
+      - Admin: red icon (+ exclamation) iff the section has ≥1
+        private annotation; else black iff public ones exist; else
+        BLUE "add" icon (hidden by default, CSS reveals it on
+        <p>:hover so admin can start a new thread).
     """
-    if not annotations_by_section or not html:
+    if not html:
         return html
 
     def process(match):
         open_tag, inner, close_tag = match.group(1), match.group(2), match.group(3)
         section = normalize_paragraph_text(strip_html_tags(inner))
-        anns = annotations_by_section.get(section)
-        if not anns:
-            return match.group(0)
-        has_public = any(a.is_public for a in anns)
-        has_private = any(not a.is_public for a in anns)
-        # Visibility: non-admin only sees the icon if there's a public
-        # annotation. Admin sees icon whenever there's any annotation.
+        anns = annotations_by_section.get(section) if annotations_by_section else None
+        has_public = any(a.is_public for a in anns) if anns else False
+        has_private = any(not a.is_public for a in anns) if anns else False
+
+        # Public reader with no public annotations → no icon at all.
         if not is_admin and not has_public:
             return match.group(0)
+
         if is_admin and has_private:
-            icon_class = 'annotation-icon-red'
+            icon_class = 'annotation-icon annotation-icon-red'
             extra = '<i class="fa-solid fa-circle-exclamation text-danger ms-1" aria-hidden="true"></i>'
-        else:
-            icon_class = 'annotation-icon-black'
+        elif has_public:
+            icon_class = 'annotation-icon annotation-icon-black'
             extra = ''
-        section_hash = annotation_section_hash(inner)
+        else:
+            # Admin, no annotations yet → blue "add" affordance,
+            # revealed on <p>:hover by CSS.
+            icon_class = 'annotation-icon annotation-icon-blue annotation-icon-add'
+            extra = ''
+
+        section_hash = annotation_section_hash(inner) if anns else ''
         icon = (
-            f'<a href="#" class="annotation-icon {icon_class}" '
+            f'<a href="#" class="{icon_class}" '
             f'data-section-key="{section_hash}" '
-            f'aria-label="View annotations">'
+            f'aria-label="Annotations">'
             f'<i class="fa-solid fa-note-sticky" aria-hidden="true"></i>{extra}</a> '
         )
         return f'{open_tag}{icon}{inner}{close_tag}'
