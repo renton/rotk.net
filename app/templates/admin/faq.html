@@ -38,8 +38,13 @@
         <li class="list-group-item"><a href="#url-link-location">Linking URLs to a Location</a></li>
         <li class="list-group-item"><a href="#url-link-role">Linking URLs to a Role</a></li>
         <li class="list-group-item"><a href="#location-snippet-exclude">Excluding bad location snippets in a chapter</a></li>
+        <li class="list-group-item"><a href="#char-snippet-exclude">Excluding bad character snippets in a chapter</a></li>
+        <li class="list-group-item"><a href="#duplicate-names">Duplicate-name characters in a chapter (splitting matches)</a></li>
         <li class="list-group-item"><a href="#event-types">Event Types (creating + assigning)</a></li>
         <li class="list-group-item"><a href="#chapter-view-tweaks">Chapter page reader controls (Tag style + Link style)</a></li>
+        <li class="list-group-item"><a href="#chapter-date">Chapter dates in the header</a></li>
+        <li class="list-group-item"><a href="#rescrape">Re-scraping chapters after a source fix</a></li>
+        <li class="list-group-item"><a href="#backfill-keywords">Backfilling per-association keywords (one-shot after migration 0012)</a></li>
     </ol>
 </div>
 
@@ -77,9 +82,11 @@
     <h2>How to add a Character/Chapter Association</h2>
     <p>
         Use this when the chapter prose mentions a character by a name
-        we don't know about yet (e.g. a courtesy name, a nickname). The
-        flow adds the name as an alias on the canonical character AND
-        records the chapter ↔ character link.
+        we don't know about yet (e.g. a courtesy name, a nickname), or
+        when you want to change which words trigger the pill in
+        <em>this specific chapter</em>. Keywords are stored
+        <strong>per-(chapter, character)</strong> — editing them here
+        doesn't affect any other chapter.
     </p>
     <ol>
         <li>Open <a href="{{ url_for('admin.chapter_associations') }}">Admin → Character/Chapter Association</a>.</li>
@@ -95,17 +102,26 @@
     </ol>
     <p>
         For each keyword the server scans the chapter text; matching
-        keywords are appended to <code>character.aliases</code> (deduped
-        against name / courtesy name / existing aliases). Keywords that
-        don't appear are reported and skipped. The chapter ↔ character
-        link is added regardless.
+        keywords are stored on the <code>chapter_character.keywords</code>
+        row (per-(chapter, character) — see the Keywords column in the
+        table above). Keywords that don't appear are reported and
+        skipped. The chapter ↔ character link is added if it wasn't
+        already there.
+    </p>
+    <p>
+        <strong>Resync semantics.</strong> Submitting the form for a
+        character who's <em>already</em> linked to this chapter
+        <em>replaces</em> that pair's keyword list with what you typed
+        — so you can tighten (or drop) which words tag as this character
+        in this chapter without affecting other chapters. The
+        character's global <code>aliases</code> column is never touched
+        by this form. Per-snippet exclusions (× on individual matches)
+        survive resyncs.
     </p>
     <p class="text-muted small">
-        Because aliases are global, a new alias will also tag this name
-        in <em>every other</em> chapter going forward — usually what you
-        want for courtesy names. If the term is genuinely chapter-local,
-        you'd be better off editing the character to remove the alias
-        afterwards.
+        Empty submission is allowed — the character stays linked but no
+        inline pills render in the prose (they'll still appear in the
+        chapter sidebar list).
     </p>
 </section>
 
@@ -148,7 +164,9 @@
     <p class="text-muted small">
         Changing the character's <code>name</code>, <code>courtesty_name</code>, or
         <code>aliases</code> triggers an automatic recount of
-        <code>book_mention_count</code> in the same transaction — the
+        <code>book_mention_count</code> in the same transaction, and the
+        recount also fires on every add / remove / switch on the
+        Character/Chapter Association page and on any rescrape — the
         chapter sidebar's "N mentions in the book" number stays accurate
         without a manual <code>flask recount-book-mentions</code> run.
     </p>
@@ -367,7 +385,11 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
     <p>Three association editors today, all the same shape (linked from the admin dropdown):</p>
     <ul>
         <li><a href="{{ url_for('admin.chapter_associations') }}">Character/Chapter Association</a>
-            — see <a href="#char-assoc-fix">fix</a> / <a href="#char-assoc-add">add</a>.</li>
+            — see <a href="#char-assoc-fix">fix</a> / <a href="#char-assoc-add">add</a>.
+            <strong>Per-snippet exclusions</strong> also live on this page —
+            see <a href="#char-snippet-exclude">Excluding bad character snippets</a>.
+            When two characters share a name in the same chapter, see
+            <a href="#duplicate-names">Duplicate-name characters</a>.</li>
         <li><a href="{{ url_for('admin.event_associations') }}">Event/Chapter Association</a>
             — pick the event from the dropdown; the picker auto-fills
             the Keywords field with the event's name+aliases.
@@ -551,6 +573,162 @@ docker compose exec app rm app/static/portraits/&lt;filename&gt;</pre>
         associated with the chapter. Clicking opens the matching
         sidebar accordion (Events / Locations) and briefly flashes
         the specific row — no page scroll.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="char-snippet-exclude" class="mb-5">
+    <h2>Excluding bad character snippets in a chapter</h2>
+    <p>
+        Full parity with the location snippet-exclusion flow — when a
+        character's keyword accidentally matches part of another word,
+        you can suppress just that occurrence without removing the
+        keyword from the whole chapter.
+    </p>
+    <ol>
+        <li>Go to <a href="{{ url_for('admin.chapter_associations') }}">Character/Chapter Association</a> and pick the chapter.</li>
+        <li>Find the character. Click <em>show N snippets</em> to expand the live match list.</li>
+        <li>Hit the red <strong>×</strong> next to a snippet to mark it as a wrong match. A confirm dialog appears first.</li>
+        <li>The snippet moves into an <em>Excluded snippets</em> collapsible below — strikethrough, with a restore (↺) button. <strong>No page reload</strong>; both pools update live.</li>
+    </ol>
+    <p>
+        The stored exclusion is a fingerprint of the surrounding text
+        (~60 chars before + the matched needle + ~60 chars after,
+        whitespace-normalised). At render time the chapter view
+        recomputes the same fingerprint per match and skips any that
+        are in the exclusion set. So the pill stops appearing in the
+        chapter prose too.
+    </p>
+    <p>
+        <strong>Where:</strong> <a href="{{ url_for('admin.chapter_associations') }}">Admin → Character/Chapter Association</a>.
+        Pick a chapter, expand the snippet list on the character's row,
+        click the red &times; next to any bad match.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="duplicate-names" class="mb-5">
+    <h2>Duplicate-name characters in a chapter (splitting matches)</h2>
+    <p>
+        When two different characters share a name (e.g. two "Lady Cao"
+        rows both associated with chapter 16), the chapter view can't
+        tell from a needle alone which one an occurrence belongs to.
+        The renderer's default is "first-registered character wins" —
+        but you can split the occurrences deliberately by mirroring
+        exclusion sets.
+    </p>
+    <h3 class="h6 mt-3">Spotting the duplicate</h3>
+    <p>
+        Any pill in the prose whose <code>name</code> is shared by
+        another character in the same chapter gets a small red
+        <i class="fa-solid fa-circle-exclamation text-danger"></i> badge
+        next to it (admin-only). Clicking that badge jumps straight to
+        the Character/Chapter Association editor for that chapter.
+    </p>
+    <h3 class="h6 mt-3">Splitting matches</h3>
+    <p>
+        Say the chapter has 4 "Lady Cao" matches and you want A to own
+        matches 0 and 2, B to own 1 and 3:
+    </p>
+    <ol>
+        <li>On character A's row in the association editor, exclude occurrences 1 and 3 (the ones that should be B).</li>
+        <li>On character B's row, exclude occurrences 0 and 2 (the ones that should be A).</li>
+        <li>The chapter render walks candidates per occurrence: for each match, the first character who <em>hasn't</em> excluded that occurrence gets the pill. So occurrence 0 goes to A (didn't exclude), 1 to B (A excluded → walk on), 2 to A, 3 to B.</li>
+    </ol>
+    <p class="text-muted small">
+        If both characters exclude the same occurrence, the pill drops
+        — the words render as plain prose. If neither excludes, the
+        first-registered character wins by default.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="chapter-date" class="mb-5">
+    <h2>Chapter dates in the header</h2>
+    <p>
+        Every chapter row has a free-form <code>date</code> column
+        (VARCHAR(64), same shape as character birth/death dates).
+        When set, the chapter view renders it as a small muted line
+        directly under the chapter title — e.g. <em>192-200 AD</em>.
+        When empty, no line is shown.
+    </p>
+    <h3 class="h6 mt-3">Setting the date</h3>
+    <p>
+        There's no admin form for individual chapters — dates are
+        managed in bulk via CLI so an LLM-assisted dating pass can
+        write them out and apply them together:
+    </p>
+    <ul>
+        <li><code>flask dump-chapters-for-dating &lt;start&gt; [end]</code> — dump prose + neighbouring context as JSON, pipe into your dating tool.</li>
+        <li><code>flask apply-chapter-dates FILE [--apply]</code> — apply <code>[{chapter_num, date}]</code> JSON to <code>chapter.date</code>. Dry-run by default; pass <code>--apply</code> to write.</li>
+    </ul>
+    <p class="text-muted small">
+        The column is a display string, not a parsed range — arbitrary
+        formats work (<code>"208 AD"</code>, <code>"Winter 208–Spring 209"</code>,
+        <code>"BC 195-190"</code>). Timeline / sortability work uses
+        <code>tools.date_parser</code> on top of this string; run
+        <code>flask check-date-parsing</code> to see which strings the
+        parser currently can't handle.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="rescrape" class="mb-5">
+    <h2>Re-scraping chapters after a source fix</h2>
+    <p>
+        Use this when the scraper's been updated and you need to
+        refresh chapter prose without disturbing any admin work.
+        <strong>Never</strong> do a delete-and-rescrape — the FKs from
+        <code>chapter_character</code>, <code>event_chapter</code>,
+        <code>chapter_location</code>, and <code>match_exclusion</code>
+        all cascade on <code>chapter</code> deletes and you'd lose
+        every association + per-chapter keyword + excluded snippet
+        for those chapters.
+    </p>
+    <ul>
+        <li><code>flask rescrape-chapter &lt;n&gt;</code> — re-fetch one chapter and UPDATE its <code>name</code> + <code>content</code> in place. Associations, keywords, and MatchExclusion rows are untouched (chapter row keeps the same <code>id</code>). Every character associated with the chapter gets a <code>book_mention_count</code> recount at the end.</li>
+        <li><code>flask rescrape-all-chapters</code> — loops the same over every chapter. Skips unchanged chapters (prints <em>unchanged</em>). Recounts affected characters once at the end, deduped.</li>
+    </ul>
+    <p class="text-muted small">
+        <strong>Caveat:</strong> per-snippet MatchExclusion rows are
+        fingerprinted by the ~60 chars of text around the match. If a
+        rescrape recovers a paragraph whose text lands within that
+        window, the stored fingerprint won't match the regenerated
+        one, and the exclusion silently stops applying (the row stays
+        in the DB — it's just orphaned). Re-× the affected snippets in
+        the admin UI to re-fingerprint against the new content. Only
+        exclusions whose <em>before</em> or <em>after</em> window
+        actually crosses the insertion are at risk; most survive.
+    </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="backfill-keywords" class="mb-5">
+    <h2>Backfilling per-association keywords (one-shot after migration 0012)</h2>
+    <p>
+        Migration <code>0012_per_association_keywords.sql</code> added a
+        <code>keywords</code> column to <code>chapter_character</code>,
+        <code>event_chapter</code>, and <code>chapter_location</code>.
+        The column starts empty on every existing row — the chapter
+        renderer falls back to the entity's global aliases in that
+        case, so nothing visibly breaks, but the per-chapter keyword
+        model isn't in effect until the column is seeded.
+    </p>
+    <ol>
+        <li><code>flask apply-migrations</code> — applies 0012 (adds the empty column).</li>
+        <li><code>flask backfill-association-keywords --dry-run</code> — preview: shows how many rows would be seeded and a sample of the generated keyword strings.</li>
+        <li><code>flask backfill-association-keywords</code> — seeds every association row whose <code>keywords</code> is still empty. Each character row gets <code>"name,courtesy_name,alias1,alias2,…"</code> (whitespace-stripped, deduped, no leading spaces); events and locations get <code>"name,alias1,alias2,…"</code>. Rows already populated via the admin UI are left alone.</li>
+    </ol>
+    <p>
+        After that, every admin submission on the Character/Event/Location
+        Association page writes to the association row's
+        <code>keywords</code> column, not the global aliases. Resync
+        semantics are per-chapter: editing keywords for chapter 5
+        doesn't affect chapters 1-4 or 6+.
+    </p>
+    <p class="text-muted small">
+        Idempotent — safe to re-run. Only touches rows with an empty
+        <code>keywords</code> column.
     </p>
 </section>
 {% endblock %}
