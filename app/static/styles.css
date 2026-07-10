@@ -236,3 +236,16 @@ p.quote {
 .yearmap-collapse-toggle[aria-expanded="false"] .fa-minus {
     display: none;
 }
+
+/* ------------------------------------------------------------------
+   image_panzoom.js viewers.
+
+   Consumers should set their own height (the chapter yearly-maps tabs
+   use 60vh inline); this is just a fallback so a bare .image-panzoom
+   never renders 0px tall. The muted backdrop letterboxes images whose
+   aspect ratio doesn't match the container.
+   ------------------------------------------------------------------ */
+.image-panzoom {
+    height: 400px;
+    background: #f4f4f4;
+}

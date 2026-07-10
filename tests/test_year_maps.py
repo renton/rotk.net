@@ -281,7 +281,10 @@ class TestChapterPageYearMaps:
         assert b'id="yearly-maps-container"' in resp.data
         assert b'>208 AD</button>' in resp.data
         assert b'yearmaps/208.png' in resp.data
-        assert b'alt="Territorial map of 208 AD"' in resp.data
+        # Pan/zoom widget (image_panzoom.js) rather than a plain <img>.
+        assert b'class="image-panzoom' in resp.data
+        assert b'data-panzoom-alt="Territorial map of 208 AD"' in resp.data
+        assert b'js/image_panzoom.js' in resp.data
 
     def test_only_years_with_images_get_tabs(self, client, db_session):
         # Chapter spans 208-210 but only 208 + 210 have uploaded maps.

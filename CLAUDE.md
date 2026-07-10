@@ -68,7 +68,9 @@ app/
                          #   admin_picker.js (datalist id resolver + auto-fill keywords field),
                          #   admin_confirm.js (data-confirm submit gate),
                          #   admin_colour_picker.js (Randomize palette button injector),
-                         #   admin_yearly_maps.js (populate the shared Yearly Maps upload/edit modal per row)
+                         #   admin_yearly_maps.js (populate the shared Yearly Maps upload/edit modal per row),
+                         #   image_panzoom.js (REUSABLE drag/wheel-zoom image viewer: Leaflet CRS.Simple on any
+                         #     .image-panzoom[data-panzoom-src] element; auto-init + Bootstrap tab/collapse re-measure)
 
 tools/
   scraper.py             # scrape_rotk_book() + scrape_rotk_characters()
