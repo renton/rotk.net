@@ -73,10 +73,12 @@ class TestChapterRender:
         assert b'192-200 AD' in resp.data
 
     def test_unassociated_character_not_tagged(self, client, db_session):
+        # 'character-ref' appears in page chrome (JS selector strings),
+        # so assert on the data attribute only real pills carry.
         ch = factories.make_chapter(content='<p>Liu Bei passed by.</p>')
         factories.make_character(name='Liu Bei')  # no association
         resp = client.get(f'/chapter/{ch.chapter_num}')
-        assert b'character-ref' not in resp.data
+        assert b'data-character-id' not in resp.data
 
     def test_per_chapter_keywords_scope_render(self, client, db_session):
         # Keywords limited to 'Mengde': the 'Cao Cao' text stays plain.

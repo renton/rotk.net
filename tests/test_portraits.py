@@ -184,13 +184,14 @@ class TestImageAdminRoutes:
         assert refreshed.is_default is False   # no hidden defaults
 
     def test_add_and_remove_portrait_tag(self, admin_client, db_session):
+        # This route takes an EXISTING tag_id (auto-create-by-name is
+        # the upload form's behaviour, not this endpoint's).
         client, _ = admin_client
         c = factories.make_character()
         p = factories.make_portrait(character=c)
+        tag = factories.make_tag(name='DW9')
         client.post(f'/admin/images/{p.id}/tags/add',
-                    data={'tag_name': 'DW9'}, follow_redirects=True)
-        tag = Tag.query.filter_by(name='DW9').first()
-        assert tag is not None
+                    data={'tag_id': str(tag.id)}, follow_redirects=True)
         assert TagAssociation.query.filter_by(
             tag_id=tag.id, target_type='portrait', target_id=p.id
         ).count() == 1

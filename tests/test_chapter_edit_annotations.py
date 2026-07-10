@@ -245,11 +245,14 @@ class TestAnnotationListPages:
 
     def test_first_annotation_previewed_not_latest(self, admin_client,
                                                    db_session):
+        # The page ALSO embeds the full thread as a JSON payload for the
+        # modal (so 'reply one' appears in the raw HTML) — the preview
+        # column is distinguished by its title attribute.
         client, _ = admin_client
         self._seed(db_session)
         resp = client.get('/admin/annotations/public')
-        assert b'opener one' in resp.data
-        assert b'reply one' not in resp.data
+        assert b'title="opener one"' in resp.data
+        assert b'title="reply one"' not in resp.data
 
     def test_private_page_shows_private_and_close_button(self, admin_client,
                                                          db_session):

@@ -1,7 +1,6 @@
 """B4 — send_email (suppressed mode) + favicon fetcher (mocked HTTP)."""
 import pytest
 
-from app import mail
 from app.blueprints.auth.emails import send_email
 from tests import factories
 from tools import favicon_fetcher as ff_mod
@@ -16,38 +15,47 @@ PNG_BYTES = b'\x89PNG\r\n\x1a\n' + b'\x00' * 32
 
 
 class TestSendEmail:
-    def test_suppressed_send_captures_message(self, app, db_session):
+    """send_email RETURNS EARLY when MAIL_SUPPRESS_SEND is on — it logs
+    the would-be message and never reaches Flask-Mail, so record_messages
+    can't observe it. Assert the log instead (via caplog)."""
+
+    def test_suppressed_send_logs_message(self, app, db_session, caplog):
+        import logging
         user = factories.make_user(confirmed=False)
         with app.test_request_context():
             token = user.generate_confirmation_token()
-            with mail.record_messages() as outbox:
-                send_email(user.email, 'Confirm your account',
-                           'auth/email/confirm', user=user, token=token)
-        assert len(outbox) == 1
-        msg = outbox[0]
-        assert msg.recipients == [user.email]
-        assert msg.subject.startswith('[rotk.net]')
-        assert msg.body and msg.html   # both parts rendered
+            with caplog.at_level(logging.INFO):
+                result = send_email(user.email, 'Confirm your account',
+                                    'auth/email/confirm', user=user,
+                                    token=token)
+        assert result is None            # suppressed → no send thread
+        assert 'suppressed' in caplog.text
+        assert user.email in caplog.text
+        assert '[rotk.net] Confirm your account' in caplog.text
 
-    def test_token_lands_in_body(self, app, db_session):
+    def test_token_lands_in_logged_body(self, app, db_session, caplog):
+        import logging
         user = factories.make_user(confirmed=False)
         with app.test_request_context():
             token = user.generate_reset_token()
-            with mail.record_messages() as outbox:
+            with caplog.at_level(logging.INFO):
                 send_email(user.email, 'Reset your password',
                            'auth/email/reset_password', user=user,
                            token=token)
-        assert token in outbox[0].body
+        assert token in caplog.text      # rendered .txt body is logged
 
-    def test_forgot_password_route_sends_suppressed_mail(self, app,
-                                                         db_session):
+    def test_forgot_password_route_suppressed_send(self, app, db_session,
+                                                   caplog):
+        import logging
         user = factories.make_user()
         client = app.test_client()
-        with mail.record_messages() as outbox:
-            client.post('/auth/forgot-password', data={'email': user.email},
-                        follow_redirects=True)
-        assert len(outbox) == 1
-        assert outbox[0].recipients == [user.email]
+        with caplog.at_level(logging.INFO):
+            resp = client.post('/auth/forgot-password',
+                               data={'email': user.email},
+                               follow_redirects=True)
+        assert resp.status_code == 200
+        assert 'suppressed' in caplog.text
+        assert user.email in caplog.text
 
 
 class TestSanitiseHost:

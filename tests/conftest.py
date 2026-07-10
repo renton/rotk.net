@@ -133,33 +133,39 @@ def app():
 
 @pytest.fixture()
 def db_session(app):
-    """Function-scoped session that joins an outer transaction via
-    savepoints. Everything a test (or the routes it calls) commits is
-    rolled back at teardown, so each test sees a pristine empty schema.
+    """Function-scoped savepoint-rollback isolation.
 
-    Standard Flask-SQLAlchemy 3.x recipe: bind the scoped session to a
-    connection that carries an open transaction, with
-    join_transaction_mode='create_savepoint' so session.commit() inside
-    application code only releases a savepoint."""
+    CRITICAL detail (found the hard way in shakeout round 2):
+    Flask-SQLAlchemy's custom Session.get_bind() resolves the bind by
+    metadata bind_key from `db.engines` and IGNORES a `bind=connection`
+    passed to the sessionmaker — so the plain-SQLAlchemy recipe silently
+    writes through the real engine and COMMITS FOR REAL (tests leak
+    into each other). The documented FSA recipe instead replaces the
+    ENGINE ENTRY in `db.engines` with the transaction-holding
+    connection, so get_bind hands every session the connection and
+    join_transaction_mode='create_savepoint' turns application commits
+    into savepoint releases. Teardown rolls the outer transaction back
+    and restores the engine entry."""
     with app.app_context():
-        engine = _db.engine
+        engines = _db.engines           # per-app {bind_key: engine} dict
+        engine = engines[None]
         connection = engine.connect()
         transaction = connection.begin()
+        engines[None] = connection      # <-- the load-bearing line
 
         original_session = _db.session
-        session_options = dict(
-            bind=connection,
-            join_transaction_mode='create_savepoint',
-        )
-        session = _db._make_scoped_session(options=session_options)
+        session = _db._make_scoped_session(
+            options=dict(join_transaction_mode='create_savepoint'))
         _db.session = session
 
-        yield session
-
-        _db.session = original_session
-        session.remove()
-        transaction.rollback()
-        connection.close()
+        try:
+            yield session
+        finally:
+            _db.session = original_session
+            session.remove()
+            transaction.rollback()
+            connection.close()
+            engines[None] = engine      # restore the real engine
 
 
 @pytest.fixture()
