@@ -185,8 +185,10 @@ This makes tag lookups case-sensitive. The scraper sometimes lowercases (roles) 
 
 ## Infrastructure / DX
 
-### 25. ⬜ No tests
+### 25. ✅ No tests
 No `tests/` directory. `rotk.py` has commented-out scaffolding for `unittest` + `coverage`. The whole inline-tagging regex pipeline is exactly the kind of code that benefits from a unit test (name-with-apostrophe, name-at-end-of-paragraph, name-inside-HTML-tag). Pytest + a couple of fixtures is two hours of work.
+
+*(Resolved: ~380-test pytest suite in `tests/` — pure-function, model/DB, HTTP-route, composite-scenario, and CLI coverage; savepoint-rollback isolation against a dedicated `rotk_net_test` DB with a hard safety guard. See README "Running the tests" and CLAUDE.md "Tests". Frontend/browser testing still open — planned via Playwright/Selenium later.)*
 
 ### 26. ✅ No Alembic / Flask-Migrate
 Schema changes today are "drop tables, change models, `flask create-all`, re-scrape". With ~150 HTTP fetches per scrape that's slow, brittle, and lossy (you lose any admin edits). Wire up Flask-Migrate with a baseline migration of the current schema.

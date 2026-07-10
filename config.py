@@ -89,6 +89,38 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
 
+def _test_database_uri():
+    """Test DB URI. The database NAME is hardcoded to `rotk_net_test`
+    on purpose — never derived from POSTGRES_DB — so a mis-set env var
+    can't point the test suite at live data. Host/port/user/password
+    reuse the standard env vars so this works both inside the compose
+    app container (host `db`) and from the host machine (the compose
+    db publishes 127.0.0.1:5432)."""
+    user = os.environ.get("POSTGRES_USER", "rotk_app")
+    password = os.environ.get("POSTGRES_PASSWORD", "")
+    host = os.environ.get("POSTGRES_HOST", "db")
+    port = os.environ.get("POSTGRES_PORT", "5432")
+    return f"postgresql+psycopg://{user}:{password}@{host}:{port}/rotk_net_test"
+
+
+class TestingConfig(Config):
+    """pytest-only config. tests/conftest.py additionally hard-asserts
+    the DB name ends in `_test` before any DDL/DML runs."""
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = _test_database_uri()
+    SQLALCHEMY_ECHO = False
+    # Every POST route would 400 without a CSRF token otherwise; the
+    # suite tests the routes' logic, not Flask-WTF's CSRF machinery.
+    WTF_CSRF_ENABLED = False
+    # The auth routes carry per-minute limits that a fast test run
+    # would trip immediately.
+    RATELIMIT_ENABLED = False
+    # itsdangerous token generation + session signing need a key.
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'test-secret-key-not-for-prod'
+    # Never send mail from tests regardless of env.
+    MAIL_SUPPRESS_SEND = True
+
+
 class ProductionConfig(Config):
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
@@ -112,5 +144,6 @@ class ProductionConfig(Config):
 config = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,
+    'testing': TestingConfig,
     'default': DevelopmentConfig,
 }

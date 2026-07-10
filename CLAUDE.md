@@ -202,7 +202,6 @@ See `ISSUES.md` for the full running list. Highlights still open:
 
 - Character name fields are typo'd as `courtesty_name` (and `chinese_courtesty_name`) throughout models, forms, and templates. Renaming is a coordinated change (#19).
 - Birth/death dates are stored as `String(N)` and can't be range-queried, though widening to fit BC years has shipped (#20).
-- No tests yet — the inline-tagging regex pipeline in particular would benefit from a pytest harness (#25).
 - **MatchExclusion context-shift after rescrape.** Fingerprints hold ~60 chars around each excluded match. If a rescrape inserts new prose whose text falls within that 60-char window, the stored fingerprint won't match the regenerated one and the exclusion silently stops applying (the row is still there in the DB; it's just orphaned). Re-× via the admin UI re-fingerprints against current content. Affects any chapter whose content changed materially — the `class="2"` scraper fix in `f7a1ab5` recovered 255 blocks across 74 chapters, so historically-excluded snippets near those blocks may need a manual re-flag.
 - **Pre-`cdb3180` `book_mention_count` values are stale.** The counter was a global string-match (over-counted duplicates like two "Lady Cao"s). After that commit it's association-aware, but old prod values persist until `flask recount-book-mentions` runs. Any character created / mutated post-commit is fine — the recount fires at all the trigger points. It's the untouched-since-migration rows that carry stale numbers.
 - **`Location.geojson = ""` legacy rows.** `new_location` used to `form.populate_obj(location)` without overriding `geojson` with the validator's parsed value, so an empty textarea landed the JSON string `""` in JSONB. Fixed in `11f25f9`, and downstream `has_geo` checks are now truthy (not `is not None`), so newer locations behave. Any pre-fix location with the bad value should get cleaned via `flask clean-empty-location-geojson`.
@@ -214,6 +213,38 @@ See `ISSUES.md` for the full running list. Highlights still open:
 - **Don't run scrapers without confirming.** They hit external sites ~150 times and overwrite/duplicate rows depending on existing state. The current scraper has no upsert logic — re-running will throw IntegrityErrors on the unique constraint and skip rows.
 - **Don't enable Flask-Migrate retroactively** without an Alembic baseline plan — `db.create_all()` (now followed by the SQL files in `migrations/`) is the source of truth, and a fresh Alembic autogenerate would not match.
 - **The MySQL → Postgres migration** (May 2026) changed: the DB URL builder in `config.py`, the `collation` argument in `app/models/abstract.py` (`utf8mb4_bin` → `C`), the bundled `db` service in `docker-compose.yml` (mysql:8.4 → postgres:16-alpine), `.env.example` (`MYSQL_*` → `POSTGRES_*`), and the requirements (`mysqlclient` / `mysql-connector` → `psycopg[binary]`). The DB was renamed `rotk.net` → `rotk_net` (no dot) to avoid postgres quoting hassles. `docker-compose.prod.yml`, `docker-compose.ambrose.yml`, `db-init/`, and the `nginx/` config were deleted — production now uses `stateful_boilerplate` for TLS/proxy.
+
+## Tests
+
+`tests/` holds a ~380-test pytest suite (see README "Running the tests"
+for the run commands). Layout:
+
+- `conftest.py` — the safety guard (refuses any DB not ending `_test`),
+  session-scoped schema setup (`db.create_all()` against `rotk_net_test`),
+  per-test savepoint-rollback isolation (`db_session`), and `client` /
+  `user_client` / `admin_client` fixtures. `admin_client` yields
+  `(client, user)` tuples.
+- `factories.py` — `make_*` helpers with unique defaults +
+  `associate_character/event/location(chapter, entity, keywords=...)`
+  which write the per-association keywords column the way the admin
+  endpoints do.
+- Pure-function suites (no DB): `test_needle_pattern`,
+  `test_annotation_canonical`, `test_hidden_snippets_pure`,
+  `test_ref_builders`. DB suites: `test_models`, `test_associations`,
+  `test_parser_db`. HTTP suites: `test_auth`, `test_public_routes`,
+  `test_association_admin`, `test_chapter_edit_annotations`,
+  `test_entity_crud`. Cross-feature: `test_composites` (annotation vs
+  hidden-snippet orphaning, Lady Cao mirror-exclusion split, exclusion
+  context-shift — several are executable documentation of ACCEPTED
+  caveats; if one starts failing after a change, update docs + decide
+  intentionally). CLI: `test_cli`.
+- When you add a route/feature, add tests in the matching suite; when
+  you fix a bug, pin it with a regression test named after the failure
+  mode (see the session-bug tests referencing commit hashes in
+  docstrings).
+- Tests were authored ahead of first execution (no local runner on the
+  dev machine) — expect a first-run shakeout pass on ambrose; fix
+  fixtures/assertions rather than weakening the tested behaviour.
 
 ## Memory
 

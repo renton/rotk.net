@@ -353,6 +353,33 @@ examples/
 - `/admin/image-manager`, `/admin/tags`, `/admin/url-types`, `/admin/event-types` — CRUD for each tag-shaped type, with usage counts and reassign-before-delete guards
 - `/admin/users` — promote / demote (you can't demote yourself or the last remaining admin)
 
+## Running the tests
+
+A ~380-test pytest suite lives in `tests/` (unit + route + composite
+scenarios). It runs against a **dedicated `rotk_net_test` database** —
+never the live one:
+
+- `TestingConfig` (config.py) hardcodes the test DB name; it is never
+  derived from `POSTGRES_DB`.
+- `tests/conftest.py` refuses to run (hard `pytest.exit`) unless the
+  resolved DB name ends in `_test`, and creates the DB on demand.
+- Every test runs inside a savepoint transaction that's rolled back,
+  so tests are isolated from each other and nothing persists.
+
+Run inside the app container (after a one-time `docker compose build app`
+to pick up the pytest dependency):
+
+```bash
+docker compose exec app pytest -q            # full suite
+docker compose exec app pytest tests/test_needle_pattern.py -q   # one file
+docker compose exec app pytest -k lady_cao -q                    # by keyword
+```
+
+The pure-function suites (`test_needle_pattern`, `test_ref_builders`,
+`test_annotation_canonical`, `test_hidden_snippets_pure`) don't touch
+the DB and run in a couple of seconds. Scraper commands are
+deliberately untested (network).
+
 ## Ops runbook
 
 Common developer flows on the deployed instance (ambrose). All commands assume `cd ~/projects/rotk.net`.
