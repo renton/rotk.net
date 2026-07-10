@@ -28,15 +28,36 @@ document.addEventListener('DOMContentLoaded', function () {
     idsField.value = factions.map(function (f) { return f.id; }).join(',');
   }
 
+  // Perceived luminance of a #rrggbb colour, 0 (black) → 1 (white).
+  // Used to pick a readable close-button variant per chip.
+  function luminance(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    if (!m) return 0;
+    var n = parseInt(m[1], 16);
+    var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  }
+
   function renderChips() {
     chipList.innerHTML = '';
     factions.forEach(function (f) {
       var chip = document.createElement('span');
-      chip.className = 'badge rounded-pill text-bg-secondary d-inline-flex align-items-center gap-1';
+      chip.className = 'badge rounded-pill d-inline-flex align-items-center gap-1';
+      // badge_widget conventions: unset bg (null/'') → Bootstrap primary;
+      // unset border → none.
+      if (f.bg) {
+        chip.style.backgroundColor = f.bg;
+      } else {
+        chip.classList.add('text-bg-primary');
+      }
+      if (f.font) chip.style.color = f.font;
+      if (f.border) chip.style.border = '2px solid ' + f.border;
       chip.appendChild(document.createTextNode(f.name));
       var x = document.createElement('button');
       x.type = 'button';
-      x.className = 'btn-close btn-close-white';
+      // White × on light text (dark chip), black × otherwise.
+      x.className = 'btn-close' +
+        (luminance(f.font || '#ffffff') > 0.5 ? ' btn-close-white' : '');
       x.style.fontSize = '0.6em';
       x.setAttribute('aria-label', 'Remove ' + f.name);
       x.addEventListener('click', function () {
@@ -55,9 +76,25 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!m) return;   // nothing picked from the datalist yet
     var id = parseInt(m[1], 10);
     var name = raw.replace(/\s*#\d+\s*$/, '');
+
+    // Pull the faction's colours off the matching datalist option so
+    // the fresh chip renders like the saved ones.
+    var font = '', bg = '', border = '';
+    var options = document.querySelectorAll('#yearmap-factions-datalist option');
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].value === raw) {
+        font = options[i].getAttribute('data-font') || '';
+        bg = options[i].getAttribute('data-bg') || '';
+        border = options[i].getAttribute('data-border') || '';
+        break;
+      }
+    }
+
     var exists = factions.some(function (f) { return f.id === id; });
     if (!exists) {
-      factions.push({ id: id, name: name });
+      factions.push({ id: id, name: name,
+                      font: font || null, bg: bg || null,
+                      border: border || null });
       renderChips();
     }
     searchInput.value = '';

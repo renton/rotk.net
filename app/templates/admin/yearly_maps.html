@@ -89,7 +89,13 @@
    the id suffix). #}
 <datalist id="yearmap-factions-datalist">
     {% for f in picker_factions %}
-    <option value="{{ f.name }} #{{ f.id }}" label="{{ f.name }}"></option>
+    {# Colour data rides on the option so a freshly-added chip renders
+       in faction colours without a round-trip. Empty data-bg/border =
+       colour unset (badge_widget's default_colour convention). #}
+    <option value="{{ f.name }} #{{ f.id }}" label="{{ f.name }}"
+            data-font="{{ f.font_colour }}"
+            data-bg="{{ '' if f.bg_colour == f.default_colour else f.bg_colour }}"
+            data-border="{{ '' if f.border_colour == f.default_colour else f.border_colour }}"></option>
     {% endfor %}
 </datalist>
 

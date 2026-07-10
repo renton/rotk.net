@@ -449,6 +449,10 @@ class TestYearMapFactions:
         assert b'yearmap-factions-datalist' in resp.data
         assert b'Pickable Faction #' in resp.data
         assert b'name="faction_ids"' in resp.data
+        # Colour data rides on the datalist options so fresh chips render
+        # in faction colours.
+        assert b'data-font=' in resp.data
+        assert b'data-bg=' in resp.data
 
 
 class TestChapterPageYearMapFactions:

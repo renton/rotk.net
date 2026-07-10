@@ -2708,9 +2708,19 @@ def yearly_maps():
         .all()
     )
     # Modal prefill: the Edit button carries the year's current faction
-    # set as JSON (Jinja can't build dict lists inline).
+    # set as JSON (Jinja can't build dict lists inline). Colours follow
+    # badge_widget semantics — default_colour (#ffffff) means "unset",
+    # shipped as None so the JS falls back to the Bootstrap-primary chip.
+    def _chip(f):
+        return {
+            'id': f.id,
+            'name': f.name,
+            'font': f.font_colour,
+            'bg': None if f.bg_colour == f.default_colour else f.bg_colour,
+            'border': None if f.border_colour == f.default_colour else f.border_colour,
+        }
     modal_factions_by_year = {
-        year: [{'id': f.id, 'name': f.name} for f in m.factions]
+        year: [_chip(f) for f in m.factions]
         for year, m in maps_by_year.items()
     }
     return render_template(
