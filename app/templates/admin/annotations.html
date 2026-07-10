@@ -34,6 +34,24 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
         </select>
     </div>
     <div class="col-md-2">
+        <label for="character-filter" class="form-label">Character</label>
+        <select name="character_id" id="character-filter" class="form-select">
+            <option value="">Any</option>
+            {% for c in filter_characters %}
+            <option value="{{ c.id }}" {% if filter_character_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="location-filter" class="form-label">Location</label>
+        <select name="location_id" id="location-filter" class="form-select">
+            <option value="">Any</option>
+            {% for l in filter_locations %}
+            <option value="{{ l.id }}" {% if filter_location_id == l.id %}selected{% endif %}>{{ l.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
         <label for="sort-filter" class="form-label">Sort</label>
         <select name="sort" id="sort-filter" class="form-select">
             <option value="latest" {% if sort == 'latest' %}selected{% endif %}>Latest activity</option>
@@ -75,6 +93,8 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
         <tr>
             <th>Chapter</th>
             <th>Thread (first annotation)</th>
+            <th>Characters</th>
+            <th>Locations</th>
             <th class="text-end">Count</th>
             <th>Latest</th>
             <th class="text-end">Actions</th>
@@ -92,10 +112,37 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
                     <i class="fa-solid fa-up-right-from-square small text-muted" aria-hidden="true"></i>
                 </a>
             </td>
-            <td class="small" style="max-width: 480px;">
+            <td class="small" style="max-width: 380px;">
                 <div class="text-truncate" title="{{ row.first_body|e }}">
                     {{ row.first_body }}
                 </div>
+            </td>
+            <td>
+                {# Vertical stack of character pills; each links to the
+                   chapter's Character/Chapter Association page. #}
+                {% for c in row.characters %}
+                <div class="mb-1">
+                    <a href="{{ url_for('admin.chapter_associations', chapter_num=row.chapter_num) }}"
+                       class="text-decoration-none">
+                        <span class="badge rounded-pill"
+                              style="background-color:{{ c.bg }};color:{{ c.font }};border:2px solid {{ c.border }};">
+                            {{ c.name }}
+                        </span>
+                    </a>
+                </div>
+                {% endfor %}
+            </td>
+            <td>
+                {# Vertical stack of underlined location links → the
+                   chapter's Location/Chapter Association page. #}
+                {% for l in row.locations %}
+                <div class="mb-1">
+                    <a href="{{ url_for('admin.location_associations', chapter_num=row.chapter_num) }}"
+                       class="small" style="text-decoration:underline;color:#000;">
+                        {{ l.name }}
+                    </a>
+                </div>
+                {% endfor %}
             </td>
             <td class="text-end">
                 <span class="badge bg-primary rounded-pill">{{ row.count }}</span>
@@ -113,7 +160,7 @@ rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
         </tr>
         {% else %}
         <tr>
-            <td colspan="5" class="text-muted">
+            <td colspan="7" class="text-muted">
                 No {% if show_deleted %}deleted{% else %}active{% endif %} threads
                 {% if selected_chapter_num %} for chapter {{ selected_chapter_num }}{% endif %}.
             </td>

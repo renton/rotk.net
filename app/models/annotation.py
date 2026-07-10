@@ -1,6 +1,19 @@
 from app import db
 
 
+annotation_character = db.Table(
+    'annotation_character',
+    db.Column('annotation_id', db.Integer, db.ForeignKey('annotation.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('character_id', db.Integer, db.ForeignKey('character.id', ondelete='CASCADE'), primary_key=True),
+)
+
+annotation_location = db.Table(
+    'annotation_location',
+    db.Column('annotation_id', db.Integer, db.ForeignKey('annotation.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('location_id', db.Integer, db.ForeignKey('location.id', ondelete='CASCADE'), primary_key=True),
+)
+
+
 class Annotation(db.Model):
     """Per-(chapter, paragraph) annotation.
 
@@ -25,6 +38,12 @@ class Annotation(db.Model):
     created_by = db.Column(db.String(64), nullable=False, default='rotk.net_system')
 
     chapter = db.relationship('Chapter')
+
+    # Characters / locations the section text references — auto-
+    # detected at create time from the chapter's associations, same
+    # needle logic as the prose renderer.
+    characters = db.relationship('Character', secondary=annotation_character)
+    locations = db.relationship('Location', secondary=annotation_location)
 
     def __repr__(self):
         return f'<Annotation id={self.id} ch={self.chapter_id} public={self.is_public}>'

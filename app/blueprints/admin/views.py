@@ -2386,7 +2386,11 @@ def _annotation_list(is_public):
     latest activity."""
     from sqlalchemy import func
 
+    from app.models.annotation import annotation_character, annotation_location
+
     chapter_num = request.args.get('chapter_num', type=int)
+    filter_character_id = request.args.get('character_id', type=int)
+    filter_location_id = request.args.get('location_id', type=int)
     sort = request.args.get('sort', 'latest')
     direction = request.args.get('dir', 'desc')
     show_deleted = request.args.get('show_deleted') in ('1', 'true', 'on')
@@ -2409,6 +2413,14 @@ def _annotation_list(is_public):
     if chapter_num is not None:
         subq = subq.join(Chapter, Chapter.id == Annotation.chapter_id) \
                    .filter(Chapter.chapter_num == chapter_num)
+    if filter_character_id is not None:
+        subq = subq.join(annotation_character,
+                         annotation_character.c.annotation_id == Annotation.id) \
+                   .filter(annotation_character.c.character_id == filter_character_id)
+    if filter_location_id is not None:
+        subq = subq.join(annotation_location,
+                         annotation_location.c.annotation_id == Annotation.id) \
+                   .filter(annotation_location.c.location_id == filter_location_id)
     subq = subq.group_by(Annotation.chapter_id, Annotation.section_text)
 
     if sort == 'chapter':
@@ -2428,7 +2440,7 @@ def _annotation_list(is_public):
 
     # Build a payload: for each row, the full thread + chapter info so
     # the admin-list modal can display it without a per-row query.
-    from tools.book_parser import annotation_section_hash
+    from tools.book_parser import annotation_section_hash, character_pill_colours
     threads_by_key = {}
     chapter_by_id = {c.id: c for c in Chapter.query.all()}
     stacked_rows = []
@@ -2441,10 +2453,30 @@ def _annotation_list(is_public):
             .order_by(Annotation.created_at)
             .all()
         )
+        # Union of character / location refs across the thread (they're
+        # identical per-annotation today, but union is future-proof).
+        ref_chars = {}
+        ref_locs = {}
+        for a in thread_annotations:
+            for c in a.characters:
+                ref_chars[c.id] = c
+            for l in a.locations:
+                ref_locs[l.id] = l
+        chapter_num_val = chapter_by_id[r.chapter_id].chapter_num if r.chapter_id in chapter_by_id else None
+        char_payload = []
+        for c in sorted(ref_chars.values(), key=lambda x: x.name):
+            bg, font, border = character_pill_colours(c)
+            char_payload.append({'id': c.id, 'name': c.name, 'bg': bg, 'font': font, 'border': border})
+        loc_payload = [
+            {'id': l.id, 'name': l.name}
+            for l in sorted(ref_locs.values(), key=lambda x: x.name)
+        ]
         threads_by_key[key] = {
             'section_text': r.section_text,
             'chapter_id': r.chapter_id,
-            'chapter_num': chapter_by_id[r.chapter_id].chapter_num if r.chapter_id in chapter_by_id else None,
+            'chapter_num': chapter_num_val,
+            'characters': char_payload,
+            'locations': loc_payload,
             'thread': [
                 {
                     'id': a.id, 'body': a.body, 'is_public': a.is_public,
@@ -2459,7 +2491,7 @@ def _annotation_list(is_public):
             'section_key': key,
             'section_text': r.section_text,
             'chapter_id': r.chapter_id,
-            'chapter_num': chapter_by_id[r.chapter_id].chapter_num if r.chapter_id in chapter_by_id else None,
+            'chapter_num': chapter_num_val,
             'count': r.cnt,
             'latest_at': r.latest_at,
             # First annotation's body — the thread opener is the best
@@ -2467,9 +2499,28 @@ def _annotation_list(is_public):
             # it), so the list previews that rather than the section
             # prose or the newest reply.
             'first_body': thread_annotations[0].body if thread_annotations else '',
+            'characters': char_payload,
+            'locations': loc_payload,
         })
 
     chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+
+    # Filter dropdown options: only entities actually referenced by
+    # annotations of this type — a full character list would be huge.
+    filter_characters = (
+        db.session.query(Character)
+        .join(annotation_character, annotation_character.c.character_id == Character.id)
+        .join(Annotation, Annotation.id == annotation_character.c.annotation_id)
+        .filter(Annotation.is_public.is_(is_public))
+        .distinct().order_by(Character.name).all()
+    )
+    filter_locations = (
+        db.session.query(Location)
+        .join(annotation_location, annotation_location.c.location_id == Location.id)
+        .join(Annotation, Annotation.id == annotation_location.c.annotation_id)
+        .filter(Annotation.is_public.is_(is_public))
+        .distinct().order_by(Location.name).all()
+    )
 
     return render_template(
         'admin/annotations.html',
@@ -2481,6 +2532,10 @@ def _annotation_list(is_public):
         direction=direction,
         show_deleted=show_deleted,
         is_public=is_public,
+        filter_characters=filter_characters,
+        filter_locations=filter_locations,
+        filter_character_id=filter_character_id,
+        filter_location_id=filter_location_id,
         csrf_form=_CsrfOnlyForm(),
     )
 
@@ -2535,6 +2590,14 @@ def annotation_create():
         body=body,
         is_public=is_public,
     )
+    # Auto-attach character / location references found in the section
+    # text. Redundant across a thread (every annotation on the same
+    # section carries the same refs) — accepted for now; makes filter
+    # queries trivial.
+    from tools.book_parser import detect_annotation_refs
+    ref_chars, ref_locs = detect_annotation_refs(chapter, section_text)
+    row.characters = ref_chars
+    row.locations = ref_locs
     db.session.add(row)
     db.session.commit()
 

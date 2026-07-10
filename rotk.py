@@ -2313,6 +2313,36 @@ def check_date_parsing(only):
 
 @app.cli.command()
 @click.option('--dry-run/--no-dry-run', default=False,
+              help='Show what would be attached without writing.')
+def backfill_annotation_refs(dry_run):
+    """Attach character / location references to annotations that
+    predate the annotation_character / annotation_location tables
+    (migration 0016). Runs the same detection the create endpoint
+    uses; skips annotations that already have refs. Idempotent."""
+    from app.models import Annotation
+    from tools.book_parser import detect_annotation_refs
+
+    rows = Annotation.query.order_by(Annotation.id).all()
+    updated = 0
+    for a in rows:
+        if a.characters or a.locations:
+            continue
+        chars, locs = detect_annotation_refs(a.chapter, a.section_text)
+        if not chars and not locs:
+            continue
+        print(f"  annotation {a.id} (ch {a.chapter.chapter_num}): "
+              f"{[c.name for c in chars]} / {[l.name for l in locs]}")
+        if not dry_run:
+            a.characters = chars
+            a.locations = locs
+        updated += 1
+    if not dry_run and updated:
+        db.session.commit()
+    print(f"\n{'Would update' if dry_run else 'Updated'} {updated} annotation(s).")
+
+
+@app.cli.command()
+@click.option('--dry-run/--no-dry-run', default=False,
               help='List affected rows without writing.')
 def clean_empty_location_geojson(dry_run):
     """Scrub Location.geojson rows that hold non-object junk (most

@@ -286,6 +286,65 @@ def inject_annotation_icons(html, annotations_by_section, is_admin):
     return _P_RE.sub(process, html)
 
 
+def detect_annotation_refs(chapter, section_text):
+    """Return (characters, locations) whose per-chapter keywords match
+    inside `section_text` — the auto-detection behind an annotation's
+    character/location references.
+
+    Uses the SAME needle sources as the chapter prose renderer:
+    per-(chapter, target) keywords with fallback to the entity's
+    global labels. Only entities already associated with the chapter
+    are candidates (an annotation can't reference someone the chapter
+    itself doesn't know about)."""
+    char_kw = load_chapter_keywords(chapter.id, 'chapter_character', 'character_id')
+    loc_kw = load_chapter_keywords(chapter.id, 'chapter_location', 'location_id')
+
+    found_characters = []
+    for character in chapter.characters:
+        needles = split_keywords_csv(char_kw.get(character.id, ''))
+        if not needles:
+            needles = [n for n in character.get_all_name_labels() if n]
+        if not needles:
+            continue
+        if build_needle_pattern(needles).search(section_text):
+            found_characters.append(character)
+
+    # Locations: direct chapter associations + event-pinned ones.
+    seen_loc_ids = set()
+    candidate_locations = []
+    for loc in [*(e.location for e in chapter.events if e.location), *chapter.locations]:
+        if loc is None or loc.id in seen_loc_ids:
+            continue
+        seen_loc_ids.add(loc.id)
+        candidate_locations.append(loc)
+
+    found_locations = []
+    for loc in candidate_locations:
+        needles = split_keywords_csv(loc_kw.get(loc.id, ''))
+        if not needles:
+            needles = [loc.name] + [a.strip() for a in (loc.aliases or '').split(',') if a.strip()]
+        needles = [n for n in needles if n]
+        if not needles:
+            continue
+        if build_needle_pattern(needles).search(section_text):
+            found_locations.append(loc)
+
+    return found_characters, found_locations
+
+
+def character_pill_colours(character):
+    """The (bg, font, border) triple build_name_ref_html uses for a
+    character's inline pill — extracted so annotation payloads / admin
+    tables can render matching pills outside the prose."""
+    f = character.primary_faction
+    if f is not None:
+        bg = f.bg_colour if f.bg_colour not in ["", f.default_colour] else "#000000"
+        font = f.font_colour or "#ffffff"
+        border = f.border_colour if f.border_colour not in ["", f.default_colour] else bg
+        return bg, font, border
+    return "#ffffff", "#000000", "#000000"
+
+
 def load_chapter_keywords(chapter_id, table_name, target_id_column):
     """Return {target_id: keyword_csv} for every association row in the
     given M2M table (chapter_character / event_chapter / chapter_location)

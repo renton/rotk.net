@@ -107,7 +107,26 @@
     renderThread(thread);
     if (ctxEl) {
       var preview = (sectionText || '').slice(0, 140);
-      ctxEl.textContent = preview + ((sectionText || '').length > 140 ? '…' : '');
+      var html = escapeHtml(preview + ((sectionText || '').length > 140 ? '…' : ''));
+      // Character / location refs detected in the section — pills +
+      // underlined location names, matching the prose styling.
+      var chars = (entry && entry.characters) || [];
+      var locs = (entry && entry.locations) || [];
+      if (chars.length || locs.length) {
+        html += '<div class="mt-2 d-flex flex-wrap gap-1 align-items-center">';
+        chars.forEach(function (c) {
+          html += '<span class="badge rounded-pill" style="background-color:' +
+                  escapeHtml(c.bg) + ';color:' + escapeHtml(c.font) +
+                  ';border:2px solid ' + escapeHtml(c.border) + ';">' +
+                  escapeHtml(c.name) + '</span>';
+        });
+        locs.forEach(function (l) {
+          html += '<span style="text-decoration:underline;color:#000;">' +
+                  escapeHtml(l.name) + '</span>';
+        });
+        html += '</div>';
+      }
+      ctxEl.innerHTML = html;
     }
     if (addForm) {
       var body = addForm.querySelector('#annotation-body');

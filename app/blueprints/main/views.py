@@ -725,11 +725,30 @@ def chapter(chapter_num):
     # section_text in the payload is the READABLE form (first stored
     # row's text, spaces intact) — the dict key is canonical/whitespace-
     # free which would be unreadable in the modal preview.
+    from tools.book_parser import character_pill_colours
     annotations_payload = {}
     for canonical_key, ann_list in annotations_by_section.items():
         key = annotation_section_hash(canonical_key)
+        # Union of character/location refs across the thread — shown
+        # under the section preview in the modal.
+        ref_chars = {}
+        ref_locs = {}
+        for a in ann_list:
+            for c in a.characters:
+                ref_chars[c.id] = c
+            for l in a.locations:
+                ref_locs[l.id] = l
+        char_payload = []
+        for c in sorted(ref_chars.values(), key=lambda x: x.name):
+            bg, font, border = character_pill_colours(c)
+            char_payload.append({'id': c.id, 'name': c.name, 'bg': bg, 'font': font, 'border': border})
         annotations_payload[key] = {
             'section_text': ann_list[0].section_text,
+            'characters': char_payload,
+            'locations': [
+                {'id': l.id, 'name': l.name}
+                for l in sorted(ref_locs.values(), key=lambda x: x.name)
+            ],
             'thread': [
                 {
                     'id': a.id,
