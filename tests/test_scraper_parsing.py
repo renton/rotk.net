@@ -65,8 +65,16 @@ class TestHelpers:
         assert build_chapter_url(7).endswith('/007.htm')
         assert build_chapter_url(120).endswith('/120.htm')
 
-    def test_clean_text_collapses(self):
-        assert clean_text('  a\r\n b\tc  ') == 'a b c'
+    def test_clean_text_deletes_control_whitespace(self):
+        # \r \n \t are DELETED (not replaced with spaces) before the
+        # space-collapse pass — so words split only by a newline get
+        # glued ('b\tc' → 'bc'). Documented actual behaviour; the
+        # scraped source keeps words apart with real spaces so this
+        # doesn't bite in practice.
+        assert clean_text('  a\r\n b\tc  ') == 'a bc'
+
+    def test_clean_text_collapses_spaces(self):
+        assert clean_text('a   b  c') == 'a b c'
 
     def test_clean_text_none(self):
         assert clean_text(None) == ''

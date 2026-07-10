@@ -363,6 +363,15 @@ never the live one:
   derived from `POSTGRES_DB`.
 - `tests/conftest.py` refuses to run (hard `pytest.exit`) unless the
   resolved DB name ends in `_test`, and creates the DB on demand.
+- **Shared-cluster note (ambrose):** `rotk_app` can't create databases
+  on the shared postgres, so the test DB needs a one-time creation as
+  the superuser — after which the conftest finds it and never asks again:
+
+  ```bash
+  cd ~/stateful_boilerplate
+  docker compose exec -T postgres psql -U postgres \
+    -c "CREATE DATABASE rotk_net_test OWNER rotk_app;"
+  ```
 - Every test runs inside a savepoint transaction that's rolled back,
   so tests are isolated from each other and nothing persists.
 

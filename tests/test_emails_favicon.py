@@ -83,11 +83,18 @@ class TestFetchFavicon:
     replaces fetch_favicon itself for everyone else)."""
 
     class FakeResponse:
+        """Mimics the streaming interface fetch_favicon uses:
+        requests.get(..., stream=True) then resp.iter_content(8192)."""
+
         def __init__(self, content, content_type=REAL_ICO_CONTENT_TYPE,
                      status_code=200):
             self.content = content
             self.status_code = status_code
             self.headers = {'Content-Type': content_type}
+
+        def iter_content(self, chunk_size=8192):
+            for i in range(0, len(self.content), chunk_size):
+                yield self.content[i:i + chunk_size]
 
     def test_writes_icon_and_returns_relative_path(self, monkeypatch,
                                                    tmp_path):

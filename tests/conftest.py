@@ -55,8 +55,15 @@ def _assert_test_database(uri):
 
 def _ensure_test_database_exists(uri):
     """CREATE DATABASE rotk_net_test if missing, via the maintenance DB.
-    The compose postgres image makes POSTGRES_USER a superuser, so the
-    app role can create databases in dev. No-op if it already exists."""
+
+    Two environments:
+      * Local compose db — POSTGRES_USER is the container superuser, so
+        auto-creation just works.
+      * Shared cluster (ambrose/prod-style) — rotk_app deliberately
+        CANNOT create databases. Auto-creation fails; the operator runs
+        the one-time CREATE DATABASE below as the postgres superuser,
+        after which this becomes a no-op.
+    """
     dbname = uri.rsplit('/', 1)[-1].split('?')[0]
     admin_uri = uri.rsplit('/', 1)[0] + '/postgres'
     engine = sa.create_engine(admin_uri, isolation_level='AUTOCOMMIT')
@@ -66,8 +73,24 @@ def _ensure_test_database_exists(uri):
                 sa.text("SELECT 1 FROM pg_database WHERE datname = :n"),
                 {'n': dbname},
             ).scalar()
-            if not exists:
+            if exists:
+                return
+            try:
                 conn.execute(sa.text(f'CREATE DATABASE "{dbname}"'))
+            except sa.exc.ProgrammingError as e:
+                if 'InsufficientPrivilege' not in type(getattr(e, 'orig', e)).__name__ \
+                        and 'permission denied' not in str(e).lower():
+                    raise
+                pytest.exit(
+                    f"The role in POSTGRES_USER can't create databases on "
+                    f"this cluster (expected on the shared prod cluster). "
+                    f"One-time setup as the postgres superuser:\n\n"
+                    f"  cd ~/stateful_boilerplate && docker compose exec -T "
+                    f"postgres psql -U postgres -c "
+                    f"'CREATE DATABASE {dbname} OWNER rotk_app;'\n\n"
+                    f"Then re-run pytest.",
+                    returncode=4,
+                )
     finally:
         engine.dispose()
 
