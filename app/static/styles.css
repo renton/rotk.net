@@ -249,3 +249,11 @@ p.quote {
     height: 400px;
     background: #f4f4f4;
 }
+
+/* Selected faction in the chapter yearly-map faction list: Bootstrap
+   toggles .active on the trigger, but these triggers sit in a bare
+   .nav (not .nav-pills) so no default styling applies — ring the badge
+   instead. */
+.yearmap-faction-toggle.active .badge {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
+}

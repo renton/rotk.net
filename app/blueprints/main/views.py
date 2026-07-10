@@ -351,6 +351,15 @@ def chapter(chapter_num):
         chapter_year_maps = (
             YearMap.query
             .filter(YearMap.year.in_(span_years))
+            # The tab panes render each map's factions and, per faction,
+            # a leader panel (portrait, roles, factions) — eager-load the
+            # non-dynamic hops. Character.roles / .factions are
+            # lazy='dynamic' and load per leader; leader counts are tiny.
+            .options(
+                selectinload(YearMap.factions)
+                .selectinload(Faction.leaders)
+                .selectinload(Character.portraits)
+            )
             .order_by(YearMap.year)
             .all()
         )

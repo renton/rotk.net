@@ -449,3 +449,97 @@ class TestYearMapFactions:
         assert b'yearmap-factions-datalist' in resp.data
         assert b'Pickable Faction #' in resp.data
         assert b'name="faction_ids"' in resp.data
+
+
+class TestChapterPageYearMapFactions:
+    """The per-year tab pane: map left, faction pills right, click-through
+    faction detail (links, leaders panel like the sidebar accordion)."""
+
+    def _seed_map(self, db_session, factions=(), year=208):
+        ch = factories.make_chapter(date=str(year))
+        m = YearMap(year=year, filename=f'{year}.png')
+        m.factions = list(factions)
+        db_session.add(m)
+        db_session.flush()
+        return ch, m
+
+    def test_faction_pill_and_detail_pane_markup(self, client, db_session):
+        f = factories.make_faction(name='Wei Kingdom')
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert f'data-bs-target="#ymf-pane-208-{f.id}"'.encode() in resp.data
+        assert f'id="ymf-pane-208-{f.id}"'.encode() in resp.data
+        assert b'Wei Kingdom' in resp.data
+
+    def test_no_factions_placeholder(self, client, db_session):
+        ch, m = self._seed_map(db_session, [])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'No factions recorded for this year yet.' in resp.data
+
+    def test_faction_urls_listed(self, client, db_session):
+        f = factories.make_faction()
+        factories.make_url(target_type='faction', target_id=f.id,
+                           name='Faction Wiki Page')
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'Faction Wiki Page' in resp.data
+
+    def test_leader_panel_contents(self, client, db_session):
+        f = factories.make_faction()
+        role = factories.make_role(name='warlord supreme')
+        other_f = factories.make_faction(name='Other Banner')
+        c = factories.make_character(name='Sole Leader Guy')
+        c.roles.append(role)
+        c.factions.append(other_f)
+        f.leaders.append(c)
+        db_session.flush()
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'Sole Leader Guy' in resp.data
+        assert b'warlord supreme' in resp.data
+        # Leader's faction pill links to the filtered characters list
+        # in a new tab.
+        assert f'/characters?any_faction={other_f.id}'.encode() in resp.data
+        assert b'target="_blank"' in resp.data
+        # Single leader → no leader-switch pills.
+        assert f'id="ymfl-tab-208-{f.id}-{c.id}"'.encode() not in resp.data
+
+    def test_leader_without_portrait_shows_placeholder(self, client,
+                                                       db_session):
+        f = factories.make_faction()
+        c = factories.make_character()
+        f.leaders.append(c)
+        db_session.flush()
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'No Image.' in resp.data
+
+    def test_leader_portrait_shown(self, client, db_session):
+        f = factories.make_faction()
+        c = factories.make_character()
+        factories.make_portrait(character=c, is_hidden=False,
+                                filename='leader_pic.png')
+        f.leaders.append(c)
+        db_session.flush()
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'leader_pic.png' in resp.data
+
+    def test_multiple_leaders_get_tabs(self, client, db_session):
+        f = factories.make_faction()
+        c1 = factories.make_character(name='Leader Alpha')
+        c2 = factories.make_character(name='Leader Beta')
+        f.leaders.extend([c1, c2])
+        db_session.flush()
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert f'id="ymfl-tab-208-{f.id}-{c1.id}"'.encode() in resp.data
+        assert f'id="ymfl-tab-208-{f.id}-{c2.id}"'.encode() in resp.data
+        assert b'Leader Alpha' in resp.data
+        assert b'Leader Beta' in resp.data
+
+    def test_no_leaders_placeholder(self, client, db_session):
+        f = factories.make_faction()
+        ch, m = self._seed_map(db_session, [f])
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'No leaders recorded for this faction.' in resp.data

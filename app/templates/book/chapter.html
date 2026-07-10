@@ -47,22 +47,163 @@
                 <div class="tab-pane fade{% if loop.first %} show active{% endif %}"
                      id="yearmap-pane-{{ m.year }}" role="tabpanel"
                      aria-labelledby="yearmap-tab-{{ m.year }}">
-                    {# Drag-to-pan / wheel-to-zoom viewer (image_panzoom.js,
-                       Leaflet CRS.Simple under the hood). #}
-                    <div class="image-panzoom border rounded" style="height: 45vh;"
-                         data-panzoom-src="{{ url_for('static', filename=m.static_path) }}"
-                         data-panzoom-alt="Territorial map of {{ m.year }} AD"></div>
-                    <div class="text-muted small mt-2 text-center">
-                        {% if m.source_site or m.source_url %}
-                        Source:
-                        {% if m.source_url %}
-                        <a href="{{ m.source_url }}" target="_blank" rel="noopener">{{ m.source_site or m.source_url }}</a>
-                        {% else %}
-                        {{ m.source_site }}
-                        {% endif %}
-                        &middot;
-                        {% endif %}
-                        <a href="{{ url_for('static', filename=m.static_path) }}" target="_blank">Full size</a>
+                    <div class="row g-3">
+                        {# Left: drag-to-pan / wheel-to-zoom viewer
+                           (image_panzoom.js, Leaflet CRS.Simple). #}
+                        <div class="col-lg-6">
+                            <div class="image-panzoom border rounded" style="height: 45vh;"
+                                 data-panzoom-src="{{ url_for('static', filename=m.static_path) }}"
+                                 data-panzoom-alt="Territorial map of {{ m.year }} AD"></div>
+                            <div class="text-muted small mt-2 text-center">
+                                {% if m.source_site or m.source_url %}
+                                Source:
+                                {% if m.source_url %}
+                                <a href="{{ m.source_url }}" target="_blank" rel="noopener">{{ m.source_site or m.source_url }}</a>
+                                {% else %}
+                                {{ m.source_site }}
+                                {% endif %}
+                                &middot;
+                                {% endif %}
+                                <a href="{{ url_for('static', filename=m.static_path) }}" target="_blank">Full size</a>
+                            </div>
+                        </div>
+                        {# Right: the factions on this year's map. Each is a
+                           Bootstrap pill trigger; clicking one reveals its
+                           detail pane (faction links + leader panel styled
+                           like the sidebar character accordion) alongside. #}
+                        <div class="col-lg-6">
+                            {% if m.factions %}
+                            <div class="row g-2">
+                                <div class="col-5">
+                                    <div class="nav flex-column align-items-start gap-1"
+                                         role="tablist" aria-orientation="vertical">
+                                        {% for f in m.factions %}
+                                        <button class="nav-link p-0 border-0 bg-transparent text-start yearmap-faction-toggle"
+                                                id="ymf-tab-{{ m.year }}-{{ f.id }}"
+                                                data-bs-toggle="pill"
+                                                data-bs-target="#ymf-pane-{{ m.year }}-{{ f.id }}"
+                                                type="button" role="tab"
+                                                aria-controls="ymf-pane-{{ m.year }}-{{ f.id }}"
+                                                aria-selected="false">
+                                            {{ macros.badge_widget(f) }}
+                                        </button>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="tab-content">
+                                        {% for f in m.factions %}
+                                        <div class="tab-pane fade" id="ymf-pane-{{ m.year }}-{{ f.id }}"
+                                             role="tabpanel"
+                                             aria-labelledby="ymf-tab-{{ m.year }}-{{ f.id }}">
+
+                                            {# Faction's external links. #}
+                                            {% set list_urls = f.urls %}
+                                            {% if list_urls %}
+                                            <div class="chapter-section-card rounded p-2 mb-2">
+                                                <div class="small text-muted fw-bold mb-1">Links:</div>
+                                                <div class="sidebar-url-indent">
+                                                    {% include '_url_list.html' %}
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
+                                            {% set leaders = f.leaders | rejectattr('is_deleted') | list %}
+                                            {% if not leaders %}
+                                            <div class="text-muted small fst-italic">No leaders recorded for this faction.</div>
+                                            {% else %}
+                                            {% if leaders|length > 1 %}
+                                            {# Multiple leaders — switch between them with pills. #}
+                                            <ul class="nav nav-pills nav-fill flex-wrap mb-2" role="tablist">
+                                                {% for c in leaders %}
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link py-1 px-2 {% if loop.first %}active{% endif %}"
+                                                            id="ymfl-tab-{{ m.year }}-{{ f.id }}-{{ c.id }}"
+                                                            data-bs-toggle="pill"
+                                                            data-bs-target="#ymfl-pane-{{ m.year }}-{{ f.id }}-{{ c.id }}"
+                                                            type="button" role="tab"
+                                                            aria-controls="ymfl-pane-{{ m.year }}-{{ f.id }}-{{ c.id }}"
+                                                            aria-selected="{{ 'true' if loop.first else 'false' }}">
+                                                        {{ c.name }}
+                                                    </button>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                            <div class="tab-content">
+                                                {% for c in leaders %}
+                                                <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                                                     id="ymfl-pane-{{ m.year }}-{{ f.id }}-{{ c.id }}"
+                                                     role="tabpanel"
+                                                     aria-labelledby="ymfl-tab-{{ m.year }}-{{ f.id }}-{{ c.id }}">
+                                                    <h6 class="mb-0">{{ c.name }}</h6>
+                                                    {% if c.chinese_name %}
+                                                    <div>{{ c.chinese_name }}</div>
+                                                    {% endif %}
+                                                    {% if c.courtesty_name or c.chinese_courtesty_name %}
+                                                    <div class="mb-1">
+                                                        {{ c.courtesty_name }}{% if c.chinese_courtesty_name %} ({{ c.chinese_courtesty_name }}){% endif %}
+                                                    </div>
+                                                    {% endif %}
+
+                                                    {# Default-preferred visible portrait, sidebar-style. #}
+                                                    {% set portraits = c.portraits
+                                                       | rejectattr('is_deleted')
+                                                       | rejectattr('is_hidden')
+                                                       | sort(attribute='is_default', reverse=true) | list %}
+                                                    {% if portraits %}
+                                                    <div class="border rounded p-2 my-2">
+                                                        <img src="{{ url_for('static', filename=portraits[0].static_path) }}"
+                                                             alt="{{ portraits[0].name or c.name }}"
+                                                             class="img-fluid d-block mx-auto"
+                                                             loading="lazy"
+                                                             style="max-height: 200px; object-fit: contain;">
+                                                    </div>
+                                                    {% else %}
+                                                    <div class="bg-secondary-subtle text-muted text-center rounded d-flex align-items-center justify-content-center my-2"
+                                                         style="height: 120px; font-style: italic;">
+                                                        No Image.
+                                                    </div>
+                                                    {% endif %}
+
+                                                    {% if c.roles %}
+                                                    <div class="mb-2">
+                                                        {% for role in c.roles %}
+                                                        <div>{{ macros.badge_widget(role) }}</div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    {% endif %}
+
+                                                    {# All the leader's factions — clickable, opening the
+                                                       characters list filtered by that faction in a new tab. #}
+                                                    {% set leader_factions = c.factions | rejectattr('is_hidden') | list %}
+                                                    {% if leader_factions %}
+                                                    <div class="chapter-section-card rounded p-2">
+                                                        <div class="small text-muted fw-bold mb-1">Factions:</div>
+                                                        {% for lf in leader_factions %}
+                                                        <div>
+                                                            <a href="{{ url_for('main.characters', any_faction=lf.id) }}"
+                                                               target="_blank" rel="noopener"
+                                                               class="text-decoration-none">
+                                                                {{ macros.badge_widget(lf) }}
+                                                            </a>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="text-muted small fst-italic">No factions recorded for this year yet.</div>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
