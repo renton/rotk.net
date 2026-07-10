@@ -168,7 +168,8 @@ class TestSave:
     def test_garbage_bytes_refused(self, admin_client, db_session):
         client, _ = admin_client
         resp = _save(client, 208, b'<?php evil', 'map.png')
-        assert b"doesn't look like a real image" in resp.data
+        # "doesn't" renders autoescaped (&#39;) — assert the apostrophe-free tail.
+        assert b'look like a real image' in resp.data
         assert YearMap.query.filter_by(year=208).first() is None
 
     def test_extension_mismatch_refused(self, admin_client, db_session):
