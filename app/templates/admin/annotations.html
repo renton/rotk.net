@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}
+rotk.net - {% if is_public %}Public{% else %}Private{% endif %} Annotations
+{% endblock %}
+
+{% block page_content %}
+{% set page_endpoint = 'admin.annotations_public' if is_public else 'admin.annotations_private' %}
+
+<div class="page-header mb-4">
+    <h1>{% if is_public %}Public{% else %}Private{% endif %} Annotations</h1>
+    <p class="text-muted mb-0">
+        {% if is_public %}
+        Annotations visible to all readers. Click a chapter link on any row to
+        jump into the chapter view and add to the thread there.
+        {% else %}
+        Annotations visible to admins only. Same shape — jump into a chapter
+        to add to the thread.
+        {% endif %}
+    </p>
+</div>
+
+<form method="GET" action="{{ url_for(page_endpoint) }}" class="row g-2 align-items-end mb-4">
+    <div class="col-md-4">
+        <label for="chapter-filter" class="form-label">Filter by chapter</label>
+        <select name="chapter_num" id="chapter-filter" class="form-select">
+            <option value="">All chapters</option>
+            {% for c in chapters %}
+            <option value="{{ c.chapter_num }}"
+                {% if selected_chapter_num == c.chapter_num %}selected{% endif %}>
+                {{ c.chapter_num }}. {{ c.name | striptags | truncate(60) }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="sort-filter" class="form-label">Sort</label>
+        <select name="sort" id="sort-filter" class="form-select">
+            <option value="created_at" {% if sort == 'created_at' %}selected{% endif %}>Created</option>
+            <option value="chapter" {% if sort == 'chapter' %}selected{% endif %}>Chapter</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="dir-filter" class="form-label">Direction</label>
+        <select name="dir" id="dir-filter" class="form-select">
+            <option value="desc" {% if direction == 'desc' %}selected{% endif %}>Desc</option>
+            <option value="asc" {% if direction == 'asc' %}selected{% endif %}>Asc</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <a href="{{ url_for(page_endpoint) }}" class="btn btn-outline-secondary">Reset</a>
+    </div>
+</form>
+
+<div class="text-muted small mb-3">
+    {{ annotations|length }} {% if is_public %}public{% else %}private{% endif %} annotation{{ '' if annotations|length == 1 else 's' }}
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Chapter</th>
+            <th>Section (preview)</th>
+            <th>Body</th>
+            <th>Author</th>
+            <th>Created</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in annotations %}
+        <tr>
+            <td>
+                <a href="{{ url_for('main.chapter', chapter_num=a.chapter.chapter_num) }}">
+                    {{ a.chapter.chapter_num }}
+                </a>
+            </td>
+            <td class="small text-muted" style="max-width: 300px;">
+                <div class="text-truncate" title="{{ a.section_text|e }}">
+                    {{ a.section_text }}
+                </div>
+            </td>
+            <td style="max-width: 400px;">
+                <div class="text-truncate" title="{{ a.body|e }}">
+                    {{ a.body }}
+                </div>
+            </td>
+            <td class="small text-muted">{{ a.created_by }}</td>
+            <td class="small text-muted">{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td class="text-end" style="min-width: 180px;">
+                <a href="{{ url_for('main.chapter', chapter_num=a.chapter.chapter_num) }}#p"
+                   class="btn btn-sm btn-outline-primary"
+                   title="Open chapter to add to this thread">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                    Add
+                </a>
+                <form method="POST" action="{{ url_for('admin.annotation_delete', annotation_id=a.id) }}"
+                      class="d-inline"
+                      data-confirm="Delete this annotation? This can't be undone.">
+                    {{ csrf_form.hidden_tag() }}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-muted">No annotations{% if selected_chapter_num %} for chapter {{ selected_chapter_num }}{% endif %}.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+{% endblock %}

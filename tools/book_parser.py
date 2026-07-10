@@ -173,6 +173,72 @@ def apply_hidden_snippets(html, hidden_rows, admin=False):
     return ''.join(out)
 
 
+_P_RE = re.compile(r'(<p\b[^>]*>)(.*?)(</p>)', re.DOTALL | re.IGNORECASE)
+
+
+def normalize_paragraph_text(text):
+    """Whitespace-normalised paragraph text used as an Annotation's
+    `section_text` fingerprint. Same normalization on save + render
+    so equality-lookup works reliably."""
+    if not text:
+        return ''
+    return _WS_RE.sub(' ', text).strip()
+
+
+def annotation_section_hash(text):
+    """Short SHA-256 hash of the normalised text — used as a DOM-safe
+    key on annotation icons and in the client-side lookup dict."""
+    import hashlib
+    return hashlib.sha256(normalize_paragraph_text(text).encode('utf-8')).hexdigest()[:16]
+
+
+def inject_annotation_icons(html, annotations_by_section, is_admin):
+    """Walk each <p> in `html`; for any paragraph whose normalised text
+    matches a key in `annotations_by_section`, inject a notepad icon
+    at the very start of the <p> content.
+
+    Icon colour rules:
+      - Public reader: black icon iff the section has ≥1 public annotation.
+      - Admin: red icon (+ red exclamation) iff the section has ≥1
+        private annotation; otherwise black icon iff there are public.
+      - No icon otherwise.
+
+    `annotations_by_section` maps normalised section text → list of
+    Annotation-shaped objects (need `.is_public`).
+    """
+    if not annotations_by_section or not html:
+        return html
+
+    def process(match):
+        open_tag, inner, close_tag = match.group(1), match.group(2), match.group(3)
+        section = normalize_paragraph_text(strip_html_tags(inner))
+        anns = annotations_by_section.get(section)
+        if not anns:
+            return match.group(0)
+        has_public = any(a.is_public for a in anns)
+        has_private = any(not a.is_public for a in anns)
+        # Visibility: non-admin only sees the icon if there's a public
+        # annotation. Admin sees icon whenever there's any annotation.
+        if not is_admin and not has_public:
+            return match.group(0)
+        if is_admin and has_private:
+            icon_class = 'annotation-icon-red'
+            extra = '<i class="fa-solid fa-circle-exclamation text-danger ms-1" aria-hidden="true"></i>'
+        else:
+            icon_class = 'annotation-icon-black'
+            extra = ''
+        section_hash = annotation_section_hash(inner)
+        icon = (
+            f'<a href="#" class="annotation-icon {icon_class}" '
+            f'data-section-key="{section_hash}" '
+            f'aria-label="View annotations">'
+            f'<i class="fa-solid fa-note-sticky" aria-hidden="true"></i>{extra}</a> '
+        )
+        return f'{open_tag}{icon}{inner}{close_tag}'
+
+    return _P_RE.sub(process, html)
+
+
 def load_chapter_keywords(chapter_id, table_name, target_id_column):
     """Return {target_id: keyword_csv} for every association row in the
     given M2M table (chapter_character / event_chapter / chapter_location)

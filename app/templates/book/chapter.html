@@ -519,12 +519,80 @@
   </div>
 </div>
 
+{# Annotations modal — shared between public "view thread" and
+   admin "view + add to thread" flows. JS populates on icon click. #}
+<div class="modal fade" id="annotation-modal" tabindex="-1"
+     aria-labelledby="annotation-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="annotation-modal-label">Annotations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="annotation-section-context" class="small text-muted mb-3"></div>
+        <ul class="list-unstyled mb-3" id="annotation-thread"></ul>
+        {% if current_user.is_authenticated and current_user.is_administrator %}
+        <hr>
+        <form id="annotation-add-form">
+          {# Grab the CSRF via the same hidden-form pattern chapter_edit uses. #}
+          <div class="mb-2">
+            <label for="annotation-body" class="form-label small text-muted">Add to thread</label>
+            <textarea id="annotation-body" name="body" class="form-control" rows="4" required></textarea>
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="annotation-is-public" name="is_public" checked>
+              <label class="form-check-label" for="annotation-is-public">
+                Public (visible to non-admins)
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Add annotation</button>
+          </div>
+          <div id="annotation-form-error" class="small text-danger mt-2" hidden></div>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if current_user.is_authenticated and current_user.is_administrator %}
+{# Floating blue "add annotation" icon that follows the paragraph
+   containing the current text selection. JS positions + shows it. #}
+<a href="#" id="annotation-add-floater" class="annotation-icon annotation-icon-blue"
+   style="position:absolute; display:none; z-index:1050;"
+   aria-label="Add annotation to this paragraph">
+  <i class="fa-solid fa-note-sticky" aria-hidden="true"></i>
+</a>
+
+{# Hidden form to expose the CSRF token to annotations.js — same
+   pattern as admin_chapter_edit + admin_location_snippets. #}
+<form id="annotations-csrf-form" style="display:none;">
+  {{ annotation_csrf_form.hidden_tag() }}
+</form>
+{% endif %}
+
+{# Payload for annotations.js. Keyed by section_text SHA-256 (short)
+   so click handlers on <a data-section-key="..."> can look up the
+   thread + full section_text for submission. #}
+<script type="application/json" id="annotations-payload" nonce="{{ csp_nonce }}">
+{{ annotations_payload | tojson }}
+</script>
+
+<script type="application/json" id="annotations-meta" nonce="{{ csp_nonce }}">
+{"chapter_id": {{ chapter.id }},
+ "is_admin": {{ (current_user.is_authenticated and current_user.is_administrator) | tojson }},
+ "create_url": "{{ url_for('admin.annotation_create') }}"}
+</script>
+
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/chapter.js') }}"></script>
 <script src="{{ url_for('static', filename='js/chapter_style.js') }}"></script>
+<script src="{{ url_for('static', filename='js/annotations.js') }}"></script>
 {# Leaflet + the shared RotkMap module are only needed when this
    chapter has at least one positioned location. We keep the unconditional
    load for simplicity — both are cached after the first chapter view.

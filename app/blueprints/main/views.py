@@ -302,6 +302,7 @@ def timeline():
 @main.route('/chapter/<int:chapter_num>', methods=['GET'])
 def chapter(chapter_num):
     from collections import defaultdict
+    from flask_wtf import FlaskForm
     from app.models import ChapterHiddenSnippet
     from tools.book_parser import apply_hidden_snippets
 
@@ -693,6 +694,47 @@ def chapter(chapter_num):
     # Characters accordion when set.
     char_summary_by_id = load_chapter_character_summaries(chapter.id)
 
+    # ---- Annotations --------------------------------------------------
+    # Public readers see only public annotations; admins see everything.
+    # We inject an icon before each <p> that has matching annotations,
+    # and ship a JSON payload keyed by SHA-256 hash so the client JS
+    # can populate the thread modal on click.
+    from app.models import Annotation
+    from tools.book_parser import (
+        inject_annotation_icons,
+        annotation_section_hash,
+        normalize_paragraph_text,
+    )
+    ann_query = Annotation.query.filter_by(chapter_id=chapter.id)
+    if not is_admin:
+        ann_query = ann_query.filter_by(is_public=True)
+    annotations_all = ann_query.order_by(Annotation.created_at).all()
+    annotations_by_section = {}
+    for a in annotations_all:
+        annotations_by_section.setdefault(a.section_text, []).append(a)
+
+    rendered_content = inject_annotation_icons(
+        rendered_content, annotations_by_section, is_admin=is_admin,
+    )
+
+    # Client payload — hash keys so the DOM data-attribute is short.
+    annotations_payload = {}
+    for section_text, ann_list in annotations_by_section.items():
+        key = annotation_section_hash(section_text)
+        annotations_payload[key] = {
+            'section_text': section_text,
+            'thread': [
+                {
+                    'id': a.id,
+                    'body': a.body,
+                    'created_at': a.created_at.strftime('%Y-%m-%d %H:%M'),
+                    'created_by': a.created_by,
+                    'is_public': a.is_public,
+                }
+                for a in ann_list
+            ],
+        }
+
     return render_template(
         'book/chapter.html',
         chapter=chapter,
@@ -706,6 +748,8 @@ def chapter(chapter_num):
         next_chapter=next_chapter,
         chapter_map_items=chapter_map_items,
         char_summary_by_id=char_summary_by_id,
+        annotations_payload=annotations_payload,
+        annotation_csrf_form=FlaskForm(),
     )
 
 @main.route('/characters', methods=['GET', 'POST'])

@@ -26,6 +26,30 @@ body.is-admin span.location-ref {
     color: #c00;
 }
 
+/* Annotation icons injected before each <p> with attached annotations.
+   Colours encode state:
+     black — public annotations only (visible to everyone)
+     red   — private annotations exist (admin-only view)
+     blue  — floating "add" affordance that follows the paragraph
+             containing the current text selection (admin only)
+   All three share the .annotation-icon base; only the -black/-red/
+   -blue modifier changes the paint. */
+.annotation-icon {
+    text-decoration: none;
+    margin-right: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.2rem;
+}
+.annotation-icon:hover {
+    background-color: #f0f0f0;
+}
+.annotation-icon-black i.fa-note-sticky { color: #333; }
+.annotation-icon-red   i.fa-note-sticky { color: #c00; }
+.annotation-icon-blue  i.fa-note-sticky { color: #0d6efd; }
+
 /* Chapter Edit admin — the hide-snippet tool wraps admin-hidden prose
    in <s class="hidden-snippet">. Public chapter view removes these
    spans entirely; admin view renders them strikethrough + clickable

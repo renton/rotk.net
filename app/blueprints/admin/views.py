@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion, ChapterHiddenSnippet
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion, ChapterHiddenSnippet, Annotation
 from app.models.character import Portrait, PORTRAIT_DIR
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, recount_character_book_mentions, apply_hidden_snippets, strip_and_normalize_with_html_map, _hidden_snippet_context, _WS_RE
@@ -2374,3 +2374,129 @@ def delete_location_type(location_type_id):
     db.session.commit()
     flash(f"Deleted location type {name!r}.")
     return redirect(url_for('admin.location_types'))
+
+
+# ----- Annotations --------------------------------------------------------
+
+def _annotation_list(is_public):
+    """Shared list-page renderer for public + private annotation admin
+    pages. Both filter on chapter_num and support sort by chapter or
+    created_at."""
+    chapter_num = request.args.get('chapter_num', type=int)
+    sort = request.args.get('sort', 'created_at')
+    direction = request.args.get('dir', 'desc')
+    if sort not in ('created_at', 'chapter'):
+        sort = 'created_at'
+    if direction not in ('asc', 'desc'):
+        direction = 'desc'
+
+    query = (
+        Annotation.query
+        .join(Chapter, Chapter.id == Annotation.chapter_id)
+        .filter(Annotation.is_public.is_(is_public))
+    )
+    if chapter_num is not None:
+        query = query.filter(Chapter.chapter_num == chapter_num)
+
+    if sort == 'chapter':
+        order_col = Chapter.chapter_num
+    else:
+        order_col = Annotation.created_at
+    query = query.order_by(order_col.desc() if direction == 'desc' else order_col.asc())
+
+    annotations = query.all()
+    chapters = Chapter.query.order_by(Chapter.chapter_num).all()
+
+    return render_template(
+        'admin/annotations.html',
+        annotations=annotations,
+        chapters=chapters,
+        selected_chapter_num=chapter_num,
+        sort=sort,
+        direction=direction,
+        is_public=is_public,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/annotations/public', methods=['GET'])
+@login_required
+@admin_required
+def annotations_public():
+    return _annotation_list(is_public=True)
+
+
+@admin.route('/annotations/private', methods=['GET'])
+@login_required
+@admin_required
+def annotations_private():
+    return _annotation_list(is_public=False)
+
+
+@admin.route('/annotations/create', methods=['POST'])
+@login_required
+@admin_required
+def annotation_create():
+    """Create a new annotation. Called from the chapter view modal
+    and from the admin list pages' Add-to-thread button.
+
+    Payload: chapter_id, section_text (full paragraph text; server
+    normalises), body, is_public. Returns JSON with the new row's id
+    + rendered fields for the client to append into the current thread."""
+    from tools.book_parser import normalize_paragraph_text
+
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    chapter_id = request.form.get('chapter_id', type=int)
+    section_text = (request.form.get('section_text') or '').strip()
+    body = (request.form.get('body') or '').strip()
+    is_public = request.form.get('is_public') in ('1', 'true', 'True', 'on')
+    if not chapter_id or not section_text or not body:
+        return jsonify(error="chapter_id, section_text, body are required."), 400
+    chapter = Chapter.query.get(chapter_id)
+    if chapter is None:
+        return jsonify(error="chapter not found."), 404
+
+    # Normalise section_text so lookups by paragraph work regardless
+    # of whitespace quirks in the source form data.
+    section_text = normalize_paragraph_text(section_text)
+
+    row = Annotation(
+        chapter_id=chapter.id,
+        section_text=section_text,
+        body=body,
+        is_public=is_public,
+    )
+    db.session.add(row)
+    db.session.commit()
+
+    return jsonify(
+        id=row.id,
+        body=row.body,
+        created_at=row.created_at.strftime('%Y-%m-%d %H:%M'),
+        created_by=row.created_by,
+        is_public=row.is_public,
+    )
+
+
+@admin.route('/annotations/<int:annotation_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def annotation_delete(annotation_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+
+    row = Annotation.query.get_or_404(annotation_id)
+    db.session.delete(row)
+    db.session.commit()
+
+    if _wants_json():
+        return jsonify(ok=True)
+
+    # Non-JS fallback: bounce back to whichever list page fits.
+    dest = 'admin.annotations_public' if row.is_public else 'admin.annotations_private'
+    flash("Annotation deleted.")
+    return redirect(url_for(dest))
