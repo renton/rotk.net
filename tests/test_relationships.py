@@ -255,3 +255,32 @@ class TestListingAndSidebar:
         assert b'Relationships:' in resp.data
         assert b'Wife' in resp.data
         assert b'Husband' in resp.data
+
+
+class TestDropdownDisambiguation:
+    def test_colliding_labels_get_type_name(self, admin_client, db_session):
+        client, _ = admin_client
+        factories.make_relationship_type(name='Father/Son',
+                                         side1_label='Father',
+                                         side2_label='Son')
+        factories.make_relationship_type(name='Father/Daughter',
+                                         side1_label='Father',
+                                         side2_label='Daughter')
+        c = factories.make_character()
+        resp = client.get(f'/characters/edit/{c.id}')
+        # The two "Father of" options are disambiguated by type name...
+        assert b'Father of (Father/Son)' in resp.data
+        assert b'Father of (Father/Daughter)' in resp.data
+        # ...while unique labels stay clean.
+        assert b'>Son of<' in resp.data
+        assert b'>Daughter of<' in resp.data
+
+    def test_unique_labels_stay_clean(self, admin_client, db_session):
+        client, _ = admin_client
+        factories.make_relationship_type(name='Husband/Wife',
+                                         side1_label='Husband',
+                                         side2_label='Wife')
+        c = factories.make_character()
+        resp = client.get(f'/characters/edit/{c.id}')
+        assert b'>Husband of<' in resp.data
+        assert b'Husband of (' not in resp.data

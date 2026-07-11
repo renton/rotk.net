@@ -1137,6 +1137,24 @@ def edit_character(id):
         .order_by(RelationshipType.name)
         .all()
     )
+    # Dropdown options, disambiguated: two types sharing an end label
+    # ("Father of" from both Father/Son and Father/Daughter) get the
+    # type name appended so the admin can tell them apart. Unique
+    # labels stay clean.
+    from collections import Counter
+    rel_options = []
+    for t in relationship_types:
+        rel_options.append({'value': f'{t.id}:1',
+                            'label': (t.side1_label or t.name),
+                            'type_name': t.name})
+        if not t.is_symmetric:
+            rel_options.append({'value': f'{t.id}:2',
+                                'label': t.side2_label,
+                                'type_name': t.name})
+    label_counts = Counter(o['label'] for o in rel_options)
+    for o in rel_options:
+        suffix = f" ({o['type_name']})" if label_counts[o['label']] > 1 else ''
+        o['text'] = f"{o['label']} of{suffix}"
 
     # Character picker datalist (with faction names for disambiguation —
     # one join query; see the faction-leaders picker for rationale).
@@ -1167,6 +1185,7 @@ def edit_character(id):
         urls=urls,
         relationships=relationships,
         relationship_types=relationship_types,
+        rel_options=rel_options,
         rel_picker_characters=rel_picker_characters,
         rel_picker_faction_names=rel_picker_faction_names,
         csrf_form=csrf_form,

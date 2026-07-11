@@ -78,13 +78,10 @@
             <select id="relationship-option" name="relationship_option"
                     class="form-select" required>
                 <option value="" selected disabled>Choose…</option>
-                {% for t in relationship_types %}
-                {% if t.is_symmetric %}
-                <option value="{{ t.id }}:1">{{ t.side1_label or t.name }} of</option>
-                {% else %}
-                <option value="{{ t.id }}:1">{{ t.side1_label or t.name }} of</option>
-                <option value="{{ t.id }}:2">{{ t.side2_label }} of</option>
-                {% endif %}
+                {# Pre-built in the view: colliding end labels carry the
+                   type name, e.g. "Father of (Father/Son)". #}
+                {% for o in rel_options %}
+                <option value="{{ o.value }}">{{ o.text }}</option>
                 {% endfor %}
             </select>
         </div>
