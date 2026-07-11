@@ -52,6 +52,11 @@ class EditCharacterForm(FlaskForm):
     birth_date = StringField("Birth Date")
     death_date = StringField("Death Date")
     ancestral_home = StringField("Ancestral Home")
+    sex = SelectField(
+        "Sex",
+        choices=[('male', 'Male'), ('female', 'Female')],
+        default='male',
+    )
     notes = TextAreaField("Notes")
 
     roles = QuerySelectMultipleField(

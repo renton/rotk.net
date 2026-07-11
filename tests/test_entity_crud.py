@@ -645,3 +645,28 @@ class TestEventFactions:
         assert resp.status_code == 200
         assert b'Besiegers' in resp.data
         assert b'Wei Timeline' in resp.data
+
+
+class TestCharacterSex:
+    def test_defaults_male(self, db_session):
+        c = factories.make_character()
+        assert c.sex == 'male'
+
+    def test_new_character_form_defaults_male(self, admin_client,
+                                              db_session):
+        client, _ = admin_client
+        client.post('/characters/new', data={'name': 'Default Sex Guy'},
+                    follow_redirects=True)
+        from app.models import Character
+        c = Character.query.filter_by(name='Default Sex Guy').first()
+        assert c.sex == 'male'
+
+    def test_edit_saves_female(self, admin_client, db_session):
+        client, _ = admin_client
+        c = factories.make_character(name='Lady Someone')
+        db_session.commit()
+        client.post(f'/characters/edit/{c.id}', data={
+            'name': 'Lady Someone', 'sex': 'female',
+        }, follow_redirects=True)
+        db_session.expire_all()
+        assert c.sex == 'female'

@@ -22,6 +22,12 @@ class Character(AbstractObject):
 
     ancestral_home = db.Column(db.String(255), default="")
 
+    # 'male' | 'female'. Defaults male — the overwhelming majority of the
+    # novel's cast. Groundwork for eventually deriving relationship
+    # labels (Son vs Daughter) from the character instead of gendered
+    # RelationshipType pairs.
+    sex = db.Column(db.String(10), nullable=False, default='male')
+
     # Pre-computed total mentions of this character across the entire book.
     # Populated by `flask recount-book-mentions`; not live (scanning all
     # 120 chapters per page load would be too slow).

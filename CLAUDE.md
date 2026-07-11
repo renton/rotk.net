@@ -28,7 +28,7 @@ app/
   models/
     abstract.py          # AbstractObject (id/name/aliases/timestamps/soft-delete/audit) + AbstractTag (+ icon + 3 colour cols)
     audit.py             # ORM event hooks stamping created_by / last_edited_by on every Model with those columns
-    character.py         # Character, Link, Role, Faction, Portrait (+ association tables incl. faction_leader M2M — Faction.leaders, admin-curated on the faction edit page)
+    character.py         # Character (incl. `sex`: male|female, default male), Link, Role, Faction, Portrait (+ association tables incl. faction_leader M2M — Faction.leaders, admin-curated on the faction edit page)
     chapter.py           # Chapter (name + content + chapter_num + M2M to Character / Event / Location)
     event.py             # Event (name, aliases, optional Location FK, optional EventType FK, geo override) + EventType (AbstractTag + factions1_label/factions2_label) + event_faction sided M2M (side 1|2 in PK; Event.factions1/.factions2 viewonly — writes hit the table directly)
     location.py          # Location (name, aliases, lat/lng) — chapter↔location M2M attached here

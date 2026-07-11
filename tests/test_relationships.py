@@ -284,3 +284,20 @@ class TestDropdownDisambiguation:
         resp = client.get(f'/characters/edit/{c.id}')
         assert b'>Husband of<' in resp.data
         assert b'Husband of (' not in resp.data
+
+
+class TestDropdownSort:
+    def test_options_alphabetical(self, admin_client, db_session):
+        client, _ = admin_client
+        factories.make_relationship_type(name='Zeta', side1_label='Zealot',
+                                         side2_label='Acolyte')
+        factories.make_relationship_type(name='Mid', side1_label='Mother',
+                                         side2_label='')
+        c = factories.make_character()
+        resp = client.get(f'/characters/edit/{c.id}')
+        # Alphabetical by option text: Acolyte of < Mother of < Zealot of.
+        a = resp.data.find(b'>Acolyte of<')
+        m = resp.data.find(b'>Mother of<')
+        z = resp.data.find(b'>Zealot of<')
+        assert -1 not in (a, m, z)
+        assert a < m < z

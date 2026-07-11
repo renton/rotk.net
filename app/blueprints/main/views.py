@@ -1155,6 +1155,7 @@ def edit_character(id):
     for o in rel_options:
         suffix = f" ({o['type_name']})" if label_counts[o['label']] > 1 else ''
         o['text'] = f"{o['label']} of{suffix}"
+    rel_options.sort(key=lambda o: o['text'].lower())
 
     # Character picker datalist (with faction names for disambiguation —
     # one join query; see the faction-leaders picker for rationale).
