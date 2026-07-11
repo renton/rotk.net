@@ -250,6 +250,7 @@ def timeline():
         )
         for ev_id, side, f in fac_rows:
             chip = {
+                'id': f.id,
                 'name': f.name,
                 'font': f.font_colour or '#ffffff',
                 'bg': ('#0d6efd' if f.bg_colour == f.default_colour

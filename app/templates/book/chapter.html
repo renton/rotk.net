@@ -571,17 +571,21 @@
                       {# Sided faction participation — labels from the
                          event's type; a side only renders when it has
                          factions. #}
+                      {# Label stays small; pills sit OUTSIDE the .small
+                         wrapper so they render at regular badge size.
+                         Each pill links to the characters list filtered
+                         by that faction, in a new tab. #}
                       {% set et = ev.event_type %}
                       {% if ev.factions1 %}
-                      <div class="small mt-1">
-                        <span class="text-muted">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}:</span>
-                        {% for f in ev.factions1 %}{{ macros.badge_widget(f) }} {% endfor %}
+                      <div class="mt-1">
+                        <span class="text-muted small">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}:</span>
+                        {% for f in ev.factions1 %}<a href="{{ url_for('main.characters', any_faction=f.id) }}" target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a> {% endfor %}
                       </div>
                       {% endif %}
                       {% if ev.factions2 %}
-                      <div class="small mt-1">
-                        <span class="text-muted">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}:</span>
-                        {% for f in ev.factions2 %}{{ macros.badge_widget(f) }} {% endfor %}
+                      <div class="mt-1">
+                        <span class="text-muted small">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}:</span>
+                        {% for f in ev.factions2 %}<a href="{{ url_for('main.characters', any_faction=f.id) }}" target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a> {% endfor %}
                       </div>
                       {% endif %}
                       {% set list_urls = ev.urls %}

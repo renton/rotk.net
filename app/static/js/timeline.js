@@ -416,9 +416,11 @@
   function renderFactionSide(label, list) {
     if (!list || !list.length) return '';
     const chips = list.map(f =>
-      `<span class="badge rounded-pill me-1" style="background:${f.bg};color:${f.font};` +
-        (f.border ? `border:2px solid ${f.border};` : '') +
-      `">${escapeHtml(f.name)}</span>`
+      `<a href="/characters?any_faction=${encodeURIComponent(f.id)}" target="_blank" rel="noopener" class="text-decoration-none">` +
+        `<span class="badge rounded-pill me-1" style="background:${f.bg};color:${f.font};` +
+          (f.border ? `border:2px solid ${f.border};` : '') +
+        `">${escapeHtml(f.name)}</span>` +
+      `</a>`
     ).join('');
     return `<dt class="fst-italic">${escapeHtml(label)}</dt><dd>${chips}</dd>`;
   }

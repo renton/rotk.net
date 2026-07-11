@@ -599,6 +599,8 @@ class TestEventFactions:
         assert b'Defenders:' in resp.data
         assert b'Wei Side' in resp.data
         assert b'Shu Side' in resp.data
+        # Pills link to the faction-filtered characters list (new tab).
+        assert f'/characters?any_faction={wei.id}'.encode() in resp.data
 
     def test_events_list_shows_sided_lists_with_labels(self, client,
                                                        db_session):

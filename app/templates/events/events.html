@@ -61,15 +61,15 @@
             {% if event.location %}<div class="small">{{ event.location.name }}</div>{% endif %}
             {% set et = event.event_type %}
             {% if event.factions1 %}
-            <div class="small mt-1">
-                <span class="fst-italic text-muted">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}:</span>
-                {% for f in event.factions1 %}{{ macros.badge_widget(f) }} {% endfor %}
+            <div class="mt-1">
+                <span class="fst-italic text-muted small">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}:</span>
+                {% for f in event.factions1 %}<a href="{{ url_for('main.characters', any_faction=f.id) }}" target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a> {% endfor %}
             </div>
             {% endif %}
             {% if event.factions2 %}
-            <div class="small mt-1">
-                <span class="fst-italic text-muted">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}:</span>
-                {% for f in event.factions2 %}{{ macros.badge_widget(f) }} {% endfor %}
+            <div class="mt-1">
+                <span class="fst-italic text-muted small">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}:</span>
+                {% for f in event.factions2 %}<a href="{{ url_for('main.characters', any_faction=f.id) }}" target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a> {% endfor %}
             </div>
             {% endif %}
             {% set ch_list = chapter_lists.get(event.id, []) %}
@@ -125,7 +125,7 @@
                 {% if event.factions1 %}
                 <div class="fst-italic small text-muted">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}</div>
                 {% for f in event.factions1 %}
-                <div class="mb-1">{{ macros.badge_widget(f) }}</div>
+                <div class="mb-1"><a href="{{ url_for('main.characters', any_faction=f.id) }}" target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a></div>
                 {% endfor %}
                 {% endif %}
             </td>
@@ -133,7 +133,7 @@
                 {% if event.factions2 %}
                 <div class="fst-italic small text-muted">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}</div>
                 {% for f in event.factions2 %}
-                <div class="mb-1">{{ macros.badge_widget(f) }}</div>
+                <div class="mb-1"><a href="{{ url_for('main.characters', any_faction=f.id) }}" target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a></div>
                 {% endfor %}
                 {% endif %}
             </td>
