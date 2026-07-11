@@ -410,6 +410,19 @@
     );
   }
 
+  // One <dt>/<dd> row of faction badges for a side of an event, or ''
+  // when the side has no factions. Colours are pre-resolved server-side
+  // (badge_widget semantics: empty border = none).
+  function renderFactionSide(label, list) {
+    if (!list || !list.length) return '';
+    const chips = list.map(f =>
+      `<span class="badge rounded-pill me-1" style="background:${f.bg};color:${f.font};` +
+        (f.border ? `border:2px solid ${f.border};` : '') +
+      `">${escapeHtml(f.name)}</span>`
+    ).join('');
+    return `<dt class="fst-italic">${escapeHtml(label)}</dt><dd>${chips}</dd>`;
+  }
+
   function renderDetail(it) {
     const d = it._data || {};
     if (it.kind === 'chapter') {
@@ -434,6 +447,8 @@
         `<dl class="timeline-detail-meta">` +
           `<dt>Type</dt><dd>${typeBadge}</dd>` +
           `<dt>Year</dt><dd>${escapeHtml(d.date_str || '')} <span class="text-muted">(${fmtRange(d.year_lo, d.year_hi)})</span></dd>` +
+          renderFactionSide(d.factions1_label, d.factions1) +
+          renderFactionSide(d.factions2_label, d.factions2) +
         `</dl>` +
         renderEventUrls(d.urls);
     } else if (it.kind === 'character') {

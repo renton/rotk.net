@@ -59,6 +59,19 @@
             </div>
             {% if event.date %}<div class="small text-muted">{{ event.date }}</div>{% endif %}
             {% if event.location %}<div class="small">{{ event.location.name }}</div>{% endif %}
+            {% set et = event.event_type %}
+            {% if event.factions1 %}
+            <div class="small mt-1">
+                <span class="fst-italic text-muted">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}:</span>
+                {% for f in event.factions1 %}{{ macros.badge_widget(f) }} {% endfor %}
+            </div>
+            {% endif %}
+            {% if event.factions2 %}
+            <div class="small mt-1">
+                <span class="fst-italic text-muted">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}:</span>
+                {% for f in event.factions2 %}{{ macros.badge_widget(f) }} {% endfor %}
+            </div>
+            {% endif %}
             {% set ch_list = chapter_lists.get(event.id, []) %}
             {% if ch_list %}
             <div class="small mt-1">Chapters:
@@ -82,6 +95,8 @@
             <th>Type</th>
             <th>Date</th>
             <th>Location</th>
+            <th class="d-none d-md-table-cell">Faction 1</th>
+            <th class="d-none d-md-table-cell">Faction 2</th>
             <th class="d-none d-md-table-cell">Keywords</th>
             <th class="d-none d-md-table-cell">Chapters</th>
             {% if is_admin %}<th class="text-end">Actions</th>{% endif %}
@@ -103,6 +118,25 @@
             <td>{% if event.event_type %}{{ macros.badge_widget(event.event_type) }}{% endif %}</td>
             <td class="small">{{ event.date }}</td>
             <td>{{ event.location.name if event.location else '' }}</td>
+            {# Sided faction lists: italic type label above a vertical
+               pill stack. A side renders only when it has factions. #}
+            {% set et = event.event_type %}
+            <td class="d-none d-md-table-cell">
+                {% if event.factions1 %}
+                <div class="fst-italic small text-muted">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}</div>
+                {% for f in event.factions1 %}
+                <div class="mb-1">{{ macros.badge_widget(f) }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="d-none d-md-table-cell">
+                {% if event.factions2 %}
+                <div class="fst-italic small text-muted">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}</div>
+                {% for f in event.factions2 %}
+                <div class="mb-1">{{ macros.badge_widget(f) }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
             <td class="d-none d-md-table-cell small text-muted">{{ event.aliases }}</td>
             <td class="d-none d-md-table-cell small">
                 {% for c in chapter_lists.get(event.id, []) -%}
@@ -117,7 +151,7 @@
         </tr>
         {% else %}
         <tr>
-            <td colspan="7" class="text-muted">No events yet.</td>
+            <td colspan="9" class="text-muted">No events yet.</td>
         </tr>
         {% endfor %}
     </tbody>

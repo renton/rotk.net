@@ -234,6 +234,31 @@ def timeline():
                 'type_border':   (ut.border_colour if ut else '') or '',
             })
 
+    # Sided faction chips per event, bulk-loaded in one query. Colours
+    # follow badge_widget semantics: default (#ffffff) bg falls back to
+    # Bootstrap primary; default border means "no border" (empty).
+    from app.models.event import event_faction
+    factions_by_event = {}
+    if event_ids:
+        fac_rows = (
+            db.session.query(
+                event_faction.c.event_id, event_faction.c.side, Faction)
+            .join(Faction, Faction.id == event_faction.c.faction_id)
+            .filter(event_faction.c.event_id.in_(event_ids))
+            .order_by(Faction.name)
+            .all()
+        )
+        for ev_id, side, f in fac_rows:
+            chip = {
+                'name': f.name,
+                'font': f.font_colour or '#ffffff',
+                'bg': ('#0d6efd' if f.bg_colour == f.default_colour
+                       else f.bg_colour),
+                'border': ('' if f.border_colour == f.default_colour
+                           else f.border_colour),
+            }
+            factions_by_event.setdefault(ev_id, {1: [], 2: []})[side].append(chip)
+
     for e in events:
         span = parse_date_range(e.date)
         if span is None:
@@ -241,6 +266,7 @@ def timeline():
         lo, hi = span
         # Optional event-type colour + icon for the marker.
         et = getattr(e, 'event_type', None)
+        ev_factions = factions_by_event.get(e.id, {1: [], 2: []})
         event_items.append({
             'id': e.id,
             'name': e.name or '',
@@ -253,6 +279,10 @@ def timeline():
             'font_colour':   et.font_colour                   if et else '#ffffff',
             'border_colour': _visible_colour(et.border_colour if et else None),
             'urls':          urls_by_event_id.get(e.id, []),
+            'factions1':       ev_factions[1],
+            'factions2':       ev_factions[2],
+            'factions1_label': (et.factions1_label if et and et.factions1_label else 'Factions'),
+            'factions2_label': (et.factions2_label if et and et.factions2_label else 'Factions'),
         })
 
     # --- Characters ---
@@ -1968,7 +1998,12 @@ def events():
 
     query = (
         Event.query
-        .options(selectinload(Event.chapters))
+        .options(
+            selectinload(Event.chapters),
+            selectinload(Event.event_type),
+            selectinload(Event.factions1),
+            selectinload(Event.factions2),
+        )
         .filter(Event.is_deleted.is_(False))
     )
     if q:

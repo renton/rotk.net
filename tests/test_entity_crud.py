@@ -599,3 +599,47 @@ class TestEventFactions:
         assert b'Defenders:' in resp.data
         assert b'Wei Side' in resp.data
         assert b'Shu Side' in resp.data
+
+    def test_events_list_shows_sided_lists_with_labels(self, client,
+                                                       db_session):
+        from app.models import EventType
+        from app.models.event import event_faction
+        from app import db as _db
+        battle = EventType(name='List Battle', factions1_label='Attackers',
+                           factions2_label='Defenders')
+        db_session.add(battle)
+        db_session.flush()
+        ev = factories.make_event(name='Listed Clash',
+                                  event_type_id=battle.id)
+        wei = factories.make_faction(name='Wei Listed')
+        shu = factories.make_faction(name='Shu Listed')
+        _db.session.execute(event_faction.insert().values([
+            dict(event_id=ev.id, faction_id=wei.id, side=1),
+            dict(event_id=ev.id, faction_id=shu.id, side=2),
+        ]))
+        resp = client.get('/events')
+        assert resp.status_code == 200
+        # Card + table both render each side (label italic + pills).
+        assert resp.data.count(b'Attackers') >= 2
+        assert resp.data.count(b'Defenders') >= 2
+        assert resp.data.count(b'Wei Listed') >= 2
+        assert resp.data.count(b'Shu Listed') >= 2
+
+    def test_timeline_payload_carries_factions(self, client, db_session):
+        from app.models import EventType
+        from app.models.event import event_faction
+        from app import db as _db
+        battle = EventType(name='Timeline Battle',
+                           factions1_label='Besiegers',
+                           factions2_label='Besieged')
+        db_session.add(battle)
+        db_session.flush()
+        ev = factories.make_event(name='Timeline Siege', date='208',
+                                  event_type_id=battle.id)
+        wei = factories.make_faction(name='Wei Timeline')
+        _db.session.execute(event_faction.insert().values(
+            event_id=ev.id, faction_id=wei.id, side=1))
+        resp = client.get('/timeline')
+        assert resp.status_code == 200
+        assert b'Besiegers' in resp.data
+        assert b'Wei Timeline' in resp.data
