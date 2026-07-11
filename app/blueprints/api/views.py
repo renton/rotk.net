@@ -326,3 +326,179 @@ def character_detail(character_id):
         .first_or_404()
     )
     return jsonify(_characters_json([c])[0])
+
+
+# --------------------------------------------------------------------------
+# Factions / Roles / Tags
+# --------------------------------------------------------------------------
+
+from sqlalchemy import func  # noqa: E402
+
+
+def _tag_shaped_query(model):
+    """Base list query for AbstractTag rows: active, visible, by name,
+    with the standard q filter applied."""
+    query = model.query.filter(model.is_deleted.is_(False),
+                               model.is_hidden.is_(False))
+    query = like_filter(query, model.name, request.args.get('q'))
+    return query.order_by(model.name)
+
+
+def _faction_json(f, member_counts=None, members=False):
+    payload = ser.tag_shaped_ref(f)
+    payload['leaders'] = [ser.character_ref(c) for c in f.leaders
+                          if not c.is_deleted]
+    if member_counts is not None:
+        payload['member_count'] = member_counts.get(f.id, 0)
+    if members:
+        member_rows = (
+            db.session.query(Character)
+            .join(Character.faction_table,
+                  Character.faction_table.c.character_id == Character.id)
+            .filter(Character.faction_table.c.faction_id == f.id,
+                    Character.is_deleted.is_(False))
+            .order_by(Character.name)
+            .all()
+        )
+        payload['member_count'] = len(member_rows)
+        payload['members'] = [ser.character_ref(c) for c in member_rows]
+        payload['urls'] = ser.urls_for(f)
+        payload['year_map_years'] = [
+            y for (y,) in
+            db.session.query(YearMap.year)
+            .join(YearMap.faction_table,
+                  YearMap.faction_table.c.year_map_id == YearMap.id)
+            .filter(YearMap.faction_table.c.faction_id == f.id)
+            .order_by(YearMap.year)
+            .all()
+        ]
+    return payload
+
+
+def _member_counts(faction_ids):
+    if not faction_ids:
+        return {}
+    rows = (
+        db.session.query(
+            Character.faction_table.c.faction_id,
+            func.count(Character.faction_table.c.character_id),
+        )
+        .join(Character,
+              Character.id == Character.faction_table.c.character_id)
+        .filter(Character.faction_table.c.faction_id.in_(faction_ids),
+                Character.is_deleted.is_(False))
+        .group_by(Character.faction_table.c.faction_id)
+        .all()
+    )
+    return dict(rows)
+
+
+@api.route('/factions', methods=['GET'])
+def factions():
+    query = _tag_shaped_query(Faction).options(selectinload(Faction.leaders))
+    pagination, per_page = get_pagination(query)
+    counts = _member_counts([f.id for f in pagination.items])
+    return envelope(pagination, per_page,
+                    [_faction_json(f, member_counts=counts)
+                     for f in pagination.items])
+
+
+@api.route('/factions/<int:faction_id>', methods=['GET'])
+def faction_detail(faction_id):
+    f = (
+        Faction.query
+        .filter(Faction.id == faction_id,
+                Faction.is_deleted.is_(False),
+                Faction.is_hidden.is_(False))
+        .options(selectinload(Faction.leaders))
+        .first_or_404()
+    )
+    return jsonify(_faction_json(f, members=True))
+
+
+def _characters_count_map(assoc_table, id_col, ids):
+    """{tag_id: active-character count} over a character M2M table."""
+    if not ids:
+        return {}
+    rows = (
+        db.session.query(id_col, func.count(assoc_table.c.character_id))
+        .join(Character, Character.id == assoc_table.c.character_id)
+        .filter(id_col.in_(ids), Character.is_deleted.is_(False))
+        .group_by(id_col)
+        .all()
+    )
+    return dict(rows)
+
+
+@api.route('/roles', methods=['GET'])
+def roles():
+    query = _tag_shaped_query(Role)
+    pagination, per_page = get_pagination(query)
+    counts = _characters_count_map(
+        Character.role_table, Character.role_table.c.role_id,
+        [r.id for r in pagination.items])
+    items = []
+    for r in pagination.items:
+        payload = ser.tag_shaped_ref(r)
+        payload['character_count'] = counts.get(r.id, 0)
+        items.append(payload)
+    return envelope(pagination, per_page, items)
+
+
+@api.route('/roles/<int:role_id>', methods=['GET'])
+def role_detail(role_id):
+    r = (
+        Role.query
+        .filter(Role.id == role_id, Role.is_deleted.is_(False),
+                Role.is_hidden.is_(False))
+        .first_or_404()
+    )
+    payload = ser.tag_shaped_ref(r)
+    chars = (
+        db.session.query(Character)
+        .join(Character.role_table,
+              Character.role_table.c.character_id == Character.id)
+        .filter(Character.role_table.c.role_id == r.id,
+                Character.is_deleted.is_(False))
+        .order_by(Character.name)
+        .all()
+    )
+    payload['character_count'] = len(chars)
+    payload['characters'] = [ser.character_ref(c) for c in chars]
+    payload['urls'] = ser.urls_for(r)
+    return jsonify(payload)
+
+
+@api.route('/tags', methods=['GET'])
+def tags():
+    query = _tag_shaped_query(Tag)
+    pagination, per_page = get_pagination(query)
+    ids = [t.id for t in pagination.items]
+    counts = {}
+    if ids:
+        counts = dict(
+            db.session.query(TagAssociation.tag_id,
+                             func.count(TagAssociation.id))
+            .filter(TagAssociation.tag_id.in_(ids))
+            .group_by(TagAssociation.tag_id)
+            .all()
+        )
+    items = []
+    for t in pagination.items:
+        payload = ser.tag_shaped_ref(t)
+        payload['usage_count'] = counts.get(t.id, 0)
+        items.append(payload)
+    return envelope(pagination, per_page, items)
+
+
+@api.route('/tags/<int:tag_id>', methods=['GET'])
+def tag_detail(tag_id):
+    t = (
+        Tag.query
+        .filter(Tag.id == tag_id, Tag.is_deleted.is_(False),
+                Tag.is_hidden.is_(False))
+        .first_or_404()
+    )
+    payload = ser.tag_shaped_ref(t)
+    payload['usage_count'] = t.associations.count()
+    return jsonify(payload)

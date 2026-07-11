@@ -138,3 +138,56 @@ class TestCharactersApi:
         resp = client.get('/api/v1/characters?faction_id=abc')
         assert resp.status_code == 400
         assert 'must be an integer' in resp.get_json()['error']
+
+
+class TestFactionsRolesTagsApi:
+    def test_factions_list_and_detail(self, client, db_session):
+        f = factories.make_faction(name='Api Banner')
+        leader = factories.make_character(name='Api Leader')
+        member = factories.make_character(name='Api Member')
+        f.leaders.append(leader)
+        member.factions.append(f)
+        leader.factions.append(f)
+        factories.make_url(target_type='faction', target_id=f.id,
+                           name='Banner Wiki')
+        db_session.flush()
+
+        data = client.get('/api/v1/factions').get_json()
+        row = next(i for i in data['items'] if i['name'] == 'Api Banner')
+        assert row['leaders'][0]['name'] == 'Api Leader'
+        assert row['member_count'] == 2
+        assert_no_private_keys(data)
+
+        detail = client.get(f'/api/v1/factions/{f.id}').get_json()
+        assert {m['name'] for m in detail['members']} == \
+            {'Api Leader', 'Api Member'}
+        assert detail['urls'][0]['name'] == 'Banner Wiki'
+        assert detail['year_map_years'] == []
+        assert_no_private_keys(detail)
+
+    def test_hidden_faction_excluded(self, client, db_session):
+        f = factories.make_faction(name='Merged Away', is_hidden=True)
+        db_session.flush()
+        data = client.get('/api/v1/factions').get_json()
+        assert all(i['name'] != 'Merged Away' for i in data['items'])
+        assert client.get(f'/api/v1/factions/{f.id}').status_code == 404
+
+    def test_roles(self, client, db_session):
+        r = factories.make_role(name='api general')
+        c = factories.make_character(name='Role Holder')
+        c.roles.append(r)
+        db_session.flush()
+        data = client.get('/api/v1/roles?q=api gen').get_json()
+        assert data['items'][0]['character_count'] == 1
+        detail = client.get(f'/api/v1/roles/{r.id}').get_json()
+        assert detail['characters'][0]['name'] == 'Role Holder'
+        assert_no_private_keys(detail)
+
+    def test_tags(self, client, db_session):
+        t = factories.make_tag(name='api-tag')
+        db_session.flush()
+        data = client.get('/api/v1/tags?q=api-tag').get_json()
+        assert data['items'][0]['name'] == 'api-tag'
+        assert data['items'][0]['usage_count'] == 0
+        detail = client.get(f'/api/v1/tags/{t.id}').get_json()
+        assert detail['usage_count'] == 0
