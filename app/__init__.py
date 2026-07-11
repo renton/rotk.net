@@ -105,6 +105,12 @@ def create_app(config_name):
     from app.blueprints.admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
+    # Public read-only JSON API. Whole-blueprint rate limit — generous
+    # enough for an MCP client, tight enough to blunt scraping.
+    from app.blueprints.api import api as api_blueprint
+    limiter.limit("120/minute")(api_blueprint)
+    app.register_blueprint(api_blueprint, url_prefix='/api/v1')
+
     # Importing edit_log registers SQLAlchemy Mapper event listeners that
     # write to the Edit audit table on every ORM insert/update/delete.
     # Side-effect-only import; nothing in here is called by name.
