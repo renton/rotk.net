@@ -49,6 +49,7 @@
         <li class="list-group-item"><a href="#yearly-maps">Yearly Maps (per-year territory images)</a></li>
         <li class="list-group-item"><a href="#faction-leaders">Faction leaders</a></li>
         <li class="list-group-item"><a href="#relationships">Character relationships (family ties)</a></li>
+        <li class="list-group-item"><a href="#api-explorer">API Explorer (trying the public JSON API)</a></li>
     </ol>
 </div>
 
@@ -847,6 +848,30 @@
             character panel gets a <em>Relationships</em> card: the
             related character as a coloured pill plus the tie label in
             small text.</li>
+    </ul>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="api-explorer" class="mb-5">
+    <h2>API Explorer (trying the public JSON API)</h2>
+    <p>
+        The site exposes a read-only JSON API at <code>/api/v1</code>
+        (anonymous, rate-limited; only public data — no users, edits or
+        private annotations). <em>Admin → API Explorer</em> lets you try
+        it without leaving the browser:
+    </p>
+    <ul>
+        <li>Pick a <strong>resource</strong> from the dropdown — the
+            parameter form regenerates from the endpoint registry.</li>
+        <li>Toggle <strong>List / Single item</strong> where a detail
+            endpoint exists (chapters are addressed by chapter number,
+            year maps by year, everything else by id).</li>
+        <li><strong>Send</strong> shows the HTTP status, elapsed time,
+            the final URL (clickable / copyable) and the pretty-printed
+            JSON response.</li>
+        <li><code>GET /api/v1/</code> itself returns the same endpoint
+            catalogue — useful as a starting point for external tools
+            (e.g. a future MCP server).</li>
     </ul>
 </section>
 {% endblock %}

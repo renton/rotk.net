@@ -58,8 +58,13 @@ app/
                          #   /admin/chapter-edit (+ hide / restore prose spans),
                          #   /admin/annotations/{public,private} (+ create / delete / restore / close-thread),
                          #   /admin/yearly-maps (+ per-year upload-or-edit modal incl. factions chip picker / remove),
-                         #   /admin/relationship-types (+ new / edit / delete w/ in-use guard)
+                         #   /admin/relationship-types (+ new / edit / delete w/ in-use guard),
+                         #   /admin/api-explorer (interactive tester for /api/v1)
     admin/forms.py       # EditTagForm, EditUrlTypeForm, EditEventTypeForm, EditRelationshipTypeForm, CreateUserForm
+    api/__init__.py      # Public read-only JSON API blueprint (mounted at /api/v1; whole-blueprint 120/min rate limit)
+    api/registry.py      # Endpoint catalogue — SINGLE SOURCE OF TRUTH for GET /api/v1/ (self-describing index) AND the /admin/api-explorer param forms
+    api/serializers.py   # Hand-rolled ref/full serializers. Privacy rules live here: never created_by/last_edited_by/notes; hidden/soft-deleted rows never serialized
+    api/views.py         # GET-only endpoints, envelope pagination ({items,page,per_page,pages,total}), JSON error handlers, bulk-join maps per resource
   templates/             # Jinja2: book/, characters/, factions/, roles/, events/, locations/, admin/, auth/, errors/
                          # Shared partials: _macros.html (badge_widget with icon prefix),
                          #   _url_section.html (External Links fieldset on edit pages),
@@ -75,7 +80,8 @@ app/
                          #   admin_colour_picker.js (Randomize palette button injector),
                          #   admin_yearly_maps.js (populate the shared Yearly Maps upload/edit modal per row),
                          #   image_panzoom.js (REUSABLE drag/wheel-zoom image viewer: Leaflet CRS.Simple on any
-                         #     .image-panzoom[data-panzoom-src] element; auto-init + Bootstrap tab/collapse re-measure)
+                         #     .image-panzoom[data-panzoom-src] element; auto-init + Bootstrap tab/collapse re-measure),
+                         #   api_explorer.js (registry-driven endpoint dropdown + param form + fetch/inspect)
 
 tools/
   scraper.py             # scrape_rotk_book() + scrape_rotk_characters()
@@ -126,6 +132,7 @@ db-data/                 # Postgres data volume for local dev (gitignored)
 13. **Hidden prose spans** (`ChapterHiddenSnippet`, `/admin/chapter-edit`). Admin highlights prose → the span is fingerprinted (same `(before, match, after)` shape as MatchExclusion) and REMOVED from the public chapter render entirely (`apply_hidden_snippets(html, rows, admin=False)`); the admin editor renders it as clickable strikethrough instead (`admin=True`). Applied to `chapter.content` BEFORE pill-tagging so hidden text never participates in needle matching, mention counts, or exclusion fingerprints. Distinct concept from MatchExclusion (which keeps text visible, just un-pilled).
 14. **Annotations** (`Annotation`, per-paragraph threads). Section identity is content-addressed: `section_text` stores the readable paragraph text; comparisons and hash keys go through `annotation_section_canonical` (strip tags → unescape entities → **remove all whitespace**). All-whitespace-removal is load-bearing: browser `textContent` inserts nothing at tag boundaries while `strip_html_tags` inserts a space, so collapsed-whitespace forms never agree — deleted-whitespace forms do. Icons are server-injected per `<p>` (`inject_annotation_icons`): black = has public (everyone), red + exclamation = has private (admin only), blue hover-revealed = no annotations yet (admin add affordance). Character/location refs are auto-detected at CREATE time from the chapter's associations (`detect_annotation_refs`) and stored on `annotation_character` / `annotation_location` M2Ms — redundant across a thread by accepted design.
 15. **Yearly territory maps** (`YearMap`, chapter-page panel). Admin uploads one image per year (184–280) at `/admin/yearly-maps` (Portrait-grade upload hardening: size cap, magic bytes, extension consistency, server-built `<year>.<ext>` filename under `static/yearmaps/`) plus the attribution pair and the year's faction set (chip picker; `year_map_faction` replaced wholesale on every modal save). On the chapter page, `_chapter_years(chapter.date)` parses the free-form date via `parse_date_range` into an inclusive year list ("208" → [208]; integer span edges are exclusive, so last year = ceil(hi) − 1); years that have a YearMap render as tabs in a collapsible header panel — map left in the reusable `image_panzoom.js` viewer, the year's factions as a two-column down-then-across pill list (first auto-selected), and a leader detail pane (faction URLs + per-leader tabs: portrait, roles, faction pills linking to the filtered characters list). No YearMap rows or unparseable/absent `chapter.date` → the panel doesn't render at all.
+16. **Public JSON API** (`/api/v1`, `app/blueprints/api/`). GET-only, anonymous, 120 req/min per IP. Lists return `{items, page, per_page, pages, total}` (per_page cap 100; chapters default 20 because full prose is included on lists AND detail — deliberate user decision). Payloads carry smart joins (character → factions/roles/sex-resolved relationships/portraits/urls/chapter keywords; event → sided faction lists with resolved labels; location → bulk-loaded ancestry chain; chapter → associated refs + prev/next). PRIVACY: no users/edits endpoints, `created_by`/`last_edited_by`/`notes` never serialized, private annotations never served, hidden/soft-deleted rows filtered everywhere — `tests/test_api.py::assert_no_private_keys` enforces this recursively. `registry.py` is the endpoint catalogue consumed by both the `GET /api/v1/` index and the `/admin/api-explorer` form generator — new endpoints must be added there too. Chapters and year-maps are addressed by their public identifiers (`chapter_num`, `year`), not row ids.
 
 ## Running it
 
@@ -249,7 +256,8 @@ for the run commands). Layout:
   `test_parser_db`. HTTP suites: `test_auth`, `test_public_routes`,
   `test_association_admin`, `test_chapter_edit_annotations`,
   `test_entity_crud`, `test_year_maps` (admin CRUD + chapter-page
-  territory-map panel). Cross-feature: `test_composites` (annotation vs
+  territory-map panel), `test_api` (the /api/v1 surface + privacy
+  guarantees). Cross-feature: `test_composites` (annotation vs
   hidden-snippet orphaning, Lady Cao mirror-exclusion split, exclusion
   context-shift — several are executable documentation of ACCEPTED
   caveats; if one starts failing after a change, update docs + decide

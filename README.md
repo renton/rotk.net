@@ -13,6 +13,7 @@ Live at [rotk.net](https://rotk.net).
 - **Map + timeline views** — locations plotted on an interactive map (pins + GeoJSON territories); events and chapters on a parsed-date timeline.
 - **Character explorer** — filter by faction / role / letter / search, sortable by book-wide mention count.
 - **Admin suite** — association editors with per-snippet match exclusions, chapter prose hiding, an image manager, audit trail of every edit, and an in-app how-to FAQ.
+- **Public JSON API** — read-only `/api/v1` with rich joined payloads for every public resource (characters, factions, events, locations, chapters incl. prose, relationships, year maps, public annotations), self-describing index, and an admin API Explorer for trying endpoints.
 
 ## Stack
 
@@ -362,6 +363,36 @@ examples/
 - `/admin/edits` — full edit history (filterable by model + row)
 - `/admin/image-manager`, `/admin/tags`, `/admin/url-types`, `/admin/event-types` — CRUD for each tag-shaped type, with usage counts and reassign-before-delete guards
 - `/admin/users` — promote / demote (you can't demote yourself or the last remaining admin)
+
+## Public API
+
+A read-only JSON API mirrors the public site at `/api/v1` — anonymous,
+rate-limited (120 req/min per IP), GET-only. `GET /api/v1/` returns a
+self-describing index of every endpoint and its query params (the same
+registry that powers the admin API Explorer at `/admin/api-explorer`).
+
+Lists are paginated (`?page`, `?per_page`, cap 100) and return
+`{items, page, per_page, pages, total}`; detail endpoints return the
+bare object. Payloads join related records in: a character carries its
+factions, roles, relationships (sex-resolved labels), portraits, links
+and chapter appearances; an event carries its sided faction lists;
+chapters include the full prose.
+
+```bash
+curl -s https://rotk.net/api/v1/ | jq '.endpoints[].path'
+curl -s 'https://rotk.net/api/v1/characters?q=Cao&sort=mentions&dir=desc' | jq '.items[0]'
+curl -s https://rotk.net/api/v1/chapters/60 | jq '.title, .years'
+curl -s 'https://rotk.net/api/v1/events?chapter_num=60' | jq '.items[].name'
+```
+
+Resources: `characters`, `factions`, `roles`, `tags`, `events`,
+`event-types`, `locations`, `location-types`, `chapters` (by
+`chapter_num`), `relationships`, `relationship-types`, `year-maps` (by
+`year`), `annotations` (public threads only).
+
+Admin data is not part of the API: there are no users/edits endpoints,
+audit columns and notes are never serialized, and private annotations
+are never served.
 
 ## Running the tests
 
