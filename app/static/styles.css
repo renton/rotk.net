@@ -281,3 +281,11 @@ p.quote {
     white-space: normal;
     text-align: left;
 }
+
+/* Admin user dropdown: it's long (section headers + ~20 items), so on
+   short viewports let it scroll internally instead of clipping past
+   the bottom of the screen. */
+.navbar .dropdown-menu[aria-labelledby="navbarDropdown"] {
+    max-height: 85vh;
+    overflow-y: auto;
+}
