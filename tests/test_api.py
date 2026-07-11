@@ -527,3 +527,20 @@ class TestApiExplorerPage:
         assert resp.status_code == 302   # anonymous → login
         uclient, _ = user_client
         assert uclient.get('/admin/api-explorer').status_code == 403
+
+
+class TestApiIsReadOnly:
+    def test_every_api_route_is_get_only(self, app, db_session):
+        """Walk the URL map: no /api/v1 rule may accept a write method."""
+        for rule in app.url_map.iter_rules():
+            if rule.rule.startswith('/api/v1'):
+                writes = rule.methods & {'POST', 'PUT', 'PATCH', 'DELETE'}
+                assert not writes, f'{rule.rule} allows {writes}'
+
+    def test_write_methods_405_json(self, client, db_session):
+        c = factories.make_character()
+        db_session.flush()
+        for method in ('post', 'put', 'patch', 'delete'):
+            resp = getattr(client, method)(f'/api/v1/characters/{c.id}')
+            assert resp.status_code == 405
+            assert 'read-only' in resp.get_json()['error']

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "rotk": {
+      "command": "python3",
+      "args": ["mcp_server/rotk_mcp.py"],
+      "env": {
+        "ROTK_API_BASE": "https://rotk.net"
+      }
+    }
+  }
+}

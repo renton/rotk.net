@@ -19,6 +19,16 @@ DEFAULT_PER_PAGE = 50
 MAX_PER_PAGE = 100
 
 
+@api.before_request
+def _enforce_read_only():
+    """Belt-and-braces: the API is READ-ONLY. Every route below is
+    GET-only already, but this guard makes the property structural —
+    a future route accidentally declaring methods=['POST'] still gets
+    refused here."""
+    if request.method not in ('GET', 'HEAD', 'OPTIONS'):
+        return jsonify(error='Method not allowed — this API is read-only.'), 405
+
+
 # --------------------------------------------------------------------------
 # Helpers
 # --------------------------------------------------------------------------

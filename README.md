@@ -392,7 +392,19 @@ Resources: `characters`, `factions`, `roles`, `tags`, `events`,
 
 Admin data is not part of the API: there are no users/edits endpoints,
 audit columns and notes are never serialized, and private annotations
-are never served.
+are never served. The API is structurally read-only — a blueprint-level
+guard rejects every non-GET method.
+
+### MCP server
+
+`mcp_server/rotk_mcp.py` wraps the API as [MCP](https://modelcontextprotocol.io)
+tools so AI assistants can query the data directly — built mainly for
+data-quality auditing (`rotk_find_data_gaps` sweeps for characters
+without factions, unparseable dates, geo-less locations, …). Zero
+dependencies beyond Python + `requests`; the repo-root `.mcp.json`
+wires it into Claude Code sessions automatically. `ROTK_API_BASE`
+selects the target site (default `https://rotk.net`). See
+`mcp_server/README.md`.
 
 ## Running the tests
 
