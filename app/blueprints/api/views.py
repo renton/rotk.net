@@ -817,3 +817,136 @@ def location_type_detail(type_id):
     payload['location_count'] = Location.query.filter_by(
         location_type_id=t.id, is_deleted=False).count()
     return jsonify(payload)
+
+
+# --------------------------------------------------------------------------
+# Chapters — full prose everywhere (per user decision), so the default
+# page size stays small.
+# --------------------------------------------------------------------------
+
+import re as _re  # noqa: E402
+
+from app.blueprints.main.views import _chapter_years  # noqa: E402
+
+CHAPTERS_PER_PAGE = 20
+_BR_RE = _re.compile(r'<\s*br\s*/?\s*>', _re.IGNORECASE)
+
+
+def _chapters_json(items):
+    ids = {c.id for c in items}
+
+    chars_map, events_map, locs_map, ann_counts = {}, {}, {}, {}
+    if ids:
+        for chid, character, kw, summary in (
+            db.session.query(
+                Character.chapter_character.c.chapter_id,
+                Character,
+                Character.chapter_character.c.keywords,
+                Character.chapter_character.c.summary,
+            )
+            .join(Character,
+                  Character.id == Character.chapter_character.c.character_id)
+            .filter(Character.chapter_character.c.chapter_id.in_(ids),
+                    Character.is_deleted.is_(False))
+            .order_by(Character.name)
+            .all()
+        ):
+            entry = ser.character_ref(character)
+            entry['keywords'] = kw or ''
+            entry['summary'] = summary or ''
+            chars_map.setdefault(chid, []).append(entry)
+
+        for chid, event, kw in (
+            db.session.query(event_chapter.c.chapter_id, Event,
+                             event_chapter.c.keywords)
+            .join(Event, Event.id == event_chapter.c.event_id)
+            .filter(event_chapter.c.chapter_id.in_(ids),
+                    Event.is_deleted.is_(False))
+            .order_by(Event.name)
+            .all()
+        ):
+            events_map.setdefault(chid, []).append(
+                {'id': event.id, 'name': event.name, 'keywords': kw or ''})
+
+        for chid, location, kw in (
+            db.session.query(chapter_location.c.chapter_id, Location,
+                             chapter_location.c.keywords)
+            .join(Location, Location.id == chapter_location.c.location_id)
+            .filter(chapter_location.c.chapter_id.in_(ids),
+                    Location.is_deleted.is_(False))
+            .order_by(Location.name)
+            .all()
+        ):
+            entry = ser.location_ref(location)
+            entry['keywords'] = kw or ''
+            locs_map.setdefault(chid, []).append(entry)
+
+        ann_counts = dict(
+            db.session.query(Annotation.chapter_id,
+                             func.count(Annotation.id))
+            .filter(Annotation.chapter_id.in_(ids),
+                    Annotation.is_public.is_(True),
+                    Annotation.is_deleted.is_(False))
+            .group_by(Annotation.chapter_id)
+            .all()
+        )
+
+    # prev/next resolved against the full ordered chapter-number list.
+    all_nums = [n for (n,) in
+                db.session.query(Chapter.chapter_num)
+                .filter(Chapter.is_deleted.is_(False))
+                .order_by(Chapter.chapter_num).all()]
+    pos = {n: i for i, n in enumerate(all_nums)}
+
+    out = []
+    for c in items:
+        i = pos.get(c.chapter_num)
+        out.append({
+            'chapter_num': c.chapter_num,
+            'title': _BR_RE.sub(' ', c.name or '').strip(),
+            'date': ser.date_span(c.date),
+            'years': _chapter_years(c.date),
+            'content': c.content or '',
+            'characters': chars_map.get(c.id, []),
+            'events': events_map.get(c.id, []),
+            'locations': locs_map.get(c.id, []),
+            'public_annotation_count': ann_counts.get(c.id, 0),
+            'prev_chapter_num': (all_nums[i - 1]
+                                 if i is not None and i > 0 else None),
+            'next_chapter_num': (all_nums[i + 1]
+                                 if i is not None and i + 1 < len(all_nums)
+                                 else None),
+        })
+    return out
+
+
+@api.route('/chapters', methods=['GET'])
+def chapters():
+    query = Chapter.query.filter(Chapter.is_deleted.is_(False))
+    query = like_filter(query, Chapter.name, request.args.get('q'))
+    character_id = int_arg('character_id')
+    if character_id is not None:
+        query = query.filter(
+            Chapter.characters.any(Character.id == character_id))
+    event_id = int_arg('event_id')
+    if event_id is not None:
+        query = query.filter(Chapter.events.any(Event.id == event_id))
+    location_id = int_arg('location_id')
+    if location_id is not None:
+        query = query.filter(
+            Chapter.locations.any(Location.id == location_id))
+    query = query.order_by(Chapter.chapter_num)
+    pagination, per_page = get_pagination(
+        query, default_per_page=CHAPTERS_PER_PAGE)
+    return envelope(pagination, per_page, _chapters_json(pagination.items))
+
+
+@api.route('/chapters/<int:chapter_num>', methods=['GET'])
+def chapter_detail(chapter_num):
+    c = (
+        Chapter.query
+        .filter(Chapter.chapter_num == chapter_num,
+                Chapter.is_deleted.is_(False))
+        .first_or_404()
+    )
+    return jsonify(_chapters_json([c])[0])

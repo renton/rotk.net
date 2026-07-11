@@ -330,3 +330,60 @@ class TestLocationsApi:
         assert data['items'][0]['location_count'] == 1
         detail = client.get(f'/api/v1/location-types/{lt.id}').get_json()
         assert detail['location_count'] == 1
+
+
+class TestChaptersApi:
+    def _seed(self, db_session):
+        ch1 = factories.make_chapter(
+            name='First <br> Clause', date='208',
+            content='<p>Prose one.</p>', chapter_num=9001)
+        ch2 = factories.make_chapter(
+            name='Second Chapter', content='<p>Prose two.</p>',
+            chapter_num=9002)
+        c = factories.make_character(name='Chapter Api Guy')
+        factories.associate_character(ch1, c, keywords='Chapter Api Guy')
+        ev = factories.make_event(name='Chapter Api Event')
+        factories.associate_event(ch1, ev, keywords='Chapter Api Event')
+        loc = factories.make_location(name='Chapter Api Place')
+        factories.associate_location(ch1, loc, keywords='Chapter Api Place')
+        factories.make_annotation(chapter=ch1, section_text='Prose one.',
+                                  is_public=True)
+        factories.make_annotation(chapter=ch1, section_text='Prose one.',
+                                  is_public=False)   # private — not counted
+        db_session.flush()
+        return ch1, ch2
+
+    def test_list_full_content_and_joins(self, client, db_session):
+        ch1, ch2 = self._seed(db_session)
+        data = client.get('/api/v1/chapters').get_json()
+        row = next(i for i in data['items'] if i['chapter_num'] == 9001)
+        assert row['title'] == 'First Clause'        # <br> collapsed
+        assert row['content'] == '<p>Prose one.</p>' # prose on the LIST
+        assert row['years'] == [208]
+        assert row['characters'][0]['name'] == 'Chapter Api Guy'
+        assert row['characters'][0]['keywords'] == 'Chapter Api Guy'
+        assert row['events'][0]['name'] == 'Chapter Api Event'
+        assert row['locations'][0]['name'] == 'Chapter Api Place'
+        assert row['public_annotation_count'] == 1   # private excluded
+        assert row['next_chapter_num'] == 9002
+        assert_no_private_keys(data)
+
+    def test_detail_by_chapter_num(self, client, db_session):
+        ch1, ch2 = self._seed(db_session)
+        detail = client.get('/api/v1/chapters/9002').get_json()
+        assert detail['content'] == '<p>Prose two.</p>'
+        assert detail['prev_chapter_num'] == 9001
+        assert detail['next_chapter_num'] is None
+        assert client.get('/api/v1/chapters/424242').status_code == 404
+
+    def test_character_filter(self, client, db_session):
+        ch1, ch2 = self._seed(db_session)
+        c = factories.make_character(name='Filter Chapter Guy')
+        factories.associate_character(ch2, c, keywords='Filter Chapter Guy')
+        db_session.flush()
+        data = client.get(f'/api/v1/chapters?character_id={c.id}').get_json()
+        assert [i['chapter_num'] for i in data['items']] == [9002]
+
+    def test_default_page_size_small(self, client, db_session):
+        data = client.get('/api/v1/chapters').get_json()
+        assert data['per_page'] == 20
