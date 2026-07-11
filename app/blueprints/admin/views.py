@@ -2982,3 +2982,19 @@ def delete_relationship_type(type_id):
     db.session.commit()
     flash(f"Deleted relationship type {name!r}.")
     return redirect(url_for('admin.relationship_types'))
+
+
+# ---------------------------------------------------------------------------
+# API Explorer — try out /api/v1 endpoints from the admin UI
+# ---------------------------------------------------------------------------
+
+@admin.route('/api-explorer', methods=['GET'])
+@login_required
+@admin_required
+def api_explorer():
+    """Interactive tester for the public JSON API. The endpoint registry
+    (single source of truth in app/blueprints/api/registry.py) ships to
+    the page as JSON; api_explorer.js builds the param form per endpoint
+    and fires same-origin fetch() calls."""
+    from app.blueprints.api.registry import ENDPOINTS
+    return render_template('admin/api_explorer.html', endpoints=ENDPOINTS)

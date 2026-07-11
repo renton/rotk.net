@@ -510,3 +510,20 @@ class TestAnnotationsApi:
         data = client.get(
             f'/api/v1/annotations?chapter_num={ch2.chapter_num}').get_json()
         assert [i['body'] for i in data['items']] == ['ch2 note']
+
+
+class TestApiExplorerPage:
+    def test_admin_page_renders_registry(self, admin_client, db_session):
+        client, _ = admin_client
+        resp = client.get('/admin/api-explorer')
+        assert resp.status_code == 200
+        assert b'id="api-endpoints"' in resp.data
+        assert b'/api/v1/characters' in resp.data
+        assert b'js/api_explorer.js' in resp.data
+        assert b'id="api-endpoint"' in resp.data
+
+    def test_gating(self, client, user_client, db_session):
+        resp = client.get('/admin/api-explorer')
+        assert resp.status_code == 302   # anonymous → login
+        uclient, _ = user_client
+        assert uclient.get('/admin/api-explorer').status_code == 403
