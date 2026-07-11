@@ -38,6 +38,86 @@
 {% set owner_type = 'character' %}
 {% include '_url_section.html' %}
 
+{% if relationships is defined %}
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">Relationships</legend>
+    <p class="text-muted small mb-3">
+        Family ties. Two-way: adding "{{ character.name }} is the Son of X"
+        here makes {{ character.name }} appear as X's Son on X's page too —
+        both read the same underlying relationship.
+    </p>
+
+    {% if relationships %}
+    <ul class="list-group mb-3">
+        {% for r in relationships %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>
+                {{ r.other.name }}
+                <span class="small text-muted fst-italic">— {{ r.label }}</span>
+            </span>
+            <form method="POST"
+                  action="{{ url_for('main.remove_character_relationship', id=character.id, rel_id=r.id) }}">
+                {{ csrf_form.hidden_tag() }}
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                        data-confirm="Remove the relationship with {{ r.other.name|e }}? (Removes it from both characters.)">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted small">No relationships yet.</p>
+    {% endif %}
+
+    {% if relationship_types %}
+    <form method="POST"
+          action="{{ url_for('main.add_character_relationship', id=character.id) }}"
+          class="row g-2 align-items-end">
+        {{ csrf_form.hidden_tag() }}
+        <div class="col-md-4">
+            <label for="relationship-option" class="form-label">{{ character.name }} is the…</label>
+            <select id="relationship-option" name="relationship_option"
+                    class="form-select" required>
+                <option value="" selected disabled>Choose…</option>
+                {% for t in relationship_types %}
+                {% if t.is_symmetric %}
+                <option value="{{ t.id }}:1">{{ t.side1_label or t.name }} of</option>
+                {% else %}
+                <option value="{{ t.id }}:1">{{ t.side1_label or t.name }} of</option>
+                <option value="{{ t.id }}:2">{{ t.side2_label }} of</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-5">
+            <label for="relationship-search" class="form-label">Character</label>
+            <input type="text" id="relationship-search" name="character_search"
+                   class="form-control"
+                   list="relationship-characters-datalist"
+                   data-picker-target="character_id"
+                   placeholder="Type to search characters…"
+                   autocomplete="off" required>
+            <input type="hidden" name="character_id">
+        </div>
+        <div class="col-md-3 text-end">
+            <button type="submit" class="btn btn-primary">Add relationship</button>
+        </div>
+    </form>
+
+    <datalist id="relationship-characters-datalist">
+        {% for c in rel_picker_characters %}
+        {% set fnames = rel_picker_faction_names.get(c.id) %}
+        <option value="{{ c.name }}{% if fnames %} ({{ fnames|join(', ') }}){% endif %} #{{ c.id }}"></option>
+        {% endfor %}
+    </datalist>
+    {% else %}
+    <p class="text-muted small mb-0">
+        No relationship types defined yet — create some under
+        <em>Admin → Relationship Types</em> first.
+    </p>
+    {% endif %}
+</fieldset>
+{% endif %}
+
 {% if portraits is defined %}
 <fieldset class="border rounded p-3 mt-5">
     <legend class="float-none w-auto fs-5 px-2">Images</legend>
@@ -166,86 +246,6 @@
         <option value="{{ t.name }}">
         {% endfor %}
     </datalist>
-    {% endif %}
-</fieldset>
-{% endif %}
-
-{% if relationships is defined %}
-<fieldset class="border rounded p-3 mt-5">
-    <legend class="float-none w-auto fs-5 px-2">Relationships</legend>
-    <p class="text-muted small mb-3">
-        Family ties. Two-way: adding "{{ character.name }} is the Son of X"
-        here makes {{ character.name }} appear as X's Son on X's page too —
-        both read the same underlying relationship.
-    </p>
-
-    {% if relationships %}
-    <ul class="list-group mb-3">
-        {% for r in relationships %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>
-                {{ r.other.name }}
-                <span class="small text-muted fst-italic">— {{ r.label }}</span>
-            </span>
-            <form method="POST"
-                  action="{{ url_for('main.remove_character_relationship', id=character.id, rel_id=r.id) }}">
-                {{ csrf_form.hidden_tag() }}
-                <button type="submit" class="btn btn-sm btn-outline-danger"
-                        data-confirm="Remove the relationship with {{ r.other.name|e }}? (Removes it from both characters.)">Remove</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p class="text-muted small">No relationships yet.</p>
-    {% endif %}
-
-    {% if relationship_types %}
-    <form method="POST"
-          action="{{ url_for('main.add_character_relationship', id=character.id) }}"
-          class="row g-2 align-items-end">
-        {{ csrf_form.hidden_tag() }}
-        <div class="col-md-4">
-            <label for="relationship-option" class="form-label">{{ character.name }} is the…</label>
-            <select id="relationship-option" name="relationship_option"
-                    class="form-select" required>
-                <option value="" selected disabled>Choose…</option>
-                {% for t in relationship_types %}
-                {% if t.is_symmetric %}
-                <option value="{{ t.id }}:1">{{ t.side1_label or t.name }} of</option>
-                {% else %}
-                <option value="{{ t.id }}:1">{{ t.side1_label or t.name }} of</option>
-                <option value="{{ t.id }}:2">{{ t.side2_label }} of</option>
-                {% endif %}
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-5">
-            <label for="relationship-search" class="form-label">Character</label>
-            <input type="text" id="relationship-search" name="character_search"
-                   class="form-control"
-                   list="relationship-characters-datalist"
-                   data-picker-target="character_id"
-                   placeholder="Type to search characters…"
-                   autocomplete="off" required>
-            <input type="hidden" name="character_id">
-        </div>
-        <div class="col-md-3 text-end">
-            <button type="submit" class="btn btn-primary">Add relationship</button>
-        </div>
-    </form>
-
-    <datalist id="relationship-characters-datalist">
-        {% for c in rel_picker_characters %}
-        {% set fnames = rel_picker_faction_names.get(c.id) %}
-        <option value="{{ c.name }}{% if fnames %} ({{ fnames|join(', ') }}){% endif %} #{{ c.id }}"></option>
-        {% endfor %}
-    </datalist>
-    {% else %}
-    <p class="text-muted small mb-0">
-        No relationship types defined yet — create some under
-        <em>Admin → Relationship Types</em> first.
-    </p>
     {% endif %}
 </fieldset>
 {% endif %}
