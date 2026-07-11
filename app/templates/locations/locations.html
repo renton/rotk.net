@@ -89,7 +89,54 @@
     </div>
 </form>
 
-<div class="table-responsive">
+{# Mobile: stacked cards (the table below is hidden under md). #}
+<div class="d-md-none">
+    {% for loc in pagination.items %}
+    <div class="card mb-2">
+        <div class="card-body py-2 px-3">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+                <div class="fw-semibold">
+                    {% if is_admin %}
+                    <a href="{{ url_for('main.edit_location', id=loc.id, back=back_url) }}">{{ loc.name }}</a>
+                    {%- if loc.latitude is none and loc.longitude is none and loc.geojson is none %}
+                    <i class="fa-solid fa-circle-question text-warning ms-1"
+                       title="No geo data — does not appear on /map"
+                       aria-label="No geo data"></i>
+                    {%- endif %}
+                    {% else %}
+                    {{ loc.name }}
+                    {% endif %}
+                    {% if loc.chinese_name %}<span class="small text-muted fw-normal ms-1">{{ loc.chinese_name }}</span>{% endif %}
+                </div>
+                {% if loc.location_type %}<div>{{ macros.badge_widget(loc.location_type) }}</div>{% endif %}
+            </div>
+            {% set chain = ancestry_by_loc_id.get(loc.id, []) %}
+            {% if chain %}
+            <div class="small text-muted">
+                {% for ancestor in chain|reverse %}
+                    {{- ancestor.name }}{% if not loop.last %} › {% endif %}
+                {%- endfor %}
+            </div>
+            {% endif %}
+            {% set ch_list = chapter_lists.get(loc.id, []) %}
+            {% if ch_list %}
+            <div class="small mt-1">Chapters:
+                {% for chapter in ch_list -%}
+                <a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.chapter_num }}</a>{% if not loop.last %}, {% endif %}
+                {%- endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <p class="text-muted">
+        No locations match the current filters.
+        <a href="{{ url_for('main.locations') }}">Clear filters</a>.
+    </p>
+    {% endfor %}
+</div>
+
+<div class="table-responsive d-none d-md-block">
 <table class="table table-striped align-middle">
     <thead>
         <tr>

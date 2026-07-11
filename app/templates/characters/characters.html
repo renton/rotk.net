@@ -73,7 +73,60 @@
     {% endfor %}
 </ul>
 
-<div class="table-responsive">
+{# Mobile: stacked cards (the table below is hidden under md). #}
+<div class="d-md-none mt-4">
+    {% for character in characters %}
+    {% set portrait = default_portraits.get(character.id) %}
+    {% set ch_list = chapter_lists.get(character.id, []) %}
+    <div class="card mb-2">
+        <div class="card-body py-2 px-3">
+            <div class="d-flex gap-2">
+                {% if portrait %}
+                <img src="{{ url_for('static', filename=portrait.static_path) }}"
+                     alt="{{ character.name }}"
+                     loading="lazy"
+                     style="width: 48px; height: 48px; object-fit: contain;">
+                {% endif %}
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-start gap-2">
+                        <div class="fw-semibold">
+                            {% if current_user.is_authenticated and current_user.is_administrator %}
+                            <a href="{{ url_for('main.edit_character', id=character.id, back=back_url) }}">{{ character.name }}</a>
+                            {% else %}
+                            {{ character.name }}
+                            {% endif %}
+                            {% if character.is_fictional %}
+                            <i class="fa-solid fa-book text-muted ms-1"
+                               title="fictional" aria-label="fictional"></i>
+                            {% endif %}
+                        </div>
+                        <div class="text-nowrap small text-muted">{{ character.book_mention_count or 0 }} mentions</div>
+                    </div>
+                    {% if character.chinese_name or character.courtesty_name %}
+                    <div class="small text-muted">
+                        {{ character.chinese_name }}{% if character.chinese_name and character.courtesty_name %} · {% endif %}{{ character.courtesty_name }}
+                    </div>
+                    {% endif %}
+                    {% if character.primary_faction %}
+                    <div class="mt-1">{{ macros.badge_widget(character.primary_faction) }}</div>
+                    {% endif %}
+                    {% if ch_list %}
+                    <div class="small mt-1">Chapters:
+                        {% for chapter in ch_list -%}
+                        <a href="{{ url_for('main.chapter', chapter_num=chapter.chapter_num) }}">{{ chapter.chapter_num }}</a>{% if not loop.last %}, {% endif %}
+                        {%- endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No characters match the current filters.</p>
+    {% endfor %}
+</div>
+
+<div class="table-responsive d-none d-md-block">
 <table class="table table-striped mt-4">
     <thead>
         <th style="width: 80px;">Image</th>

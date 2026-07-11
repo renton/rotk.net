@@ -161,3 +161,31 @@ class TestCharactersMentionSort:
         resp = client.get('/characters?sort=mentions&dir=desc')
         assert b'sort=mentions' in resp.data
         assert b'>37<' in resp.data.replace(b'\n', b'').replace(b' ', b'')
+
+
+class TestListingMobileCards:
+    """Each public listing renders twice: mobile cards (d-md-none) and
+    the desktop table (d-none d-md-block) — same rows in both."""
+
+    def test_characters_page_has_card_and_table(self, client, db_session):
+        factories.make_character(name='Card Table Guy', book_mention_count=5)
+        resp = client.get('/characters')
+        assert b'd-md-none' in resp.data
+        assert b'table-responsive d-none d-md-block' in resp.data
+        assert resp.data.count(b'Card Table Guy') >= 2   # card + table row
+        assert b'5 mentions' in resp.data                # card summary line
+
+    def test_events_page_has_card_and_table(self, client, db_session):
+        factories.make_event(name='Cardable Battle')
+        resp = client.get('/events')
+        assert b'd-md-none' in resp.data
+        assert b'table-responsive d-none d-md-block' in resp.data
+        assert resp.data.count(b'Cardable Battle') >= 2
+
+    def test_locations_page_has_card_and_table(self, client, db_session):
+        parent = factories.make_location(name='Cardland Province')
+        factories.make_location(name='Cardville', parent_id=parent.id)
+        resp = client.get('/locations')
+        assert b'd-md-none' in resp.data
+        assert b'table-responsive d-none d-md-block' in resp.data
+        assert resp.data.count(b'Cardville') >= 2

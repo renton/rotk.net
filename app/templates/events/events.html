@@ -39,7 +39,42 @@
     </div>
 </form>
 
-<div class="table-responsive">
+{# Mobile: stacked cards (the table below is hidden under md). #}
+<div class="d-md-none">
+    {% for event in pagination.items %}
+    <div class="card mb-2">
+        <div class="card-body py-2 px-3">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+                <div class="fw-semibold">
+                    {% if is_admin %}
+                    <a href="{{ url_for('main.edit_event', id=event.id) }}">{{ event.name }}</a>
+                    {% else %}
+                    {{ event.name }}
+                    {% endif %}
+                    {% if event.hide_on_map %}
+                    <span class="badge bg-secondary ms-1" title="Excluded from the map view">no-map</span>
+                    {% endif %}
+                </div>
+                {% if event.event_type %}<div>{{ macros.badge_widget(event.event_type) }}</div>{% endif %}
+            </div>
+            {% if event.date %}<div class="small text-muted">{{ event.date }}</div>{% endif %}
+            {% if event.location %}<div class="small">{{ event.location.name }}</div>{% endif %}
+            {% set ch_list = chapter_lists.get(event.id, []) %}
+            {% if ch_list %}
+            <div class="small mt-1">Chapters:
+                {% for c in ch_list -%}
+                <a href="{{ url_for('main.chapter', chapter_num=c.chapter_num) }}">{{ c.chapter_num }}</a>{% if not loop.last %}, {% endif %}
+                {%- endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No events yet.</p>
+    {% endfor %}
+</div>
+
+<div class="table-responsive d-none d-md-block">
 <table class="table table-striped align-middle">
     <thead>
         <tr>
