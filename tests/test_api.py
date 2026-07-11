@@ -264,3 +264,69 @@ class TestEventsApi:
         assert data['items'][0]['event_count'] == 1
         detail = client.get(f'/api/v1/event-types/{et.id}').get_json()
         assert detail['event_count'] == 1
+
+
+class TestLocationsApi:
+    def test_list_with_ancestry(self, client, db_session):
+        from app.models import LocationType
+        lt = LocationType(name='Api Province')
+        db_session.add(lt)
+        db_session.flush()
+        province = factories.make_location(name='Api Yizhou',
+                                           location_type_id=lt.id)
+        county = factories.make_location(name='Api Chengdu',
+                                         parent_id=province.id,
+                                         latitude=30.5, longitude=104.0)
+        db_session.flush()
+        data = client.get('/api/v1/locations?q=Api Chengdu').get_json()
+        row = data['items'][0]
+        assert row['parent']['name'] == 'Api Yizhou'
+        assert [a['name'] for a in row['ancestry']] == ['Api Yizhou']
+        assert row['latitude'] == 30.5
+        assert row['has_geojson'] is False
+        assert 'geojson' not in row   # detail-only field
+        assert_no_private_keys(data)
+
+    def test_detail_extras(self, client, db_session):
+        province = factories.make_location(name='Api Parent')
+        child = factories.make_location(name='Api Child',
+                                        parent_id=province.id)
+        ev = factories.make_event(name='Api Located Event',
+                                  location_id=province.id)
+        ch = factories.make_chapter()
+        factories.associate_location(ch, province, keywords='Api Parent')
+        db_session.flush()
+        detail = client.get(f'/api/v1/locations/{province.id}').get_json()
+        assert detail['children'][0]['name'] == 'Api Child'
+        assert detail['events_here'][0]['name'] == 'Api Located Event'
+        assert detail['chapters'][0]['chapter_num'] == ch.chapter_num
+        assert detail['geojson'] is None
+        assert_no_private_keys(detail)
+
+    def test_geojson_on_detail(self, client, db_session):
+        geo = {'type': 'Polygon',
+               'coordinates': [[[0, 0], [1, 0], [1, 1], [0, 0]]]}
+        loc = factories.make_location(name='Api Poly', geojson=geo)
+        db_session.flush()
+        detail = client.get(f'/api/v1/locations/{loc.id}').get_json()
+        assert detail['geojson']['type'] == 'Polygon'
+        assert detail['has_geojson'] is True
+
+    def test_filters(self, client, db_session):
+        parent = factories.make_location(name='Api Root')
+        factories.make_location(name='Api Leaf', parent_id=parent.id)
+        db_session.flush()
+        data = client.get(
+            f'/api/v1/locations?parent_id={parent.id}').get_json()
+        assert [i['name'] for i in data['items']] == ['Api Leaf']
+
+    def test_location_types(self, client, db_session):
+        from app.models import LocationType
+        lt = LocationType(name='Api Pass')
+        db_session.add(lt)
+        db_session.flush()
+        factories.make_location(location_type_id=lt.id)
+        data = client.get('/api/v1/location-types?q=Api Pass').get_json()
+        assert data['items'][0]['location_count'] == 1
+        detail = client.get(f'/api/v1/location-types/{lt.id}').get_json()
+        assert detail['location_count'] == 1

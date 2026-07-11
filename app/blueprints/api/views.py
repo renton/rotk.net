@@ -651,3 +651,169 @@ def event_type_detail(type_id):
     payload['event_count'] = Event.query.filter_by(
         event_type_id=t.id, is_deleted=False).count()
     return jsonify(payload)
+
+
+# --------------------------------------------------------------------------
+# Locations / Location Types
+# --------------------------------------------------------------------------
+
+from app.models.location import chapter_location  # noqa: E402
+
+
+def _ancestry_chains(items):
+    """{location_id: [ref, ...]} root→leaf ancestry per location.
+
+    Bulk: iteratively load each missing tier of parents by id (chains
+    are ≤ ~4 deep) instead of lazy-walking per row. Cycle-guarded like
+    the sidebar walk."""
+    by_id = {loc.id: loc for loc in items}
+    frontier = {loc.parent_id for loc in items
+                if loc.parent_id and loc.parent_id not in by_id}
+    depth = 0
+    while frontier and depth < 10:
+        rows = Location.query.filter(Location.id.in_(frontier)).all()
+        for loc in rows:
+            by_id[loc.id] = loc
+        frontier = {loc.parent_id for loc in rows
+                    if loc.parent_id and loc.parent_id not in by_id}
+        depth += 1
+
+    chains = {}
+    for loc in items:
+        chain = []
+        seen = {loc.id}
+        cur = by_id.get(loc.parent_id) if loc.parent_id else None
+        steps = 0
+        while cur is not None and cur.id not in seen and steps < 10:
+            chain.append(ser.location_ref(cur))
+            seen.add(cur.id)
+            cur = by_id.get(cur.parent_id) if cur.parent_id else None
+            steps += 1
+        chain.reverse()   # root → leaf reading order
+        chains[loc.id] = chain
+    return chains
+
+
+def _locations_json(items, detail=False):
+    ids = {loc.id for loc in items}
+    chains = _ancestry_chains(items)
+
+    out = []
+    for loc in items:
+        payload = ser.location_ref(loc)
+        payload.update({
+            'aliases': [a.strip() for a in (loc.aliases or '').split(',')
+                        if a.strip()],
+            'parent': ser.location_ref(loc.parent) if loc.parent_id else None,
+            'ancestry': chains.get(loc.id, []),
+            'latitude': loc.latitude,
+            'longitude': loc.longitude,
+            'has_geojson': bool(loc.geojson),
+        })
+        out.append(payload)
+
+    if detail:
+        # Single-item extras — full geometry + children/events/chapters.
+        loc, payload = items[0], out[0]
+        payload['geojson'] = loc.geojson if loc.geojson else None
+        payload['children'] = [
+            ser.location_ref(child)
+            for child in sorted(
+                (c for c in loc.children if not c.is_deleted),
+                key=lambda c: c.name)
+        ]
+        payload['events_here'] = [
+            {'id': e.id, 'name': e.name}
+            for e in Event.query
+            .filter(Event.location_id == loc.id,
+                    Event.is_deleted.is_(False))
+            .order_by(Event.name).all()
+        ]
+        payload['chapters'] = [
+            {'chapter_num': num, 'title': name or '', 'keywords': kw or ''}
+            for num, name, kw in
+            db.session.query(Chapter.chapter_num, Chapter.name,
+                             chapter_location.c.keywords)
+            .join(chapter_location,
+                  chapter_location.c.chapter_id == Chapter.id)
+            .filter(chapter_location.c.location_id == loc.id)
+            .order_by(Chapter.chapter_num)
+            .all()
+        ]
+        payload['urls'] = ser.urls_for(loc)
+    return out
+
+
+def _location_base_query():
+    return (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .options(selectinload(Location.location_type))
+    )
+
+
+@api.route('/locations', methods=['GET'])
+def locations():
+    query = _location_base_query()
+    q = (request.args.get('q') or '').strip()
+    if q:
+        like = f'%{q}%'
+        query = query.filter(Location.name.ilike(like)
+                             | Location.aliases.ilike(like))
+    location_type_id = int_arg('location_type_id')
+    if location_type_id is not None:
+        query = query.filter(Location.location_type_id == location_type_id)
+    parent_id = int_arg('parent_id')
+    if parent_id is not None:
+        query = query.filter(Location.parent_id == parent_id)
+    query = query.order_by(Location.name)
+    pagination, per_page = get_pagination(query)
+    return envelope(pagination, per_page, _locations_json(pagination.items))
+
+
+@api.route('/locations/<int:location_id>', methods=['GET'])
+def location_detail(location_id):
+    loc = (
+        _location_base_query()
+        .filter(Location.id == location_id)
+        .first_or_404()
+    )
+    return jsonify(_locations_json([loc], detail=True)[0])
+
+
+@api.route('/location-types', methods=['GET'])
+def location_types():
+    query = _tag_shaped_query(LocationType)
+    pagination, per_page = get_pagination(query)
+    ids = [t.id for t in pagination.items]
+    counts = {}
+    if ids:
+        counts = dict(
+            db.session.query(Location.location_type_id,
+                             func.count(Location.id))
+            .filter(Location.location_type_id.in_(ids),
+                    Location.is_deleted.is_(False))
+            .group_by(Location.location_type_id)
+            .all()
+        )
+    items = []
+    for t in pagination.items:
+        payload = ser.tag_shaped_ref(t)
+        payload['location_count'] = counts.get(t.id, 0)
+        items.append(payload)
+    return envelope(pagination, per_page, items)
+
+
+@api.route('/location-types/<int:type_id>', methods=['GET'])
+def location_type_detail(type_id):
+    t = (
+        LocationType.query
+        .filter(LocationType.id == type_id,
+                LocationType.is_deleted.is_(False),
+                LocationType.is_hidden.is_(False))
+        .first_or_404()
+    )
+    payload = ser.tag_shaped_ref(t)
+    payload['location_count'] = Location.query.filter_by(
+        location_type_id=t.id, is_deleted=False).count()
+    return jsonify(payload)
