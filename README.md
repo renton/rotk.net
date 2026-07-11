@@ -156,6 +156,7 @@ Defined in `rotk.py`. Run inside the app container with `docker-compose exec app
 | `apply-chapter-character-summaries FILE [--apply]` | Apply `[{chapter_num, character_id, summary, _note?}]` JSON to `chapter_character.summary`. Dry-run by default; `--apply` writes. Skips entries whose character isn't tagged in the chapter. Idempotent. |
 | `dump-locations [--type ...]` | Dump every active Location as JSON on stdout (id, name, chinese_name, type, parent_chain, lat/lng, has_geojson). Read-only — feeds the boundary-sourcing workflow for the /map view. |
 | `apply-location-geo FILE [--apply]` | Apply `[{id, latitude?, longitude?, geojson?, _note?}]` JSON to Location rows. Each entry must include a point and/or a Polygon/MultiPolygon GeoJSON. Dry-run by default; `--apply` writes. Idempotent. |
+| `apply-fixes FILE [--apply]` | Generalized cross-resource bulk fixes from a JSON op list: `update` fields on any resource, `add/remove_relationship`, `add/update/remove_association` (chapter links + keywords/summary), `add/remove_faction_leader`. Dry-run by default; `--apply` writes (removals get a stronger confirm). Idempotent; audit + Edit log stamped automatically; affected characters get mention recounts. Fix files live in `data/fixes/`. |
 | `deploy` | No-op; called automatically by `boot.sh` on container start |
 
 ---
