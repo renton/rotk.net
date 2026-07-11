@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}rotk.net - Admin: Relationship Types{% endblock %}
+
+{% block page_content %}
+<div class="page-header mb-4 d-flex justify-content-between align-items-end">
+    <div>
+        <h1>Relationship Types</h1>
+        <p class="text-muted mb-0">
+            The two-ended labels for character family ties. Side 1 / side 2
+            name the ends ("Father"/"Son"); a blank side 2 makes the type
+            symmetric ("Brothers").
+        </p>
+    </div>
+    <a href="{{ url_for('admin.new_relationship_type') }}" class="btn btn-primary">+ Add Type</a>
+</div>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Side 1 label</th>
+            <th>Side 2 label</th>
+            <th>In use</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in types %}
+        <tr>
+            <td>{{ t.name }}</td>
+            <td>{{ t.side1_label or '—' }}</td>
+            <td>{% if t.side2_label %}{{ t.side2_label }}{% else %}<span class="text-muted fst-italic">symmetric</span>{% endif %}</td>
+            <td>{{ usage_counts.get(t.id, 0) }}</td>
+            <td class="text-end">
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="{{ url_for('admin.edit_relationship_type', type_id=t.id) }}"
+                       class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form method="POST"
+                          action="{{ url_for('admin.delete_relationship_type', type_id=t.id) }}">
+                        {{ csrf_form.hidden_tag() }}
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                data-confirm="Delete relationship type {{ t.name|e }}?">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-muted">No relationship types yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
+{% endblock %}

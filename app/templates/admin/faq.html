@@ -48,6 +48,7 @@
         <li class="list-group-item"><a href="#annotation-admin">Managing annotations from the admin lists</a></li>
         <li class="list-group-item"><a href="#yearly-maps">Yearly Maps (per-year territory images)</a></li>
         <li class="list-group-item"><a href="#faction-leaders">Faction leaders</a></li>
+        <li class="list-group-item"><a href="#relationships">Character relationships (family ties)</a></li>
     </ol>
 </div>
 
@@ -819,5 +820,31 @@
         factions list as a vertical stack of character pills (coloured by
         each character's primary faction, like their chapter pills).
     </p>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="relationships" class="mb-5">
+    <h2>Character relationships (family ties)</h2>
+    <ul>
+        <li><strong>Types first</strong> — <em>Admin → Relationship
+            Types</em>. Each type labels the two ends of a tie: side 1 /
+            side 2 (Father / Son, Husband / Wife). Leave side 2 blank
+            for symmetric ties (Brothers, Cousins) — both ends then show
+            the side-1 label.</li>
+        <li><strong>Adding</strong> — on a character's edit page,
+            the <em>Relationships</em> fieldset: pick "X is the… [Father
+            of]" and the other character (the picker shows factions to
+            disambiguate duplicate names). One add covers both
+            characters — the tie is a single record read from both
+            sides, so the other character's page immediately shows the
+            inverse ("Son").</li>
+        <li><strong>Removing</strong> — from either character's edit
+            page; it disappears from both.</li>
+        <li><strong>Where readers see them</strong> — the characters
+            list has a Relationships column, and the chapter sidebar's
+            character panel gets a <em>Relationships</em> card: the
+            related character as a coloured pill plus the tie label in
+            small text.</li>
+    </ul>
 </section>
 {% endblock %}

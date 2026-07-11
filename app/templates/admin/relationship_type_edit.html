@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+rotk.net - {% if relationship_type %}Edit relationship type {{ relationship_type.name }}{% else %}New relationship type{% endif %}
+{% endblock %}
+
+{% block page_header %}
+<div class="page-header mb-4">
+    <h1>{% if relationship_type %}Edit relationship type{% else %}New relationship type{% endif %}</h1>
+    <p class="text-muted mb-0">
+        Side 1 / side 2 label the two ends of the tie — the side-1
+        character IS the side-1 label (the "Father" in Father/Son).
+        Leave side 2 blank for symmetric types like "Brothers" or
+        "Cousins" (both ends display the side-1 label).
+    </p>
+</div>
+{% endblock %}
+
+{% block main_form %}
+{{ super() }}
+<div class="mt-3">
+    <a href="{{ url_for('admin.relationship_types') }}" class="btn btn-link">&larr; Back to relationship types</a>
+</div>
+{% endblock %}

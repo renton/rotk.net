@@ -243,3 +243,30 @@ def associate_location(chapter, location, keywords='', session=None):
         {'kw': keywords, 'cid': chapter.id, 'lid': location.id},
     )
     s.flush()
+
+
+# --- Relationships ----------------------------------------------------------
+
+def make_relationship_type(session=None, **kw):
+    """Two-ended tie label. Defaults to an asymmetric Father/Son shape;
+    pass side2_label='' for a symmetric type (Brothers, Cousins)."""
+    from app.models import RelationshipType
+    n = _n()
+    defaults = dict(
+        name=f'RelType{n}',
+        side1_label='Father',
+        side2_label='Son',
+    )
+    defaults.update(kw)
+    return _flush(RelationshipType(**defaults), session)
+
+
+def make_relationship(character1, character2, relationship_type,
+                      session=None):
+    """One tie row: character1 IS the side-1 role (the Father)."""
+    from app.models import Relationship
+    return _flush(Relationship(
+        character1_id=character1.id,
+        character2_id=character2.id,
+        relationship_type_id=relationship_type.id,
+    ), session)

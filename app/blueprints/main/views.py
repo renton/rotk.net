@@ -725,6 +725,39 @@ def chapter(chapter_num):
             depth += 1
         ancestry_by_loc_id[loc.id] = chain
 
+    # Relationships for the sidebar character panels — one bulk query
+    # across every character in the sidebar, each row resolved to
+    # (other character, label) from that character's side of the tie.
+    from app.models import Relationship
+    sidebar_char_ids = {c.id for c in characters}
+    relationships_by_char_id = {}
+    if sidebar_char_ids:
+        rel_rows = (
+            Relationship.query
+            .filter((Relationship.character1_id.in_(sidebar_char_ids))
+                    | (Relationship.character2_id.in_(sidebar_char_ids)))
+            .options(
+                selectinload(Relationship.character1),
+                selectinload(Relationship.character2),
+                selectinload(Relationship.relationship_type),
+            )
+            .all()
+        )
+        for r in rel_rows:
+            for cid in (r.character1_id, r.character2_id):
+                if cid not in sidebar_char_ids:
+                    continue
+                other, rel_label = r.describe_for(cid)
+                if other.is_deleted or other.id == cid:
+                    continue
+                bg, font, border = character_pill_colours(other)
+                relationships_by_char_id.setdefault(cid, []).append({
+                    'name': other.name, 'label': rel_label,
+                    'bg': bg, 'font': font, 'border': border,
+                })
+        for pills in relationships_by_char_id.values():
+            pills.sort(key=lambda d: (d['label'], d['name']))
+
     # Adjacent chapters for the prev/next nav buttons at the bottom of
     # the page. `chapter_num` is 1..120 and gapless in this dataset, so
     # +/-1 lookups are fine — the .first() falls back to None at the
@@ -846,6 +879,7 @@ def chapter(chapter_num):
         chapter_map_items=chapter_map_items,
         chapter_year_maps=chapter_year_maps,
         char_summary_by_id=char_summary_by_id,
+        relationships_by_char_id=relationships_by_char_id,
         annotations_payload=annotations_payload,
         annotation_csrf_form=FlaskForm(),
     )
@@ -912,6 +946,38 @@ def characters():
 
     characters = pagination.items  # Get current page items
 
+    # Relationships column: bulk-load every tie touching a page row and
+    # resolve each to (other character, label) from that row's viewpoint.
+    from app.models import Relationship
+    page_ids = {c.id for c in characters}
+    relationships_by_char_id = {}
+    if page_ids:
+        rel_rows = (
+            Relationship.query
+            .filter((Relationship.character1_id.in_(page_ids))
+                    | (Relationship.character2_id.in_(page_ids)))
+            .options(
+                selectinload(Relationship.character1),
+                selectinload(Relationship.character2),
+                selectinload(Relationship.relationship_type),
+            )
+            .all()
+        )
+        for r in rel_rows:
+            for cid in (r.character1_id, r.character2_id):
+                if cid not in page_ids:
+                    continue
+                other, rel_label = r.describe_for(cid)
+                if other.is_deleted or other.id == cid:
+                    continue
+                bg, font, border = character_pill_colours(other)
+                relationships_by_char_id.setdefault(cid, []).append({
+                    'name': other.name, 'label': rel_label,
+                    'bg': bg, 'font': font, 'border': border,
+                })
+        for pills in relationships_by_char_id.values():
+            pills.sort(key=lambda d: (d['label'], d['name']))
+
     # Pick one image per character to show next to the row: the default if
     # set, else the first non-hidden portrait, else None. Matches the
     # ordering the chapter sidebar uses for its first tab.
@@ -939,6 +1005,7 @@ def characters():
         direction=direction,
         default_portraits=default_portraits,
         chapter_lists=chapter_lists,
+        relationships_by_char_id=relationships_by_char_id,
     )
 
 @main.route('/characters/new', methods=['GET', 'POST'])
@@ -1041,6 +1108,52 @@ def edit_character(id):
     from flask_wtf import FlaskForm
     csrf_form = FlaskForm()
 
+    # --- Relationships fieldset context ---------------------------------
+    from app.models import Relationship, RelationshipType
+    rel_rows = (
+        Relationship.query
+        .filter((Relationship.character1_id == character.id)
+                | (Relationship.character2_id == character.id))
+        .options(
+            selectinload(Relationship.character1),
+            selectinload(Relationship.character2),
+            selectinload(Relationship.relationship_type),
+        )
+        .all()
+    )
+    relationships = []
+    for r in rel_rows:
+        other, rel_label = r.describe_for(character.id)
+        if other.is_deleted:
+            continue
+        relationships.append({'id': r.id, 'other': other, 'label': rel_label})
+    relationships.sort(key=lambda d: (d['label'], d['other'].name))
+
+    relationship_types = (
+        RelationshipType.query
+        .filter(RelationshipType.is_hidden.is_(False))
+        .order_by(RelationshipType.name)
+        .all()
+    )
+
+    # Character picker datalist (with faction names for disambiguation —
+    # one join query; see the faction-leaders picker for rationale).
+    rel_picker_characters = (
+        Character.query
+        .filter(Character.is_deleted.is_(False), Character.id != character.id)
+        .order_by(Character.name)
+        .all()
+    )
+    rel_picker_faction_names = {}
+    for cid, fname in (
+        db.session.query(Character.faction_table.c.character_id, Faction.name)
+        .join(Faction, Faction.id == Character.faction_table.c.faction_id)
+        .filter(Faction.is_hidden.is_(False))
+        .order_by(Faction.name)
+        .all()
+    ):
+        rel_picker_faction_names.setdefault(cid, []).append(fname)
+
     return render_template(
         'characters/character_edit.html',
         form=form,
@@ -1050,9 +1163,97 @@ def edit_character(id):
         all_tags=all_tags,
         add_url_form=add_url_form,
         urls=urls,
+        relationships=relationships,
+        relationship_types=relationship_types,
+        rel_picker_characters=rel_picker_characters,
+        rel_picker_faction_names=rel_picker_faction_names,
         csrf_form=csrf_form,
         back=_back_arg(),
     )
+
+
+@main.route('/characters/<int:id>/relationships/add', methods=['POST'])
+@login_required
+@admin_required
+def add_character_relationship(id):
+    """Create a family tie from this character's edit page.
+
+    `relationship_option` encodes type + which end THIS character takes,
+    as "<type_id>:1" or "<type_id>:2" (side 1 = the type's side1_label,
+    e.g. the Father). The row is stored with character1 = the side-1
+    character, so adding "X is the Son of Y" writes (Y, X, type) and
+    both edit pages read the same row."""
+    from flask_wtf import FlaskForm
+    from app.models import Relationship, RelationshipType
+    if not FlaskForm().validate_on_submit():
+        abort(400)
+    character = Character.query.get_or_404(id)
+
+    raw_opt = (request.form.get('relationship_option') or '').strip()
+    m = re.fullmatch(r'(\d+):([12])', raw_opt)
+    if not m:
+        flash("Pick a relationship type.")
+        return redirect(url_for('main.edit_character', id=character.id))
+    rel_type = RelationshipType.query.get(int(m.group(1)))
+    my_side = int(m.group(2))
+    if rel_type is None or rel_type.is_hidden:
+        flash("Pick a relationship type.")
+        return redirect(url_for('main.edit_character', id=character.id))
+    if my_side == 2 and rel_type.is_symmetric:
+        my_side = 1   # symmetric types only have one meaningful side
+
+    raw_id = (request.form.get('character_id') or '').strip()
+    if not raw_id.isdigit():
+        m2 = re.search(r'#(\d+)\s*$', request.form.get('character_search') or '')
+        raw_id = m2.group(1) if m2 else ''
+    other = Character.query.get(int(raw_id)) if raw_id.isdigit() else None
+    if other is None or other.is_deleted:
+        flash("Couldn't resolve that character — pick one from the list.")
+        return redirect(url_for('main.edit_character', id=character.id))
+    if other.id == character.id:
+        flash("A character can't have a relationship with themselves.")
+        return redirect(url_for('main.edit_character', id=character.id))
+
+    c1, c2 = ((character, other) if my_side == 1 else (other, character))
+
+    # Duplicate guard: the exact row, plus the reversed row for
+    # symmetric types (A-Brothers-B and B-Brothers-A are the same tie).
+    dup = Relationship.query.filter_by(
+        character1_id=c1.id, character2_id=c2.id,
+        relationship_type_id=rel_type.id).first()
+    if dup is None and rel_type.is_symmetric:
+        dup = Relationship.query.filter_by(
+            character1_id=c2.id, character2_id=c1.id,
+            relationship_type_id=rel_type.id).first()
+    if dup is not None:
+        flash("That relationship already exists.")
+        return redirect(url_for('main.edit_character', id=character.id))
+
+    db.session.add(Relationship(
+        character1_id=c1.id, character2_id=c2.id,
+        relationship_type_id=rel_type.id))
+    db.session.commit()
+    flash(f"Added relationship with {other.name}.")
+    return redirect(url_for('main.edit_character', id=character.id))
+
+
+@main.route('/characters/<int:id>/relationships/remove/<int:rel_id>', methods=['POST'])
+@login_required
+@admin_required
+def remove_character_relationship(id, rel_id):
+    from flask_wtf import FlaskForm
+    from app.models import Relationship
+    if not FlaskForm().validate_on_submit():
+        abort(400)
+    character = Character.query.get_or_404(id)
+    rel = Relationship.query.get_or_404(rel_id)
+    if character.id not in (rel.character1_id, rel.character2_id):
+        abort(404)
+    other, _ = rel.describe_for(character.id)
+    db.session.delete(rel)
+    db.session.commit()
+    flash(f"Removed relationship with {other.name}.")
+    return redirect(url_for('main.edit_character', id=character.id))
 
 
 @main.route('/characters/<int:id>/upload-portrait', methods=['POST'])

@@ -38,12 +38,14 @@ app/
     chapter_hidden_snippet.py  # ChapterHiddenSnippet — admin-hidden prose spans (fingerprinted like MatchExclusion; removed from public render entirely)
     annotation.py        # Annotation (per-paragraph public/private threads, section_text content-addressed) + annotation_character / annotation_location M2Ms
     edit.py              # Edit (admin save audit log: model, row, field-by-field diffs)
+    relationship.py      # RelationshipType (tag-shaped + side1_label/side2_label; blank side2 = symmetric) + Relationship (character1 IS the side-1 role; two-way by construction — both ends read the same row via describe_for)
     year_map.py          # YearMap — one territory-map image per year (184–280; `year` UNIQUE; files in static/yearmaps/; Portrait-style source_site/source_url credit pair; year_map_faction M2M = factions present that year, replaced wholesale on modal save)
     auth.py              # User, AnonymousUser, login_manager hooks
   blueprints/
     main/views.py        # Public + admin-edit routes for Character / Faction / Role / Event / Location;
                          #   chapter view (inline-tags characters + events + locations, applies per-snippet exclusions;
                          #   renders the yearly territory-maps panel from chapter.date); faction leader add/remove;
+                         #   character relationship add/remove (sided rows — see relationship.py);
                          #   characters list sortable by book_mention_count (?sort=mentions&dir=asc|desc)
     main/forms.py        # EditCharacterForm, EditFactionForm, EditRoleForm, EditEventForm, EditLocationForm, AddUrlForm
     auth/views.py        # login, logout, register, confirm, forgot/reset password, change password/email
@@ -55,8 +57,9 @@ app/
                          #   /admin/location-associations (+ per-snippet exclude / restore),
                          #   /admin/chapter-edit (+ hide / restore prose spans),
                          #   /admin/annotations/{public,private} (+ create / delete / restore / close-thread),
-                         #   /admin/yearly-maps (+ per-year upload-or-edit modal incl. factions chip picker / remove)
-    admin/forms.py       # EditTagForm, EditUrlTypeForm, EditEventTypeForm, CreateUserForm
+                         #   /admin/yearly-maps (+ per-year upload-or-edit modal incl. factions chip picker / remove),
+                         #   /admin/relationship-types (+ new / edit / delete w/ in-use guard)
+    admin/forms.py       # EditTagForm, EditUrlTypeForm, EditEventTypeForm, EditRelationshipTypeForm, CreateUserForm
   templates/             # Jinja2: book/, characters/, factions/, roles/, events/, locations/, admin/, auth/, errors/
                          # Shared partials: _macros.html (badge_widget with icon prefix),
                          #   _url_section.html (External Links fieldset on edit pages),

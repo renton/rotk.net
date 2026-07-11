@@ -153,6 +153,7 @@
         <th class="d-none d-md-table-cell">Roles</th>
         <th>Faction</th>
         <th class="d-none d-md-table-cell">Other Factions</th>
+        <th class="d-none d-md-table-cell">Relationships</th>
         <th>Chapter References</th>
     </thead>
     <tbody>
@@ -220,6 +221,20 @@
                         <div>
                             {{ macros.badge_widget(faction) }}
                         </div>
+                    {% endfor %}
+                </td>
+                <td class="d-none d-md-table-cell">
+                    {# Related characters as pills (coloured like their
+                       chapter pill) + the tie label in small text. #}
+                    {% for r in relationships_by_char_id.get(character.id, []) %}
+                    <div class="mb-1">
+                        <a href="{{ url_for('main.characters', search_query=r.name) }}"
+                           class="text-decoration-none">
+                            <span class="badge rounded-pill"
+                                  style="background-color:{{ r.bg }};color:{{ r.font }};border:2px solid {{ r.border }};">{{ r.name }}</span>
+                        </a>
+                        <span class="small text-muted fst-italic">{{ r.label }}</span>
+                    </div>
                     {% endfor %}
                 </td>
                 <td class="small">

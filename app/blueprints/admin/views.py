@@ -11,14 +11,14 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app import db
-from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion, ChapterHiddenSnippet, Annotation
+from app.models import User, Chapter, Character, Faction, Role, Tag, TagAssociation, Url, UrlType, Event, EventType, Location, LocationType, Edit, MatchExclusion, ChapterHiddenSnippet, Annotation, Relationship, RelationshipType
 from app.models.character import Portrait, PORTRAIT_DIR
 from app.models.year_map import YearMap, YEARMAP_DIR, YEARMAP_FIRST_YEAR, YEARMAP_LAST_YEAR
 from werkzeug.utils import secure_filename
 from app.blueprints.main.views import _detect_image_type, _MAX_PORTRAIT_BYTES
 from tools.decorators import admin_required
 from tools.book_parser import find_character_mentions, find_event_mentions, find_location_mentions, count_mentions_per_character, strip_html_tags, build_needle_pattern, load_match_exclusions, load_chapter_keywords, load_chapter_character_summaries, split_keywords_csv, find_location_character_overlap, find_shared_needle_ids, location_needles, recount_character_book_mentions, apply_hidden_snippets, strip_and_normalize_with_html_map, _hidden_snippet_context, _WS_RE
-from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm
+from .forms import EditTagForm, CreateUserForm, EditUrlTypeForm, EditEventTypeForm, EditLocationTypeForm, EditRelationshipTypeForm
 from . import admin
 
 
@@ -2883,3 +2883,102 @@ def yearly_maps_remove(year):
 
     flash(f"Map for {year} AD removed.")
     return redirect(url_for('admin.yearly_maps'))
+
+
+# ---------------------------------------------------------------------------
+# Relationship Types — the two-ended labels for character family ties
+# ---------------------------------------------------------------------------
+
+@admin.route('/relationship-types', methods=['GET'])
+@login_required
+@admin_required
+def relationship_types():
+    """List relationship types with usage counts. Simpler than the other
+    type listings (no search/sort) — the set is small and stable."""
+    usage_counts = dict(
+        db.session.query(
+            Relationship.relationship_type_id,
+            func.count(Relationship.id),
+        )
+        .group_by(Relationship.relationship_type_id)
+        .all()
+    )
+    types = (
+        RelationshipType.query
+        .filter(RelationshipType.is_hidden.is_(False))
+        .order_by(RelationshipType.name)
+        .all()
+    )
+    return render_template(
+        'admin/relationship_types.html',
+        types=types,
+        usage_counts=usage_counts,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+@admin.route('/relationship-types/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_relationship_type():
+    form = EditRelationshipTypeForm()
+    if form.validate_on_submit():
+        rel_type = RelationshipType()
+        form.populate_obj(rel_type)
+        db.session.add(rel_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A relationship type named {rel_type.name!r} already exists.")
+            return redirect(url_for('admin.new_relationship_type'))
+        flash(f"Created relationship type {rel_type.name!r}.")
+        return redirect(url_for('admin.relationship_types'))
+    return render_template('admin/relationship_type_edit.html',
+                           form=form, relationship_type=None)
+
+
+@admin.route('/relationship-types/<int:type_id>/edit', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_relationship_type(type_id):
+    rel_type = RelationshipType.query.get_or_404(type_id)
+    form = EditRelationshipTypeForm(obj=rel_type)
+    if form.validate_on_submit():
+        form.populate_obj(rel_type)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash(f"A relationship type named {rel_type.name!r} already exists.")
+            return redirect(url_for('admin.edit_relationship_type', type_id=rel_type.id))
+        flash(f"Updated relationship type {rel_type.name!r}.")
+        return redirect(url_for('admin.relationship_types'))
+    return render_template('admin/relationship_type_edit.html',
+                           form=form, relationship_type=rel_type)
+
+
+@admin.route('/relationship-types/<int:type_id>/delete', methods=['POST'])
+@login_required
+@admin_required
+def delete_relationship_type(type_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+    rel_type = RelationshipType.query.get_or_404(type_id)
+    name = rel_type.name
+
+    # Refuse while in use — the relationship FK is ON DELETE CASCADE, so
+    # deleting a used type would silently erase the ties themselves.
+    in_use = Relationship.query.filter_by(relationship_type_id=rel_type.id).count()
+    if in_use > 0:
+        flash(
+            f"Can't delete {name!r}: it's used by {in_use} relationship"
+            f"{'' if in_use == 1 else 's'}. Remove those first."
+        )
+        return redirect(url_for('admin.relationship_types'))
+
+    db.session.delete(rel_type)
+    db.session.commit()
+    flash(f"Deleted relationship type {name!r}.")
+    return redirect(url_for('admin.relationship_types'))

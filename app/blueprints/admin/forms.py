@@ -117,6 +117,24 @@ class EditEventTypeForm(FlaskForm):
     submit = SubmitField("Save")
 
 
+class EditRelationshipTypeForm(FlaskForm):
+    """Create/edit form for a RelationshipType — a name plus one label
+    per end of the tie. Blank side-2 label = symmetric type (both ends
+    show the side-1 label)."""
+    name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
+    side1_label = StringField(
+        "Side 1 label",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": 'e.g. "Father" — blank falls back to the name'},
+    )
+    side2_label = StringField(
+        "Side 2 label",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": 'e.g. "Son" — blank = symmetric (Brothers, Cousins)'},
+    )
+    submit = SubmitField("Save")
+
+
 class EditLocationTypeForm(FlaskForm):
     """Create/edit form for a LocationType — name + Font Awesome icon +
     three colours. Identical shape to EditEventTypeForm; the badge gets
