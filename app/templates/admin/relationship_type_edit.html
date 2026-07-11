@@ -11,9 +11,15 @@ rotk.net - {% if relationship_type %}Edit relationship type {{ relationship_type
         Side 1 / side 2 label the two ends of the tie — the side-1
         character IS the side-1 label (the "Parent" end of Parent/Child).
         Each end takes an optional female variant, resolved from the
-        character's sex ("Father"/"Mother"). Leave side 2 fully blank
-        for symmetric types like "Siblings" or "Cousins" (both ends
-        resolve through the side-1 labels).
+        character's sex ("Father"/"Mother").
+    </p>
+    <p class="text-muted mb-0">
+        <strong>Rule of thumb:</strong> if swapping the two people changes
+        the word (Parent↔Child, Uncle↔Nephew), fill both sides. If only
+        <em>sex</em> changes the word, use side 1 alone and leave side 2
+        fully blank — Siblings is side 1 Brother/Sister, and Spouses is
+        side 1 Husband/Wife (each end then resolves by that character's
+        own sex, and it doesn't matter who was added from which page).
     </p>
 </div>
 {% endblock %}
