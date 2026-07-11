@@ -950,3 +950,96 @@ def chapter_detail(chapter_num):
         .first_or_404()
     )
     return jsonify(_chapters_json([c])[0])
+
+
+# --------------------------------------------------------------------------
+# Relationships / Relationship Types
+# --------------------------------------------------------------------------
+
+def _relationship_json(r):
+    t = r.relationship_type
+    c1, c2 = r.character1, r.character2
+    end1 = dict(ser.character_ref(c1),
+                label=t.end_label(1, c1.sex) or t.name)
+    end2 = dict(ser.character_ref(c2),
+                label=(t.end_label(2, c2.sex)
+                       or t.end_label(1, c2.sex) or t.name))
+    return {
+        'id': r.id,
+        'type': {'id': t.id, 'name': t.name,
+                 'is_symmetric': t.is_symmetric},
+        'character1': end1,
+        'character2': end2,
+    }
+
+
+@api.route('/relationships', methods=['GET'])
+def relationships():
+    query = (
+        Relationship.query
+        .join(Relationship.relationship_type)
+        .options(
+            selectinload(Relationship.character1),
+            selectinload(Relationship.character2),
+            selectinload(Relationship.relationship_type),
+        )
+    )
+    character_id = int_arg('character_id')
+    if character_id is not None:
+        query = query.filter(
+            (Relationship.character1_id == character_id)
+            | (Relationship.character2_id == character_id))
+    type_id = int_arg('relationship_type_id')
+    if type_id is not None:
+        query = query.filter(Relationship.relationship_type_id == type_id)
+    query = query.order_by(RelationshipType.name, Relationship.id)
+
+    pagination, per_page = get_pagination(query)
+    items = [_relationship_json(r) for r in pagination.items
+             if not (r.character1.is_deleted or r.character2.is_deleted)]
+    return envelope(pagination, per_page, items)
+
+
+def _relationship_type_json(t, usage=None):
+    return {
+        'id': t.id,
+        'name': t.name,
+        'side1_label': t.side1_label or '',
+        'side1_label_female': t.side1_label_female or '',
+        'side2_label': t.side2_label or '',
+        'side2_label_female': t.side2_label_female or '',
+        'is_symmetric': t.is_symmetric,
+        'usage_count': usage,
+    }
+
+
+@api.route('/relationship-types', methods=['GET'])
+def relationship_types():
+    query = _tag_shaped_query(RelationshipType)
+    pagination, per_page = get_pagination(query)
+    ids = [t.id for t in pagination.items]
+    counts = {}
+    if ids:
+        counts = dict(
+            db.session.query(Relationship.relationship_type_id,
+                             func.count(Relationship.id))
+            .filter(Relationship.relationship_type_id.in_(ids))
+            .group_by(Relationship.relationship_type_id)
+            .all()
+        )
+    return envelope(pagination, per_page,
+                    [_relationship_type_json(t, counts.get(t.id, 0))
+                     for t in pagination.items])
+
+
+@api.route('/relationship-types/<int:type_id>', methods=['GET'])
+def relationship_type_detail(type_id):
+    t = (
+        RelationshipType.query
+        .filter(RelationshipType.id == type_id,
+                RelationshipType.is_deleted.is_(False),
+                RelationshipType.is_hidden.is_(False))
+        .first_or_404()
+    )
+    usage = Relationship.query.filter_by(relationship_type_id=t.id).count()
+    return jsonify(_relationship_type_json(t, usage))

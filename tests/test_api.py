@@ -387,3 +387,53 @@ class TestChaptersApi:
     def test_default_page_size_small(self, client, db_session):
         data = client.get('/api/v1/chapters').get_json()
         assert data['per_page'] == 20
+
+
+class TestRelationshipsApi:
+    def test_list_with_sex_resolved_labels(self, client, db_session):
+        t = factories.make_relationship_type(
+            name='Api Parent/Child',
+            side1_label='Father', side1_label_female='Mother',
+            side2_label='Son', side2_label_female='Daughter')
+        mum = factories.make_character(name='Api Mum', sex='female')
+        boy = factories.make_character(name='Api Boy', sex='male')
+        r = factories.make_relationship(mum, boy, t)
+        db_session.flush()
+        data = client.get('/api/v1/relationships').get_json()
+        row = next(i for i in data['items'] if i['id'] == r.id)
+        assert row['character1']['name'] == 'Api Mum'
+        assert row['character1']['label'] == 'Mother'
+        assert row['character2']['label'] == 'Son'
+        assert row['type']['is_symmetric'] is False
+        assert_no_private_keys(data)
+
+    def test_character_filter(self, client, db_session):
+        t = factories.make_relationship_type()
+        a = factories.make_character()
+        b = factories.make_character()
+        outsider = factories.make_character()
+        factories.make_relationship(a, b, t)
+        db_session.flush()
+        data = client.get(
+            f'/api/v1/relationships?character_id={a.id}').get_json()
+        assert data['total'] == 1
+        data = client.get(
+            f'/api/v1/relationships?character_id={outsider.id}').get_json()
+        assert data['total'] == 0
+
+    def test_relationship_types_endpoint(self, client, db_session):
+        t = factories.make_relationship_type(
+            name='Api Siblings', side1_label='Brother',
+            side1_label_female='Sister', side2_label='')
+        a = factories.make_character()
+        b = factories.make_character()
+        factories.make_relationship(a, b, t)
+        db_session.flush()
+        data = client.get('/api/v1/relationship-types?q=Api Sib').get_json()
+        row = data['items'][0]
+        assert row['is_symmetric'] is True
+        assert row['side1_label_female'] == 'Sister'
+        assert row['usage_count'] == 1
+        detail = client.get(
+            f'/api/v1/relationship-types/{t.id}').get_json()
+        assert detail['usage_count'] == 1
