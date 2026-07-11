@@ -829,7 +829,9 @@ def chapter(chapter_num):
     # section_text in the payload is the READABLE form (first stored
     # row's text, spaces intact) — the dict key is canonical/whitespace-
     # free which would be unreadable in the modal preview.
-    from tools.book_parser import character_pill_colours
+    # (character_pill_colours comes from the module-level import — a
+    # function-local import here would shadow it for the WHOLE function
+    # and break the earlier relationships block with UnboundLocalError.)
     annotations_payload = {}
     for canonical_key, ann_list in annotations_by_section.items():
         key = annotation_section_hash(canonical_key)
