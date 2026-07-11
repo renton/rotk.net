@@ -1043,3 +1043,105 @@ def relationship_type_detail(type_id):
     )
     usage = Relationship.query.filter_by(relationship_type_id=t.id).count()
     return jsonify(_relationship_type_json(t, usage))
+
+
+# --------------------------------------------------------------------------
+# Year Maps / Annotations (public only)
+# --------------------------------------------------------------------------
+
+from tools.book_parser import (  # noqa: E402
+    annotation_section_canonical, annotation_section_hash,
+)
+
+
+def _year_map_json(m):
+    factions = []
+    for f in m.factions:
+        if f.is_hidden:
+            continue
+        entry = ser.faction_ref(f)
+        entry['leaders'] = [ser.character_ref(c) for c in f.leaders
+                            if not c.is_deleted]
+        factions.append(entry)
+    return {
+        'year': m.year,
+        'image': url_for('static', filename=m.static_path),
+        'source_site': m.source_site or '',
+        'source_url': m.source_url or '',
+        'factions': factions,
+    }
+
+
+@api.route('/year-maps', methods=['GET'])
+def year_maps():
+    query = (
+        YearMap.query
+        .options(selectinload(YearMap.factions)
+                 .selectinload(Faction.leaders))
+        .order_by(YearMap.year)
+    )
+    year_from = int_arg('year_from')
+    if year_from is not None:
+        query = query.filter(YearMap.year >= year_from)
+    year_to = int_arg('year_to')
+    if year_to is not None:
+        query = query.filter(YearMap.year <= year_to)
+    pagination, per_page = get_pagination(query)
+    return envelope(pagination, per_page,
+                    [_year_map_json(m) for m in pagination.items])
+
+
+@api.route('/year-maps/<int:year>', methods=['GET'])
+def year_map_detail(year):
+    m = (
+        YearMap.query
+        .filter(YearMap.year == year)
+        .options(selectinload(YearMap.factions)
+                 .selectinload(Faction.leaders))
+        .first_or_404()
+    )
+    return jsonify(_year_map_json(m))
+
+
+def _annotation_json(a):
+    return {
+        'id': a.id,
+        'chapter_num': a.chapter.chapter_num if a.chapter else None,
+        'chapter_title': (a.chapter.name or '') if a.chapter else '',
+        # Consumers can group entries into paragraph threads by this key
+        # — it's the same content-addressed hash the site uses.
+        'thread_key': annotation_section_hash(
+            annotation_section_canonical(a.section_text)),
+        'section_text': a.section_text,
+        'body': a.body,
+        'author': a.created_by,   # shown publicly on chapter pages too
+        'created_at': a.created_at.isoformat() if a.created_at else None,
+        'characters': [ser.character_ref(c) for c in a.characters
+                       if not c.is_deleted],
+        'locations': [ser.location_ref(l) for l in a.locations
+                      if not l.is_deleted],
+    }
+
+
+@api.route('/annotations', methods=['GET'])
+def annotations():
+    """PUBLIC annotations only — the is_public filter here is the privacy
+    boundary; private admin threads must never be serialized."""
+    query = (
+        Annotation.query
+        .filter(Annotation.is_public.is_(True),
+                Annotation.is_deleted.is_(False))
+        .join(Chapter, Chapter.id == Annotation.chapter_id)
+        .options(
+            selectinload(Annotation.chapter),
+            selectinload(Annotation.characters),
+            selectinload(Annotation.locations),
+        )
+        .order_by(Chapter.chapter_num, Annotation.created_at)
+    )
+    chapter_num = int_arg('chapter_num')
+    if chapter_num is not None:
+        query = query.filter(Chapter.chapter_num == chapter_num)
+    pagination, per_page = get_pagination(query)
+    return envelope(pagination, per_page,
+                    [_annotation_json(a) for a in pagination.items])

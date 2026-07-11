@@ -183,9 +183,10 @@ ENDPOINTS = [
         'title': 'Annotations (public)',
         'path': '/api/v1/annotations',
         'detail_path': None,
-        'description': ('PUBLIC reader annotations only — grouped as '
-                        'paragraph threads with chapter refs. Private admin '
-                        'threads are never served.'),
+        'description': ('PUBLIC reader annotations only — thread entries '
+                        'with chapter refs and a content-addressed '
+                        'thread_key for grouping. Private admin threads '
+                        'are never served.'),
         'params': [
             {'name': 'chapter_num', 'type': 'number',
              'label': 'Chapter number'},

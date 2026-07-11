@@ -437,3 +437,76 @@ class TestRelationshipsApi:
         detail = client.get(
             f'/api/v1/relationship-types/{t.id}').get_json()
         assert detail['usage_count'] == 1
+
+
+class TestYearMapsApi:
+    def test_list_and_detail(self, client, db_session):
+        from app.models import YearMap
+        f = factories.make_faction(name='Map Api Faction')
+        leader = factories.make_character(name='Map Api Leader')
+        f.leaders.append(leader)
+        m = YearMap(year=8208, filename='8208.png',
+                    source_site='Api Atlas',
+                    source_url='https://example.org/atlas')
+        m.factions = [f]
+        db_session.add(m)
+        db_session.flush()
+
+        data = client.get('/api/v1/year-maps').get_json()
+        row = next(i for i in data['items'] if i['year'] == 8208)
+        assert row['image'].endswith('yearmaps/8208.png')
+        assert row['source_site'] == 'Api Atlas'
+        assert row['factions'][0]['name'] == 'Map Api Faction'
+        assert row['factions'][0]['leaders'][0]['name'] == 'Map Api Leader'
+        assert_no_private_keys(data)
+
+        detail = client.get('/api/v1/year-maps/8208').get_json()
+        assert detail['year'] == 8208
+        assert client.get('/api/v1/year-maps/9999').status_code == 404
+
+    def test_year_range_filter(self, client, db_session):
+        from app.models import YearMap
+        db_session.add(YearMap(year=8300, filename='a.png'))
+        db_session.add(YearMap(year=8310, filename='b.png'))
+        db_session.flush()
+        data = client.get(
+            '/api/v1/year-maps?year_from=8305&year_to=8315').get_json()
+        assert [i['year'] for i in data['items']] == [8310]
+
+
+class TestAnnotationsApi:
+    def test_public_only_with_thread_key(self, client, db_session):
+        ch = factories.make_chapter(content='<p>Annotated api prose.</p>')
+        pub = factories.make_annotation(
+            chapter=ch, section_text='Annotated api prose.',
+            body='public note', is_public=True)
+        factories.make_annotation(
+            chapter=ch, section_text='Annotated api prose.',
+            body='SECRET ADMIN NOTE', is_public=False)
+        factories.make_annotation(
+            chapter=ch, section_text='Annotated api prose.',
+            body='deleted note', is_public=True, is_deleted=True)
+        db_session.flush()
+
+        resp = client.get('/api/v1/annotations')
+        data = resp.get_json()
+        bodies = [i['body'] for i in data['items']]
+        assert bodies == ['public note']
+        assert b'SECRET ADMIN NOTE' not in resp.data
+        row = data['items'][0]
+        assert row['chapter_num'] == ch.chapter_num
+        assert row['thread_key']            # content-addressed group key
+        assert row['author']                # public on chapter pages too
+        assert_no_private_keys(data)
+
+    def test_chapter_filter(self, client, db_session):
+        ch1 = factories.make_chapter()
+        ch2 = factories.make_chapter()
+        factories.make_annotation(chapter=ch1, section_text='x',
+                                  body='ch1 note', is_public=True)
+        factories.make_annotation(chapter=ch2, section_text='y',
+                                  body='ch2 note', is_public=True)
+        db_session.flush()
+        data = client.get(
+            f'/api/v1/annotations?chapter_num={ch2.chapter_num}').get_json()
+        assert [i['body'] for i in data['items']] == ['ch2 note']
