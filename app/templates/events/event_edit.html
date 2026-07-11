@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
 
 {% block title %}
 rotk.net - {% if event %}Edit {{ event.name }}{% else %}New event{% endif %}
@@ -26,6 +27,68 @@ rotk.net - {% if event %}Edit {{ event.name }}{% else %}New event{% endif %}
     {% include '_url_section.html' %}
 {% endif %}
 
+{% if event %}
+{# Sided faction participation. Labels come from the event's TYPE
+   (factions1_label / factions2_label); a blank list-2 label means the
+   second list doesn't apply — its fieldset is hidden unless legacy
+   rows already exist there. #}
+{% set et = event.event_type %}
+{% set label1 = (et.factions1_label if et and et.factions1_label else 'Factions') %}
+{% set label2 = (et.factions2_label if et and et.factions2_label else '') %}
+{% set sides = [(1, label1, event.factions1)] %}
+{% if label2 or event.factions2 %}
+    {% set _ = sides.append((2, label2 or 'Factions (list 2)', event.factions2)) %}
+{% endif %}
+{% for side, side_label, side_factions in sides %}
+<fieldset class="border rounded p-3 mt-5">
+    <legend class="float-none w-auto fs-5 px-2">{{ side_label }}</legend>
+
+    {% if side_factions %}
+    <ul class="list-group mb-3">
+        {% for f in side_factions %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ macros.badge_widget(f) }}</span>
+            <form method="POST"
+                  action="{{ url_for('main.remove_event_faction', id=event.id, side=side, faction_id=f.id) }}">
+                {{ csrf_form.hidden_tag() }}
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                        data-confirm="Remove {{ f.name|e }} from {{ side_label|e }}?">Remove</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted small">No factions in this list yet.</p>
+    {% endif %}
+
+    <form method="POST"
+          action="{{ url_for('main.add_event_faction', id=event.id, side=side) }}"
+          class="row g-2 align-items-end">
+        {{ csrf_form.hidden_tag() }}
+        <div class="col-md-8">
+            <label for="event-faction-search-{{ side }}" class="form-label">Add a faction</label>
+            <input type="text" id="event-faction-search-{{ side }}" name="faction_search"
+                   class="form-control"
+                   list="event-factions-datalist"
+                   data-picker-target="faction_id"
+                   placeholder="Type to search factions…"
+                   autocomplete="off" required>
+            <input type="hidden" name="faction_id">
+        </div>
+        <div class="col-md-4 text-end">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</fieldset>
+{% endfor %}
+
+<datalist id="event-factions-datalist">
+    {% for f in faction_picker_factions %}
+    <option value="{{ f.name }} #{{ f.id }}" label="{{ f.name }}"></option>
+    {% endfor %}
+</datalist>
+{% endif %}
+
 <div class="mt-3">
     <a href="{{ url_for('main.events') }}" class="btn btn-link">&larr; Back to events</a>
 </div>
@@ -33,5 +96,6 @@ rotk.net - {% if event %}Edit {{ event.name }}{% else %}New event{% endif %}
 
 {% block scripts %}
 {{ super() }}
+<script src="{{ url_for('static', filename='js/admin_picker.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
 {% endblock %}

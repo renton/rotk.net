@@ -86,6 +86,19 @@ class EditEventTypeForm(FlaskForm):
         validators=[Length(0, 80)],
         render_kw={"placeholder": "e.g. fa-solid fa-flag"},
     )
+    # Per-side display labels for the event's two faction lists.
+    # Blank list-1 label renders as "Factions"; blank list-2 label
+    # means events of this type only get ONE faction list.
+    factions1_label = StringField(
+        "Factions list 1 label",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": 'e.g. "Attackers" — blank shows "Factions"'},
+    )
+    factions2_label = StringField(
+        "Factions list 2 label",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": 'e.g. "Defenders" — blank = no second list'},
+    )
     font_colour = StringField(
         "Font Colour",
         validators=[validate_colour],

@@ -455,3 +455,147 @@ class TestLocationParentPickerBreadcrumb:
         target = factories.make_location(name='Another Spot')
         resp = client.get(f'/locations/edit/{target.id}')
         assert 'Typed Child (County) — Parent Region'.encode() in resp.data
+
+
+class TestEventFactions:
+    def _add(self, client, event, side, faction=None, faction_search=''):
+        return client.post(f'/events/{event.id}/factions/{side}/add', data={
+            'faction_id': str(faction.id) if faction else '',
+            'faction_search': faction_search,
+        }, follow_redirects=True)
+
+    def test_add_to_side1(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        resp = self._add(client, ev, 1, faction=f)
+        assert resp.status_code == 200
+        db_session.expire_all()
+        assert f in ev.factions1
+        assert f not in ev.factions2
+
+    def test_add_to_side2(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        self._add(client, ev, 2, faction=f)
+        db_session.expire_all()
+        assert f in ev.factions2
+        assert f not in ev.factions1
+
+    def test_same_faction_both_sides_allowed(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        self._add(client, ev, 1, faction=f)
+        self._add(client, ev, 2, faction=f)
+        db_session.expire_all()
+        assert f in ev.factions1 and f in ev.factions2
+
+    def test_duplicate_same_side_noop(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        self._add(client, ev, 1, faction=f)
+        resp = self._add(client, ev, 1, faction=f)
+        assert b'already in that list' in resp.data
+        db_session.expire_all()
+        assert len(ev.factions1) == 1
+
+    def test_name_id_suffix_fallback(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        self._add(client, ev, 1, faction_search=f'{f.name} #{f.id}')
+        db_session.expire_all()
+        assert f in ev.factions1
+
+    def test_invalid_side_404(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        assert self._add(client, ev, 3, faction=f).status_code == 404
+
+    def test_remove_only_touches_that_side(self, admin_client, db_session):
+        client, _ = admin_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        self._add(client, ev, 1, faction=f)
+        self._add(client, ev, 2, faction=f)
+        resp = client.post(
+            f'/events/{ev.id}/factions/1/remove/{f.id}',
+            follow_redirects=True)
+        assert b'Removed' in resp.data
+        db_session.expire_all()
+        assert f not in ev.factions1
+        assert f in ev.factions2
+
+    def test_non_admin_forbidden(self, user_client, db_session):
+        client, _ = user_client
+        ev = factories.make_event()
+        f = factories.make_faction()
+        assert client.post(f'/events/{ev.id}/factions/1/add', data={
+            'faction_id': str(f.id), 'faction_search': '',
+        }).status_code == 403
+        assert client.post(
+            f'/events/{ev.id}/factions/1/remove/{f.id}').status_code == 403
+
+    def test_edit_page_shows_type_labels_and_side2_gating(
+            self, admin_client, db_session):
+        client, _ = admin_client
+        from app.models import EventType
+        battle = EventType(name='Battle Type', factions1_label='Attackers',
+                           factions2_label='Defenders')
+        db_session.add(battle)
+        db_session.flush()
+        ev_battle = factories.make_event(event_type_id=battle.id)
+        ev_plain = factories.make_event()
+        resp = client.get(f'/events/edit/{ev_battle.id}')
+        assert b'Attackers' in resp.data
+        assert b'Defenders' in resp.data
+        # Typeless event: one generic list, no second fieldset.
+        resp = client.get(f'/events/edit/{ev_plain.id}')
+        assert b'>Factions</legend>' in resp.data
+        assert b'factions/2/add' not in resp.data
+
+    def test_event_type_labels_saved_via_admin_form(self, admin_client,
+                                                    db_session):
+        client, _ = admin_client
+        from app.models import EventType
+        et = EventType(name='Labelled Type')
+        db_session.add(et)
+        db_session.commit()
+        resp = client.post(f'/admin/event-types/{et.id}/edit', data={
+            'name': 'Labelled Type', 'icon': '',
+            'factions1_label': 'Rebels', 'factions2_label': 'Suppressors',
+            'font_colour': '#ffffff', 'bg_colour': '#ffffff',
+            'border_colour': '#ffffff',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+        db_session.expire_all()
+        assert et.factions1_label == 'Rebels'
+        assert et.factions2_label == 'Suppressors'
+
+    def test_chapter_sidebar_renders_sided_lists(self, client, db_session):
+        from app.models import EventType
+        from app.models.event import event_faction
+        from app import db as _db
+        battle = EventType(name='Sidebar Battle', factions1_label='Attackers',
+                           factions2_label='Defenders')
+        db_session.add(battle)
+        db_session.flush()
+        ev = factories.make_event(name='Sidebar Clash',
+                                  event_type_id=battle.id)
+        wei = factories.make_faction(name='Wei Side')
+        shu = factories.make_faction(name='Shu Side')
+        _db.session.execute(event_faction.insert().values([
+            dict(event_id=ev.id, faction_id=wei.id, side=1),
+            dict(event_id=ev.id, faction_id=shu.id, side=2),
+        ]))
+        ch = factories.make_chapter()
+        factories.associate_event(ch, ev, keywords=ev.name)
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert b'Attackers:' in resp.data
+        assert b'Defenders:' in resp.data
+        assert b'Wei Side' in resp.data
+        assert b'Shu Side' in resp.data

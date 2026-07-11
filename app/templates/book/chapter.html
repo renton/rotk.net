@@ -568,6 +568,22 @@
                         <span class="text-muted small">· {{ ev.location.name }}</span>
                         {% endif %}
                       </div>
+                      {# Sided faction participation — labels from the
+                         event's type; a side only renders when it has
+                         factions. #}
+                      {% set et = ev.event_type %}
+                      {% if ev.factions1 %}
+                      <div class="small mt-1">
+                        <span class="text-muted">{{ et.factions1_label if et and et.factions1_label else 'Factions' }}:</span>
+                        {% for f in ev.factions1 %}{{ macros.badge_widget(f) }} {% endfor %}
+                      </div>
+                      {% endif %}
+                      {% if ev.factions2 %}
+                      <div class="small mt-1">
+                        <span class="text-muted">{{ et.factions2_label if et and et.factions2_label else 'Factions' }}:</span>
+                        {% for f in ev.factions2 %}{{ macros.badge_widget(f) }} {% endfor %}
+                      </div>
+                      {% endif %}
                       {% set list_urls = ev.urls %}
                       {% if list_urls %}
                       <div class="sidebar-url-indent mt-1">

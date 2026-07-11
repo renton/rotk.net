@@ -10,6 +10,21 @@ from app.models.abstract import AbstractObject, AbstractTag
 from app.models.chapter import Chapter
 
 
+# Sided event ↔ faction participation. One table with a `side`
+# discriminator (1 or 2) rather than two M2M tables — Event.factions1 /
+# Event.factions2 are relationships filtered on it. `side` is part of
+# the PK so a faction can (rarely) sit on both sides of the same event.
+# Writes go through this table directly (see the add/remove routes in
+# main/views) — the relationships below are viewonly so the side value
+# is always explicit, never guessed by the ORM.
+event_faction = db.Table(
+    'event_faction',
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('faction_id', db.Integer, db.ForeignKey('faction.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('side', db.SmallInteger, nullable=False, default=1, primary_key=True),
+)
+
+
 event_chapter = db.Table(
     'event_chapter',
     db.Column('event_id',   db.Integer, db.ForeignKey('event.id'),   primary_key=True),
@@ -27,6 +42,15 @@ class EventType(AbstractTag):
     columns + a Font Awesome `icon` string used in the chapter sidebar
     badge."""
     events = db.relationship('Event', back_populates='event_type')
+
+    # Display labels for the two faction lists on events of this type
+    # ("Attackers"/"Defenders" for Battle, "Signatories"/"" for Treaty).
+    # Empty factions1_label falls back to "Factions" at render time;
+    # empty factions2_label means the second list doesn't apply to this
+    # type (the edit page hides its picker; public views only render a
+    # side that actually has factions).
+    factions1_label = db.Column(db.String(64), nullable=False, default='')
+    factions2_label = db.Column(db.String(64), nullable=False, default='')
 
     def __repr__(self):
         return f'<EventType {self.name}>'
@@ -80,6 +104,29 @@ class Event(AbstractObject):
         viewonly=True,
         order_by='Url.name',
     )
+
+    # The two sided faction lists (see event_faction above). Viewonly —
+    # writes insert/delete event_faction rows directly so `side` is
+    # always set explicitly.
+    factions1 = db.relationship(
+        'Faction',
+        secondary=event_faction,
+        primaryjoin='Event.id == event_faction.c.event_id',
+        secondaryjoin='and_(Faction.id == event_faction.c.faction_id, event_faction.c.side == 1)',
+        viewonly=True,
+        order_by='Faction.name',
+    )
+    factions2 = db.relationship(
+        'Faction',
+        secondary=event_faction,
+        primaryjoin='Event.id == event_faction.c.event_id',
+        secondaryjoin='and_(Faction.id == event_faction.c.faction_id, event_faction.c.side == 2)',
+        viewonly=True,
+        order_by='Faction.name',
+    )
+
+    def factions_for_side(self, side):
+        return self.factions1 if side == 1 else self.factions2
 
     def __repr__(self):
         return f'<Event {self.name}>'

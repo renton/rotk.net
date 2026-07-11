@@ -30,7 +30,7 @@ app/
     audit.py             # ORM event hooks stamping created_by / last_edited_by on every Model with those columns
     character.py         # Character, Link, Role, Faction, Portrait (+ association tables incl. faction_leader M2M — Faction.leaders, admin-curated on the faction edit page)
     chapter.py           # Chapter (name + content + chapter_num + M2M to Character / Event / Location)
-    event.py             # Event (name, aliases, optional Location FK, optional EventType FK, geo override) + EventType (AbstractTag)
+    event.py             # Event (name, aliases, optional Location FK, optional EventType FK, geo override) + EventType (AbstractTag + factions1_label/factions2_label) + event_faction sided M2M (side 1|2 in PK; Event.factions1/.factions2 viewonly — writes hit the table directly)
     location.py          # Location (name, aliases, lat/lng) — chapter↔location M2M attached here
     tag.py               # Tag + TagAssociation (polymorphic by target_type + target_id)
     url.py               # Url + UrlType (polymorphic Url; FA-iconed UrlType)

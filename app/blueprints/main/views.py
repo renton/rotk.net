@@ -2005,6 +2005,71 @@ def events():
     )
 
 
+@main.route('/events/<int:id>/factions/<int:side>/add', methods=['POST'])
+@login_required
+@admin_required
+def add_event_faction(id, side):
+    """Attach a faction to one side of an event's participation lists.
+
+    Same picker pair as the faction-leaders form: hidden `faction_id`
+    (filled by admin_picker.js) with a `Name #<id>` suffix fallback in
+    `faction_search`. Writes the event_faction row directly so `side`
+    is explicit (the model relationships are viewonly)."""
+    from flask_wtf import FlaskForm
+    from app.models.event import event_faction
+    if not FlaskForm().validate_on_submit():
+        abort(400)
+    if side not in (1, 2):
+        abort(404)
+    event = Event.query.get_or_404(id)
+
+    raw_id = (request.form.get('faction_id') or '').strip()
+    if not raw_id.isdigit():
+        m = re.search(r'#(\d+)\s*$', request.form.get('faction_search') or '')
+        raw_id = m.group(1) if m else ''
+    faction = Faction.query.get(int(raw_id)) if raw_id.isdigit() else None
+    if faction is None or faction.is_hidden:
+        flash("Couldn't resolve that faction — pick one from the list.")
+        return redirect(url_for('main.edit_event', id=event.id))
+
+    if faction in event.factions_for_side(side):
+        flash(f"{faction.name} is already in that list.")
+    else:
+        db.session.execute(event_faction.insert().values(
+            event_id=event.id, faction_id=faction.id, side=side))
+        db.session.commit()
+        flash(f"Added {faction.name}.")
+    return redirect(url_for('main.edit_event', id=event.id))
+
+
+@main.route('/events/<int:id>/factions/<int:side>/remove/<int:faction_id>', methods=['POST'])
+@login_required
+@admin_required
+def remove_event_faction(id, side, faction_id):
+    from flask_wtf import FlaskForm
+    from app.models.event import event_faction
+    if not FlaskForm().validate_on_submit():
+        abort(400)
+    if side not in (1, 2):
+        abort(404)
+    event = Event.query.get_or_404(id)
+    faction = Faction.query.get_or_404(faction_id)
+
+    result = db.session.execute(
+        event_faction.delete().where(
+            (event_faction.c.event_id == event.id)
+            & (event_faction.c.faction_id == faction.id)
+            & (event_faction.c.side == side)
+        )
+    )
+    db.session.commit()
+    if result.rowcount:
+        flash(f"Removed {faction.name}.")
+    else:
+        flash(f"{faction.name} wasn't in that list.")
+    return redirect(url_for('main.edit_event', id=event.id))
+
+
 @main.route('/events/new', methods=['GET', 'POST'])
 @login_required
 @admin_required
@@ -2035,10 +2100,19 @@ def edit_event(id):
         db.session.commit()
         flash("Event updated.")
         return redirect(url_for('main.edit_event', id=event.id))
+    # Sided faction lists. Side 2 only applies when the event's type
+    # carries a factions2_label (or legacy data already exists there).
+    faction_picker_factions = (
+        Faction.query
+        .filter(Faction.is_hidden.is_(False))
+        .order_by(Faction.name)
+        .all()
+    )
     return render_template(
         'events/event_edit.html',
         form=form,
         event=event,
+        faction_picker_factions=faction_picker_factions,
         urls=[u for u in event.urls if not u.is_deleted],
         add_url_form=AddUrlForm(),
         csrf_form=FlaskForm(),
