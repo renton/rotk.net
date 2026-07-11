@@ -301,3 +301,71 @@ class TestDropdownSort:
         z = resp.data.find(b'>Zealot of<')
         assert -1 not in (a, m, z)
         assert a < m < z
+
+
+class TestSexAwareLabels:
+    """One Parent/Child type covers Father/Mother/Son/Daughter via each
+    character's sex; blank female labels fall back to the default."""
+
+    def _parent_child(self):
+        return factories.make_relationship_type(
+            name='Parent/Child',
+            side1_label='Father', side1_label_female='Mother',
+            side2_label='Son', side2_label_female='Daughter')
+
+    def test_end_label_resolution(self, db_session):
+        t = self._parent_child()
+        assert t.end_label(1, 'male') == 'Father'
+        assert t.end_label(1, 'female') == 'Mother'
+        assert t.end_label(2, 'female') == 'Daughter'
+        # No female override → default label regardless of sex.
+        plain = factories.make_relationship_type(side1_label='Uncle',
+                                                 side2_label='Nephew')
+        assert plain.end_label(1, 'female') == 'Uncle'
+
+    def test_describe_for_uses_other_characters_sex(self, db_session):
+        t = self._parent_child()
+        mum = factories.make_character(name='Mum', sex='female')
+        girl = factories.make_character(name='Girl', sex='female')
+        r = factories.make_relationship(mum, girl, t)
+        # From the daughter's view the other end is her Mother...
+        assert r.describe_for(girl.id)[1] == 'Mother'
+        # ...and from the mother's view, her Daughter.
+        assert r.describe_for(mum.id)[1] == 'Daughter'
+
+    def test_symmetric_with_female_variant(self, db_session):
+        t = factories.make_relationship_type(
+            name='Siblings', side1_label='Brother',
+            side1_label_female='Sister', side2_label='',
+        )
+        assert t.is_symmetric
+        bro = factories.make_character(sex='male')
+        sis = factories.make_character(sex='female')
+        r = factories.make_relationship(bro, sis, t)
+        # He sees his Sister; she sees her Brother.
+        assert r.describe_for(bro.id)[1] == 'Sister'
+        assert r.describe_for(sis.id)[1] == 'Brother'
+
+    def test_dropdown_resolves_for_edited_characters_sex(self, admin_client,
+                                                         db_session):
+        client, _ = admin_client
+        self._parent_child()
+        lady = factories.make_character(name='Lady Bian', sex='female')
+        lord = factories.make_character(name='Lord Cao', sex='male')
+        resp = client.get(f'/characters/edit/{lady.id}')
+        assert b'>Mother of<' in resp.data
+        assert b'>Father of<' not in resp.data
+        resp = client.get(f'/characters/edit/{lord.id}')
+        assert b'>Father of<' in resp.data
+        assert b'>Mother of<' not in resp.data
+
+    def test_admin_form_saves_female_labels(self, admin_client, db_session):
+        client, _ = admin_client
+        resp = client.post('/admin/relationship-types/new', data={
+            'name': 'Spouse Pair', 'side1_label': 'Husband',
+            'side1_label_female': '', 'side2_label': 'Husband2',
+            'side2_label_female': 'Wife',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+        t = RelationshipType.query.filter_by(name='Spouse Pair').first()
+        assert t.side2_label_female == 'Wife'

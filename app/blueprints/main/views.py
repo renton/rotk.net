@@ -1137,19 +1137,19 @@ def edit_character(id):
         .order_by(RelationshipType.name)
         .all()
     )
-    # Dropdown options, disambiguated: two types sharing an end label
-    # ("Father of" from both Father/Son and Father/Daughter) get the
-    # type name appended so the admin can tell them apart. Unique
-    # labels stay clean.
+    # Dropdown options. Labels resolve for THIS character's sex (a
+    # female character sees "Mother of" from a Parent/Child type), and
+    # two types sharing a resolved end label get the type name appended
+    # so the admin can tell them apart. Unique labels stay clean.
     from collections import Counter
     rel_options = []
     for t in relationship_types:
         rel_options.append({'value': f'{t.id}:1',
-                            'label': (t.side1_label or t.name),
+                            'label': (t.end_label(1, character.sex) or t.name),
                             'type_name': t.name})
         if not t.is_symmetric:
             rel_options.append({'value': f'{t.id}:2',
-                                'label': t.side2_label,
+                                'label': (t.end_label(2, character.sex) or t.name),
                                 'type_name': t.name})
     label_counts = Counter(o['label'] for o in rel_options)
     for o in rel_options:

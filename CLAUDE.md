@@ -38,7 +38,7 @@ app/
     chapter_hidden_snippet.py  # ChapterHiddenSnippet — admin-hidden prose spans (fingerprinted like MatchExclusion; removed from public render entirely)
     annotation.py        # Annotation (per-paragraph public/private threads, section_text content-addressed) + annotation_character / annotation_location M2Ms
     edit.py              # Edit (admin save audit log: model, row, field-by-field diffs)
-    relationship.py      # RelationshipType (tag-shaped + side1_label/side2_label; blank side2 = symmetric) + Relationship (character1 IS the side-1 role; two-way by construction — both ends read the same row via describe_for)
+    relationship.py      # RelationshipType (tag-shaped; side{1,2}_label = male/default + side{1,2}_label_female overrides resolved from Character.sex; blank side2 pair = symmetric) + Relationship (character1 IS the side-1 role; two-way by construction — both ends read the same row via describe_for)
     year_map.py          # YearMap — one territory-map image per year (184–280; `year` UNIQUE; files in static/yearmaps/; Portrait-style source_site/source_url credit pair; year_map_faction M2M = factions present that year, replaced wholesale on modal save)
     auth.py              # User, AnonymousUser, login_manager hooks
   blueprints/

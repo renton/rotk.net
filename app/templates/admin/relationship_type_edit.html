@@ -9,9 +9,11 @@ rotk.net - {% if relationship_type %}Edit relationship type {{ relationship_type
     <h1>{% if relationship_type %}Edit relationship type{% else %}New relationship type{% endif %}</h1>
     <p class="text-muted mb-0">
         Side 1 / side 2 label the two ends of the tie — the side-1
-        character IS the side-1 label (the "Father" in Father/Son).
-        Leave side 2 blank for symmetric types like "Brothers" or
-        "Cousins" (both ends display the side-1 label).
+        character IS the side-1 label (the "Parent" end of Parent/Child).
+        Each end takes an optional female variant, resolved from the
+        character's sex ("Father"/"Mother"). Leave side 2 fully blank
+        for symmetric types like "Siblings" or "Cousins" (both ends
+        resolve through the side-1 labels).
     </p>
 </div>
 {% endblock %}

@@ -8,8 +8,10 @@
         <h1>Relationship Types</h1>
         <p class="text-muted mb-0">
             The two-ended labels for character family ties. Side 1 / side 2
-            name the ends ("Father"/"Son"); a blank side 2 makes the type
-            symmetric ("Brothers").
+            name the ends, each with an optional female variant — one
+            "Parent/Child" type covers Father / Mother / Son / Daughter
+            via each character's sex. A fully blank side 2 makes the
+            type symmetric ("Siblings", "Cousins").
         </p>
     </div>
     <a href="{{ url_for('admin.new_relationship_type') }}" class="btn btn-primary">+ Add Type</a>
@@ -29,8 +31,8 @@
         {% for t in types %}
         <tr>
             <td>{{ t.name }}</td>
-            <td>{{ t.side1_label or '—' }}</td>
-            <td>{% if t.side2_label %}{{ t.side2_label }}{% else %}<span class="text-muted fst-italic">symmetric</span>{% endif %}</td>
+            <td>{{ t.side1_label or '—' }}{% if t.side1_label_female %} / {{ t.side1_label_female }}{% endif %}</td>
+            <td>{% if t.side2_label or t.side2_label_female %}{{ t.side2_label }}{% if t.side2_label_female %} / {{ t.side2_label_female }}{% endif %}{% else %}<span class="text-muted fst-italic">symmetric</span>{% endif %}</td>
             <td>{{ usage_counts.get(t.id, 0) }}</td>
             <td class="text-end">
                 <div class="d-flex gap-2 justify-content-end">

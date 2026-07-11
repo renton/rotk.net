@@ -123,14 +123,24 @@ class EditRelationshipTypeForm(FlaskForm):
     show the side-1 label)."""
     name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
     side1_label = StringField(
-        "Side 1 label",
+        "Side 1 label (male / default)",
         validators=[Length(0, 64)],
         render_kw={"placeholder": 'e.g. "Father" — blank falls back to the name'},
     )
-    side2_label = StringField(
-        "Side 2 label",
+    side1_label_female = StringField(
+        "Side 1 label (female)",
         validators=[Length(0, 64)],
-        render_kw={"placeholder": 'e.g. "Son" — blank = symmetric (Brothers, Cousins)'},
+        render_kw={"placeholder": 'e.g. "Mother" — blank uses the default label'},
+    )
+    side2_label = StringField(
+        "Side 2 label (male / default)",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": 'e.g. "Son" — blank (with female blank) = symmetric'},
+    )
+    side2_label_female = StringField(
+        "Side 2 label (female)",
+        validators=[Length(0, 64)],
+        render_kw={"placeholder": 'e.g. "Daughter" — blank uses the default label'},
     )
     submit = SubmitField("Save")
 
