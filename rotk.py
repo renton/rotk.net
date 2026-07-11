@@ -2380,6 +2380,345 @@ def clean_empty_location_geojson(dry_run):
 
 
 @app.cli.command()
+@click.argument('fixes_file', type=click.Path(exists=True, dir_okay=False))
+@click.option('--apply/--dry-run', default=False,
+              help='Default is dry-run (prints what would happen). Pass --apply to write.')
+@click.option('--no-confirm', is_flag=True, default=False,
+              help='Skip the interactive confirm before --apply writes (for scripted use).')
+def apply_fixes(fixes_file, apply, no_confirm):
+    """Apply a batch of cross-resource data fixes from a JSON file.
+
+    The generalized companion to the per-purpose apply-* commands: one
+    file can update fields on many resource types, add/remove
+    relationships, manage chapter associations and faction leaders.
+    Built for the find-with-MCP → agree → apply workflow.
+
+    Input file: a JSON ARRAY of operation objects. Every op may carry a
+    "_note" (ignored — for humans). Supported ops:
+
+      {"op": "update", "model": "location", "id": 1819,
+       "fields": {"name": "West Valley Land"}}
+          Set columns on a row. Models: character, faction, role, tag,
+          event, event_type, location, location_type, chapter,
+          relationship_type, url_type, year_map. Refuses id/audit/
+          timestamp columns; warns on chapter.content (fingerprints).
+
+      {"op": "add_relationship", "character1_id": 1, "character2_id": 2,
+       "type": "Parent/Child"}
+          character1 IS the side-1 role (the Parent). `type` may be the
+          RelationshipType name or id. Skips exact + symmetric-reversed
+          duplicates. "remove_relationship" takes the same keys.
+
+      {"op": "add_association", "target": "event", "chapter_num": 59,
+       "target_id": 41, "keywords": ""}
+          Link a character/event/location to a chapter (writes the M2M
+          + per-chapter keywords). "update_association" changes
+          keywords (and "summary" for characters) on an existing link;
+          "remove_association" drops the link.
+
+      {"op": "add_faction_leader", "faction_id": 3, "character_id": 86}
+          ("remove_faction_leader" mirrors.)
+
+    Idempotent: every op no-ops cleanly when the data is already in the
+    requested state. Character-affecting ops recount
+    book_mention_count at the end (same triggers the admin UI uses).
+    Audit columns + the Edit log are stamped automatically by the ORM
+    hooks. Removal-class ops get a stronger y/N confirm under --apply."""
+    import json as _json
+    from sqlalchemy import text as _text
+    from app.models import (Chapter, Character, Event, EventType, Faction,
+                            Location, LocationType, Relationship,
+                            RelationshipType, Role, Tag, UrlType, YearMap)
+    from app.models.event import event_chapter
+    from app.models.location import chapter_location
+    from tools.book_parser import recount_character_book_mentions
+
+    MODELS = {
+        'character': Character, 'faction': Faction, 'role': Role,
+        'tag': Tag, 'event': Event, 'event_type': EventType,
+        'location': Location, 'location_type': LocationType,
+        'chapter': Chapter, 'relationship_type': RelationshipType,
+        'url_type': UrlType, 'year_map': YearMap,
+    }
+    DENIED_FIELDS = {'id', 'created_at', 'updated_at', 'created_by',
+                     'last_edited_by'}
+    ASSOC = {
+        'character': ('chapter_character', 'character_id',
+                      Character.chapter_character, Character),
+        'event': ('event_chapter', 'event_id', event_chapter, Event),
+        'location': ('chapter_location', 'location_id', chapter_location,
+                     Location),
+    }
+    REMOVAL_OPS = {'remove_relationship', 'remove_association',
+                   'remove_faction_leader'}
+
+    ops = _json.loads(open(fixes_file).read())
+    if not isinstance(ops, list):
+        raise click.ClickException('Input file must be a JSON array of ops.')
+
+    def _resolve_rel_type(spec, i):
+        if isinstance(spec, int):
+            rt = RelationshipType.query.get(spec)
+        else:
+            rt = RelationshipType.query.filter_by(name=spec).first()
+        if rt is None:
+            raise click.ClickException(f"op[{i}]: no relationship type {spec!r}")
+        return rt
+
+    # ---- Pass 1: validate everything + build an executable plan ----------
+    plan = []          # (kind, description, apply_fn, is_noop)
+    recount_ids = set()
+    warnings = []
+
+    for i, op in enumerate(ops):
+        kind = op.get('op')
+        note = f"  # {op['_note']}" if op.get('_note') else ''
+
+        if kind == 'update':
+            model_name = op.get('model')
+            model = MODELS.get(model_name)
+            if model is None:
+                raise click.ClickException(
+                    f"op[{i}]: unknown model {model_name!r} "
+                    f"(valid: {', '.join(sorted(MODELS))})")
+            row = model.query.get(op.get('id'))
+            if row is None:
+                raise click.ClickException(
+                    f"op[{i}]: no {model_name} with id={op.get('id')}")
+            fields = op.get('fields') or {}
+            if not fields:
+                raise click.ClickException(f"op[{i}]: update with no fields")
+            changes = []
+            for field, new in fields.items():
+                if field in DENIED_FIELDS:
+                    raise click.ClickException(
+                        f"op[{i}]: field {field!r} is not editable")
+                if not hasattr(row, field):
+                    raise click.ClickException(
+                        f"op[{i}]: {model_name} has no field {field!r}")
+                old = getattr(row, field)
+                if old != new:
+                    changes.append((field, old, new))
+                if model_name == 'chapter' and field == 'content':
+                    warnings.append(
+                        f"op[{i}]: changing chapter.content can orphan "
+                        f"MatchExclusion / hidden-snippet / annotation "
+                        f"fingerprints — re-check them after applying.")
+            label = getattr(row, 'name', None) or getattr(row, 'chapter_num', row.id)
+            desc = f"update {model_name} [{row.id}] {label!r}: " + (
+                '; '.join(f"{f}: {o!r} -> {n!r}" for f, o, n in changes)
+                if changes else 'no changes (already as requested)')
+
+            def apply_update(row=row, changes=changes):
+                for f, _, n in changes:
+                    setattr(row, f, n)
+            if model_name == 'character' and any(
+                    f in ('name', 'courtesty_name', 'aliases')
+                    for f, _, _ in changes):
+                recount_ids.add(row.id)
+            plan.append((kind, desc + note, apply_update, not changes))
+
+        elif kind in ('add_relationship', 'remove_relationship'):
+            c1 = Character.query.get(op.get('character1_id'))
+            c2 = Character.query.get(op.get('character2_id'))
+            if c1 is None or c2 is None:
+                raise click.ClickException(f"op[{i}]: bad character id(s)")
+            if c1.id == c2.id:
+                raise click.ClickException(f"op[{i}]: self-relationship")
+            rt = _resolve_rel_type(op.get('type'), i)
+            existing = Relationship.query.filter_by(
+                character1_id=c1.id, character2_id=c2.id,
+                relationship_type_id=rt.id).first()
+            reversed_row = Relationship.query.filter_by(
+                character1_id=c2.id, character2_id=c1.id,
+                relationship_type_id=rt.id).first()
+            if kind == 'add_relationship':
+                dup = existing or (reversed_row if rt.is_symmetric else None)
+                desc = (f"add relationship {c1.name!r} "
+                        f"—[{rt.name}]→ {c2.name!r}")
+                if dup:
+                    desc += ' (already exists — skip)'
+
+                def apply_add_rel(c1=c1, c2=c2, rt=rt):
+                    db.session.add(Relationship(
+                        character1_id=c1.id, character2_id=c2.id,
+                        relationship_type_id=rt.id))
+                plan.append((kind, desc + note, apply_add_rel, bool(dup)))
+            else:
+                victim = existing or reversed_row
+                desc = (f"REMOVE relationship {c1.name!r} "
+                        f"—[{rt.name}]— {c2.name!r}")
+                if victim is None:
+                    desc += " (doesn't exist — skip)"
+
+                def apply_rm_rel(victim=victim):
+                    db.session.delete(victim)
+                plan.append((kind, desc + note, apply_rm_rel, victim is None))
+
+        elif kind in ('add_association', 'update_association',
+                      'remove_association'):
+            target_type = op.get('target')
+            if target_type not in ASSOC:
+                raise click.ClickException(
+                    f"op[{i}]: bad target {target_type!r} "
+                    f"(character|event|location)")
+            table_name, fk_col, table_obj, model = ASSOC[target_type]
+            chapter = Chapter.query.filter_by(
+                chapter_num=op.get('chapter_num')).first()
+            if chapter is None:
+                raise click.ClickException(
+                    f"op[{i}]: no chapter {op.get('chapter_num')!r}")
+            target = model.query.get(op.get('target_id'))
+            if target is None:
+                raise click.ClickException(
+                    f"op[{i}]: no {target_type} id={op.get('target_id')}")
+            exists = db.session.execute(_text(
+                f'SELECT 1 FROM {table_name} '
+                f'WHERE chapter_id = :cid AND {fk_col} = :tid'
+            ), {'cid': chapter.id, 'tid': target.id}).first() is not None
+            keywords = op.get('keywords')
+            summary = op.get('summary')
+            if summary is not None and target_type != 'character':
+                raise click.ClickException(
+                    f"op[{i}]: summary only applies to character associations")
+            tname = f"ch{chapter.chapter_num} <-> {target_type} {target.name!r}"
+
+            if kind == 'add_association':
+                desc = f"associate {tname}"
+                if keywords:
+                    desc += f" keywords={keywords!r}"
+                if exists:
+                    desc += ' (already associated — skip)'
+
+                def apply_add_assoc(table_name=table_name, fk_col=fk_col,
+                                    chapter=chapter, target=target,
+                                    keywords=keywords):
+                    db.session.execute(_text(
+                        f'INSERT INTO {table_name} (chapter_id, {fk_col}, keywords) '
+                        f'VALUES (:cid, :tid, :kw)'
+                    ), {'cid': chapter.id, 'tid': target.id,
+                        'kw': keywords or ''})
+                if target_type == 'character':
+                    recount_ids.add(target.id)
+                plan.append((kind, desc + note, apply_add_assoc, exists))
+
+            elif kind == 'update_association':
+                if not exists:
+                    raise click.ClickException(
+                        f"op[{i}]: {tname} isn't associated — use "
+                        f"add_association")
+                sets, params = [], {'cid': chapter.id, 'tid': target.id}
+                if keywords is not None:
+                    sets.append('keywords = :kw')
+                    params['kw'] = keywords
+                if summary is not None:
+                    sets.append('summary = :sm')
+                    params['sm'] = summary
+                if not sets:
+                    raise click.ClickException(
+                        f"op[{i}]: update_association needs keywords "
+                        f"and/or summary")
+                desc = f"update association {tname}:"
+                if keywords is not None:
+                    desc += f" keywords={keywords!r}"
+                if summary is not None:
+                    desc += f" summary={summary[:60]!r}"
+
+                def apply_upd_assoc(table_name=table_name, fk_col=fk_col,
+                                    sets=sets, params=params):
+                    db.session.execute(_text(
+                        f'UPDATE {table_name} SET {", ".join(sets)} '
+                        f'WHERE chapter_id = :cid AND {fk_col} = :tid'
+                    ), params)
+                if target_type == 'character' and keywords is not None:
+                    recount_ids.add(target.id)
+                plan.append((kind, desc + note, apply_upd_assoc, False))
+
+            else:   # remove_association
+                desc = f"REMOVE association {tname}"
+                if not exists:
+                    desc += " (not associated — skip)"
+
+                def apply_rm_assoc(table_name=table_name, fk_col=fk_col,
+                                   chapter=chapter, target=target):
+                    db.session.execute(_text(
+                        f'DELETE FROM {table_name} '
+                        f'WHERE chapter_id = :cid AND {fk_col} = :tid'
+                    ), {'cid': chapter.id, 'tid': target.id})
+                if target_type == 'character':
+                    recount_ids.add(target.id)
+                plan.append((kind, desc + note, apply_rm_assoc, not exists))
+
+        elif kind in ('add_faction_leader', 'remove_faction_leader'):
+            faction = Faction.query.get(op.get('faction_id'))
+            character = Character.query.get(op.get('character_id'))
+            if faction is None or character is None:
+                raise click.ClickException(f"op[{i}]: bad faction/character id")
+            is_leader = character in faction.leaders
+            if kind == 'add_faction_leader':
+                desc = f"add leader {character.name!r} to faction {faction.name!r}"
+                if is_leader:
+                    desc += ' (already a leader — skip)'
+
+                def apply_add_leader(faction=faction, character=character):
+                    faction.leaders.append(character)
+                plan.append((kind, desc + note, apply_add_leader, is_leader))
+            else:
+                desc = f"REMOVE leader {character.name!r} from faction {faction.name!r}"
+                if not is_leader:
+                    desc += " (isn't a leader — skip)"
+
+                def apply_rm_leader(faction=faction, character=character):
+                    faction.leaders.remove(character)
+                plan.append((kind, desc + note, apply_rm_leader, not is_leader))
+
+        else:
+            raise click.ClickException(f"op[{i}]: unknown op {kind!r}")
+
+    # ---- Report -----------------------------------------------------------
+    click.echo(f"{'APPLY' if apply else 'DRY RUN'} — {len(plan)} op(s) "
+               f"from {fixes_file}\n")
+    for n, (kind, desc, _, is_noop) in enumerate(plan, 1):
+        marker = '=' if is_noop else ('-' if kind in REMOVAL_OPS else '+')
+        click.echo(f" {marker} [{n:>3}] {desc}")
+    for w in warnings:
+        click.echo(f" ! {w}")
+
+    doable = [(k, d, fn) for k, d, fn, noop in plan if not noop]
+    removals = [d for k, d, fn, noop in plan
+                if not noop and k in REMOVAL_OPS]
+    click.echo(f"\n{len(doable)} op(s) would write; "
+               f"{len(plan) - len(doable)} no-op(s).")
+    if recount_ids:
+        click.echo(f"{len(recount_ids)} character(s) will get a "
+                   f"book_mention_count recount.")
+
+    if not apply:
+        click.echo("\nDry run only — nothing written. "
+                   "Re-run with --apply to write.")
+        return
+    if not doable:
+        click.echo("\nNothing to do.")
+        return
+    if not no_confirm:
+        if removals:
+            click.confirm(
+                f"\n{len(removals)} REMOVAL op(s) included. Really apply?",
+                abort=True)
+        else:
+            click.confirm(f"\nApply {len(doable)} op(s)?", abort=True)
+
+    for kind, desc, fn in doable:
+        fn()
+    for cid in recount_ids:
+        c = Character.query.get(cid)
+        if c is not None:
+            recount_character_book_mentions(c)
+    db.session.commit()
+    click.echo(f"\nDone. {len(doable)} op(s) applied.")
+
+
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     pass
