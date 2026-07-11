@@ -101,3 +101,24 @@ def visible_portraits(c):
     rows = [p for p in c.portraits if not p.is_deleted and not p.is_hidden]
     rows.sort(key=lambda p: not p.is_default)
     return [portrait_entry(p) for p in rows]
+
+
+def location_ref(loc):
+    if loc is None:
+        return None
+    return {
+        'id': loc.id,
+        'name': loc.name,
+        'chinese_name': loc.chinese_name or '',
+        'location_type': tag_shaped_ref(loc.location_type),
+    }
+
+
+def event_type_ref(et):
+    """EventType ref incl. its two faction-list labels."""
+    if et is None:
+        return None
+    payload = tag_shaped_ref(et)
+    payload['factions1_label'] = et.factions1_label or ''
+    payload['factions2_label'] = et.factions2_label or ''
+    return payload

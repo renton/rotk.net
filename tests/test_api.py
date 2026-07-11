@@ -191,3 +191,76 @@ class TestFactionsRolesTagsApi:
         assert data['items'][0]['usage_count'] == 0
         detail = client.get(f'/api/v1/tags/{t.id}').get_json()
         assert detail['usage_count'] == 0
+
+
+class TestEventsApi:
+    def _seed(self, db_session):
+        from app.models import EventType
+        from app.models.event import event_faction
+        from app import db as _db
+        et = EventType(name='Api Battle', factions1_label='Attackers',
+                       factions2_label='Defenders')
+        db_session.add(et)
+        db_session.flush()
+        loc = factories.make_location(name='Api Field')
+        ev = factories.make_event(name='Api Clash', date='208',
+                                  event_type_id=et.id, location_id=loc.id,
+                                  aliases='The Clash')
+        wei = factories.make_faction(name='Api Attacker')
+        shu = factories.make_faction(name='Api Defender')
+        _db.session.execute(event_faction.insert().values([
+            dict(event_id=ev.id, faction_id=wei.id, side=1),
+            dict(event_id=ev.id, faction_id=shu.id, side=2),
+        ]))
+        ch = factories.make_chapter()
+        factories.associate_event(ch, ev, keywords='Api Clash')
+        db_session.flush()
+        return ev, et, loc, ch
+
+    def test_list_payload(self, client, db_session):
+        ev, et, loc, ch = self._seed(db_session)
+        data = client.get('/api/v1/events').get_json()
+        row = next(i for i in data['items'] if i['name'] == 'Api Clash')
+        assert row['date']['raw'] == '208'
+        assert row['date']['year_lo'] == 208.0
+        assert row['event_type']['name'] == 'Api Battle'
+        assert row['location']['name'] == 'Api Field'
+        assert row['factions1']['label'] == 'Attackers'
+        assert row['factions1']['factions'][0]['name'] == 'Api Attacker'
+        assert row['factions2']['factions'][0]['name'] == 'Api Defender'
+        assert row['chapters'][0]['chapter_num'] == ch.chapter_num
+        assert row['aliases'] == ['The Clash']
+        assert_no_private_keys(data)
+
+    def test_filters(self, client, db_session):
+        ev, et, loc, ch = self._seed(db_session)
+        other = factories.make_event(name='Unrelated Api Event')
+        db_session.flush()
+        data = client.get(f'/api/v1/events?location_id={loc.id}').get_json()
+        assert [i['name'] for i in data['items']] == ['Api Clash']
+        data = client.get(
+            f'/api/v1/events?chapter_num={ch.chapter_num}').get_json()
+        assert [i['name'] for i in data['items']] == ['Api Clash']
+        data = client.get(
+            f'/api/v1/events?event_type_id={et.id}').get_json()
+        assert [i['name'] for i in data['items']] == ['Api Clash']
+
+    def test_detail_and_typeless_labels(self, client, db_session):
+        ev = factories.make_event(name='Plain Api Event')
+        db_session.flush()
+        detail = client.get(f'/api/v1/events/{ev.id}').get_json()
+        assert detail['event_type'] is None
+        assert detail['factions1']['label'] == 'Factions'
+        assert detail['factions1']['factions'] == []
+
+    def test_event_types_endpoint(self, client, db_session):
+        from app.models import EventType
+        et = EventType(name='Countable Type', factions1_label='Rebels')
+        db_session.add(et)
+        db_session.flush()
+        factories.make_event(event_type_id=et.id)
+        data = client.get('/api/v1/event-types?q=Countable').get_json()
+        assert data['items'][0]['factions1_label'] == 'Rebels'
+        assert data['items'][0]['event_count'] == 1
+        detail = client.get(f'/api/v1/event-types/{et.id}').get_json()
+        assert detail['event_count'] == 1

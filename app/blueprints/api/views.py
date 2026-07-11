@@ -502,3 +502,152 @@ def tag_detail(tag_id):
     payload = ser.tag_shaped_ref(t)
     payload['usage_count'] = t.associations.count()
     return jsonify(payload)
+
+
+# --------------------------------------------------------------------------
+# Events / Event Types
+# --------------------------------------------------------------------------
+
+from app.models.event import event_chapter  # noqa: E402
+
+
+def _events_json(items):
+    ids = {e.id for e in items}
+    urls_map = _urls_map('event', ids)
+
+    chapters_map = {}
+    if ids:
+        rows = (
+            db.session.query(
+                event_chapter.c.event_id,
+                Chapter.chapter_num,
+                Chapter.name,
+                event_chapter.c.keywords,
+            )
+            .join(Chapter, Chapter.id == event_chapter.c.chapter_id)
+            .filter(event_chapter.c.event_id.in_(ids))
+            .order_by(Chapter.chapter_num)
+            .all()
+        )
+        for eid, num, name, keywords in rows:
+            chapters_map.setdefault(eid, []).append({
+                'chapter_num': num,
+                'title': name or '',
+                'keywords': keywords or '',
+            })
+
+    out = []
+    for e in items:
+        et = e.event_type
+        out.append({
+            'id': e.id,
+            'name': e.name,
+            'chinese_name': e.chinese_name or '',
+            'aliases': [a.strip() for a in (e.aliases or '').split(',')
+                        if a.strip()],
+            'date': ser.date_span(e.date),
+            'event_type': ser.event_type_ref(et),
+            'location': ser.location_ref(e.location),
+            'geo_point_override': e.geo_point_override or '',
+            'hide_on_map': bool(e.hide_on_map),
+            'factions1': {
+                'label': (et.factions1_label if et and et.factions1_label
+                          else 'Factions'),
+                'factions': [ser.faction_ref(f) for f in e.factions1
+                             if not f.is_hidden],
+            },
+            'factions2': {
+                'label': (et.factions2_label if et and et.factions2_label
+                          else 'Factions'),
+                'factions': [ser.faction_ref(f) for f in e.factions2
+                             if not f.is_hidden],
+            },
+            'urls': urls_map.get(e.id, []),
+            'chapters': chapters_map.get(e.id, []),
+        })
+    return out
+
+
+def _event_base_query():
+    return (
+        Event.query
+        .filter(Event.is_deleted.is_(False))
+        .options(
+            selectinload(Event.event_type),
+            selectinload(Event.location).selectinload(Location.location_type),
+            selectinload(Event.factions1),
+            selectinload(Event.factions2),
+        )
+    )
+
+
+@api.route('/events', methods=['GET'])
+def events():
+    query = _event_base_query()
+    q = (request.args.get('q') or '').strip()
+    if q:
+        like = f'%{q}%'
+        query = query.filter(Event.name.ilike(like)
+                             | Event.aliases.ilike(like))
+    location_id = int_arg('location_id')
+    if location_id is not None:
+        query = query.filter(Event.location_id == location_id)
+    event_type_id = int_arg('event_type_id')
+    if event_type_id is not None:
+        query = query.filter(Event.event_type_id == event_type_id)
+    chapter_num = int_arg('chapter_num')
+    if chapter_num is not None:
+        query = (
+            query.join(event_chapter, event_chapter.c.event_id == Event.id)
+            .join(Chapter, Chapter.id == event_chapter.c.chapter_id)
+            .filter(Chapter.chapter_num == chapter_num)
+        )
+    query = query.order_by(Event.name)
+    pagination, per_page = get_pagination(query)
+    return envelope(pagination, per_page, _events_json(pagination.items))
+
+
+@api.route('/events/<int:event_id>', methods=['GET'])
+def event_detail(event_id):
+    e = (
+        _event_base_query()
+        .filter(Event.id == event_id)
+        .first_or_404()
+    )
+    return jsonify(_events_json([e])[0])
+
+
+@api.route('/event-types', methods=['GET'])
+def event_types():
+    query = _tag_shaped_query(EventType)
+    pagination, per_page = get_pagination(query)
+    ids = [t.id for t in pagination.items]
+    counts = {}
+    if ids:
+        counts = dict(
+            db.session.query(Event.event_type_id, func.count(Event.id))
+            .filter(Event.event_type_id.in_(ids),
+                    Event.is_deleted.is_(False))
+            .group_by(Event.event_type_id)
+            .all()
+        )
+    items = []
+    for t in pagination.items:
+        payload = ser.event_type_ref(t)
+        payload['event_count'] = counts.get(t.id, 0)
+        items.append(payload)
+    return envelope(pagination, per_page, items)
+
+
+@api.route('/event-types/<int:type_id>', methods=['GET'])
+def event_type_detail(type_id):
+    t = (
+        EventType.query
+        .filter(EventType.id == type_id, EventType.is_deleted.is_(False),
+                EventType.is_hidden.is_(False))
+        .first_or_404()
+    )
+    payload = ser.event_type_ref(t)
+    payload['event_count'] = Event.query.filter_by(
+        event_type_id=t.id, is_deleted=False).count()
+    return jsonify(payload)
