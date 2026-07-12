@@ -36,7 +36,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch12 — 27 ops (Battle of Yan Province event added, 6 missing summaries, He Man kill credited to Cao Hong, Xue Lan/Zhang Miao fate fixes, Dian Wei/Xiahou Yuan rescue details)
 - [x] ch13 — 45 ops (Empress He→Empress Fu wrong-person fix, 11 missing summaries, 2 admin-note 'summaries' replaced, 4 relationships incl. Guo Si/Yang Biao marriages, ~25 summary corrections)
 - [x] ch14 — 35 ops (13 missing summaries, Cao Bao is LÜ BU's father-in-law not Zhang Fei's, Xu Huang kills Li Yue not Li Xian and refuses the murder-gift, Li Jue→Li Bie nephew)
-- [ ] ch15
+- [x] ch15 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' removal, 9 missing summaries, Yan Yu dup-note replaced, Young Overlord kill fixes, 4 relationships incl. Sun Ce↔Zhou Yu sworn)
 - [ ] ch16
 - [ ] ch17
 - [ ] ch18
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch15_audit.json (4):
+- Yan Baihu [2762] ↔ Yan Yu [2794] Sibling; Liu Dai [1325] ↔ Liu Yao [1452] Sibling
+- Sun Ce [2060] ↔ Zhou Yu [3466] Sworn Brother; Wu Jing [2466] → Sun Ce Pibling/Nibling
 
 From ch14_audit.json (1):
 - Li Jue [1185] → Li Bie [3678] Pibling/Nibling
@@ -177,6 +181,10 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch15:
+- Yan Yu [2794] carried the literal summary "(duplicate record)" — find
+  and merge its twin (another 嚴輿 row).
 
 From ch14:
 - Cao Bao's daughter is Lü Bu's wife ("my son-in-law... Lu Bu") — again

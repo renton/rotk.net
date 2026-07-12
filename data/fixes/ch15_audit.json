@@ -1,0 +1,177 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 15,
+   "target_id": 1263,
+   "_note": "Liang Da is NOT in ch15 - his keyword 'Tai' matched inside 'Zhou Tai' (6 occurrences); part of the Liang Da cleanup begun in ch2"},
+
+  {"op": "add_relationship", "character1_id": 2762, "character2_id": 2794,
+   "type": 5, "_note": "Yan Yu is Yan Baihu's brother ('sent his brother, Yan Yu' - paras 131, 141)"},
+
+  {"op": "add_relationship", "character1_id": 1325, "character2_id": 1452,
+   "type": 5, "_note": "Liu Yao is 'brother of the Imperial Protector of Yanzhou, Liu Dai' (para 53)"},
+
+  {"op": "add_relationship", "character1_id": 2060, "character2_id": 3466,
+   "type": 4, "_note": "Sun Ce and Zhou Yu 'became exceedingly good friends and sworn brothers, Sun Ce being the elder by two months' (para 45)"},
+
+  {"op": "add_relationship", "character1_id": 2466, "character2_id": 2060,
+   "type": 10, "_note": "Wu Jing is Sun Ce's uncle - 'his mother's brother, Governor Wu Jing' (para 26)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3683,
+   "summary": "Joins Xue Li and Zhang Ying in the night sortie out of Moling after Sun Ce's faked death - and dies to Jiang Qin's arrow in the ambush.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3685,
+   "summary": "Named among the generals at Yuan Shu's thirty-officer council as the seal-emboldened court plots against Sun Ce and Liu Bei.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3577,
+   "summary": "The Latter Han founder whose hilltop temple stands above the Sacred Hills camps; Sun Ce dreams Liu Xiu called him, prays at the shrine over Zhang Zhao's objection, and vows to restore the temple if his cause succeeds - the errand that leads to the duel with Taishi Ci.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1452,
+   "summary": "Imperial Protector of Yangzhou, driven from Shouchun to Que by Yuan Shu. He shelves the young Taishi Ci as 'not yet equal' to the van, loses Niuzhu, the Sacred Hills camp, and Que in succession, and after the Niuzhu counter-attack collapses flees to Liu Biao at Yuzhang - more than ten thousand of his men dead or surrendered.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3682,
+   "summary": "Governor of Lujiang, subdued by Sun Ce on Yuan Shu's orders - the victory whose condescending celebration banquet leaves Sun Ce weeping under the moon.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1547,
+   "summary": "Baited by Yuan Shu's promised grain, gold, and horses into sending Gao Shun against Xiaopei - then stiffed on the reward and minded to turn his army on Yuan Shu instead. Chen Gong redirects him: recall Liu Bei as a wing. He restores Liu Bei's family untouched, even offers to return Xuzhou itself, and settles into an uneasy peace of exchanged presents.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1554,
+   "summary": "Yuan Shu's adviser from Runan who walks in on the escape plot with a hundred bold fellows to offer - and rides out with Sun Ce as one of his first two counselors on the Jiangdong venture.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 2279,
+   "summary": "Governor of Kuaiji who backs the White Tiger against Yu Fan's protest, joins forces at Shanyin, and is flanked into his own walls by Zhou Yu and Cheng Pu. Tricked out of the city by the feigned withdrawal toward his Chadu supply base, he dares not return and flees to the coastal regions.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3684,
+   "summary": "Yuan Shu's adviser who closes the chapter: Sun Ce is untouchable behind the Great River, so strike Liu Bei first - 'I have a scheme to put him into your hands in a very short time.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 2794,
+   "summary": "Yan Baihu's brother: holds Maple Bridge sword in hand until Jiang Qin and Chen Wu storm up from a boat beneath it, then comes to Sun Ce's tent as peace envoy proposing to 'share the region' - and dies on Sun Ce's own blade, his head sent into the city.",
+   "_note": "old 'summary' was the bare note '(duplicate record)' - flagged in audit_notes.md"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3259,
+   "summary": "Liu Yao's general who entrenches the Niuzhu grain stores, loses them when Jiang Qin and Zhou Tai fire his camp, is spared execution and posted to Lingling - and dies on Chen Wu's spear turning to run in the Moling night sortie.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3459,
+   "summary": "Wang Lang's officer: rushes out to even the odds against Taishi Ci, trades blows with Huang Gai, and dies under Sun Ce's spear in the torchlit forest ambush on the Chadu road.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 2708,
+   "summary": "Liu Yao's commander at Moling. From his wall an archer's furtive shot topples Sun Ce from the saddle - and when the 'dead' Sun Ce reappears from ambush, Xue Li is slain in the panic of the night sortie.",
+   "_note": "old summary attached him to Yan Baihu and had Cheng Pu kill him; he's Liu Yao's man, slain in the ambush turbulence"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 2957,
+   "summary": "Liu Yao's general at Niuzhu: made prisoner by Sun Ce in the third bout, carried off under the victor's arm - and found crushed to death against Sun Ce's body when the prisoner is thrown down.",
+   "_note": "old summary attached him to Yan Baihu with a Cheng Pu kill; Sun Ce crushes him - half of the 'Young Overlord' legend"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 510,
+   "summary": "Liu Yao's general who rides to rescue the captured Yu Mi - and drops dead from his saddle, skull split, at Sun Ce's thunderous shout. The other half of the feat that names the 'Young Overlord'.",
+   "_note": "old summary called him a subdued brigand chief; he is frightened to death mid-charge"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3053,
+   "summary": "Ally Liu Yao rides to at Moling; joins the counter-attack on Niuzhu that Sun Ce turns back before the Young Overlord feats scatter the army.",
+   "_note": "old summary said Sun Ce's army killed him - his death isn't in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 228,
+   "summary": "Named among the generals at Yuan Shu's closing council of thirty officers.",
+   "_note": "old summary was 'bandit / minor figure'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1798,
+   "summary": "Named among the generals at Yuan Shu's closing council of thirty officers.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 258,
+   "summary": "The sallow, red-eyed seven-span fighter who betrays Que to Zhou Yu from inside, then as Van Leader dashes into Xue Li's array with a dozen riders and kills fifty men; storms Maple Bridge from the boat with Jiang Qin, and spears Zhang Ying in the Moling sortie.",
+   "_note": "old summary was a bare recruitment mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1064,
+   "summary": "River-bandit chief who introduces himself by firing Zhang Ying's Niuzhu camp with Zhou Tai and three hundred men; storms Maple Bridge from the boat with Chen Wu and puts the arrow through Chen Heng in the Moling ambush.",
+   "_note": "old summary was a bare recruitment mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 785,
+   "summary": "Answers Yan Yu's sword-on-the-bridge challenge and chases him to the west gate of Wujun once the boat party clears the span.",
+   "_note": "old summary was veteran filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 972,
+   "summary": "Opens the campaign dueling Zhang Ying above the Bullock Rapid, captures Jiaxing in the Wujun collapse, and rides out against Zhou Xin at Shanyin.",
+   "_note": "old summary was veteran filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 295,
+   "summary": "Fights Taishi Ci thirty bouts when Sun Ce is challenged to a death-duel, catches his lord's runaway horse in the scramble on Shenting Hill, and later routs the White Tiger's stand at the Western Ford, chasing him to Kuaiji.",
+   "_note": "old summary was veteran filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 2084,
+   "summary": "Sees the way into stubborn Kuaiji: strike the Chadu supply depot 'where the enemy is unprepared'. The feint empties the city into Sun Ce's forest ambush, and he is left in command of Kuaiji when the southeast settles.",
+   "_note": "old summary was a bare lieutenant mention; the winning plan is his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3516,
+   "summary": "Old officer of Sun Jian's who finds the young master weeping under the moon and lights the fuse: leave Yuan Shu, 'rescue' Wu Jing, and take Jiangdong. He rides as counselor on the expedition and ends it Governor of Wujun.",
+   "_note": "old summary was a bare recruitment mention; the escape plan starts with him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3466,
+   "summary": "Meets Sun Ce at Linyang with troops of his own - the sworn friend two months his junior - and immediately delivers the 'two Zhangs' of Guangling to the cause. He takes Que by surprise through Chen Wu's treachery, rescues the Shenting melee, flanks Wang Lang at Shanyin, and designs the reed-marsh trap that takes Taishi Ci alive.",
+   "_note": "old summary credited him with recommending Lu Su - that comes much later (ch29)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3272,
+   "summary": "Elder of the two Zhangs of Guangling, won by Sun Ce's personal visits and gifts; warns him against praying at the hilltop shrine with the enemy across the valley, and proposes the night raid that breaks Liu Yao's camp.",
+   "_note": "old summary was a bare recruitment mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 3123,
+   "summary": "Younger of the two Zhangs of Guangling; tries to keep Sun Ce off Maple Bridge - 'a leader's fate is bound up with the army's' - and is answered with the creed that a commander must share his soldiers' dangers.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 435,
+   "summary": "The eight-span Kuaiji native who walks into camp carrying Yan Baihu's head as his introduction - and, remembering his own healed spear wounds, points Sun Ce to Yu Fan and thence to the surgeon Hua Tuo.",
+   "_note": "old summary was a bare recruitment mention; he brings the White Tiger's head"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1290,
+   "summary": "Village leader of Yuhang who raises his neighbors to stop Yan Baihu's plundering flight, then joins Sun Ce with his son and crosses the Great River as a Commander.",
+   "_note": "old summary omitted the Yuhang stand"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1024,
+   "summary": "Fobs off Gao Shun's demand for the reward Yuan Shu promised Lü Bu - 'my lord has gone away; I will settle this when I see him' - the stall that nearly turns Lü Bu against Shouchun.",
+   "_note": "old summary was generic threat language"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 15,
+   "target_id": 1325,
+   "summary": "Named as Liu Yao's brother in the introduction of the Yangzhou protector.",
+   "_note": "old summary called him dead - ch10 has him submitting to Cao Cao; here he's only a genealogical mention"}
+]
