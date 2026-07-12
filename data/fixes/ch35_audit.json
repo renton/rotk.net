@@ -1,0 +1,79 @@
+[
+  {"op": "add_relationship", "character1_id": 1726, "character2_id": 1739,
+   "type": 10, "_note": "'Uncle and nephew. Pang Degong is ten years older than my master; the other is five years younger' - the cowherd on Pang Degong and Pang Tong"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 2661,
+   "summary": "The chapter's second title figure, debuting as Shan Fu: he is Water Mirror's midnight visitor who left Liu Biao with only a letter ('he treats good people correctly but cannot use them'), then catches Liu Bei's ear singing in the Xinye market. He tests the new lord's virtue with the give-away-the-Dilu trick, is made Commanding Adviser on the spot, and wins his first battle with the left-right-front plan that kills both Lü brothers.",
+   "_note": "summary was missing for the title character"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 3659,
+   "summary": "Quoted by Water Mirror to rebuke Liu Bei's despair of finding talent: 'In a hamlet of ten households there must be one true person.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 1565,
+   "summary": "Petitions Cao Ren for five thousand men to bring back Liu Bei's head - 'since our surrender we have performed no noteworthy service' - and announces himself grandly before the lines; Zhao Zilong's spear disposes of him in moments.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 1573,
+   "summary": "Joint author of the head-hunting petition: his retreat is shredded by Guan Yu's flank attack, and three miles on Zhang Fei is waiting - he is slain without a chance of striking a blow.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 68,
+   "summary": "Caught lying to Zhao Zilong at the west gate - 'it is my duty to guard the officials' - he is berated by Liu Biao when Sun Qian delivers the truth, ordered out to execution, and saved only by his sister's tears and Sun Qian's cold arithmetic; he keeps his head at the price of a public reprimand.",
+   "_note": "old summary missed the death sentence and reprieve"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 61,
+   "summary": "Prays her husband into remitting her brother Cai Mao's death sentence - while her stepson Liu Qi weeps to Liu Bei that she 'always cherishes a wish to put me out of the way.'",
+   "_note": "old summary had her still pushing assassination plans; her ch35 role is the plea for Cai Mao"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 1313,
+   "summary": "Reads Liu Bei's letter, hears out Sun Qian, and orders Cai Mao's execution on the spot - 'how dare you try to hurt my brother!' - relenting only at his wife's prayers and Sun Qian's warning; he sends his elder son Liu Qi to Xinye to apologize in his name.",
+   "_note": "old summary had him receiving Liu Bei back at Jingzhou - Liu Bei never returns in ch35; the letter and Liu Qi's embassy carry the reconciliation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 1395,
+   "summary": "Sent to Xinye to apologize for the banquet plot, he breaks down in his cups: his stepmother Lady Cai wishes him dead - 'could you advise me, Uncle?' Liu Bei counsels perfect filial care, and the young man weeps bitterly at parting.",
+   "_note": "old summary was a bare 'tied to Liu Bei's cause'; the tearful counsel scene starts here"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 2102,
+   "summary": "Bears Liu Bei's letter to Jingzhou, lays out Cai Mao's machinations and the Tan Torrent leap - then saves the condemned Cai Mao with a statesman's caution: execute him, and Liu Bei can no longer stay in Jingzhou.",
+   "_note": "old summary was a bare 'with Liu Bei at Xinye'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 1739,
+   "summary": "Painted by the cowherd before he ever appears: the nephew Water Mirror loves like a brother, who once kept the master up a mulberry tree talking from noon till evening. Whether he is the Young Phoenix of the prophecy, Water Mirror will only answer 'good, very good!'",
+   "_note": "old summary said Sima Hui names him as Young Phoenix - the point of the scene is that he refuses to name anyone"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 123,
+   "summary": "Camped at Fancheng with thirty thousand troops to threaten Jingzhou: he grants the Lü brothers their fatal expedition, then refuses Li Dian's hold-and-reinforce counsel - 'Xinye is but a crossbow-slug of a place' - brands him traitor for doubting, and marches twenty-five thousand across the River Yu for revenge.",
+   "_note": "old summary stopped at his arrival; the revenge march and the bullying of Li Dian are the chapter's cliffhanger"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 1158,
+   "summary": "The voice of caution at Fancheng: hold, and ask the Prime Minister for reinforcements - 'to know your enemy and yourself is the secret of victory; I am not afraid of the battle, but I do not think we can conquer.' Called traitor twice for it, he is shamed into marching anyway.",
+   "_note": "old summary was a bare 'with Cao Ren against Xinye'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 704,
+   "summary": "Takes the flanking wing in Shan Fu's first battle plan and falls on Lü Xiang's retreating column, destroying more than half of it.",
+   "_note": "old summary was a bare 'at Xinye with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 3106,
+   "summary": "The far anvil of Shan Fu's plan: three miles behind the rout he stands in the road, spear levelled - 'Zhang Fei is waiting!' - and Lü Xiang dies without striking a blow.",
+   "_note": "old summary was a bare 'at Xinye with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 35,
+   "target_id": 3334,
+   "summary": "Misses his lord at the banquet, corners the lying Cai Mao twice, reads the wet hoof-track on the far bank, and traces Liu Bei to Water Mirror's farm by morning. In the battle that follows he kills Lü Kuang with a single spear thrust.",
+   "_note": "old summary's 'equal-rank fourth Tiger' line described nothing that happens; his search and the Lü Kuang kill do"}
+]
