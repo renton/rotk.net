@@ -9,6 +9,14 @@
     <div>
         <h1 class="mb-0">
             {{ character.name }}
+            {# Sex symbol — small, muted, classic mars/venus. #}
+            {% if character.sex == 'female' %}
+            <i class="fa-solid fa-venus ms-1" style="font-size: 0.5em; color: #c2557e;"
+               title="female" aria-label="female"></i>
+            {% else %}
+            <i class="fa-solid fa-mars ms-1" style="font-size: 0.5em; color: #4a7dc2;"
+               title="male" aria-label="male"></i>
+            {% endif %}
             {% if character.is_fictional %}
             <i class="fa-solid fa-book text-muted ms-1" style="font-size: 0.6em;"
                title="fictional" aria-label="fictional"></i>
@@ -89,7 +97,12 @@
             <dt class="col-sm-3">Ancestral home</dt><dd class="col-sm-9">{{ character.ancestral_home }}</dd>
             {% endif %}
             {% if character.aliases %}
-            <dt class="col-sm-3">Also known as</dt><dd class="col-sm-9">{{ character.aliases }}</dd>
+            <dt class="col-sm-3">Also known as</dt>
+            <dd class="col-sm-9">
+                {% for alias in character.aliases.split(',') if alias.strip() %}
+                <span class="badge text-bg-light border me-1">{{ alias.strip() }}</span>
+                {% endfor %}
+            </dd>
             {% endif %}
             <dt class="col-sm-3">Book mentions</dt>
             <dd class="col-sm-9">{{ character.book_mention_count or 0 }}</dd>

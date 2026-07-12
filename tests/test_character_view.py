@@ -130,3 +130,36 @@ class TestLinkSources:
         resp = client.get(f'/chapter/{ch.chapter_num}')
         assert f'href="/characters/{leader.id}"'.encode() in resp.data
         assert b'Map Linked Leader' in resp.data
+
+
+class TestViewPagePolish:
+    def test_sex_symbols(self, client, db_session):
+        him = factories.make_character(name='Symbol Him', sex='male')
+        her = factories.make_character(name='Symbol Her', sex='female')
+        db_session.flush()
+        assert b'fa-mars' in client.get(f'/characters/{him.id}').data
+        assert b'fa-venus' in client.get(f'/characters/{her.id}').data
+
+    def test_aliases_render_as_pills(self, client, db_session):
+        c = factories.make_character(name='Alias Shower',
+                                     aliases='Mengde, Lord Big')
+        db_session.flush()
+        resp = client.get(f'/characters/{c.id}')
+        assert b'Also known as' in resp.data
+        assert b'>Mengde</span>' in resp.data
+        assert b'>Lord Big</span>' in resp.data
+
+    def test_sidebar_faction_pills_link_filtered_list(self, client,
+                                                      db_session):
+        wei = factories.make_faction(name='Sidebar Wei')
+        old = factories.make_faction(name='Sidebar Old Banner')
+        c = factories.make_character(name='Sidebar Faction Guy')
+        c.set_primary_faction(wei)
+        c.factions.append(old)
+        ch = factories.make_chapter(
+            content='<p>Sidebar Faction Guy passes.</p>')
+        factories.associate_character(ch, c, keywords='Sidebar Faction Guy')
+        db_session.flush()
+        resp = client.get(f'/chapter/{ch.chapter_num}')
+        assert f'/characters?any_faction={wei.id}'.encode() in resp.data
+        assert f'/characters?any_faction={old.id}'.encode() in resp.data

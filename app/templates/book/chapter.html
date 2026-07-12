@@ -450,7 +450,8 @@
                       <div class="chapter-section-card rounded p-2 mt-3 mb-2">
                         <div class="small text-muted fw-bold mb-1">Faction:</div>
                         <div>
-                          {{ macros.badge_widget(character.primary_faction) }}
+                          <a href="{{ url_for('main.characters', any_faction=character.primary_faction.id) }}"
+                             target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(character.primary_faction) }}</a>
                         </div>
                         {# Indented links attached to the faction, if any. #}
                         {% set list_urls = character.primary_faction.urls %}
@@ -474,7 +475,8 @@
                         <div class="small text-muted fw-bold mb-1">Other Factions:</div>
                         {% for faction in past_factions %}
                           <div>
-                            {{ macros.badge_widget(faction) }}
+                            <a href="{{ url_for('main.characters', any_faction=faction.id) }}"
+                               target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(faction) }}</a>
                           </div>
                           {% set list_urls = faction.urls %}
                           {% if list_urls %}
