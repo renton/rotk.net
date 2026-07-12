@@ -1,0 +1,149 @@
+[
+  {"op": "add_relationship", "character1_id": 3008, "character2_id": 3021,
+   "type": 10, "_note": "Yuan Yin is Yuan Shu's nephew ('his nephew, Yuan Yin, taking his coffin and his wife and children')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3706,
+   "summary": "One of the six names on the silk pledge Dong Cheng unrolls before Liu Bei.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3707,
+   "summary": "Urges the plotters not to move too fast on Ma Teng's Liu Bei suggestion; his name stands on the pledge shown at the night visit.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3679,
+   "summary": "Cao Cao's joking name for the armed brothers who burst in on the plum-garden party: wine is served to 'the two Fan Kuais' - the Hongmen Banquet's loyal guardian.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3685,
+   "summary": "Deserts the arrogant Yuan Shu for Mount Song with Chen Lan, then plunders his old master's baggage train and bars the road back to Shouchun - the last shove into the wilderness.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 1434,
+   "summary": "Sheds tears at the parting audience as Liu Bei - the one conspirator with an army - marches out of Xuchang against Yuan Shu.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3709,
+   "summary": "Xiang Ba of the Hongmen Banquet, cited in Cao Cao's joke: this friendly wine party needs no sword-dancers of old.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3708,
+   "summary": "Xiang Chang of the Hongmen Banquet, half of Cao Cao's joke when the brothers offer 'a little sword play'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3710,
+   "summary": "Magistrate of Lujiang who slaughters Yuan Yin's refugee party - coffin, wife, and children - finds the Imperial Hereditary Seal among the spoils, and carries it to Cao Cao for the governorship of Gaoling.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 1024,
+   "summary": "Sent to force a way through Liu Bei's blocking army; Zhang Fei attacks without a parley and cuts him down in the tenth bout.",
+   "_note": "old summary called it an ambush; it's a head-on vanguard duel"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3233,
+   "summary": "Dismissed with a clap and a laugh in the plum-garden heroes test - 'paltry people like them are not worth mentioning'.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3242,
+   "summary": "Gongsun Zan's last hope: the letters arranging their two-pronged attack fall into Yuan Shao's hands, and the agreed signals become the ambush that ends the siege of Yijing.",
+   "_note": "old summary was a bare recap mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 664,
+   "summary": "His end arrives in Man Chong's report: walled up in the Yijing Tower with a hundred thousand carts of grain, refusing to rescue his own surrounded men, deserted, his plea-letters intercepted - until a tunnel reaches the tower and it burns. He kills his wife and children and hangs himself in the flames.",
+   "_note": "old summary was vague; the report scene carries the whole story"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3334,
+   "summary": "Remembered, not seen: hearing of Gongsun Zan's fiery end, Liu Bei's first anxiety is the fate of Zhao Zilong.",
+   "_note": "old summary had him rejoining Liu Bei's service - that happens later (ch28); here he is only worried about"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 1638,
+   "summary": "Returns from scouting the north with the chapter's great report: the fall of Gongsun Zan at the Yijing Tower, and Yuan Shu's offer to surrender the imperial title - and the Seal - to his brother.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 2624,
+   "summary": "Fetches Liu Bei to the plum-garden interview with Zhang Liao, and later chases the departed army with five hundred horse - only to ride back empty-handed before Liu Bei's 'a general in the field is deaf even to royal commands'.",
+   "_note": "old summary had only the invitation errand"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3166,
+   "summary": "Co-fetches Liu Bei to the plum garden - and lends his name unknowingly to Guan Yu's ruse, when the disguised soldiers hail Xuzhou's gate at third watch as 'Zhang Liao's troops from the capital'.",
+   "_note": "old summary was a bare 'serves under Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 216,
+   "summary": "Hears his son's account of Che Zhou's ambush commission and sends him straight out to warn Liu Bei - the Chens' loyalty declared at last.",
+   "_note": "old summary was vague"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 207,
+   "summary": "Plays confidant to Che Zhou, designs his 'ambush' - then warns Liu Bei's brothers on his father's order, and from the wall showers the fleeing governor with arrows to pen him against Guan Yu's sword. 'Never mind - I have a plan' closes the chapter.",
+   "_note": "old summary was thinner than his double game"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 1619,
+   "summary": "Names Liu Bei to the conspirators, staking everything on what he alone noticed at the hunt - Guan Yu's checked sword. When Liu Bei marches, he pleads urgent business and returns to Xiliang.",
+   "_note": "old summary had the signing order confused"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 1539,
+   "summary": "Cao Cao's general, sent with Zhu Ling to accompany Liu Bei's fifty thousand; commands the left wing against Yuan Shu and is sent back to the capital when Liu Bei keeps the army.",
+   "_note": "old summary made him a Yuan Shu officer - he's Cao Cao's minder on the expedition"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3495,
+   "summary": "Cao Cao's minder on the expedition with Lu Zhao; commands the left wing against Yuan Shu, then returns without Liu Bei - and is saved from execution only by Xun Yu's 'the power was in Liu Bei's hands'.",
+   "_note": "old summary missed the near-execution"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 2755,
+   "summary": "Talks Cao Cao out of executing the returned minders, then supplies the next move: secret orders to Che Zhou to destroy Liu Bei at Xuzhou.",
+   "_note": "old summary invented a warning about the heroes test"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 2102,
+   "summary": "Pays the courtesy call on Che Zhou with Mi Zhu when Liu Bei reoccupies Xuzhou.",
+   "_note": "old summary described ch22's embassy to Yuan Shao"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3006,
+   "summary": "Finishes Gongsun Zan with intercepted signals, a tunnel, and fire, inheriting the whole north; then demands the Imperial Seal itself as the price of accepting his broken brother's imperial title.",
+   "_note": "old summary borrowed ch22's embassy"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3008,
+   "summary": "Abandoned by Lei Bo and Chen Lan, he resigns his stolen imperial title to his brother and marches north - into Liu Bei's blocking army. Ji Ling dies, the deserters loot his train, and in the summer heat at Jiangling, refused even honeyed water ('there is no water save that tainted with blood'), he rolls from his couch vomiting blood and dies.",
+   "_note": "old summary said he was killed off-page; his death scene is narrated in full"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3021,
+   "summary": "Carries his uncle's coffin and family toward Lujiang - where Magistrate Xu Liu slaughters them all and strips the Imperial Seal from the baggage.",
+   "_note": "old summary ended at the flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 228,
+   "summary": "Deserts Yuan Shu for Mount Song with Lei Bo, plunders his old master's baggage train after the Xuzhou defeat, and bars his retreat to Shouchun.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 704,
+   "summary": "Author and executioner of the counter-plot: rather than storm the ambush, he plays Cao Cao's own colors - hailing the gate at third watch as 'Zhang Liao's troops' - and cuts Che Zhou down at the drawbridge, under Chen Deng's covering arrows.",
+   "_note": "old summary had the kill but not the ruse, which is his plan"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 21,
+   "target_id": 3106,
+   "summary": "Cuts down Ji Ling in the tenth bout of the vanguard clash, then - once inside Xuzhou - exterminates Che Zhou's family before Liu Bei can weigh the consequences.",
+   "_note": "old summary omitted the Ji Ling kill"}
+]

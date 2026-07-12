@@ -42,7 +42,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch18 — 43 ops (You Province bare-'You' keyword fix, 8 missing summaries, Taishan bandits mislabeled as Lü Bu's eight generals, Jia Xu's double victory, 4 relationships incl. Liu Bei's marriages)
 - [x] ch19 — 28 ops (6 missing summaries incl. Lü Bu's end and Liu An, Hou Cheng steals Red Hare not the halberd, Taishan chiefs at Xiao Pass, Zhang Yang assassination subplot, Chen Deng's triple-cross)
 - [x] ch20 — 35 ops (Liu Hong wrong-person fix #2: Emperor Ling removed, Liu Bei's father [3849] added; Emperor Xian summary restored to Liu Xie; Yang Biao victim-not-conspirator; 14 missing summaries; Fu Wan→Empress Fu + Liu Xiong→Liu Hong relationships)
-- [ ] ch21
+- [x] ch21 — 31 ops (9 missing summaries, Zhao Yun premature-rejoin fix, Lu Zhao wrong-side fix, Yuan Shu's on-page death, Guan Yu's ruse credited, Yuan Shu→Yuan Yin nephew)
 - [ ] ch22
 - [ ] ch23
 - [ ] ch24
@@ -105,6 +105,9 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch21_audit.json (1):
+- Yuan Shu [3008] → Yuan Yin [3021] Pibling/Nibling
 
 From ch20_audit.json (2):
 - Fu Wan [579] → Fu Shou/Empress Fu [578] Parent/Child
