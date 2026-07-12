@@ -69,7 +69,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch45 — 28 ops (Shi Kuang wrong-person removal [ancient musician vs Shi Xie's general], Qi Commandery/County bare-'Qi'-in-'Liu Qi' false assocs, Cai Xun's death by Gan Ning's arrow, Zhou Yu's two murder attempts + envoy beheading, Jiang Gan staging, persuader-roll summaries)
 - [x] ch46 — 18 ops (Cai He/Cai Zhong false-deserter summaries, Huang Gai's plan-was-his-idea fix, Zhou Yu 'deceived him for once', Lu Su split-loyalty note, fog-poem figures Li Lou/King Yu, Jiang Gan ch47 spillover)
 - [x] ch47 — 14 ops (TWO wrong-person swaps: Sun Zi 2133→Sun Tzu 3594, Wu Qi 2480→ancient Wu Qi 3834; Kan Ze no-date riposte, Gan Ning playacting fix, Cai brothers turned letter-boxes, Pang Tong chain scheme + shore encounter)
-- [ ] ch48
+- [x] ch48 — 29 ops (Liang Da 'Tai' false assoc removed [tracker item], Liu Fu + Li Tong dup-note summaries replaced, Jiao Chu/Zhang Neng on-page deaths, Liu Fu spearing scene, Cao Cao's two-Qiaos boast, fleet order-of-battle, Zhou Yu's collapse trigger, 3 relationships: Liu Fu→Liu Xi + Duke Qiao→both Qiaos)
 - [ ] ch49
 - [ ] ch50
 - [ ] ch51
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch48_audit.json (3):
+- Liu Fu [1338] → Liu Xi [3821] Parent/Child
+- Duke Qiao [3818] → Da Qiao [1794] + → Xiao Qiao [1796] Parent/Child
 
 From ch43_audit.json (2):
 - Lady Wu/Dowager [2450] ↔ Lady Wu/aunt [3808] Sibling

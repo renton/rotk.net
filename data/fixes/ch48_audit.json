@@ -1,0 +1,139 @@
+[
+  {"op": "add_relationship", "character1_id": 1338, "character2_id": 3821,
+   "type": 1, "_note": "'the murdered man's son, Liu Xi, came to crave the body of his father'"},
+
+  {"op": "add_relationship", "character1_id": 3818, "character2_id": 1794,
+   "type": 1, "_note": "'the Patriarch Duke Qiao... his two daughters - Elder Qiao and Younger Qiao'"},
+
+  {"op": "add_relationship", "character1_id": 3818, "character2_id": 1796,
+   "type": 1, "_note": "Younger Qiao is Duke Qiao's second daughter"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 48,
+   "target_id": 1263,
+   "_note": "FALSE POSITIVE (Liang Da cleanup, flagged in tracker): no 'Liang Da' in ch48 - his 'Tai' keyword matched inside 'Zhou Tai' and 'Taishan Mountains'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1338,
+   "summary": "Imperial Protector of Yangzhou, the builder of schools and gatherer of refugees at Hefei: at the height of the moonlit banquet he alone names the song's omens ill - the paled stars, the raven with no branch - and the drunken Prime Minister runs him through with the levelled spear. Cao Cao weeps over the deed at dawn and buries him with a minister's honors.",
+   "_note": "old summary was the admin note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3821,
+   "summary": "Liu Fu's son, who comes to crave his father's body - and receives Cao Cao's tears, an apology, and an escort home for the coffin.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1224,
+   "summary": "Commands the right naval squadron under the white flag in Cao Cao's chained-fleet order of battle.",
+   "_note": "old summary was the admin note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3656,
+   "summary": "Commands the rear naval squadron under the black flag in the chained fleet's array.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1081,
+   "summary": "The northern braggart who swears he is a sailor too: given twenty small boats against Cao Cao's own doubts, he leads the sortie twirling his long spear - and dies at Han Dang's first thrust.",
+   "_note": "old summary: 'minor figure named in passing' - he stakes his life and loses it on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3758,
+   "summary": "Jiao Chu's fellow boaster: charging up with shouts to avenge him, he is cut down by Zhou Tai's leap across the gunwales, his body falling into the river.",
+   "_note": "summary was missing; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 785,
+   "summary": "Sails out with five ships against the northern sortie, fends the arrow-storm with his buckler, and kills Jiao Chu at the first spear-thrust.",
+   "_note": "old summary was a bare 'commands part of the skirmish'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3456,
+   "summary": "Angles his squadron into the melee and leaps across to the enemy deck, cutting Zhang Neng down into the river - the second braggart dead in minutes.",
+   "_note": "old summary was a bare 'commands part of the skirmish'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 2439,
+   "summary": "Brings thirty supporting ships to cover the doomed sortie and is worsted by the pursuing southerners until Zhou Yu's recall flag ends the chase.",
+   "_note": "old summary was a bare 'commands part of the skirmish'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 86,
+   "summary": "The Short Song chapter: fifty-four, master of everything but the south, he pours a libation from the spear that broke the Yellow Scarves, dreams aloud of the two Qiaos in his Bronze Bird Tower - and spears Liu Fu dead for calling the raven verse ill-omened. Sober, he weeps and buries his victim with honors; then he laughs off Cheng Yu's fire warning with meteorology: in winter 'you will get neither east nor south winds.'",
+   "_note": "old summary was sound; the two-Qiaos boast (proving Zhuge Liang's ode-trick half-true) was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 309,
+   "summary": "Looks at the chained fleet and says the one true thing in the northern camp: 'you should be prepared for an attack by fire' - and is laughed down with the winter-wind lecture.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 2754,
+   "summary": "Twice the sober voice: begs Cao Cao not to boast of the coming desertions aloud, and backs Cheng Yu's fire warning - 'why do you laugh at him?'",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 2661,
+   "summary": "Puts Pang Tong's escape plan to work: seeds the camp with rumors of Han Sui and Ma Teng marching on the capital, then volunteers to guard San Pass against the invented threat - and rides out of the Red Cliffs story with three thousand men and his life.",
+   "_note": "old summary was sound; the rumor-seeding was his own touch"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1739,
+   "summary": "Caught on the shore by Xu Shu, he trades the escape whisper - ask for the western command - for silence, and slips back to the southern bank, his chains already forging.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3042,
+   "summary": "Assigned to lead Xu Shu's van to San Pass - the escort on the invented errand.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3466,
+   "summary": "Watches the chained fleet maneuver 'steady as dry land', sees Cao Cao's yellow flag topple into the river and laughs at the omen - then a corner of his own flag flicks his cheek, the thought behind everything strikes home, and he falls back with a cry, blood on his lips: the fire plan needs a southeast wind that winter will not blow.",
+   "_note": "old summary was sound; the flag-flick trigger detail added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1794,
+   "summary": "Named in Cao Cao's drunken confession: victory means marrying the two Qiaos into the Bronze Bird Tower 'to rejoice my declining years' - the boast that makes Zhuge Liang's doctored ode true after all.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1796,
+   "summary": "The second of the two fair women in Cao Cao's Bronze Bird daydream - Zhou Yu's own wife, coveted aloud at the banquet.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3818,
+   "summary": "The Patriarch Duke Qiao, Cao Cao's old friend of long ago - father of the two beauties the Prime Minister now plans to take as spoils.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3819,
+   "summary": "The Tang poet whose broken-halberd quatrain frames the chapter: had the east wind refused Zhou Yu, 'the two fair Qiaos, in the Bronze Bird's shade, would have been locked at spring age.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3820,
+   "summary": "The legendary brewer of the Short Song's cure for sorrow - 'bumpers of wine such as Du Kang once brewed.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3642,
+   "summary": "Duke Zhou, the Short Song's closing model - 'no leisure found by day or night; stern toil is his who would the empire gain.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 1547,
+   "summary": "Second trophy in the spear's resume - 'this is the spear that broke up the Yellow Scarves, captured Lü Bu...'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 3032,
+   "summary": "Commands the left wing of the shore forces under the blue flag in the grand order of battle.",
+   "_note": "summary was missing (prose spells him Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 48,
+   "target_id": 2060,
+   "summary": "Named as Elder Qiao's husband in Cao Cao's banquet boast - the dead rival whose widow the Prime Minister means to house in his tower.",
+   "_note": "old summary was a bare mention; anchored to the boast"}
+]
