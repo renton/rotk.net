@@ -1,0 +1,159 @@
+[
+  {"op": "add_relationship", "character1_id": 2105, "character2_id": 2121,
+   "type": 5, "_note": "'Sun Quan's younger brother, Sun Yi, was Governor of Dangyang'"},
+
+  {"op": "add_relationship", "character1_id": 2121, "character2_id": 2618,
+   "type": 3, "_note": "'Sun Yi's wife, Lady Xu, was skilled in divination'"},
+
+  {"op": "add_relationship", "character1_id": 1290, "character2_id": 3784,
+   "type": 1, "_note": "'Ling Cao left a son, Ling Tong, fifteen years of age'"},
+
+  {"op": "add_relationship", "character1_id": 2450, "character2_id": 2060,
+   "type": 1, "_note": "Lady Wu's deathbed: 'I bore my husband four sons... with my first, Sun Ce, I dreamed of the moon'"},
+
+  {"op": "add_relationship", "character1_id": 2450, "character2_id": 2105,
+   "type": 1, "_note": "'with my second, Sun Quan, of the sun'"},
+
+  {"op": "add_relationship", "character1_id": 2466, "character2_id": 2450,
+   "type": 5, "_note": "'My brother Wu Jing and I went into the old Yue'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 1566,
+   "summary": "Brings Sun Quan the Gan Ning dossier from Dragon Gorge - the Silk-sailed Pirate wants to defect but fears his welcome - and brokers the recruitment that decides the war. As Van Leader at Xiakou he drops into a small boat to fire the drifting warships and chases Chen Jiu ashore, striking him down at the water's edge.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3784,
+   "summary": "Ling Cao's fifteen-year-old son, who leads an expedition through the enemy fleet to bring back his father's corpse - the seed of his lifelong feud with Gan Ning.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3783,
+   "summary": "Prince Huan of Qi, who paid five visits to the Eastern Suburb before Guan Zhong would see him - Liu Bei's answer to Guan Yu's charge of too much deference.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3775,
+   "summary": "The minister worth five princely visits in Liu Bei's retort - if Prince Huan could wait on Guan Zhong, a third call on the Sleeping Dragon is no humiliation.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3690,
+   "summary": "King Wen, whose homage to old Lu Wang by the River Wei is Liu Bei's second precedent against his brothers' grumbling.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3774,
+   "summary": "The old man of the River Wei whom King Wen deigned to visit - the deference Liu Bei cites before setting out a third time.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 1351,
+   "summary": "Emperor Ling, half of the poem's verdict on the dynasty's rot - 'decay began in the days of Huan and Ling.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3582,
+   "summary": "Emperor Huan, named with Ling in the old poem as the reigns where the Han's fiery virtue failed.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 1434,
+   "summary": "Emperor Xian of the old poem - the removal of his capital to Xuchang marks the confusion within the four seas.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3577,
+   "summary": "Liu Xiu, who 'restored the glory at Capital Luoyang' in the poem's sweep of Han history.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 37,
+   "summary": "The escort guardsman recruited by Gui Lan and Dai Yuan: he follows Sun Yi home from the banquet in the dusk and stabs him - and the two prime movers immediately behead their own dagger-man in the market place to wear the avengers' mask.",
+   "_note": "old summary had him 'executed by Lady Xu's vengeance plot' - his fellow conspirators killed him as a scapegoat before her plot began"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 2618,
+   "summary": "Casts the inauspicious lot her husband ignores, then avenges him with pure stagecraft: a feigned betrothal to buy thirty days, two loyal old generals hidden in a chamber, the suitor Gui Lan led drunk to the daggers, Dai Yuan slain at a second supper - and the two heads hung before her husband's coffin as she resumes her mourning white.",
+   "_note": "old summary said she engineered Bian Hong's execution - the conspirators killed Bian Hong; her plot took Gui Lan and Dai Yuan"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 2121,
+   "summary": "Sun Quan's younger brother, Governor of Dangyang - a hard drinker whose floggings earn him the hatred of Gui Lan and Dai Yuan; deaf to his wife's divination, he is stabbed in the dusk by their hired guardsman as the banquet disperses.",
+   "_note": "old summary was the admin note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3219,
+   "summary": "Scholar of Wucheng, one of the roll of worthies who flock year by year to Sun Quan's guest lodges at Kuaiji.",
+   "_note": "old summary was the admin note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 714,
+   "summary": "Military Inspector who plots Sun Yi's murder, beheads his own dagger-man to cover it, plunders the residence - and demands the widow herself. Her feigned consent walks him, drunk and defenseless, into the chamber where Sun Gao and Fu Ying wait with daggers.",
+   "_note": "old summary omitted the forced-marriage demand that drives the revenge tale"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 2070,
+   "summary": "One of Sun Yi's two trusted old generals: hidden in the secret chamber by Lady Xu, he cuts down the drunken Gui Lan and shares the Dangyang command Sun Quan bestows on the avengers.",
+   "_note": "old summary: 'named in passing' - he is half the revenge"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 584,
+   "summary": "The other hidden avenger: he springs out with Sun Gao to dispatch Gui Lan and Dai Yuan, and is raised to Commandership over Dangyang for it.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 2105,
+   "summary": "Refuses Cao Cao's demand for a hostage son on Zhou Yu's counsel, avenges his brother Sun Yi by ennobling Lady Xu's two dagger-generals, mourns his mother through her deathbed charge - serve Zhou Yu and Zhang Zhao as teachers, honor her sister as a second mother, find his sister a husband - then breaks the mourning to strike Huang Zu, welcoming the pirate Gan Ning with a full pardon: 'with his help I could destroy Huang Zu.'",
+   "_note": "old summary quoted the internal/external-matters injunction and a Lu Su charge that are not in this text"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 2450,
+   "summary": "On her deathbed the Dowager tells her life plain - orphaned, exiled to Yue with her brother Wu Jing, married into the Sun house, the moon dreamed for Sun Ce and the sun for Sun Quan - and binds her son to Zhou Yu and Zhang Zhao as teachers, to her sister as a second mother, and to finding his sister a husband.",
+   "_note": "old summary compressed the injunction; the dreams and family charges are the scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 998,
+   "summary": "The target at Xiakou whose own meanness armed his enemy: he owed the city's recovery to Gan Ning and rewarded him with 'after all, he is no more than a pirate' - so the Silk-sailed Pirate now cuts his hawsers, kills his van leaders, and burns his two hundred chained warships.",
+   "_note": "old summary missed that his snub of Gan Ning causes the defeat"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 2034,
+   "summary": "Gan Ning's one friend in Huang Zu's service - his advocate for promotion, and the man who arranged the Exian posting that let the pirate slip away. Given chief command of the doomed defense, he is captured fleeing overland and caged to await execution beside the master who scorned his advice.",
+   "_note": "old summary omitted that he is Gan Ning's patron - the debt that matters in ch39"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3466,
+   "summary": "Argues down the hostage demand - 'to send a hostage is to be forced into joining Cao Cao' - is made Supreme Admiral over all Wu's forces, and overrules mourning-etiquette on the Huang Zu war: 'vengeance should not be postponed; it cannot wait upon times and seasons.'",
+   "_note": "old summary was a bare campaign command"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3272,
+   "summary": "Counsels caution both times: warns that refusing Cao Cao's hostage demand risks attack, and holds that 'the armies should not move during the period of mourning' - overruled by Zhou Yu on each count.",
+   "_note": "old summary was a bare 'senior civil officer'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 435,
+   "summary": "General in the Xiakou expedition: with Gan Ning he mans the hundred light craft - fifty picked men to a boat - that row through the arrow storm and cut the hawsers of Huang Zu's chained fleet.",
+   "_note": "old summary: 'named in passing among Wu officers'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 704,
+   "summary": "Opens the chapter's remonstrance - two visits is 'even too much deference'; the recluse 'dare not submit to the test' - and later hushes Zhang Fei's plan to wake the sleeper with a bomb.",
+   "_note": "old summary was a bare 'with Liu Bei at the Third Visit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 3106,
+   "summary": "Threatens to fetch the villager 'with a hempen rope', promises politeness, and spends the visit smothering the urge to let off a bomb behind the cottage while his brother stands waiting on a sleeping man.",
+   "_note": "old summary had the muttering but not the rope and bomb threats"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 86,
+   "summary": "Present twice at one remove: the remembered hostage demand of AD 202 whose refusal seeded his grudge against the South Land, and the naval drills on Aquamarine Lake that Zhuge Liang reads - correctly - as the coming invasion of the south.",
+   "_note": "old summary's 'off-stage' missed the hostage-demand retrospective that drives the Wu half"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 38,
+   "target_id": 1311,
+   "summary": "Third Visit chapter: he answers his brothers with Prince Huan and King Wen, walks the last quarter mile on foot, and stands through the sage's nap and another hour besides. The Longzhong Plan unrolls before him on a map - Jingzhou first, the River Lands next, the empire in trinity - and his tears at 'what will become of the people?' win what gifts could not.",
+   "_note": "old summary quoted the fish-in-water line, which belongs to ch39"}
+]
