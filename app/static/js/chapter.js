@@ -150,6 +150,13 @@
     var item = itemId ? document.getElementById(itemId) : null;
     if (!item) return;
 
+    // Persistent "last clicked" marker — makes the target findable even
+    // if the scroll lands imperfectly. One at a time across the sidebar.
+    document.querySelectorAll('.sidebar-selected').forEach(function (el) {
+      el.classList.remove('sidebar-selected');
+    });
+    item.classList.add('sidebar-selected');
+
     // CSS animates a yellow-fade-out via the .sidebar-flash class.
     // Re-trigger by removing + re-adding (with a reflow in between) so
     // a second click on the same item flashes again.
@@ -159,26 +166,32 @@
 
     var scrollToItem = function () {
       if (isMobile()) return;
-      // block: 'nearest' scrolls only as much as needed — won't jump
-      // up when the item is already visible. behavior: 'smooth' keeps
-      // the motion intentional rather than jolty.
-      item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      // block: 'center' ALWAYS positions the row mid-viewport.
+      // ('nearest' was a silent no-op whenever any ancestor scroll
+      // container technically contained the row — the "doesn't scroll
+      // to the right spot" bug.)
+      item.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+    // The sidebar accordions share data-bs-parent, so opening this
+    // panel simultaneously CLOSES a sibling — layout keeps shifting
+    // after shown.bs.collapse fires for the opening panel alone. A
+    // second corrective scroll after Bootstrap's 350ms transition has
+    // fully settled re-targets the row wherever it ended up.
+    var scrollTwice = function () {
+      scrollToItem();
+      setTimeout(scrollToItem, 420);
     };
 
     if (collapseEl && typeof bootstrap !== 'undefined') {
       var inst = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
       if (collapseEl.classList.contains('show')) {
-        // Already open — the layout's settled, scroll right away.
-        scrollToItem();
+        scrollTwice();
       } else {
-        // Defer scrolling until the accordion finishes expanding,
-        // otherwise the item's final position isn't known yet and
-        // the scroll lands short.
-        collapseEl.addEventListener('shown.bs.collapse', scrollToItem, { once: true });
+        collapseEl.addEventListener('shown.bs.collapse', scrollTwice, { once: true });
         inst.show();
       }
     } else {
-      scrollToItem();
+      scrollTwice();
     }
   }
 

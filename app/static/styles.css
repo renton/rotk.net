@@ -289,3 +289,12 @@ p.quote {
     max-height: 85vh;
     overflow-y: auto;
 }
+
+/* Last-clicked sidebar row (events + locations accordions). Persistent
+   — unlike the .sidebar-flash fade-out — so the reader can find the
+   row even if the scroll lands imperfectly. Left accent bar + warm
+   tint; !important because location rows also carry .bg-light. */
+.sidebar-selected {
+    background-color: #fff3cd !important;
+    box-shadow: inset 4px 0 0 #f0ad4e;
+}
