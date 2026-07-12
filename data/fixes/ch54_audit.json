@@ -1,0 +1,169 @@
+[
+ {
+  "op": "add_relationship",
+  "character1_id": 1311,
+  "character2_id": 3639,
+  "type": 3,
+  "_note": "'the bride and bridegroom duly plighted their troth' - Liu Bei weds Sun Ren (Lady Sun)"
+ },
+ {
+  "op": "add_relationship",
+  "character1_id": 2105,
+  "character2_id": 3639,
+  "type": 5,
+  "_note": "'our lord has a sister, Sun Ren'"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3833,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Wu Guotai, the Dowager Marchioness - missed by sex_audit.json"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 592,
+  "summary": "Dies at Jingzhou - the scouts report white flags everywhere and a magnificent mausoleum rising outside the city. Her death is the opening Zhou Yu's marriage-trap is built on.",
+  "_note": "old summary had her as the 'existing senior wife' - she dies this chapter"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3639,
+  "summary": "The bait who becomes the bride: 'a tough lady, whose women guards number many hundreds, all armed' - and who has sworn to wed no one unknown to fame. Her brother offers her as Zhou Yu's decoy, her mother makes the offer real, and the wedding night finds the bridegroom staring at chambers hung with spears and sword-girded waiting-maids.",
+  "_note": "summary was missing for the bride of the title"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3833,
+  "summary": "The Dowager Marchioness: learning of her daughter's 'betrothal' from the town gossip, she rakes her son over the coals - 'it was my place to promise her in marriage' - damns Zhou Yu's decoy scheme as the ruin of her child's life, inspects the groom at the Sweet Dew Temple ('just the son-in-law for me!'), scatters the hidden assassins with one burst of wrath, and moves Liu Bei into her own palace for safety.",
+  "_note": "summary was missing; NOTE this row likely duplicates the aunt Lady Wu [3808] of ch43 ('when my elder sister lay dying...') - flagged in audit_notes.md"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3832,
+  "summary": "The State Patriarch Qiao, father-in-law of Sun Ce and Zhou Yu: Zhao Zilong's first silken bag sends Liu Bei to him with sheep and wine, and he does the rest - carries the 'news' to the Dowager, argues the trap into a real wedding ('you will be a shameful laughing stock'), and intercedes for the condemned ambush commander.",
+  "_note": "summary was missing; NOTE this row likely duplicates Duke Qiao [3818] of ch48 (same father of the two Qiaos) - flagged in audit_notes.md"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3829,
+  "summary": "Posts the five hundred ruffians in the temple wings on Lu Fan's suggestion - exposed by Zhao Zilong's sharp eyes, condemned by the Dowager on the spot, and saved only by the intended victim's own intercession.",
+  "_note": "summary was missing"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3742,
+  "summary": "Chosen as marriage intermediary: he sells the match to the widowed Liu Bei ('a man without a wife is like a house without a ridge pole'), shuttles the arrangements - and supplies the temple-ambush idea that nearly wrecks everything.",
+  "_note": "summary was missing; row still flagged as likely dup of Lü Fan [1554]"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 1523,
+  "summary": "Comes to mourn and to claim, is silenced by Zhuge Liang's genealogy-and-gratitude broadside, and leaves holding the famous IOU: Jingzhou 'temporarily occupied' until the west is won - with his own signature on it as guarantor, extracted with a smile. Zhou Yu reads it and stamps his foot: 'you have been victimized.'",
+  "_note": "old summary was a bare 'carries the marriage proposal'; the guarantor signature is his trap"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3529,
+  "summary": "Demolishes the rendition claim - the empire is the Liu estate, and where was Zhou Yu without the southeast wind? - then concedes the paper that concedes nothing: temporary occupation until Yizhou falls, with Lu Su maneuvered into signing as guarantor. When the marriage bait arrives he smells Zhou Yu, consults the oracle behind the screen, and packs Zhao Zilong off with three silken bags: 'let Zhou Yu employ all his ruses - his calculations will always fail halfway.'",
+  "_note": "old summary had the bags; the IOU negotiation is the chapter's first half"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3466,
+  "summary": "Reads the IOU for the humbug it is, then builds the counter-trap on a funeral: offer the tough sister, lure the widower to Nanxu, and ransom him for Jingzhou. 'Instead of marrying a wife, Liu Bei will find himself a prisoner' - but the first silken bag turns his secret into town gossip, and the Dowager turns his decoy into a genuine marriage.",
+  "_note": "old summary was sound; the plan's unraveling added"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 2105,
+  "summary": "Sends Lu Fan with the poisoned proposal - and is flayed by his mother when the whole town knows before she does. Forced to make the trap real, he posts assassins anyway, watches them scattered by the Dowager's wrath, and answers Liu Bei's boulder-omen with his own secret prayer over the same stone: Jingzhou recovered. Both halves split - 'thus fate then declared for the dynasties two.' The horse-race on the slope ends the day as brothers-in-law.",
+  "_note": "old summary was sound; the boulder and slope scenes added"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 1311,
+  "summary": "Fifty and grizzled, he sails into the enemy's capital with ten ships, five hundred gala-dressed guards, and three silken bags he cannot read: the public shopping spree makes the engagement irreversible, the Dowager takes one look and claims him, and his kneeling appeal - 'if you would slay me, let it be here' - turns her wrath on the assassins. He splits the boulder on a secret prayer, matches Sun Quan gallop for gallop on the slope, and walks through the red torches into a bridal chamber hung with spears.",
+  "_note": "old summary ended at 'meeting his bride' - the wedding completes this chapter"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3334,
+  "summary": "Opens the first silken bag at the landing: visit Patriarch Qiao with sheep and wine, and let five hundred guards in gala dress shop the engagement into every mouth in Nanxu. At the temple banquet his eye finds the hidden ruffians - the warning that lets Liu Bei kneel his way out of the ambush - and the Dowager toasts 'the hero of Dangyang' by name.",
+  "_note": "old summary was sound; the temple save added"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 2102,
+  "summary": "Sent back with Lu Fan to ratify the betrothal, warns his master out of the banquet with a look, and counsels marrying at once 'so that no further complications could arise.'",
+  "_note": "old summary was a bare 'with Liu Bei'"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 1473,
+  "summary": "Named as the price of Jingzhou: 'Liu Zhang in Yizhou is ignorant and weak, and my master will attack him' - when the west falls, the IOU matures.",
+  "_note": "old summary was a bare 'regional roll'"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 3586,
+  "summary": "Emperor Jing, the ancestor Zhuge Liang plants at the head of the argument: Liu Bei is his great-great-grandson, and the empire is the Liu family's estate.",
+  "_note": "summary was missing"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 1434,
+  "summary": "The living legitimacy in Zhuge Liang's speech - Liu Bei is 'the Emperor's Uncle', with a share of the Liu estate by blood.",
+  "_note": "summary was missing"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 1395,
+  "summary": "His funeral is the pretext of the chapter: Lu Su arrives with Sun Quan's condolence gifts - and the rendition demand his death has matured.",
+  "_note": "old summary was a bare 'dead'"
+ },
+ {
+  "op": "update_association",
+  "target": "character",
+  "chapter_num": 54,
+  "target_id": 2060,
+  "summary": "Named as Patriarch Qiao's other son-in-law - the family thread Zhao Zilong's first bag pulls to reach the Dowager's ear.",
+  "_note": "old summary was a bare 'named in passing'"
+ }
+]

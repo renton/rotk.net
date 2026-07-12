@@ -75,7 +75,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch51 — 28 ops (Liang Da 'Tai' false assoc removed [tracker item - last in-range], Niu Jin NOT killed fix, Chen Jiao's stolen seal, Cao Cao guide-letter not Xuchang relief, Sun Quan invented Hefei push removed, wager + feigned-death + three-city sweep summaries)
 - [x] ch52 — 21 ops (Liu Qi ALIVE-not-dead fix, Zhang Fei/Guan Yu ch53 spillovers pulled back, Zhao Fan restored-not-killed, Yi Ji recommends-Ma-brothers fix, Xing Darong/Bao Long/Liu Xiang deaths+captures, widow-refusal three reasons)
 - [x] ch53 — 32 ops (Taishi Ci DIES this chapter fix, Wei Yan/Zhuge Liang rebellious-bone scene removed [not in this edition's text], Song Qian/Yang Lin/Jin Xuan on-page deaths, Gong Zhi's arrow + governorship, Sun Quan dismount-greeting, Zhang Liao open-gates counter-ruse, Taishi Ci→Taishi Xiang Parent/Child)
-- [ ] ch54
+- [x] ch54 — 21 ops (Lady Gan DIES fix, Sun Ren bride summary + Liu Bei↔Sun Ren marriage + Sun Quan↔Sun Ren sibling, Wu Guotai sex=female + dup-of-3808 flag, Qiao Gong dup-of-3818 flag, IOU guarantor scene, three silken bags, boulder omen)
 - [ ] ch55
 - [ ] ch56
 - [ ] ch57
@@ -105,6 +105,9 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch54_audit.json (2):
+- Liu Bei [1311] ↔ Sun Ren [3639] Husband/Wife; Sun Quan [2105] ↔ Sun Ren Sibling
 
 From ch53_audit.json (1):
 - Taishi Ci [2142] → Taishi Xiang [2143] Parent/Child
@@ -257,6 +260,16 @@ From ch47 (out-of-range note):
   ancient general's mentions in ch84/94/103/104** — same 吳起-vs-吳祺
   confusion the ch47 fix swaps; those chapters are outside this batch,
   swap to [3834] via admin UI or a later fix file.
+
+From ch54:
+- **Wu Guotai [3833] likely duplicates the aunt Lady Wu [3808]** — ch43's
+  reminder-giver ('sister of his late mother') and ch54's Dowager
+  Marchioness ('when my elder sister lay dying') are the same person in
+  the novel. Merge/soft-delete one via admin UI; ch43's relationships
+  were proposed against 3808.
+- **Qiao Gong [3832] likely duplicates Duke Qiao [3818]** — both are the
+  father of the two Qiaos (ch48 banquet boast vs ch54 State Patriarch).
+  ch48's parent relationships were proposed against 3818.
 
 From ch50:
 - **The archer Yu Gong (of the Mencius Zi Zhuo story) has no Character
