@@ -12,10 +12,18 @@ location/event associations, event keywords that never match the prose,
 relationships stated in prose but missing, and chapter-character
 summaries (add missing / rewrite thin ones).
 
+## Relationship type ids (verified live 2026-07-12)
+
+Parent/Child=1, Husband/Wife=3, Sworn Brother=4, Sibling=5, Cousin=7,
+Pibling/Nibling=10, Grandparent/Grandchild=14,
+Great-Grandparent/Grandchild=16, Ancestor/Descendant=18.
+No adoptive/step/liege types exist — note adoptive ties in `_note` on a
+Parent/Child op (ch1 did this for Cao Teng→Cao Song).
+
 ## Progress
 
-- [x] ch1 — 14 ops (done before this batch)
-- [ ] ch2
+- [x] ch1 — 14 ops (done before this batch; APPLIED by Ren — its 9 relationships are live, and he created Liu Hong [3849] = Liu Bei's father)
+- [x] ch2 — 75 ops (Zhang Bao 'Zhang Ba' spelling, Liu Xian [3601] dup removal, Liang Da 'Tai' alias fix, 17 relationships, ~35 summary rewrites)
 - [ ] ch3
 - [ ] ch4
 - [ ] ch5
@@ -79,22 +87,48 @@ summaries (add missing / rewrite thin ones).
 Fix files aren't applied yet, so live-data reads won't show these.
 Check here before proposing a relationship op.
 
-From ch1_audit.json:
-- Cao Song [130] → Cao Cao [86] Parent/Child
-- Cao Teng [132] → Cao Song [130] Parent/Child (adoptive)
-- Zhang Jue [3154] ↔ Zhang Bao [3069] Sibling
-- Zhang Jue [3154] ↔ Zhang Liang [3164] Sibling
-- Zhang Bao [3069] ↔ Zhang Liang [3164] Sibling
-- Liu Yuanqi [1471] → Liu Bei [1311] Pibling/Nibling
-- Liu Sheng [3585] → Liu Bei [1311] Ancestor/Descendent
-- Liu Qi (Emperor Jing) [3590] → Liu Sheng [3585] Parent/Child
-- Emperor Ling [1351] → Liu Xie (Emperor Xian) [1434] Parent/Child
+ch1_audit.json: APPLIED — all 9 relationships live in DB (verified 2026-07-12).
+Live baseline also includes: Liu Yan→Liu Zhang, Liu Bei→Liu Shan,
+Zhang Ling/Zhang Heng/Zhang Lu chain, Ma Teng→Ma Chao (+uncle Ma Dai,
+cousin Ma Chao↔Ma Dai), Xun Yu→Xun You (uncle), Han Sui↔Ma Teng sworn,
+Liu Bei/Guan Yu/Zhang Fei sworn triangle, Liu Hong[3849]→Liu Bei.
+
+From ch2_audit.json (17):
+- He Jin [844] ↔ Empress He [831] Sibling; He Jin ↔ He Miao [852] Sibling;
+  He Miao ↔ Empress He Sibling
+- Lady of Wuyang [2502] → He Jin, → He Miao Parent/Child
+- Empress He [831] → Liu Bian [1312] Parent/Child; Emperor Ling [1351] → Liu Bian Parent/Child
+- Lady Wang [3599] → Liu Xie [1434] Parent/Child; Liu Bian ↔ Liu Xie Sibling (half)
+- Empress Dowager Dong [403] → Emperor Ling [1351] Parent/Child; → Liu Xie Grandparent
+- Liu Chang [3602] → Emperor Ling Parent/Child; Liu Chang ↔ Empress Dong Husband/Wife
+- Emperor Huan [3582] → Emperor Ling Parent/Child (adoptive)
+- Dong Chong [411] ↔ Empress Dong [403] Sibling
+- Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
+- Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
 ## Report-only findings (need manual action, no apply-fixes op exists)
 
 From ch1:
 - "Yuan Mountains" (ch1 ¶6 omen scene) has no Location row — create via
   admin UI + associate if wanted.
-- Liu Bei's father "Liu Hong" has no Character row (ch1 keyword fix
-  just untags him). Five Liu Hong rows exist (1351–1355); 1352 (Jin,
+- ~~Liu Bei's father needs a Character row~~ DONE — Ren created Liu
+  Hong [3849]. Five OTHER Liu Hong rows exist (1351–1355); 1352 (Jin,
   Zhongjia) vs 1353 (bare "Han politician") look like possible dupes.
+
+From ch2:
+- **Liu Xian [3601] is a duplicate of Liu Xie [1434]** — created from
+  ch2's "Liu Xian" spelling of the future Emperor Xian. After applying
+  ch2_audit.json it has no chapters; soft-delete it via the admin UI.
+- **Liang Da [1263] cleanup is multi-chapter.** His alias 'Tai'
+  false-matched every "X Tai" name (Zhou Tai, Chen Tai, Zheng Tai...),
+  giving him 21 bogus chapter associations + book_mention_count 106 +
+  a Koei portrait of Taigong Wang(!). ch2_audit.json fixes the global
+  alias ('Tai' → 'Liang Tai') and removes the ch2 association. In-range
+  chapters (15, 44, 48, 49, 51, 55) get checked as their audits come
+  up; OUT-OF-RANGE chapters still carrying the bogus association +
+  'Liang Da,Tai' keywords: 61, 67, 68, 75, 76, 78, 82, 83, 84, 107,
+  109, 110, 111, 114. The portrait should also be reviewed manually.
+- "Jiedu" (Liu Chang's fief, ¶81) has no Location row.
+- Event "Massacre of the Eunuchs" [11] is associated to ch2 but never
+  inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
+  associated on purpose — sidebar context.

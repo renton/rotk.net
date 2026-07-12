@@ -1,0 +1,332 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3069,
+   "keywords": "Zhang Bao,Zhang Ba",
+   "summary": "The last of the three Zhang brothers still in the field (the prose spells him 'Zhang Ba'). His battlefield sorcery routs Liu Bei until Zhu Jun counters it with sprinkled pig and goat blood; wounded by Liu Bei's arrow, he holes up in Yangcheng, where his own officer Yan Zheng kills him and surrenders with his head.",
+   "_note": "prose spells him 'Zhang Ba' throughout (14 occurrences) so current empty keywords never match; summary said he was 'mentioned in passing' when he's the main antagonist of the first third"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 2,
+   "target_id": 3601,
+   "_note": "Liu Xian [3601] is a mistaken row: every 'Liu Xian' in ch2 prose is Emperor Ling's son by Lady Wang, i.e. Liu Xie [1434] (made Prince of Chenliu in para 109 - Liu Xie's title). 3601 has no other chapters; consider soft-deleting the character too"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1434, "keywords": "Prince Xian,Liu Xian",
+   "_note": "this translation calls the future Emperor Xian 'Liu Xian' in ch2 (6 occurrences) - give Liu Xie the needle freed by removing 3601"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 2,
+   "target_id": 1263,
+   "_note": "Liang Da is NOT in ch2 - his keyword 'Tai' matched inside 'Zheng Tai'. His alias 'Tai' pollutes ~21 chapters this way (see the update op below and audit_notes.md)"},
+
+  {"op": "update", "model": "character", "id": 1263,
+   "fields": {"aliases": "Liang Tai"},
+   "_note": "global fix: bare alias 'Tai' false-matches every 'X Tai' name (Zhou Tai, Chen Tai, Zheng Tai...). chinese_name is 梁大/太 so the intended alias was the Liang Tai spelling; per-chapter keyword rows still need per-chapter cleanup as those chapters are audited"},
+
+  {"op": "add_association", "target": "event", "chapter_num": 2,
+   "target_id": 1, "keywords": "Yellow Scarves",
+   "_note": "ch2 is still the Yellow Turban campaign (Wancheng, Yangcheng, Quyang) and says 'Yellow Scarves' 6+ times, but the event was never associated"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 2,
+   "target_id": 46, "keywords": "Henan",
+   "_note": "para 29 'governorship of Henan' - fallback keywords 'Henan Commandery' never match"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 2,
+   "target_id": 17, "keywords": "Yangcheng",
+   "_note": "paras 11/14 'city of Yangcheng' - fallback 'Yangcheng County' never matches"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 2,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "para 78 'Imperial Protector of Youzhou' - fallback 'You Province' never matches"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 2,
+   "target_id": 1260,
+   "_note": "Wen County is not in ch2; the only 'Wen' is 'Wen Tombs' (para 120), Empress Dong's tomb near Luoyang - a different thing"},
+
+  {"op": "add_association", "target": "location", "chapter_num": 2,
+   "target_id": 904, "keywords": "Hejian",
+   "_note": "para 117: Empress Dong 'removed into her original fief of Hejian'"},
+
+  {"op": "add_association", "target": "location", "chapter_num": 2,
+   "target_id": 1819, "keywords": "West Valley Land",
+   "_note": "para 1: Dong Zhuo 'born in the far northwest at Lintao in the West Valley Land'"},
+
+  {"op": "add_relationship", "character1_id": 844, "character2_id": 831,
+   "type": 5, "_note": "He Jin brother of Empress He (para 80 'his sister had become a concubine of rank')"},
+
+  {"op": "add_relationship", "character1_id": 844, "character2_id": 852,
+   "type": 5, "_note": "He Jin brother of He Miao (para 119 'He Jin's younger brother, He Miao')"},
+
+  {"op": "add_relationship", "character1_id": 852, "character2_id": 831,
+   "type": 5, "_note": "He Miao brother of Empress He (para 124 'his sister Empress He')"},
+
+  {"op": "add_relationship", "character1_id": 2502, "character2_id": 844,
+   "type": 1, "_note": "Lady of Wuyang mother of He Jin (para 119)"},
+
+  {"op": "add_relationship", "character1_id": 2502, "character2_id": 852,
+   "type": 1, "_note": "Lady of Wuyang mother of He Miao (para 119 'his mother, Lady Wuyang')"},
+
+  {"op": "add_relationship", "character1_id": 831, "character2_id": 1312,
+   "type": 1, "_note": "Empress He mother of Liu Bian (para 80 'borne a son to the Emperor, named Liu Bian')"},
+
+  {"op": "add_relationship", "character1_id": 1351, "character2_id": 1312,
+   "type": 1, "_note": "Emperor Ling father of Liu Bian (para 80)"},
+
+  {"op": "add_relationship", "character1_id": 3599, "character2_id": 1434,
+   "type": 1, "_note": "Lady Wang mother of Liu Xie (para 81 'Lady Wang, who had borne him a son')"},
+
+  {"op": "add_relationship", "character1_id": 1312, "character2_id": 1434,
+   "type": 5, "_note": "Liu Bian and Liu Xie, half-brothers - both sons of Emperor Ling (paras 80-81)"},
+
+  {"op": "add_relationship", "character1_id": 403, "character2_id": 1351,
+   "type": 1, "_note": "Empress Dowager Dong mother of Emperor Ling (para 81 'Empress Dong, who was the mother of Emperor Ling')"},
+
+  {"op": "add_relationship", "character1_id": 3602, "character2_id": 1351,
+   "type": 1, "_note": "Liu Chang biological father of Emperor Ling (para 81 'he adopted the son of Liu Chang, who succeeded as the Emperor Ling')"},
+
+  {"op": "add_relationship", "character1_id": 3602, "character2_id": 403,
+   "type": 3, "_note": "Liu Chang husband of Empress Dowager Dong (para 81 'Lady Dong was the wife of Liu Chang')"},
+
+  {"op": "add_relationship", "character1_id": 3582, "character2_id": 1351,
+   "type": 1, "_note": "ADOPTIVE: the heirless Emperor Huan adopted Liu Chang's son, the future Emperor Ling (para 81)"},
+
+  {"op": "add_relationship", "character1_id": 411, "character2_id": 403,
+   "type": 5, "_note": "Dong Chong brother of Empress Dowager Dong (para 108 'your brother, the Imperial Uncle Dong Chong')"},
+
+  {"op": "add_relationship", "character1_id": 403, "character2_id": 1434,
+   "type": 14, "_note": "Empress Dowager Dong grandmother of Liu Xie (mother of his father Emperor Ling; also raised him after Lady Wang's poisoning, para 81)"},
+
+  {"op": "add_relationship", "character1_id": 3594, "character2_id": 2081,
+   "type": 18, "_note": "Sun Jian 'a descendant of the famous Sun Zi the Strategist' (para 41)"},
+
+  {"op": "add_relationship", "character1_id": 2623, "character2_id": 3597,
+   "type": 1, "_note": "Xu Chang father of Xu Hao (para 25 'The rebel's son Xu Hao was also slain with his father')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 444,
+   "summary": "Introduced with his origins at Lintao in the West Valley Land; as Governor of Hedong he is arrogant and overbearing, and only Liu Bei's restraint keeps Zhang Fei from killing him after his contempt toward the brothers. His repeated defeats against the Yellow Scarves get him superseded in command by Huangfu Song.",
+   "_note": "old summary described ch3 events (He Jin's summons, Li Jue/Guo Si) that haven't happened yet"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 411,
+   "summary": "Empress Dowager Dong's brother, the 'Imperial Uncle'. When she moves against Empress He he is made General of the Flying Cavalry and given the army; after her fall a guard is set on his house, his seal of office is taken, and he kills himself in his private apartments.",
+   "_note": "old summary called him her nephew (prose: 'your brother') and said he was killed (he killed himself)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 205,
+   "summary": "Minister of the Interior who stops the guards from executing Liu Tao and presses the Emperor to act against the eunuchs, citing Feng Xu's treason and beating his forehead on the throne steps. Imprisoned alongside Liu Tao; both are murdered that same night.",
+   "_note": "old summary had him killed 'in the recap of earlier court purges' - his death scene is in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1412,
+   "summary": "Court Counselor who bursts in on Emperor Ling's feast with the eunuchs to warn that the empire is at its last gasp while robbers swarm and the Ten sell offices. The weeping eunuchs turn the Emperor against him; he is dragged out and murdered in prison that night with Chen Dan, crying that the four-century Han is falling fast.",
+   "_note": "old summary: 'minor imperial-clan figure named in passing' - he has one of the chapter's major scenes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3598,
+   "summary": "The imperial inspector sent to Anxi, who snubs Liu Bei, fishes for a bribe, and coerces the county underlings into false testimony against him. A drunken Zhang Fei drags him out by the hair, lashes him to the hitching post, and whips him with willow switches; Liu Bei spares his life and resigns by hanging the official seal round his neck. His complaint puts the brothers to flight.",
+   "_note": "old summary: 'Court figure named in passing' - he is the whipped inspector of the chapter title"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 618,
+   "summary": "A general under Zhang Bao who rides out to offer battle in the hills; after a few bouts Zhang Fei wounds and unhorses him, the signal for Liu Bei's general advance.",
+   "_note": "old summary said he was killed in a mop-up; he is wounded and unhorsed by Zhang Fei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 815,
+   "summary": "One of the three remnant Yellow Scarves chiefs. He holds Wancheng against Zhu Jun, offers surrender when famine bites and is refused, then is slain as his desperate men break out through the corner the besiegers deliberately left open.",
+   "_note": "old summary said Zhu Jun killed him after he surrendered; the surrender was refused and he died in the breakout"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3299,
+   "summary": "Remnant Yellow Scarves chief who with Han Zhong and Sun Zhong raises thirty thousand men as 'avengers of Zhang Jue' and retakes Wancheng. Charging Sun Jian on the wall, he is knocked from his horse with his own snatched spear and killed.",
+   "_note": "old summary: 'named in passing' - he leads the rising and dies fighting Sun Jian"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3593,
+   "summary": "The third of the remnant Yellow Scarves chiefs at Wancheng. Fleeing north out of the fallen city, he is shot from his horse by an arrow from Liu Bei's own bow.",
+   "_note": "old summary: 'Court figure named in passing' - wrong person entirely; he's a rebel chief killed by Liu Bei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3592,
+   "summary": "An officer of Zhang Bao in besieged Yangcheng; seeing the rebellion collapsing, he kills his own leader and brings the head to Zhu Jun in token of submission.",
+   "_note": "old summary: 'Court figure named in passing' - he's the officer who ends the siege by killing Zhang Bao"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 2623,
+   "summary": "A rebel of the Wu region who proclaimed himself the Sun Emperor with ten thousand followers. The young Sun Jian raised a thousand men with the local officials and helped quell him - the exploit that launched Sun Jian's career. His son Xu Hao died with him.",
+   "_note": "old summary: 'Court official among He Jin's circle' - wrong person entirely; he's the rebel Sun Emperor"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3597,
+   "summary": "Son of the rebel Xu Chang, the self-styled Sun Emperor; slain along with his father when Sun Jian helps put the rising down.",
+   "_note": "old summary: 'Court figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3594,
+   "summary": "Sun Zi the Strategist, named as the famous ancestor of Sun Jian when the general makes his entrance before Wancheng.",
+   "_note": "old summary claimed this is NOT the strategist - the prose says exactly the opposite ('a descendant of the famous Sun Zi the Strategist')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3046,
+   "summary": "Imperial Protector who commended the young Sun Jian to the Throne for crushing Xu Chang's revolt, winning him the magistracies of Yandu, Xuyi, and Xiapi.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3155,
+   "summary": "Court official who hears Liu Bei's grievance in the capital and tells the Emperor to his face that the Yellow Scarves rose because the eunuchs sell offices - urging that the Ten be beheaded. The eunuchs have him thrust from court, then arrange a face-saving list of minor preferments on which Liu Bei gets the Anxi magistracy.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3153,
+   "summary": "Rebel who rose at Yuyang together with Zhang Chun. When Liu Bei (serving under Liu Yu) breaks the rising and Zhang Chun is murdered by his own officers, Zhang Ju sees all is lost and kills himself.",
+   "_note": "old summary: 'minor rebel named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3090,
+   "summary": "Rebel who rose at Yuyang with Zhang Ju. His cruelty turns his leaders against him; one of his own officers kills him and brings in his head, after which the rest submit.",
+   "_note": "old summary placed his rising in Liang Province; the prose says Yuyang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1713,
+   "summary": "Leader of a rebellion in Changsha. The eunuchs' forged edict makes Sun Jian Governor of Changsha to suppress him, and within two months the county is reported tranquil.",
+   "_note": "old summary placed him at Wancheng; his rising is in Changsha, put down by Sun Jian"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1356,
+   "summary": "Imperial clansman of Daizhou who shelters the fugitive brothers after the whipping of the inspector, for the sake of Liu Bei's noble birth, and later recommends Liu Bei to Liu Yu - reopening his path into imperial service.",
+   "_note": "old summary: 'minor imperial-clan figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1469,
+   "summary": "Made Imperial Protector of Youzhou to move against the Yuyang rebels Zhang Ju and Zhang Chun. On Liu Hu's recommendation he gives Liu Bei a commander's rank; after the victory he reports Liu Bei's services, winning him a full pardon, and is himself promoted Grand Commander.",
+   "_note": "old summary had him merely 'listed among regional governors'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 664,
+   "summary": "Praises Liu Bei's former services to the Throne, getting him promoted from Commanding Officer of Gaotang to Magistrate of Pingyuan, where Liu Bei recovers something of his old spirit.",
+   "_note": "old summary tied him to He Jin's ally lists - not in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3599,
+   "summary": "A beautiful consort of Emperor Ling who bore him the son Liu Xie; Empress He poisoned her out of jealousy, and the baby was given to Empress Dowager Dong to raise.",
+   "_note": "old summary: 'Court lady named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 2502,
+   "summary": "Mother of He Jin and He Miao. The cornered eunuchs Zhang Rang and Duan Gui buy her over with lavish gifts, and her word with Empress He helps restore the eunuchs to favour at court.",
+   "_note": "old summary: 'minor noblewoman named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3602,
+   "summary": "Lord of Jiedu, husband of the later Empress Dowager Dong and biological father of the boy the heirless Emperor Huan adopted - the future Emperor Ling.",
+   "_note": "old summary: 'Minor imperial-clan figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3605,
+   "summary": "Emperor Zhi, recalled in Cao Cao's warning to He Jin's council that eunuch influence has spread unchecked since the reigns of Emperors Chong and Zhi, a century and a half before.",
+   "_note": "old summary: 'Minor courtier named in passing' - he's a former emperor cited in a historical aside"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3607,
+   "summary": "Empress Lu of the early Han, invoked by Empress He at the banquet as the cautionary example of an empress who meddled in state affairs and brought destruction on her whole clan.",
+   "_note": "old summary: 'Minor court figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 750,
+   "summary": "One of the Ten Eunuchs. After the coup fails he finds Jian Shuo hiding among the palace-garden shrubs and murders him.",
+   "_note": "old summary was generic; his one act - killing Jian Shuo - is specific"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 561,
+   "summary": "A eunuch accused before the throne by Chen Dan of having been in league with the Yellow Scarves; the Emperor waves the charge away for lack of proof.",
+   "_note": "old summary was generic"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 481,
+   "summary": "One of the Ten Eunuchs. After Empress Dong's fall he and Zhang Rang buy protection through He Miao and Lady Wuyang, then spread the report that He Jin poisoned the late empress and aims at the throne - handing Yuan Shao his pretext for demanding their destruction.",
+   "_note": "old summary was generic"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3338,
+   "summary": "Eunuch ennobled among the thirteen after the rebellion and raised to General of the Flying Cavalry, while honest commanders like Huangfu Song and Zhu Jun are stripped of office for refusing the eunuchs' demands.",
+   "_note": "old summary described ch3-style plotting; ch2 shows his ennoblement"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 852,
+   "summary": "He Jin's younger brother. Bought with eunuch gifts, he argues to his sister Empress He that slaying the palace's old servants without cause could bring revolution - helping tie the Regent Marshal's hands.",
+   "_note": "old summary vague ('lukewarm ally'); the bribery is the point"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 865,
+   "summary": "Minister in He Jin's party who enters the Palace with him and thirty other officials to set Liu Bian on the throne after Emperor Ling's death.",
+   "_note": "old summary gave him a warning speech that isn't in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3381,
+   "summary": "Minister in He Jin's party who enters the Palace with him to enthrone Liu Bian after Emperor Ling's death.",
+   "_note": "old summary gave him the warning against summoning outside armies - that speech is in ch3"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1004,
+   "summary": "Supersedes Dong Zhuo and wins seven straight victories over the remaining Zhang brothers - Zhang Liang slain at Quyang, Zhang Jue's corpse exhumed and beheaded. Promoted General of the Flying Chariots and Imperial Protector of Jizhou, he uses his standing to have Lu Zhi restored - then falls victim to the eunuchs' intrigues and is stripped of office.",
+   "_note": "old summary mixed in a jailing-for-bribe episode not in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1541,
+   "summary": "Restored to his former rank through Huangfu Song's memorial vindicating his conduct in the Yellow Scarves campaign.",
+   "_note": "old summary invented a quiet retirement"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3494,
+   "summary": "Finishes the Yellow Scarves: besieges Zhang Bao at Yangcheng, refuses Han Zhong's surrender at Wancheng, debates the strategy with Liu Bei, and retakes the city with Sun Jian's help. Promoted General of the Flying Cavalry and Governor of Henan, he faithfully reports Liu Bei's and Sun Jian's merits - before the eunuchs strip him of office too.",
+   "_note": "old summary was thin for the chapter's principal commander"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 86,
+   "summary": "At He Jin's council he warns that eunuch influence has run for a century and a half, since Emperors Chong and Zhi, and that the plot must stay secret - earning He Jin's contempt as an 'inferior'. When the Emperor dies he urges settling the succession first; the chapter closes with him laughing that the eunuch problem is 'as easy as turning over one's hand'.",
+   "_note": "old summary quoted ch3 material (the 'one gaoler' argument comes after the chapter break)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3154,
+   "summary": "Reported dead of illness before Huangfu Song's arrival at the front; his coffin is exhumed, the corpse beheaded, and the head sent for exposure at Capital Luoyang. His name lives on in the 'avengers of Zhang Jue' who rise at Wancheng.",
+   "_note": "old summary just said he was referenced as dead"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3164,
+   "summary": "Takes over his dead brother Zhang Jue's army (the prose spells him 'Zhang Lian') but loses seven straight battles to Huangfu Song and is slain at Quyang.",
+   "_note": "old summary: 'mentioned in passing' - his defeat and death are narrated"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 403,
+   "summary": "Mother of Emperor Ling and raiser of Liu Xie, whose succession she pushes. Defeated when He Jin enthrones Liu Bian, she schemes with the eunuchs, making Liu Xie Prince of Chenliu and her brother Dong Chong a general - until He Jin's faction banishes her to her old fief of Hejian and has her poisoned there in the country.",
+   "_note": "old summary stopped before her banishment and murder - the chapter's He-vs-Dong duel"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1351,
+   "summary": "Ailing and under his mother's urging, he leans toward naming Liu Xie heir, and Jian Shuo counsels killing He Jin first to clear the way. The summons into the Palace is betrayed by Pan Yin, and the Emperor dies with the succession unsettled - the eunuchs concealing his death behind a forged edict.",
+   "_note": "old summary said he entrusted Prince Bian to Jian Shuo; the prose has Jian Shuo plotting FOR Liu Xie against Bian"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3606,
+   "summary": "Former Minister of the Interior, named as the father of Yuan Shao when Yuan Shao steps forward at He Jin's council.",
+   "_note": "old summary: 'minor courtier in the Yuan clan' - his significance is being Yuan Shao's father"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 3012,
+   "summary": "Imperial Guardian, named as the uncle of Yuan Shao when Yuan Shao steps forward at He Jin's council.",
+   "_note": "old summary put him among He Jin's senior advisers - ch2 only name-checks him in Yuan Shao's introduction"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 2081,
+   "summary": "Introduced with his youth: scattering pirates on the River Qiantang at seventeen and helping crush the self-styled Sun Emperor Xu Chang. Arriving before Wancheng with fifteen hundred veterans, he is first over the wall, cuts down twenty rebels, and kills Zhao Hong with the man's own spear; rewarded with the governorship of Changsha, he suppresses Ou Xing and is created Lord of Wucheng.",
+   "_note": "old summary skipped the origin story and the wall exploit that introduce him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1052,
+   "summary": "The eunuch who counsels the dying Emperor to kill He Jin so Liu Xie can succeed, then tries to lure the Regent Marshal into the Palace. Pan Yin's warning defuses the trap; after Liu Bian's enthronement Jian Shuo hides in the palace garden and is murdered among the shrubs by his fellow eunuch Guo Sheng.",
+   "_note": "old summary said Emperor Ling entrusted Liu Xie's protection to him - not in the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 2,
+   "target_id": 1721,
+   "summary": "The commander who stops He Jin at the Forbidden City gate with word that Jian Shuo means to kill him, then brings the news that the Emperor is dead and the eunuchs are forging a summons to settle the succession their way.",
+   "_note": "old summary called him a eunuch; the prose styles him Commander Pan Yin"}
+]
