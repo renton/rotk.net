@@ -74,6 +74,7 @@
                     </span>
                     <span class="flex-grow-1">
                         {{ c.name }}
+                        {%- if c.aliases %} <span class="text-muted fst-italic small">({{ c.aliases }})</span>{% endif %}
                         {% if crumbs.get(c.id) %}
                         <div class="small text-muted">{{ crumbs[c.id] }}</div>
                         {% endif %}
