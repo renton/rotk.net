@@ -1,0 +1,184 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 44,
+   "target_id": 1263,
+   "_note": "FALSE POSITIVE (Liang Da cleanup, flagged in tracker): neither 'Liang Da' nor a standalone 'Tai' occurs in ch44 - his 'Tai' keyword matched inside 'Zhou Tai' and 'Taishan Mountains'"},
+
+  {"op": "update", "model": "character", "id": 3809,
+   "fields": {"sex": "female"},
+   "_note": "Xi Shi - the famous beauty of Yue; missed by sex_audit.json"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3810, "keywords": "Kings Wu",
+   "summary": "King Wu of Zhou, invoked in the ode's climax - only 'the richly prosperous rule of Kings Wu and Huan' compares with the builder's sacred understanding.",
+   "_note": "keywords were the bare 'Wu', which pills every mention of the southern state; the one real occurrence is 'Kings Wu and Huan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3745,
+   "summary": "The 'Huan' of the ode's 'Kings Wu and Huan' - the hegemon whose prosperous rule flatters the tower's builder.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1794,
+   "summary": "Elder Qiao, 'the widow of Sun Ce, our late ruler' - one of the two beauties Zhuge Liang's doctored ode places in Cao Cao's tower, and half the insult that commits Zhou Yu to war.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1796,
+   "summary": "Younger Qiao - 'and Younger Qiao is my wife!' The revelation Zhuge Liang feigns astonishment at ('I blundered - a deadly fault!') after reciting the ode that would send her to the Bronze Bird Terraces.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3529,
+   "summary": "Sits smiling through the Zhou Yu-Lu Su wrangle, agrees sweetly with 'surrender', then springs the trap: Cao Cao's whole expedition wants only two women - and he recites the Bronze Bird ode with 'he would have the two Qiaos, these beautiful ladies of Wu' planted in it. The feigned apology seals it. Next day he sends Zhou Yu back to dissolve Sun Quan's last doubt about the numbers - reading the lord's heart so exactly that Zhou Yu privately marks him for death.",
+   "_note": "old summary had the ode trick; the numbers-doubt reading and the death-mark it earns complete the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3466,
+   "summary": "Plays surrender-minded to every faction in turn - pacifists, generals, trimmers - then erupts at the doctored ode: 'you old rebel, this insult is too deep!' Before Sun Quan he dismantles Cao Cao point by point (unsubdued rear, cavalry traded for ships, winter, malaria), takes sword and supreme command, and by night explains away the million: sick central troops and doubtful Yuan men - 'I could smash them with fifty thousand.' In his innermost heart, though, the guest who reads minds 'will have to be put out of the way.'",
+   "_note": "old summary was good on the ode; the four-points speech, the night audience, and the first murder thought were missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1523,
+   "summary": "Welcomes his friend home, argues surrender down to his face not knowing it is a pose - and, made Assistant Commander, immediately talks Zhou Yu out of killing Zhuge Liang: 'it is self-destruction to make away with your ablest officer before Cao Cao is destroyed.' Try the brother instead.",
+   "_note": "old summary was a bare 'orchestrates the introduction'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 2105,
+   "summary": "Hands Zhou Yu the contemptuous letter, hears the four points against Cao Cao, and rises with his oath - one of the two of them must go. The sword stroke that takes the corner off his writing table makes the policy irreversible: 'let any other person mention surrender, and he shall be served as I have served this table.' Yet that same night he confesses the one doubt left - the numbers - and sleeps only after Zhou Yu dissolves the million into sick men and doubtful loyalists.",
+   "_note": "old summary had the table; the night doubt is the human half"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3272,
+   "summary": "Brings his faction to Zhou Yu first and is told what he wants to hear; next day, invited to restate the surrender case before the throne, he is dismissed in one line - 'the opinion of an ill-advised student' - and watches the table corner fly.",
+   "_note": "old summary was a bare 'pacifist; with the council'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 295,
+   "summary": "Leads the war party to Zhou Yu's door - then sulks when the younger man is made Commander-in-Chief over him, feigning illness and sending his son to the muster. The son's report of the dispositions converts him: 'I have always despised Zhou Yu as a mere student... I must support him' - and he goes in person to confess his fault.",
+   "_note": "old summary was a bare 'veteran general at the council'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 311,
+   "summary": "Attends the muster in his 'indisposed' father's place and carries home the account of Zhou Yu's dispositions that turns Cheng Pu's contempt into support.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 972,
+   "summary": "Smites his forehead before Zhou Yu - 'they may take my head, but I swear never to surrender' - and is named joint Leader of the Van with Han Dang, first ships to the Three Gorges.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 785,
+   "summary": "Comes with the war party's oath and is appointed joint Leader of the Van with Huang Gai.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1064,
+   "summary": "Given the first of the four armies, paired with Zhou Tai, in Zhou Yu's muster.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3456,
+   "summary": "Paired with Jiang Qin over the first army in the expedition's order of battle.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1723,
+   "summary": "Commands the second army with Ling Tong in Zhou Yu's dispositions.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3784,
+   "summary": "Paired with Pan Zhang over the second army in the muster.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 2142,
+   "summary": "Given the third army with Lü Meng in the order of battle.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1566,
+   "summary": "Comes with Gan Ning to sound out Zhou Yu on war or peace, and is paired with Taishi Ci over the third army.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 596,
+   "summary": "Brings his supporters to Zhou Yu's door in the round of pre-council visits, arguing the war case.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1530,
+   "summary": "Paired with Dong Xi over the fourth army - his first command in the saga.",
+   "_note": "old summary was a bare 'not yet a major player'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 435,
+   "summary": "Given the fourth army with Lu Xun in Zhou Yu's muster.",
+   "_note": "old summary was a bare 'war-faction general'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3742,
+   "summary": "Appointed roving inspector with Zhu Zhi, keeping the land and marine columns to the general plan - having first visited Zhou Yu among the trimmers with Zhuge Jin.",
+   "_note": "summary was missing; NOTE row still flagged as likely dup of Lü Fan [1554]"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3516,
+   "summary": "Named inspector beside Lu Fan, moving from unit to unit to hold the expedition to plan.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3524,
+   "summary": "Sent by Zhou Yu to win his brother with the tale of Boyi and Shuqi, who starved together rather than separate - and comes back converted in reverse: 'I came to persuade him and lo! It is I who is being talked over.' His loyalty to Sun Quan survives; the family reunion does not.",
+   "_note": "old summary was right; tightened to the actual exchange"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3814,
+   "summary": "The brothers who perished of hunger by the Shouyang Hills rather than separate - Zhuge Jin's parable for why his brother should change masters, turned back on him within three sentences.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 2450,
+   "summary": "Her dying charge opens the chapter in full: 'for internal matters consult Zhang Zhao; for external policy Zhou Yu' - the sentence that summons the man who decides the war.",
+   "_note": "old summary was a bare echo mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 160,
+   "summary": "Named as the able writer of the 'Ode to the Bronze Bird Terrace' - the poem Zhuge Liang recites with two Qiaos smuggled into it.",
+   "_note": "old summary said Zhuge Liang 'misquotes' - kept, this is the accurate frame"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3762,
+   "summary": "The Yue statesman whose gift of Xi Shi to the king of Wu is Zhuge Liang's precedent for buying peace with two women.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3809,
+   "summary": "The famous beauty Fan Li delivered to the king of Wu - the historical cover for Zhuge Liang's two-Qiaos provocation.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3811,
+   "summary": "The king of Wu who accepted Xi Shi - the ruinous precedent inside Zhuge Liang's smooth suggestion.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3812,
+   "summary": "The Khan of the Xiongnu to whom a Han emperor once gave a princess as the price of peace - Zhuge Liang's soothing 'you surely would not grudge two more women' after the ode explodes.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 3690,
+   "summary": "King Wen, whose 'felicitous dream' of gathering scholars the ode credits to the tower's builder.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 1434,
+   "summary": "The Emperor 'really a prisoner in Xuchang, guarded by the most cruel soldiers' - Zhou Yu's charge to the assembled officers.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 44,
+   "target_id": 2060,
+   "summary": "Present in his widow and his charge: Elder Qiao is his relict, and Zhou Yu holds 'a sacred trust from my late lord, Sun Ce' that no ode was needed to enforce.",
+   "_note": "old summary was a bare widow mention"}
+]

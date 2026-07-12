@@ -65,7 +65,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch41 — 42 ops (Zhang Zi [3794] dup-of-Zhang Yi [3757] association swapped, Xu Shu was the double-crossing envoy not silent, Wei Yan fled TO Han Xuan, Wang Wei's loyal death, Yu Jin the executioner of Liu Cong/Lady Cai, Xu Chu invented Changban duel removed, 8 missing summaries for Zhao Yun's victims, Liu Shan ch42 spillover, Zhong brothers Sibling)
 - [x] ch42 — 22 ops (Liu Xin surrendered-not-murdered fix, Yan Province false assoc removed (Zhang Fei 'of Yan' = ancient state), Xiahou Jie + Zhong brothers deaths, Zhang Fei bridge blunder + rebuke, Zhuge Liang stage-management, Han Song freed)
 - [x] ch43 — 41 ops (aunt Lady Wu [3808] identified — reminder came from her not the mother, Zhou Yu not yet summoned, 20+ citation-figure summaries for the scholars' gauntlet, six pacifists enriched, Zhang Wen dup-note replaced again, Yanzhou/Yuzhou bare-alias restrictions, 2 relationships: Dowager↔aunt + Sun Jian↔aunt)
-- [ ] ch44
+- [x] ch44 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' false assoc removed [tracker item], Xi Shi sex=female, Ji Fa bare-'Wu' keyword restricted, two-Qiaos ode cast summaries, Zhou Yu four-points + murder thought, Cheng Pu sulk-and-convert, order-of-battle pairs, Boyi/Shuqi parable)
 - [ ] ch45
 - [ ] ch46
 - [ ] ch47
