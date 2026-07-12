@@ -145,17 +145,21 @@
   // yank the user away from the paragraph they were reading. On
   // desktop the sidebar sits next to the prose, so the page scroll
   // brings the row into view without losing the reader's place.
+  // Persistent "last clicked" marker — makes the target findable even
+  // if the scroll lands imperfectly. One at a time across the sidebar.
+  function markSelected(item) {
+    document.querySelectorAll('.sidebar-selected').forEach(function (el) {
+      el.classList.remove('sidebar-selected');
+    });
+    item.classList.add('sidebar-selected');
+  }
+
   function showAccordionItem(collapseId, itemId) {
     var collapseEl = document.getElementById(collapseId);
     var item = itemId ? document.getElementById(itemId) : null;
     if (!item) return;
 
-    // Persistent "last clicked" marker — makes the target findable even
-    // if the scroll lands imperfectly. One at a time across the sidebar.
-    document.querySelectorAll('.sidebar-selected').forEach(function (el) {
-      el.classList.remove('sidebar-selected');
-    });
-    item.classList.add('sidebar-selected');
+    markSelected(item);
 
     // CSS animates a yellow-fade-out via the .sidebar-flash class.
     // Re-trigger by removing + re-adding (with a reflow in between) so
@@ -243,7 +247,13 @@
       // the Locations accordion + row-flash like before.
       var item = document.getElementById('location-item-' + lid);
       var hasGeo = item && item.hasAttribute('data-show-on-map');
-      if (hasGeo && showLocationOnMap(lid)) return;
+      if (hasGeo && showLocationOnMap(lid)) {
+        // The map takes the scroll, but the Locations list still marks
+        // this row as the last-clicked location so it's findable when
+        // the reader opens that accordion.
+        markSelected(item);
+        return;
+      }
       showAccordionItem('collapseLocations', 'location-item-' + lid);
     }
   });
