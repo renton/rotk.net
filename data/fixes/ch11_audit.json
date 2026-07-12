@@ -1,0 +1,172 @@
+[
+  {"op": "add_relationship", "character1_id": 3174, "character2_id": 3082,
+   "type": 5, "_note": "Zhang Chao is Zhang Miao's brother ('Zhang Miao's brother, Zhang Chao, was introducing Chen Gong' - para 93)"},
+
+  {"op": "add_relationship", "character1_id": 3659, "character2_id": 1117,
+   "type": 18, "_note": "Kong Rong 'was one of the twentieth generation in descent from the great Teacher Confucius' (para 6)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 1547,
+   "summary": "The refuge odyssey: refused by Yuan Shu, nearly executed by Yuan Shao after beating Zhang Yan, sheltered by Zhang Yang, hunted by Li Jue and Guo Si, he lands with Zhang Miao just as Chen Gong proposes seizing Yanzhou. He takes the province and Puyang, twice waves off Chen Gong's advice - no Taishan ambush, no strike on the road-weary enemy - yet routs Cao Cao in the field behind his eight generals, springs the counter-trap on the night raid, and ends the chapter closing in on the exhausted Cao Cao himself.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3659,
+   "summary": "The great Teacher, ancestor of Kong Rong in the twentieth generation - and the hinge of the boy's famous retort: Confucius once questioned Laozi about ceremonies, so the families had 'known each other for generations'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3663,
+   "summary": "The Daoist sage claimed as Li Ying's ancestor in ten-year-old Kong Rong's witticism - the interview Confucius sought about ceremonies.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3662,
+   "summary": "Governor of Henan in Kong Rong's boyhood story: the ten-year-old talks his way past the doorkeeper as an 'intimate friend' and astonishes him with the Confucius-Laozi genealogy.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3665,
+   "summary": "One of the two subordinate generals (with Xue Lan) Lü Bu leaves holding Yanzhou city with ten thousand troops - the appointment Chen Gong immediately calls a mistake.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3656,
+   "summary": "One of the six generals in Cao Cao's twenty-thousand-man night raid on the western camp; he and Cao Hong are beaten trying to hold off Zhang Liao and Zang Ba during the dawn retreat.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3032,
+   "summary": "Answers Zang Ba's challenge before Puyang and trades thirty even blows; flees with Xiahou Dun when Lü Bu himself thunders in, and later helps Yu Jin cover the shattered night-raid retreat.",
+   "_note": "summary was missing (row name Yue Jin; prose spells Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3664,
+   "summary": "Kong Rong's general at Beihai; rides out against the Yellow Scarves chief Guan Hai and is cut down within a few bouts - the defeat that shuts the city behind its walls.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 255,
+   "summary": "The High Minister of the boyhood anecdote: told of the ten-year-old prodigy, he sniffs that a clever boy needn't grow into a clever man - and the boy replies that in that case the minister must have been very clever as a child.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 207,
+   "summary": "Volunteers as Tao Qian's envoy to Tian Kai in Qingzhou, and later adds his voice to the chorus urging Liu Bei to accept the Xuzhou protectorship.",
+   "_note": "old summary deferred him to future chapters; he acts in this one"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 692,
+   "summary": "Yellow Scarves chief who demands ten thousand carts of grain from Beihai, cuts down Zong Bao, and besieges the city - until the relief arrives and Guan Yu's green-dragon saber fells him in a few bouts.",
+   "_note": "old summary said Taishi Ci killed him; the saber stroke is Guan Yu's"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 704,
+   "summary": "Opens the combat at Beihai and cuts down the rebel chief Guan Hai with the green-dragon saber, then urges his reluctant brother to accept Tao Qian's offer of Xuzhou.",
+   "_note": "old summary was generic; the Guan Hai kill is his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 2142,
+   "summary": "Repays Kong Rong's kindness to his mother: rides alone through the Yellow Scarves into Beihai, then cuts his way out again - dropping pursuers with arrow after arrow - to fetch Liu Bei from Pingyuan. Fights in the relief beside Zhang Fei, refuses all reward, and leaves to answer Liu Yao's summons to Yangzhou.",
+   "_note": "old summary credited him with killing Guan Hai (Guan Yu's kill)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 1117,
+   "summary": "The prodigy of Qufu - 'intimate friend' of Li Ying at ten - now the hospitable Governor of Beihai. Besieged by Guan Hai's Yellow Scarves, he is saved by the chain of gratitude he forged: Taishi Ci's mother sends her son, who fetches Liu Bei. He then marches with Liu Bei for Xuzhou and dismisses Yuan Shu as 'a drying skeleton in a dark tomb' when Liu Bei tries to deflect Tao Qian's offer.",
+   "_note": "old summary had Zhao Yun at Beihai; Zhao Yun only joins for the Xuzhou leg"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 1311,
+   "summary": "Marches from Pingyuan with three thousand men and his brothers to break the Beihai siege - 'and does he know there is a Liu Bei in this world?' - then borrows two thousand troops and Zhao Zilong from Gongsun Zan for Xuzhou. He cuts through to the city, writes the letter that (with Lü Bu's help) lifts the siege, and three times refuses Tao Qian's offered governorship, settling instead at little Xiaopei to stand watch.",
+   "_note": "old summary put Zhao Yun's column at Beihai and omitted the triple refusal"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 2178,
+   "summary": "Imperial Protector of Qingzhou, fetched by Chen Deng's mission; he marches to Xuzhou but camps far off in the hills, dreading to close with Cao Cao - and goes home after the banquets.",
+   "_note": "old summary had Mi Zhu as the envoy; Chen Deng carried that letter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 309,
+   "summary": "Left behind with Xun Yu when the vengeance army marched, he holds the three remaining counties - Juancheng, Fanxia, and Dongjun - against Lü Bu's storm.",
+   "_note": "old summary had him advising the retreat; that counsel is Guo Jia's - Cheng Yu is defending Yanzhou"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 2755,
+   "summary": "With Cheng Yu, desperately holds Juancheng, Fanxia, and Dongjun - the last three counties of Yanzhou - while Lü Bu takes everything else.",
+   "_note": "old summary credited him with the warning message; Cao Ren's messenger brought it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 737,
+   "summary": "Talks Cao Cao out of killing Liu Bei's messenger - answer with fair words, then strike - and when Yanzhou falls, urges making peace with Liu Bei 'at any cost' to race home. On the march he warns of an ambush at the Taishan defile; Cao Cao laughs it off, and for once is right.",
+   "_note": "old summary merged him into a Cheng Yu argument that isn't in the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 123,
+   "summary": "Left facing Lü Bu's storm, he fights battle after losing battle for Yanzhou and sends the courier whose news turns Cao Cao's army around; on the return he is assigned to besiege Yanzhou city while Cao Cao makes for Puyang.",
+   "_note": "old summary was a bare 'serves in the recovery'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 2953,
+   "summary": "Spots the weakly-held western camp from the hills and proposes the night raid that Cao Cao leads in person; he and Yue Jing hack the escape route open when the counter-trap closes.",
+   "_note": "old summary was a bare 'serves at Puyang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 2535,
+   "summary": "Rides out to back Yue Jing against Zang Ba and crosses spears with Zhang Liao - until Lü Bu himself charges and both must flee.",
+   "_note": "old summary was a bare 'serves at Puyang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 620,
+   "summary": "Ordered with Wei Xu and Hou Cheng to relieve the raided western camp; he meets Cao Cao at the fourth watch and fights him until dawn.",
+   "_note": "old summary was vague command-structure filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 2707,
+   "summary": "Entrusted (with Li Fang) to hold Yanzhou city itself while Lü Bu marches to Puyang - the garrison choice Chen Gong protests as unequal to the task.",
+   "_note": "old summary wrongly listed him among the eight generals at Puyang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3042,
+   "summary": "One of Lü Bu's eight generals, from Huaying; opens the Puyang battle by trading thirty even blows with Yue Jing, and later ambushes the night-raid retreat with Zhang Liao.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3166,
+   "summary": "First-named of Lü Bu's eight generals, from Mayi; crosses spears with Xiahou Dun before Puyang and springs the hill ambush on the retreating night raiders with Zang Ba.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 1738,
+   "summary": "Hid and protected Lü Bu's family in Changan after the fall - and is put to death by Li Jue and Guo Si for it when he restores them to Lü Bu.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3247,
+   "summary": "Governor of Shangdang who takes the fugitive Lü Bu into his service - until Li Jue and Guo Si's letters demand his guest's head and Lü Bu must flee again.",
+   "_note": "old summary was a bare regional-roll mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3082,
+   "summary": "Zhang Miao's brother, who introduces Chen Gong at the moment Lü Bu arrives - the meeting that produces the Yanzhou plot.",
+   "_note": "old summary was coalition-era filler; he brokers the chapter's fateful introduction"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3008,
+   "summary": "Refuses to receive the fugitive Lü Bu for his instability; later, when Liu Bei suggests giving Xuzhou to the four-generations-honored Yuan Shu instead, Kong Rong buries the idea: 'a drying skeleton in a dark tomb'.",
+   "_note": "old summary was a bare regional-roll mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 1185,
+   "summary": "With Guo Si, executes Pang Shu for sheltering Lü Bu's family and writes to Zhang Yang demanding the fugitive's death - keeping Lü Bu running until he lands at Chenliu.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 753,
+   "summary": "With Li Jue, kills Pang Shu for restoring Lü Bu's family and hounds the fugitive from Zhang Yang's protection.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 11,
+   "target_id": 3334,
+   "summary": "Lent to Liu Bei by Gongsun Zan with two thousand troops for the Xuzhou expedition; he commands the rear column and supports the ox-horn line with Guan Yu. At the parting Liu Bei holds his hands, in tears, unable to let go.",
+   "_note": "old summary sent him to Beihai; he joins only for the Xuzhou leg"}
+]

@@ -32,7 +32,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch8 — 13 ops (Diao Chan age 16→21 + concubine relationship, Dong Huang nephew, Imperial Rector self-title fix, Great River assoc, sage-citation fixes)
 - [x] ch9 — 20 ops (Luoyang assoc removed, Lü Bu–Diao Chan relationship, 18 summary fixes incl. Li Su executed by Lü Bu, plotters vs purge-victims mixups, gate-opening fifth column)
 - [x] ch10 — 25 ops (7 missing summaries filled, Nanyang false assoc removed, Cao Song↔Cao De sibling, Bian Rang/Fan Chou/Li Meng/Wang Fang/Liu Dai/Yu Jin summary corrections)
-- [ ] ch11
+- [x] ch11 — 35 ops (8 missing summaries incl. Lü Bu's, Guan Hai kill credited to Guan Yu not Taishi Ci, Zhao Yun Beihai/Xuzhou mixup, Zhang Miao↔Zhang Chao + Confucius→Kong Rong relationships)
 - [ ] ch12
 - [ ] ch13
 - [ ] ch14
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch11_audit.json (2):
+- Zhang Miao [3174] ↔ Zhang Chao [3082] Sibling
+- Confucius [3659] → Kong Rong [1117] Ancestor/Descendant
 
 From ch10_audit.json (1):
 - Cao Song [130] ↔ Cao De [3658] Sibling
