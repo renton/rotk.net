@@ -1,0 +1,76 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 1434,
+   "summary": "Confers on the surrendered Guan Yu the rank General Who Serves the Hans - the very loophole Guan Yu's first condition carved out - and, admiring the unbagged beard at court, names him 'The Man with the Beautiful Beard'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 1449,
+   "summary": "Governor of Dongjun (the prose spells him Liu Yue); his urgent calls from Baima bring Cao Cao's one hundred fifty thousand east against Yan Liang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 1547,
+   "summary": "Remembered as the late master of Song Xian and Wei Xu - the 'famous veteran generals' Cao Cao throws at Yan Liang, to their deaths.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 3722,
+   "summary": "The ancient retainer of Zhang Liao's clinching argument - 'the difference in behavior brought about by difference of treatment' - out-kind Liu Bei, and Guan Yu's heart may follow.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 309,
+   "summary": "Designs both traps: the false deserters and feigned defeats that strand Guan Yu on Tushan, and - when Cao Cao fears giving Guan Yu his parting service - the crueler one: let him kill Yuan Shao's champion, and Yuan Shao will kill Liu Bei, leaving Guan Yu nowhere to go.",
+   "_note": "old summary had only the first trick"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 86,
+   "summary": "Grants the three conditions - 'as I am a minister of Han, so am I Han' - and lays siege to Guan Yu's heart: shared quarters foiled by the all-night candle, twice-normal provision, brocade over the old robe, the beard bag, banquets every third day. The gift of Red Hare wins the only real bow - because it can carry Guan Yu to Liu Bei in a day - and Cao Cao begins to repent of it.",
+   "_note": "old summary compressed the whole seduction campaign"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 2535,
+   "summary": "Plays the decoy at Xiapi: ten bouts, feigned flight, a stand, flight again - drawing Guan Yu seven miles from the walls into the crossbow ring at Tushan.",
+   "_note": "old summary placed him at Baima; his ch25 work is the lure"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 2624,
+   "summary": "Springs the ambush with Xu Huang that closes the road behind the lured Guan Yu at Tushan.",
+   "_note": "old summary was a bare bodyguard mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 2779,
+   "summary": "Yuan Shao's champion at Baima: kills Song Xian in three bouts, halves Wei Xu's forehead at the first blow, and drives Xu Huang back in twenty - until a red horse crosses the field faster than a question and Guan Yu's saber falls before he can move. His head leaves the field on Red Hare's neck.",
+   "_note": "old summary said three duelists died; Xu Huang survives his twenty bouts"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 1107,
+   "summary": "Divides his goods among his clan before marching - 'if we are defeated, the risk I run is great' - protests that Yan Liang is too narrow for the van, and is the one who names the red-faced, long-bearded killer: it can only be Guan Yu.",
+   "_note": "old summary borrowed the ch26 river-crossing warning"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 2176,
+   "summary": "Twice blocks the autumn expedition - the moment passed with Xuzhou's fall; wait for a real opening - and is nearly executed for it, saved by Liu Bei's plea and thrown into prison instead. 'Neglect your servant's wise words, and you will fail in the field.'",
+   "_note": "old summary said he was already jailed; the jailing happens in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 3006,
+   "summary": "Talked into the autumn campaign by Liu Bei's flattery over Tian Feng's protests - whom he jails - he sends Yan Liang against Baima over Ju Shou's objection. When the survivors describe the red-faced executioner, he turns on his guest: 'your brother has slain my beloved leader' - and orders Liu Bei beheaded.",
+   "_note": "old summary borrowed ch26's Wen Chou dispatch and defusal"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 1311,
+   "summary": "Grieving and rootless at Jizhou, he tips Yuan Shao into war - 'you are failing in your duty if you do not attack' - and begs the doomed Tian Feng into mere imprisonment. Then Baima's survivors describe his brother's saber-work, and the chapter ends with lictors leading him out to die.",
+   "_note": "old summary borrowed ch26's defusal; ch25 ends on the death order"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 3106,
+   "summary": "Invoked at the moment of triumph: Guan Yu waves off the Yan Liang feat - his brother Zhang Fei takes heads 'in an army of a hundred legions as easily as picking something from his own pocket'. Cao Cao has his officers note the name on their robe-flaps.",
+   "_note": "old summary was a bare off-stage mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 25,
+   "target_id": 2755,
+   "summary": "Distrusts the retirement Guan Yu demands before submitting - 'I fear treachery' - and later frames the trap Cao Cao lives by: a man who must render a parting service can be kept by denying him the chance.",
+   "_note": "old summary was a bare 'in Xuchang'"}
+]

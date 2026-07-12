@@ -46,7 +46,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch22 — 21 ops (bare You/Ji/Yan keyword fixes, 6 missing summaries, Zhao Yan manifesto assoc added, Xun Yu's takedown, Tian Feng premature jailing, Chunyu Qiong ch30 spillover)
 - [x] ch23 — 24 ops (19 missing summaries incl. Ji Ping the martyr-physician and the whole Mi Heng diatribe cast, Zhang Xiu dup-note replaced, Liu Ye envoy credit)
 - [x] ch24 — 21 ops (3 missing summaries, Sun Qian/Jian Yong/Mi Zhu flight mixups, Tian Feng not yet jailed, scabies-refusal added to Yuan Shao, 3 relationships incl. Dong Cheng↔Consort Dong)
-- [ ] ch25
+- [x] ch25 — 15 ops (4 missing summaries, Tian Feng jailed THIS chapter, Yan Liang two-not-three kills, ch26 spillovers pulled back, Cheng Yu's double trap)
 - [ ] ch26
 - [ ] ch27
 - [ ] ch28
