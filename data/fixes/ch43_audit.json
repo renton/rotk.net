@@ -1,0 +1,200 @@
+[
+  {"op": "add_relationship", "character1_id": 2450, "character2_id": 3808,
+   "type": 5, "_note": "'Lady Wu, the sister of his late mother' - the Dowager Wu [2450] and her younger sister [3808], both wives of Sun Jian"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 3808,
+   "type": 3, "_note": "per the Dowager's ch38 deathbed words: 'my younger sister and I both were wives to your father'"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 43,
+   "target_id": 63, "keywords": "Yanzhou",
+   "_note": "bare 'Yan' would pill 'the feeble state of Yan conquered Qi' (the ancient northern state, not Yanzhou) - the genuine mention is 'when Cao Cao went to Yanzhou'"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 43,
+   "target_id": 62, "keywords": "Yuzhou",
+   "_note": "restrict from bare 'Yu' (lands inside Yu Fan / Zhou Yu / Guan Yu in counts); 'Liu Bei of Yuzhou' is the real usage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3808,
+   "summary": "The aunt who is also a mother - her sister's co-wife to Sun Jian: finding Sun Quan sleepless between war and surrender, she asks one question - 'have you forgotten the last words of my sister?' - and the dying charge about Zhou Yu decides the crisis.",
+   "_note": "summary was missing; this is the AUNT Lady Wu [3808], distinct from the late Dowager [2450]"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 2105,
+   "summary": "Reads Cao Cao's hunting-party letter to a chamber of surrender counsel, walks out silent, and hears Lu Su's arithmetic of submission - a servant keeps his office; a lord loses everything. Provoked by Zhuge Liang into rage, then into resolve ('I will never allow the land of Wu to be dictated to by another'), he wobbles again under Zhang Zhao's second assault - until his aunt recalls his mother's dying words: in Zhou Yu's counsels lies safety.",
+   "_note": "old summary credited the reminder to his mother and quoted an internal/external-matters line not in this text; the aunt delivers it, and Zhou Yu is not yet summoned"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3466,
+   "summary": "Present only as the answer to the crisis: the dying Dowager's remembered charge - 'in Zhou Yu's counsels you safety find' - closes the chapter and points to the man who will decide the war.",
+   "_note": "old summary had him summoned and arriving; the summons belongs to ch44"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 1523,
+   "summary": "Coaches Zhuge Liang three times not to reveal Cao Cao's numbers - and watches him inflate them to a million and a half. But his own quiet speech outside the council door is the chapter's hinge: a servant who submits keeps his village and office; a lord who submits gets one carriage, one horse, ten followers. 'Determine to play a bold game!'",
+   "_note": "old summary was right in outline; the one-carriage-one-horse speech deserved the space"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 972,
+   "summary": "Bursts into the scholars' baiting session with the Commissariat chief's impatience - 'our archenemy nears our borders and you sit wrangling!' - and personally leads Zhuge Liang out of the debating pit toward Sun Quan.",
+   "_note": "old summary had him backing Zhou Yu's war argument, which comes later; his ch43 scene is ending the debate"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3272,
+   "summary": "Leads the surrender party twice: the council argument that Cao Cao holds both the imperial authority and the Great River, and the opening challenge of the scholars' gauntlet - Guan Zhong and Yue Yi against Liu Bei's lost Jingzhou - answered with the physician parable and the 'common birds' laugh. After the war decision he rallies the scholars for one more assault on Sun Quan's resolve.",
+   "_note": "old summary covered the first argument only"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 2950,
+   "summary": "Second challenger: sneers that the man thrashed at Dangyang talks big - and is answered that retiring for breathing space before a million brutes shames no one, unlike counselling a lord to kneel to a renegade.",
+   "_note": "old summary was a bare 'second pacifist'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 58,
+   "summary": "Fourth challenger: asks if Zhuge Liang means to play the persuader like Zhang Yi and Su Qin - and is told those two were heroes who carried seals of state, unlike men frightened into surrender counsel by one crafty letter.",
+   "_note": "old summary was a bare 'fourth pacifist'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 2720,
+   "summary": "Argues the Hans have outlasted their allotted time and Cao Cao holds two-thirds of the empire - and is scorched for words 'as if you knew neither father nor prince'; he blushes and says no more.",
+   "_note": "old summary was a bare 'fifth pacifist'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 1505,
+   "summary": "Sneers that Liu Bei is 'a weaver of mats, a seller of straw shoes' against Cao Shen's descendant - and is reminded he is the Lu Ji who pocketed an orange at Yuan Shu's table, that Cao Cao's heredity makes him a hereditary Han servant turned renegade, and that the dynasty's own founder rose from lowly origins.",
+   "_note": "old summary was a bare 'third pacifist'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 2772,
+   "summary": "Demands to know what classical canon Zhuge Liang studied - and hangs his head at the answer: Yi Yin farmed, Lu Wang fished, and none of the men who shaped ages asked whose essays to imitate.",
+   "_note": "old summary was a bare 'sixth pacifist'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 281,
+   "summary": "Shouts that the big talker has shown no scholarship - and receives the two-scholars speech: the noble scholar acts for his age; the mean pedant flows with thousands of words and 'not a solid idea in his breast', like Yang Xiong who served Wang Mang and went out a window.",
+   "_note": "old summary was a bare 'last of the pacifists'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 1592,
+   "summary": "One of the two (with Zhang Wen) still waiting their turn to pose Zhuge Liang when Huang Gai bursts in and ends the gauntlet.",
+   "_note": "old summary said 'not a pacifist' - he was queued to challenge; the interruption saved him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3219,
+   "summary": "Poised with Luo Tong to try the visitor when Huang Gai's angry entrance ends the debating - the challenge never delivered.",
+   "_note": "old summary was the admin note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 683,
+   "summary": "Leads the second wave against the war decision: Liu Bei, defeated, merely wants to borrow the South Land's strength - 'why must our lord lend himself to his schemes?'",
+   "_note": "old summary was a bare 'among the scholars'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3524,
+   "summary": "Meets his younger brother in the corridor and is gently refused a family visit - 'public affairs precede private obligations' - with a promise of news once the work is done.",
+   "_note": "old summary was a bare 'tactfully neutral'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 1323,
+   "summary": "Cited twice: Cao Cao's letter brags of taking him prisoner, and Zhuge Liang writes him off as 'a stupid lad, misled by specious words' who fell victim to the ferocity he surrendered to.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 1434,
+   "summary": "The Emperor whom Cao Cao 'overawes and in his name coerces the nobles' - the legitimacy question running under the whole debate.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3775,
+   "summary": "Zhang Zhao's measuring stick: the minister who made Prince Huan head of the feudal lords - can the man who lost Jingzhou claim his equal?",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3776,
+   "summary": "The statesman under whom feeble Yan took seventy cities of Qi - the second half of Zhang Zhao's challenge to the self-comparison.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3745,
+   "summary": "Prince Huan of Qi, made 'supreme in all the land' by Guan Zhong's statesmanship - the standard Zhang Zhao demands Zhuge Liang live up to.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3575,
+   "summary": "Cited twice in Zhuge Liang's defense: the Founder lost battle after battle to Xiang Yu yet won at Gaixia, and rose from origins as lowly as a mat-weaver's.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3696,
+   "summary": "The victor of every battle but the last - Zhuge Liang's proof that defeats decide nothing until Gaixia.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3750,
+   "summary": "The strategist whose long-unrewarded service turned Gaixia - Zhuge Liang's answer to those who count Liu Bei's defeats.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3802,
+   "summary": "The Supreme Ancestor's Prime Minister from whom Lu Ji derives Cao Cao's pedigree - turned against the argument: a minister's descendant is by heredity a servant of Han.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3800,
+   "summary": "The persuader who bore the seals of six federated states - Bu Zhi's intended insult, reclaimed by Zhuge Liang as a hero's credential.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3801,
+   "summary": "Twice Prime Minister of Qin - paired with Su Qin in Bu Zhi's jibe about glib persuaders, and in Zhuge Liang's retort about men who actually reformed governments.",
+   "_note": "summary was missing (this is the Warring States persuader, distinct from the Yuan general Zhang Yi [3757])"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3612,
+   "summary": "The farmer of Shen who became a founding minister - first name in Zhuge Liang's roll of great men no one asked for reading lists.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3774,
+   "summary": "Lu Wang, the fisherman of the River Wei, cited against the pedants: transcendent ability owes nothing to classical canons.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3655,
+   "summary": "Named in Zhuge Liang's roll of doers - Zhang Liang and Chen Ping, Zheng Yu and Geng Yan - men of transcendent ability who never asked whose essays to copy.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3712,
+   "summary": "Paired with Zhang Liang in the answer to Yan Jun's canon question - ability, not book-lists, made them.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3804,
+   "summary": "One of the four doers (with Zhang Liang, Chen Ping, Geng Yan) in Zhuge Liang's answer to the pedants.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3805,
+   "summary": "The Han restoration general closing Zhuge Liang's roll of men measured by deeds, not essays.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3806,
+   "summary": "The cautionary pedant of the two-scholars speech: he glorified the age with his writings, stooped to serve the tyrant Wang Mang, and went out a window for it.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3576,
+   "summary": "The tyrant whom the ode-writing Yang Xiong stooped to serve - Zhuge Liang's warning about mean scholars.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 3807,
+   "summary": "The hero of Qi too noble to submit to shame - Zhuge Liang's answer to 'why does not Liu Bei yield?', and the barb that drives Sun Quan from his own audience chamber.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 43,
+   "target_id": 1547,
+   "summary": "First name in Sun Quan's private inventory of Cao Cao's enemies - all gone now but Liu Bei 'and my poor self.'",
+   "_note": "summary was missing"}
+]

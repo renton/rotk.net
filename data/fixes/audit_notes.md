@@ -64,7 +64,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch40 — 33 ops (Zhi Xi mourner/Chi Lu informer conflation untangled, ch41 spillovers pulled from Cao Cao/Cai Mao/Lady Cai/Liu Cong/Zhang Yun (murders + admiral posts), Li Gui/Fu Xuan/Wang Can surrender-council cast, Kong Rong's sons' eggs line, Liu Qi denied-deathbed fix, burn-Xinye roster)
 - [x] ch41 — 42 ops (Zhang Zi [3794] dup-of-Zhang Yi [3757] association swapped, Xu Shu was the double-crossing envoy not silent, Wei Yan fled TO Han Xuan, Wang Wei's loyal death, Yu Jin the executioner of Liu Cong/Lady Cai, Xu Chu invented Changban duel removed, 8 missing summaries for Zhao Yun's victims, Liu Shan ch42 spillover, Zhong brothers Sibling)
 - [x] ch42 — 22 ops (Liu Xin surrendered-not-murdered fix, Yan Province false assoc removed (Zhang Fei 'of Yan' = ancient state), Xiahou Jie + Zhong brothers deaths, Zhang Fei bridge blunder + rebuke, Zhuge Liang stage-management, Han Song freed)
-- [ ] ch43
+- [x] ch43 — 41 ops (aunt Lady Wu [3808] identified — reminder came from her not the mother, Zhou Yu not yet summoned, 20+ citation-figure summaries for the scholars' gauntlet, six pacifists enriched, Zhang Wen dup-note replaced again, Yanzhou/Yuzhou bare-alias restrictions, 2 relationships: Dowager↔aunt + Sun Jian↔aunt)
 - [ ] ch44
 - [ ] ch45
 - [ ] ch46
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch43_audit.json (2):
+- Lady Wu/Dowager [2450] ↔ Lady Wu/aunt [3808] Sibling
+- Sun Jian [2081] ↔ Lady Wu/aunt [3808] Husband/Wife
 
 From ch41_audit.json (1):
 - Zhong Jin [3797] ↔ Zhong Shen [3798] Sibling
