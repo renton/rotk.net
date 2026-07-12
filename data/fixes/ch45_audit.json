@@ -1,0 +1,138 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 45,
+   "target_id": 1956,
+   "_note": "WRONG PERSON: ch45's 'though I am not so profound a musician as Shi Kuang of old' is the ancient blind music master of Jin (師曠), not this Shi Kuang [士匡, b. 175, Shi Xie's family, Eastern Wu general]; no row exists for the musician - flagged in audit_notes.md"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 45,
+   "target_id": 947,
+   "_note": "FALSE POSITIVE: no Qi Commandery in ch45 - the bare 'Qi' alias matched inside 'Liu Qi'"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 45,
+   "target_id": 1051,
+   "_note": "FALSE POSITIVE: no Qi County in ch45 either - same bare-'Qi'-in-'Liu Qi' match"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3769,
+   "summary": "Cai Mao's young brother, sent out to answer Gan Ning's challenge at the meeting of the three rivers - Gan Ning's arrow drops him as his ship closes.",
+   "_note": "summary was missing; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 596,
+   "summary": "Leads the van at the meeting of the three rivers: 'I am Gan Ning! I challenge anyone to combat!' - shoots Cai Xun dead in the opening exchange, and his crossbowmen break the untrained northern marines.",
+   "_note": "old summary was a bare 'with Zhou Yu at the camp'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 785,
+   "summary": "Commands the left wing that closes on Cao Cao's fleet after Gan Ning's van breaks the line.",
+   "_note": "old summary was a bare 'with Zhou Yu at the camp'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1064,
+   "summary": "Brings up the right wing in the first river battle, sealing the southern victory.",
+   "_note": "old summary was a bare 'with Zhou Yu at the camp'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 2142,
+   "summary": "Handed Zhou Yu's own commander's sword as master of the Gathering of Heroes: anyone who mentions the war between Cao Cao and the South Land dies - the sanction that gags the persuader all evening.",
+   "_note": "old summary was a bare 'with Zhou Yu at the camp'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1056,
+   "summary": "Volunteers his three-inch tongue and schoolboy friendship, and walks into a play staged for him: greeted as 'an emissary in Cao Cao's cause', gagged by the sword-rule at the feast, shown the troops and grain heaps, bedded down beside a snoring host - and left alone with the planted letter. He steals it, flees before dawn, and hands Cao Cao the forgery that beheads both admirals.",
+   "_note": "old summary was sound; expanded with the staging he was walked through"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3466,
+   "summary": "Twice tries to kill his allies before fighting his enemy - the Iron Pile Mountains errand meant for Cao Cao's ambush, and fifty hidden executioners waiting on a dropped cup until Guan Yu's face sweats the plan out of him. He beheads Cao Cao's letter-bearer over an arrogant superscription, wins the first river battle and quails at the hundred-mile line of northern campfires - then turns his old schoolmate into a postman: the feigned drunkenness, the forged Cai Mao-Zhang Yun letter, the staged midnight whispers. 'Those two were my only source of anxiety. Now they are gone.'",
+   "_note": "old summary had the Jiang Gan ruse; the two murder attempts and the envoy beheading complete the portrait"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3529,
+   "summary": "Reads the Iron Pile Mountains errand as a death warrant and accepts it anyway, teases Zhou Yu into cancelling it with a street-rhyme about one-direction talents, peers into the banquet tent and relaxes at the sight of Guan Yu behind his lord's chair - and leaves Liu Bei with the chapter's quietest bombshell: on the twentieth of the eleventh month send Zhao Zilong to the south bank, 'when the southeast wind begins, I shall return.'",
+   "_note": "old summary was thin; the errand, the tent-check, and the wind prophecy are the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1523,
+   "summary": "The shuttle between the two geniuses: carries Zhou Yu's murder plans away and Zhuge Liang's counsel back, twice talks his commander out of killing the ally ('think of the country's good first'), fails to save Cao Cao's beheaded messenger, and is sent at the end to sound out whether Zhuge Liang saw through the letter trick - of course he did.",
+   "_note": "old summary was a bare 'unnerved by Zhuge Liang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1311,
+   "summary": "Sails to Zhou Yu's camp with one boat and twenty men, laughing through a banquet staged for his assassination - the dropped-cup signal never comes because Guan Yu stands sword in hand behind his chair. Only in the boat does Zhuge Liang tell him how close it was; he leaves with the strange instruction about the twentieth day and the southeast wind.",
+   "_note": "old summary was a bare 'at Jiangxia'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 704,
+   "summary": "Opposes the visit, then stands sword in hand behind his brother's seat through the whole banquet - the 'fierce look' that makes Zhou Yu's back run with sweat and keeps the signal cup on the table. One meaningful glance ends the visit safely.",
+   "_note": "old summary was a bare 'with Liu Bei at Jiangxia'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3106,
+   "summary": "Brings fifty ships downriver on his own initiative, fearing even Guan Yu's arm might not be enough - and escorts the brothers home.",
+   "_note": "old summary was a bare 'with Liu Bei at Jiangxia'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1053,
+   "summary": "Left holding Exian while his lord sails into Zhou Yu's banquet.",
+   "_note": "old summary was a bare 'with Liu Bei at Jiangxia'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1682,
+   "summary": "Carries the congratulatory gifts to Zhou Yu's camp and comes back with the invitation that is really a trap - 'if your master would only come here, it would be very gracious on his part.'",
+   "_note": "old summary was a bare 'with Liu Bei at Jiangxia'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 86,
+   "summary": "Loses the first river battle to marines who cannot fight on water, watches Cai Mao and Zhang Yun build the twenty-four Water Gates that finally worry Zhou Yu - and then throws it all away: one stolen forgery and both admirals are headless before he thinks. Too proud to admit the trick, he calls it remissness and hands the fleet to Mao Jie and Yu Jin, who know nothing of naval war.",
+   "_note": "old summary was sound; tightened around the cover-up"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 68,
+   "summary": "Beaten in the first exchange, he answers Cao Cao's reproach with the truth - the marines need training - and builds the twenty-four Water Gates whose competence frightens Zhou Yu into the forgery. His 'the soldiers are not yet sufficiently trained' at the summons becomes his death warrant: 'they will be trained enough when you have sent my head to Zhou Yu, eh?'",
+   "_note": "old summary had the execution; the tragedy is that his own competence caused it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3267,
+   "summary": "Co-builder of the naval camp that impresses even the enemy - dumb-founded before Cao Cao with nothing to say, and beheaded beside Cai Mao on the strength of a letter neither ever wrote.",
+   "_note": "old summary was serviceable; sharpened"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 1647,
+   "summary": "Handed the naval camp with Yu Jin over the headless admirals' bodies - a northern administrator with no water-war experience, exactly as Zhou Yu intended.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 2953,
+   "summary": "Made co-commander of the fleet with Mao Jie after the executions - the second landsman set over a navy.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 295,
+   "summary": "Marches out with Zhou Yu and Lu Su at the head of the expedition to the Three Gorges anchorage.",
+   "_note": "old summary re-litigated the ch44 resentment, already resolved there"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3800,
+   "summary": "First of the four ancient persuaders in Zhou Yu's drunken boast - even their rushing-river words could not move a man who has found his proper lord.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3801,
+   "summary": "Named with Su Qin in the boast staged for Jiang Gan's ears - tongues like sharp swords, and still no use against Zhou Yu's loyalty.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3815,
+   "summary": "Third of the four great persuaders Zhou Yu declares himself proof against - the speech that tells Jiang Gan his mission is dead.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 3816,
+   "summary": "Last name in Zhou Yu's roll of persuaders whose eloquence would fail here - delivered to a guest whose face has already turned clay-colored.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 45,
+   "target_id": 2754,
+   "summary": "Credited in Zhou Yu's opening history lesson: the Wuchao supply-burning advice that beat Yuan Shao - the precedent for the Iron Pile Mountains trap.",
+   "_note": "old summary was a bare 'with Cao Cao'"}
+]

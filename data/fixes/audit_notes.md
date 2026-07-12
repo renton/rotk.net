@@ -66,7 +66,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch42 — 22 ops (Liu Xin surrendered-not-murdered fix, Yan Province false assoc removed (Zhang Fei 'of Yan' = ancient state), Xiahou Jie + Zhong brothers deaths, Zhang Fei bridge blunder + rebuke, Zhuge Liang stage-management, Han Song freed)
 - [x] ch43 — 41 ops (aunt Lady Wu [3808] identified — reminder came from her not the mother, Zhou Yu not yet summoned, 20+ citation-figure summaries for the scholars' gauntlet, six pacifists enriched, Zhang Wen dup-note replaced again, Yanzhou/Yuzhou bare-alias restrictions, 2 relationships: Dowager↔aunt + Sun Jian↔aunt)
 - [x] ch44 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' false assoc removed [tracker item], Xi Shi sex=female, Ji Fa bare-'Wu' keyword restricted, two-Qiaos ode cast summaries, Zhou Yu four-points + murder thought, Cheng Pu sulk-and-convert, order-of-battle pairs, Boyi/Shuqi parable)
-- [ ] ch45
+- [x] ch45 — 28 ops (Shi Kuang wrong-person removal [ancient musician vs Shi Xie's general], Qi Commandery/County bare-'Qi'-in-'Liu Qi' false assocs, Cai Xun's death by Gan Ning's arrow, Zhou Yu's two murder attempts + envoy beheading, Jiang Gan staging, persuader-roll summaries)
 - [ ] ch46
 - [ ] ch47
 - [ ] ch48
@@ -244,6 +244,13 @@ From ch3_audit.json (5):
 - Dong Zhuo [444] ↔ Dong Min [429] Sibling
 
 ## Report-only findings (need manual action, no apply-fixes op exists)
+
+From ch45:
+- **The ancient music master Shi Kuang (師曠) has no Character row** —
+  Zhou Yu cites him in ch45; the existing Shi Kuang [1956, 士匡] is Shi
+  Xie's Eastern Wu general, a different person. Create the musician row
+  + associate to ch45 if wanted (the fix file removes the wrong-person
+  association).
 
 From ch41:
 - **Zhang Zi [3794] duplicates Zhang Yi [3757]** — same surrendered Yuan
