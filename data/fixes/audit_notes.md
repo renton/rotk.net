@@ -67,7 +67,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch43 — 41 ops (aunt Lady Wu [3808] identified — reminder came from her not the mother, Zhou Yu not yet summoned, 20+ citation-figure summaries for the scholars' gauntlet, six pacifists enriched, Zhang Wen dup-note replaced again, Yanzhou/Yuzhou bare-alias restrictions, 2 relationships: Dowager↔aunt + Sun Jian↔aunt)
 - [x] ch44 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' false assoc removed [tracker item], Xi Shi sex=female, Ji Fa bare-'Wu' keyword restricted, two-Qiaos ode cast summaries, Zhou Yu four-points + murder thought, Cheng Pu sulk-and-convert, order-of-battle pairs, Boyi/Shuqi parable)
 - [x] ch45 — 28 ops (Shi Kuang wrong-person removal [ancient musician vs Shi Xie's general], Qi Commandery/County bare-'Qi'-in-'Liu Qi' false assocs, Cai Xun's death by Gan Ning's arrow, Zhou Yu's two murder attempts + envoy beheading, Jiang Gan staging, persuader-roll summaries)
-- [ ] ch46
+- [x] ch46 — 18 ops (Cai He/Cai Zhong false-deserter summaries, Huang Gai's plan-was-his-idea fix, Zhou Yu 'deceived him for once', Lu Su split-loyalty note, fog-poem figures Li Lou/King Yu, Jiang Gan ch47 spillover)
 - [ ] ch47
 - [ ] ch48
 - [ ] ch49

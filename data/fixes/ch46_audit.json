@@ -1,0 +1,91 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3767,
+   "summary": "Sent with his brother Cai Zhong to feign desertion and avenge Cai Mao - Zhou Yu reads the missing families at a glance, posts the pair under Gan Ning's watchful van, and privately marks them for sacrifice to the flag on the day of battle.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3768,
+   "summary": "The other false deserter of Xun You's scheme: welcomed with presents, assigned to the van - and turned unknowing into Zhou Yu's channel for feeding Cao Cao exactly the news he wants believed.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3817,
+   "summary": "The keen-eyed man of legend whose sight 'could never pierce this gloom' - the fog poem's measure of the whiteness on the river.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3645,
+   "summary": "King Yu the flood-tamer, whose matchless skill 'would fail to sound the depth and height' of the great fog.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3529,
+   "summary": "Signs the three-day arrow warrant in front of the whole assembly, idles two days, then sails twenty straw-lined boats into the fifth-watch fog and lets Cao Cao's ten thousand archers fill both sides of every dummy - 'we thank you, Sir Prime Minister, for the arrows!' Back ashore he matches palms with Zhou Yu on the word 'Fire', reads the Cai brothers' false desertion at a glance, and knows the beating of Huang Gai for a ruse while pretending resentment like everyone else.",
+   "_note": "old summary had the arrows; the palm-match and the two ruses he sees through complete it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3466,
+   "summary": "Sets the ten-day arrow trap - materials quietly withheld - and hears his victim ask for three; when the hundred thousand arrive he sighs 'he is better than I; his methods are more than human.' He matches palms on 'Fire', turns Cao Cao's false deserters into his own information pipe, and stages the flesh-suffering ruse: fifty strokes on a veteran's bared back, the table kicked over, the officers cowed - and one gleeful confession to Lu Su: 'then I have deceived him for once.'",
+   "_note": "old summary was sound; the deceived-him-for-once beat and the arrow-count sigh sharpen it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 972,
+   "summary": "Comes by night with fire on his mind and volunteers his own body when Zhou Yu laments the missing defector: 'kill me, I do not mind.' Next day he plays treason on cue - 'better take Zhang Zhao's advice and surrender' - invokes three generations of service under Sun Jian, and takes fifty strokes that leave his back running blood, swooning on the way to his tent. Only to Kan Ze, who guesses, does he confirm the ruse and ask for his letter-carrier.",
+   "_note": "old summary was sound; the night visit where the plan is HIS idea was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 1111,
+   "summary": "Reads the beating for theatre from the general's face - 'I guessed about nine tenths of the truth' - and is the one friend Huang Gai trusts with the secret: he joyfully agrees to carry the false-surrender letter into Cao Cao's camp.",
+   "_note": "old summary was sound; tightened to the scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 596,
+   "summary": "Given the false deserters to 'lead the van' - really to watch them until they are sacrificed to the flag - and plays his scripted part at the beating, interceding for Huang Gai and being driven out with blows for it.",
+   "_note": "old summary was a bare 'at the war council'; both his scenes are staged roles"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 1523,
+   "summary": "Promptly betrays Zhuge Liang's 'don't tell Zhou Yu' - then keeps the secret that matters, lending the twenty screened boats without a word to his chief. Terrified in the fog while his passenger drinks, he ferries between the geniuses all chapter, piqued and enlightened by turns.",
+   "_note": "old summary had the fright; his split loyalty - blabbing one secret, keeping the other - is the character note"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 86,
+   "summary": "Reads the drums in the fog as ambush and answers with ten thousand archers shooting blind - handing over a hundred thousand arrows and hearing the mocking thanks float back downstream. Smarting, he takes Xun You's counter-plan and sends the Cai brothers as false deserters - hostage-safe, he thinks, because their families are in his Jingzhou.",
+   "_note": "old summary was sound; the deserter counter-scheme was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 2754,
+   "summary": "Author of the counter-espionage plan: send men who can plausibly hate us - Cai Mao's own younger brothers - to feign desertion and spy on the southern camp.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 1647,
+   "summary": "Runs to Cao Cao with the news of drums in the fog - and lines the marines up on the bank to shoot at straw men.",
+   "_note": "old summary was a bare 'nominal admiral'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 2953,
+   "summary": "Co-reports the foggy commotion with Mao Jie and helps pour ten thousand men's arrows into Zhuge Liang's dummy fleet.",
+   "_note": "old summary was a bare 'co-admiral'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 3272,
+   "summary": "Invoked in Huang Gai's scripted treason - 'better to take Zhang Zhao's advice, throw down your weapons, and surrender' - the name that makes the offense capital.",
+   "_note": "old summary was a bare 'civil officer'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 2081,
+   "summary": "Invoked at the sentence: 'this is the third generation since I went with General Sun Jian' - the service record Huang Gai throws in Zhou Yu's face on cue.",
+   "_note": "old summary was a bare 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 68,
+   "summary": "His execution is the pivot the chapter turns on: his clan's presence in Cao Cao's army makes his brothers plausible avengers-turned-deserters, and their 'vengeance' story is what Zhou Yu pretends to believe.",
+   "_note": "old summary was a bare 'already executed'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 46,
+   "target_id": 1056,
+   "summary": "His disaster echoes forward: Zhuge Liang congratulates Zhou Yu on the ruse played off on him, and warns that Cao Cao will soon see through it without ever confessing the mistake.",
+   "_note": "old summary anticipated ch47's second errand; ch46 only reflects on the first"}
+]
