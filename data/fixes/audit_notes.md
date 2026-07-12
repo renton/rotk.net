@@ -74,7 +74,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch50 — 29 ops (Zhang Zi [3794] dup swap again, Yang Youji wrong-archer removal [Yu Gong story], Cai Zhong/Ma Yan/Zhang Zi on-page deaths by Gan Ning, three-laughs ambush cast, Guo Jia lament, 47-not-27 survivors + Jiangling-not-Nanjun fixes, Hefei posting)
 - [x] ch51 — 28 ops (Liang Da 'Tai' false assoc removed [tracker item - last in-range], Niu Jin NOT killed fix, Chen Jiao's stolen seal, Cao Cao guide-letter not Xuchang relief, Sun Quan invented Hefei push removed, wager + feigned-death + three-city sweep summaries)
 - [x] ch52 — 21 ops (Liu Qi ALIVE-not-dead fix, Zhang Fei/Guan Yu ch53 spillovers pulled back, Zhao Fan restored-not-killed, Yi Ji recommends-Ma-brothers fix, Xing Darong/Bao Long/Liu Xiang deaths+captures, widow-refusal three reasons)
-- [ ] ch53
+- [x] ch53 — 32 ops (Taishi Ci DIES this chapter fix, Wei Yan/Zhuge Liang rebellious-bone scene removed [not in this edition's text], Song Qian/Yang Lin/Jin Xuan on-page deaths, Gong Zhi's arrow + governorship, Sun Quan dismount-greeting, Zhang Liao open-gates counter-ruse, Taishi Ci→Taishi Xiang Parent/Child)
 - [ ] ch54
 - [ ] ch55
 - [ ] ch56
@@ -105,6 +105,9 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch53_audit.json (1):
+- Taishi Ci [2142] → Taishi Xiang [2143] Parent/Child
 
 From ch48_audit.json (3):
 - Liu Fu [1338] → Liu Xi [3821] Parent/Child

@@ -1,0 +1,159 @@
+[
+  {"op": "add_relationship", "character1_id": 2142, "character2_id": 2143,
+   "type": 1, "_note": "'took his son, Taishi Heng, into his own palace to be brought up' - row 2143's keywords already use the Taishi Heng spelling"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 2142,
+   "summary": "Duels Zhang Liao a hundred even bouts before Hefei, then stakes everything on his countryman Ge Ding's assassination plot - and rides through the invitingly opened gate into the arrow storm Zhang Liao prepared. Carried back riddled with wounds, he dies at forty-one with the great cry on his lips: 'why must I die before I have attained my desire?' Sun Quan buries him on Beigu Hill and takes his son into the palace.",
+   "_note": "old summary said 'first action' - this chapter is his DEATH"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3166,
+   "summary": "Sends the challenge that stings Sun Quan onto the field, fights Taishi Ci a hundred bouts, and routs the southern army - then wins the night too: armor kept on after victory ('a victory is no reason for rejoicing'), the arsonists caught and beheaded, and the city gates thrown OPEN as bait. Taishi Ci rides into the trap.",
+   "_note": "old summary had Cao Cao dispatching him to Hefei this chapter - he has held it since ch50; the open-gates counter-ruse was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 86,
+   "summary": "Present only through his Hefei garrison - Zhang Liao, Li Dian, and Yue Jin, posted there after Red Cliffs, carry his war this chapter.",
+   "_note": "old summary invented a fresh dispatch of Zhang Liao; the posting was ch50's"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3831,
+   "summary": "Taishi Ci's fellow townsman, slipped into Hefei to avenge Song Qian with his brother the groom: their straw-fire signal is lit on schedule - but Zhang Liao's calm ('a whole city cannot be traitors') unravels the plot, and both are dragged up by Li Dian and beheaded.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 2022,
+   "summary": "One of Sun Quan's two halberd-bearing guards: his crossed halberd catches Yue Jin's lightning slash at his lord's head - and moments later Li Dian's arrow takes him through the heart from behind. His death is what drives Sun Quan to sanction the fatal night raid.",
+   "_note": "old summary: 'named in passing' - he dies saving Sun Quan"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3829,
+   "summary": "The second halberd guard at Sun Quan's side - his weapon shorn through with Song Qian's, the broken shaft hammering Yue Jin's horse back from their lord.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3032,
+   "summary": "Rides out alone, one man and one sword, sidelong past the dueling champions - and nearly takes Sun Quan's head with one lightning slash, foiled only by the two crossed halberds.",
+   "_note": "summary was missing (prose spells him Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 1158,
+   "summary": "Shoots Song Qian dead from behind as he pursues Yue Jin, and drags the plotters Ge Ding and the groom before Zhang Liao for beheading.",
+   "_note": "old summary was a bare 'with Zhang Liao at Hefei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 2105,
+   "summary": "Dismounts to greet Lu Su by the roadside - 'was that manifestation enough for you?' - and is told no: only the imperial throne will do. Stung by Zhang Liao's letter he fights in gold helmet at the front, loses Song Qian to an arrow, takes Zhang Hong's rebuke ('it is not for you to exhibit prowess on the battlefield'), sanctions the night raid that kills Taishi Ci - and buries his second great leader on Beigu Hill.",
+   "_note": "old summary was a bare campaign mention; the dismount scene and the two rebukes are the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 1523,
+   "summary": "Greeted by his dismounted lord before the whole army - and answers the honor with ambition: nothing is enough until Sun Quan 'plays his part as emperor.' At chapter's end he is announced again: coming to mourn Liu Qi, and to claim the promise.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3123,
+   "summary": "Delivers the rebuke after Song Qian's death: curb the physical feats of a Xia Yu or a Meng Ben and contemplate princely virtues - 'hereafter you should regard as most important your personal safety.' Sun Quan promises to reform.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3645,
+   "summary": "Xia Yu, cited in Zhang Hong's rebuke as the kind of ancient strongman whose feats a prince should repress in himself.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3830,
+   "summary": "The legendary strongman paired with Xia Yu in Zhang Hong's lecture on what a ruler should not try to be.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3524,
+   "summary": "Warns that Zhang Liao is full of guile and will be ready for the night raid - the caution Sun Quan's grief overrides, at Taishi Ci's cost.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 2143,
+   "summary": "Taishi Ci's son (the prose spells him Taishi Heng), taken into Sun Quan's own palace to be brought up after his father's death.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 1096,
+   "summary": "Governor of Wuling: sends his one honest counselor to execution for advising surrender, freezes with panic before Zhang Fei's thunder-shout - and flees back to a wall held by that same counselor: Gong Zhi's arrow strikes his face, and his own troops cut off his head for Zhang Fei.",
+   "_note": "old summary credited the kill to Zhang Fei's army - his own people finished him under Gong Zhi's wall"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3828,
+   "summary": "The secretary who told Jin Xuan the truth and nearly died for it: spared by the officers' pleading, he seizes the wall while the Governor is routed, looses the arrow that fells him, and surrenders the city - Liu Bei gives him the governorship of Wuling.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3106,
+   "summary": "Signs the same written guarantee Zhao Zilong gave, takes his three thousand to Wuling, and wins with a shout - Jin Xuan panics at the thunder of his voice and is dead under his own wall before the day ends.",
+   "_note": "old summary was a bare 'finishes the Wuling settlement'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 704,
+   "summary": "Scorns the warning about the sixty-year-old - 'give me my own five hundred swordsmen' - kills Yang Lin in three bouts, and fights Huang Zhong a hundred more without finding a weak spot. When the veteran's horse falls he lowers his saber: 'get another horse and come again.' Next day the answering arrow parts his helmet plume. Changsha falls to Wei Yan's mutiny, and he ends the chapter sent to hold Xiangyang and bury Liu Qi.",
+   "_note": "old summary was sound; Yang Lin and the Xiangyang posting added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 996,
+   "summary": "Sixty years old, bender of the three-hundred-pound bow: a hundred even bouts, then the stumbling horse and Guan Yu's mercy - repaid with two empty bowstring twangs and one perfect shot into the helmet plume. Han Xuan reads the mercy as treason and orders his head off; saved by Wei Yan's mutiny, he yields only when Liu Bei comes to his house in person - and his first request is leave to bury the master who condemned him.",
+   "_note": "old summary was sound; the burial request seals the portrait"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 808,
+   "summary": "Hasty, hated, and 'of small compunction in matters of life and death': he reads three days of mutual chivalry as a plot, sentences his own bulwark with intercession itself made a crime - and dies on his wall under Wei Yan's stroke, his head carried to Guan Yu.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 2418,
+   "summary": "Cuts down the executioner's blade over Huang Zhong's neck - 'Huang Zhong is our bulwark!' - raises the crowd, kills Han Xuan on his own wall, and carries the head out to Guan Yu with the city behind it. Liu Bei, grateful, makes him a Van Leader beside the man he saved.",
+   "_note": "old summary described a rebellious-bone execution scene that is not in this edition's ch53 text - Liu Bei simply rewards him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3529,
+   "summary": "Briefs Guan Yu on the sixty-year-old 'warrior of a thousand' and is scorned for it; sends Liu Bei after him with supports, reads the black flag and the thrice-croaking crow as Changsha taken and a great leader mastered - and, when the falling star announces Liu Qi's death, has the answer ready for the claim that must follow: 'I will have somewhat to say to anyone who comes.'",
+   "_note": "old summary was built on the rebellious-bone scene, which is not in this edition's ch53 text"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 1311,
+   "summary": "Follows his over-confident brother with supports, enters Changsha to the tale of the two mercies, and goes in person to the house where Huang Zhong sits behind a plea of illness - the visit that wins the veteran. He makes Huang Zhong and Wei Yan Van Leaders, gives Changsha to Liu Pan and Wuling to Gong Zhi, renames Youkou to Gongan - and wails at the news of Liu Qi, knowing the promise that death matures.",
+   "_note": "old summary had the house visit; the ledger of appointments and the promise-anxiety added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 2838,
+   "summary": "Volunteers to spare the veteran the fight - 'trust to my right arm' - and is cut down by Guan Yu in the third encounter.",
+   "_note": "old summary: 'minor figure named in passing' - he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 1389,
+   "summary": "Liu Biao's nephew, living quietly at Yuxian: introduced by the newly yielded Huang Zhong and made Governor of Changsha.",
+   "_note": "old summary was a bare campaign mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 1395,
+   "summary": "Dies at Xiangyang - the falling star in the northwest Zhuge Liang reads a moment before the messenger arrives. His death matures the promise: Jingzhou is now claimable, and Lu Su is already coming 'to mourn'.",
+   "_note": "old summary was a bare 'dead'; his death is this chapter's hinge"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3784,
+   "summary": "Posted at Hanyang with half the fleet when Zhou Yu retires to Chaisang to heal.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 596,
+   "summary": "Left in command at Baling with his share of the fleet during Zhou Yu's convalescence.",
+   "_note": "old summary put him at Hefei; his posting is Baling"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 3466,
+   "summary": "Recovering at Chaisang, his fleet split between Gan Ning at Baling and Ling Tong at Hanyang, the rest gone to Hefei under Cheng Pu.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 53,
+   "target_id": 295,
+   "summary": "Brings the Red Cliffs veterans to Hefei - and saves Sun Quan's life, cutting off Zhang Liao's pursuit at the moment of the rout.",
+   "_note": "old summary was a bare 'with Sun Quan'"}
+]
