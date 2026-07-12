@@ -1,64 +1,118 @@
 [
-  {"op": "update", "model": "location", "id": 1819,
-   "fields": {"name": "West Valley Land"},
-   "_note": "name was stored with a trailing space, which broke matching"},
-
-  {"op": "update", "model": "location", "id": 1816,
-   "fields": {"location_type_id": null},
-   "_note": "West River Land is the Xichuan region, not a River (East River Land has no type either)"},
-
-  {"op": "update", "model": "event", "id": 41,
-   "fields": {"date": "c. 211"},
-   "_note": "was 'c. April - November 211' which the date parser can't read -> invisible on timeline"},
-
-  {"op": "add_association", "target": "event", "chapter_num": 59,
-   "target_id": 41, "keywords": "",
-   "_note": "Battle of Tong Pass climax happens IN ch59 (Xu Chu duel, smudged letter); keywords empty on purpose - 'Tong Pass' inline would steal the location pill"},
-
-  {"op": "add_association", "target": "location", "chapter_num": 59,
-   "target_id": 1819, "keywords": "West Valley Land",
-   "_note": "ch59: 'They traveled toward Lintao, a city in West Valley Land'"},
-
-  {"op": "update_association", "target": "character", "chapter_num": 59,
-   "target_id": 2624, "keywords": "Xu Chu,Zhongkang,Marquis Tiger,Tiger Lust",
-   "_note": "Xu Chu's ch59 nicknames (3x Marquis Tiger, 4x Tiger Lust); deliberately NOT bare 'Tiger' - the Tiger Guard is a unit"},
-
-  {"op": "update", "model": "relationship_type", "id": 16,
-   "fields": {"name": "Great-Grandparent/Grandchild"},
-   "_note": "name had a literal trailing tab character"},
-
-  {"op": "update", "model": "relationship_type", "id": 10,
-   "fields": {"side2_label_female": "Niece"},
-   "_note": "typo: Neice"},
-
-  {"op": "update", "model": "relationship_type", "id": 18,
-   "fields": {"name": "Ancestor/Descendant", "side2_label": "Descendant"},
-   "_note": "spelling (optional - delete this op if 'Descendent' was intentional)"},
-
-  {"op": "add_relationship", "character1_id": 3167, "character2_id": 3121,
-   "type": 1, "_note": "Zhang Ling father of Zhang Heng (ch59: 'his son, Zhang Heng')"},
-
-  {"op": "add_relationship", "character1_id": 3121, "character2_id": 3169,
-   "type": 1, "_note": "Zhang Heng father of Zhang Lu (ch59: 'his son Zhang Lu')"},
-
-  {"op": "add_relationship", "character1_id": 3167, "character2_id": 3169,
-   "type": 14, "_note": "Zhang Ling grandfather of Zhang Lu (ch59: 'grandson of Zhang Ling')"},
-
-  {"op": "add_relationship", "character1_id": 3169, "character2_id": 3215,
-   "type": 5, "_note": "Zhang Lu and Zhang Wei are brothers (ch59: 'his brother, Zhang Wei')"},
-
-  {"op": "add_relationship", "character1_id": 1619, "character2_id": 1599,
-   "type": 1, "_note": "Ma Teng father of Ma Chao (ch59: 'Ma Teng has died, and Ma Chao defeated')"},
-
-  {"op": "add_relationship", "character1_id": 805, "character2_id": 1619,
-   "type": 4, "_note": "Han Sui and Ma Teng sworn brothers (ch59: 'I was his father's pledged brother')"},
-
-  {"op": "add_relationship", "character1_id": 1599, "character2_id": 1601,
-   "type": 7, "_note": "Ma Chao and Ma Dai are cousins (novel-established)"},
-
-  {"op": "add_relationship", "character1_id": 1619, "character2_id": 1601,
-   "type": 10, "_note": "Ma Teng uncle of Ma Dai (follows from the cousin tie)"},
-
-  {"op": "add_relationship", "character1_id": 3842, "character2_id": 1446,
-   "type": 18, "_note": "Liu Yu (Prince Gong) ancestor of Liu Yan (ch59: 'a descendant from Prince Gong')"}
+  {
+    "op": "update",
+    "model": "event",
+    "id": 41,
+    "fields": {
+      "date": "c. 211"
+    },
+    "_note": "was 'c. April - November 211' which the date parser can't read -> invisible on timeline"
+  },
+  {
+    "op": "add_association",
+    "target": "event",
+    "chapter_num": 59,
+    "target_id": 41,
+    "keywords": "",
+    "_note": "Battle of Tong Pass climax happens IN ch59 (Xu Chu duel, smudged letter); keywords empty on purpose - 'Tong Pass' inline would steal the location pill"
+  },
+  {
+    "op": "update_association",
+    "target": "character",
+    "chapter_num": 59,
+    "target_id": 2624,
+    "keywords": "Xu Chu,Zhongkang,Marquis Tiger,Tiger Lust",
+    "_note": "Xu Chu's ch59 nicknames (3x Marquis Tiger, 4x Tiger Lust); deliberately NOT bare 'Tiger' - the Tiger Guard is a unit"
+  },
+  {
+    "op": "update",
+    "model": "relationship_type",
+    "id": 16,
+    "fields": {
+      "name": "Great-Grandparent/Grandchild"
+    },
+    "_note": "name had a literal trailing tab character"
+  },
+  {
+    "op": "update",
+    "model": "relationship_type",
+    "id": 10,
+    "fields": {
+      "side2_label_female": "Niece"
+    },
+    "_note": "typo: Neice"
+  },
+  {
+    "op": "update",
+    "model": "relationship_type",
+    "id": 18,
+    "fields": {
+      "name": "Ancestor/Descendant",
+      "side2_label": "Descendant"
+    },
+    "_note": "spelling (optional - delete this op if 'Descendent' was intentional)"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 3167,
+    "character2_id": 3121,
+    "type": 1,
+    "_note": "Zhang Ling father of Zhang Heng (ch59: 'his son, Zhang Heng')"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 3121,
+    "character2_id": 3169,
+    "type": 1,
+    "_note": "Zhang Heng father of Zhang Lu (ch59: 'his son Zhang Lu')"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 3167,
+    "character2_id": 3169,
+    "type": 14,
+    "_note": "Zhang Ling grandfather of Zhang Lu (ch59: 'grandson of Zhang Ling')"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 3169,
+    "character2_id": 3215,
+    "type": 5,
+    "_note": "Zhang Lu and Zhang Wei are brothers (ch59: 'his brother, Zhang Wei')"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 1619,
+    "character2_id": 1599,
+    "type": 1,
+    "_note": "Ma Teng father of Ma Chao (ch59: 'Ma Teng has died, and Ma Chao defeated')"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 805,
+    "character2_id": 1619,
+    "type": 4,
+    "_note": "Han Sui and Ma Teng sworn brothers (ch59: 'I was his father's pledged brother')"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 1599,
+    "character2_id": 1601,
+    "type": 7,
+    "_note": "Ma Chao and Ma Dai are cousins (novel-established)"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 1619,
+    "character2_id": 1601,
+    "type": 10,
+    "_note": "Ma Teng uncle of Ma Dai (follows from the cousin tie)"
+  },
+  {
+    "op": "add_relationship",
+    "character1_id": 3842,
+    "character2_id": 1446,
+    "type": 18,
+    "_note": "Liu Yu (Prince Gong) ancestor of Liu Yan (ch59: 'a descendant from Prince Gong')"
+  }
 ]
