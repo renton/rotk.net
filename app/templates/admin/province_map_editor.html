@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - Admin: {{ province.name }} map editor{% endblock %}
+
+{% block container_class %}container-fluid{% endblock %}
+
+{% block page_content %}
+<div class="page-header mt-3 mb-3 d-flex justify-content-between align-items-end flex-wrap gap-2">
+    <div>
+        <h1 class="mb-0">{{ province.name }} — location placement</h1>
+        <p class="text-muted small mb-0">
+            Pick a location on the right, then place it on the map:
+            points click once, lines are drawn freehand, regions are
+            clicked out corner by corner.
+        </p>
+    </div>
+    <a href="{{ url_for('admin.province_maps') }}"
+       class="btn btn-sm btn-outline-secondary">&larr; Back to province maps</a>
+</div>
+
+<div class="row g-3">
+    {# ----- Left: the map + mode toolbar ----- #}
+    <div class="col-lg-8">
+        {# Toolbar appears while placing (province_map_editor.js). #}
+        <div id="pme-toolbar" class="border rounded p-2 mb-2 d-none align-items-center gap-2 flex-wrap bg-light">
+            <span>Placing:
+                <strong id="pme-toolbar-name"></strong>
+                <span class="text-muted small" id="pme-toolbar-kind"></span>
+            </span>
+            <span class="text-muted small flex-grow-1" id="pme-toolbar-hint"></span>
+            <button type="button" id="pme-save" class="btn btn-sm btn-success" disabled>Save</button>
+            <button type="button" id="pme-reset" class="btn btn-sm btn-outline-warning">Reset</button>
+            <button type="button" id="pme-cancel" class="btn btn-sm btn-outline-secondary">Cancel</button>
+        </div>
+
+        <div class="image-panzoom border rounded" id="pme-map"
+             style="height: 78vh;"
+             data-panzoom-src="{{ payload.image_url }}"
+             data-panzoom-alt="Map of {{ province.name }}"></div>
+    </div>
+
+    {# ----- Right: child locations ----- #}
+    <div class="col-lg-4">
+        <div class="border rounded p-2" style="max-height: 84vh; overflow-y: auto;">
+            <div class="small text-muted fw-bold mb-2">
+                {{ children|length }} location{{ '' if children|length == 1 else 's' }} in {{ province.name }}
+            </div>
+            {% if not children %}
+            <p class="text-muted small mb-0">
+                No child locations — set this province as a parent on
+                location edit pages first.
+            </p>
+            {% endif %}
+            <ul class="list-group list-group-flush" id="pme-location-list">
+                {% for c in children %}
+                <li class="list-group-item px-1 d-flex align-items-center gap-2"
+                    id="pme-row-{{ c.id }}" data-location-id="{{ c.id }}">
+                    <span class="pme-status text-muted" title="placement status">
+                        <i class="fa-solid fa-circle" style="font-size: 0.55em;"></i>
+                    </span>
+                    <span class="flex-grow-1">
+                        {{ c.name }}
+                        {% if c.location_type %}
+                        <div>{{ macros.badge_widget(c.location_type) }}
+                            <span class="small text-muted fst-italic">{{ c.location_type.point_type }}</span>
+                        </div>
+                        {% endif %}
+                    </span>
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-outline-primary pme-select"
+                                data-location-id="{{ c.id }}">Select</button>
+                        <button type="button" class="btn btn-outline-secondary pme-show d-none"
+                                data-location-id="{{ c.id }}">Show</button>
+                        <button type="button" class="btn btn-outline-danger pme-clear d-none"
+                                data-location-id="{{ c.id }}"
+                                title="Remove this placement">&times;</button>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{# CSRF for the JSON placement POSTs — same hidden-form pattern as
+   annotations.js. #}
+<form id="pme-csrf-form" style="display:none;">
+    {{ csrf_form.hidden_tag() }}
+</form>
+
+<script type="application/json" id="pme-payload"
+        nonce="{{ csp_nonce }}">{{ payload | tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/image_panzoom.js') }}"></script>
+<script src="{{ url_for('static', filename='js/province_map_editor.js') }}"></script>
+{% endblock %}

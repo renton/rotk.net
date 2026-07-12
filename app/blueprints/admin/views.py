@@ -2998,3 +2998,292 @@ def api_explorer():
     and fires same-origin fetch() calls."""
     from app.blueprints.api.registry import ENDPOINTS
     return render_template('admin/api_explorer.html', endpoints=ENDPOINTS)
+
+
+# ---------------------------------------------------------------------------
+# Province Maps — one map image per Province location + placement editor
+# ---------------------------------------------------------------------------
+
+from app.models import ProvinceMap, ProvinceMapPlacement
+from app.models.province_map import PROVINCEMAP_DIR, POINT_TYPES
+
+
+@admin.route('/province-maps', methods=['GET'])
+@login_required
+@admin_required
+def province_maps():
+    """One row per Province-type Location: map image status, placement
+    progress (n placed / m child locations), upload + editor actions."""
+    provinces = (
+        Location.query
+        .join(LocationType, Location.location_type_id == LocationType.id)
+        .filter(Location.is_deleted.is_(False),
+                LocationType.name == 'Province')
+        .order_by(Location.name)
+        .all()
+    )
+    maps_by_loc = {m.location_id: m for m in ProvinceMap.query.all()}
+
+    placement_counts = dict(
+        db.session.query(ProvinceMapPlacement.province_map_id,
+                         func.count(ProvinceMapPlacement.id))
+        .group_by(ProvinceMapPlacement.province_map_id)
+        .all()
+    )
+    child_counts = dict(
+        db.session.query(Location.parent_id, func.count(Location.id))
+        .filter(Location.parent_id.in_([p.id for p in provinces] or [0]),
+                Location.is_deleted.is_(False))
+        .group_by(Location.parent_id)
+        .all()
+    )
+
+    return render_template(
+        'admin/province_maps.html',
+        provinces=provinces,
+        maps_by_loc=maps_by_loc,
+        placement_counts=placement_counts,
+        child_counts=child_counts,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+def _province_or_404(location_id):
+    prov = (
+        Location.query
+        .join(LocationType, Location.location_type_id == LocationType.id)
+        .filter(Location.id == location_id,
+                Location.is_deleted.is_(False),
+                LocationType.name == 'Province')
+        .first()
+    )
+    if prov is None:
+        abort(404)
+    return prov
+
+
+@admin.route('/province-maps/<int:location_id>/upload', methods=['POST'])
+@login_required
+@admin_required
+def province_maps_upload(location_id):
+    """Upload (or replace) the map image for one province. Same
+    defense-in-depth as the yearly-maps / portrait uploaders."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        abort(400)
+    prov = _province_or_404(location_id)
+
+    source_site = (request.form.get('source_site') or '').strip()
+    source_url = (request.form.get('source_url') or '').strip()
+    if len(source_site) > 255 or len(source_url) > 2048:
+        flash("Attribution too long (site max 255, URL max 2048 characters).")
+        return redirect(url_for('admin.province_maps'))
+
+    row = ProvinceMap.query.filter_by(location_id=prov.id).first()
+    file = request.files.get('image_file')
+    has_file = file is not None and bool(file.filename)
+    if not has_file and row is None:
+        flash(f"No image on file for {prov.name} — choose a file to upload.")
+        return redirect(url_for('admin.province_maps'))
+
+    if has_file:
+        file.stream.seek(0, os.SEEK_END)
+        size = file.stream.tell()
+        file.stream.seek(0)
+        if size <= 0:
+            flash("Uploaded file is empty.")
+            return redirect(url_for('admin.province_maps'))
+        if size > _MAX_PORTRAIT_BYTES:
+            flash(f"File too large ({size:,} bytes). "
+                  f"Max {_MAX_PORTRAIT_BYTES:,} bytes.")
+            return redirect(url_for('admin.province_maps'))
+
+        header = file.stream.read(32)
+        file.stream.seek(0)
+        detected = _detect_image_type(header)
+        if detected is None:
+            flash("Uploaded file doesn't look like a real image "
+                  "(JPEG/PNG/GIF/WEBP signatures didn't match).")
+            return redirect(url_for('admin.province_maps'))
+
+        safe_original = secure_filename(file.filename) or 'upload'
+        declared_ext = os.path.splitext(safe_original)[1].lower()
+        declared = 'jpg' if declared_ext == '.jpeg' else declared_ext.lstrip('.')
+        if declared != detected:
+            flash(f"File extension {declared_ext!r} doesn't match the actual "
+                  f"content ({detected!r}). Refusing to save.")
+            return redirect(url_for('admin.province_maps'))
+
+        maps_dir = os.path.join(current_app.static_folder, PROVINCEMAP_DIR)
+        os.makedirs(maps_dir, exist_ok=True)
+        filename = f'{prov.id}.{detected}'
+        path = os.path.join(maps_dir, filename)
+        abs_dir = os.path.abspath(maps_dir)
+        if not os.path.abspath(path).startswith(abs_dir + os.sep):
+            abort(400)
+        file.save(path)
+
+        if row is None:
+            row = ProvinceMap(location_id=prov.id, filename=filename)
+            db.session.add(row)
+            verb = "uploaded"
+        else:
+            if row.filename != filename:
+                old_path = os.path.join(maps_dir, row.filename)
+                if os.path.abspath(old_path).startswith(abs_dir + os.sep) \
+                        and os.path.exists(old_path):
+                    os.remove(old_path)
+            row.filename = filename
+            verb = "replaced"
+    else:
+        verb = "attribution updated"
+
+    row.source_site = source_site
+    row.source_url = source_url
+    db.session.commit()
+
+    flash(f"Map for {prov.name} {verb}.")
+    return redirect(url_for('admin.province_maps'))
+
+
+@admin.route('/province-maps/<int:location_id>/editor', methods=['GET'])
+@login_required
+@admin_required
+def province_map_editor(location_id):
+    """Interactive placement editor: pan/zoom province map on the left,
+    child-location list on the right. Placement geometry is created in
+    the browser (province_map_editor.js) and saved via the placement
+    endpoints below."""
+    prov = _province_or_404(location_id)
+    pmap = ProvinceMap.query.filter_by(location_id=prov.id).first()
+    if pmap is None:
+        abort(404)
+
+    children = (
+        Location.query
+        .filter(Location.parent_id == prov.id,
+                Location.is_deleted.is_(False))
+        .options(selectinload(Location.location_type))
+        .order_by(Location.name)
+        .all()
+    )
+    placements = {
+        p.location_id: {'kind': p.kind, 'geometry': p.geometry}
+        for p in ProvinceMapPlacement.query.filter_by(
+            province_map_id=pmap.id).all()
+    }
+    payload = {
+        'province_id': prov.id,
+        'image_url': url_for('static', filename=pmap.static_path),
+        'save_url_template': url_for(
+            'admin.province_map_place', location_id=prov.id, child_id=0),
+        'delete_url_template': url_for(
+            'admin.province_map_place_delete', location_id=prov.id,
+            child_id=0),
+        'locations': [
+            {
+                'id': c.id,
+                'name': c.name,
+                'type_name': (c.location_type.name
+                              if c.location_type else ''),
+                'icon': ((c.location_type.icon or '')
+                         if c.location_type else ''),
+                'point_type': (c.location_type.point_type
+                               if c.location_type else 'point'),
+            }
+            for c in children
+        ],
+        'placements': placements,
+    }
+    return render_template(
+        'admin/province_map_editor.html',
+        province=prov,
+        pmap=pmap,
+        children=children,
+        payload=payload,
+        csrf_form=_CsrfOnlyForm(),
+    )
+
+
+def _validate_geometry(kind, geometry):
+    """Shape-check placement geometry (image-pixel coords)."""
+    def is_pair(v):
+        return (isinstance(v, (list, tuple)) and len(v) == 2
+                and all(isinstance(n, (int, float)) for n in v))
+    if kind == 'point':
+        return is_pair(geometry)
+    if kind == 'line':
+        return (isinstance(geometry, list) and len(geometry) >= 2
+                and all(is_pair(p) for p in geometry))
+    if kind == 'region':
+        return (isinstance(geometry, list) and len(geometry) >= 3
+                and all(is_pair(p) for p in geometry))
+    return False
+
+
+@admin.route('/province-maps/<int:location_id>/placements/<int:child_id>',
+             methods=['POST'])
+@login_required
+@admin_required
+def province_map_place(location_id, child_id):
+    """Create or replace one child location's placement. JSON body:
+    {kind, geometry} with kind matching the child's type point_type."""
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        return jsonify(error='Bad CSRF token.'), 400
+    prov = _province_or_404(location_id)
+    pmap = ProvinceMap.query.filter_by(location_id=prov.id).first()
+    if pmap is None:
+        return jsonify(error='No map uploaded for this province.'), 404
+    child = Location.query.get_or_404(child_id)
+    if child.parent_id != prov.id or child.is_deleted:
+        return jsonify(error='Location is not a child of this province.'), 400
+
+    data = request.get_json(silent=True) or {}
+    kind = data.get('kind')
+    geometry = data.get('geometry')
+    if kind not in POINT_TYPES:
+        return jsonify(error=f'Bad kind {kind!r}.'), 400
+    expected = (child.location_type.point_type
+                if child.location_type else 'point')
+    if kind != expected:
+        return jsonify(error=f'Kind {kind!r} does not match the location '
+                             f"type's placement type {expected!r}."), 400
+    if not _validate_geometry(kind, geometry):
+        return jsonify(error='Geometry shape invalid for this kind.'), 400
+
+    placement = ProvinceMapPlacement.query.filter_by(
+        province_map_id=pmap.id, location_id=child.id).first()
+    created = placement is None
+    if created:
+        placement = ProvinceMapPlacement(province_map_id=pmap.id,
+                                         location_id=child.id,
+                                         kind=kind, geometry=geometry)
+        db.session.add(placement)
+    else:
+        placement.kind = kind
+        placement.geometry = geometry
+    db.session.commit()
+    return jsonify(ok=True, created=created, location_id=child.id,
+                   kind=kind)
+
+
+@admin.route('/province-maps/<int:location_id>/placements/<int:child_id>/delete',
+             methods=['POST'])
+@login_required
+@admin_required
+def province_map_place_delete(location_id, child_id):
+    form = _CsrfOnlyForm()
+    if not form.validate_on_submit():
+        return jsonify(error='Bad CSRF token.'), 400
+    prov = _province_or_404(location_id)
+    pmap = ProvinceMap.query.filter_by(location_id=prov.id).first()
+    if pmap is None:
+        return jsonify(error='No map uploaded for this province.'), 404
+    placement = ProvinceMapPlacement.query.filter_by(
+        province_map_id=pmap.id, location_id=child_id).first()
+    if placement is None:
+        return jsonify(error='No placement for that location.'), 404
+    db.session.delete(placement)
+    db.session.commit()
+    return jsonify(ok=True, location_id=child_id)

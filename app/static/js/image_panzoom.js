@@ -68,6 +68,10 @@
 
       el._panzoomMap = map;
       el._panzoomBounds = bounds;
+      // Consumers that need the Leaflet map (e.g. the province-map
+      // placement editor) listen for this instead of polling.
+      el.dispatchEvent(new CustomEvent('panzoom:ready',
+                                       { detail: { map: map, bounds: bounds } }));
 
       if (el.clientWidth > 0 && el.clientHeight > 0) {
         fit(el);

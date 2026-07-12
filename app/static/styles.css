@@ -324,3 +324,27 @@ p.quote {
     text-transform: uppercase;
     letter-spacing: 0.07em;
 }
+
+/* ------------------------------------------------------------------
+   Province-map placement editor.
+   ------------------------------------------------------------------ */
+.pme-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #c0392b;
+    text-shadow: 0 0 3px #fff, 0 0 5px #fff;
+}
+.pme-marker.pme-pulse i,
+.pme-pulse {
+    animation: pme-pulse 0.4s ease-in-out 3;
+}
+@keyframes pme-pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.8); }
+}
+.pme-placing .leaflet-container,
+.image-panzoom.pme-placing {
+    cursor: crosshair !important;
+}

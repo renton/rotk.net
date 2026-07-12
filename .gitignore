@@ -80,3 +80,7 @@ app/static/yearmaps/*
 # Local working assets (e.g. source GIF + extracted stills for Yearly Maps).
 # Images are uploaded through /admin/yearly-maps, not committed.
 assets/
+
+# Admin-uploaded province maps. Same pattern as portraits/yearmaps.
+app/static/provincemaps/*
+!app/static/provincemaps/.gitkeep
