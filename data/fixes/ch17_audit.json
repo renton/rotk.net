@@ -1,0 +1,229 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3690, "keywords": "King Wen",
+   "summary": "King Wen, Ancestor of the Zhou - Yan Xiang's counter-example: he held two thirds of the empire and still served the Shang. Yuan Shu is no King Wen, and the Hans are no Shang.",
+   "_note": "keywords contained a junk token 'Xiahou' (collides with Xiahou Dun/Yuan); summary was missing"},
+
+  {"op": "add_relationship", "character1_id": 376, "character2_id": 375,
+   "type": 1, "_note": "Dian Man is Dian Wei's son ('conferred rank upon his son Dian Man')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3685,
+   "summary": "Commands the Second Left Army in Zhang Xun's seven-division invasion of Xuzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3691,
+   "summary": "One of Yuan Shu's three coordinating generals: loses his spear to Lü Bu's third-bout hand wound, then is left among the four holding Shouchun - captured when the walls fall and executed in the market place.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1434,
+   "summary": "Hosts the peace banquet for the heads of Li Jue and Guo Si, ennobles Duan Wei and Wu Xi, and personally arranges the chariot to escort Cao Cao out of the city for the Zhang Xiu expedition - deference flowing the wrong way.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1547,
+   "summary": "Target of the seven-army invasion. He nearly beheads the two Chens on Chen Gong's accusation, spares them for Chen Deng's plan, and reaps it whole: Han Xian and Yang Feng turn their coats, the night flare breaks Zhang Xun, and Yuan Shu himself - all imperial pomp and silver mail - is routed after Lü Bu's third-bout maiming of Li Deng. Cao Cao names him General of the Left Army.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3643,
+   "summary": "King Shun, claimed as the Yuan family's ancestor in Yuan Shu's earth-receives-fire justification for taking the throne.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3693,
+   "summary": "Controller of the Granaries who issues grain in the short measure at Cao Cao's own order - then is summoned: 'I want the loan of your head to expose to the soldiery.' Beheaded on a pole as a 'peculator', his family bought off, the army quieted. The chapter's coldest bargain.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2788,
+   "summary": "The secretary who stands up alone against the imperial declaration, holding up King Wen of Zhou as the model of loyal restraint - and is brushed aside by Yuan Shu's oracle-and-seal logic.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3684,
+   "summary": "Talks Yuan Shu out of attacking Sun Ce, and designs the endgame: hold famine-struck Shouchun with a hundred thousand men while the court, the army, and the family treasure withdraw across the River Huai to wait out the besiegers' hunger.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2816,
+   "summary": "Third Right Army commander who turns his coat with Han Xian at Chen Deng's urging, firing the night flare that breaks Zhang Xun. Made Governor of Langye - where his plundering soldiers earn him Liu Bei's banquet: at the dropped cup, the brothers cut him down, and his head is presented to Cao Cao.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3695,
+   "summary": "One of Zhang Xiu's two generals before Nanyang; falls to Xu Chu in the third bout.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3233,
+   "summary": "Backed by Liu Biao, he ravages Nanyang and Jiangling until Cao Cao's disciplined army - fresh from the wheat-field decree - drives him behind Nanyang's walls, where Jia Xu watches Cao Cao inspect the northwest corner and promises a counter-move.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1024,
+   "summary": "Commands Yuan Shu's reserves; caught at daylight between Lü Bu's pursuit and the turncoats Yang Feng and Han Xian, he is forced to flight.",
+   "_note": "old summary killed him off - his death (by Guan Yu) comes in ch21, and he commands the reserve, not a division under Zhang Xun"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3239,
+   "summary": "Grand Commander of the seven armies, two hundred thousand strong, aimed at Xuzhou. Waiting on reinforcements, he is surprised instead by the defectors' night flare and Lü Bu's assault, and routed before dawn.",
+   "_note": "old summary said he was killed - he flees"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1147,
+   "summary": "One of Zhang Xiu's two generals in the array before Nanyang.",
+   "_note": "old summary made him Yuan Shu's general and killed him - he's Zhang Xiu's man and survives"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1264,
+   "summary": "One of the four generals left holding Shouchun with a hundred thousand troops; captured when Cao Cao's three-day assault carries the walls, and executed in the market place.",
+   "_note": "old summary was vague about how he died"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3033,
+   "summary": "One of the four generals left holding Shouchun; captured in the storming and executed in the market place.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 221,
+   "summary": "Commands the First Right Army of the invasion, then shares the Shouchun garrison's fate: captured and executed when the city falls.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 228,
+   "summary": "Commands the Second Right Army of the seven-division invasion of Xuzhou.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1798,
+   "summary": "Van Leader of Yuan Shu's defense with fifty thousand troops; falls to Xiahou Dun in the third bout before Shouchun, his army fleeing into the doomed city.",
+   "_note": "old summary was a bare list mention - he dies here"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 807,
+   "summary": "Third Left Army commander who defects at Chen Deng's roadside embassy - 'why serve a traitor?' - and helps break Zhang Xun and Ji Ling. Made Governor of Yidu; his plundering soldiers bring Liu Bei's dropped-cup banquet, and his head travels to Cao Cao beside Yang Feng's.",
+   "_note": "old summary stopped at the defection"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 547,
+   "summary": "His daughter is made Yuan Shu's Empress as the pretender completes his palace household.",
+   "_note": "old summary garbled the relationship - Feng Fang's daughter is the empress"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1093,
+   "summary": "Imperial Protector of Yangzhou, ordered to run the invasion's commissariat; he declines the rebel office and Yuan Shu puts him to death.",
+   "_note": "old summary: 'minor figure named in passing' - he dies refusing the post"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 484,
+   "summary": "Slays Li Jue and presents his head at Xuchang; rewarded as General Who Destroys Rebellion and sent to guard Changan.",
+   "_note": "old summary invented a coalition role; he's Li Jue's killer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2489,
+   "summary": "Kills Guo Si and presents his head at Xuchang; rewarded as General Who Wrecks Villainy and sent with Duan Wei to guard Changan.",
+   "_note": "old summary put him among Yuan Shu's officers - he's Guo Si's killer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1185,
+   "summary": "Slain by Duan Wei; his head goes to Xuchang and his whole clan - more than two hundred - is executed at the gates, to the people's cheers.",
+   "_note": "old summary: 'named in passing' - this chapter records his end"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 753,
+   "summary": "Killed by Wu Xi, his head presented at the Xuchang peace banquet beside Li Jue's.",
+   "_note": "old summary: 'named in passing' - this chapter records his end"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 207,
+   "summary": "Laughs at the seven armies as 'heaps of rotting straw' with his neck under Lü Bu's sword, then delivers the campaign: his roadside embassy turns Han Xian and Yang Feng, and his memorial aligns the court, Liu Bei, and Lü Bu into one front.",
+   "_note": "old summary was vague coordination talk"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 216,
+   "summary": "Arrested with his son on Chen Gong's accusation and released on the plan's success; then blocks the idea of keeping the defectors in Xuzhou - posted to Yidu and Langye, 'those places will be all yours within a year' - refusing to lengthen the tiger's claws.",
+   "_note": "old summary was vague alignment talk"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 214,
+   "summary": "Blames the invasion on the two Chens' courting of Xuchang and demands their heads - the accusation Chen Deng laughs off with 'heaps of rotting straw'. Commands the Yidu division against Chen Ji in the five-way defense.",
+   "_note": "old summary was a bare adviser mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 86,
+   "summary": "Assembles the four-way front and takes Shouchun by three days of personal wall-side supervision after buying calm with Wang Hou's borrowed head. On the Zhang Xiu march his wheat-field decree meets his own bolting horse - and he trades his hair for his head, 'I cut off the hair as touching the head.' The two acts frame the man.",
+   "_note": "old summary had only the borrowed head"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 737,
+   "summary": "Saves Cao Cao from his own sword in the trampled wheat with the Spring-and-Autumn precedent: the law does not reach the most important. The hair falls instead of the head.",
+   "_note": "old summary was a bare 'advises Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2624,
+   "summary": "Sent out against the railing Zhang Xiu and drops his general Zhang Xian in the third bout, driving the rebels behind Nanyang's walls.",
+   "_note": "old summary was a bare 'serves in the central army'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2535,
+   "summary": "Van Leader of the united host; kills Yuan Shu's van commander Qiao Rui in the third bout before Shouchun.",
+   "_note": "old summary was a bare 'serves under Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1865,
+   "summary": "Chief of the Commissariat who brings Cao Cao the impossible arithmetic of one hundred seventy thousand mouths in a famine - the statement that leads to the short measure and Wang Hou's borrowed head.",
+   "_note": "old summary was about the farm colonies generally"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1311,
+   "summary": "First to welcome the grand army - presenting the heads of Han Xian and Yang Feng, whose plundering he ended with a dropped cup at his own banquet. He fights on the southern face at Shouchun and is then planted at Xiaopei: Cao Cao's 'pitfall for the tiger', with secret orders to heed only the two Chens.",
+   "_note": "old summary was a bare coalition mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 704,
+   "summary": "Bars the fleeing pretender's road - 'Traitor! Why have they not slain you?' - scattering Yuan Shu's remnant toward the Huai; at the Xiaopei banquet he and Zhang Fei execute Han Xian and Yang Feng at the dropped cup.",
+   "_note": "old summary was a bare 'rides with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2060,
+   "summary": "Refuses Yuan Shu's loan - 'I would rather punish such a renegade than help him' - garrisons Jiangkou, is made Governor of Kuaiji, and on Zhang Zhao's plan brings his fleet against Shouchun's west face while shipping Cao Cao a hundred thousand carts of grain.",
+   "_note": "old summary invented recovered river territories"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3272,
+   "summary": "Argues against attacking Yuan Shu alone: write to Cao Cao, let the great army strike from the north with Wu as auxiliary - the plan that creates the four-way convergence on Shouchun.",
+   "_note": "old summary was a bare civil-officer mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 3008,
+   "summary": "Declares himself emperor with the reign title Second Glory - dragon chariot, north-south sacrifices, Feng Fang's daughter as Empress - over Yan Xiang's protest. His seven armies under Zhang Xun break against Lü Bu's turned defectors; he flees Guan Yu's ambush, abandons Shouchun's hundred thousand to the famine siege, and carries his treasure across the Huai.",
+   "_note": "old summary aimed the seven armies at Liu Bei (they target Xuzhou/Lü Bu) and used a reign name not in this prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 2755,
+   "summary": "Stops the pursuit across the Huai - famine-stricken land cannot feed an army; return and wait for the spring wheat - and is left in chief military command of Xuchang for the Zhang Xiu expedition.",
+   "_note": "old summary was a bare administration mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1048,
+   "summary": "Watches Cao Cao ride Nanyang's walls for three days, reads the northwest-corner mound as the feint it is, and tells Zhang Xiu he can beat it with a counter-move - the cliffhanger.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 1313,
+   "summary": "Backs Zhang Xiu's ravaging of Nanyang and Jiangling - the alliance that pulls Cao Cao's army south while Shouchun still smokes.",
+   "_note": "old summary said he refused to commit - he actively supports Zhang Xiu"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 100,
+   "summary": "Left facing Zhang Xiu and Liu Biao's risings in Nanyang and Jiangling; worsted in several engagements, his distress calls bring Cao Cao's army south.",
+   "_note": "old summary was a bare 'serves in the central army'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 17,
+   "target_id": 123,
+   "summary": "Left holding the capital while the one hundred seventy thousand march south against Yuan Shu.",
+   "_note": "old summary was a bare 'serves in the central army'"}
+]
