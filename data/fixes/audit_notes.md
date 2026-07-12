@@ -52,7 +52,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch28 — 20 ops (5 missing summaries incl. Zhou Cang's debut, Guo Chang farm-host fix, Guan Ping adoption relationships, Cai Yang→Qin Qi nephew)
 - [x] ch29 — 29 ops (17 missing summaries incl. Yu Ji the haunting saint, Hua Xin envoy/governor fix, Guo Jia's prophecy, Qiao-sister marriages: Sun Ce↔Da Qiao, Zhou Yu↔Xiao Qiao)
 - [x] ch30 — 22 ops (12 missing summaries, Jia Xu's invented council quote fixed, Wuchao raid roster corrected, catapult 'Rumblers' restored, Han Meng/Chunyu Qiong fates fixed)
-- [ ] ch31
+- [x] ch31 — 44 ops (Yin Kui wrong-person fix: politician 2905 removed, astrologer 2906 added; Liu Bang added as 'Founder of Han'; 5 Yuan-family relationships; Gao Lan/Liu Pi/Shi Huan on-page deaths; Tian Feng suicide-sequence fix; bare-'You' keyword restriction; 6 missing + ~25 thin/wrong summaries)
 - [ ] ch32
 - [ ] ch33
 - [ ] ch34
@@ -105,6 +105,12 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch31_audit.json (5):
+- Yuan Shao [3006] → Yuan Xi [3013] + → Yuan Shang [3005] Parent/Child
+- Yuan Shao [3006] ↔ Lady Liu [1299] Husband/Wife
+- Lady Liu [1299] → Yuan Shang [3005] Parent/Child
+- Yuan Shao [3006] → Gao Gan [604] Pibling/Nibling
 
 From ch29_audit.json (3):
 - Sun Ce [2060] → Da Qiao [1794] Husband/Wife; Zhou Yu [3466] → Xiao Qiao [1796] Husband/Wife

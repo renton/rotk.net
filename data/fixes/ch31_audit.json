@@ -1,0 +1,209 @@
+[
+  {"op": "add_relationship", "character1_id": 3006, "character2_id": 3013,
+   "type": 1, "_note": "'three sons had been born to Yuan Shao: Yuan Tan the eldest... Yuan Xi, who ruled over Youzhou'"},
+
+  {"op": "add_relationship", "character1_id": 3006, "character2_id": 3005,
+   "type": 1, "_note": "'and Yuan Shang, borne to him by Lady Liu' - the favorite youngest son"},
+
+  {"op": "add_relationship", "character1_id": 3006, "character2_id": 1299,
+   "type": 3, "_note": "'his second wife, who came of the Liu family and had replaced the first wife after her death'"},
+
+  {"op": "add_relationship", "character1_id": 1299, "character2_id": 3005,
+   "type": 1, "_note": "Yuan Shang was 'borne to him by Lady Liu'; 'the lad's mother was constantly urging that her son should be named as successor'"},
+
+  {"op": "add_relationship", "character1_id": 3006, "character2_id": 604,
+   "type": 10, "_note": "'his nephew Gao Gan coming from Bingzhou'"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 31,
+   "target_id": 2905,
+   "_note": "WRONG PERSON: ch31's 'Yin Kui of Liaodong, who was learned in astrology' is the astrologer Yin Kui [2906, 殷馗, ancestral home Liaodong, role astrologer, already tied to the ch37 retelling of the same yellow-star prophecy] - not this Yuan-camp politician [陰夔], whose real appearance is the ch32 embassy"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 31,
+   "target_id": 2906, "keywords": "Yin Kui",
+   "summary": "The Liaodong astrologer whose fifty-year-old reading of a yellow star over Chu and Song the centenarian villagers recite to Cao Cao: a true and honest man would arrive at the Yellow River - 'Lo! That is exactly fifty years ago.'",
+   "_note": "replaces the wrong-person association above (astrologer 殷馗, not politician 陰夔)"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 31,
+   "target_id": 3575, "keywords": "Founder of Han",
+   "summary": "Guan Yu's consolation at the Han River feast: the great Founder of Han was defeated by Xiang Yu many times, yet won at the Nine-Mile Mountains and founded four centuries of dynasty.",
+   "_note": "'the great Founder of Han contended with Xiang Yu' - Xiang Yu is associated but Liu Bang was not; prose phrase used as keywords ('Liu Bang' never occurs)"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 31,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "You Province's empty per-chapter keywords fall back to global aliases incl. bare 'You', which pills capitalized 'You' in dialogue ('You, Sir, are well known...'); restrict to Youzhou, the spelling the prose uses"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3582,
+   "summary": "Emperor Huan, in whose days the yellow star appeared over Chu and Song - the datum of Yin Kui's fifty-year prophecy.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1547,
+   "summary": "First entry in Cai Mao's indictment of Liu Bei's career - 'first followed Lu Bu, then he served Cao Cao, and next he joined himself to Yuan Shao'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3635,
+   "summary": "Meets the beaten Yuan Shao with reinforcements, hears the remorse about Tian Feng - and jealously invents the prisoner 'clapping his hands for joy' at the defeat: the slander that sends the letter and sword to the prison. In the succession council he sides with Shen Pei for Yuan Shang.",
+   "_note": "summary was missing for the man who causes Tian Feng's death"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2755,
+   "summary": "His letter reaches the river camp: Liu Bei is strengthening at Runan with Liu Pi and Gong Du and means to strike Xuchang while its master is away - 'hasten homeward to defend it'. The warning that redirects the whole campaign south.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3032,
+   "summary": "Fourth ambush company on the left in the ten-ambush battle; with Yu Jin his onfall strews the countryside with Yuan corpses, and at Runan he is the one who surrounds Zhang Fei.",
+   "_note": "summary was missing (prose spells him Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3736,
+   "summary": "Rides in with Guan Yu and Guan Ping and three hundred men to break Zhang He off the cornered Zhao Zilong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1299,
+   "summary": "Yuan Shao's second wife, of the Liu family: as his health crumbles after Guandu she besets him to settle the succession, constantly urging her own son Yuan Shang - the favorite kept at home - as heir.",
+   "_note": "old summary said she pushes the succession 'after his death' - Yuan Shao is alive throughout ch31; the deathbed coup is ch32"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 612,
+   "summary": "Fifth ambush company on the right at Cangting; then at the Rang Mountains he cuts down Liu Pi in the third bout and is closing on Liu Bei himself when Zhao Zilong's spear takes him out of the saddle - dead in his first year under Cao Cao.",
+   "_note": "old summary ('with Cao Cao at Cangting') missed that he kills Liu Pi and dies this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1390,
+   "summary": "Flees fallen Runan with Liu Bei's family, talks his despairing lord out of suicide - 'let me try to fight a way out and save you; death is nothing to me!' - and is cut down by Gao Lan in the third bout.",
+   "_note": "old summary had him 'killed at Runan when the city falls'; he escapes the city and dies later shielding Liu Bei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2176,
+   "summary": "The gaoler brings congratulations - the defeated lord will surely honor the vindicated prophet - and Tian Feng answers 'Now am I a dead man', knowing his master jealous and forgetful of honest advice. When the letter and sword arrive on Peng Ji's slander, he cuts his own throat in the prison, pitied by all who heard.",
+   "_note": "old summary said he was 'murdered on Yuan Shao's return from Cangting'; the death comes on the Guandu homecoming (before Cangting) and is a commanded suicide"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3006,
+   "summary": "Rallied at Liyang by Jiang Yiqu after the Guandu rout, he hears his own soldiers wail 'had he but listened to Tian Feng' - then has the vindicated prophet killed on Peng Ji's slander rather than face him. He masses two hundred thirty thousand troops of his three sons and nephew at Cangting, is shattered by the ten ambushes, coughs bright blood with his sons in his arms, and goes home to sicken while Lady Liu presses the succession he cannot decide.",
+   "_note": "old summary ran the sequence backwards (Tian Feng's death precedes Cangting, on the Guandu homecoming) and called the commanded suicide a murder in the wrong context"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1948,
+   "summary": "Rides out with a spear against the sword-flourishing Yuan Shang before the lines at Cangting - and is killed by the feint-and-turn arrow that takes him in the left eye.",
+   "_note": "old summary: 'minor figure named in passing' - he duels and dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1078,
+   "summary": "Receives the hatless fugitive at Liyang, comforts him, and calls in the scattered remnants - the soldiers swarm back 'like ants' and make Yuan Shao an army again.",
+   "_note": "old summary: 'minor Yuan officer named in passing' - he is the rally point of the retreat"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3005,
+   "summary": "Eager to shine before his father, he duels Shi Huan with his pair of swords and kills him with a feigned-flight arrow through the left eye. His mother's urging and his father's favor set him up as heir over his elder brothers, and when Cao Cao returns in AD 203 he claims the command himself: 'Father... let me lead the army against this enemy.'",
+   "_note": "old summary missed the Shi Huan duel and the closing command"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1313,
+   "summary": "Overrules Cai Mao's kill-the-messenger counsel - 'I have decided, and you need say no more' - rides ten miles beyond Jingzhou to welcome Liu Bei, and lodges him in his own residence.",
+   "_note": "old summary said he gives Liu Bei Xinye - that grant is later; in ch31 Liu Bei is housed in the Imperial Protector's own residence"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1311,
+   "summary": "Recites the Girdle Mandate to Cao Cao's face at the Rang Mountains and wins the first day - then loses both brothers to relief missions, is ambushed by night, and flees alone into the hills. Saved by Liu Pi's death and Zhao Zilong's spear, he reaches the Han River with a thousand men, offers to release his followers, and instead takes Sun Qian's counsel: refuge with his kinsman Liu Biao, who welcomes him into Jingzhou - the start of the long exile.",
+   "_note": "old summary routed the flight 'through Jingmen', which is not in the prose (Rang Mountains and the Han River are)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 704,
+   "summary": "Entrenches southeast of the Rang camp and springs the first-day trap; sent to recover fallen Runan he is surrounded, cuts free in time to save Liu Pi's refugees, then finds and frees the encircled Zhang Fei. At the Han River feast he steadies his despairing brother: the Founder of Han lost to Xiang Yu many times and won the empire at the Nine-Mile Mountains.",
+   "_note": "old summary was a bare 'with Liu Bei in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3106,
+   "summary": "Entrenches southwest and joins the first-day victory; rides to rescue Gong Du's supply train, beats off Xiahou Yuan (who has killed Gong Du) - and is himself surrounded by Yue Jin until Guan Yu finds him.",
+   "_note": "old summary was a bare 'with Liu Bei in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3334,
+   "summary": "The chapter's saving spear: thirty even bouts with Xu Chu, an alley cut through the night ambush ('fear not, my lord, only follow me!'), Gao Lan dead from the saddle at the moment Liu Bei faces capture, and Zhang He worsted in thirty more bouts. Every road out of ch31 is opened by Zhao Zilong.",
+   "_note": "old summary was a bare 'with Liu Bei in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2624,
+   "summary": "Commands the advanced front in the ten-ambush plan: his feigned night attack draws Yuan Shao's whole army into the trap, and at dawn he 'simply flew to the front', killing ten generals. At the Rang Mountains he duels Zhao Zilong thirty bouts even and later pursues him in the night breakout.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 309,
+   "summary": "Author of the 'Ten Ambushes' - lure Yuan Shao to the river where the army must fight or drown - that breaks Cangting; afterwards he talks Cao Cao out of attacking Liu Biao while Yuan Shao still lives, and homeward to refresh the troops for a spring campaign.",
+   "_note": "old summary had only the ambush plan"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 100,
+   "summary": "First ambush company on the right; blocks Yuan Shao's last road with Xiahou Dun - and is left in sole command on the river bank, maintaining the appearance of strength, when Cao Cao races south to Runan.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2535,
+   "summary": "First ambush company on the left at Cangting and half of the final roadblock that makes Yuan Shao groan aloud; in the south his flanking army takes Runan behind Liu Bei's back - the stroke that collapses the whole campaign.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting and Runan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2556,
+   "summary": "Fifth ambush company on the left at Cangting; in the Runan campaign he kills Gong Du at the supply train and is beaten off by the avenging Zhang Fei.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting and Runan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 642,
+   "summary": "Brings the supply train the enemy intercepts; killed by Xiahou Yuan before Zhang Fei's rescue can reach him.",
+   "_note": "old summary had him 'killed at Runan alongside Liu Pi' - he dies at the supply train, by Xiahou Yuan's hand; Liu Pi dies separately by Gao Lan's"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3120,
+   "summary": "Second ambush company on the right; bursts with Zhang Liao into the old camp just as the fugitives' meal is cooked. In the hills he corners Liu Bei's remnant - 'quickly dismount and surrender!' - but thirty bouts with Zhao Zilong worst him, and Guan Yu's arrival drives him off.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2102,
+   "summary": "Proposes Jingzhou at the Han River feast and goes ahead as envoy: his speech on Liu Bei's ideals sits unmoved through Cai Mao's demand for his head - 'I am not afraid of death' - and wins Liu Biao's welcome. The embassy that ends the flight.",
+   "_note": "old summary was a bare 'with Liu Bei in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 756,
+   "summary": "Argues the succession council to a standstill - naming the youngest over the firstborn 'sows the seeds of turbulence'; settle the enemy first - and is sent with Xin Ping to follow Yuan Tan to Qingzhou after Cangting.",
+   "_note": "old summary anticipated ch32's feud; his ch31 role is the council speech"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2608,
+   "summary": "Stands with Guo Tu for the eldest son in the divided succession council; after Cangting he is ordered to Qingzhou with Yuan Tan to prepare against invasion.",
+   "_note": "old summary was a bare label"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3011,
+   "summary": "Marches sixty thousand troops from Qingzhou to his father's rescue and stands beside him at Cangting; sent back afterwards with Xin Ping and Guo Tu to hold Qingzhou. His father's verdict in council - 'my eldest son is hard and cruel' - plants the feud to come.",
+   "_note": "old summary skipped his ch31 actions for the ch32 feud"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 3013,
+   "summary": "Brings fifty thousand troops from Youzhou; wounded by arrows in the flight from the ten ambushes, and sent back to his province - 'my second is mild and unfit', says his father's council verdict.",
+   "_note": "old summary had only 'holds Youzhou'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 604,
+   "summary": "Brings fifty thousand troops from Bingzhou to Cangting, is wounded by arrows in the flight beside Yuan Xi, and returns to hold his province against the coming invasion.",
+   "_note": "old summary had only the territory-holder label"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 1158,
+   "summary": "Third ambush company on the left at Cangting, barring the road paired with Xu Huang; in the south he rides with Yu Jin in the night pursuit that scatters Liu Bei's escape.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 2953,
+   "summary": "Fourth ambush company on the right at Cangting, paired with Yue Jin in the onfall that fills the water courses with blood; later bears down on Liu Bei's night breakout beside Li Dian.",
+   "_note": "old summary was a bare 'with Cao Cao at Cangting'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 31,
+   "target_id": 86,
+   "summary": "Feasts the hundred-year-old villagers who hail him as Yin Kui's prophesied 'true and honest man', makes killing a villager's fowl a capital crime - then springs Cheng Yu's ten ambushes at Cangting and destroys the Yuan army. Xun Yu's letter turns him south: Runan taken, Liu Bei hunted through the hills ('I, the Prime Minister, am here awaiting you!'), and the pursuit dropped only when the quarry is spent. He waits on Jizhou 'till the autumn when the crops have been gathered in'.",
+   "_note": "old summary was serviceable but missed the prophecy scene and the crop-sparing patience that frame the chapter's portrait of him"}
+]
