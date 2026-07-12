@@ -65,15 +65,41 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;',
+               '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  function popupHtml(loc) {
+    var editUrl = P.location_edit_url_template.replace(/0$/, String(loc.id));
+    return '<div class="pme-popup">' +
+      '<strong>' + escapeHtml(loc.name) + '</strong>' +
+      (loc.type_name
+        ? '<div class="small text-muted">' +
+          (loc.icon ? '<i class="' + escapeHtml(loc.icon) + ' me-1"></i>' : '') +
+          escapeHtml(loc.type_name) +
+          ' <span class="fst-italic">(' + escapeHtml(loc.point_type) + ')</span></div>'
+        : '') +
+      '<a href="' + editUrl + '" target="_blank" rel="noopener" class="small">Edit location</a>' +
+      '</div>';
+  }
+
   function layerFor(loc, kind, geometry, preview) {
     var style = preview ? PREVIEW_STYLE : STYLE;
+    var layer;
     if (kind === 'point') {
-      return L.marker(toLatLng(geometry), { icon: iconFor(loc) });
+      layer = L.marker(toLatLng(geometry), { icon: iconFor(loc) });
+    } else if (kind === 'line') {
+      layer = L.polyline(geometry.map(toLatLng), style);
+    } else {
+      layer = L.polygon(geometry.map(toLatLng), style);
     }
-    if (kind === 'line') {
-      return L.polyline(geometry.map(toLatLng), style);
-    }
-    return L.polygon(geometry.map(toLatLng), style);
+    // Saved layers get a click popup with the location's info;
+    // previews stay bare so popups don't fight placement clicks.
+    if (!preview) layer.bindPopup(popupHtml(loc));
+    return layer;
   }
 
   // ---- list row state -----------------------------------------------------

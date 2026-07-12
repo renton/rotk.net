@@ -249,6 +249,8 @@ class TestEditor:
         assert b'Editor County' in resp.data
         assert b'"point_type": "line"' in resp.data
         assert b'js/province_map_editor.js' in resp.data
+        # Popup link template for the on-map click tooltips.
+        assert b'location_edit_url_template' in resp.data
 
     def test_place_point_line_region(self, admin_client, db_session):
         client, _ = admin_client

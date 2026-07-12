@@ -3180,6 +3180,7 @@ def province_map_editor(location_id):
         'delete_url_template': url_for(
             'admin.province_map_place_delete', location_id=prov.id,
             child_id=0),
+        'location_edit_url_template': url_for('main.edit_location', id=0),
         'locations': [
             {
                 'id': c.id,
