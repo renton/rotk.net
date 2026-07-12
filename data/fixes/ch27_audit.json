@@ -1,0 +1,114 @@
+[
+  {"op": "add_relationship", "character1_id": 3724, "character2_id": 3725,
+   "type": 1, "_note": "Hu Hua: 'I have a son, Hu Ban, with Governor Wang Zhi of Yingyang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3727, "keywords": "Wang Zhi",
+   "summary": "Governor of Yingyang, kin by marriage to the slain Han Qu: he lodges the travelers with smiles and orders Hu Ban to burn the rest house at midnight. Betrayed by his own agent, he chases the escaped party and dies on Guan Yu's short sword.",
+   "_note": "keywords were empty (name never tagged) and summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3728,
+   "summary": "Commander of Dongling Pass, the first gate: demands the ladies as a gage for passage without papers, and falls at the first stroke of the green-dragon saber.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3729,
+   "summary": "Governor of Luoyang, the second gate: sets Meng Tan's lure-and-ambush, puts an arrow in Guan Yu's left arm from the wall - and is sliced through head and shoulder as the bleeding rider closes anyway.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3730,
+   "summary": "Han Qu's general who plans the feigned flight into ambush - and forgets what Red Hare can do: caught mid-lure and cut in two pieces.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3731,
+   "summary": "Warden of River Si Pass, ex-Yellow Scarf with a comet-hammer: packs the State Guardian Temple with two hundred hidden ax-men behind a friendly welcome. Pu Jing's lifted knife-glance exposes him; Guan Yu cuts his hammer-cord and then the man in halves.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3733,
+   "summary": "Priest of the State Guardian Temple, 'Transverse Peace', born across the rivulet from Guan Yu's home: his meaningful glance at the knife at his side warns his countryman of the ambush. That done, he shoulders his alms bowl and wanders off like a cloud - 'we shall meet again.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3734,
+   "summary": "Commander of the Yellow River ferry under Xiahou Dun: 'even if you grew wings, you should not fly over.' He sneers that Guan Yu has only killed nobodies - and loses his head in the first encounter, the sixth and last general of the journey.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3723,
+   "summary": "Liao Hua's bandit partner who seizes the ladies' carriage and proposes splitting the women as wives - Liao Hua kills him for it and carries the head to Guan Yu as apology.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3724,
+   "summary": "The old graybeard farmer, once a court officer under Emperor Huan, who shelters the party for a night and hands Guan Yu the letter to his son Hu Ban - the letter that will save the whole party at Yingyang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3725,
+   "summary": "Wang Zhi's general, ordered to burn the rest house with the travelers inside. Creeping in to see what the famous warrior looks like, he finds Guan Yu reading by lamplight - 'really a god!' - receives his own father's letter, and opens the city gates instead of lighting the fire.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 1449,
+   "summary": "Governor of Huazhou (the prose spells him Liu Yue), whose siege Guan Yu once lifted: he rides out to greet his savior - and refuses him ferry boats for fear of Xiahou Dun. Gratitude ends where Cao Cao's commanders begin.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3732,
+   "summary": "Emperor Ming, who once burned incense in the courtyard of the State Guardian Temple - the shrine's claim to fame.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3582,
+   "summary": "Emperor Huan, in whose days the old farmer Hu Hua served at court before retiring.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 86,
+   "summary": "Refuses Cai Yang's pursuit and Cheng Yu's kill-advice - 'each has his master; do not pursue' - then rides out with an unarmed escort to overtake the fugitive himself: gold refused, a brocade fighting robe lifted off a sword-point in wary thanks. He turns back sad, leaving five passes between his word and his commanders' orders.",
+   "_note": "old summary invented a pass-edict sent after Guan Yu; the prose has no edict - only the robe and gold"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 704,
+   "summary": "The solitary journey: five passes forced, six generals slain - Kong Xiu at Dongling; Meng Tan and Han Qu at Luoyang (an arrow in his arm for it); Bian Xi and his temple ambush at River Si Pass; Wang Zhi burned-bed plot at Yingyang; Qin Qi at the Yellow River ferry. He takes Cao Cao's robe on the point of his saber, stands while women are present at Hu Hua's farm, and crosses the river - only to learn from Sun Qian that Liu Bei has already left for Runan.",
+   "_note": "old summary invented a pass-edict he 'refused to wait for'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 72,
+   "summary": "The one officer openly hostile to Guan Yu; ready to ride the moment the escape is known, and ordered by Cao Cao to be gone and say no more of pursuit.",
+   "_note": "old summary borrowed the later Gucheng arc; ch27 only has the squashed request"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 3166,
+   "summary": "Gallops out alone ahead of Cao Cao - 'go slowly, Guan Yu!' - to hold the fugitive at the bridge for the farewell, the one man Guan Yu will wait for.",
+   "_note": "old summary had him carrying the gifts; he is the herald - Cao Cao brings them"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 2624,
+   "summary": "Rides in the unarmed farewell escort and bristles at the mounted, wary Guan Yu - 'he is a very rude man; why not take him prisoner?' - to be answered with Cao Cao's given word.",
+   "_note": "old summary was a bare court mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 2535,
+   "summary": "His subordinate holds the ferry Guan Yu forces - and the chapter ends with Xiahou Dun himself thundering up behind the carriage with hundreds of horsemen, shouting for Guan Yu to stop.",
+   "_note": "old summary deferred him to ch28; he arrives in this chapter's final lines"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 2102,
+   "summary": "Intercepts Guan Yu beyond the river with the vital redirection: Yuan Shao's court has rotted - Tian Feng gaoled, Ju Shou degraded - and Liu Bei has slipped away to Liu Pi at Runan. The party wheels south.",
+   "_note": "old summary left him at Yuan Shao's camp"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 1107,
+   "summary": "Reported degraded in Sun Qian's account of the jealous, quarreling northern court.",
+   "_note": "old summary was a bare 'with Yuan Shao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 27,
+   "target_id": 1311,
+   "summary": "Already gone from Yuan Shao's court: reading the jealous quarrels around him, he and Sun Qian contrived his departure, and he waits now with Liu Pi at Runan - the destination Sun Qian turns the carriage toward.",
+   "_note": "old summary still had him waiting at Yuan Shao's camp"}
+]

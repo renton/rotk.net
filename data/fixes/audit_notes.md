@@ -48,7 +48,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch24 — 21 ops (3 missing summaries, Sun Qian/Jian Yong/Mi Zhu flight mixups, Tian Feng not yet jailed, scabies-refusal added to Yuan Shao, 3 relationships incl. Dong Cheng↔Consort Dong)
 - [x] ch25 — 15 ops (4 missing summaries, Tian Feng jailed THIS chapter, Yan Liang two-not-three kills, ch26 spillovers pulled back, Cheng Yu's double trap)
 - [x] ch26 — 17 ops (Battle of Dushi Ford event gets its first chapter, letter-carrier fixed Chen Zhen not Sun Qian, Cai Yang/Cao Cao ch27 spillovers, 2 missing summaries)
-- [ ] ch27
+- [x] ch27 — 23 ops (13 missing summaries for the five-passes cast, Wang Zhi empty keywords, invented 'pass-edict' removed from Cao Cao/Guan Yu, Hu Hua→Hu Ban relationship)
 - [ ] ch28
 - [ ] ch29
 - [ ] ch30
