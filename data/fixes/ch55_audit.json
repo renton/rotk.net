@@ -1,0 +1,120 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 55,
+   "target_id": 1263,
+   "_note": "FALSE POSITIVE (Liang Da cleanup - LAST in-range chapter): no 'Liang Da' in ch55 - his 'Tai' keyword matched inside 'Zhou Tai'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3833,
+   "summary": "Delighted by her son's luxurious 'kindness' to the newlyweds, she grants the New Year's request that springs the escape: 'a very filial proceeding - I should not think of stopping you.' Her authority shadows every pursuit: the officers dare not touch a couple the Dowager blessed.",
+   "_note": "summary was missing on the ch55 row"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3334,
+   "summary": "Idles a year in the front palace watching his lord dissolve into luxury - then opens the second bag: the invented Cao Cao invasion that shakes Liu Bei loose. On the road he opens the third at the roadblock, handing Liu Bei the confession-speech that turns Lady Sun into their rescuer, and stands bursting with wrath beside her carriage at both confrontations.",
+   "_note": "old summary had one bag; he opens both the second and third this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 1311,
+   "summary": "A year of fair women, silk, and music nearly does what armies could not - until Zhao Zilong's invented invasion wakes him. He weeps his way to the truth twice: the ancestor-sacrifice fiction that wins the Dowager's blessing, and the third bag's full confession at the roadblock - 'you were the bait with which to hook me' - that turns his bride into his shield. At Loving Shore, despairing on an empty river, he finds twenty boats and a smiling Daoist waiting.",
+   "_note": "old summary credited him with opening the second bag - Zhao Zilong opens both; the confession is scripted by the third"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3639,
+   "summary": "Laughs at her husband's fear of the bedroom weapons ('afraid of a few weapons after half a lifetime of slaughter!'), sees through his first lie, and chooses him over her house. Twice she rolls up the carriage curtains and breaks pursuing generals with her voice alone - 'so you fear Zhou Yu and not me! Think you that if he slays you, I will not slay him?' - and holds the rearguard with Zhao Zilong while her husband rides for the river.",
+   "_note": "old summary was sound; the two confrontations are voice, not sword - detail corrected"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3466,
+   "summary": "Salvages the failed trap with a subtler one - drown the adventurer in luxury until his brothers' affection curdles - and nearly succeeds: a year passes. When the couple bolts he has Xu Sheng and Ding Feng already camped on the road, then leads the fleet pursuit in person - into Guan Yu's gully ambush at Huangzhou. Fleeing to his ship he hears the bank jeering 'General Zhou Yu has given Uncle Liu Bei a wife and lost his soldiers!' - and the wound reopens as he falls.",
+   "_note": "old summary had Zhuge Liang sending taunting verses - the taunt is the soldiers' jeer from the bank; the luxury-trap letter was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3529,
+   "summary": "The author off-stage until the last page: the three bags play out exactly as sealed, and he is waiting in the hold of the twentieth boat in Daoist dress - 'my lord, again you see Zhuge Liang; he has waited a long time.' He lands the party, springs Guan Yu, Huang Zhong, and Wei Yan on the pursuing marines, and sends the four foolish generals home with a message: tell Zhou Yu not to use the Fair Damsel Trick again.",
+   "_note": "old summary's 'taunting verses' are not in the text; the boat rendezvous is"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 2105,
+   "summary": "Builds the gilded cage - the redecorated Eastern Palace, the damsels, the gold - and sleeps drunk through the escape. Waking, he shatters his jade inkstone on the floor, sends Chen Wu and Pan Zhang, and then - warned that no officer dare face his sister - hands Jiang Qin and Zhou Tai his own sword: bring back the heads of my sister and Liu Bei both, or lose your own.",
+   "_note": "old summary was sound; the inkstone and the sword order are the scenes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3272,
+   "summary": "Endorses the luxury trap point for point - give the lifelong wanderer wealth until Zhuge Liang and the brothers fade - and, when the couple bolts, urges immediate pursuit.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 295,
+   "summary": "Tells Sun Quan the truth about the pursuit: the officers all fear the young lady, and no one who looks on her countenance will dare lay hands on her - the words that provoke the sword order.",
+   "_note": "old summary was a bare 'with Zhou Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 258,
+   "summary": "Sent first after the fugitives with Pan Zhang and five hundred veterans - and joins the four-general chorus that Lady Sun shames into opening the road.",
+   "_note": "old summary was a bare 'sent in the pursuit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 1723,
+   "summary": "Half of the first pursuit pair: catches up only to be flayed from the carriage window with the others - 'because you have weapons in your hands, you would slay us!' - and gives way.",
+   "_note": "old summary said he was turned back alone; he yields with the four"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 1064,
+   "summary": "Carries Sun Quan's own sword with Zhou Tai and the order to take two heads; arriving too late, he devises the double chase - fast boats on the river, columns on the bank - that ends in Guan Yu's gully.",
+   "_note": "old summary had him turned back by Lady Sun; he never catches her - his part is the water-and-land plan"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3456,
+   "summary": "Bears the Marquis' sword beside Jiang Qin under the two-heads order - the pursuit that arrives one shamed roadblock too late.",
+   "_note": "old summary was a bare 'sent in the pursuit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 2660,
+   "summary": "Camped on the Chaisang road for days by Zhou Yu's calculation - and undone in a minute: Lady Sun's rolled-up curtain and torrent of abuse drop him out of the saddle, arms grounded, road open.",
+   "_note": "old summary was a bare 'with Zhou Yu in the pursuit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 382,
+   "summary": "Shares the roadblock camp and the humiliation - 'we are but men of lowly rank; we dare not dispute with Lady Sun' - and stands aside.",
+   "_note": "old summary was a bare 'with Zhou Yu in the pursuit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 704,
+   "summary": "Bursts from a gully at Huangzhou on the dismounted marines - the ambush that turns Zhou Yu's pursuit into flight and reopens his wound.",
+   "_note": "old summary was a bare 'commands one of the three ambushes'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 996,
+   "summary": "Falls on the fleeing southern column at his appointed point in Zhuge Liang's covering plan - Zhou Yu's marines are cut up between him and Wei Yan.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 2418,
+   "summary": "Strikes the retreating pursuers at the second point of the shore ambush, completing the rout that sends Zhou Yu bleeding to his ship.",
+   "_note": "old summary was a bare 'commands one of the three ambushes'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 972,
+   "summary": "Sails in Zhou Yu's own pursuit fleet - swift as a falling star, and just too late at every landing.",
+   "_note": "old summary was a bare 'with Zhou Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 785,
+   "summary": "Supports Zhou Yu's fleet pursuit and helps restrain the raging commander from charging back up the bank into the jeers.",
+   "_note": "old summary was a bare 'sent in the pursuit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 3106,
+   "summary": "Named in Zhou Yu's warning letter as one of the reasons Liu Bei will not stay caged - 'the aid of such great leaders as Guan Yu, Zhang Fei, and Zhao Zilong.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 2102,
+   "summary": "Sent to Jingzhou with the news of the wedding - the errand that keeps Zhuge Liang's timetable synchronized with the palace idyll.",
+   "_note": "old summary was a bare 'with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 55,
+   "target_id": 86,
+   "summary": "The phantom of the second silken bag: his invented five-hundred-thousand-man revenge march on Jingzhou is the lie that pries Liu Bei out of the gilded cage.",
+   "_note": "old summary was a bare 'named in passing'"}
+]
