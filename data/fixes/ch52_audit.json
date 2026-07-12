@@ -1,0 +1,106 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1395,
+   "summary": "Wheeled out alive - 'supported by two attendants' - as Zhuge Liang's answer to Lu Su's demand for Jingzhou: the rightful heir holds his father's land. Privately Lu Su reads him as a wine-and-women wreck with half a year to live; Ma Liang's plan keeps him resting in Xiangyang as nominal Imperial Protector.",
+   "_note": "old summary KILLED him this chapter - he is alive throughout ch52; the death and falling star belong to ch53"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1311,
+   "summary": "Fends off Lu Su's restitution demand behind Liu Qi's living body, takes Ma Liang's four-commandery plan, and marches on Lingling - sparing Xing Darong to use him, forgiving Liu Xiang, and reappointing the surrendered Liu Du. At Guiyang he draws the lesson from Zhao Zilong's refusal of the widow: 'you are indeed right honorable.'",
+   "_note": "old summary imported Liu Qi's death and the borrowing renegotiation, neither in ch52"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1523,
+   "summary": "Talks Zhou Yu out of attacking his allies - fight near home and Cao Cao profits - then carries the demand to Jingzhou himself, only to be checkmated by a living heir: the cities are Liu Qi's patrimony. He extracts one concession - 'should he die, then you ought to return these cities' - and guarantees the half-year wait to his seething commander.",
+   "_note": "old summary was sound; the living-heir checkmate is the scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3466,
+   "summary": "Recovers from the burst wound swearing to settle accounts with Zhuge Liang, is talked down by Lu Su twice - and then ordered away entirely: Sun Quan's Hefei siege is failing, and the fleet marches east, Cheng Pu ahead, the grudge unpaid.",
+   "_note": "old summary put him seething at the four-commandery news, which is not in ch52"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 295,
+   "summary": "Sent ahead with the marine and land forces to Hefei, ready for Sun Quan's call, while Zhou Yu nurses his wound at Chaisang.",
+   "_note": "old summary was a bare 'with Zhou Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 2888,
+   "summary": "Received with old affection, he points Liu Bei to the five Ma brothers of the village rhyme - 'white eyebrows is the best of them' - and is made second to the new adviser he recommended.",
+   "_note": "old summary invented a Lingling embassy; his ch52 role is recommending Ma Liang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1605,
+   "summary": "The White Eyebrows of the village couplet: his first counsel maps the next act - keep Liu Qi as nominal Protector to quiet the people, then take Lingling, Wuling, Guiyang, and Changsha for their resources. Appointed Imperial Protector Assistant with Yi Ji as his second.",
+   "_note": "old summary was sound; the plan's content added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1617,
+   "summary": "Named as the youngest of the five talented Ma brothers in Yi Ji's recommendation - the future name of Jieting entering the story as a footnote to his brother.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1330,
+   "summary": "Governor of Lingling: overruled by his confident son, he waits behind the walls until the boy comes home a released prisoner carrying Zhuge Liang's terms - then hoists the flag, carries out his seal, and is reappointed to his own governorship.",
+   "_note": "old summary said he surrendered 'via Yi Ji', which is not in the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3825,
+   "summary": "Liu Du's self-confident son (the prose spells him Liu Xiang): stakes the defense on Xing Darong, falls for the burning-camp counter-ruse, and is carried to Zhuge Liang bound across a horse - to be dressed, wined, and sent home as the messenger of surrender.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3826,
+   "summary": "The Lingling champion with the battle-ax called Cleaver of Mountains: chases Zhuge Liang's carriage into the trap, submits when Zhao Zilong bars the way, is spared to betray his master - and plays both sides once too often: Zhao Zilong's spear kills him in the night ambush he helped design.",
+   "_note": "summary was missing; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3529,
+   "summary": "Produces the living Liu Qi to silence Lu Su's demand and concedes only 'should he die'; on campaign he plays the bait himself - the four-wheeled carriage and feather fan drawing Xing Darong through the parted ranks to Zhang Fei - spares the captured champion to turn him, reads the counter-ruse, and takes Lingling with two ambushes. He then settles the Guiyang command by lot and endorses Zhao Zilong's three reasons for refusing the widow.",
+   "_note": "old summary compressed the whole chapter into a list; the carriage-bait ruse is his set piece"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3334,
+   "summary": "Wins Guiyang by lot over Zhang Fei's wrangling and takes it with three thousand men: unhorses Chen Ying and frees him, accepts Zhao Fan's surrender and his sworn brotherhood - then knocks him down over the offered widow ('is not your sister-in-law my sister-in-law?'). He drinks the two false deserters under the table, beheads them, rides their five hundred men through the gates as a screen, and seizes the city. His three reasons for refusing Lady Fan close the chapter: reputation first, family later.",
+   "_note": "old summary was sound; the false-deserter counter-ruse was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3295,
+   "summary": "Reads the odds correctly and wants to yield from the start; surrendered, he overreaches - sworn brotherhood, then his beautiful widowed sister-in-law Lady Fan offered as a bride, with murder in his eye when the offer explodes. Captured by his own returning 'deserters', he tells the story to Zhuge Liang, is released, and keeps his governorship.",
+   "_note": "old summary had him rebelling later and killed - he is restored to office at chapter's end"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 271,
+   "summary": "The flying-fork hunter who insists on fighting: Zhao Zilong catches his thrown fork mid-air, hurls it back, and drags him from the saddle. Freed to carry surrender terms, he then proposes the fake desertion with Bao Long - and is beheaded when Zhao Zilong drinks the truth out of their soldiers.",
+   "_note": "old summary: 'minor figure named in passing' - he duels, is captured twice, and dies"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3827,
+   "summary": "The tiger-shooting archer of Guiyang: co-author of the false desertion meant to catch Zhao Zilong - who feigns delight, gets both plotters drunk, and has them bound and beheaded.",
+   "_note": "summary was missing; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 3106,
+   "summary": "Loses the Guiyang command to Zhao Zilong by lot and sulks through the chapter - until the news of the widow refusal and the rewards is too much: 'just give me three thousand soldiers, and I will take Wuling and bring you the Governor!' Zhuge Liang's one condition is the cliffhanger.",
+   "_note": "old summary gave him Wuling and Jin Xuan - that campaign is ch53's; ch52 is the sulk and the demand"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 704,
+   "summary": "Off-stage at Xiangyang: Liu Bei plans to move Liu Qi there so Guan Yu can be freed to return - the pre-positioning for the Changsha campaign to come.",
+   "_note": "old summary had him volunteering for Changsha and setting out - that is ch53"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 2105,
+   "summary": "Bogged down before Hefei - several battles without a victory - he recalls Zhou Yu's army from Jingzhou to reinforce the siege.",
+   "_note": "old summary was a bare 'at Chaisang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1336,
+   "summary": "Left guarding Jiangling with Mi Zhu while the main army marches on Lingling.",
+   "_note": "old summary was a bare 'with Liu Bei at Jingzhou'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 52,
+   "target_id": 1682,
+   "summary": "Posted with Liu Feng to hold Jiangling during the four-commandery campaign.",
+   "_note": "old summary was a bare 'with Liu Bei at Jingzhou'"}
+]
