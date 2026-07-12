@@ -49,7 +49,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch25 — 15 ops (4 missing summaries, Tian Feng jailed THIS chapter, Yan Liang two-not-three kills, ch26 spillovers pulled back, Cheng Yu's double trap)
 - [x] ch26 — 17 ops (Battle of Dushi Ford event gets its first chapter, letter-carrier fixed Chen Zhen not Sun Qian, Cai Yang/Cao Cao ch27 spillovers, 2 missing summaries)
 - [x] ch27 — 23 ops (13 missing summaries for the five-passes cast, Wang Zhi empty keywords, invented 'pass-edict' removed from Cao Cao/Guan Yu, Hu Hua→Hu Ban relationship)
-- [ ] ch28
+- [x] ch28 — 20 ops (5 missing summaries incl. Zhou Cang's debut, Guo Chang farm-host fix, Guan Ping adoption relationships, Cai Yang→Qin Qi nephew)
 - [ ] ch29
 - [ ] ch30
 - [ ] ch31
@@ -105,6 +105,11 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch28_audit.json (4):
+- Cai Yang [72] → Qin Qi [3734] Pibling/Nibling
+- Guan Ding [3737] → Guan Ping [698] + → Guan Neng [3738] Parent/Child
+- Guan Yu [704] → Guan Ping [698] Parent/Child (adoptive)
 
 From ch24_audit.json (3):
 - Dong Cheng [410] ↔ Consort Dong [402] Sibling

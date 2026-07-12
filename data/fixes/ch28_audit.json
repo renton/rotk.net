@@ -1,0 +1,93 @@
+[
+  {"op": "add_relationship", "character1_id": 72, "character2_id": 3734,
+   "type": 10, "_note": "'Qin Qi was the son of Cai Yang's sister' - the revenge motive behind the Gucheng attack"},
+
+  {"op": "add_relationship", "character1_id": 3737, "character2_id": 698,
+   "type": 1, "_note": "Guan Ping is Guan Ding's second son"},
+
+  {"op": "add_relationship", "character1_id": 3737, "character2_id": 3738,
+   "type": 1, "_note": "Guan Neng (also spelled Guan Ning), the student, is Guan Ding's elder son"},
+
+  {"op": "add_relationship", "character1_id": 704, "character2_id": 698,
+   "type": 1, "_note": "ADOPTIVE: at Liu Bei's suggestion Guan Ping makes a son's obeisance to Guan Yu, 'who has no son of his own'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3737,
+   "summary": "The venerable farmer named Guan who shelters Guan Yu at the border - and gladly gives his eighteen-year-old second son Guan Ping to be the hero's adopted son.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3738,
+   "summary": "Guan Ding's elder son, the student of the family, who stays with the farm as his soldier brother rides off adopted into legend.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3735,
+   "summary": "Yellow Scarves remnant chief who demands Red Hare on the road - and drops from the saddle in apology at the sight of the beard. Sent back to hold the Sleeping Bull camp, he tries to rob one more rider of his horse: Zhao Zilong, who kills him.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3734,
+   "summary": "Recalled as the spring of the last pursuit: the ferry commander Guan Yu slew was the son of Cai Yang's sister, confided to Xiahou Dun's care.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3736,
+   "summary": "The dark, curly-bearded ex-Yellow Scarf of Sleeping Bull Mountain who kneels by the roadside begging to carry Guan Yu's whip and run by his stirrup. Allowed to follow on foot, he limps back from the mountain thrice-wounded by the unknown warrior who killed Pei Yuanshao - and so leads the party to Zhao Zilong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 698,
+   "summary": "Guan Ding's eighteen-year-old second son, 'to be a soldier': at Liu Bei's suggestion he bows as adopted son to the sonless Guan Yu and calls Liu Bei 'Uncle' - riding out of the farmyard into the rest of the saga.",
+   "_note": "old summary was vague about the adoption's mechanics"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 2535,
+   "summary": "Runs Guan Yu down with two hundred horse and duels him ten bouts, brushing aside two successive messengers - the Prime Minister 'did not know about the slain commanders' - until Zhang Liao arrives with the explicit order to let him pass. His grievance: the dead ferry commander Qin Qi was in his especial care.",
+   "_note": "old summary compressed the three-messenger scene into a pass-edict"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 720,
+   "summary": "The old farmer who feasts the travelers on mutton - and whose vagabond hunting son tries to steal Red Hare in the night, is kicked flat by the horse, pardoned for his father's sake, and turns up next morning guiding brigands to try again.",
+   "_note": "old summary made him a Yuan Shao officer - he's the farm host of the horse-theft episode"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 1284,
+   "summary": "Recalled in Lady Gan's argument against taking on Zhou Cang's whole band: 'you refused the service of Liao Hua - why suffer this crowd?'",
+   "_note": "old summary had him joining Guan Yu here; he appears only in the recollection"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3334,
+   "summary": "Found holding the Sleeping Bull camp: after Gongsun Zan's fiery end he drifted, refused Yuan Shao's invitations, killed the horse-thief Pei Yuanshao - and drops from the saddle at Liu Bei's shout. 'Now I have reached your side, that is enough for all my life.' The last of the core finally under one banner.",
+   "_note": "old summary had him arriving with Liu Bei; he is discovered on the mountain"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 756,
+   "summary": "Fails to stop the Liu Biao 'mission' - 'neither will ever return' - then redirects his master's anger: forget Liu Bei, ally with Sun Ce's six territories against Cao Cao. His letter goes south with Chen Zhen.",
+   "_note": "old summary was a bare 'with Yuan Shao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 1053,
+   "summary": "Designs both escapes: Liu Bei's 'let me win Liu Biao for you' pretext, and his own - volunteering to accompany and 'watch' him. Yuan Shao approves them out of his own camp forever.",
+   "_note": "old summary was a bare arrival mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 3006,
+   "summary": "Threatens to kill the approaching Guan Yu for Yan Liang and Wen Chou - then, at Liu Bei's deer-for-a-tiger arithmetic, laughs it off as a joke. Duped twice more, he releases Liu Bei to 'recruit Liu Biao' and Jian Yong to 'watch' him, and turns to Guo Tu's Sun Ce alliance when neither comes back.",
+   "_note": "old summary was a bare off-stage mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 1682,
+   "summary": "Rides into Gucheng's south gate with forty archers and his brother - the Mi family had searched for the scattered brothers from their home village until travelers' gossip described a certain Zhang Fei who had seized a city.",
+   "_note": "old summary had him arriving with Liu Bei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 1678,
+   "summary": "Arrives at Gucheng with his brother Mi Zhu and forty mounted archers, completing the reunion.",
+   "_note": "old summary had him arriving with Liu Bei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 28,
+   "target_id": 2102,
+   "summary": "The tireless go-between of the reunion: into Gucheng to announce Guan Yu, to Runan to find Liu Bei already gone, into Jizhou to plan the escape, and back across the border to fetch Guan Yu to the farm where the brothers finally clasp hands.",
+   "_note": "old summary was a bare arrival mention"}
+]
