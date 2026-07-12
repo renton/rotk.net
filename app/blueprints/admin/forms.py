@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SelectField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, ValidationError
 
 from app.models import User
@@ -147,13 +147,24 @@ class EditRelationshipTypeForm(FlaskForm):
 
 class EditLocationTypeForm(FlaskForm):
     """Create/edit form for a LocationType — name + Font Awesome icon +
-    three colours. Identical shape to EditEventTypeForm; the badge gets
-    rendered next to each location in the chapter sidebar."""
+    three colours + the province-map placement style. Identical shape to
+    EditEventTypeForm otherwise; the badge gets rendered next to each
+    location in the chapter sidebar."""
     name = StringField("Name *", validators=[DataRequired(), Length(1, 255)])
     icon = StringField(
         "Font Awesome icon class",
         validators=[Length(0, 80)],
         render_kw={"placeholder": "e.g. fa-solid fa-mountain"},
+    )
+    # How locations of this type get placed on province maps.
+    point_type = SelectField(
+        "Province-map placement type",
+        choices=[
+            ('point', 'Point — a single coordinate (icon marker)'),
+            ('line', 'Line — freehand stroke (rivers, walls, borders)'),
+            ('region', 'Region — polygon built from clicked points'),
+        ],
+        default='point',
     )
     font_colour = StringField(
         "Font Colour",

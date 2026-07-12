@@ -20,6 +20,11 @@ rotk.net - {% if location_type %}Edit location type {{ location_type.name }}{% e
         <code>{{ location_type.icon }}</code>
     </div>
     {% endif %}
+    <p class="text-muted mb-0 mt-2">
+        <strong>Placement type</strong> controls how locations of this
+        type are drawn on province maps: a single point marker, a
+        freehand line (rivers, walls), or a clicked-out polygon region.
+    </p>
 </div>
 {% endblock %}
 

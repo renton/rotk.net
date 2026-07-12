@@ -83,3 +83,41 @@ class TestModels:
         db_session.add(lt)
         db_session.flush()
         assert lt.point_type == 'point'
+
+
+class TestLocationTypePointType:
+    def test_edit_saves_line(self, admin_client, db_session):
+        client, _ = admin_client
+        lt = LocationType(name='Pointable River')
+        db_session.add(lt)
+        db_session.commit()
+        resp = client.post(f'/admin/location-types/{lt.id}/edit', data={
+            'name': 'Pointable River', 'icon': '', 'point_type': 'line',
+            'font_colour': '#ffffff', 'bg_colour': '#ffffff',
+            'border_colour': '#ffffff',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+        db_session.expire_all()
+        assert lt.point_type == 'line'
+
+    def test_invalid_choice_rejected(self, admin_client, db_session):
+        client, _ = admin_client
+        lt = LocationType(name='Pointable Bad')
+        db_session.add(lt)
+        db_session.commit()
+        client.post(f'/admin/location-types/{lt.id}/edit', data={
+            'name': 'Pointable Bad', 'icon': '', 'point_type': 'blob',
+            'font_colour': '#ffffff', 'bg_colour': '#ffffff',
+            'border_colour': '#ffffff',
+        }, follow_redirects=True)
+        db_session.expire_all()
+        assert lt.point_type == 'point'   # unchanged — choice invalid
+
+    def test_form_renders_choices(self, admin_client, db_session):
+        client, _ = admin_client
+        lt = LocationType(name='Pointable Render')
+        db_session.add(lt)
+        db_session.commit()
+        resp = client.get(f'/admin/location-types/{lt.id}/edit')
+        assert b'Province-map placement type' in resp.data
+        assert b'freehand stroke' in resp.data
