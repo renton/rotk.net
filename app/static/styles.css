@@ -348,3 +348,23 @@ p.quote {
 .image-panzoom.pme-placing {
     cursor: crosshair !important;
 }
+
+/* Admin user dropdown, desktop: flow the (now ~30-item) menu into two
+   columns, reading down-then-across so the section headings keep their
+   groups. The :has(li:nth-child(15)) guard means a NON-admin's short
+   menu (3 account items) stays single-column. Mobile keeps the stacked
+   default. */
+@media (min-width: 992px) {
+    .navbar .dropdown-menu[aria-labelledby="navbarDropdown"]:has(li:nth-child(15)) {
+        column-count: 2;
+        column-gap: 0.25rem;
+        min-width: 33rem;
+    }
+    .navbar .dropdown-menu[aria-labelledby="navbarDropdown"] > li {
+        break-inside: avoid;
+    }
+    /* Never strand a section heading at the bottom of a column. */
+    .navbar .dropdown-menu[aria-labelledby="navbarDropdown"] > li:has(.dropdown-header) {
+        break-after: avoid;
+    }
+}
