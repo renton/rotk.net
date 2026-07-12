@@ -1,0 +1,141 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3641,
+   "summary": "Begs Lü Bu not to ride out alone - 'you are my lord and my life' - seconding Lady Yan's tears; between the two women he abandons Chen Gong's ox-horn plan and drowns the siege in wine with them.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3697,
+   "summary": "Commands the rear of the thousand-man escort smuggling the envoys through Liu Bei's lines; caught by Zhang Fei in the very first bout, he confesses the marriage scheme and is executed at the camp's main gate.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3700,
+   "summary": "Hou Cheng's subordinate who steals fifteen horses to resell to Liu Bei; his captain hunts him down and kills him - the recovered horses leading to the wine, the flogging, and the final betrayal.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3698,
+   "summary": "The young hunter who, finding no game for his famous guest, kills his own wife and serves her as 'wolf' - Liu Bei learns the truth from the body in the kitchen. He stays behind for his living mother; Liu Bei tells Cao Cao, who sends the man a hundred ounces of silver.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 1547,
+   "summary": "The end: gulled out of Xuzhou by Chen Deng's triple-cross - fighting Chen Gong's own troops in the dark - he holes up in Xiapi, twice shelves Chen Gong's ox-horn plan for the tears of Lady Yan and Diao Chan, and drinks while the rivers Yi and Si rise around the walls. Hou Cheng steals Red Hare; Song Xian and Wei Xu bind him in his sleep and drop his halberd from the wall. At the White Gate Tower he pleads for life until Liu Bei's quiet 'remember Ding Yuan and Dong Zhuo' - and is strangled and beheaded.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2049,
+   "summary": "Adherent of the murdered Governor Zhang Yang (the prose spells him Kui Gu): kills the assassin Yang Chou and leads the Henei force to Daicheng - where Cao Cao sends Shi Huan to intercept and kill him.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3233,
+   "summary": "Named among the western menaces - with Liu Biao - weighed in Cao Cao's council on whether to abandon the stubborn siege.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 1738,
+   "summary": "Recalled in Lady Yan's tearful reproach: the man whose kindness hid her at Changan when Lü Bu abandoned her the first time.",
+   "_note": "old summary: 'minor figure named in passing' - and he paid for that kindness with his life (ch11)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 1948,
+   "summary": "Sent by Cao Cao to intercept and kill Sui Gu before the Henei force can reach the war.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2269,
+   "summary": "One of the two advisers (with Xu Si) who propose renewing the Yuan Shu marriage alliance, and who creep through Liu Bei's lines by night to carry it - returning with Yuan Shu's terms: the bride first, then the rescue.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2663,
+   "summary": "Author of the last hope: renew the marriage alliance with Yuan Shu. He runs the blockade with Wang Kai, brings back the bride-first terms, and tells Lü Bu plainly that after He Meng's capture only Red Hare can carry the girl through the siege.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2807,
+   "summary": "Assassinates his own lord, Governor Zhang Yang of Henei, and sets off with the head for Cao Cao - only to be slain in turn by the loyal Sui Gu.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3247,
+   "summary": "Governor of Henei, inclined to march to Lü Bu's relief - and assassinated for it by his subordinate Yang Chou.",
+   "_note": "old summary: 'named in passing' - his murder is the northern subplot"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 185,
+   "summary": "One of the four Taishan bandit chiefs who bar the road with thirty thousand men at the Mangdang Hills near Xiao Pass - scattered by Xu Chu's charge.",
+   "_note": "old summary invented a refused plea for help"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2071,
+   "summary": "One of the four Taishan bandit chiefs beaten back to Xiao Pass by Xu Chu - the garrison Chen Deng slanders as turncoats in his triple-cross.",
+   "_note": "old summary had him as one of Lü Bu's eight generals surrendering with the city"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2457,
+   "summary": "One of the four Taishan bandit chiefs holding Xiao Pass against Cao Cao's advance.",
+   "_note": "old summary had him as one of Lü Bu's eight generals"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2907,
+   "summary": "One of the four Taishan bandit chiefs holding Xiao Pass against Cao Cao's advance.",
+   "_note": "old summary had him as one of Lü Bu's eight generals"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 207,
+   "summary": "The triple-cross: he tells Lü Bu the pass garrison is turning traitor, tells Chen Gong that Xuzhou has fallen, and lights the fire signal that sets the two allies fighting each other in the dark - then bars Xuzhou's gates behind them. The Chen family's masterpiece of treachery.",
+   "_note": "old summary had him delivering Xiapi's gates; his coup is the pass trick and Xuzhou itself"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 216,
+   "summary": "Inside Xuzhou with his son's conspiracy as the gates close against the returning Lü Bu.",
+   "_note": "old summary named the wrong city"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 882,
+   "summary": "Recovers his fifteen stolen horses and kills the thief Hou Cao - then is flogged fifty strokes for brewing celebration wine under the prohibition. His revenge: he steals Red Hare itself and rides it to Cao Cao, the signal for Song Xian and Wei Xu to bind their sleeping master.",
+   "_note": "old summary had him stealing the halberd - that was Song Xian and Wei Xu; Hou Cheng takes the horse"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2026,
+   "summary": "With Wei Xu, seizes the exhausted Lü Bu sleeping in his chair, trusses him with ropes, and hurls the trident halberd down from the wall to Xiahou Yuan as proof before opening the gates.",
+   "_note": "old summary was right in outline; this adds the halberd toss that convinces the besiegers"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2754,
+   "summary": "Kills the retreat proposal at the council: Lü Bu's spirit is broken and Chen Gong is clever but unheeded - 'it only needs a sharp attack'. The flooding follows.",
+   "_note": "old summary was a bare 'with Cao Cao at the siege'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2755,
+   "summary": "Names the winning stroke aloud - 'I suppose you mean drowning the city by River Si and River Yi' - as the council turns from retreat to the flood.",
+   "_note": "old summary had him back in Xuchang; he speaks at the siege council"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2637,
+   "summary": "Takes Chen Gong prisoner at the south gate as the flooded city falls.",
+   "_note": "old summary was a bare 'with Cao Cao at the siege'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2556,
+   "summary": "Catches the trident halberd thrown down from the wall - the proof that Lü Bu is taken - and the gates swing open.",
+   "_note": "old summary was a bare 'serves at the siege'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 123,
+   "summary": "Detached with three thousand troops to take Xiaopei while the main army closes on Lü Bu.",
+   "_note": "old summary was a bare 'serves at the siege'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 2624,
+   "summary": "Plunges into the thirty thousand Taishan brigands at the Mangdang Hills and chases the four chiefs back up to Xiao Pass.",
+   "_note": "old summary was a bare 'with Cao Cao at the siege'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 19,
+   "target_id": 3106,
+   "summary": "Snaps up the escort commander He Meng in the first bout of the night interception - the capture that betrays the whole marriage scheme to Cao Cao.",
+   "_note": "old summary was a bare 'rides with Liu Bei'"}
+]

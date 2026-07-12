@@ -40,7 +40,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch16 — 42 ops (12 missing summaries, Lady Yan/Lady Zhou wrong-person fix, 2 dup-note summaries replaced, 8 relationships incl. Cao Cao→Cao Ang and the Lü Bu household)
 - [x] ch17 — 45 ops (Ji Chang 'Xiahou' junk keyword, 13 missing summaries incl. Wang Hou's borrowed head, Ji Ling/Zhang Xun/Lei Xu not killed, Duan Wei/Wu Xi kill credits, Dian Wei→Dian Man)
 - [x] ch18 — 43 ops (You Province bare-'You' keyword fix, 8 missing summaries, Taishan bandits mislabeled as Lü Bu's eight generals, Jia Xu's double victory, 4 relationships incl. Liu Bei's marriages)
-- [ ] ch19
+- [x] ch19 — 28 ops (6 missing summaries incl. Lü Bu's end and Liu An, Hou Cheng steals Red Hare not the halberd, Taishan chiefs at Xiao Pass, Zhang Yang assassination subplot, Chen Deng's triple-cross)
 - [ ] ch20
 - [ ] ch21
 - [ ] ch22
