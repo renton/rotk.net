@@ -60,7 +60,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch36 — 33 ops (Fancheng capture credited to Guan Yu not Zhao Yun, Lady Xun inkstone scene + 9 other missing summaries, Xu Province false assoc removed, bare-'Yu' restriction, Zhuge Liang did appear in person, 9 relationships: Liu Feng adoption cluster + Lady Xun→Xu Shu + Zhuge family tree)
 - [x] ch37 — 23 ops (Lady Xun's suicide + 13 other missing summaries for the recluse coterie and cycle-lecture cast, Guan Yu/Zhang Fei ch38-spillover quotes fixed, Zhuge Jun met-once fix, Cui Zhouping lecture, 2 relationships: Zhuge Jin↔Liang + Gui→Jin; Huang Chengyan father-in-law tie is prose-only, no in-law type)
 - [x] ch38 — 34 ops (Lady Xu's revenge untangled: Bian Hong killed by his co-conspirators, her plot took Gui Lan/Dai Yuan; Sun Yi + Zhang Wen dup-note summaries replaced; Lü Meng/Ling Tong missing summaries; Sun Quan deathbed injunction fixed to prose; Su Fei patron-of-Gan-Ning nuance; 6 relationships incl. Lady Wu→Sun Ce/Sun Quan + Sun Yi↔Lady Xu)
-- [ ] ch39
+- [x] ch39 — 33 ops (Su Fei was PARDONED not executed, Huang Zu killed by Gan Ning not captured by Lü Meng, Xu Shu's tiger-with-wings warning restored, Sima Yi wolf-gaze anecdote removed (not in text), Cao Cao/Xiahou Dun ch40 spillovers pulled back, Guan Ping fire-detail fix, Ling Tong banquet feud, 4 Sima-family relationships)
 - [ ] ch40
 - [ ] ch41
 - [ ] ch42
@@ -105,6 +105,11 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch39_audit.json (4):
+- Sima Fang [1991] → Sima Yi [2008] + → Sima Lang [1996] Parent/Child
+- Sima Juan [3786] → Sima Yi [2008] Grandparent/Grandchild
+- Sima Lang [1996] ↔ Sima Yi [2008] Sibling
 
 From ch38_audit.json (6):
 - Sun Quan [2105] ↔ Sun Yi [2121] Sibling; Sun Yi ↔ Lady Xu [2618] Husband/Wife

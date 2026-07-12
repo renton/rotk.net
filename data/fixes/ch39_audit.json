@@ -1,0 +1,158 @@
+[
+  {"op": "add_relationship", "character1_id": 1991, "character2_id": 2008,
+   "type": 1, "_note": "'Sima Yi of Henei was... son of Sima Fang, Governor of Jingzhao'"},
+
+  {"op": "add_relationship", "character1_id": 3786, "character2_id": 2008,
+   "type": 14, "_note": "'grandson of Sima Juan, Governor of Yingchuan'"},
+
+  {"op": "add_relationship", "character1_id": 1991, "character2_id": 1996,
+   "type": 1, "_note": "implied: Sima Lang is Sima Yi's elder brother, so also Sima Fang's son"},
+
+  {"op": "add_relationship", "character1_id": 1996, "character2_id": 2008,
+   "type": 5, "_note": "'younger brother of Sima Lang, Secretary General'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 998,
+   "summary": "Abandons Jiangxia when the defense collapses - straight into Gan Ning's ambush at the east gate. 'I treated you well in the past' earns him 'you treated me as a pirate'; an arrow takes him from the saddle and Gan Ning cuts off his head, which travels home in a box to be offered before Sun Jian's shrine.",
+   "_note": "old summary had him captured by Lü Meng - Gan Ning shot and beheaded him in flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2034,
+   "summary": "Condemned to have his head offered beside Huang Zu's - until Gan Ning weeps before Sun Quan, offering to return every honor he holds to pay the debt: 'but for Su Fei, my bones would be rotting in some ditch.' Pardoned, with Gan Ning's own life pledged against his flight.",
+   "_note": "old summary EXECUTED him - the whole scene is his pardon; only one head was offered"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 596,
+   "summary": "Foresees Huang Zu's escape route, ambushes the east gate, and answers the old reproach with an arrow and a beheading - racing Cheng Pu so no one else claims the kill. He then spends his new credit to save his old patron Su Fei from the block, fends off Ling Tong's banquet sword with a chair, and is posted to Xiakou with five thousand men - conveniently beyond his enemy's reach.",
+   "_note": "old summary was a bare 'with Sun Quan in the south'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3784,
+   "summary": "Bursts into lamentation at the victory banquet and rushes on Gan Ning sword drawn - the man who shot his father Ling Cao. Sun Quan talks him down from the blood feud ('each was fighting for his lord'), but he sits glaring; a promotion, and Gan Ning's posting far away at Xiakou, keep the peace.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 295,
+   "summary": "His shout in Gan Ning's rear is what makes the pirate loose the fatal arrow rather than share the credit; the two return together with Huang Zu's head.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2105,
+   "summary": "Sends his father's murderer's head home in a box for the shrine, then learns mercy's price: he pardons Su Fei against Gan Ning's pledged life, breaks up the banquet blood-feud between Ling Tong and Gan Ning, and separates them with postings. Following Zhang Zhao's counsel he gives up distant Jiangxia, sets his brother Sun Kuang over Wujun, and camps at Chaisang while Zhou Yu drills the fleet on Poyang Lake.",
+   "_note": "old summary imported a Lu Su plan that is not in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3272,
+   "summary": "Argues against holding faraway Jiangxia alone: go home, absorb Liu Biao's revenge expedition on friendly ground, then take the whole region - the counsel Sun Quan follows.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3466,
+   "summary": "Commander-in-Chief and Supreme Admiral, drilling the naval forces on Poyang Lake as the South Land builds its fleets.",
+   "_note": "old summary was a bare victory mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2088,
+   "summary": "Sun Quan's brother, given command at Wujun as the South Land spreads its garrisons along the river.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 1313,
+   "summary": "Summons Liu Bei to plan vengeance for Huang Zu and instead offers him everything - 'after I am gone you will have this region' - an offer declined on the spot. He frets over Cao Cao's naval drills, and lets Liu Qi take three thousand soldiers to Jiangxia only when Liu Bei endorses it.",
+   "_note": "old summary had him dying and summoning Liu Bei to a deathbed - that is ch40; here he is ailing but ruling"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 68,
+   "summary": "Only spoken of: Liu Biao admits he spared 'the prime mover' of the Xiangyang plot under universal pleading, and Liu Bei diplomatically shifts the blame to subordinates.",
+   "_note": "old summary had him blocking the summons of Liu Bei, which is not in ch39"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 1311,
+   "summary": "Declines Jingzhou to its owner's face - 'he has always been most kind; I could not take advantage of his weakness' - stages the colic that sends Zhuge Liang into Liu Qi's ladder trap, and answers his brothers' jealousy with 'I have him as if the fish has got into the water again.' At Bowang he hands over sword and seal, plays the retreating bait himself, and watches the fire prove the young strategist to everyone.",
+   "_note": "old summary missed the declined offer and the fish-in-water line (which belongs here, not ch38)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 86,
+   "summary": "Suppresses the three highest offices of state and takes their functions into the Prime Minister's hands, appointing Mao Jie and Cui Yan general secretaries and the young Sima Yi literary secretary - then lets Xiahou Dun march on Xinye with one hundred thousand troops over Xun Yu's and Xu Shu's warnings.",
+   "_note": "old summary imported ch40's bound-return and 500,000-strong campaign; ch39's Cao Cao consolidates offices and authorizes the probe"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2008,
+   "summary": "Appointed literary secretary as Cao Cao absorbs the great offices - introduced by lineage alone: grandson of Sima Juan, son of Sima Fang, younger brother of Sima Lang, a man of Henei. The quietest debut of the book's longest game.",
+   "_note": "old summary's wolf's-gaze anecdote is not in this text - only the appointment and lineage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3786,
+   "summary": "Governor of Yingchuan, named as Sima Yi's grandfather in the lineage that introduces the new literary secretary.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 336,
+   "summary": "Appointed one of Cao Cao's two general secretaries (with Mao Jie) in the reorganization that ends the three highest offices.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 1647,
+   "summary": "Appointed general secretary beside Cui Yan when Cao Cao takes the great offices into his own hands.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2661,
+   "summary": "Breaks his silence to warn against the Xinye expedition: with Zhuge Liang, Liu Bei is 'a tiger who has grown wings' - and, pressed for a comparison, 'I am a mere glow-worm spark; he is the glory of the full moon.'",
+   "_note": "old summary had him silent; he delivers the chapter's most famous warning"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2755,
+   "summary": "Cautions against despising Liu Bei now that he has a Directing Instructor - the warning Xiahou Dun laughs off with his head as the stake.",
+   "_note": "old summary was a bare 'running Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2535,
+   "summary": "Stakes his own head on taking Liu Bei and 'that Zhuge Liang of no account' prisoner - then walks the script written for him: mocks the 'dogs and sheep' vanguard, chases Zhao Zilong's feigned retreats past every warning, and is engulfed when the reeds around the narrow road become a sea of fire. He leads the battered remains back toward Xuchang.",
+   "_note": "old summary's bound-return-begging-execution scene opens ch40, not ch39"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 789,
+   "summary": "Reads the feigned retreats correctly and urges caution mid-chase - 'I should not fear even Ten Ambushes!' is the answer - and escapes the fire that kills his fellow general Xiahou Lan.",
+   "_note": "old summary was a bare 'Cao Cao officer at Bowang Slope'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 2543,
+   "summary": "One of Xiahou Dun's four assistant generals: rushing to save the burning baggage train, he runs into Zhang Fei and is slain forthwith.",
+   "_note": "old summary called him Xiahou Dun's cousin, which the prose does not state; his killer was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 704,
+   "summary": "Left commanding Xinye during the Jingzhou visit, then given the Yushan Hills ambush: wait for the southern flame, burn the baggage train. He voices the brothers' scepticism - 'we are all to go out; what will YOU do?' - and rides home converted: 'Zhuge Liang is really a fine strategist!'",
+   "_note": "old summary was a bare 'executes part of the ambush'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3106,
+   "summary": "Sneers 'send the Water!' and laughs at a strategist who fights from an armchair - then executes his Anlin Forest ambush to the letter, cuts down Xiahou Lan at the baggage train, and dismounts to bow to the man in the little carriage: 'Zhuge Liang is really a fine strategist!'",
+   "_note": "old summary had the conversion but not the Xiahou Lan kill or the 'send the Water' sneer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3334,
+   "summary": "Recalled from Fancheng to play the ordered loser: he duels Xiahou Dun and retreats, turns and retreats again, dragging one hundred thousand men down the narrowing road - and when the reeds ignite he wheels round for the slaughter.",
+   "_note": "old summary was a bare 'executes part of the ambush'; his part was the bait"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 698,
+   "summary": "Paired with Liu Feng south of Bowang Slope: five hundred men each, combustibles prepared, and at dusk they start the blaze that turns the reed-choked road into the trap.",
+   "_note": "old summary put him 'with Guan Yu'; his post was the fire detail with Liu Feng"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 1336,
+   "summary": "Shares the fire detail with Guan Ping beyond Bowang Slope - the two five-hundred-man torch parties that spring Zhuge Liang's first battle.",
+   "_note": "old summary was a bare 'with Liu Bei at Xinye'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3785,
+   "summary": "The prince who stayed at home and died - Zhuge Liang's parable, delivered up a ladderless tower, for why Liu Qi must leave the capital.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 39,
+   "target_id": 3675,
+   "summary": "Chong Er, the brother who went away and lived in peace - the other half of the parable that sends Liu Qi to Jiangxia and out of his stepmother's reach.",
+   "_note": "summary was missing"}
+]
