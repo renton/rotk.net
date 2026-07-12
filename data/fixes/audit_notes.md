@@ -262,6 +262,23 @@ From ch3_audit.json (5):
 - Ding Yuan [398] → Lü Bu [1547] Parent/Child (adoptive); Dong Zhuo [444] → Lü Bu Parent/Child (adoptive)
 - Dong Zhuo [444] ↔ Dong Min [429] Sibling
 
+## Character sex sweep #2 (whole roster)
+
+All 3,731 character rows swept (every DB row was sex=male). sex_audit.json
+already covers 76 title-prefixed women (Lady/Empress/Consort + Diao Chan,
+the Qiaos, etc.). This second pass caught 15 GIVEN-NAME women with no such
+prefix that slipped through, in `data/fixes/sex_audit_2.json` — apply with
+`flask apply-fixes data/fixes/sex_audit_2.json --apply`:
+Bu Lianshi[54], Cao Jie/empress[105], Dong Bai[405], Guo Nüwang[746],
+Pang E[1728], Quan Huijie[1838], Sun Luban[2096], Sun Luyu[2098],
+Wang Yuanji[2367], Xiahou Hui/夏侯徽[2540], Xie Ji[2590], Xin Xianying[2609],
+Yang Yan[2866], Zhang Chunhua[3092], Zhao Yuanjiang[3332].
+Deliberately NOT flipped (same-romanization traps): Cao Jie[106] the eunuch,
+Xiahou Hui[2539] 夏侯惠 (Xiahou Yuan's son). Left male for lack of evidence:
+Wenren Min[2448] (聞人 compound surname, no role/history signal - verify
+manually if it turns out to be a woman). The 公/姬-surname/夫-transliteration
+regex hits (Gongsun*, Ji Chang/Ji Fa = Zhou kings, Yufuluo) are all male.
+
 ## Chapter dates sweep (post-audit)
 
 All 59 chapters swept: stored `chapter.date` vs explicit "(AD xxx)"

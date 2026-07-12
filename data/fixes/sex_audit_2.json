@@ -1,0 +1,61 @@
+[
+  {"op": "update", "model": "character", "id": 54,
+   "fields": {"sex": "female"},
+   "_note": "Bu Lianshi (步練師), Lady Bu, Sun Quan's consort - role 'noble lady'. Missed by sex_audit.json (name has no Lady/Empress prefix)"},
+
+  {"op": "update", "model": "character", "id": 105,
+   "fields": {"sex": "female"},
+   "_note": "Cao Jie (曹節), Emperor Xian's empress - role 'empress'. NOTE distinct from the eunuch Cao Jie [106] (曹節, same characters, role eunuch) who is correctly male"},
+
+  {"op": "update", "model": "character", "id": 405,
+   "fields": {"sex": "female"},
+   "_note": "Dong Bai (董白), Dong Zhuo's granddaughter - role literally \"dong zhuo's granddaughter\""},
+
+  {"op": "update", "model": "character", "id": 746,
+   "fields": {"sex": "female"},
+   "_note": "Guo Nüwang (郭女王), Empress Guo, Cao Pi's consort - role 'empress'"},
+
+  {"op": "update", "model": "character", "id": 1728,
+   "fields": {"sex": "female"},
+   "_note": "Pang E / Zhao E (龐娥/趙娥), the Han-era daughter who avenged her father - 娥 female marker"},
+
+  {"op": "update", "model": "character", "id": 1838,
+   "fields": {"sex": "female"},
+   "_note": "Quan Huijie (全惠解), Sun Liang's empress - role 'empress'"},
+
+  {"op": "update", "model": "character", "id": 2096,
+   "fields": {"sex": "female"},
+   "_note": "Sun Luban (孫魯班), Sun Quan's elder daughter (Princess Quan) - role 'noble lady'"},
+
+  {"op": "update", "model": "character", "id": 2098,
+   "fields": {"sex": "female"},
+   "_note": "Sun Luyu (孫魯育), Sun Quan's younger daughter (Princess Zhu) - role 'noble lady'"},
+
+  {"op": "update", "model": "character", "id": 2367,
+   "fields": {"sex": "female"},
+   "_note": "Wang Yuanji (王元姬), Sima Zhao's wife, Empress Dowager Wenming - role 'empress dowager'"},
+
+  {"op": "update", "model": "character", "id": 2540,
+   "fields": {"sex": "female"},
+   "_note": "Xiahou Hui (夏侯徽), Sima Shi's wife - role \"sima shi's wife\". NOTE distinct from Xiahou Hui [2539] (夏侯惠), Xiahou Yuan's son, correctly male"},
+
+  {"op": "update", "model": "character", "id": 2590,
+   "fields": {"sex": "female"},
+   "_note": "Xie Ji (謝姬), a noble lady - role 'noble lady' (謝 surname + 姬 = concubine/lady, not the Zhou royal surname sense)"},
+
+  {"op": "update", "model": "character", "id": 2609,
+   "fields": {"sex": "female"},
+   "_note": "Xin Xianying (辛憲英), Xin Pi's daughter, famed for her insight (Gaoping coup warning); historically female"},
+
+  {"op": "update", "model": "character", "id": 2866,
+   "fields": {"sex": "female"},
+   "_note": "Yang Yan (楊艷), Sima Yan's empress, Empress Wumin - role 'empress'"},
+
+  {"op": "update", "model": "character", "id": 3092,
+   "fields": {"sex": "female"},
+   "_note": "Zhang Chunhua (張春華), Sima Yi's wife, mother of Sima Shi and Sima Zhao, posthumous Empress Xuanmu; historically female"},
+
+  {"op": "update", "model": "character", "id": 3332,
+   "fields": {"sex": "female"},
+   "_note": "Zhao Yuanjiang (趙媛姜), the chaste-widow avenger figure - 媛 female marker"}
+]
