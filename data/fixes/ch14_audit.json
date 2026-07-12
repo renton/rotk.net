@@ -1,0 +1,174 @@
+[
+  {"op": "add_relationship", "character1_id": 1185, "character2_id": 3678,
+   "type": 10, "_note": "Li Xian and Li Bie are 'nephews of Li Jue' (para 33)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3679,
+   "summary": "Liu Bang's bodyguard-hero, invoked when Xu Chu brings back two heads: 'You are really my Fan Kuai!'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3675,
+   "summary": "Duke Wen of Jin, cited in Xun Yu's history lesson: he supported Prince Xiang of the declining Zhou and every feudal lord backed him - the model for escorting Emperor Xian.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3676,
+   "summary": "Prince Xiang of Zhou, the sheltered sovereign of Xun Yu's precedent for taking up the Emperor's cause.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3678,
+   "summary": "Nephew of Li Jue; rides out beside his cousin Li Xian against Cao Cao's line, is so startled by Xu Chu's kill that he tumbles from the saddle, and is slain where he falls.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3671,
+   "summary": "Makes his last throw at the Gu Hills, shouting that his army is Li Jue and Guo Si's - but Yang Feng knows the voice, and Xu Huang fells him in the first bout.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3575,
+   "summary": "Cited by Xun Yu: the Han founder won the people by wearing mourning for Emperor Yi of Chu - proof that honoring a wronged sovereign is the road to power.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3680,
+   "summary": "Royal Clan Recorder to whom the astrologer Wang Li confides his reading of Venus and Mars - that a new ruler must emerge and 'the ancient states of Jin and Wei must increase'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1434,
+   "summary": "Returns to a Luoyang of brambles and broken walls, changes the reign style to Rebuilt Tranquillity, and summons Cao Cao - who beats off Li Jue and Guo Si, then walks the court to his own Xuchang. The Emperor 'dared not oppose'; from now on every memorial passes through Cao Cao first.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3656,
+   "summary": "Named a Commander in the great distribution of offices at Xuchang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1547,
+   "summary": "Shown Cao Cao's secret kill-order by Liu Bei himself, he weeps at the 'miscreant's scheme for sowing discord'. But when Cao Bao's letter arrives - Liu Bei away, Zhang Fei drunk - he takes Xuzhou by a midnight ruse at the gates, then posts guards so no one disturbs Liu Bei's abandoned family.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3677,
+   "summary": "Emperor Yi of Chu, for whom Liu Bang wore mourning - Xun Yu's second precedent for championing Emperor Xian.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3681,
+   "summary": "Ji Ling's officer, sent out to take his general's place in the duel; he sneers that Guan Yu is 'a reputationless leader' and dies on the first attack.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3032,
+   "summary": "Rides with Cao Hong's reinforcement column presented to the Emperor outside ruined Luoyang; made a Commander in the Xuchang appointments.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1229,
+   "summary": "Nephew of Li Jue; rides out with his cousin Li Bie against Cao Cao's array and is cut down by Xu Chu, who carries both heads back to his chief.",
+   "_note": "old summary called him a White Wave commander killed by Xu Huang - he's Li Jue's nephew, killed by Xu Chu"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 2637,
+   "summary": "Fells the treacherous Li Yue in a single bout at the Gu Hills, then bars Cao Cao's road at the mound crying 'Cao Cao is stealing away the Emperor!' - and trades fifty even bouts with Xu Chu. Won over in his candlelit tent by his old friend Man Chong, he refuses to murder his masters as a parting gift - 'it is very wrong for a servant to slay his master' - and crosses to Cao Cao with a handful of riders.",
+   "_note": "old summary had him behead Li Xian to seal the defection; he kills Li Yue, and explicitly refuses to kill anyone as a gift"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 2816,
+   "summary": "Recognizes Li Yue's voice behind the false alarm and sends Xu Huang to cut him down. Sidelined by Cao Cao's arrival, he withdraws to Daliang, bars the Xuchang road crying theft of the Emperor, loses Xu Huang to Man Chong's night visit, and - ambushed pursuing the deserter - flees with Han Xian to Yuan Shu.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 807,
+   "summary": "Pulls his army out with Yang Feng when Cao Cao's star rises, joins the ambush-shattered attempt to reclaim the Emperor on the Xuchang road, and flees with him to Yuan Shu.",
+   "_note": "old summary was vague"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 82,
+   "summary": "LÜ BU's father-in-law (he pleads 'if you saw my son-in-law's face, you would pardon me'). Forced to drink and then flogged fifty strokes by the drunken Zhang Fei, he opens Xuzhou's gates to Lü Bu that same night - and dies in the moat with Zhang Fei's spear-wound in his back.",
+   "_note": "old summary called him ZHANG FEI's father-in-law - the prose says his son-in-law is Lü Bu"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3106,
+   "summary": "Left holding Xuzhou on a no-wine oath, he throws a farewell banquet, forces a cup on the abstaining Cao Bao, then flogs him fifty strokes for refusing a second - the insult that opens the gates to Lü Bu at midnight. Half-drunk, he cuts his way out with eighteen riders (leaving Liu Bei's family behind), kills the pursuing Cao Bao at the moat, and at Xuyi draws his sword to kill himself under Guan Yu's rebuke.",
+   "_note": "old summary borrowed ch15's forgiveness line; ch14 ends on the suicide attempt"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1311,
+   "summary": "Handed the Xuzhou protectorship and a lordship by Cao Cao's own memorial - with a private note ordering him to kill Lü Bu. He shows Lü Bu the letter instead, seeing through the 'Rival Tigers' ruse; but the follow-up 'Tiger against Wolf' edict he obeys, marching on Yuan Shu - and while Guan Yu duels Ji Ling at Xuyi, Xuzhou and his own family fall to Lü Bu behind him. 'Success is not worth rejoicing; failure is not worth grieving.'",
+   "_note": "old summary described ch13's refugee scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 410,
+   "summary": "Argues at ruined Luoyang that the court cannot stand a siege and must move east of the Huashan Mountains; raised to a lordship with thirteen others in the Xuchang rewards.",
+   "_note": "old summary's 'Wagon-General' title isn't in the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 704,
+   "summary": "Trades thirty even bouts with Ji Ling at Xuyi, kills the sneering stand-in Xun Zheng with a single attack, and when Xuzhou falls, drags the truth out of Zhang Fei - 'now the city is lost and therewith our sisters-in-law' - the rebuke that puts his brother's sword to his own throat.",
+   "_note": "old summary was a bare 'serves under Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1024,
+   "summary": "Yuan Shu's champion with the heavy three-edged sword, sent with one hundred thousand troops against Liu Bei at Xuyi. He trades thirty even bouts with Guan Yu, calls a rest and never returns to the duel - sending the doomed Xun Zheng instead - then falls back to the mouth of River Huaiyin.",
+   "_note": "old summary misplaced the battle at Xiaopei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1048,
+   "summary": "Tells Li Jue and Guo Si flatly that they cannot beat Cao Cao and should submit for amnesty - and gets a drawn sword for it. That night he slips out of camp alone and rides home to his native village.",
+   "_note": "old summary skipped the sword incident that drives him out"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 2755,
+   "summary": "Sets the course of the era three times: 'take the lead in restoring the Emperor or someone will get in before you'; the 'Rival Tigers and One Prey' ruse to make Liu Bei kill Lü Bu; and when that fails, the 'Tiger against Wolf' ruse that sets Yuan Shu on Liu Bei. Made Imperial Counselor and Chair of the Secretariat.",
+   "_note": "old summary had only the emperor line; both ruses are also his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 2624,
+   "summary": "Cuts down Li Jue's nephews Li Xian and Li Bie in one sally and returns with both heads - 'you are really my Fan Kuai!' - then fights Xu Huang fifty bouts to a standstill on the Xuchang road. At the closing council he offers to fetch Liu Bei's and Lü Bu's heads with fifty thousand men, and is talked down by Xun Yu's subtler ruses.",
+   "_note": "old summary was a bare guard-duty mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 2282,
+   "summary": "The astrologer Court Counselor whose star-reading - Venus and Mars mingling in the Gate of Heaven - announces that Han's aura is exhausted and Wei must rise. Cao Cao sends word: 'your loyalty is well known... the less said the better.'",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 2803,
+   "summary": "Memorializes from the brambles of Luoyang that Cao Cao, strong in the Shandong region, should be associated in the government - the decree that brings Cao Cao to the Emperor's side.",
+   "_note": "old summary had him merely arriving at Xuchang; he authors the summons"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 207,
+   "summary": "Assigned by Liu Bei as Zhang Fei's civil partner and sobriety-keeper for Xuzhou; his one intervention at the banquet - 'remember your brother's injunctions' - is waved off with 'you civilians attend to your civil business'.",
+   "_note": "old summary was generic administration filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1682,
+   "summary": "Reads the second edict for what it is - a ruse - but Liu Bei marches anyway: 'the royal command is not to be disobeyed.' He also doubts Zhang Fei's no-wine oath to his face.",
+   "_note": "old summary was generic administration filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3008,
+   "summary": "Told (by Cao Cao's design) that Liu Bei has memorialized to seize his territory, he erupts - 'you weaver of mats! you plaiter of straw shoes!' - and sends Ji Ling with one hundred thousand troops against Xuyi. Later receives the fleeing Yang Feng and Han Xian.",
+   "_note": "old summary was a bare mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 1185,
+   "summary": "Draws his sword on Jia Xu for counseling submission, attacks the 'fatigued' escort anyway, loses his nephews Li Xian and Li Bie to Xu Chu, and flees west into the hills 'like dogs from a falling house'.",
+   "_note": "old summary was passive; ch14 is his rout"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 753,
+   "summary": "Joins Li Jue's attack on Cao Cao's 'fatigued' army and shares the ten-thousand-dead rout, fleeing into the brushwood hills.",
+   "_note": "old summary was passive"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 14,
+   "target_id": 3006,
+   "summary": "Named only as Dong Zhao's former employer in the secretary's self-introduction.",
+   "_note": "old summary invented a strategic-watching role not in the prose"}
+]

@@ -35,7 +35,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch11 — 35 ops (8 missing summaries incl. Lü Bu's, Guan Hai kill credited to Guan Yu not Taishi Ci, Zhao Yun Beihai/Xuzhou mixup, Zhang Miao↔Zhang Chao + Confucius→Kong Rong relationships)
 - [x] ch12 — 27 ops (Battle of Yan Province event added, 6 missing summaries, He Man kill credited to Cao Hong, Xue Lan/Zhang Miao fate fixes, Dian Wei/Xiahou Yuan rescue details)
 - [x] ch13 — 45 ops (Empress He→Empress Fu wrong-person fix, 11 missing summaries, 2 admin-note 'summaries' replaced, 4 relationships incl. Guo Si/Yang Biao marriages, ~25 summary corrections)
-- [ ] ch14
+- [x] ch14 — 35 ops (13 missing summaries, Cao Bao is LÜ BU's father-in-law not Zhang Fei's, Xu Huang kills Li Yue not Li Xian and refuses the murder-gift, Li Jue→Li Bie nephew)
 - [ ] ch15
 - [ ] ch16
 - [ ] ch17
@@ -106,6 +106,9 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch14_audit.json (1):
+- Li Jue [1185] → Li Bie [3678] Pibling/Nibling
+
 From ch13_audit.json (4):
 - Fu De [565] ↔ Fu Shou/Empress Fu [578] Sibling
 - Guo Si [753] → Lady Qiong [3666] Husband/Wife; Yang Biao [2803] → Lady Kai [3667] Husband/Wife
@@ -174,6 +177,11 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch14:
+- Cao Bao's daughter is Lü Bu's wife ("my son-in-law... Lu Bu") — again
+  blocked by the missing in-law relationship type.
+- "Yewang" (Yang Feng's camp, ¶4) has no Location row.
 
 From ch13:
 - **Duplicate Yang Feng rows**: [2816] (associated to ch13) carried the
