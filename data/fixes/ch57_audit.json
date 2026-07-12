@@ -1,0 +1,254 @@
+[
+  {"op": "update", "model": "character", "id": 3838,
+   "fields": {"sex": "female"},
+   "_note": "Li Chunxiang, Huang Kui's concubine - missed by sex_audit.json"},
+
+  {"op": "add_relationship", "character1_id": 3835, "character2_id": 1619,
+   "type": 1, "_note": "'His father's name was Ma Sui'"},
+
+  {"op": "add_relationship", "character1_id": 3744, "character2_id": 1619,
+   "type": 18, "_note": "'Ma Teng was a descendant of the famous leader Ma Yuan, General Who Quells the Waves'"},
+
+  {"op": "add_relationship", "character1_id": 1619, "character2_id": 1623,
+   "type": 1, "_note": "'his two sons - Ma Xiu and Ma Tie - as Leaders of the Van'"},
+
+  {"op": "add_relationship", "character1_id": 1619, "character2_id": 1620,
+   "type": 1, "_note": "'The youngest son - Ma Tie - soon fell in the volleys of arrows'"},
+
+  {"op": "add_relationship", "character1_id": 3836, "character2_id": 3837,
+   "type": 3, "_note": "'his wife, Lady Zhi' - Huang Kui's wife"},
+
+  {"op": "add_relationship", "character1_id": 3837, "character2_id": 3839,
+   "type": 5, "_note": "'the wife's younger brother, Miao Ze'"},
+
+  {"op": "add_relationship", "character1_id": 3466, "character2_id": 3461,
+   "type": 1, "_note": "'Zhou Yu's family consisted of two sons and a daughter, the children being named Zhou Xun, Zhou Yin, and Zhou Ying'"},
+
+  {"op": "add_relationship", "character1_id": 3466, "character2_id": 3465,
+   "type": 1, "_note": "Zhou Yin is Zhou Yu's second son"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3466,
+   "summary": "Blocked at Baqiu by Liu Feng and Guan Ping, he receives Zhuge Liang's letter proving the western expedition hopeless - writes his dying memorial recommending Lu Su, sighs the famous line to heaven ('O God, since you made Zhou Yu, why did you also create Zhuge Liang?'), and dies at thirty-six. Sun Quan weeps aloud, buries him in his native place, and takes his three children under his care.",
+   "_note": "old summary was sound; the Baqiu blockade and the memorial's content added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3640,
+   "summary": "Sun Quan's brother, sent to reinforce the western expedition - he presses the army to Baqiu, where the blocked advance and Zhuge Liang's letter end everything.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3461,
+   "summary": "Zhou Yu's elder son, one of the two boys and a girl Sun Quan takes into his generous care.",
+   "_note": "old summary: 'minor figure named in passing' - he is Zhou Yu's son"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3465,
+   "summary": "Zhou Yu's younger son, raised with his brother and sister under Sun Quan's protection.",
+   "_note": "old summary: 'minor figure named in passing' - he is Zhou Yu's son"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3529,
+   "summary": "His letter kills the western expedition and, the poem implies, its author; reading the falling star he smiles 'Zhou Yu is dead' - then sails to Chaisang under Zhao Zilong's guard and delivers the threnody that converts the hostile mourners: 'people lied when they said these two were enemies.' On the shore Pang Tong clutches his arm; he answers with a letter of introduction to Liu Bei - and later has to explain why the transcendent drink themselves through paltry posts.",
+   "_note": "old summary was sound; the letter-that-kills and the Pang Tong recruitment added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1523,
+   "summary": "Named successor in the dying memorial and appointed Commander-in-Chief - but immediately tries to give the post away: Pang Tong is the abler man, 'not inferior to the old Guan Zhong or Yue Yi.' When Sun Quan rejects the ugly genius, Lu Su redirects him to Liu Bei with a letter - and a mission: keep the two houses at peace against Cao Cao.",
+   "_note": "old summary had the succession; his self-effacing sponsorship of Pang Tong is the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2105,
+   "summary": "Weeps aloud over the memorial ('whom have I to lean upon?'), honors the coffin at Wuhu, and provides for Zhou Yu's children - then throws away the successor Zhou Yu's equal: repelled by the bushy brows and turned-up nose, stung by 'mine is far greater', he dismisses Pang Tong with a vow never to employ him.",
+   "_note": "old summary was a bare 'mourns Zhou Yu'; the Pang Tong rejection is his scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1739,
+   "summary": "Clutches Zhuge Liang's arm at the embarkation laughing at the funeral theatre, is rejected by Sun Quan for his face and his boast, and carries two letters to Jingzhou - showing neither. Fobbed off with the paltry magistracy of Leiyang, he drinks for a hundred days, then clears every arrear of business in half a day before the astonished Zhang Fei: 'when I can take on Cao Cao and Sun Quan as easily as I can read this paper...' Liu Bei begs pardon at the foot of the steps and makes him Vice Directing Instructor.",
+   "_note": "old summary was sound; the letters-unshown pride is the key beat"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1311,
+   "summary": "Judges the Young Phoenix by his unbowed salutation and ugly face and posts him to Leiyang - then, when Zhang Fei returns amazed and Lu Su's letter surfaces ('beware of judging him by his looks'), goes out to meet him and apologizes at the foot of the steps. With both Sleeping Dragon and Young Phoenix in service - 'surely the Hans will rise again.'",
+   "_note": "old summary was sound; kept to the arc"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3106,
+   "summary": "Sent to inspect the drunken magistrate and ready to dismiss him on the spot - until Pang Tong disposes of a hundred days' arrears by midday, and Zhang Fei crosses the hall: 'you are indeed a marvel, Master.' His report undoes his brother's mistake.",
+   "_note": "old summary was a bare 'with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2102,
+   "summary": "Sent as Zhang Fei's coadjutor for tact - and supplies it, staying the summary dismissal: 'Pang Tong is a man of great ability; let us inquire into it.'",
+   "_note": "old summary was a bare 'with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2755,
+   "summary": "Author of both halves of the capital's scheming: attack the south first now that Zhou Yu is dead - and lure Ma Teng in with the title of General Who Subdues the South, 'thus he can be enticed to the capital and got rid of.'",
+   "_note": "old summary was a bare 'in Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 86,
+   "summary": "Baits Ma Teng with an imperial title, learns of the review-day assassination plot through a concubine's pillow talk, and springs four armies on the western column - Ma Teng, Ma Xiu, and Huang Kui executed, and the informer Miao Ze beheaded with the woman he betrayed everyone for: 'what advantage would there be in preserving such a miscreant?' The news of Liu Bei's western preparations then stops his southern march cold.",
+   "_note": "old summary was a bare 'lures Ma Teng'; the trap and the informer's reward complete it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1619,
+   "summary": "Descendant of Ma Yuan, son of a Qiang mother, sworn brother of Han Sui - and still bound by the Girdle Edict he signed with Dong Cheng: he marches to the summons hoping to finish that old work. Huang Kui's drunken sincerity draws him into the review-day assassination plan; betrayed through a concubine, hemmed in by four armies, he is captured wounded and dies abusing Cao Cao: 'it is the will of God!'",
+   "_note": "old summary was thin on the plot; the Girdle Edict motive is why he comes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1599,
+   "summary": "Counsels obedience to the imperial summons, offers to march on the capital instead - and is ordered to stay commanding the Qiang troops, the deterrent his father wrongly trusts to keep Cao Cao honest. His farewell warning: 'be careful not to enter the city till you know exactly what plots are afoot.'",
+   "_note": "old summary was sound; tightened"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1623,
+   "summary": "Rides as Leader of the Van with his brother Ma Tie; captured wounded beside his father when their arrow-struck horses fall, and executed with him, cursing to the end.",
+   "_note": "old summary said 'third son rides along' - he is taken and executed"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1620,
+   "summary": "The youngest son, sharing the van with Ma Xiu - first to die, falling in the volleys of arrows when the four ambush armies close.",
+   "_note": "old summary said 'second son rides along' - the prose calls him the youngest, and he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1601,
+   "summary": "The one voice against going - 'Cao Cao's designs are unfathomable' - and the one who escapes: warned by fugitives from the rearguard, he abandons his army and slips through the sealed passes disguised as a trader.",
+   "_note": "old summary had him staying in Xiliang - he commands the rearguard and escapes in disguise"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3836,
+   "summary": "Cao Cao's own envoy to Ma Teng - and his father's unavenged death makes him a plotter within an hour of the first cup: he designs the review-day assassination. His drunken confidence to the wrong concubine kills the plot, the plotters, and his whole household.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3837,
+   "summary": "Huang Kui's wife, who asks what troubles him and is told nothing - while the concubine who asks the same question destroys the family.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3838,
+   "summary": "Huang Kui's concubine, coached by her lover Miao Ze to ask one leading question - the pillow talk that betrays the assassination plot. Cao Cao has her executed beside the man who wanted her.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3839,
+   "summary": "Lady Zhi's younger brother, who wanted his sister's husband's concubine: he coaches the question, carries the secret to Cao Cao, and asks only for Li Chunxiang as his reward - receiving instead the executioner: 'what advantage would there be in preserving such a miscreant?'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3835,
+   "summary": "Ma Teng's father: a minor magistrate of Tianshui under Emperor Huan who lost his post, drifted west among the Qiang, and married a Qiang woman - the frontier blood of the Ma line.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3744,
+   "summary": "The Waves Queller, ancestor of Ma Teng - invoked again in the elegy: 'Old Waves Queller's name his grandson glorified.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 805,
+   "summary": "Ma Teng's pledged brother, Commander Who Guards the West - half of the deterrent Ma Teng counts on to keep Cao Cao's hands off him.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 410,
+   "summary": "The dead conspirator whose Girdle Edict still binds: Ma Teng recounts the society to Ma Chao, and Huang Kui's shout - 'then you have quite forgotten the Girdle Edict, eh?' - is the password that joins the two plotters.",
+   "_note": "old summary was a bare recap mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1056,
+   "summary": "Lamented in the threnody as the false friend whose Poyang Lake visit only displayed Zhou Yu's lofty ideals.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2060,
+   "summary": "The companion of Zhou Yu's younger days in the threnody - the humble-cottage friendship the mourner laments first.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1313,
+   "summary": "Named in the threnody's second lament - the guard of distant Baqiu 'putting fear into the heart of Liu Biao.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3775,
+   "summary": "Lu Su's yardstick for Pang Tong - 'not inferior to the old Guan Zhong or Yue Yi.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3776,
+   "summary": "Paired with Guan Zhong in Lu Su's estimate of the Young Phoenix.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3594,
+   "summary": "Cited twice: even Sun Zi the Famed Strategist could not guarantee Zhou Yu's western war, and Pang Tong's plans equal his.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3834,
+   "summary": "Wu Qi the Great General, named in Zhuge Liang's fatal letter and again in Lu Su's praise of Pang Tong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1993,
+   "summary": "Water Mirror's old prophecy is redeemed in Liu Bei's mouth: with both Sleeping Dragon and Young Phoenix in service, 'surely the Hans will rise again.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1473,
+   "summary": "The letter's verdict on the western war: 'Imperial Protector Liu Zhang may be weak within, but he is strong enough to defend himself' - the argument that breaks Zhou Yu's last hope.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1434,
+   "summary": "The Emperor whose name summons Ma Teng - 'Cao Cao has the command of the Emperor to call you; if you do not go, you will be punished.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3582,
+   "summary": "Emperor Huan, in whose reign Ma Sui held and lost his little Tianshui magistracy.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1351,
+   "summary": "Emperor Ling, in whose reign the Qiang made trouble and Ma Teng first raised troops - the service that earned his western title.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 1336,
+   "summary": "Bars the Great River water route at Baqiu with Guan Ping - the blockade that strands Zhou Yu's last expedition.",
+   "_note": "old summary was a bare 'with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 698,
+   "summary": "Shares the Baqiu river blockade with Liu Feng, penning in the expedition Zhou Yu will not survive.",
+   "_note": "old summary was a bare 'with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 3334,
+   "summary": "Commands the funeral escort - the redoubtable presence at Zhuge Liang's shoulder that keeps the grieving southern officers' hands off their swords.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2624,
+   "summary": "Leads one of the four ambush armies that close on Ma Teng at the review.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2556,
+   "summary": "Commands one face of the four-sided review-day trap.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 2637,
+   "summary": "Closes the fourth side of the trap that ends the Ma family's embassy.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 57,
+   "target_id": 100,
+   "summary": "One of the four ambush leaders whose armies hem in the western column at the review.",
+   "_note": "old summary was a bare 'with Cao Cao'"}
+]

@@ -78,7 +78,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch54 — 21 ops (Lady Gan DIES fix, Sun Ren bride summary + Liu Bei↔Sun Ren marriage + Sun Quan↔Sun Ren sibling, Wu Guotai sex=female + dup-of-3808 flag, Qiao Gong dup-of-3818 flag, IOU guarantor scene, three silken bags, boulder omen)
 - [x] ch55 — 24 ops (Liang Da 'Tai' false assoc removed [FINAL in-range tracker item], Zhao Yun opens bags 2 AND 3, Zhou Yu taunting-verses fix [soldiers' jeer], luxury-trap letter, Lady Sun's two voice-confrontations, inkstone + sword-order scenes, Wu Guotai New Year permission)
 - [x] ch56 — 38 ops (Ji Chang 'Xiahou' junk keyword AGAIN [ch17 bug recurrence], Chen Lin memorial-vs-ode fix, Hua Xin marooned-envoy fix, Gu Yong/Cheng Yu scheme authorship, archery contest six-shot cast, apologia figures, borrowed-road double-fooling of Lu Su)
-- [ ] ch57
+- [x] ch57 — 53 ops (Zhou Yu's death + threnody cast, Ma Dai escaped-in-disguise fix, Ma Xiu/Ma Tie executed fixes, Huang Kui plot chain summaries, Li Chunxiang sex=female, Zhou Xun/Zhou Yin are Zhou Yu's SONS, 9 relationships: Ma family tree + Huang Kui household + Zhou Yu's sons)
 - [ ] ch58
 - [x] ch59 — 15 ops (done earlier)
 
@@ -105,6 +105,12 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch57_audit.json (9):
+- Ma Sui [3835] → Ma Teng [1619] Parent/Child; Ma Yuan [3744] → Ma Teng Ancestor/Descendant
+- Ma Teng → Ma Xiu [1623] + → Ma Tie [1620] Parent/Child
+- Huang Kui [3836] ↔ Lady Zhi [3837] Husband/Wife; Lady Zhi ↔ Miao Ze [3839] Sibling
+- Zhou Yu [3466] → Zhou Xun [3461] + → Zhou Yin [3465] Parent/Child
 
 From ch54_audit.json (2):
 - Liu Bei [1311] ↔ Sun Ren [3639] Husband/Wife; Sun Quan [2105] ↔ Sun Ren Sibling
