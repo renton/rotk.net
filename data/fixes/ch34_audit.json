@@ -1,0 +1,125 @@
+[
+  {"op": "add_relationship", "character1_id": 68, "character2_id": 61,
+   "type": 5, "_note": "'So he spoke to his sister, Liu Biao's wife' - Cai Mao is Lady Cai's brother"},
+
+  {"op": "add_relationship", "character1_id": 1313, "character2_id": 1395,
+   "type": 1, "_note": "'My first wife, of the Chen family, bore me a son Liu Qi, my eldest'"},
+
+  {"op": "add_relationship", "character1_id": 1313, "character2_id": 1323,
+   "type": 1, "_note": "'Later I took a wife of the Cai family, who bore me a son named Liu Zong'"},
+
+  {"op": "add_relationship", "character1_id": 61, "character2_id": 1323,
+   "type": 1, "_note": "Liu Cong is Lady Cai's son - the heir the Cai clan pushes"},
+
+  {"op": "add_relationship", "character1_id": 592, "character2_id": 1401,
+   "type": 1, "_note": "'Liu Bei's wife, Lady Gan, gave birth to a son who was named Liu Shan'"},
+
+  {"op": "add_relationship", "character1_id": 68, "character2_id": 3767,
+   "type": 5, "_note": "'My brothers are ready. Cai He is posted on the road to the Xian Hills...'"},
+
+  {"op": "add_relationship", "character1_id": 68, "character2_id": 3768,
+   "type": 5, "_note": "Cai Zhong is another of the brothers Cai Mao posts on the roads"},
+
+  {"op": "add_relationship", "character1_id": 68, "character2_id": 3769,
+   "type": 5, "_note": "Cai Xun is the third brother, posted with Cai Zhong on the north and south roads"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3767,
+   "summary": "Cai Mao's brother, posted on the road to the Xian Hills from the east gate to cut off Liu Bei's escape from the Xiangyang banquet.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3768,
+   "summary": "One of the Cai brothers blocking the north and south roads out of Xiangyang - only the west, 'safeguarded' by the Tan Torrent, is left open.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3769,
+   "summary": "The third Cai brother of the Xiangyang trap, sharing the north and south road watch with Cai Zhong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3765,
+   "summary": "Surrendered general turned plunderer of Jiangxia, riding a handsome prancing horse that catches Liu Bei's eye; Zhao Zilong's spear takes his life in one brief bout - and his mount, the ill-omened Dilu, changes the story.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3763,
+   "summary": "Zhang Wu's fellow rebel at Jiangxia: chasing Zhao Zilong to recover the captured Dilu horse, he is met by Zhang Fei's shout and killed with one thrust.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 764,
+   "summary": "Guo Jia's son (the prose spells him Guo Ye), taken into Cao Cao's own family to be brought up after his father's posthumous ennoblement as the Pure Lord.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 1323,
+   "summary": "Liu Biao's younger son by Lady Cai, 'fairly intelligent' (the prose spells him Liu Zong): the heir the Cai clan and its army-in-hand mean to enthrone over the elder Liu Qi - the secret sorrow behind the whole chapter's plotting.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3643,
+   "summary": "The sage king whose mother dreamed of a jade bird before his birth - Xun You's precedent for reading the unearthed bronze bird as a felicitous omen.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3770,
+   "summary": "The Song-era poet (Su Dongpo) whose long meditation on the leap over the Tan Torrent - 'those dragons twain, ah! where are they?' - is quoted in full.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 1129,
+   "summary": "Already dead by this chapter: Kuai Yue cites him - 'my passed-away brother, Kuai Liang, knew horses very well' - while diagnosing the Dilu's tear-tracks.",
+   "_note": "old summary had him 'aware of the plot but neutral' - he is deceased and appears only in his brother's citation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 1131,
+   "summary": "Reads the Dilu horse's tear-tracks and white blaze as death to its master, warns Cai Mao that harming Liu Bei will 'forfeit everybody's favor' - then, told Liu Biao has consented, designs the detail that matters: the separate officers' banquet that pulls Zhao Zilong from his lord's side.",
+   "_note": "old summary was a bare 'sides with Cai Mao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 1395,
+   "summary": "Liu Biao's eldest, 'virtuous but weakly' in his father's private verdict, out of favor with the Cai faction: he and his brother host the Xiangyang festival in their father's name, begging Uncle Liu Bei to preside.",
+   "_note": "old summary had him already seeking Liu Bei's survival counsel - that scene comes later; ch34 gives the heir verdict and the festival greeting"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 2102,
+   "summary": "Reads his lord's worry before the festival invitation - 'something untoward happened at Jingzhou; consider well before you accept' - the caution Guan Yu talks Liu Bei past.",
+   "_note": "old summary had him negotiating with Liu Biao after the attempt, which is not in ch34"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 2336,
+   "summary": "With Wen Ping, hosts the separate banquet for the military officers - the courtesy that strips Zhao Zilong from Liu Bei's side at the fatal feast.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 2439,
+   "summary": "Co-host with Wang Wei of the officers' banquet staged to draw Zhao Zilong away from Liu Bei; Zhao Zilong declines until Liu Bei himself tells him to go.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 2754,
+   "summary": "Reads the bronze bird as King Shun's jade-bird omen, and counsels the half-year rest - 'both Liu Biao and Sun Quan will fall at the first roll of the drums' - that sets the southern timetable.",
+   "_note": "old summary was a bare 'advises on southern strategy'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 2888,
+   "summary": "Liu Bei's guardian angel three times over: warns him off the returned Dilu horse at the city gate, comes by night to the guest-house with news of Cai Mao's assassins, and at the festival itself carries a wine cup to his ear - 'make an excuse to get away' - and points him out the unguarded west road.",
+   "_note": "old summary had only one warning; he gives three, and the wine-cup signal is the escape"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 704,
+   "summary": "Nominated to guard Guzi against Zhang Lu in Liu Bei's three-generals proposal; later argues for accepting the festival invitation - staying away would only confirm Liu Biao's suspicions.",
+   "_note": "old summary was a bare 'with Liu Bei at Xinye'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3106,
+   "summary": "Kills the rebel Chen Sun with one thrust when he chases Zhao Zilong for the Dilu horse; his festival counsel is the shortest on record - 'banquets are no good; gatherings are no better; it is best not to go.'",
+   "_note": "old summary was a bare 'with Liu Bei at Xinye'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 34,
+   "target_id": 3334,
+   "summary": "Kills Zhang Wu for the Dilu horse at Jiangxia, insists on escorting Liu Bei to Xiangyang with three hundred men, and stands sword in hand at the feast until manoeuvred away to the officers' banquet - to ride out of the gate at chapter's end hunting Cai Mao for vengeance.",
+   "_note": "old summary was a bare 'with Liu Bei at Xinye'"}
+]

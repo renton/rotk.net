@@ -55,7 +55,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch31 — 44 ops (Yin Kui wrong-person fix: politician 2905 removed, astrologer 2906 added; Liu Bang added as 'Founder of Han'; 5 Yuan-family relationships; Gao Lan/Liu Pi/Shi Huan on-page deaths; Tian Feng suicide-sequence fix; bare-'You' keyword restriction; 6 missing + ~25 thin/wrong summaries)
 - [x] ch32 — 44 ops (Xu Province false-positive assoc removed, bare-'You' restriction, 10 missing summaries incl. Peng Ji's death arc and the Lü brothers, Shen Pei's north-facing execution, Wang Xiu wrong-master fix, Feng Li/Li Mu/Ma Yan/Yin Kai 'minor' fixes, Cao Pi ch33 spillover pulled back, 4 relationships)
 - [x] ch33 — 46 ops (Battle of Ye event added to ch32, Xu Province + Bronze Bird Tower false assocs removed, Wuhuan Chu keywords fixed from bare 'Chu', Mao Dun/Xin Ping/Guo Tu on-page deaths, Yuan Tan died at Nanpi not Pingyuan, Gao Gan killed by Wang Yan at Shanglu, Wang Xiu mourner scene, 3 relationships incl. Cao Pi↔Lady Zhen)
-- [ ] ch34
+- [x] ch34 — 28 ops (9 missing summaries incl. the three Cai brothers and Su Dongpo, Kuai Liang is-dead fix, Liu Qi/Sun Qian wrong-content fixes, Yi Ji's three warnings, Zhao Yun's Dilu capture, 8 relationships: Jingzhou heir family + Cai brothers + Lady Gan→Liu Shan)
 - [ ] ch35
 - [ ] ch36
 - [ ] ch37
@@ -105,6 +105,12 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch34_audit.json (8):
+- Cai Mao [68] ↔ Lady Cai [61] Sibling; Cai Mao ↔ Cai He [3767] + ↔ Cai Zhong [3768] + ↔ Cai Xun [3769] Sibling
+- Liu Biao [1313] → Liu Qi [1395] + → Liu Cong [1323] Parent/Child
+- Lady Cai [61] → Liu Cong [1323] Parent/Child
+- Lady Gan [592] → Liu Shan [1401] Parent/Child
 
 From ch33_audit.json (3):
 - Gongsun Du [650] → Gongsun Kang [657] Parent/Child
