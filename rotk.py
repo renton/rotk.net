@@ -2412,9 +2412,11 @@ def apply_fixes(fixes_file, apply, no_confirm):
       {"op": "add_association", "target": "event", "chapter_num": 59,
        "target_id": 41, "keywords": ""}
           Link a character/event/location to a chapter (writes the M2M
-          + per-chapter keywords). "update_association" changes
-          keywords (and "summary" for characters) on an existing link;
-          "remove_association" drops the link.
+          + per-chapter keywords). Character adds may also carry a
+          "summary" (written onto the new chapter_character row).
+          "update_association" changes keywords (and "summary" for
+          characters) on an existing link; "remove_association" drops
+          the link.
 
       {"op": "add_faction_leader", "faction_id": 3, "character_id": 86}
           ("remove_faction_leader" mirrors.)
@@ -2587,17 +2589,29 @@ def apply_fixes(fixes_file, apply, no_confirm):
                 desc = f"associate {tname}"
                 if keywords:
                     desc += f" keywords={keywords!r}"
+                if summary:
+                    desc += f" summary={summary[:60]!r}"
                 if exists:
                     desc += ' (already associated — skip)'
 
                 def apply_add_assoc(table_name=table_name, fk_col=fk_col,
                                     chapter=chapter, target=target,
-                                    keywords=keywords):
+                                    keywords=keywords, summary=summary):
+                    # summary passed pass-1 validation only for
+                    # character targets, and chapter_character is the
+                    # only association table with the column.
+                    cols = f'chapter_id, {fk_col}, keywords'
+                    vals = ':cid, :tid, :kw'
+                    params = {'cid': chapter.id, 'tid': target.id,
+                              'kw': keywords or ''}
+                    if summary is not None:
+                        cols += ', summary'
+                        vals += ', :sm'
+                        params['sm'] = summary
                     db.session.execute(_text(
-                        f'INSERT INTO {table_name} (chapter_id, {fk_col}, keywords) '
-                        f'VALUES (:cid, :tid, :kw)'
-                    ), {'cid': chapter.id, 'tid': target.id,
-                        'kw': keywords or ''})
+                        f'INSERT INTO {table_name} ({cols}) '
+                        f'VALUES ({vals})'
+                    ), params)
                 if target_type == 'character':
                     recount_ids.add(target.id)
                 plan.append((kind, desc + note, apply_add_assoc, exists))

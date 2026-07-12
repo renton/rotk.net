@@ -176,6 +176,38 @@ class TestAssociationOps:
         db_session.expire_all()
         assert c.book_mention_count == 1   # recount fired
 
+    def test_add_character_association_with_summary(self, cli_runner,
+                                                    db_session, tmp_path):
+        ch = factories.make_chapter(content='<p>Summary Guy bows.</p>')
+        c = factories.make_character(name='Summary Guy')
+        db_session.commit()
+        path = write_ops(tmp_path, [
+            {'op': 'add_association', 'target': 'character',
+             'chapter_num': ch.chapter_num, 'target_id': c.id,
+             'keywords': 'Summary Guy', 'summary': 'He bows once.'}])
+        result = cli_runner.invoke(
+            args=['apply-fixes', path, '--apply', '--no-confirm'])
+        assert result.exit_code == 0, result.output
+        row = db.session.execute(db.text(
+            'SELECT keywords, summary FROM chapter_character '
+            'WHERE chapter_id = :c AND character_id = :h'),
+            {'c': ch.id, 'h': c.id}).first()
+        assert row.keywords == 'Summary Guy'
+        assert row.summary == 'He bows once.'
+
+    def test_add_association_summary_rejected_for_non_character(
+            self, cli_runner, db_session, tmp_path):
+        ch = factories.make_chapter()
+        ev = factories.make_event()
+        db_session.commit()
+        path = write_ops(tmp_path, [
+            {'op': 'add_association', 'target': 'event',
+             'chapter_num': ch.chapter_num, 'target_id': ev.id,
+             'keywords': '', 'summary': 'not allowed'}])
+        result = cli_runner.invoke(args=['apply-fixes', path])
+        assert result.exit_code != 0
+        assert 'summary only applies to character associations' in result.output
+
     def test_update_association_keywords_and_summary(self, cli_runner,
                                                      db_session, tmp_path):
         ch = factories.make_chapter(content='<p>Keyword Guy nods.</p>')
