@@ -1,0 +1,147 @@
+[
+  {"op": "add_association", "target": "location", "chapter_num": 7,
+   "target_id": 1801, "keywords": "South Land",
+   "_note": "para 1 'returned to the South Land' + para 101 'fell upon the South Land troops'"},
+
+  {"op": "add_association", "target": "location", "chapter_num": 7,
+   "target_id": 1656, "keywords": "Great River",
+   "_note": "para 1 'territories southeast of the Great River'"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 2060,
+   "type": 1, "_note": "Sun Ce, eldest of Sun Jian's four sons by his first wife of the Wu family (para 69)"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 2105,
+   "type": 1, "_note": "Sun Quan, second son of Sun Jian (para 69)"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 2121,
+   "type": 1, "_note": "Sun Yi, third son of Sun Jian (para 69)"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 2088,
+   "type": 1, "_note": "Sun Kuang, fourth son of Sun Jian (para 69)"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 2089,
+   "type": 1, "_note": "Sun Lang, son of Sun Jian by his second wife, sister of the first (para 69)"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 3639,
+   "type": 1, "_note": "Sun Ren, daughter of Sun Jian by his second wife (para 69) - the later Lady Sun"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 3640,
+   "type": 1, "_note": "ADOPTIVE: Sun Hu, 'adopted a son from a Yu family and named him Sun Hu' (para 69)"},
+
+  {"op": "add_relationship", "character1_id": 2081, "character2_id": 2084,
+   "type": 5, "_note": "Sun Jing, Sun Jian's younger brother (paras 69-70)"},
+
+  {"op": "add_relationship", "character1_id": 664, "character2_id": 663,
+   "type": 5, "_note": "Gongsun Yue is Gongsun Zan's brother (para 15 'sent his brother, Gongsun Yue')"},
+
+  {"op": "add_relationship", "character1_id": 1313, "character2_id": 61,
+   "type": 3, "_note": "Liu Biao's 'newly wedded wife' is Cai Mao's sister, Lady Cai (para 87; she is named in later chapters)"},
+
+  {"op": "add_relationship", "character1_id": 1129, "character2_id": 1131,
+   "type": 5, "_note": "the Kuai brothers of Yanping (introduced together ch6; brothers historically - the novel treats them as such)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 68,
+   "summary": "Overrules Kuai Liang's caution - 'the enemy is at the city gates' - and leads ten thousand out to the Xian Hills, where Cheng Pu routs him and the field is left heaped with corpses. Kuai Liang demands his head by military law, but Liu Biao will not execute the brother of his newly wedded wife. He joins the final sortie after Sun Jian falls.",
+   "_note": "old summary: 'mentioned in passing' - he loses the chapter's key sortie and survives by marriage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 244,
+   "summary": "One of Huang Zu's two generals at Dengcheng. Riding out to save the exhausted Zhang Hui, he takes Sun Jian's arrow full in the face and falls from his horse.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 3127,
+   "summary": "Huang Zu's general from Jiangxia (the prose spells him Zhang Hui). Fights Han Dang for thirty bouts until his rescuer Chen Sheng is shot down - then panic opens his guard and Han Dang cleaves his skull in two.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 295,
+   "summary": "Warns Sun Jian that Yuan Shu is not to be trusted, routs Cai Mao at the Xian Hills with the iron-spined lance, nearly captures Huang Zu, and in the night battle after his lord's death spears Lü Gong from the saddle.",
+   "_note": "old summary was generic; he kills the man who killed Sun Jian"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 3638,
+   "summary": "Carries Han Fu's invitation to Yuan Shao - then hides in the suburbs with Geng Wu to knife the incoming 'guest'. The attempt fails and Yan Liang and Wen Chou behead them both on the spot.",
+   "_note": "old summary missed that he was the invitation's own messenger"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 785,
+   "summary": "Kills Huang Zu's general Zhang Hui with a skull-cleaving slash after thirty bouts, and later reads the broken flagstaff before Xiangyang as an omen to withdraw - advice Sun Jian flouts on the eve of his death.",
+   "_note": "old summary was a bare 'serves with Sun Jian'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 952,
+   "summary": "Volunteers as envoy to his old friend Liu Biao to trade the captive Huang Zu for Sun Jian's body. Terms are agreed - then Kuai Liang bursts in demanding the ambassador's execution as the chapter ends.",
+   "_note": "old summary missed the cliffhanger on his life"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 972,
+   "summary": "Prepares the river fleet for the Jingzhou expedition, commands the ships during the land battles, and when the night sortie erupts after Sun Jian's death, lands his marines and takes Huang Zu prisoner - the bargaining piece for his lord's body.",
+   "_note": "old summary had him 'partnering in the retreat'; he captures Huang Zu"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 1129,
+   "summary": "Liu Biao's chief mind this chapter: plans Huang Zu's defense, reads the falling star as Sun Jian's death, designs Lü Gong's boulder-and-arrow ambush in the Xian Hills to the letter, demands Cai Mao's execution after the sortie disaster - and ends the chapter demanding envoy Huan Ji's head to unlock a total victory.",
+   "_note": "old summary credited him only with 'suggesting the ambush'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 1556,
+   "summary": "Volunteers to carry Liu Biao's letter through the blockade and executes Kuai Liang's plan exactly: lures the pursuing Sun Jian alone into the Xian Hills, where boulders and arrows kill him and his horse. Fires the signal bombs for the great sortie - then dies on Cheng Pu's spear in the chaos.",
+   "_note": "old summary omitted his own death"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 1834,
+   "summary": "Hides eight hundred bowmen under their shields until Yan Guang's van is on top of them, then loosing the storm that breaks the White Horse general's army - he cuts down Yan Guang, kills the standard-bearer, and hacks through Gongsun Zan's embroidered banner. His pursuit ends on Zhao Zilong's spear.",
+   "_note": "old summary omitted that Zhao Yun kills him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 2084,
+   "summary": "Sun Jian's younger brother; stands in front of his horse with the six sons begging him not to launch a war 'for a little resentment'. Sun Jian rides anyway - to his death.",
+   "_note": "old summary invented a funeral role; his scene is the failed dissuasion"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 3639,
+   "summary": "Sun Jian's daughter by his second wife, named in the family roll - the girl who will one day be Liu Bei's Lady Sun.",
+   "_note": "old summary: 'Sun Jian relative named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 3640,
+   "summary": "Sun Jian's adopted son, taken in from a Yu family and given the Sun name - listed in the family roll before the fatal expedition.",
+   "_note": "old summary: 'Sun Jian relative named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 2176,
+   "summary": "One of the four confidants who take over Jizhou's administration for Yuan Shao, and the voice at the Pan River urging his master into an empty building when Zhao Zilong storms the guard - refused with the famous helmet-dashing 'a brave man rather faces death in battle'.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 2430,
+   "summary": "Runs Gongsun Zan down at the River Pan bridge: ten bouts break the White Horse general, one of his four rescuers dies on the first stroke, and only a grassy-mound ambush of a young spearman - Zhao Zilong, trading fifty even bouts - stops the kill. Earlier he and Yan Liang beheaded the assassins Geng Wu and Guan Chun.",
+   "_note": "old summary reduced him to the beheading; the Gongsun Zan chase is his chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 2767,
+   "summary": "Gongsun Zan's Van Leader at the Pan River (the prose spells him Yan Guang). Qu Yi's hidden bowmen shred his advance, and Qu Yi rides him down and cuts him from the saddle.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 2779,
+   "summary": "Commands a thousand archers on the van's wing, pinning Gongsun Zan's cavalry while Qu Yi's ambush breaks the center; earlier he and Wen Chou beheaded the assassins Geng Wu and Guan Chun; later his arrival helps pull Yuan Shao out of Zhao Zilong's storm.",
+   "_note": "old summary had only the beheading"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 3006,
+   "summary": "Takes Jizhou by Peng Ji's two-handed trick - inviting Gongsun Zan's attack, then entering as Han Fu's 'protector' - and strips Han Fu of everything. His deniable ambush kills Gongsun Yue, igniting the Pan River war: he loses to Qu Yi's ambush, dashes his helmet down refusing to hide when Zhao Zilong hems him in, and finally flees the charge of the three brothers. He accepts the imperial truce with elaborate respect.",
+   "_note": "old summary stopped before the battle he personally fought in"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 3008,
+   "summary": "Refused a thousand horses by his brother and grain by Liu Biao, he brews the chapter's second war: his letter tells Sun Jian that Liu Biao plans to seize the South Land, promising 'you will get Jingzhou and I shall have Jizhou' - the spark that sends Sun Jian to his death.",
+   "_note": "old summary: 'named in passing in the catalogue' - his letter drives the whole second half"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 7,
+   "target_id": 1131,
+   "summary": "Leads one of the three armies out of Xiangyang in the great sortie after the signal bombs announce Sun Jian's death.",
+   "_note": "old summary put him on a 'south bank' engagement that isn't in this chapter"}
+]

@@ -28,7 +28,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch4 — 17 ops (Empress Dong added to ch4, Qiao keyword, 3 relationships, 12 summary rewrites) + data/fixes/sex_audit.json (73 ops: every Empress/Lady/Consort + Diao Chan/Qiaos/Cai Yan/Sun Ren had sex=male)
 - [x] ch5 — 29 ops (Yue Jing spelling, Li Feng 'Anguo'-in-'Wu Anguo' false positive removed, Hu Zhen junk keyword, Qiao/Julu keywords, 7 relationships incl. Cao/Xiahou clan web, ~18 summary rewrites)
 - [x] ch6 — 36 ops (Campaign vs Dong Zhuo event added, Qiao/Yiyang/Great River keywords, ~32 summary rewrites — many had wrong fates: demoted-not-killed, executed ministers, murdered Qiao Mao, Eight Wise Ones mixups)
-- [ ] ch7
+- [x] ch7 — 33 ops (South Land/Great River assocs, 11 relationships incl. the whole Sun family roll + Liu Biao↔Lady Cai + Kuai brothers, ~20 summary rewrites)
 - [ ] ch8
 - [ ] ch9
 - [ ] ch10
@@ -106,6 +106,12 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch7_audit.json (11):
+- Sun Jian [2081] → Sun Ce [2060], Sun Quan [2105], Sun Yi [2121], Sun Kuang [2088],
+  Sun Lang [2089], Sun Ren [3639] Parent/Child; → Sun Hu [3640] Parent/Child (adoptive)
+- Sun Jian ↔ Sun Jing [2084] Sibling; Gongsun Zan [664] ↔ Gongsun Yue [663] Sibling
+- Liu Biao [1313] → Lady Cai [61] Husband/Wife; Kuai Liang [1129] ↔ Kuai Yue [1131] Sibling
+
 From ch5_audit.json (7):
 - Bao Xin [20] ↔ Bao Zhong [3618] Sibling
 - Xiahou Ying [3616] → Xiahou Dun [2535] Ancestor/Descendant
@@ -149,6 +155,16 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch7:
+- Cai Mao is Liu Biao's brother-in-law (stated twice) — no in-law
+  relationship type exists (same gap as Dong Zhuo's sons-in-law).
+- Sun Jian's two wives (Lady Wu and her sister) are unnamed in ch7
+  prose; Lady Wu [2450] left unassociated — no usable needle.
+- Location aliases are single-word for many rows ('Wen', 'Shang',
+  'You', 'Ji', 'Jing') — these are the root cause of the location
+  false-positive associations seen in ch2/ch3. Worth an eventual
+  sweep, but per-chapter keywords are the safe fix for now.
 
 From ch6:
 - Liu Xie's ch6 keyword 'Emperor' also matches "the First Emperor" (Qin
