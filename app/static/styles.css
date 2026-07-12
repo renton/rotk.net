@@ -298,3 +298,29 @@ p.quote {
     background-color: #fff3cd !important;
     box-shadow: inset 4px 0 0 #f0ad4e;
 }
+
+/* ------------------------------------------------------------------
+   Nav polish.
+
+   1. The public top-nav items (Book / Characters / … / Map) sit on
+      Bootstrap's default 0.5rem link padding and read cramped — widen
+      the horizontal padding on desktop. Collapsed (mobile) nav keeps
+      the default so the stacked list stays compact.
+   2. The admin dropdown's section headings (Chapter tools / Content /
+      …) get a bronze accent + small-caps treatment so they read as
+      headings rather than greyed-out items.
+   ------------------------------------------------------------------ */
+@media (min-width: 992px) {
+    .navbar .navbar-nav .nav-link {
+        padding-left: 1.05rem;
+        padding-right: 1.05rem;
+    }
+}
+
+.navbar .dropdown-menu .dropdown-header {
+    color: #96601c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
