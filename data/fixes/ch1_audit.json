@@ -1,0 +1,48 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 1,
+   "target_id": 728,
+   "_note": "Guo Dan is NOT in ch1 - false positive: his courtesy name keyword 'Yuanyi' matched inside 'Ma Yuanyi' in the prose"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 1,
+   "target_id": 3427,
+   "_note": "Zhou Buyi is NOT in ch1 - false positive: his courtesy keyword 'Yuanzhi' matched inside 'Cheng Yuanzhi'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 1,
+   "target_id": 1351, "keywords": "Emperor Ling,Ling",
+   "_note": "drop 'Liu Hong' from Emperor Ling's ch1 keywords: the ONLY 'Liu Hong' in ch1 prose is LIU BEI'S FATHER (para 30), not the emperor - it was pilling the wrong man"},
+
+  {"op": "add_association", "target": "location", "chapter_num": 1,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "You Province: 'Zhang Jue led his army into Youzhou' + 'return to Youzhou' - was never associated"},
+
+  {"op": "update_association", "target": "event", "chapter_num": 1,
+   "target_id": 1, "keywords": "Yellow Turban Rebellion,Yellow Turbans,Yellow Scarves",
+   "_note": "ch1 prose calls them 'Yellow Scarves' exclusively (12+ times); current keywords never match so the event never inline-tags"},
+
+  {"op": "add_relationship", "character1_id": 130, "character2_id": 86,
+   "type": 1, "_note": "Cao Song father of Cao Cao (ch1: 'His father was Cao Song')"},
+
+  {"op": "add_relationship", "character1_id": 132, "character2_id": 130,
+   "type": 1, "_note": "Cao Teng (adoptive) father of Cao Song (ch1: 'born to the Xiahou family, but... brought up by Eunuch Cao Teng')"},
+
+  {"op": "add_relationship", "character1_id": 3154, "character2_id": 3069,
+   "type": 5, "_note": "Zhang Jue and Zhang Bao brothers (ch1: 'three brothers')"},
+
+  {"op": "add_relationship", "character1_id": 3154, "character2_id": 3164,
+   "type": 5, "_note": "Zhang Jue and Zhang Liang brothers"},
+
+  {"op": "add_relationship", "character1_id": 3069, "character2_id": 3164,
+   "type": 5, "_note": "Zhang Bao and Zhang Liang brothers"},
+
+  {"op": "add_relationship", "character1_id": 1471, "character2_id": 1311,
+   "type": 10, "_note": "Liu Yuanqi uncle of Liu Bei (ch1: 'His uncle, Liu Yuanqi')"},
+
+  {"op": "add_relationship", "character1_id": 3585, "character2_id": 1311,
+   "type": 18, "_note": "Liu Sheng (Prince Sheng of Zhongshan) ancestor of Liu Bei (ch1: 'a descendant of Prince Sheng of Zhongshan')"},
+
+  {"op": "add_relationship", "character1_id": 3590, "character2_id": 3585,
+   "type": 1, "_note": "Emperor Jing (Liu Qi) father of Prince Sheng (ch1: 'whose father was the Emperor Jing')"},
+
+  {"op": "add_relationship", "character1_id": 1351, "character2_id": 1434,
+   "type": 1, "_note": "Emperor Ling father of Emperor Xian (Liu Xie) - not stated in ch1 but historical; delete this op if you'd rather source it from a later chapter"}
+]
