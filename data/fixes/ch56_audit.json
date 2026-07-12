@@ -1,0 +1,191 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3690, "keywords": "King Wen of Zhou",
+   "summary": "King Wen of Zhou, 'perfectly virtuous' in the saying of Confucius that Cao Cao claims is engraved on his mind - the banquet speech's proof that he covets no throne.",
+   "_note": "keywords included the junk token 'Xiahou' (same bug as ch17), which pills inside every Xiahou Yuan/Dun mention; summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3659,
+   "summary": "Source of the King Wen saying Cao Cao builds his great apologia on - 'I ever bear in mind what Confucius said of King Wen of Zhou.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3642,
+   "summary": "The flatterers' superlative - 'none are your equals, not even Duke of Zhou' - and the poem's warning: had Duke Zhou died while slander spread, none would have known his true character.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3612,
+   "summary": "The great minister Yi Yin, paired with Duke Zhou in the court's chorus of flattery after the banquet speech.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3576,
+   "summary": "The poem's counter-example to Duke Zhou: had Wang Mang died while still famed for deference to the learned, his treachery would never have been known - judge no one before the end.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 86,
+   "summary": "Inaugurates the finished Bronze Bird Tower in jeweled headdress and pearl shoes, laughs the robe-brawl into gifts for everyone, and answers the scholars' odes with the great apologia: the cottage near Qiao, the tomb inscription he once wanted, the roll of the destroyed - 'were it not for poor me, I know not how many would be styling themselves emperors' - and the confession that he dare not lay down his armies. Hua Xin's news of Liu Bei's Jingzhou appointment knocks the pen from his hand: 'the dragon, once captive, has escaped to the mighty deep.' Cheng Yu's poisoned governorships restore his calm.",
+   "_note": "old summary was sound; the apologia and pen-drop deserved the space"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 231,
+   "summary": "One of the four scholars - with Wang Lang, Zhong Yao, and Wang Can - whose laudatory odes at the tower prompt Cao Cao's self-justifying speech.",
+   "_note": "old summary had him penning Cao Cao's memorial - the self-justification is Cao Cao's own spoken apologia; Chen Lin only presents an ode"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2279,
+   "summary": "Presents one of the four odes praising Cao Cao as worthy of 'the highest trust of all' - the flattery the apologia deflects.",
+   "_note": "old summary was a bare 'at court'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3410,
+   "summary": "Second of the four ode-presenting scholars at the Bronze Bird inauguration.",
+   "_note": "old summary was a bare 'at court'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2215,
+   "summary": "Joins Wang Lang, Zhong Yao, and Chen Lin in the tower odes that crown Cao Cao with every virtue.",
+   "_note": "old summary was a bare 'literary figure'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 142,
+   "summary": "Opens the archery contest: three galloping passes and a bull's eye at a hundred paces - 'a very promising colt of my own,' beams Cao Cao, reaching for the prize robe too soon.",
+   "_note": "old summary was a bare 'competes'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2439,
+   "summary": "Rides out of the green ranks to protest the family monopoly on the prize - and matches Cao Xiu's bull's eye from the gallop.",
+   "_note": "old summary was a bare 'serves at the banquet'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 100,
+   "summary": "Third bull's eye of the contest, fired to reclaim the robe for the red-robed family side.",
+   "_note": "old summary was a bare 'at the banquet'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3120,
+   "summary": "Turns his back at the gallop and hits the bull's eye shooting backwards - the fourth arrow in the red.",
+   "_note": "old summary was a bare 'at the banquet'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2556,
+   "summary": "Gallops to the limit, bends over backwards, and puts his arrow in among the other four - 'is not that a better shot than any of its predecessors?'",
+   "_note": "old summary was a bare 'competes'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2637,
+   "summary": "Ends the contest by aiming past the target: his arrow cuts the willow twig, the robe flutters down, and he rides off wearing it - until Xu Chu lifts him bodily out of the saddle.",
+   "_note": "old summary was a bare 'competes' - his twig shot wins the robe"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 683,
+   "summary": "Author of the chapter's opening stratagem: memorialize Liu Bei as Imperial Protector of Jingzhou to freeze Cao Cao, soothe Liu Bei - and buy time to set the two of them at each other.",
+   "_note": "old summary was a bare 'at Sun Quan's court' - the memorial plan is his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 941,
+   "summary": "Sun Quan's envoy to the tower with the Jingzhou memorial - and Cheng Yu's first sacrifice: 'cause the Emperor to retain this Hua Xin in the capital.' He is showered with gifts, given a ministry, and quietly stolen from the South Land.",
+   "_note": "old summary had him as a rising Cao adviser - he is Sun Quan's envoy deliberately marooned"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 309,
+   "summary": "Reads Hua Xin's mission at a glance and prescribes the counter-poison: make Zhou Yu Governor of Nanjun and Cheng Pu Governor of Jiangxia, keep Hua Xin at the capital - and the South Land's one prop will spend itself against Liu Bei. 'Friend Cheng Yu, you are a man after my own heart.'",
+   "_note": "old summary was a bare 'at court'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2105,
+   "summary": "Takes Gu Yong's counsel over his own rage - the memorial that makes his rival Imperial Protector - then turns on his guarantor: 'you are the guarantor in the loan... I will not wait till old age has come to us all!' He is petitioned into backing Zhou Yu's borrowed-road march at the chapter's end.",
+   "_note": "old summary was a bare 'receives Zhou Yu's failure'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1523,
+   "summary": "Squeezed between his signature and his lord's shout, he sails to Jingzhou to collect - and meets scripted weeping and Zhuge Liang's brotherly-blood argument; 'really the first of generous people,' he consents to plead for delay. Zhou Yu turns him around with the borrowed-road ruse, and he carries THAT to Jingzhou too, delighted at how easily it is accepted.",
+   "_note": "old summary was a bare 'with Sun Quan'; he is fooled twice in one chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1311,
+   "summary": "Weeps on cue - covering his face when Lu Su names the rendition, beating his breast as Zhuge Liang's speech peaks - and agrees to the borrowed-road offer on his adviser's rapid nod, understanding none of it until the ruse is named for him afterwards.",
+   "_note": "old summary was a bare 'sets up the cheerful welcome'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3529,
+   "summary": "Directs Liu Bei's tears from behind the screen and answers Lu Su with the unanswerable: Liu Zhang is my lord's blood - attack him and bear the world's blame, yield Jingzhou first and have nowhere to rest. When the borrowed-road offer arrives he nods Liu Bei into accepting it, then names the ruse - 'Borrow a Road to Destroy the Host' - and sets the hidden hook: 'if Zhou Yu is not killed, he will be nine-tenths a corpse.'",
+   "_note": "old summary was sound; the weeping script and the hook line added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3466,
+   "summary": "Takes the poisoned governorship of Nanjun, spins the borrowed-road scheme - march 'for Xichuan' through Jingzhou, take the host unprepared, assassinate the greeter - and sails smiling at the thought of finally having Zhuge Liang. At the silent wall Zhao Zilong names his ruse back to him, the scouts report four armies converging with orders to take the Commander-in-Chief - and he falls from the saddle with a great cry as the wound reopens a third time.",
+   "_note": "old summary was sound; kept to the arc"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 295,
+   "summary": "Made Governor of Jiangxia in Cheng Yu's wedge-driving memorial, and ordered up with reinforcements for the borrowed-road march.",
+   "_note": "old summary was a bare 'with Zhou Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1682,
+   "summary": "Meets the southern fleet at Xiakou with assurances that all is prepared and the Imperial Uncle waits outside the walls with the cup of greeting - the bait's last polish.",
+   "_note": "old summary was a bare 'with Liu Bei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3334,
+   "summary": "Appears on the suddenly living wall as Zhou Yu challenges the gate: 'the Directing Instructor knows that you want to try the ruse of Borrow a Road to Destroy the Host' - the sentence that turns the trap inside out.",
+   "_note": "old summary was a bare 'welcome ambush' mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 704,
+   "summary": "One of the four armies converging on the exposed Zhou Yu from all sides, shouting for the capture of the Commander-in-Chief - the shock that reopens the wound.",
+   "_note": "old summary was a bare 'welcome ambush' mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3106,
+   "summary": "Closes on Zhou Yu with Guan Yu, Huang Zhong, and Wei Yan in the four-sided convergence at the wall.",
+   "_note": "old summary was a bare 'welcome ambush' mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 996,
+   "summary": "Third of the four converging columns whose tramp 'shakes the heavens' around the trapped Commander-in-Chief.",
+   "_note": "old summary was a bare 'welcome ambush' mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 2418,
+   "summary": "Fourth column of the convergence that springs Zhuge Liang's hidden hook on the borrowed-road army.",
+   "_note": "old summary was a bare 'welcome ambush' mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 596,
+   "summary": "Named Van Leader of the fifty-thousand-man borrowed-road expedition, and rides beside Zhou Yu on the land approach to the silent wall.",
+   "_note": "old summary was a bare 'with Zhou Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3784,
+   "summary": "Rear Guard of the borrowed-road march with Lü Meng.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1566,
+   "summary": "Shares the Rear Guard of Zhou Yu's fifty thousand with Ling Tong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 3639,
+   "summary": "Her marriage is the chapter's lever: 'now that you are the husband of a daughter of Wu' opens Lu Su's claim, and 'Sun Quan's sister is now Liu Bei's wife' is the news that makes Cao Cao drop his pen.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1473,
+   "summary": "The unattackable pretext: 'Liu Zhang of Yizhou is my lord's younger brother' - the blood tie Zhuge Liang wields against rendition, and the fiction the borrowed-road army pretends to march for.",
+   "_note": "old summary was a bare 'regional roll'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1434,
+   "summary": "The throne both schemes route through: Gu Yong's memorial and Cheng Yu's counter-memorial each borrow the Emperor's name to move the pieces.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 56,
+   "target_id": 1547,
+   "summary": "Listed in the apologia's roll of the destroyed - 'broke the power of Lü Bu.'",
+   "_note": "summary was missing"}
+]
