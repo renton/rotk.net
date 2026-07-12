@@ -1,0 +1,61 @@
+[
+  {"op": "add_association", "target": "location", "chapter_num": 8,
+   "target_id": 1656, "keywords": "Great River",
+   "_note": "para 4 'In Changsha, one of the territories south of the Great River'"},
+
+  {"op": "add_relationship", "character1_id": 444, "character2_id": 422,
+   "type": 10, "_note": "Dong Huang is Dong Zhuo's nephew ('A nephew, Dong Huang, was made Court Counselor')"},
+
+  {"op": "add_relationship", "character1_id": 444, "character2_id": 3641,
+   "type": 3, "_note": "Dong Zhuo takes Diao Chan as concubine in ch8 ('brought home a new bedfellow') - the chaining scheme's first link; noting as Husband/Wife, the only spousal type"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3641,
+   "summary": "Twenty-one-year-old singing girl raised in Wang Yun's household like a daughter. Overheard sighing for her lord's grief, she offers to die a myriad deaths for him - and becomes the whole chaining scheme: betrothed to Lü Bu, presented to Dong Zhuo, then playing each against the other with perfectly aimed tears, from the sickbed dumb-show to the staged suicide attempt at the lily pond.",
+   "_note": "old summary said sixteen; the prose twice says twenty-one"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3612,
+   "summary": "Cited in Wang Yun's banquet flattery: not even the ancient sages Yi Yin and the Duke of Zhou could match the Prime Minister's virtue.",
+   "_note": "old summary tied him to the Shang Fu title; he is cited in Wang Yun's flattery"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3642,
+   "summary": "The Duke of Zhou, cited alongside Yi Yin in Wang Yun's banquet flattery of Dong Zhuo.",
+   "_note": "old summary placed him in an 'opening rhetorical roll' - it's the banquet scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3643,
+   "summary": "Cited in Wang Yun's astrology speech: as Shun succeeded Yao and Yu continued Shun, so should Dong Zhuo receive the decree of Heaven.",
+   "_note": "old summary misplaced the citation in the chapter opening"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3644,
+   "summary": "Cited in Wang Yun's astrology speech as the sage emperor Shun succeeded - the bait that makes Dong Zhuo promise Wang Yun 'first in merit' when Heaven's decree devolves on him.",
+   "_note": "old summary misplaced the citation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3645,
+   "summary": "Cited in Wang Yun's astrology speech as the successor who continued Shun's work by merit alone.",
+   "_note": "old summary misplaced the citation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 444,
+   "summary": "Styles himself Imperial Rector, apes imperial state, and builds the replica city Meiwo with twenty years of stores and eight hundred maidens. He tortures surrendered rebels to death mid-feast and has Minister Zhang Wen beheaded at table, the head served on a red dish. Snared by Wang Yun's flattery and Diao Chan's beauty, he takes her home, neglects a month of business, banishes Lü Bu from her sickroom - and ends the chapter hurling the trident halberd at his fleeing 'son' in the Phoenix Pavilion garden.",
+   "_note": "old summary skipped the Meiwo terror scenes (torture feast, Zhang Wen's head)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 1434,
+   "summary": "The powerless boy emperor; Dong Zhuo now styles HIMSELF 'Imperial Rector' - father to the Emperor - and apes imperial state while the real sovereign sits through his conversations.",
+   "_note": "old summary read as if the title were given to the Emperor; Dong Zhuo takes it for himself"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 3008,
+   "summary": "Named in Dong Zhuo's banquet 'explanation': Minister Zhang Wen was supposedly in league with Yuan Shu to assassinate him - the pretext for the head on the red dish.",
+   "_note": "old summary invented a Sun Ce allegiance context; his one mention is the Zhang Wen pretext"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 8,
+   "target_id": 1204,
+   "summary": "After Dong Zhuo banishes Lü Bu from the sickroom, Li Ru warns that alienating the general will cost him the empire, and has him recalled and soothed with three hundred ounces of gold and twenty rolls of brocade - patching, for now, the crack Diao Chan is prying open.",
+   "_note": "old summary credited him with the give-her-to-Lü-Bu counsel - that comes in ch9"}
+]
