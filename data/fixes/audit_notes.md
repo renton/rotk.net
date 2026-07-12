@@ -31,7 +31,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch7 — 33 ops (South Land/Great River assocs, 11 relationships incl. the whole Sun family roll + Liu Biao↔Lady Cai + Kuai brothers, ~20 summary rewrites)
 - [x] ch8 — 13 ops (Diao Chan age 16→21 + concubine relationship, Dong Huang nephew, Imperial Rector self-title fix, Great River assoc, sage-citation fixes)
 - [x] ch9 — 20 ops (Luoyang assoc removed, Lü Bu–Diao Chan relationship, 18 summary fixes incl. Li Su executed by Lü Bu, plotters vs purge-victims mixups, gate-opening fifth column)
-- [ ] ch10
+- [x] ch10 — 25 ops (7 missing summaries filled, Nanyang false assoc removed, Cao Song↔Cao De sibling, Bian Rang/Fan Chou/Li Meng/Wang Fang/Liu Dai/Yu Jin summary corrections)
 - [ ] ch11
 - [ ] ch12
 - [ ] ch13
@@ -106,6 +106,9 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch10_audit.json (1):
+- Cao Song [130] ↔ Cao De [3658] Sibling
+
 From ch9_audit.json (1):
 - Lü Bu [1547] → Diao Chan [3641] Husband/Wife
 
@@ -162,6 +165,11 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch10:
+- **Duplicate Liu Xiu rows**: ch6 associates Liu Xiu [3577], ch10
+  associates Liu Xiu [1438] — both are the Latter Han founder. Merge /
+  soft-delete one via admin UI.
 
 From ch7:
 - Cai Mao is Liu Biao's brother-in-law (stated twice) — no in-law

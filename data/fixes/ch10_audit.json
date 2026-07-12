@@ -1,0 +1,123 @@
+[
+  {"op": "remove_association", "target": "location", "chapter_num": 10,
+   "target_id": 917,
+   "_note": "Nanyang is never mentioned in ch10 prose - association never matches"},
+
+  {"op": "add_relationship", "character1_id": 130, "character2_id": 3658,
+   "type": 5, "_note": "Cao De is Cao Song's brother ('His brother, Cao De, drawing his sword, went out' - para 80)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 3658,
+   "summary": "Cao Song's brother, travelling with the family to Yanzhou. When Zhang Kai's escort turns on them in the storm-bound temple, he goes out sword in hand to investigate and is cut down at once.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 3654,
+   "summary": "Court Counselor who conspires with Ma Yu and Liu Fan as the inside allies of Ma Teng's rescue army, obtaining the secret edicts. Betrayed by a household servant, he is beheaded in the market place with his whole household.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 3657,
+   "summary": "E Lai, the legendary strongman of old - Cao Cao's exclamation on watching Dian Wei hold the toppling banner one-handed: 'This is old E Lai again!'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 3656,
+   "summary": "Recruit from Wucheng, invited into Cao Cao's growing brain trust in the wave brought by Liu Ye alongside Man Chong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 1434,
+   "summary": "Forced from the tower to grant Li Jue, Guo Si, Fan Chou, and Zhang Ji whatever ranks they write down for themselves; his palace attendants are replaced with the rebels' creatures who watch his every movement.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 2370,
+   "summary": "Named from the tower: 'You have slain Wang Yun - now withdraw these soldiers.' His death is the rebels' accomplished fact as the chapter opens.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 3655,
+   "summary": "Liu Bang's great strategist, invoked when Cao Cao wins Xun Yu: 'Xun Yu is my Zhang Liang!'",
+   "_note": "summary was missing (this is the Han founder's adviser, not the Yellow Turban)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 42,
+   "summary": "Governor of Jiujiang and a close friend of Tao Qian; marches five thousand troops to help Xuzhou and is intercepted and killed on the road by Xiahou Dun at Cao Cao's order.",
+   "_note": "old summary had him recommending Cao Cao for Yanzhou - wrong man and wrong fate"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 214,
+   "summary": "Comes in haste to intercede for Tao Qian - 'your worthy father met his death at the hands of Zhang Kai; Tao Qian is guiltless, and the people more innocent still.' Cao Cao rebuffs him with 'you once abandoned me', and Chen Gong, unable to face Tao Qian, rides off to serve Zhang Miao at Chenliu - the posting from which he will strike in ch11.",
+   "_note": "old summary: 'named in passing' - his failed intercession sets up the Yanzhou betrayal"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 502,
+   "summary": "Made General of the Right Army and Lord of Wanian in the extorted honors. Sent after the retreating Han Sui, he lets his fellow villager ride away - is seen by Li Jue's nephew - and at a 'reconciliation' banquet Jia Xu designed, assassins take his head beneath the table.",
+   "_note": "old summary invented a capture and a murderer named Li Bie; he spares Han Sui and Li Jue has him killed at the banquet"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 1048,
+   "summary": "Counsels fortify-and-wait against the Xiliang army - vindicated when the boasters Li Meng and Wang Fang fall to Ma Chao - then suggests executing Fan Chou quietly at a banquet rather than risking open war, and keeps urging his masters toward good governance until the court begins to recover.",
+   "_note": "old summary omitted the banquet advice and the governance push"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 1185,
+   "summary": "Writes his own promotion list at spear-point - General of the Flying Chariots, Lord of Chiyang - and rules the court with Guo Si. He crushes the Ma Teng-Han Sui rescue by following Jia Xu's patience, beheads the three inside conspirators with their households, and has Fan Chou's head taken at his own banquet for sparing Han Sui.",
+   "_note": "old summary was thin for the chapter's ruling villain"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 1193,
+   "summary": "Rewarded with an Imperial Commandership for opening Changan's gates, then boasts he can crush the Xiliang army in one battle. Chasing the young Ma Chao, he is plucked bodily from his saddle by the boy's arm, carried back a prisoner, and decapitated.",
+   "_note": "old summary: 'one of Li Jue's officers in the field' - he dies spectacularly"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 2232,
+   "summary": "Rewarded for opening Changan's gates, he despises the seventeen-year-old Ma Chao on sight - and falls to the boy's spear within a few passes.",
+   "_note": "old summary: 'one of Li Jue's officers in the field' - he's Ma Chao's first duel kill"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 1325,
+   "summary": "Submits after Cao Cao breaks the Qingzhou Yellow Scarves; he and his officials invite Cao Cao to take over Yanzhou - the seat of his rising power.",
+   "_note": "old summary said he was killed by the rebels; this translation has him submitting and offering the province"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 1599,
+   "summary": "Debuts at seventeen, face like jade and eyes like shooting stars: spears Wang Fang dead within a few passes, then feigns not to see the pursuing Li Meng, twists past his thrust, and plucks him from the saddle with one arm. On the retreat his desperate rearguard saves his father's beaten army.",
+   "_note": "old summary omitted both kills that make the debut famous"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 2161,
+   "summary": "Courts Cao Cao's friendship by feasting the passing Cao family and giving them Zhang Kai's escort - and inherits the massacre. He bows beneath his ensign explaining the fault is not his, offers to give himself up to save his people, and is answered only by 'Vengeance' banners and slaughtered countryside - until an unnamed voice at council promises a scheme.",
+   "_note": "old summary was decent; this adds his self-surrender offer and the cliffhanger"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 2535,
+   "summary": "Discovers Dian Wei chasing a tiger across a stream and presents him to Cao Cao. In the vengeance campaign he is a Van Leader: kills Bian Rang on the march at Cao Cao's order and duels Cao Bao until a hurricane of dust and pebbles breaks up the field.",
+   "_note": "old summary credited him with recruiting Yu Jin (who came on his own) and missed the campaign role"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 2953,
+   "summary": "Arrives at Yanzhou with his own troop of several hundred - an expert horseman and archer - and is made Army Inspector; rides as a Van Leader in the Xuzhou vengeance campaign.",
+   "_note": "old summary said Xiahou Dun recommended him; he came on his own"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 2926,
+   "summary": "Governor of Taishan, sent by Cao Cao to escort Cao Song's family from Langye. When Zhang Kai's escort massacres them at the temple, he flees for his life to Yuan Shao.",
+   "_note": "old summary: 'minor courtier named in passing' - he's the escort commander who survives"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 3494,
+   "summary": "Summoned to court as Court Administrator by Li Jue and Guo Si to buy popularity; when the Qingzhou Yellow Scarves rise, he tells them plainly the rising will only break if they order Cao Cao to act - the recommendation that restarts Cao Cao's ascent.",
+   "_note": "old summary was about court rank; his act is the Cao Cao recommendation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 376,
+   "summary": "Debuts as the strongman of Chenliu: killed dozens of tent-mates with his fists, avenged a friend and walked the market with the head, follows a tiger across a stream - which is where Xiahou Dun finds him. Wielding twin hundred-twenty-pound spears, he steadies a toppling banner one-handed in the wind; Cao Cao cries 'this is old E Lai again!' and makes him Commander of the Headquarters Guards.",
+   "_note": "old summary garbled the tiger and flag anecdotes into one"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 10,
+   "target_id": 444,
+   "summary": "Dead but restless: his followers carve a fragrant-wood likeness for the missing corpse and try to bury him at Meiwo - and three times thunderstorms burst the coffin and hurl the remains out, until the thunder-fire consumes them. Heaven, the narrator observes, was exceedingly angry.",
+   "_note": "old summary skipped the thrice-rejected burial, ch10's one Dong Zhuo scene"}
+]
