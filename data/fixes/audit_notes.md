@@ -43,7 +43,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch19 — 28 ops (6 missing summaries incl. Lü Bu's end and Liu An, Hou Cheng steals Red Hare not the halberd, Taishan chiefs at Xiao Pass, Zhang Yang assassination subplot, Chen Deng's triple-cross)
 - [x] ch20 — 35 ops (Liu Hong wrong-person fix #2: Emperor Ling removed, Liu Bei's father [3849] added; Emperor Xian summary restored to Liu Xie; Yang Biao victim-not-conspirator; 14 missing summaries; Fu Wan→Empress Fu + Liu Xiong→Liu Hong relationships)
 - [x] ch21 — 31 ops (9 missing summaries, Zhao Yun premature-rejoin fix, Lu Zhao wrong-side fix, Yuan Shu's on-page death, Guan Yu's ruse credited, Yuan Shu→Yuan Yin nephew)
-- [ ] ch22
+- [x] ch22 — 21 ops (bare You/Ji/Yan keyword fixes, 6 missing summaries, Zhao Yan manifesto assoc added, Xun Yu's takedown, Tian Feng premature jailing, Chunyu Qiong ch30 spillover)
 - [ ] ch23
 - [ ] ch24
 - [ ] ch25

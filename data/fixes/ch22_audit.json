@@ -1,0 +1,103 @@
+[
+  {"op": "update_association", "target": "location", "chapter_num": 22,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "per-chapter keywords included bare 'You', which matches the capitalized pronoun 18 times in this dialogue-heavy chapter"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 22,
+   "target_id": 18, "keywords": "Jizhou",
+   "_note": "bare 'Ji' keyword only ever matches inside personal names here; 'Jizhou' covers the real mentions"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 22,
+   "target_id": 63, "keywords": "Yanzhou",
+   "_note": "bare 'Yan' keyword collides with 'Yan Liang'; 'Yanzhou' covers the real mentions"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 22,
+   "target_id": 3325, "keywords": "Zhao Yan",
+   "summary": "Held up in Chen Lin's manifesto as proof of the tyranny: the honest censor whose words once moved the Emperor, arrested and put to death by Cao Cao 'in defiance of all legal procedures'.",
+   "_note": "the manifesto names the executed censor (killed in ch20) but he wasn't associated to ch22"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 3711,
+   "summary": "Zheng Xuan's famous teacher, master of the Book of Odes, who lectured with singing girls behind a lowered curtain - and prized the one pupil who never once looked: 'only Zheng Xuan has penetrated the inner meaning of my instructions.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 2723,
+   "summary": "Consulted with Xu You on the great question (the prose spells him Xun Shen); he backs the strike and is named one of the three Military Advisers for the march on Liyang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 3635,
+   "summary": "Named Commanding General beside Shen Pei for the Liyang expedition - and dissected in Xun Yu's council takedown as 'steady but useless'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 1351,
+   "summary": "The late Emperor Ling, under whom Chen Lin served as Court Secretary before fleeing Dong Zhuo's coup to Jizhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 3582,
+   "summary": "Emperor Huan, in whose reign Zheng Xuan rose to Chair of the Secretariat before the eunuchs drove him into Xuzhou retirement.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 1434,
+   "summary": "The prisoner behind the manifesto: Chen Lin's document charges that Cao Cao's seven hundred 'guards' around the Palace hold the Emperor captive, his tears shed over desecrated imperial tombs.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 2755,
+   "summary": "Answers Kong Rong's catalogue of Yuan Shao's talent with the chapter's famous takedown: Tian Feng bold but treacherous, Xu You greedy, Shen Pei devoted but stupid, Peng Ji steady but useless - 'what is the use even of their hundred thousands?'",
+   "_note": "old summary was a bare 'running Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 2176,
+   "summary": "Argues for patience - report to the Throne, occupy Liyang, build a river fleet, win in three years - and is overriden by Shen Pei and Guo Tu's push for war; he marches anyway as one of the three Military Advisers.",
+   "_note": "old summary jailed him prematurely (that comes later); in ch22 he is outvoted but still appointed"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 316,
+   "summary": "Listed by Kong Rong among Yuan Shao's able commanders with Gao Lan, Zhang He, and Han Meng - and dismissed by Xun Yu as 'poor, rough stuff'.",
+   "_note": "old summary gave him the commissariat command - that's ch30"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 2683,
+   "summary": "Consulted with Xun Shen, he backs the war and is named a Military Adviser - but at Liyang his feud with the commanding Shen Pei helps freeze the whole army for two months.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 3042,
+   "summary": "Ordered to keep the pressure on Qingzhou and Xuzhou when Cao Cao redeploys from the frozen Liyang front.",
+   "_note": "old summary was vague drift talk; he has a specific assignment"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 2953,
+   "summary": "Posted with Li Dian along the Yellow River when the Liyang standoff breaks up.",
+   "_note": "old summary was a bare frontier mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 1158,
+   "summary": "Posted with Yu Jin along the Yellow River when the Liyang standoff breaks up.",
+   "_note": "old summary was a bare frontier mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 123,
+   "summary": "Given the main force at Guandu - the position around which the coming war will turn - when Cao Cao returns to Xuchang.",
+   "_note": "old summary was a bare frontier mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 207,
+   "summary": "Proposes the rescue play: Yuan Shao commands a million men across four regions - get Zheng Xuan, whose family has a century's intimacy with the Yuans, to write the letter. He escorts Liu Bei to the scholar's house himself.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 1325,
+   "summary": "The former Imperial Protector of Yanzhou, now Cao Cao's Supernumerary Leader: sent with Wang Zhong and fifty thousand men to fly the Prime Minister's banner at Xuzhou. He loses the lot-draw, hangs back, distrusts a flogged 'deserter' exactly as intended, and is taken by Zhang Fei in the night ambush - then released by Liu Bei to carry home the message of loyalty.",
+   "_note": "old summary was bare; the prose explicitly identifies him with the Yanzhou protector and details the capture"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 22,
+   "target_id": 2382,
+   "summary": "Loses the lot-draw and marches on Xuzhou, bluffing that the Prime Minister rides with him - until Guan Yu wheels on the slope, plucks him from the saddle by his breastplate straps, and carries him across the pommel into the lines. Imprisoned kindly, released with Liu Dai to explain that Liu Bei is no rebel.",
+   "_note": "old summary was thin on the famous saddle-pluck capture"}
+]
