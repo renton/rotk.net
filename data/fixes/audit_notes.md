@@ -58,7 +58,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch34 — 28 ops (9 missing summaries incl. the three Cai brothers and Su Dongpo, Kuai Liang is-dead fix, Liu Qi/Sun Qian wrong-content fixes, Yi Ji's three warnings, Zhao Yun's Dilu capture, 8 relationships: Jingzhou heir family + Cai brothers + Lady Gan→Liu Shan)
 - [x] ch35 — 16 ops (Xu Shu/Shan Fu debut summary was missing, Lü brothers' on-page deaths, Cai Mao death-sentence-and-reprieve, Liu Biao letter-not-visit fix, Pang Tong 'named as Young Phoenix' fix, Pang Degong→Pang Tong uncle relationship)
 - [x] ch36 — 33 ops (Fancheng capture credited to Guan Yu not Zhao Yun, Lady Xun inkstone scene + 9 other missing summaries, Xu Province false assoc removed, bare-'Yu' restriction, Zhuge Liang did appear in person, 9 relationships: Liu Feng adoption cluster + Lady Xun→Xu Shu + Zhuge family tree)
-- [ ] ch37
+- [x] ch37 — 23 ops (Lady Xun's suicide + 13 other missing summaries for the recluse coterie and cycle-lecture cast, Guan Yu/Zhang Fei ch38-spillover quotes fixed, Zhuge Jun met-once fix, Cui Zhouping lecture, 2 relationships: Zhuge Jin↔Liang + Gui→Jin; Huang Chengyan father-in-law tie is prose-only, no in-law type)
 - [ ] ch38
 - [ ] ch39
 - [ ] ch40
@@ -105,6 +105,9 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch37_audit.json (2):
+- Zhuge Jin [3524] ↔ Zhuge Liang [3529] Sibling; Zhuge Gui [3521] → Zhuge Jin [3524] Parent/Child
 
 From ch36_audit.json (9):
 - Liu Bei [1311] → Liu Feng [1336] Parent/Child (adoptive)

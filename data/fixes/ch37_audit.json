@@ -1,0 +1,111 @@
+[
+  {"op": "add_relationship", "character1_id": 3524, "character2_id": 3529,
+   "type": 5, "_note": "'He has another elder brother, Zhuge Jin, now with Sun Quan... Zhuge Liang is the second of our family'"},
+
+  {"op": "add_relationship", "character1_id": 3521, "character2_id": 3524,
+   "type": 1, "_note": "implied: Zhuge Jin is the eldest of Zhuge Gui's three sons per Zhuge Jun's account"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 37,
+   "target_id": 62, "keywords": "Yuzhou",
+   "_note": "restrict from the bare 'Yu' alias (lands inside Guan Yu mentions in counts); 'Yuzhou' occurs three times"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3773,
+   "summary": "Sees her son at her door and delivers the tirade of the book - loyalty and filial piety opposed, Cao Cao the traitor, Liu Bei the fitting master, 'on the strength of a scrap of forged writing you have left the light and plunged into darkness' - then walks out and hangs herself rather than live as his leash. Cao Cao, whose trick killed her, sends mourning gifts.",
+   "_note": "summary was missing; ch37 is where she dies"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3782,
+   "summary": "Zhuge Liang's father-in-law, jogging over the bridge on a donkey through the snow with a wine jar behind him, humming a plum-blossom song from his son-in-law's house - the second visit's last false hope.",
+   "_note": "summary was missing; NOTE no father-in-law relationship type exists, so the tie stays prose-only"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3778,
+   "summary": "The pale, long-bearded singer in the roadside inn whose Lu Wang ballad stops Liu Bei mid-journey; one of the Sleeping Dragon's coterie of five, he waves off recruitment - 'we idle folks of the wilds know nothing of tranquilizing states.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3779,
+   "summary": "Shi Guangyuan's refined-faced drinking companion at the inn, tapping the table through the second song; another of the coterie of five, equally immune to Liu Bei's horses.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3775,
+   "summary": "The self-comparison Guan Yu finds excessive - and Water Mirror finds insufficient: Zhuge Liang should be measured not against Guan Zhong but against Lu Wang and Zhang Liang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3776,
+   "summary": "Half of the famous self-comparison the friends could never gauge - 'he always compared himself with Guan Zhong and Yue Yi.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3774,
+   "summary": "Water Mirror's true measure of the Sleeping Dragon - Lu Wang, whose foundations held the Zhou eight hundred years - echoed again in the inn ballad and in Liu Bei's letter left at the cottage.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3655,
+   "summary": "The other half of Water Mirror's measure: Zhang Liang, who made the Han glorious for four centuries - invoked in the inn song and in Liu Bei's letter.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3575,
+   "summary": "Opens Cui Zhouping's lecture on the cycles: with the slaying of Qin's wicked ruler, Liu Bang turned disorder to order and bought two centuries of tranquillity.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3576,
+   "summary": "The pivot of Cui Zhouping's cycle - Wang Mang's rebellion turned two centuries of order back to chaos.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3577,
+   "summary": "The restorer in Cui Zhouping's cycle: Liu Xiu rebuilt the Han and bought two more centuries - which are now due to end, whatever Liu Bei wishes.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3715,
+   "summary": "Quoted by Liu Bei to silence Zhang Fei's 'send and tell him to come': 'to try to see the sage without going his way is like barring a door you wish to enter.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 2906,
+   "summary": "The old astrologer cited by Water Mirror to explain Yingchuan's crop of talent: the stars cluster thick over the region.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 1434,
+   "summary": "Present in Liu Bei's self-announcements: 'Uncle of the Emperor' at the cottage door, 'a distant relative of the Emperor' in the letter - the legitimacy Liu Bei carries to the recluse.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 328,
+   "summary": "Met on the mountain path and mistaken for the Sleeping Dragon: seated on a stone, he lectures Liu Bei on the great cycles - order and disorder alternate by fate, the time of troubles is due, and no sage can 'repair the cosmos' against Heaven. He declines service ('too fond of leisure') and strolls off; days later he has carried Zhuge Liang away on a jaunt.",
+   "_note": "old summary was garbled ('a Cui Zhouping form'); his fatalism lecture is the first visit's centrepiece"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 704,
+   "summary": "Suggests turning back at the empty cottage and, hearing Water Mirror rank Zhuge Liang with Guan Zhong and Yue Yi, objects that the comparison is 'a little too much' - to be trumped: Lu Wang and Zhang Liang are the right measure.",
+   "_note": "old summary quoted the 'too much deference' argument, which belongs to ch38's remonstrance"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3106,
+   "summary": "Grumbles through both failures - 'send and tell him to come', the snow journey is 'useless', the scholar talks 'wild ravings' - and is twice told to be silent, once with Mencius quoted at him.",
+   "_note": "old summary's rope threat belongs to ch38; ch37 is the running grumble"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 3527,
+   "summary": "The knee-hugging singer by the brazier whom Liu Bei mistakes for the sage himself: he sets the family straight - Zhuge Jin eldest and serving Sun Quan, Zhuge Liang second - lends the 'four treasures' for the letter, and can promise nothing about a brother whose 'goings and comings nobody can guess.'",
+   "_note": "old summary had him meeting Liu Bei twice; the first visit's doorkeeper was the serving lad"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 2755,
+   "summary": "Greets Xu Shu at the gate on Cao Cao's behalf, and talks his master out of a winter campaign against the south - wait for milder weather.",
+   "_note": "old summary was a bare 'running Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 37,
+   "target_id": 86,
+   "summary": "Receives the trapped Xu Shu with honeyed courtesies, sends mourning gifts and personally sacrifices for the mother his own forgery drove to the noose - then, deferring the southern war to spring, diverts the River Zhang into the Aquamarine Lake to drill his soldiers for war on water.",
+   "_note": "old summary's council-silence detail is later material; the condolence hypocrisy and the naval lake are ch37's"}
+]
