@@ -1,0 +1,111 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3746,
+   "summary": "One of the five leaders of the Wuchao depot guard; returning from a grain delivery he sees the night sky burning, rushes back with Zhao Rui - and both die when Cao Cao wheels his raiders about.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3747,
+   "summary": "One of the five leaders posted to guard the Wuchao grain depot under the drunkard Chunyu Qiong.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3748,
+   "summary": "His name is the password of the raid - 'Jiang Qi has orders to guard the grain stores' - and when the real Jiang Qi marches ten thousand men to save burning Wuchao, Zhang Liao cuts him down before he can raise his weapon; false messengers then report his 'victory' to stop further relief.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3750,
+   "summary": "Han Xin, who left Xiang Yu for the rising Han - Cao Cao's welcome-compliment to the defectors Zhang He and Gao Lan.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3751,
+   "summary": "Weizi, who left the falling House of Shang for Zhou - the other half of Cao Cao's compliment to his new defectors.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3749,
+   "summary": "Sun Bin's besiege-Wei-to-rescue-Zhao stratagem, cited by Guo Tu to justify striking Cao Cao's camp during the Wuchao raid - the counsel that instead destroys Zhang He and Gao Lan's standing.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3575,
+   "summary": "Cited in Xun Yu's resolve-stiffening letter: Cao Cao's position is brighter than Liu Bang's was against Xiang Yu at Jungyang and Chenggao - hold, and the unexpected move will come.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3696,
+   "summary": "The stronger rival of Xun Yu's letter-analogy, and the master Han Xin wisely abandoned in Cao Cao's welcome to the defectors.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3576,
+   "summary": "The usurper Yuan Shao ranks Cao Cao beneath - 'worse than Wang Mang and Dong Zhuo' - in the parley of insults before Guandu.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 1434,
+   "summary": "Both armies claim him: Cao Cao professes to command 'by imperial authority' while Yuan Shao brands the claim rebellion in the shouted parley before the lines.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3635,
+   "summary": "Rebukes Tian Feng's 'ill-omened words' as the army marches - and, when the broken Yuan Shao stumbles home, whispers that the jailed prophet is laughing: the slander that gets Tian Feng put to death.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3752,
+   "summary": "Sent with fifty thousand troops to 'save' Liyang against the invented flanking threat - the deception that empties Yuan Shao's camp for the eight-division assault.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 1048,
+   "summary": "Assigned with Xun You and Cao Hong to hold the main camp - with the newly-defected Xu You beside them - while Cao Cao rides for Wuchao.",
+   "_note": "old summary invented a grain-council quote; the resolve letter is Xun Yu's, and Jia Xu's ch30 role is the camp guard"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 86,
+   "summary": "Outnumbered and nearly out of grain, he holds on Xun Yu's letter until Xu You walks into his camp - greeted barefoot - with Wuchao's location. He rides the night raid himself, gagged troops and muzzled horses under Yuan Shao's own banners, Zhang Liao and Xu Chu in the van, burns the depot, mutilates its drunken commander, and shatters the northern army: Yuan Shao crosses the river with eight hundred horse.",
+   "_note": "old summary put Xiahou Dun on the raid; he guarded the left camp - the van was Zhang Liao and Xu Chu"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 316,
+   "summary": "Entrusted with the Wuchao depot and drunk when the 'friendly' column arrives; captured in the flames, he is sent back to Yuan Shao with ears, nose, and fingers cut off, roped to his horse - the ruin of the northern commissariat in one night.",
+   "_note": "old summary credited the capture to Yue Jin, who isn't in this chapter's account"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 2637,
+   "summary": "Follows up his prisoner-spy's intelligence by burning Han Meng's entire supply convoy in a defile by night - the first fire of the grain war - then rides rear guard on the Wuchao raid itself.",
+   "_note": "old summary had only the raid; the convoy burning is his own coup"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 796,
+   "summary": "The 'valiant fool' (Xun You's phrase) commanding the supply convoy: Xu Huang's night interception scatters his escort and burns every wagon, and he flees to a furious reception.",
+   "_note": "old summary had him captured at Wuchao; he escapes the convoy fire"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 1948,
+   "summary": "Xu Huang's officer who captures the enemy spy - the thread that unravels into the convoy burning - and rides in the raid that lights it.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 3316,
+   "summary": "One of the five Wuchao depot leaders; killed with Gui Yuanjin when they rush back toward the flames and Cao Cao turns on them.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 793,
+   "summary": "One of the five leaders of the Wuchao depot guard overwhelmed in the night raid.",
+   "_note": "old summary was vaguer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 1453,
+   "summary": "Answers Yuan Shao's fifty archery mounds with catapults - the 'Rumblers' whose stone balls sweep the towers clear - and counters Shen Pei's tunneling Sappers with a trench around the camp. The engineering duel is his.",
+   "_note": "old summary's 'lightning-arrow carts' garbled the catapults"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 30,
+   "target_id": 2683,
+   "summary": "His plan to raid empty Xuchang is spat back with an accusation of bribery - Shen Pei has jailed his son and nephew - so he walks to the enemy: Cao Cao runs out barefoot to greet him, admits the empty granary only when shown his own intercepted letter, and receives Wuchao. One defection decides the war.",
+   "_note": "old summary was right in outline; this adds the rejected Xuchang plan and the barefoot greeting"}
+]

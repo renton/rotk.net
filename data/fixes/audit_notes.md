@@ -51,7 +51,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch27 — 23 ops (13 missing summaries for the five-passes cast, Wang Zhi empty keywords, invented 'pass-edict' removed from Cao Cao/Guan Yu, Hu Hua→Hu Ban relationship)
 - [x] ch28 — 20 ops (5 missing summaries incl. Zhou Cang's debut, Guo Chang farm-host fix, Guan Ping adoption relationships, Cai Yang→Qin Qi nephew)
 - [x] ch29 — 29 ops (17 missing summaries incl. Yu Ji the haunting saint, Hua Xin envoy/governor fix, Guo Jia's prophecy, Qiao-sister marriages: Sun Ce↔Da Qiao, Zhou Yu↔Xiao Qiao)
-- [ ] ch30
+- [x] ch30 — 22 ops (12 missing summaries, Jia Xu's invented council quote fixed, Wuchao raid roster corrected, catapult 'Rumblers' restored, Han Meng/Chunyu Qiong fates fixed)
 - [ ] ch31
 - [ ] ch32
 - [ ] ch33
