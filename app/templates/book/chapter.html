@@ -140,7 +140,11 @@
                                                      id="ymfl-pane-{{ m.year }}-{{ f.id }}-{{ c.id }}"
                                                      role="tabpanel"
                                                      aria-labelledby="ymfl-tab-{{ m.year }}-{{ f.id }}-{{ c.id }}">
-                                                    <h6 class="mb-0">{{ c.name }}</h6>
+                                                    <h6 class="mb-0">
+                                                        <a href="{{ url_for('main.character_view', id=c.id) }}"
+                                                           target="_blank" rel="noopener"
+                                                           class="text-decoration-none">{{ c.name }}</a>
+                                                    </h6>
                                                     {% if c.chinese_name %}
                                                     <div>{{ c.chinese_name }}</div>
                                                     {% endif %}
@@ -306,7 +310,8 @@
                     <div class="character-panel mb-4" id="character-panel-{{ character.id }}" {% if loop.index != 1 %}style="display:none;"{% endif %}>
                       <div class="d-flex align-items-center gap-2 mb-0">
                         <h6 class="mb-0">
-                          {{ character.name }}
+                          <a href="{{ url_for('main.character_view', id=character.id) }}"
+                             class="text-decoration-none text-reset">{{ character.name }}</a>
                           {% if character.is_fictional %}
                           <i class="fa-solid fa-book text-muted ms-1"
                              title="fictional"
@@ -489,8 +494,11 @@
                         <div class="small text-muted fw-bold mb-1">Relationships:</div>
                         {% for r in char_rels %}
                         <div class="mb-1">
-                          <span class="badge rounded-pill"
-                                style="background-color:{{ r.bg }};color:{{ r.font }};border:2px solid {{ r.border }};">{{ r.name }}</span>
+                          <a href="{{ url_for('main.character_view', id=r.id) }}"
+                             target="_blank" rel="noopener" class="text-decoration-none">
+                            <span class="badge rounded-pill"
+                                  style="background-color:{{ r.bg }};color:{{ r.font }};border:2px solid {{ r.border }};">{{ r.name }}</span>
+                          </a>
                           <span class="small text-muted fst-italic">{{ r.label }}</span>
                         </div>
                         {% endfor %}

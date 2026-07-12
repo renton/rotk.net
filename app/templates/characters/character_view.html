@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}rotk.net - {{ character.name }}{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header mt-4 mb-4 d-flex justify-content-between align-items-start flex-wrap gap-2">
+    <div>
+        <h1 class="mb-0">
+            {{ character.name }}
+            {% if character.is_fictional %}
+            <i class="fa-solid fa-book text-muted ms-1" style="font-size: 0.6em;"
+               title="fictional" aria-label="fictional"></i>
+            {% endif %}
+        </h1>
+        {% if character.chinese_name %}
+        <div class="fs-4 text-muted">{{ character.chinese_name }}</div>
+        {% endif %}
+        {% if character.courtesty_name or character.chinese_courtesty_name %}
+        <div class="text-muted">
+            Courtesy name: {{ character.courtesty_name }}{% if character.chinese_courtesty_name %} ({{ character.chinese_courtesty_name }}){% endif %}
+        </div>
+        {% endif %}
+    </div>
+    {% if current_user.is_authenticated and current_user.is_administrator %}
+    <a href="{{ url_for('main.edit_character', id=character.id) }}"
+       class="btn btn-sm btn-outline-secondary">
+        <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Edit
+    </a>
+    {% endif %}
+</div>
+
+<div class="row g-4">
+    {# ----- Left column: portraits ----- #}
+    <div class="col-md-4 col-lg-3">
+        {% if portraits %}
+        {% if portraits|length > 1 %}
+        <ul class="nav nav-pills nav-fill flex-wrap mb-2" role="tablist">
+            {% for p in portraits %}
+            <li class="nav-item" role="presentation">
+                <button class="nav-link py-1 px-2 {% if loop.first %}active{% endif %}"
+                        id="cv-portrait-tab-{{ loop.index0 }}"
+                        data-bs-toggle="pill"
+                        data-bs-target="#cv-portrait-pane-{{ loop.index0 }}"
+                        type="button" role="tab"
+                        aria-selected="{{ 'true' if loop.first else 'false' }}">{{ loop.index }}</button>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="tab-content border rounded p-2">
+            {% for p in portraits %}
+            <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                 id="cv-portrait-pane-{{ loop.index0 }}" role="tabpanel">
+                <img src="{{ url_for('static', filename=p.static_path) }}"
+                     alt="{{ p.name or character.name }}"
+                     class="img-fluid d-block mx-auto" loading="lazy"
+                     style="max-height: 360px; object-fit: contain;">
+                <div class="small text-muted mt-1">
+                    Source:
+                    {% if p.source_url %}
+                    <a href="{{ p.source_url }}" target="_blank" rel="noopener">{{ p.source_site or p.source_url }}</a>
+                    {% else %}
+                    {{ p.source_site or 'unknown' }}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-secondary-subtle text-muted text-center rounded d-flex align-items-center justify-content-center"
+             style="height: 240px; font-style: italic;">
+            No Image.
+        </div>
+        {% endif %}
+    </div>
+
+    {# ----- Right column: facts ----- #}
+    <div class="col-md-8 col-lg-9">
+        <dl class="row mb-3">
+            {% if character.birth_date %}
+            <dt class="col-sm-3">Born</dt><dd class="col-sm-9">{{ character.birth_date }}</dd>
+            {% endif %}
+            {% if character.death_date %}
+            <dt class="col-sm-3">Died</dt><dd class="col-sm-9">{{ character.death_date }}</dd>
+            {% endif %}
+            {% if character.ancestral_home %}
+            <dt class="col-sm-3">Ancestral home</dt><dd class="col-sm-9">{{ character.ancestral_home }}</dd>
+            {% endif %}
+            {% if character.aliases %}
+            <dt class="col-sm-3">Also known as</dt><dd class="col-sm-9">{{ character.aliases }}</dd>
+            {% endif %}
+            <dt class="col-sm-3">Book mentions</dt>
+            <dd class="col-sm-9">{{ character.book_mention_count or 0 }}</dd>
+        </dl>
+
+        {% if roles %}
+        <div class="chapter-section-card rounded p-2 mb-3">
+            <div class="small text-muted fw-bold mb-1">Roles:</div>
+            {% for role in roles %}
+            <span class="me-1">{{ macros.badge_widget(role) }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if factions %}
+        <div class="chapter-section-card rounded p-2 mb-3">
+            <div class="small text-muted fw-bold mb-1">Factions:</div>
+            {# Faction pills open the characters list filtered by that
+               faction, in a new tab. Primary faction marked. #}
+            {% for f in factions %}
+            <span class="me-1">
+                <a href="{{ url_for('main.characters', any_faction=f.id) }}"
+                   target="_blank" rel="noopener" class="text-decoration-none">{{ macros.badge_widget(f) }}</a>
+                {%- if character.primary_faction and f.id == character.primary_faction.id %}
+                <span class="small text-muted fst-italic">(primary)</span>
+                {%- endif %}
+            </span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if relationships %}
+        <div class="chapter-section-card rounded p-2 mb-3">
+            <div class="small text-muted fw-bold mb-1">Relationships:</div>
+            {% for r in relationships %}
+            <div class="mb-1">
+                <a href="{{ url_for('main.character_view', id=r.id) }}"
+                   target="_blank" rel="noopener" class="text-decoration-none">
+                    <span class="badge rounded-pill"
+                          style="background-color:{{ r.bg }};color:{{ r.font }};border:2px solid {{ r.border }};">{{ r.name }}</span>
+                </a>
+                <span class="small text-muted fst-italic">{{ r.label }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% set list_urls = urls %}
+        {% if list_urls %}
+        <div class="chapter-section-card rounded p-2 mb-3">
+            <div class="small text-muted fw-bold mb-1">Links:</div>
+            <div class="sidebar-url-indent">
+                {% include '_url_list.html' %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if chapter_rows %}
+        <div class="chapter-section-card rounded p-2 mb-3">
+            <div class="small text-muted fw-bold mb-1">
+                Appears in {{ chapter_rows|length }} chapter{{ '' if chapter_rows|length == 1 else 's' }}:
+            </div>
+            <ul class="list-unstyled mb-0 small">
+                {% for num, name, summary in chapter_rows %}
+                <li class="mb-1">
+                    <a href="{{ url_for('main.chapter', chapter_num=num) }}">Chapter {{ num }}</a>
+                    — {{ name | replace('<br>', ' ') | safe }}
+                    {% if summary %}
+                    <div class="text-muted fst-italic ms-3">{{ summary }}</div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -93,7 +93,8 @@
                             {% if current_user.is_authenticated and current_user.is_administrator %}
                             <a href="{{ url_for('main.edit_character', id=character.id, back=back_url) }}">{{ character.name }}</a>
                             {% else %}
-                            {{ character.name }}
+                            <a href="{{ url_for('main.character_view', id=character.id) }}"
+                               target="_blank" rel="noopener">{{ character.name }}</a>
                             {% endif %}
                             {% if character.is_fictional %}
                             <i class="fa-solid fa-book text-muted ms-1"
@@ -174,7 +175,8 @@
                         {% if current_user.is_authenticated and current_user.is_administrator %}
                             <a href="{{ url_for('main.edit_character', id=character.id, back=back_url) }}">{{ character.name }}</a>
                         {% else %}
-                            {{ character.name }}
+                            <a href="{{ url_for('main.character_view', id=character.id) }}"
+                               target="_blank" rel="noopener">{{ character.name }}</a>
                         {% endif %}
                         {# Book icon next to the name when the character is
                            marked fictional. Hover tooltip says "fictional";
@@ -228,7 +230,8 @@
                        chapter pill) + the tie label in small text. #}
                     {% for r in relationships_by_char_id.get(character.id, []) %}
                     <div class="mb-1">
-                        <a href="{{ url_for('main.characters', search_query=r.name) }}"
+                        <a href="{{ url_for('main.character_view', id=r.id) }}"
+                           target="_blank" rel="noopener"
                            class="text-decoration-none">
                             <span class="badge rounded-pill"
                                   style="background-color:{{ r.bg }};color:{{ r.font }};border:2px solid {{ r.border }};">{{ r.name }}</span>

@@ -46,7 +46,9 @@ app/
                          #   chapter view (inline-tags characters + events + locations, applies per-snippet exclusions;
                          #   renders the yearly territory-maps panel from chapter.date); faction leader add/remove;
                          #   character relationship add/remove (sided rows — see relationship.py);
-                         #   characters list sortable by book_mention_count (?sort=mentions&dir=asc|desc)
+                         #   characters list sortable by book_mention_count (?sort=mentions&dir=asc|desc);
+                         #   public character detail page (/characters/<id> — portraits, roles, factions,
+                         #   relationships, links, chapter appearances; every character pill site-wide links here)
     main/forms.py        # EditCharacterForm, EditFactionForm, EditRoleForm, EditEventForm, EditLocationForm, AddUrlForm
     auth/views.py        # login, logout, register, confirm, forgot/reset password, change password/email
     auth/forms.py        # Login, Registration, ForgotPassword, ResetPassword, ChangePassword, ChangeEmail

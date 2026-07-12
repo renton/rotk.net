@@ -43,7 +43,8 @@
                        Links to the characters list filtered by name. #}
                     {% for l in leaders_by_faction.get(faction.id, []) %}
                     <div class="mb-1">
-                        <a href="{{ url_for('main.characters', search_query=l.name) }}"
+                        <a href="{{ url_for('main.character_view', id=l.id) }}"
+                           target="_blank" rel="noopener"
                            class="text-decoration-none">
                             <span class="badge rounded-pill faction-leader-pill"
                                   style="background-color:{{ l.bg }};color:{{ l.font }};border:2px solid {{ l.border }};">

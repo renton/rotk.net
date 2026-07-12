@@ -752,7 +752,7 @@ def chapter(chapter_num):
                     continue
                 bg, font, border = character_pill_colours(other)
                 relationships_by_char_id.setdefault(cid, []).append({
-                    'name': other.name, 'label': rel_label,
+                    'id': other.id, 'name': other.name, 'label': rel_label,
                     'bg': bg, 'font': font, 'border': border,
                 })
         for pills in relationships_by_char_id.values():
@@ -886,6 +886,77 @@ def chapter(chapter_num):
         annotation_csrf_form=FlaskForm(),
     )
 
+@main.route('/characters/<int:id>', methods=['GET'])
+def character_view(id):
+    """Public character detail page — everything the site knows about
+    one character: portraits, roles, factions, relationships, external
+    links and chapter appearances. The read-only sibling of the admin
+    edit page; linked from every character pill across the site."""
+    character = Character.query.filter(
+        Character.id == id,
+        Character.is_deleted.is_(False),
+    ).options(selectinload(Character.portraits)).first_or_404()
+
+    portraits = [p for p in character.portraits
+                 if not p.is_deleted and not p.is_hidden]
+    portraits.sort(key=lambda p: not p.is_default)
+
+    roles = character.roles.order_by(Role.name).all()
+    factions = [f for f in character.factions.order_by(Faction.name).all()
+                if not f.is_hidden]
+
+    # Relationships resolved from this character's side; each entry
+    # carries the OTHER character's id + pill colours so the template
+    # can link every pill to that character's own page.
+    from app.models import Relationship
+    rel_rows = (
+        Relationship.query
+        .filter((Relationship.character1_id == character.id)
+                | (Relationship.character2_id == character.id))
+        .options(
+            selectinload(Relationship.character1),
+            selectinload(Relationship.character2),
+            selectinload(Relationship.relationship_type),
+        )
+        .all()
+    )
+    relationships = []
+    for r in rel_rows:
+        other, rel_label = r.describe_for(character.id)
+        if other.is_deleted or other.id == character.id:
+            continue
+        bg, font, border = character_pill_colours(other)
+        relationships.append({'id': other.id, 'name': other.name,
+                              'label': rel_label,
+                              'bg': bg, 'font': font, 'border': border})
+    relationships.sort(key=lambda d: (d['label'], d['name']))
+
+    # Chapter appearances with the per-chapter editorial summaries.
+    chapter_rows = (
+        db.session.query(
+            Chapter.chapter_num,
+            Chapter.name,
+            Character.chapter_character.c.summary,
+        )
+        .join(Character.chapter_character,
+              Character.chapter_character.c.chapter_id == Chapter.id)
+        .filter(Character.chapter_character.c.character_id == character.id)
+        .order_by(Chapter.chapter_num)
+        .all()
+    )
+
+    return render_template(
+        'characters/character_view.html',
+        character=character,
+        portraits=portraits,
+        roles=roles,
+        factions=factions,
+        relationships=relationships,
+        chapter_rows=chapter_rows,
+        urls=[u for u in character.urls if not u.is_deleted],
+    )
+
+
 @main.route('/characters', methods=['GET', 'POST'])
 def characters():
 
@@ -974,7 +1045,7 @@ def characters():
                     continue
                 bg, font, border = character_pill_colours(other)
                 relationships_by_char_id.setdefault(cid, []).append({
-                    'name': other.name, 'label': rel_label,
+                    'id': other.id, 'name': other.name, 'label': rel_label,
                     'bg': bg, 'font': font, 'border': border,
                 })
         for pills in relationships_by_char_id.values():
