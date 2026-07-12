@@ -38,7 +38,7 @@ DEFAULT_PROTOCOL_VERSION = '2024-11-05'
 RESOURCES = [
     'characters', 'factions', 'roles', 'tags', 'events', 'event-types',
     'locations', 'location-types', 'chapters', 'relationships',
-    'relationship-types', 'year-maps', 'annotations',
+    'relationship-types', 'year-maps', 'province-maps', 'annotations',
 ]
 
 _session = requests.Session()
@@ -151,6 +151,9 @@ GAP_CHECKS = {
     'year_maps_without_factions': (
         'year-maps', lambda i: 'no factions attached'
         if not i.get('factions') else None),
+    'province_maps_without_placements': (
+        'province-maps', lambda i: 'no locations placed yet'
+        if not i.get('placement_count') else None),
 }
 
 # Special check that isn't a per-item predicate: which era years have no
@@ -242,7 +245,8 @@ TOOLS = [
         'description': (
             'Fetch ONE resource with its full joined payload. `id` is the '
             'row id — except chapters (use the chapter number, 1-120) and '
-            'year-maps (use the year, 184-280). Relationships and '
+            'year-maps (use the year, 184-280); province-maps detail '
+            'includes full placement geometry. Relationships and '
             'annotations have no detail endpoint; use rotk_list filters.'),
         'inputSchema': {
             'type': 'object',

@@ -187,6 +187,21 @@ class TestGapSweeps:
                             {'check': 'year_maps_missing_years'})
         assert body['missing_years'] == [200]
 
+    def test_province_maps_without_placements(self, fake_api):
+        fake_api['responses'][('/api/v1/province-maps',
+                               json.dumps({'page': 1, 'per_page': 100},
+                                          sort_keys=True))] = {
+            'items': [
+                {'id': 1, 'name': None, 'label': 'North',
+                 'placement_count': 3},
+                {'id': 2, 'name': None, 'label': 'South',
+                 'placement_count': 0},
+            ], 'pages': 1}
+        is_err, body = tool('rotk_find_data_gaps',
+                            {'check': 'province_maps_without_placements'})
+        assert body['hit_count'] == 1
+        assert body['hits'][0]['id'] == 2
+
     def test_unknown_check_lists_available(self, fake_api):
         is_err, body = tool('rotk_find_data_gaps', {'check': 'nonsense'})
         assert 'available' in body
