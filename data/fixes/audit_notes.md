@@ -50,7 +50,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch26 — 17 ops (Battle of Dushi Ford event gets its first chapter, letter-carrier fixed Chen Zhen not Sun Qian, Cai Yang/Cao Cao ch27 spillovers, 2 missing summaries)
 - [x] ch27 — 23 ops (13 missing summaries for the five-passes cast, Wang Zhi empty keywords, invented 'pass-edict' removed from Cao Cao/Guan Yu, Hu Hua→Hu Ban relationship)
 - [x] ch28 — 20 ops (5 missing summaries incl. Zhou Cang's debut, Guo Chang farm-host fix, Guan Ping adoption relationships, Cai Yang→Qin Qi nephew)
-- [ ] ch29
+- [x] ch29 — 29 ops (17 missing summaries incl. Yu Ji the haunting saint, Hua Xin envoy/governor fix, Guo Jia's prophecy, Qiao-sister marriages: Sun Ce↔Da Qiao, Zhou Yu↔Xiao Qiao)
 - [ ] ch30
 - [ ] ch31
 - [ ] ch32
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch29_audit.json (3):
+- Sun Ce [2060] → Da Qiao [1794] Husband/Wife; Zhou Yu [3466] → Xiao Qiao [1796] Husband/Wife
+- Da Qiao [1794] ↔ Xiao Qiao [1796] Sibling
 
 From ch28_audit.json (4):
 - Cai Yang [72] → Qin Qi [3734] Pibling/Nibling
@@ -211,6 +215,11 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch29:
+- **Duplicate Lu Fan rows**: Lü Fan [1554] (Sun Ce's adviser since
+  ch15) vs Lu Fan [3742] (proposes Yu Ji's rain wager, ch29) — same
+  man 呂範. Merge via admin UI.
 
 From ch20:
 - **Duplicate Emperor Jing rows**: ch1 used Liu Qi [3590]; ch20

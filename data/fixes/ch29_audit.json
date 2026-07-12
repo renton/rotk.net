@@ -1,0 +1,140 @@
+[
+  {"op": "add_relationship", "character1_id": 2060, "character2_id": 1794,
+   "type": 3, "_note": "Sun Ce's deathbed farewell to 'his wife, Lady Qiao' (Da Qiao)"},
+
+  {"op": "add_relationship", "character1_id": 3466, "character2_id": 1796,
+   "type": 3, "_note": "'her sister... her husband, Zhou Yu' - Xiao Qiao is Zhou Yu's wife"},
+
+  {"op": "add_relationship", "character1_id": 1794, "character2_id": 1796,
+   "type": 5, "_note": "Da Qiao and Xiao Qiao are sisters ('your sister will come to see you presently')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3739,
+   "summary": "The Daoist saint whose passing empties Sun Ce's banquet tower of its guests. Imprisoned for 'deluding the people', he wins the rain-prayer wager - three spans of rain from a cloudless sky - and is beheaded anyway. His body vanishes in a storm, and his wraith haunts Sun Ce in mirror, monastery smoke, gate, and flame until the young conqueror's wounds burst and kill him.",
+   "_note": "summary was missing for the chapter's central figure"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 1794,
+   "summary": "Sun Ce's wife (the prose calls her Lady Qiao), summoned to the deathbed: care for his mother, and pass through her sister the charge that Zhou Yu must uphold Sun Quan.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3659,
+   "summary": "Quoted twice by Lady Wu on the reality of spiritual beings - her scripture for making Sun Ce pray at the Jade Pure Monastery after Yu Ji's death.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3675,
+   "summary": "Duke Wen, one of the two Protectors of Reign Sun Quan names to Lu Su in the midnight talk as his models for leading the feudal lords.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3745,
+   "summary": "Duke Huan, the other Protector of Reign in Sun Quan's midnight ambition - the hegemon model Lu Su gently talks him past, toward empire itself.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 1434,
+   "summary": "Receives Sun Ce's victory memorial - and the petition Cao Cao later sends conferring on Sun Quan the title of General and Governor of Kuaiji.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3577,
+   "summary": "The Latter Han founder in Ma Yuan's maxim, quoted by Zhou Yu to Lu Su: ministers must choose their princes as princes choose their ministers.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 1443,
+   "summary": "Governor of Lujiang (the prose spells him Liu Xu), defeated by Sun Ce in AD 199 - the conquest that opens the chapter's account of southern supremacy.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3743,
+   "summary": "Lu Su's friend who had engaged him to join Zheng Bao at Chaohu - the rival offer Zhou Yu talks him out of with Ma Yuan's maxim.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3742,
+   "summary": "Proposes the rain-prayer wager as an amercement for the condemned Yu Ji - 'it is very dry just now'.",
+   "_note": "summary was missing; NOTE this row appears to duplicate Lü Fan [1554] (Sun Ce's adviser since ch15) - flagged in audit_notes.md"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3744,
+   "summary": "The Han general whose maxim - 'ministers must also choose their princes' - Zhou Yu quotes to pull Lu Su away from Chaohu.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3696,
+   "summary": "Invoked twice: Xu Gong's secret letter brands Sun Ce 'a turbulent fellow of the Xiang Yu type', and Lu Su casts Cao Cao as the Xiang Yu blocking any true service to the Emperor.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3677,
+   "summary": "Emperor Yi, whom the Han founder wished to serve but could not for Xiang Yu's evildoing - Lu Su's parallel for the Emperor caged by Cao Cao.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3722,
+   "summary": "Invoked in the verse on Xu Gong's three retainers: loyal avengers of a murdered lord, self-immolated like Yu Rang of old.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3741,
+   "summary": "The Imperial Protector of Jiaozhou cited in Sun Ce's tirade against superstition: deluded by red-turbaned doctrine into drum-beating faith, and slain by the enemy anyway.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 1414,
+   "summary": "The minister whose physiognomy reading haunts the succession: of all the Sun brothers, only Sun Quan - remarkable face, unusual build - has the look of great honor and long life.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3363,
+   "summary": "The Chaohu leader Lu Su had half-agreed to join before Zhou Yu redirected him to Sun Quan.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 941,
+   "summary": "Governor of Yuzhang who surrenders to Sun Ce at the mere arrival of Yu Fan's dispatch - the bloodless conquest that rounds out the southern domain.",
+   "_note": "old summary made him Cao Cao's envoy; in ch29 he is the surrendering governor"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 737,
+   "summary": "His verdict on Sun Ce - frivolous, unready, 'a stupid swaggerer who will die at the hands of some mean person' - is repeated to the wounded conqueror's face by Zhang Hong, and comes true within the chapter.",
+   "_note": "old summary gave him the recognition advice; his role is the fulfilled prophecy"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3123,
+   "summary": "Returns from the capital with Guo Jia's insult ringing; after Sun Ce's death he talks Cao Cao out of attacking mourners - 'treat him generously' - and comes home bearing Sun Quan's title of General and Governor of Kuaiji, joining Zhang Zhao in the administration and recruiting Gu Yong.",
+   "_note": "old summary was a bare 'two Zhangs' mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 75,
+   "summary": "Named as the Historian whose disciple Gu Yong was - the pedigree behind Sun Quan's correct, abstemious new Deputy Governor.",
+   "_note": "old summary was vague literary-aside filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 275,
+   "summary": "Arrives with Yuan Shao's alliance offer in time to watch his host arrest a saint mid-banquet; he is finally sent home with dispatches breaking off all negotiations - and his report sets Yuan Shao marching seven hundred thousand men toward Xuchang.",
+   "_note": "old summary missed that his embassy fails"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3524,
+   "summary": "Zhuge Liang's elder brother, recommended by Lu Su and treated as a superior guest; his first counsel steers the new regime - refuse Yuan Shao, lean toward Cao Cao until occasion serves.",
+   "_note": "old summary omitted the advice that decides the chapter's diplomacy"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 2450,
+   "summary": "Pleads for the imprisoned saint her son mocks, quotes Confucius to force the monastery pilgrimage, and presides over the deathbed - confirming to Sun Quan that his gifts surpass his brother's, and pointing him to Zhou Yu and Zhang Zhao.",
+   "_note": "old summary had only the succession scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 2950,
+   "summary": "His dispatch alone brings the Governor of Yuzhang, Hua Xin, over without a fight.",
+   "_note": "old summary was a bare court mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 29,
+   "target_id": 3006,
+   "summary": "His envoy Chen Zhen returns with the alliance dead and Cao Cao's titles draped over the new southern lord - and Yuan Shao, enraged, begins mustering seven hundred thousand troops against Xuchang: the road to Guandu.",
+   "_note": "old summary was a bare off-stage mention"}
+]
