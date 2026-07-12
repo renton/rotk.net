@@ -809,6 +809,7 @@ def location_types():
     items = []
     for t in pagination.items:
         payload = ser.tag_shaped_ref(t)
+        payload['point_type'] = t.point_type
         payload['location_count'] = counts.get(t.id, 0)
         items.append(payload)
     return envelope(pagination, per_page, items)
@@ -824,6 +825,7 @@ def location_type_detail(type_id):
         .first_or_404()
     )
     payload = ser.tag_shaped_ref(t)
+    payload['point_type'] = t.point_type
     payload['location_count'] = Location.query.filter_by(
         location_type_id=t.id, is_deleted=False).count()
     return jsonify(payload)
@@ -1155,3 +1157,82 @@ def annotations():
     pagination, per_page = get_pagination(query)
     return envelope(pagination, per_page,
                     [_annotation_json(a) for a in pagination.items])
+
+
+# --------------------------------------------------------------------------
+# Province Maps — per-province map images + hand-placed overlays
+# --------------------------------------------------------------------------
+
+from app.models import ProvinceMap, ProvinceMapPlacement  # noqa: E402
+
+
+def _province_map_json(m, placement_counts=None, detail=False):
+    payload = {
+        'id': m.id,
+        'province': ser.location_ref(m.location),
+        'label': m.label or '',
+        'image': url_for('static', filename=m.static_path),
+        'source_site': m.source_site or '',
+        'source_url': m.source_url or '',
+    }
+    if placement_counts is not None:
+        payload['placement_count'] = placement_counts.get(m.id, 0)
+    if detail:
+        rows = (
+            ProvinceMapPlacement.query
+            .filter_by(province_map_id=m.id)
+            .options(selectinload(ProvinceMapPlacement.location)
+                     .selectinload(Location.location_type))
+            .all()
+        )
+        payload['placements'] = [
+            {
+                'location': ser.location_ref(p.location),
+                'kind': p.kind,
+                'geometry': p.geometry,
+            }
+            for p in rows
+            if p.location is not None and not p.location.is_deleted
+        ]
+        payload['placement_count'] = len(payload['placements'])
+    return payload
+
+
+@api.route('/province-maps', methods=['GET'])
+def province_maps():
+    query = (
+        ProvinceMap.query
+        .options(selectinload(ProvinceMap.location)
+                 .selectinload(Location.location_type))
+        .order_by(ProvinceMap.location_id, ProvinceMap.label,
+                  ProvinceMap.id)
+    )
+    location_id = int_arg('location_id')
+    if location_id is not None:
+        query = query.filter(ProvinceMap.location_id == location_id)
+    pagination, per_page = get_pagination(query)
+    ids = [m.id for m in pagination.items]
+    counts = {}
+    if ids:
+        counts = dict(
+            db.session.query(ProvinceMapPlacement.province_map_id,
+                             func.count(ProvinceMapPlacement.id))
+            .filter(ProvinceMapPlacement.province_map_id.in_(ids))
+            .group_by(ProvinceMapPlacement.province_map_id)
+            .all()
+        )
+    return envelope(pagination, per_page,
+                    [_province_map_json(m, placement_counts=counts)
+                     for m in pagination.items])
+
+
+@api.route('/province-maps/<int:map_id>', methods=['GET'])
+def province_map_detail(map_id):
+    m = (
+        ProvinceMap.query
+        .filter(ProvinceMap.id == map_id)
+        .options(selectinload(ProvinceMap.location)
+                 .selectinload(Location.location_type))
+        .first_or_404()
+    )
+    return jsonify(_province_map_json(m, detail=True))

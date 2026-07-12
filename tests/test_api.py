@@ -544,3 +544,62 @@ class TestApiIsReadOnly:
             resp = getattr(client, method)(f'/api/v1/characters/{c.id}')
             assert resp.status_code == 405
             assert 'read-only' in resp.get_json()['error']
+
+
+class TestProvinceMapsApi:
+    def _seed(self, db_session):
+        from app.models import (LocationType, ProvinceMap,
+                                ProvinceMapPlacement)
+        lt = LocationType.query.filter_by(name='Province').first()
+        if lt is None:
+            lt = LocationType(name='Province')
+            db_session.add(lt)
+            db_session.flush()
+        prov = factories.make_location(name='Api Province',
+                                       location_type_id=lt.id)
+        child = factories.make_location(name='Api Pinned County',
+                                        parent_id=prov.id)
+        m = ProvinceMap(location_id=prov.id, filename='pm_api.png',
+                        label='North part', source_site='Api Source')
+        db_session.add(m)
+        db_session.flush()
+        db_session.add(ProvinceMapPlacement(
+            province_map_id=m.id, location_id=child.id,
+            kind='point', geometry=[12.5, 30.0]))
+        db_session.flush()
+        return prov, m, child
+
+    def test_list_and_filter(self, client, db_session):
+        prov, m, child = self._seed(db_session)
+        data = client.get('/api/v1/province-maps').get_json()
+        row = next(i for i in data['items'] if i['id'] == m.id)
+        assert row['province']['name'] == 'Api Province'
+        assert row['label'] == 'North part'
+        assert row['image'].endswith('provincemaps/pm_api.png')
+        assert row['placement_count'] == 1
+        assert 'placements' not in row      # detail-only
+        assert_no_private_keys(data)
+        data = client.get(
+            f'/api/v1/province-maps?location_id={prov.id}').get_json()
+        assert data['total'] == 1
+
+    def test_detail_includes_geometry(self, client, db_session):
+        prov, m, child = self._seed(db_session)
+        detail = client.get(f'/api/v1/province-maps/{m.id}').get_json()
+        assert detail['placement_count'] == 1
+        pl = detail['placements'][0]
+        assert pl['location']['name'] == 'Api Pinned County'
+        assert pl['kind'] == 'point'
+        assert pl['geometry'] == [12.5, 30.0]
+        assert_no_private_keys(detail)
+        assert client.get('/api/v1/province-maps/424242').status_code == 404
+
+    def test_location_types_carry_point_type(self, client, db_session):
+        from app.models import LocationType
+        lt = LocationType(name='Api Riverine', point_type='line')
+        db_session.add(lt)
+        db_session.flush()
+        data = client.get('/api/v1/location-types?q=Api Riverine').get_json()
+        assert data['items'][0]['point_type'] == 'line'
+        detail = client.get(f'/api/v1/location-types/{lt.id}').get_json()
+        assert detail['point_type'] == 'line'

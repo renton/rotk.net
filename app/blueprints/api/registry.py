@@ -118,7 +118,9 @@ ENDPOINTS = [
         'title': 'Location Types',
         'path': '/api/v1/location-types',
         'detail_path': '/api/v1/location-types/<id>',
-        'description': 'Location categories (Province, Commandery, …).',
+        'description': ('Location categories (Province, Commandery, …) '
+                        'incl. their province-map placement style '
+                        '(point / line / region).'),
         'params': [
             {'name': 'q', 'type': 'text', 'label': 'Search (name contains)'},
         ],
@@ -176,6 +178,20 @@ ENDPOINTS = [
         'params': [
             {'name': 'year_from', 'type': 'number', 'label': 'Year from'},
             {'name': 'year_to', 'type': 'number', 'label': 'Year to'},
+        ],
+    },
+    {
+        'key': 'province-maps',
+        'title': 'Province Maps',
+        'path': '/api/v1/province-maps',
+        'detail_path': '/api/v1/province-maps/<id>',
+        'description': ('Per-province map images (several per province '
+                        'allowed, labelled) with hand-placed location '
+                        'overlays. Detail includes each placement\'s '
+                        'geometry in image-pixel coordinates.'),
+        'params': [
+            {'name': 'location_id', 'type': 'number',
+             'label': 'Province location id'},
         ],
     },
     {

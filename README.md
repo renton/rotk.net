@@ -389,7 +389,8 @@ curl -s 'https://rotk.net/api/v1/events?chapter_num=60' | jq '.items[].name'
 Resources: `characters`, `factions`, `roles`, `tags`, `events`,
 `event-types`, `locations`, `location-types`, `chapters` (by
 `chapter_num`), `relationships`, `relationship-types`, `year-maps` (by
-`year`), `annotations` (public threads only).
+`year`), `province-maps` (incl. placement geometry), `annotations`
+(public threads only).
 
 Admin data is not part of the API: there are no users/edits endpoints,
 audit columns and notes are never serialized, and private annotations
