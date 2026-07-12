@@ -326,6 +326,32 @@ class TestEditor:
         assert b'js/province_map_editor.js' in resp.data
         assert b'location_edit_url_template' in resp.data
 
+    def test_editor_commandery_filter(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, pmap, *_ = self._setup(client, db_session)
+        cmdy_type = LocationType.query.filter_by(name='Commandery').first()
+        if cmdy_type is None:
+            cmdy_type = LocationType(name='Commandery')
+            db_session.add(cmdy_type)
+            db_session.flush()
+        cmdy = factories.make_location(name='Filter Commandery',
+                                       parent_id=prov.id,
+                                       location_type_id=cmdy_type.id)
+        inside = factories.make_location(name='Inside County',
+                                         parent_id=cmdy.id)
+        db_session.commit()
+        resp = client.get(f'/admin/province-maps/editor/{pmap.id}')
+        assert b'id="pme-commandery-filter"' in resp.data
+        assert b'>All commanderies<' in resp.data
+        assert b'>Filter Commandery<' in resp.data
+        # Rows carry the nearest-commandery id: the commandery itself
+        # AND its nested county point at it.
+        expected = f'data-commandery-id="{cmdy.id}"'.encode()
+        assert resp.data.count(expected) == 2
+        # A direct child of the province (no commandery ancestor) has
+        # an empty marker.
+        assert b'data-commandery-id=""' in resp.data
+
     def test_editor_type_filter_markup(self, admin_client, db_session):
         client, _ = admin_client
         prov, pmap, *_ = self._setup(client, db_session)

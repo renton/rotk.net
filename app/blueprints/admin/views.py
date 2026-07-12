@@ -3103,8 +3103,13 @@ def _province_descendants(province_id):
         by_id[loc.id] = loc
         by_parent.setdefault(loc.parent_id, []).append(loc)
 
+    def is_commandery(loc):
+        return (loc.location_type is not None
+                and loc.location_type.name == 'Commandery')
+
     found = []
     crumbs = {}
+    commandery_of = {}   # loc_id -> nearest Commandery ancestor id (or self)
     seen = {province_id}
     queue = [(child, []) for child in by_parent.get(province_id, [])]
     while queue:
@@ -3114,10 +3119,17 @@ def _province_descendants(province_id):
         seen.add(loc.id)
         found.append(loc)
         crumbs[loc.id] = ' › '.join(p.name for p in path)
+        if is_commandery(loc):
+            commandery_of[loc.id] = loc.id
+        else:
+            for ancestor in reversed(path):
+                if is_commandery(ancestor):
+                    commandery_of[loc.id] = ancestor.id
+                    break
         queue.extend((child, path + [loc])
                      for child in by_parent.get(loc.id, []))
     found.sort(key=lambda l: l.name)
-    return found, crumbs
+    return found, crumbs, commandery_of
 
 
 def _validate_map_upload(file):
@@ -3281,7 +3293,11 @@ def province_map_editor(map_id):
         .order_by(ProvinceMap.label, ProvinceMap.id)
         .all()
     )
-    children, crumbs = _province_descendants(prov.id)
+    children, crumbs, commandery_of = _province_descendants(prov.id)
+    commanderies = sorted(
+        (c for c in children
+         if c.location_type and c.location_type.name == 'Commandery'),
+        key=lambda c: c.name)
     placements = {
         p.location_id: {'kind': p.kind, 'geometry': p.geometry}
         for p in ProvinceMapPlacement.query.filter_by(
@@ -3318,6 +3334,8 @@ def province_map_editor(map_id):
         siblings=siblings,
         children=children,
         crumbs=crumbs,
+        commandery_of=commandery_of,
+        commanderies=commanderies,
         payload=payload,
         csrf_form=_CsrfOnlyForm(),
     )
@@ -3352,7 +3370,7 @@ def province_map_place(map_id, child_id):
         return jsonify(error='Bad CSRF token.'), 400
     pmap = ProvinceMap.query.get_or_404(map_id)
     child = Location.query.get_or_404(child_id)
-    descendants, _ = _province_descendants(pmap.location_id)
+    descendants, _, _ = _province_descendants(pmap.location_id)
     if child.is_deleted or child.id not in {d.id for d in descendants}:
         return jsonify(error='Location is not a descendant of this '
                              'province.'), 400

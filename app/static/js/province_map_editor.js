@@ -290,16 +290,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // ---- location-type filter ------------------------------------------------
+  // ---- location list filters (commandery AND type, combined) --------------
   var typeFilter = document.getElementById('pme-type-filter');
-  if (typeFilter) {
-    typeFilter.addEventListener('change', function () {
-      var want = typeFilter.value;
-      document.querySelectorAll('#pme-location-list > li').forEach(function (row) {
-        var t = row.getAttribute('data-type-name');
-        row.classList.toggle('d-none', !!want && t !== want);
-      });
+  var commanderyFilter = document.getElementById('pme-commandery-filter');
+  function applyListFilters() {
+    var wantType = typeFilter ? typeFilter.value : '';
+    var wantCommandery = commanderyFilter ? commanderyFilter.value : '';
+    document.querySelectorAll('#pme-location-list > li').forEach(function (row) {
+      var hide = false;
+      if (wantType && row.getAttribute('data-type-name') !== wantType) {
+        hide = true;
+      }
+      if (wantCommandery &&
+          row.getAttribute('data-commandery-id') !== wantCommandery) {
+        hide = true;
+      }
+      row.classList.toggle('d-none', hide);
     });
+  }
+  if (typeFilter) typeFilter.addEventListener('change', applyListFilters);
+  if (commanderyFilter) {
+    commanderyFilter.addEventListener('change', applyListFilters);
   }
 
   // ---- boot ---------------------------------------------------------------
