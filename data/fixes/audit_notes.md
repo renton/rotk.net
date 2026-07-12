@@ -25,7 +25,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch1 — 14 ops (done before this batch; APPLIED by Ren — its 9 relationships are live, and he created Liu Hong [3849] = Liu Bei's father)
 - [x] ch2 — 75 ops (Zhang Bao 'Zhang Ba' spelling, Liu Xian [3601] dup removal, Liang Da 'Tai' alias fix, 17 relationships, ~35 summary rewrites)
 - [x] ch3 — 37 ops (Massacre of the Eunuchs event added to ch3, Shang/Taishan Commandery false-positive removals, 5 relationships incl. both Lü Bu adoptions, ~27 summary rewrites)
-- [ ] ch4
+- [x] ch4 — 17 ops (Empress Dong added to ch4, Qiao keyword, 3 relationships, 12 summary rewrites) + data/fixes/sex_audit.json (73 ops: every Empress/Lady/Consort + Diao Chan/Qiaos/Cai Yan/Sun Ren had sex=male)
 - [ ] ch5
 - [ ] ch6
 - [ ] ch7
@@ -106,6 +106,11 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch4_audit.json (3):
+- Lü Boshe [1546] ↔ Cao Song [130] Sworn Brother
+- Liu Bian [1312] → Consort Tang [2148] Husband/Wife
+- Yuan Wei [3012] → Yuan Shao [3006] Pibling/Nibling
+
 From ch3_audit.json (5):
 - Yuan Shao [3006] ↔ Yuan Shu [3008] Sibling; Cui Yi [3609] ↔ Cui Lie [331] Sibling
 - Ding Yuan [398] → Lü Bu [1547] Parent/Child (adoptive); Dong Zhuo [444] → Lü Bu Parent/Child (adoptive)
@@ -138,6 +143,16 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch4 (and the sex sweep):
+- **data/fixes/sex_audit.json** fixes sex=female on 73 characters (every
+  Empress/Lady/Consort row, Diao Chan, Da/Xiao Qiao, Cai Yan, Fu Shou,
+  Lü Zhi, Sun Ren, Duan Qiaoxiao). Apply it early — relationship labels
+  (Mother/Daughter/Wife) resolve from Character.sex.
+- Possible duplicate female rows to eyeball: Empress Bian [33] vs Lady
+  Bian [35]; Empress Zhen [3344] vs Lady Zhen [3345]; Lady Wuyang
+  [3608] vs Lady of Wuyang [2502] (2502 is the one associated to ch2).
+- No Location row for the inn / Chenggao hamlet needed; nothing missing.
 
 From ch3:
 - No "in-law" relationship type exists. Ch3 states Niu Fu and Li Ru are

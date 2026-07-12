@@ -1,0 +1,79 @@
+[
+  {"op": "update_association", "target": "location", "chapter_num": 4,
+   "target_id": 1160, "keywords": "Qiao",
+   "_note": "prose says 'traveled in hot haste toward Qiao, his home county' and 'rode away toward Qiao' - the fallback 'Qiao County' never matches"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 4,
+   "target_id": 403, "keywords": "Empress Dong",
+   "summary": "Cited in the deposition document: 'Empress Dong died suddenly and no one knew why' - her murder now part of the official case against Empress He's regime.",
+   "_note": "the deposition document names Empress Dong; she wasn't associated to ch4"},
+
+  {"op": "add_relationship", "character1_id": 1546, "character2_id": 130,
+   "type": 4, "_note": "Lu Boshe is 'a sworn-brother of my father' (Cao Cao of Cao Song) - the tie that makes the massacre at Chenggao so damning"},
+
+  {"op": "add_relationship", "character1_id": 1312, "character2_id": 2148,
+   "type": 3, "_note": "Consort Tang is the deposed Emperor Liu Bian's consort ('the Imperial Consort, Lady Tang'); she offers to die in his place and is strangled beside him"},
+
+  {"op": "add_relationship", "character1_id": 3012, "character2_id": 3006,
+   "type": 10, "_note": "Yuan Wei uncle of Yuan Shao ('Your nephew behaved improperly', Dong Zhuo to Imperial Guardian Yuan Wei; also ch2 para 95)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 75,
+   "summary": "Summoned by Dong Zhuo to dress the new regime in respectability, he refuses to come - until Dong Zhuo threatens to exterminate his whole clan. Once at court he is promoted three times in a month to Court Counselor, the showpiece of the Prime Minister's 'generosity'.",
+   "_note": "old summary omitted the clan-extermination threat that is the story"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 214,
+   "summary": "Magistrate of Zhongmou who recognizes the captured 'merchant' as Cao Cao, then frees him at midnight, moved by his loyalty, and abandons office to follow him. Revolted by the slaughter of Lu Boshe's household and then of the old man himself, he ends the chapter standing over the sleeping Cao Cao, sword thoughts in his heart - 'if I spare him, he will do more harm later.'",
+   "_note": "old summary had him riding away before dawn - that's the ch5 resolution; ch4 ends on the unresolved intent"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 2148,
+   "summary": "The deposed Emperor's consort, immured with him and Empress He in the Palace of Forever Calm. When Li Ru brings the poisoned cup she begs to drink in her lord's place; after the farewell songs Li Ru has the soldiers strangle her.",
+   "_note": "old summary's 'strangled with her own silken scarf' isn't in the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 444,
+   "summary": "Completes the deposition in the Hall of Virtue on the first of the ninth month, executing Ding Guan for objecting, and installs the nine-year-old Prince of Chenliu. As Prime Minister he sleeps on the Dragon Couch, defiles the palace women, sacks Yangcheng during the spring festival and parades the heads as rebel trophies, survives Wu Fu's dagger, orders the murder of the deposed imperial family, and - after the sword incident - puts a price on Cao Cao's head across the empire.",
+   "_note": "old summary skipped the Yangcheng massacre and Wu Fu attempt"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 831,
+   "summary": "Imprisoned in the Palace of Forever Calm on dwindling rations. When Li Ru brings the poisoned cup she refuses to drink, railing at her feckless brother He Jin as the author of it all and at Dong Zhuo's tool - so Li Ru seizes her and throws her from the window.",
+   "_note": "old summary said 'thrown from a high tower on Li Ru's orders' - Li Ru throws her out himself"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 1204,
+   "summary": "Checks Dong Zhuo's sword at the banquet's end, reads the deposition document aloud, and personally carries out the murder of the imperial family - offering the poisoned cup, throwing Empress He from the window, strangling Lady Tang, forcing the wine down the boy's throat. Then he engineers the empire-wide manhunt for Cao Cao.",
+   "_note": "old summary was right in outline; this credits his direct hand in the murders"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 1312,
+   "summary": "Deposed in the Hall of Virtue after less than half a year's reign and locked in the Palace of Forever Calm as Prince of Hongnong. His swallow poem, intercepted by Dong Zhuo's spy, becomes the pretext for murder: after a last farewell song to his mother, Li Ru forces the poisoned wine down his throat.",
+   "_note": "old summary missed that his own poem triggered the killing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 1434,
+   "summary": "Proclaimed emperor in the Hall of Virtue at nine years old - five years younger than the brother he replaces - with the reign-style changed to Inauguration of Tranquillity. A child ruler while Dong Zhuo, now Prime Minister, comes booted and armed to court.",
+   "_note": "old summary placed Cao Cao's assassination attempt in the audience hall; it happens at Dong Zhuo's private palace"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 1547,
+   "summary": "Dong Zhuo's shadow: strikes down the assassin Wu Fu on the palace steps, and his presence at the couch keeps Cao Cao's sword sheathed. Sent to pick out a horse as a gift, his brief absence gives Cao Cao his moment - and his return ends it. He is also first to voice the suspicion that the 'gift' was an assassination attempt.",
+   "_note": "old summary underplayed the Wu Fu save and his suspicion"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 2370,
+   "summary": "Summons the old ministers under cover of a birthday party and weeps for the dynasty - until Cao Cao laughs that weeping till dawn will not kill Dong Zhuo. He arms Cao Cao with his seven-jewelled sword and pours the oath-cup for the assassination attempt.",
+   "_note": "old summary skipped the fake-birthday banquet device"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 2461,
+   "summary": "A general who wears a breastplate under his court dress and a hidden dagger, and attacks Dong Zhuo on the palace steps. Held off by Dong Zhuo's brute strength and struck down by Lü Bu, he rails to the end - 'your crimes fill the heavens, and every person would slay you' - and is hacked to pieces.",
+   "_note": "old summary: 'minor courtier named in passing during the deposition banquet' - wrong person entirely"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 4,
+   "target_id": 3006,
+   "summary": "Walks out of the banquet sword in hand, hangs his seals of office at the east gate, and rides for Jizhou. Pardoned and given the governorship of Bohai on Zhou Bi and Wu Qiong's advice, he sends the secret letter that shames Wang Yun into plotting - the spark for the sword scheme.",
+   "_note": "old summary said he appears only off-stage; his letter drives the second half of the chapter"}
+]

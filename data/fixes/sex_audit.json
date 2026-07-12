@@ -1,0 +1,659 @@
+[
+ {
+  "op": "update",
+  "model": "character",
+  "id": 33,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Bian"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 403,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Dowager Dong"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 832,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Dowager He"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 717,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Guo"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 831,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress He"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1641,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Mao"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1714,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Pan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1939,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Shenyuan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2204,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Wang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2449,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Wu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3063,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Zhang (Wei, Cao Fang)"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3064,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Zhang (Shu, Liu Shan 1st)"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3065,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Zhang (Shu, Liu Shan 2nd)"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3344,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Zhen"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3474,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Empress Zhu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 578,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Fu Shou (Empress Fu)"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3607,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "L\u00fc Zhi (Empress Lu)"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2205,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Wang, Empress Dayi"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2206,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Wang, Empress Jinghuai"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 402,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Consort Dong"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2148,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Consort Tang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 6,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Bai"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 35,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Bian"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 61,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Cai"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 78,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Cao"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3687,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Cao"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 189,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Chen"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 323,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Cui"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 450,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Du, Lady of Xiyang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 499,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Fan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 543,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Feng"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 592,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Gan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 686,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Guan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 881,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Hou"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 892,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Hu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 967,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Huang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3667,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Kai"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1127,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Kuai"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1299,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Liu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1301,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Liu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1677,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Mi"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3666,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Qiong"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1878,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Ruan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1886,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Rui"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2052,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Sun"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2053,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Sun"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2174,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Tian"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3599,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Wang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2450,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Wu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3808,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Wu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3608,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Wuyang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2502,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady of Wuyang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2503,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xi"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2519,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xia"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2527,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xiahou"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2579,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xie"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2618,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2619,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3773,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Xun"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2761,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Yan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2799,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Yang"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 2941,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Yu"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3630,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Yuan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3345,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Zhen"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3837,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Zhi"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3689,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Zhou"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3555,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Lady Zou"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3639,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Sun Ren (Sun Shangxiang / Lady Sun)"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 3641,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Diao Chan"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1794,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Da Qiao"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 1796,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Xiao Qiao"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 483,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Duan Qiaoxiao"
+ },
+ {
+  "op": "update",
+  "model": "character",
+  "id": 71,
+  "fields": {
+   "sex": "female"
+  },
+  "_note": "Cai Yan (Cai Wenji)"
+ }
+]
