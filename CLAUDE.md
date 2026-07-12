@@ -39,6 +39,9 @@ app/
     annotation.py        # Annotation (per-paragraph public/private threads, section_text content-addressed) + annotation_character / annotation_location M2Ms
     edit.py              # Edit (admin save audit log: model, row, field-by-field diffs)
     relationship.py      # RelationshipType (tag-shaped; side{1,2}_label = male/default + side{1,2}_label_female overrides resolved from Character.sex; blank side2 pair = symmetric) + Relationship (character1 IS the side-1 role; two-way by construction — both ends read the same row via describe_for)
+    province_map.py      # ProvinceMap (one image per Province-type Location; location_id UNIQUE) +
+                         #   ProvinceMapPlacement (per-child overlay geometry in IMAGE-PIXEL coords JSONB;
+                         #   kind point|line|region copied from LocationType.point_type at save)
     year_map.py          # YearMap — one territory-map image per year (184–280; `year` UNIQUE; files in static/yearmaps/; Portrait-style source_site/source_url credit pair; year_map_faction M2M = factions present that year, replaced wholesale on modal save)
     auth.py              # User, AnonymousUser, login_manager hooks
   blueprints/
@@ -61,7 +64,9 @@ app/
                          #   /admin/annotations/{public,private} (+ create / delete / restore / close-thread),
                          #   /admin/yearly-maps (+ per-year upload-or-edit modal incl. factions chip picker / remove),
                          #   /admin/relationship-types (+ new / edit / delete w/ in-use guard),
-                         #   /admin/api-explorer (interactive tester for /api/v1)
+                         #   /admin/api-explorer (interactive tester for /api/v1),
+                         #   /admin/province-maps (+ per-province upload modal; /editor placement tool
+                         #   w/ JSON placement upsert/delete endpoints)
     admin/forms.py       # EditTagForm, EditUrlTypeForm, EditEventTypeForm, EditRelationshipTypeForm, CreateUserForm
     api/__init__.py      # Public read-only JSON API blueprint (mounted at /api/v1; whole-blueprint 120/min rate limit)
     api/registry.py      # Endpoint catalogue — SINGLE SOURCE OF TRUTH for GET /api/v1/ (self-describing index) AND the /admin/api-explorer param forms
@@ -83,7 +88,11 @@ app/
                          #   admin_yearly_maps.js (populate the shared Yearly Maps upload/edit modal per row),
                          #   image_panzoom.js (REUSABLE drag/wheel-zoom image viewer: Leaflet CRS.Simple on any
                          #     .image-panzoom[data-panzoom-src] element; auto-init + Bootstrap tab/collapse re-measure),
-                         #   api_explorer.js (registry-driven endpoint dropdown + param form + fetch/inspect)
+                         #   api_explorer.js (registry-driven endpoint dropdown + param form + fetch/inspect),
+                         #   admin_province_maps.js (province-map upload modal populate),
+                         #   province_map_editor.js (placement editor: point-click / freehand-line /
+                         #     polygon-region modes on the image_panzoom Leaflet map; Save/Reset/Cancel,
+                         #     Show pans+pulses; rides the panzoom:ready CustomEvent)
 
 tools/
   scraper.py             # scrape_rotk_book() + scrape_rotk_characters()
@@ -142,6 +151,7 @@ db-data/                 # Postgres data volume for local dev (gitignored)
 14. **Annotations** (`Annotation`, per-paragraph threads). Section identity is content-addressed: `section_text` stores the readable paragraph text; comparisons and hash keys go through `annotation_section_canonical` (strip tags → unescape entities → **remove all whitespace**). All-whitespace-removal is load-bearing: browser `textContent` inserts nothing at tag boundaries while `strip_html_tags` inserts a space, so collapsed-whitespace forms never agree — deleted-whitespace forms do. Icons are server-injected per `<p>` (`inject_annotation_icons`): black = has public (everyone), red + exclamation = has private (admin only), blue hover-revealed = no annotations yet (admin add affordance). Character/location refs are auto-detected at CREATE time from the chapter's associations (`detect_annotation_refs`) and stored on `annotation_character` / `annotation_location` M2Ms — redundant across a thread by accepted design.
 15. **Yearly territory maps** (`YearMap`, chapter-page panel). Admin uploads one image per year (184–280) at `/admin/yearly-maps` (Portrait-grade upload hardening: size cap, magic bytes, extension consistency, server-built `<year>.<ext>` filename under `static/yearmaps/`) plus the attribution pair and the year's faction set (chip picker; `year_map_faction` replaced wholesale on every modal save). On the chapter page, `_chapter_years(chapter.date)` parses the free-form date via `parse_date_range` into an inclusive year list ("208" → [208]; integer span edges are exclusive, so last year = ceil(hi) − 1); years that have a YearMap render as tabs in a collapsible header panel — map left in the reusable `image_panzoom.js` viewer, the year's factions as a two-column down-then-across pill list (first auto-selected), and a leader detail pane (faction URLs + per-leader tabs: portrait, roles, faction pills linking to the filtered characters list). No YearMap rows or unparseable/absent `chapter.date` → the panel doesn't render at all.
 16. **Public JSON API** (`/api/v1`, `app/blueprints/api/`). GET-only, anonymous, 120 req/min per IP. Lists return `{items, page, per_page, pages, total}` (per_page cap 100; chapters default 20 because full prose is included on lists AND detail — deliberate user decision). Payloads carry smart joins (character → factions/roles/sex-resolved relationships/portraits/urls/chapter keywords; event → sided faction lists with resolved labels; location → bulk-loaded ancestry chain; chapter → associated refs + prev/next). PRIVACY: no users/edits endpoints, `created_by`/`last_edited_by`/`notes` never serialized, private annotations never served, hidden/soft-deleted rows filtered everywhere — `tests/test_api.py::assert_no_private_keys` enforces this recursively. `registry.py` is the endpoint catalogue consumed by both the `GET /api/v1/` index and the `/admin/api-explorer` form generator — new endpoints must be added there too. Chapters and year-maps are addressed by their public identifiers (`chapter_num`, `year`), not row ids. Read-only is STRUCTURAL: an `@api.before_request` guard 405s any non-GET method, and `tests/test_api.py::TestApiIsReadOnly` walks the URL map asserting no write methods exist. The `mcp_server/` directory wraps this API as MCP tools for Claude (also strictly read-only).
+17. **Province maps** (`ProvinceMap`/`ProvinceMapPlacement`, admin-only for now). One uploaded image per Province-type Location (`/admin/province-maps`, YearMap-grade upload hardening, file `static/provincemaps/<location_id>.<ext>`). The editor (`/admin/province-maps/<id>/editor`) lists the province's child locations and places each on the image according to its LocationType's `point_type`: 'point' = one click → FA-icon marker; 'line' = freehand stroke (map dragging disabled during the mode, stroke thinned to ~3px steps); 'region' = clicked-out polygon (≥3 vertices). Geometry is stored in IMAGE-PIXEL coordinates (`[x, y]` / `[[x, y], ...]` JSONB — CRS.Simple lat=y/lng=x conversion lives in the JS); `kind` is copied onto the placement at save so later point_type changes don't orphan rows. No public rendering yet — the data waits for a future province view.
 
 ## Running it
 

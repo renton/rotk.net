@@ -12,7 +12,7 @@ Live at [rotk.net](https://rotk.net).
 - **Factions with leaders** — factions carry admin-curated leader characters, shown as pills on the factions list and in the map panels.
 - **Map + timeline views** — locations plotted on an interactive map (pins + GeoJSON territories); events and chapters on a parsed-date timeline.
 - **Character explorer** — filter by faction / role / letter / search, sortable by book-wide mention count; every character has a public detail page (portraits, roles, factions, relationships, chapter appearances) reachable from any pill on the site.
-- **Admin suite** — association editors with per-snippet match exclusions, chapter prose hiding, an image manager, audit trail of every edit, and an in-app how-to FAQ.
+- **Admin suite** — association editors with per-snippet match exclusions, chapter prose hiding, an image manager, a province-map placement editor (upload a map per province, hand-place child locations as points / freehand lines / polygon regions), audit trail of every edit, and an in-app how-to FAQ.
 - **Public JSON API** — read-only `/api/v1` with rich joined payloads for every public resource (characters, factions, events, locations, chapters incl. prose, relationships, year maps, public annotations), self-describing index, and an admin API Explorer for trying endpoints.
 
 ## Stack

@@ -50,6 +50,7 @@
         <li class="list-group-item"><a href="#faction-leaders">Faction leaders</a></li>
         <li class="list-group-item"><a href="#relationships">Character relationships (family ties)</a></li>
         <li class="list-group-item"><a href="#api-explorer">API Explorer (trying the public JSON API)</a></li>
+        <li class="list-group-item"><a href="#province-maps">Province Maps (placement editor)</a></li>
     </ol>
 </div>
 
@@ -872,6 +873,34 @@
         <li><code>GET /api/v1/</code> itself returns the same endpoint
             catalogue — useful as a starting point for external tools
             (e.g. a future MCP server).</li>
+    </ul>
+</section>
+
+{# ------------------------------------------------------------------- #}
+<section id="province-maps" class="mb-5">
+    <h2>Province Maps (placement editor)</h2>
+    <ul>
+        <li><strong>Setup</strong> — <em>Admin → Province Maps</em> lists
+            every Province-type location. Upload a map image for one
+            (same rules as portraits: JPG/PNG/GIF/WEBP, 10 MB, magic-byte
+            checked) — <em>Edit locations</em> unlocks once it has a map.</li>
+        <li><strong>Placement types</strong> — how a location is drawn
+            comes from its <a href="#loc-edit">location type</a>'s
+            <em>placement type</em> (set on the location-type edit page):
+            point (one coordinate, shown with the type's Font Awesome
+            icon), line (freehand — rivers, walls), or region (a polygon
+            you click out corner by corner).</li>
+        <li><strong>The editor</strong> — map on the left (drag to pan,
+            wheel to zoom), the province's child locations on the right.
+            <em>Select</em> a location, place it (click once for points;
+            press-and-drag for lines; click each corner for regions,
+            three minimum), then <em>Save</em>. <em>Reset</em> clears
+            what you've drawn so far; <em>Cancel</em> exits without
+            saving. Already-placed locations show a green dot,
+            a <em>Show</em> button that pans to and pulses the shape,
+            and an <em>&times;</em> to remove the placement.</li>
+        <li>Placements are admin-side data for now — nothing renders
+            publicly yet.</li>
     </ul>
 </section>
 {% endblock %}
