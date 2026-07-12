@@ -262,6 +262,17 @@ From ch3_audit.json (5):
 - Ding Yuan [398] → Lü Bu [1547] Parent/Child (adoptive); Dong Zhuo [444] → Lü Bu Parent/Child (adoptive)
 - Dong Zhuo [444] ↔ Dong Min [429] Sibling
 
+## Chapter dates sweep (post-audit)
+
+All 59 chapters swept: stored `chapter.date` vs explicit "(AD xxx)"
+citations in the prose. 54 consistent; ch1/ch59 out-of-range mentions
+are backstory (omens of 168/178, Liu Yan's death 194). Three genuine
+fixes in `data/fixes/chapter_dates_audit.json` — apply with
+`flask apply-chapter-dates data/fixes/chapter_dates_audit.json --apply`:
+ch4 189→189-190, ch17 197→197-198, ch38 208→202-208 (see _notes).
+Caveat: chapters with no explicit AD citation were only checked for
+monotonic consistency with neighbours.
+
 ## Report-only findings (need manual action, no apply-fixes op exists)
 
 From ch47 (out-of-range note):
