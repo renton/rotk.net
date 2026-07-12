@@ -1,0 +1,135 @@
+[
+  {"op": "add_association", "target": "event", "chapter_num": 12,
+   "target_id": 14, "keywords": "",
+   "_note": "the Battle of Yan Province concludes in ch12 (Puyang fire trap, Yanzhou recovery, Dingtao rout) but the event was only on ch11"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 1547,
+   "summary": "Springs Chen Gong's Tian-family letter trap and nearly kills Cao Cao in burning Puyang - even tapping the masked fugitive's helmet to ask where Cao Cao is. Then the tables turn: he charges into the fake-funeral ambush at the Maling Hills, ignores Chen Gong before Puyang and is mobbed by six generals, is locked out of the city by the turncoat Tians, and at Dingtao loses two-thirds of his army to the embankment ambush - yet rallies his generals and turns back, 'still enough to break Cao Cao'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3665,
+   "summary": "Left holding Yanzhou with Xue Lan, he lets the garrison scatter to plunder; when Cao Cao returns he rides out with his halberd and falls to Xu Chu in the second bout - the new recruit's 'introductory gift'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3577,
+   "summary": "Cited in Xun Yu's remonstrance: as Liu Xiu took Henei for his base, so Yanzhou and the Yellow River are Cao Cao's 'Land Within the Passes' - not to be traded for Xuzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3656,
+   "summary": "Guards the rear with Yu Jin on the Puyang march, and when Xue Lan flees toward Juye, rides him down and kills him with an arrow.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3032,
+   "summary": "Leads the right wing with Li Dian against Puyang, joins the six-general mobbing of Lü Bu, and at Dingtao kills Cheng Lian with an arrow.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 850,
+   "summary": "The 'devil who shoots across the sky' - Yellow Scarves champion at Goat Hill with iron mace and green robe. Cao Hong leaps from the saddle to fight him on foot, feigns flight after fifty even blows, and cuts him down with two sudden slashes.",
+   "_note": "old summary credited the kill to Liu Bei's brothers - it's Cao Hong's duel"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 864,
+   "summary": "Yellow Scarves chief of the Runan-Yingchuan plunder-hoard. Fleeing toward the Gepei Hills he runs into the unknown swashbuckler Xu Chu, who catches him under one arm at the first encounter and pens his men like cattle. Executed after the campaign.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 982,
+   "summary": "Yellow Scarves chief at Goat Hill; Li Dian dashes into his broken array and carries him off captive. Executed with He Yi.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 100,
+   "summary": "Answers He Man's challenge on foot, sword against iron mace, and kills him with a feint and two slashes after fifty even blows; commands the right assault column at Puyang's gates.",
+   "_note": "old summary was a bare 'serves in the counter-attack'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 1158,
+   "summary": "Urges Cao Cao to let others enter Puyang first (unheeded), captures the rebel chief Huang Shao bare-handed at Goat Hill, and seizes the drawbridge that locks Xue Lan out of Yanzhou.",
+   "_note": "old summary was a bare 'serves in the counter-attack'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 293,
+   "summary": "One of Lü Bu's eight generals; killed by an arrow from Yue Jing in the Dingtao embankment ambush.",
+   "_note": "old summary had him merely serving; he dies this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 620,
+   "summary": "Front Commander of the feigned sortie that baits Cao Cao toward the drawbridge, then blocks the south gate during the fire trap. Out foraging when Dingtao falls, he helps Chen Gong carry Lü Bu's family out of the abandoned city.",
+   "_note": "old summary invented a retreat to Xuzhou's borders"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 882,
+   "summary": "Rear Commander of the feigned sortie at Puyang, then pairs with Gao Shun to bar the south gate against the trapped Cao Cao.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 376,
+   "summary": "Plunges back into burning Puyang three times hunting for his lost lord, warding falling beams aside with his lance. Later he fights the unknown swashbuckler Xu Chu for two hours to a standstill, then feigns defeat twice on Cao Cao's orders to draw him into the pitfall - the recruitment by combat.",
+   "_note": "old summary had him carrying an unconscious Cao Cao out; the prose has repeated re-entries and Xiahou Yuan's horse"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 2556,
+   "summary": "Reaches the burned and singed Cao Cao at the east gate just after the beam falls, and with Dian Wei lifts him onto his own horse - the ride that gets him out of Puyang alive.",
+   "_note": "old summary was a bare 'serves in the counter-attack'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 2535,
+   "summary": "Opens the chapter pulling Cao Cao out of Lü Bu's pursuit and fighting the halberd to a rain-soaked dusk; later holds Juancheng with Cao Ren and brings the news that Yanzhou lies open for the retaking.",
+   "_note": "old summary was a bare 'serves in the counter-attack'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 1453,
+   "summary": "Smells Chen Gong's guile in the Tian-family letter and persuades Cao Cao to enter Puyang with only a third of the army - the caution that leaves a reserve to save him. After the recovery he urges hunting the 'savage beast' Lü Bu down, and is left to hold Puyang.",
+   "_note": "old summary was a bare 'among the advisers'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 2755,
+   "summary": "Talks Cao Cao out of trading Yanzhou for Xuzhou - 'to barter the trunk for the branches' - invoking the Supreme Ancestor's Land Within the Passes and Liu Xiu's Henei; then points him at the Yellow Scarves' hoards in Runan and Yingchuan to feed the starving army.",
+   "_note": "old summary was a bare 'among the advisers'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3042,
+   "summary": "Springs the eastern arm of the fire-trap ambush inside Puyang with Zhang Liao.",
+   "_note": "old summary was a bare list mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3166,
+   "summary": "Leads the western arm of the fire-trap ambush inside Puyang, closing the ring on Cao Cao.",
+   "_note": "old summary was a bare 'serves through the campaign'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 2707,
+   "summary": "Left commanding Yanzhou city, he lets the garrison scatter to plunder; caught by Cao Cao's sudden return, cut off from the city by Li Dian's seized drawbridge, he flees toward Juye and dies to Lu Qian's arrow.",
+   "_note": "old summary put him at Puyang; he never left Yanzhou"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3174,
+   "summary": "His Yanzhou venture in ruins, he abandons Dingtao and flees to Yuan Shu.",
+   "_note": "old summary said his own men killed him en route - not in this prose; he simply flees"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 3008,
+   "summary": "The refuge Zhang Miao flees to when Dingtao falls and the Yanzhou adventure collapses.",
+   "_note": "old summary borrowed next chapter's seal plot"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 207,
+   "summary": "Named Secretary of Xuzhou when Liu Bei finally assumes the protectorship.",
+   "_note": "old summary was vague alignment talk"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 2102,
+   "summary": "Recommended to Liu Bei by the dying Tao Qian himself - 'Sun Qian from Beihai could be appointed to some post' - and made an Adviser alongside Mi Zhu when Liu Bei takes office.",
+   "_note": "old summary had him arguing in council; his debut is Tao Qian's deathbed recommendation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 12,
+   "target_id": 2624,
+   "summary": "Debuts as the swashbuckler of Qiao: pens hundreds of Yellow Scarves like cattle after catching He Yi under one arm, fights Dian Wei two hours to a draw, and is finally taken by pitfall and hooks - whereupon Cao Cao unties him with his own hands. He tells the stone-throwing, oxen-hauling stories himself, brings his clan over, and pays his 'introductory gift' by killing Li Fang in two bouts.",
+   "_note": "old summary was thin for a debut this famous"}
+]

@@ -33,7 +33,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch9 — 20 ops (Luoyang assoc removed, Lü Bu–Diao Chan relationship, 18 summary fixes incl. Li Su executed by Lü Bu, plotters vs purge-victims mixups, gate-opening fifth column)
 - [x] ch10 — 25 ops (7 missing summaries filled, Nanyang false assoc removed, Cao Song↔Cao De sibling, Bian Rang/Fan Chou/Li Meng/Wang Fang/Liu Dai/Yu Jin summary corrections)
 - [x] ch11 — 35 ops (8 missing summaries incl. Lü Bu's, Guan Hai kill credited to Guan Yu not Taishi Ci, Zhao Yun Beihai/Xuzhou mixup, Zhang Miao↔Zhang Chao + Confucius→Kong Rong relationships)
-- [ ] ch12
+- [x] ch12 — 27 ops (Battle of Yan Province event added, 6 missing summaries, He Man kill credited to Cao Hong, Xue Lan/Zhang Miao fate fixes, Dian Wei/Xiahou Yuan rescue details)
 - [ ] ch13
 - [ ] ch14
 - [ ] ch15
