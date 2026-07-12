@@ -1,0 +1,85 @@
+[
+  {"op": "add_association", "target": "event", "chapter_num": 26,
+   "target_id": 20, "keywords": "",
+   "_note": "the Battle of Dushi Ford (Feb-Mar 200, the Yenjin/Yan Ford fight where Wen Chou dies) is narrated in ch26; the event had no chapter associations at all"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 3656,
+   "summary": "Asks the question everyone is thinking - why march the supply wagons in front? - and is told to wait and see; after the victory Cao Cao explains the bait to him by name.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 3032,
+   "summary": "One of the two generals (with Yu Jin) placed under Guan Yu for the fifty-thousand-man Runan expedition.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 72,
+   "summary": "Rises from the stunned assembly as Guan Yu rides out of the north gate: 'with three thousand mailed horse I will bring him back alive' - the chapter's closing threat.",
+   "_note": "old summary borrowed ch27-28's nephew-revenge pursuit; here he only volunteers"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 86,
+   "summary": "Springs the supply-train bait at Yenjin - armor off, horses loose, wagons abandoned - then falls on Wen Chou's looters and drowns half the northern army. He ennobles Guan Yu as Lord of Hanshou, but when the farewell visits begin, hangs the no-admission board at his gate day after day - the silent refusal Guan Yu finally rides through.",
+   "_note": "old summary borrowed ch27's 'do not pursue' line; ch26 ends with Cai Yang volunteering to chase"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 275,
+   "summary": "Yuan Shao's man of Nanyang who slips into Xuchang with Liu Bei's letter - the reproachful lines that make Guan Yu weep aloud - and carries back the answer: farewell to Cao Cao first, then the ladies, then the road.",
+   "_note": "old summary gave him ch29's Sun Ce embassy; here he is the letter-bearer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 2102,
+   "summary": "Caught as a 'spy' outside Guan Yu's Runan camp - deliberately: he tells Guan Yu that Liu Bei lives at Yuan Shao's court, arranges the rebels' feigned defeat, and goes ahead to scout whether the slayer of Yan Liang and Wen Chou dare show his face in the north.",
+   "_note": "old summary had him carrying the letter from Jizhou; Chen Zhen carries that - Sun Qian works the Runan end"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 642,
+   "summary": "Rides out in armor to 'duel' Guan Yu, shames him publicly - 'Liu Bei is with Yuan Shao and you are with Cao Cao' - then whispers the arrangement mid-chase and yields Runan by design.",
+   "_note": "old summary was a bare partner mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 704,
+   "summary": "Cuts down Wen Chou at the third bout by the Yellow River, volunteers for Runan to break his idleness, and there learns from Sun Qian where his brother is. Caught between the ladies' reproaches and Cao Cao's no-admission board, he writes his farewell, seals every gift and his Hanshou lordship seal in the hall, and rides out the north gate with the carriage - Red Hare under him, twenty guards behind.",
+   "_note": "old summary compressed the Runan expedition and misplace the seal on a gatepost"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 1311,
+   "summary": "Talks his head off the block twice - 'is every red-faced man with a beard named Guan Yu?', then 'Cao Cao arranged it all to make you kill me' - and glimpses his brother's Hanshou banner across the river at Yenjin. His letter of loving reproach, carried by Chen Zhen, brings Guan Yu out of Xuchang.",
+   "_note": "old summary said the letter went via Sun Qian"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 2754,
+   "summary": "The only man who reads the abandoned wagons for what they are - 'these are a bait for the enemy; why retire?' - earning Cao Cao's glance: 'he understands, do not say anything.'",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 3166,
+   "summary": "Chases the fleeing Wen Chou, loses his cap-tassel to one arrow and his horse to the next; later sent to sound out Guan Yu - who answers that his bond with Liu Bei is friend, brother, and lord in one - and finally lies 'indisposed' when the farewells come.",
+   "_note": "old summary was a bare 'serves under Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 2953,
+   "summary": "Marches under Guan Yu against Runan - and afterwards is the one who tells Cao Cao that Liu Bei's whereabouts are known, triggering Zhang Liao's probe.",
+   "_note": "old summary posted him at the river frontier; he serves under Guan Yu and informs on him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 2755,
+   "summary": "Warns against giving Guan Yu the Runan command - any news of Liu Bei and he is gone - and is answered with 'if he does well this time, I will not let him fight again.'",
+   "_note": "old summary was a bare 'running Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 756,
+   "summary": "With Shen Pei, brings Yuan Shao the news that Guan Yu killed Wen Chou too, and that Liu Bei 'pretends ignorance' - the denunciation that puts Liu Bei under the axe a second time.",
+   "_note": "old summary was a bare council mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 1925,
+   "summary": "Joins Guo Tu in denouncing Liu Bei after Wen Chou's death - and is waved off as nearly making his master 'injure the good' when Liu Bei talks his way clear.",
+   "_note": "old summary was a bare council mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 26,
+   "target_id": 592,
+   "summary": "Weeps with Lady Mi at the rumor of Liu Bei's death - until an old guard lets slip that he lives in the north; she then reproaches Guan Yu for hiding it and presses him: 'brother-in-law, you should hasten.'",
+   "_note": "old summary was a bare carriage mention"}
+]
