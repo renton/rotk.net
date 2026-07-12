@@ -79,7 +79,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch55 — 24 ops (Liang Da 'Tai' false assoc removed [FINAL in-range tracker item], Zhao Yun opens bags 2 AND 3, Zhou Yu taunting-verses fix [soldiers' jeer], luxury-trap letter, Lady Sun's two voice-confrontations, inkstone + sword-order scenes, Wu Guotai New Year permission)
 - [x] ch56 — 38 ops (Ji Chang 'Xiahou' junk keyword AGAIN [ch17 bug recurrence], Chen Lin memorial-vs-ode fix, Hua Xin marooned-envoy fix, Gu Yong/Cheng Yu scheme authorship, archery contest six-shot cast, apologia figures, borrowed-road double-fooling of Lu Su)
 - [x] ch57 — 54 ops (Zhou Yu's death + threnody cast, Ma Dai escaped-in-disguise fix, Ma Xiu/Ma Tie executed fixes, Huang Kui plot chain summaries, Li Chunxiang sex=female, Zhou Xun/Zhou Yin are Zhou Yu's SONS, 9 relationships: Ma family tree + Huang Kui household + Zhou Yu's sons)
-- [x] ch58 — 39 ops (Chen Qun + Li Tong dup-note summaries replaced, Li Tong DIES, Ding Fei cattle-stampede fix [was garbled as 'beard-trimming horse'], Cao Hong two-feats untangled, Ma Teng ch57-recap fix, Zhong Jing/Cao Yong/Cheng Yi deaths, eight Xiliang commanders, Liu Bei's war-launching letter, Zhong Yao↔Zhong Jing Sibling)
+- [x] ch58 — 38 ops (Chen Qun + Li Tong dup-note summaries replaced, Li Tong DIES, Ding Fei cattle-stampede fix [was garbled as 'beard-trimming horse'], Cao Hong two-feats untangled, Ma Teng ch57-recap fix, Zhong Jing/Cao Yong/Cheng Yi deaths, eight Xiliang commanders, Liu Bei's war-launching letter, Zhong Yao↔Zhong Jing Sibling)
 - [x] ch59 — 15 ops (done earlier)
 
 ## Relationships proposed across fix files (dedupe list)
