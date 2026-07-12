@@ -1,0 +1,146 @@
+[
+  {"op": "add_relationship", "character1_id": 1311, "character2_id": 1336,
+   "type": 1, "_note": "ADOPTIVE: Liu Bei adopts Kou Feng, renamed Liu Feng, over Guan Yu's objection ('you have a son - why adopt another?')"},
+
+  {"op": "add_relationship", "character1_id": 3772, "character2_id": 1336,
+   "type": 1, "_note": "'He is my nephew, Kou Feng, son of Lord Kou of Luo'"},
+
+  {"op": "add_relationship", "character1_id": 3771, "character2_id": 1336,
+   "type": 10, "_note": "Liu Mi: 'he is my nephew... I have taken care of him after his parents died'"},
+
+  {"op": "add_relationship", "character1_id": 3773, "character2_id": 2661,
+   "type": 1, "_note": "'his mother, Lady Xun, has no one to care for her' - Xu Shu's mother"},
+
+  {"op": "add_relationship", "character1_id": 3521, "character2_id": 3529,
+   "type": 1, "_note": "'His father, Zhuge Gui, was the Deputy Governor of Taishan but died young'"},
+
+  {"op": "add_relationship", "character1_id": 3521, "character2_id": 3527,
+   "type": 1, "_note": "Zhuge Jun is Zhuge Liang's younger brother, so also Zhuge Gui's son"},
+
+  {"op": "add_relationship", "character1_id": 3529, "character2_id": 3527,
+   "type": 5, "_note": "'he and his younger brother, Zhuge Jun, returned to their farm in Nanyang'"},
+
+  {"op": "add_relationship", "character1_id": 3538, "character2_id": 3529,
+   "type": 10, "_note": "'the young fellow went with his uncle Zhuge Xuan to Jingzhou'"},
+
+  {"op": "add_relationship", "character1_id": 3777, "character2_id": 3529,
+   "type": 18, "_note": "'He is of the family of the former General Zhuge Feng' - ancestral line"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 36,
+   "target_id": 69,
+   "_note": "FALSE POSITIVE: no Xuzhou/Xu Province in ch36 - the bare 'Xu' alias matched the surname in Xu Shu's ~30 mentions"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 36,
+   "target_id": 62, "keywords": "Yuzhou",
+   "_note": "restrict from the bare 'Yu' alias (which lands inside Guan Yu / Cheng Yu / River Yu mentions in counts) to the one real usage, 'Liu Bei of Yuzhou'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3773,
+   "summary": "Xu Shu's widowed mother, lured to the capital and asked to summon her son from the 'rebel' Liu Bei: she delivers the book's fiercest dressing-down - 'you, under the name of a Han minister, are really nothing but a Han rebel' - and hurls an inkstone at Cao Cao's head. Saved from execution by Cheng Yu's cold logic, she is kept as the living bait whose forged handwriting steals her son.",
+   "_note": "summary was missing for the chapter's moral centre"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3771,
+   "summary": "Magistrate of Fancheng, a Changsha-born scion of the imperial house: he hosts the victorious Liu Bei in his own home - and gives up his ward, the handsome young Kou Feng, to become Liu Bei's adopted son Liu Feng.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3772,
+   "summary": "Liu Feng's late father - 'Kou Feng, son of Lord Kou of Luo' - dead before the story reaches Fancheng.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3775,
+   "summary": "The ancient chancellor of Qi to whom Zhuge Liang 'often compares himself' - and whom, in Xu Shu's opinion, he far surpasses.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3776,
+   "summary": "The Yan general paired with Guan Zhong in Zhuge Liang's self-comparison - both, says Xu Shu, are the Sleeping Dragon's inferiors.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3774,
+   "summary": "Lu Wang, the sage whose aid made the Zhou: Xu Shu's measure of what Zhuge Liang's consent would mean to Liu Bei.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3655,
+   "summary": "The Han founder's strategist, second half of Xu Shu's parting comparison - win Zhuge Liang, and it will be 'as when Zhang Liang came to help' the Han.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3777,
+   "summary": "The former Han general from whom the Zhuge family of Langye descends - the head of the Sleeping Dragon's lineage.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 1351,
+   "summary": "Emperor Ling, in whose last years the young Xu Shu killed a man to avenge a friend - the date-stamp on Cheng Yu's biography of the fugitive swordsman turned scholar.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 1434,
+   "summary": "Invoked in Cao Cao's honeyed offer to Lady Xun: call your son and 'I could speak of him before the Emperor'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 123,
+   "summary": "Nearly executes Li Dian for counselling retreat, loses his Eight Docked Gates array to a formation-reading he cannot fathom, loses his night raid to a camp already ablaze, loses most of his army in the river - and reaches Fancheng to hear Guan Yu shout from its wall. He crawls back to Xuchang weeping his faults on the ground.",
+   "_note": "old summary credited Fancheng's capture to Zhao Yun - Guan Yu took it; and the Li Dian death sentence was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3334,
+   "summary": "Duels Li Dian ten bouts in the opening clash, then executes Shan Fu's formation-break: in at the southeast gate with five hundred men, feint at the fleeing Cao Ren, out due west, and back in again until the Eight Gates dissolve. At the night raid he cuts Cao Ren's road of retreat; he ends the chapter garrisoning captured Fancheng.",
+   "_note": "old summary gave him Fancheng's capture - Guan Yu took the city; Zhao Yun broke the array and now guards it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 704,
+   "summary": "The hidden blade of Shan Fu's whispered plan: while Cao Ren empties Fancheng for revenge, Guan Yu takes the city - 'I took the city a long time ago!' - and mauls the fugitives once more. Later he alone questions the wisdom of adopting Liu Feng: 'you have a son; it may cause confusion.'",
+   "_note": "old summary was a bare 'commands part of the Xinye action'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3106,
+   "summary": "Falls on Cao Ren's broken army at the river bank as it waits for boats - most of the soldiers drown in the stream.",
+   "_note": "old summary was a bare 'commands part of the Xinye action'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 1158,
+   "summary": "Loses ten bouts to Zhao Zilong and counsels retreat to Fancheng - for which Cao Ren orders his execution, commuted to rear-guard duty. Every warning he gives proves right, and it is he who drags Cao Ren into the boat that saves his life.",
+   "_note": "old summary was a bare 'with Cao Ren at Xinye/Fancheng'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 309,
+   "summary": "Identifies Shan Fu as the fugitive avenger Xu Shu ('ten times cleverer' than himself), saves the inkstone-throwing Lady Xun from execution with pure calculation - dead she is a martyr, alive she is bait - then plays the false sworn-brother, trading letters until he can forge her hand. His counterfeit summons pulls Xu Shu out of Xinye.",
+   "_note": "old summary had the forged letter but not the biography, the rescue-as-strategy, or the fake-filial-son grooming"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 2102,
+   "summary": "Offers the ruthless option: keep Xu Shu at all costs - Cao Cao will kill the mother, and the son will fight on burning for revenge. Liu Bei refuses to buy service with a mother's life.",
+   "_note": "old summary was a bare 'with Liu Bei at Xinye'; his one scene is this rejected counsel"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 2661,
+   "summary": "Unmasked by Cheng Yu as Xu Shu, the friend-avenging swordsman who turned scholar after escaping the drum-cart: the forged letter in his mother's hand breaks him, and he leaves Liu Bei with the vow that Cao Cao 'though he use all manner of means, will never get one plan from me'. At the Daisy Pavilion farewell he turns his horse back twice - first to name Zhuge Liang ('a sleeping dragon among men'), then to ride to the Ridge himself and beg his friend to accept, earning only 'so you have made me a victim of the world's sacrifice.'",
+   "_note": "old summary had the recommendation; the unmasking, the vow, and the rebuffed personal embassy complete it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 1739,
+   "summary": "Named at last: 'Young Phoenix is Pang Tong of Xiangyang' - Xu Shu unseals the half of Water Mirror's riddle that Liu Bei is not yet fated to pursue.",
+   "_note": "old summary attributed the naming to Sima Hui's list; it is Xu Shu who finally identifies him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 1336,
+   "summary": "The handsome ward of Magistrate Liu Mi - born Kou Feng, orphaned son of Lord Kou of Luo - whom Liu Bei adopts and renames at Fancheng, making him bow to Guan Yu and Zhang Fei as uncles over Guan Yu's misgivings.",
+   "_note": "old summary's parenthetical had the adoption preceding Liu Shan's birth - Liu Shan was born in ch34, which is exactly Guan Yu's objection"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3527,
+   "summary": "Zhuge Liang's younger brother in Xu Shu's lineage account - the two withdrew to the Nanyang farm after their uncle's death, composing songs in the Liangfu style.",
+   "_note": "old summary said he 'appears in the chapter's setup' - he is only named in the account; his on-stage debut comes with the visits"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 36,
+   "target_id": 3529,
+   "summary": "Introduced by Xu Shu's parting speech - Master Sleeping Dragon of the ridge in Nanyang, superior to his own models Guan Zhong and Yue Yi, 'the talent to measure the heavens and mete the earth' - and then met in the flesh for one sharp moment: told Liu Bei is coming, he shakes out his sleeves at Xu Shu - 'so you have made me a victim of the world's sacrifice' - and walks out.",
+   "_note": "old summary said he had 'not yet appeared in person'; the final scene is his first on-stage appearance"}
+]

@@ -57,7 +57,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch33 — 46 ops (Battle of Ye event added to ch32, Xu Province + Bronze Bird Tower false assocs removed, Wuhuan Chu keywords fixed from bare 'Chu', Mao Dun/Xin Ping/Guo Tu on-page deaths, Yuan Tan died at Nanpi not Pingyuan, Gao Gan killed by Wang Yan at Shanglu, Wang Xiu mourner scene, 3 relationships incl. Cao Pi↔Lady Zhen)
 - [x] ch34 — 28 ops (9 missing summaries incl. the three Cai brothers and Su Dongpo, Kuai Liang is-dead fix, Liu Qi/Sun Qian wrong-content fixes, Yi Ji's three warnings, Zhao Yun's Dilu capture, 8 relationships: Jingzhou heir family + Cai brothers + Lady Gan→Liu Shan)
 - [x] ch35 — 16 ops (Xu Shu/Shan Fu debut summary was missing, Lü brothers' on-page deaths, Cai Mao death-sentence-and-reprieve, Liu Biao letter-not-visit fix, Pang Tong 'named as Young Phoenix' fix, Pang Degong→Pang Tong uncle relationship)
-- [ ] ch36
+- [x] ch36 — 33 ops (Fancheng capture credited to Guan Yu not Zhao Yun, Lady Xun inkstone scene + 9 other missing summaries, Xu Province false assoc removed, bare-'Yu' restriction, Zhuge Liang did appear in person, 9 relationships: Liu Feng adoption cluster + Lady Xun→Xu Shu + Zhuge family tree)
 - [ ] ch37
 - [ ] ch38
 - [ ] ch39
@@ -105,6 +105,14 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch36_audit.json (9):
+- Liu Bei [1311] → Liu Feng [1336] Parent/Child (adoptive)
+- Lord Kou [3772] → Liu Feng [1336] Parent/Child; Liu Mi [3771] → Liu Feng Pibling/Nibling
+- Lady Xun [3773] → Xu Shu [2661] Parent/Child
+- Zhuge Gui [3521] → Zhuge Liang [3529] + → Zhuge Jun [3527] Parent/Child
+- Zhuge Liang [3529] ↔ Zhuge Jun [3527] Sibling; Zhuge Xuan [3538] → Zhuge Liang Pibling/Nibling
+- Zhuge Feng [3777] → Zhuge Liang [3529] Ancestor/Descendant
 
 From ch35_audit.json (1):
 - Pang Degong [1726] → Pang Tong [1739] Pibling/Nibling
