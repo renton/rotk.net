@@ -3036,10 +3036,29 @@ def province_maps():
         .all()
     )
     # Count ALL descendants per province (the editor places the whole
-    # subtree, not just direct children).
-    child_counts = {
-        p.id: len(_province_descendants(p.id)[0]) for p in provinces
-    }
+    # subtree, not just direct children). One location load shared by
+    # every province's BFS — not one load per province.
+    all_rows = (
+        db.session.query(Location.id, Location.parent_id)
+        .filter(Location.is_deleted.is_(False))
+        .all()
+    )
+    by_parent = {}
+    for lid, pid in all_rows:
+        by_parent.setdefault(pid, []).append(lid)
+    child_counts = {}
+    for p in provinces:
+        seen = {p.id}
+        stack = list(by_parent.get(p.id, []))
+        count = 0
+        while stack:
+            lid = stack.pop()
+            if lid in seen:
+                continue
+            seen.add(lid)
+            count += 1
+            stack.extend(by_parent.get(lid, []))
+        child_counts[p.id] = count
 
     return render_template(
         'admin/province_maps.html',
