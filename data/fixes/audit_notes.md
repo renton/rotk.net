@@ -37,7 +37,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch13 — 45 ops (Empress He→Empress Fu wrong-person fix, 11 missing summaries, 2 admin-note 'summaries' replaced, 4 relationships incl. Guo Si/Yang Biao marriages, ~25 summary corrections)
 - [x] ch14 — 35 ops (13 missing summaries, Cao Bao is LÜ BU's father-in-law not Zhang Fei's, Xu Huang kills Li Yue not Li Xian and refuses the murder-gift, Li Jue→Li Bie nephew)
 - [x] ch15 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' removal, 9 missing summaries, Yan Yu dup-note replaced, Young Overlord kill fixes, 4 relationships incl. Sun Ce↔Zhou Yu sworn)
-- [ ] ch16
+- [x] ch16 — 42 ops (12 missing summaries, Lady Yan/Lady Zhou wrong-person fix, 2 dup-note summaries replaced, 8 relationships incl. Cao Cao→Cao Ang and the Lü Bu household)
 - [ ] ch17
 - [ ] ch18
 - [ ] ch19
@@ -105,6 +105,12 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch16_audit.json (8):
+- Cao Cao [86] → Cao Ang [80] Parent/Child; → Cao Amin [3688] Pibling/Nibling
+- Zhang Ji [3134] → Zhang Xiu [3233] Pibling/Nibling; ↔ Lady Zhou [3689] Husband/Wife
+- Lü Bu [1547] ↔ Lady Yan [2761] + ↔ Lady Cao [3687] Husband/Wife
+- Cao Bao [82] → Lady Cao [3687] Parent/Child; Chen Gui [216] → Chen Deng [207] Parent/Child
 
 From ch15_audit.json (4):
 - Yan Baihu [2762] ↔ Yan Yu [2794] Sibling; Liu Dai [1325] ↔ Liu Yao [1452] Sibling

@@ -1,0 +1,195 @@
+[
+  {"op": "add_relationship", "character1_id": 86, "character2_id": 80,
+   "type": 1, "_note": "Cao Ang is 'Cao Cao's eldest son' (para 180)"},
+
+  {"op": "add_relationship", "character1_id": 86, "character2_id": 3688,
+   "type": 10, "_note": "Cao Amin is Cao Cao's nephew ('His nephew, Cao Amin' - para 152)"},
+
+  {"op": "add_relationship", "character1_id": 3134, "character2_id": 3233,
+   "type": 10, "_note": "Zhang Xiu is Zhang Ji's nephew ('His nephew, Zhang Xiu, had succeeded to the command' - para 140)"},
+
+  {"op": "add_relationship", "character1_id": 1547, "character2_id": 2761,
+   "type": 3, "_note": "Lady Yan is Lü Bu's legal wife ('He first married a lady of the Yan family, and she was the legal wife' - para 64)"},
+
+  {"op": "add_relationship", "character1_id": 1547, "character2_id": 3687,
+   "type": 3, "_note": "Lady Cao, Cao Bao's daughter, was Lü Bu's secondary wife who died young (para 64)"},
+
+  {"op": "add_relationship", "character1_id": 82, "character2_id": 3687,
+   "type": 1, "_note": "Lady Cao was 'a daughter of Cao Bao' (para 64) - resolves the ch14 father-in-law note"},
+
+  {"op": "add_relationship", "character1_id": 3134, "character2_id": 3689,
+   "type": 3, "_note": "Lady Zhou was 'wife to Zhang Ji; born of the Zhou family' (para 155)"},
+
+  {"op": "add_relationship", "character1_id": 216, "character2_id": 207,
+   "type": 1, "_note": "Chen Gui is 'father of Chen Deng' (para 92)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3688,
+   "summary": "Cao Cao's nephew, who peeps through a partition, reports the beautiful widow of Zhang Ji, and fetches her under armed escort - the errand that dooms the camp. In the night revolt he flees on foot beside his uncle and is hacked to pieces at River Yu.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3641,
+   "summary": "Named in the accounting of Lü Bu's household: his concubine, childless - which leaves the one beloved daughter as the marriage-alliance pawn.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3668,
+   "summary": "The sun-shooting archer of antiquity, invoked in the verses celebrating Lü Bu's halberd shot.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 895,
+   "summary": "Zhang Xiu's strongman (the prose spells him Hu Juer) - carries six hundred pounds two hundred miles in a day. His plan disarms the terrible bodyguard: get Dian Wei drunk at the banquet, slip in among his escort, and steal the double halberds before the revolt.",
+   "_note": "summary was missing (distinct from Hu Chier [896], Niu Fu's killer in ch9)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3687,
+   "summary": "Cao Bao's daughter, taken by Lü Bu as secondary wife during his Xiaopei days; already dead young and childless when the household is counted.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3689,
+   "summary": "Zhang Ji's widow, 'born of the Zhou family': fetched to Cao Cao's tent, kept among the tents under Dian Wei's guard through days of dalliance - the shame that turns Zhang Xiu's surrender into the Wancheng massacre.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3685,
+   "summary": "One of the two generals under Ji Ling in the hundred-thousand-man march on Xiaopei.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 1434,
+   "summary": "His name seals the chapter's politics: the decree carried by Wang Ze makes Lü Bu General Who Pacifies the East, and Cao Cao memorializes him to make Liu Bei Imperial Protector of Yuzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 1547,
+   "summary": "The archery-feast chapter: he seats Ji Ling and Liu Bei at one table and stakes peace on hitting the halberd's side-blade at a hundred and fifty paces - and does. Then the marriage snare: he accepts Yuan Shu's alliance for his one daughter, sends the wedding party out to music, and recalls it at old Chen Gui's warning. Goaded over Zhang Fei's horse-theft he besieges Xiaopei, lets Liu Bei slip away north, and takes the falcon flattery whole: 'yes, he understands me!'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3684,
+   "summary": "Author of the opening move: bribe Lü Bu with two hundred thousand carts of millet to sit still while Ji Ling crushes Liu Bei - foiled when Lü Bu decides a live Liu Bei is his own best buffer.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3686,
+   "summary": "The legendary archer whose ape-slaying shots are invoked beside Hou Yi's suns in the verses on the halberd shot.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3032,
+   "summary": "Among the four generals Cao Cao mistakenly sends against the 'mutinous' Yu Jin on the retreat from Wancheng.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3134,
+   "summary": "Dies attacking Nanyang, struck by a stray arrow - his army passing to his nephew Zhang Xiu, and his beautiful widow Lady Zhou becoming the spark of the Wancheng catastrophe.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3233,
+   "summary": "Succeeds his dead uncle Zhang Ji, camps at Wancheng with Jia Xu, and surrenders sensibly to Cao Cao's one hundred fifty thousand - until Cao Cao takes his uncle's widow to bed. On Jia Xu's quiet plan he moves his troops inside the lines, disarms Dian Wei through Hu Juer's theft, and burns the camp at midnight, killing Dian Wei, Cao Ang, and Cao Amin. Yu Jin breaks him in the aftermath and he flees to Liu Biao.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2761,
+   "summary": "Lü Bu's legal wife of the Yan family and mother of his only child. Consulted over the Yuan marriage offer, she reasons her daughter might one day be an empress - the assent that sends the wedding party out the gate.",
+   "_note": "old summary confused her with Lady Zhou/Zou, Zhang Ji's widow at Wancheng - a different woman in this same chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 813,
+   "summary": "Yuan Shu's marriage envoy: delivers the millet and the alliance offer, escorts the bride's procession - and when Chen Gui's warning turns Lü Bu around, he is thrown in a cage, shipped to Xuchang with the memorial of thanks, and executed by Cao Cao in the market place.",
+   "_note": "old summary ended at the broken engagement; he dies for it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 1024,
+   "summary": "Marches a hundred thousand on Xiaopei only to be hauled into Lü Bu's tent 'as if he had been a child' and bound by the halberd-shot wager. Back at Shouchun he invents the next snare himself: the 'Relative-above-Stranger' marriage alliance between Yuan Shu's son and Lü Bu's daughter.",
+   "_note": "old summary omitted that the marriage scheme is his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2953,
+   "summary": "The chapter's model soldier: he cuts down the plundering Qingzhou troops to protect the people, is denounced by them as a mutineer, and - attackers at his back - fortifies camp before explaining himself. Then he breaks Zhang Xiu's pursuit outright. Cao Cao: 'who, even of the ancient leaders, can excel Yu Jin?' - golden armor and the lordship of Yishou.",
+   "_note": "old summary was a bare 'serves under Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2535,
+   "summary": "Leads the van to River Yu - but his Qingzhou soldiers loot the countryside in the retreat, and Cao Cao publicly reprimands him for their indiscipline while Yu Jin is honored.",
+   "_note": "old summary was a bare 'serves under Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2374,
+   "summary": "The Imperial Legate who carries Lü Bu's new title - General Who Pacifies the East - and Cao Cao's private mediating letter to Xuzhou.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2026,
+   "summary": "Escorts the bride's carriage with Wei Xu, and later brings the report that Zhang Fei, disguised as a brigand, stole half their three hundred purchased horses.",
+   "_note": "old summary was command-structure filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2416,
+   "summary": "Escorts the bride's carriage with Song Xian, reports the horse theft, and fails to stop Liu Bei's moonlit breakout at the north gate.",
+   "_note": "old summary was command-structure filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3106,
+   "summary": "Steals a hundred and fifty of Lü Bu's newly bought horses in brigand's guise - then owns it to his face: 'you did not say anything when you stole my brother's Xuzhou!' He trades a hundred bouts with Lü Bu before the gongs recall him, and leads the van in the moonlit breakout to Xuchang.",
+   "_note": "old summary was a bare 'with Liu Bei at Xiaopei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 704,
+   "summary": "Counsels hearing Lü Bu out at the archery feast, then holds the rearguard against Zhang Liao's pursuit in the flight from Xiaopei.",
+   "_note": "old summary was a bare 'with Liu Bei at Xiaopei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 1311,
+   "summary": "Saved once by the halberd shot and besieged anyway over Zhang Fei's horse raid, he abandons Xiaopei by moonlight and throws himself on Cao Cao - who, over Xun Yu's and Cheng Yu's urgings to kill him, calls him brother, gives him troops and grain, and has him made Imperial Protector of Yuzhou.",
+   "_note": "old summary stopped at the halberd shot"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 620,
+   "summary": "Named Governor of the captured Xiaopei when Lü Bu lets Liu Bei's cavalcade escape north.",
+   "_note": "old summary was command-structure filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3166,
+   "summary": "Recalls the wedding party at Lü Bu's order, then pursues Liu Bei's moonlit breakout until Guan Yu's rearguard holds him off.",
+   "_note": "old summary was command-structure filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2755,
+   "summary": "Urges Cao Cao to destroy the sheltering Liu Bei - 'too much of a hero' - and is overruled; then supplies the subtler tool: flatter Lü Bu with a title and a peace commission, for 'he is led astray by any little advantage before his eyes'.",
+   "_note": "old summary had him running the administration; both counsels are his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 737,
+   "summary": "Argues Liu Bei's life out of the balance: killing one hero who came for protection would scare off every able man the cause needs. Cao Cao: 'what you say exactly fits what I think.'",
+   "_note": "old summary was a bare 'with Cao Cao at Wancheng'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 309,
+   "summary": "Presses the same warning as Xun Yu - Liu Bei will never stay subordinate - and is answered with Guo Jia's logic: now is the time to win men, not kill them.",
+   "_note": "old summary was generic adviser filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 2102,
+   "summary": "Reads the position after Lü Bu rejects the peace offer: the one man who hates Lü Bu most is Cao Cao - abandon Xiaopei and borrow his strength. The advice that carries Liu Bei to Xuchang.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 228,
+   "summary": "One of the two generals under Ji Ling in the march on Xiaopei.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 82,
+   "summary": "Named as the father of Lü Bu's late secondary wife, Lady Cao, in the accounting of the household.",
+   "_note": "old summary pointed at a recap that isn't in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 16,
+   "target_id": 3008,
+   "summary": "Buys Lü Bu's neutrality with two hundred thousand carts of millet, loses the Xiaopei campaign to the halberd shot, then reaches for the marriage snare - and when his palace-building, empress-choosing imperial project is announced to Xuzhou, Lü Bu cages his envoy and the alliance dies. His answer is an army.",
+   "_note": "old summary had wrong cart numbers and a Yangcheng defeat not in this chapter"}
+]
