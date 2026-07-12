@@ -1,0 +1,207 @@
+[
+  {"op": "update_association", "target": "location", "chapter_num": 18,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "per-chapter keywords were 'Youzhou,You' - bare 'You' matches the capitalized pronoun at sentence starts throughout the dialogue; 'Youzhou' covers the real mention"},
+
+  {"op": "add_relationship", "character1_id": 1311, "character2_id": 1677,
+   "type": 3, "_note": "Liu Bei 'had taken a sister of Mi Zhu as a second wife' (Lady Mi) - stated in ch18"},
+
+  {"op": "add_relationship", "character1_id": 1311, "character2_id": 592,
+   "type": 3, "_note": "Lady Gan is Liu Bei's (first) wife - captured with Lady Mi at Xuzhou in ch15-16 and named as his wife throughout"},
+
+  {"op": "add_relationship", "character1_id": 1682, "character2_id": 1677,
+   "type": 5, "_note": "Lady Mi is Mi Zhu's sister (ch18: 'a sister of Mi Zhu')"},
+
+  {"op": "add_relationship", "character1_id": 1682, "character2_id": 1678,
+   "type": 5, "_note": "Mi Fang is Mi Zhu's brother ('Mi Zhu and his brother Mi Fang')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3688,
+   "summary": "Remembered at the River Yu sacrifice: Cao Cao burns incense for Dian Wei and then for his nephew Cao Amin and his son Cao Ang, both lost in the same Wancheng night.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3697,
+   "summary": "One of the three officers (with Hou Cheng and Cao Xing) leading the two hundred horse Lü Bu detaches to reinforce Gao Shun before Xiaopei.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3575,
+   "summary": "Invoked in Guo Jia's ten-points speech: the Supreme Ancestor beat the stronger Xiang Yu by superior wisdom alone - the template for Cao Cao against Yuan Shao.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3696,
+   "summary": "The stronger rival who lost anyway - Guo Jia's proof that Yuan Shao's big battalions decide nothing.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1434,
+   "summary": "Makes Sun Ce Lord of Wu and General Who Destroys Rebels at Cao Cao's memorial, and - to lull the north - grants Yuan Shao the protectorship of Jizhou, Qingzhou, Youzhou, and Bingzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3656,
+   "summary": "Wounded in Jia Xu's counter-ambush at Wancheng, then rides as one of the four van commanders against Lü Bu and falls back with Li Dian on Jibei after the eye-arrow rout.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1547,
+   "summary": "His hunting party's catch - Liu Bei's intercepted reply to Cao Cao - exposes the plot against him. He executes the courier and strikes four ways at once: the Taishan bandits toward Yanzhou, Gao Shun and Zhang Liao at Xiaopei, Song Xian and Wei Xu west, himself in reserve - arriving before Xiaopei just as Gao Shun beats the vanguard.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3233,
+   "summary": "Executes Jia Xu's counter-ambush at Wancheng - townsfolk faking the northwest defense, veterans hidden by the southeast breach - and costs Cao Cao fifty thousand men. He loses the first pursuit at Anzhong, balks at Jia Xu's 'pursue the victors' paradox, then follows it alone and routs Cao Cao's rearguard, settling at Xiangyang as Liu Biao's lips to his teeth.",
+   "_note": "old 'summary' was the bare note '(duplicate record)' - flagged in audit_notes.md"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1224,
+   "summary": "Rides from Runan unbidden and bursts from the hills to save Cao Cao's shattered rearguard from Zhang Xiu's second pursuit; made Lord Who Renders High Services and confirmed as Runan's shield against Liu Biao and Zhang Xiu.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 86,
+   "summary": "Reads Nanyang's rebuilt southeast wall and feints northwest - but Jia Xu reads him back, and the veterans who slip the breach at second watch walk into an ambush that costs fifty thousand men. He mourns Dian Wei by the River Yu, springs his own pass ambush at Anzhong, races home at word of Yuan Shao's designs - losing his baggage to the paradox pursuit - and turns, on the ten points and the intercepted letter, to the destruction of Lü Bu.",
+   "_note": "old summary called the Wancheng defeat a fake-retreat trap; it's the wall-breach counter-ambush"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1048,
+   "summary": "Beats Cao Cao twice in one chapter: reads the northwest feint and packs the southeast houses with veterans, then - after warning against the first pursuit and being ignored - stakes his head on sending the beaten army after the victorious one, and wins. His lecture on why ('a hurried retreat means trouble at home; the rearguard laxity follows') leaves both his masters bowing.",
+   "_note": "old summary compressed the two ruses into one"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 185,
+   "summary": "One of the four Taishan Mountains bandit chiefs enlisted by Chen Gong and Zang Ba to strike at Yanzhou.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2071,
+   "summary": "One of the four Taishan Mountains bandit chiefs enlisted to take Yanzhou for Lü Bu.",
+   "_note": "old summary wrongly listed him among Lü Bu's eight generals"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2457,
+   "summary": "One of the four Taishan Mountains bandit chiefs enlisted to take Yanzhou for Lü Bu.",
+   "_note": "old summary wrongly listed him among Lü Bu's eight generals"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2907,
+   "summary": "One of the four Taishan Mountains bandit chiefs enlisted to take Yanzhou for Lü Bu.",
+   "_note": "old summary wrongly listed him among Lü Bu's eight generals"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 704,
+   "summary": "Holds the west gate and turns Zhang Liao back with words alone - 'you are too good a man to waste yourself on rebels' - then stops Zhang Fei from pursuing a man too honorable to fight them.",
+   "_note": "old summary was generic defense filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3166,
+   "summary": "Assaults the west gate - and hangs his head when Guan Yu calls him too good for rebels; he shifts to the east gate and withdraws again rather than cross Zhang Fei. The shame that will bear fruit at Xiapi.",
+   "_note": "old summary was a bare assault mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3106,
+   "summary": "Holds the east gate and sallies out at Zhang Liao, itching to pursue until Guan Yu explains why an honorable man is walking away.",
+   "_note": "old summary was generic defense filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 620,
+   "summary": "Marches on Xiaopei, demands Liu Bei bound as Cao Cao's plotter, and when the relief army arrives, trades fifty bouts with Xiahou Dun - whose pursuit into the ranks costs him his eye to Cao Xing's arrow. Gao Shun rides the shock to victory and turns back on Xiaopei with Lü Bu and Zhang Liao.",
+   "_note": "old summary said he takes Xiaopei this chapter - the city falls in ch19"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1311,
+   "summary": "Exposed by his intercepted reply to Cao Cao, he shuts Xiaopei's four gates - himself at the south, Sun Qian north, Guan Yu west, Zhang Fei east, the Mi brothers guarding the family - sends Jian Yong for help, and marches out to camp when Cao Cao's fifty thousand approach. The chapter ends with Lü Bu, Gao Shun, and Zhang Liao each taking one brother.",
+   "_note": "old summary described ch19's fall and flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1682,
+   "summary": "Commands the family guard at Xiaopei's center with his brother Mi Fang - trusted as Liu Bei's brothers-in-law, Liu Bei having married their sister.",
+   "_note": "old summary described the ch19 flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1678,
+   "summary": "Guards Liu Bei's family at Xiaopei's center with his brother Mi Zhu - the brothers-in-law post.",
+   "_note": "old summary described the ch19 flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1053,
+   "summary": "Debuts as Liu Bei's fellow townsman and secretary: volunteers to carry the appeal to Xuchang, delivers it to Cao Cao, and rides back with the rescue army as its rearguard.",
+   "_note": "old summary had him fleeing with the group; he's the messenger who brings the army"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2102,
+   "summary": "Proposes the appeal to Cao Cao and holds Xiaopei's north gate.",
+   "_note": "old summary was flight filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 214,
+   "summary": "Warns Lü Bu that the Chens' flattery hides something - 'no ears for loyal words' - and, hunting near Xiaopei, intercepts the courier whose letter proves him right. He then rides with Zang Ba to raise the four Taishan bandit chiefs against Yanzhou.",
+   "_note": "old summary was a bare adviser mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3042,
+   "summary": "Rides with Chen Gong to enlist the four Taishan Mountains bandit chiefs - Sun Guan, Wu Dun, Yin Li, and Chang Xi - for the strike at Yanzhou.",
+   "_note": "old summary was a bare 'serves under Lu Bu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2026,
+   "summary": "Sent west with Wei Xu against Runan and Yingchuan in Lü Bu's four-pronged countermove.",
+   "_note": "old summary was a bare 'serves under Lu Bu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2416,
+   "summary": "Sent west with Song Xian against Runan and Yingchuan in Lü Bu's four-pronged countermove.",
+   "_note": "old summary was a bare 'serves under Lu Bu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2953,
+   "summary": "Wounded, with Lu Qian, in the counter-ambush inside Nanyang's southeast corner.",
+   "_note": "old summary was a bare 'serves under Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 737,
+   "summary": "Delivers the ten-points speech - Yuan Shao's ten weaknesses against Cao Cao's ten excellences, from administration to war - then aims the conclusion: destroy Lü Bu first, before the north is engaged, and 'smite before they are fully prepared'.",
+   "_note": "old summary was a bare 'advises Cao Cao' - the ten points are the chapter's centerpiece"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2754,
+   "summary": "Judges Liu Biao and Zhang Xiu too freshly beaten to stir, and names the real danger: Lü Bu joined to Yuan Shu astride the Huai and Si rivers.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2755,
+   "summary": "His letters steer the chapter: warning that Liu Biao has cut the retreat at Anzhong, then that Yuan Shao eyes Xuchang - the news that turns the army home. He asks the question that draws out Cao Cao's baited-retreat logic, and insists on securing Liu Bei's cooperation before any move on Lü Bu.",
+   "_note": "old summary was a bare 'running Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1313,
+   "summary": "Answers Zhang Xiu's call and blocks the retreat at Anzhong - into Cao Cao's pass ambush. Burned once, he refuses Jia Xu's paradoxical second pursuit and misses the victory, then goes home to Jingzhou to play lips to Zhang Xiu's teeth.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 1129,
+   "summary": "Reads Sun Ce's river camp as Cao Cao's diversion and urges Liu Biao out to Anzhong - 'never-ending regret if Cao Cao escapes'.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 998,
+   "summary": "Left holding Jingzhou's points of vantage while Liu Biao marches to Anzhong.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 2060,
+   "summary": "His camp at Hukou pins Jingzhou's attention; Cao Cao's memorial makes him Lord of Wu and General Who Destroys Rebels, with orders against Liu Biao.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 3006,
+   "summary": "His arrogant letter demanding grain and troops for a Gongsun Zan campaign nearly brings war - until Guo Jia's ten points persuade Cao Cao to flatter instead: the protectorship of four northern regions and a promise of help send Yuan Shao's army north, clearing the board for Xiapi.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 18,
+   "target_id": 664,
+   "summary": "The declared target of Yuan Shao's northern expedition - the war that keeps the north busy while Cao Cao turns on Lü Bu.",
+   "_note": "old summary: 'named in passing'"}
+]

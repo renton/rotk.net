@@ -39,7 +39,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch15 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' removal, 9 missing summaries, Yan Yu dup-note replaced, Young Overlord kill fixes, 4 relationships incl. Sun Ce↔Zhou Yu sworn)
 - [x] ch16 — 42 ops (12 missing summaries, Lady Yan/Lady Zhou wrong-person fix, 2 dup-note summaries replaced, 8 relationships incl. Cao Cao→Cao Ang and the Lü Bu household)
 - [x] ch17 — 45 ops (Ji Chang 'Xiahou' junk keyword, 13 missing summaries incl. Wang Hou's borrowed head, Ji Ling/Zhang Xun/Lei Xu not killed, Duan Wei/Wu Xi kill credits, Dian Wei→Dian Man)
-- [ ] ch18
+- [x] ch18 — 43 ops (You Province bare-'You' keyword fix, 8 missing summaries, Taishan bandits mislabeled as Lü Bu's eight generals, Jia Xu's double victory, 4 relationships incl. Liu Bei's marriages)
 - [ ] ch19
 - [ ] ch20
 - [ ] ch21
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch18_audit.json (4):
+- Liu Bei [1311] → Lady Mi [1677] + → Lady Gan [592] Husband/Wife
+- Mi Zhu [1682] ↔ Lady Mi [1677] Sibling; ↔ Mi Fang [1678] Sibling
 
 From ch17_audit.json (1):
 - Dian Wei [376] → Dian Man [375] Parent/Child
