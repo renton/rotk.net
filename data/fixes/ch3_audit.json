@@ -1,0 +1,173 @@
+[
+  {"op": "add_association", "target": "event", "chapter_num": 3,
+   "target_id": 11, "keywords": "",
+   "_note": "the Massacre of the Eunuchs actually happens in ch3 (paras 36-45: gate fired, Ten slaughtered, families hunted) - the event was only associated to ch2, the plotting chapter"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 3,
+   "target_id": 881,
+   "_note": "Shang Commandery is not in ch3; the only 'Shang' is 'Emperor Tai Jia of the Shang Dynasty' (para 98) - a dynasty, not the place"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 3,
+   "target_id": 966,
+   "_note": "duplicate referent: para 83 says Bao Xin 'retired to the Taishan Mountains', which Taishan Mountains [47] already tags; the Commandery row never matches anything"},
+
+  {"op": "add_relationship", "character1_id": 3006, "character2_id": 3008,
+   "type": 5, "_note": "Yuan Shu 'a brother of Yuan Shao' (para 26)"},
+
+  {"op": "add_relationship", "character1_id": 3609, "character2_id": 331,
+   "type": 5, "_note": "farmer Cui Yi: 'My brother Cui Lie is the former Minister of the Interior' (para 57)"},
+
+  {"op": "add_relationship", "character1_id": 398, "character2_id": 1547,
+   "type": 1, "_note": "ADOPTIVE: Lu Bu 'the adopted son of Ding Yuan' (para 104) - the tie he severs by murdering him"},
+
+  {"op": "add_relationship", "character1_id": 444, "character2_id": 1547,
+   "type": 1, "_note": "ADOPTIVE: 'Pray let me bow to you as my adopted father!' (para 156) - Lu Bu becomes Dong Zhuo's adopted son"},
+
+  {"op": "add_relationship", "character1_id": 444, "character2_id": 429,
+   "type": 5, "_note": "Dong Min is Dong Zhuo's brother (para 158 'his brother Dong Min')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 75,
+   "summary": "Court Counselor who with Peng Bo stays Dong Zhuo's sword when he moves to kill Lu Zhi at the Wenming Garden banquet, warning that Lu Zhi is the cynosure of the whole country.",
+   "_note": "old summary (recalled from exile) is ch4 material"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 86,
+   "summary": "Opens the chapter finishing his argument that a gaoler is force enough against the eunuchs and that summoning regional armies will expose the plot - then walks out sneering that the one who will throw the world into chaos is He Jin. Escorts He Jin to the palace gate, storms in when the Regent Marshal's head comes over the wall, and afterwards douses the fires and asks Empress He to direct affairs while the Emperor is sought.",
+   "_note": "old summary described the deposition banquet and ch4 assassination planning - Cao Cao isn't at the banquet scenes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 106,
+   "summary": "One of the four surviving Regular Attendants who carry off Empress He, Emperor Bian, and the Prince of Chenliu toward the North Palace as the palace burns.",
+   "_note": "old summary called him an earlier-era figure in a recap; he acts in this chapter (para 37)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 316,
+   "summary": "Commander of the Left Army, among the officials who meet the rescued Emperor's cavalcade returning from the Beimang Hills.",
+   "_note": "old summary vaguely tied him to the massacre's aftermath; he appears in the cavalcade (para 63)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 331,
+   "summary": "Former Minister of the Interior who resigned in disgust at the eunuchs and hid in the country; his brother Cui Yi shelters the fugitive Emperor at his farm.",
+   "_note": "old summary: 'minor official mentioned in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3609,
+   "summary": "The farmer who dreams of two red suns dropping behind his dwelling and finds the fugitive Emperor and Prince of Chenliu behind his straw heap. Brother of the former Minister Cui Lie, he serves the boys on his knees and vouches for Min Gong when the searchers arrive.",
+   "_note": "old summary: 'minor courtier named in passing' - he's the farmer who shelters the Emperor"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 444,
+   "summary": "Marches his two hundred thousand Xizhou troops on Luoyang at He Jin's summons and meets the rescued Emperor at Beimang, where the Prince of Chenliu's composure plants the deposition idea. He swallows the He brothers' leaderless troops, proposes the deposition at the Wenming Garden feast - faced down by Ding Yuan, rebutted by Lu Zhi - then buys Lü Bu with Red Hare, has Ding Yuan murdered, heaps offices on himself, and at a second banquet draws his sword on Yuan Shao.",
+   "_note": "old summary said he 'adopts' the Emperor and completes the deposition - the deposition itself is ch4"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 481,
+   "summary": "With Zhang Rang he abducts the Emperor from the burning palace. Challenged by armed Lu Zhi, he abandons the Empress and flees; Min Gong finally overtakes and slays him, hanging the head from his horse's neck for exposure at the capital.",
+   "_note": "old summary said he died in Yuan Shao's palace massacre; he escaped it and was killed later by Min Gong"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 403,
+   "summary": "Invoked by Zhang Rang as he reviles He Jin at the Gate of Grand Virtue: what crime had Empress Dong committed that she was put to death, and who feigned sickness at the Mother of the Country's funeral?",
+   "_note": "old summary ('demoted to Empress He and confined') was garbled; she is already dead - ch3 only cites her murder"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 831,
+   "summary": "Pressured by the terrified eunuchs, she summons her brother and commands him to desist - the edict that walks He Jin into the ambush. Carried off in the chaos, she escapes by leaping from a window when Lu Zhi challenges her captor; afterwards Cao Cao asks her to direct affairs while the Emperor is missing.",
+   "_note": "old summary (stripped of robes, Palace of Forever Calm, Consort Tang) is ch4 material"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 852,
+   "summary": "Cornered in an inner hall by He Jin's general Wu Kuang, who cries that he too plotted against his own brother; the soldiers hem him in and hack him to pieces.",
+   "_note": "old summary was vague about how he died"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 885,
+   "summary": "One of the four surviving Regular Attendants who carry off the Empress and the two boys toward the North Palace as the palace burns.",
+   "_note": "old summary said he was killed in the massacre; para 37 has him among the four who escape with the imperial family"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1204,
+   "summary": "Dong Zhuo's son-in-law and adviser: has him legitimize the march with a memorial, urges the deposition banquet ('put all opponents to death, and your prestige is settled'), defuses the Ding Yuan confrontation when he spots Lü Bu glowering behind him, and blesses the bribe - 'one cannot grudge a horse to win an empire.'",
+   "_note": "old summary included reading the deposition document - that's ch4"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1312,
+   "summary": "Carried off in the palace chaos and hidden in the riverside grass, weeping in his brother's arms, too frightened to answer either the farmer or Dong Zhuo. Restored to Luoyang - the Hereditary Seal now missing - he hears Dong Zhuo announce he will be set aside as Prince of Hongnong.",
+   "_note": "old summary was a cross-reference note pointing at the wrong row"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1351,
+   "summary": "The late Emperor, cited in Ding Yuan's protest that the reigning boy is the late Emperor's own son and has done no wrong - the first open defiance of Dong Zhuo's deposition plan.",
+   "_note": "old summary described Liu Bian's flight and deposition - the wrong person (this row is Emperor Ling)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1434,
+   "summary": "The nine-year-old Prince of Chenliu: hides with his brother in the river grass, does the talking at Cui Yi's farm, and challenges Dong Zhuo at the roadside so fearlessly that Dong Zhuo conceives the desire to set his brother aside and enthrone him.",
+   "_note": "old summary said he was installed as Emperor Xian this chapter - that's ch4"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1541,
+   "summary": "Warns He Jin that Dong Zhuo is 'in appearance innocent... a very wolf at heart' and resigns when ignored. Armed during the palace chaos, he frightens Duan Gui away from the abducted Empress; at the deposition banquet he demolishes Dong Zhuo's Yi Yin and Huo Guang precedents and is nearly cut down, saved by Cai Yong and Peng Bo.",
+   "_note": "old summary mixed up who received the wolf warning and dropped his two other scenes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1695,
+   "summary": "Commander in Henan who runs the fleeing eunuchs down at the Beimang Hills - Zhang Rang drowns himself, and Min Gong later overtakes and slays Duan Gui - then traces the missing Emperor to Cui Yi's farm and escorts the boys back toward Luoyang.",
+   "_note": "old summary omitted that he kills Duan Gui"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 1761,
+   "summary": "Court Counselor who with Cai Yong stays Dong Zhuo's sword over Lu Zhi, warning that the violent death of the country's cynosure would stir every heart.",
+   "_note": "old summary had him riding with Min Gong's search party - wrong scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3611,
+   "summary": "The unenlightened Shang emperor whom the sage minister Yi Yin immured in the Tong Palace until he reformed - Lu Zhi's precedent for why Dong Zhuo, lacking Yi Yin's purity, has no right to depose anyone.",
+   "_note": "old summary said Dong Zhuo cited him; it is Lu Zhi's rebuttal that cites Tai Jia"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 2370,
+   "summary": "Minister of the Interior in the cavalcade that recovers the Emperor. At the deposition banquet he defuses the Dong Zhuo-Yuan Shao standoff by ruling that so great a question cannot be settled over wine; when Bao Xin sounds him out about striking Dong Zhuo, he answers only 'let us talk it over.'",
+   "_note": "old summary skipped his actual ch3 scenes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 2470,
+   "summary": "He Jin's general: fires the palace gate to open the assault after his master's murder, then corners He Miao crying that he too plotted against his own brother, and has him hacked to pieces.",
+   "_note": "old summary was generic"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 2803,
+   "summary": "Grand Commander, among the officials who meet the rescued Emperor's cavalcade returning from the Beimang Hills.",
+   "_note": "old summary invented a banquet silencing that isn't in the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3006,
+   "summary": "Guards He Jin to the palace and, when the Regent Marshal's head comes over the wall, calls the slayers of the wicked to him and leads the storming of the palace. At Dong Zhuo's second banquet he alone answers the deposition speech - 'if your sword is sharp, mine is never blunt!' - and the chapter ends with the two facing each other, blades drawn.",
+   "_note": "old summary included hanging his seal on the East Gate and riding to Bohai - that's ch4"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3008,
+   "summary": "Brother of Yuan Shao; commands the five hundred picked guards at the Forbidden City entrance, bursts in when the gate burns and slaughters eunuchs without regard to age or rank, then sends soldiers to root out the eunuchs' families - many beardless men dying by mistake.",
+   "_note": "old summary called him Yuan Shao's cousin; the prose says brother"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3192,
+   "summary": "Leader of the Ten: stages the ambush at the Gate of Grand Virtue, reviles He Jin for his ingratitude and has him cut in two, then flees with the abducted Emperor to the Beimang Hills, where, cornered by Min Gong, he drowns himself in the river.",
+   "_note": "old summary said he died when the palace was stormed; he escaped it and drowned at Beimang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3610,
+   "summary": "Commander of the Right Army, among the officials who meet the rescued Emperor's cavalcade returning from the Beimang Hills.",
+   "_note": "old summary: 'minor courtier named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3381,
+   "summary": "Delivers the 'fierce wild beast' warning against summoning Dong Zhuo - 'if he comes, his prey will be humans' - and gives up his post alongside Lu Zhi when He Jin calls him timorous.",
+   "_note": "old summary framed the resignation as refusing to serve Dong Zhuo; he resigns because He Jin ignores the warning"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 3,
+   "target_id": 3634,
+   "summary": "The Prince of Changyi, who piled up three thousand faults in twenty-seven days and was deposed by Huo Guang - cited by Lu Zhi as a precedent Dong Zhuo has no standing to claim.",
+   "_note": "old summary: 'minor imperial-clan figure named in passing'"}
+]

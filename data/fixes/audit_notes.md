@@ -24,7 +24,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 
 - [x] ch1 — 14 ops (done before this batch; APPLIED by Ren — its 9 relationships are live, and he created Liu Hong [3849] = Liu Bei's father)
 - [x] ch2 — 75 ops (Zhang Bao 'Zhang Ba' spelling, Liu Xian [3601] dup removal, Liang Da 'Tai' alias fix, 17 relationships, ~35 summary rewrites)
-- [ ] ch3
+- [x] ch3 — 37 ops (Massacre of the Eunuchs event added to ch3, Shang/Taishan Commandery false-positive removals, 5 relationships incl. both Lü Bu adoptions, ~27 summary rewrites)
 - [ ] ch4
 - [ ] ch5
 - [ ] ch6
@@ -106,6 +106,11 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch3_audit.json (5):
+- Yuan Shao [3006] ↔ Yuan Shu [3008] Sibling; Cui Yi [3609] ↔ Cui Lie [331] Sibling
+- Ding Yuan [398] → Lü Bu [1547] Parent/Child (adoptive); Dong Zhuo [444] → Lü Bu Parent/Child (adoptive)
+- Dong Zhuo [444] ↔ Dong Min [429] Sibling
+
 ## Report-only findings (need manual action, no apply-fixes op exists)
 
 From ch1:
@@ -131,4 +136,10 @@ From ch2:
 - "Jiedu" (Liu Chang's fief, ¶81) has no Location row.
 - Event "Massacre of the Eunuchs" [11] is associated to ch2 but never
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
-  associated on purpose — sidebar context.
+  associated on purpose — sidebar context. ch3_audit.json adds it to
+  ch3 too.
+
+From ch3:
+- No "in-law" relationship type exists. Ch3 states Niu Fu and Li Ru are
+  both Dong Zhuo's sons-in-law — worth a Parent-in-law/Child-in-law
+  type if wanted; skipped for now.
