@@ -1,0 +1,166 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3397,
+   "summary": "The one man who dares weep over Kong Rong's exposed corpse - Cao Cao would kill him for it, but Xun Yu pleads that a righteous mourner who had often warned Kong Rong against his own rectitude should live. He buries father and sons.",
+   "_note": "old summary conflated him with Chi Lu the INFORMER - Zhi Xi is the mourner who buries the family"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3787,
+   "summary": "The Imperial Inspector whose slighted client overhears Kong Rong's doorway apostrophe: he carries the tale to Cao Cao and embellishes it - Mi Heng's old insults were 'deliberately arranged' by Kong Rong - the denunciation that kills the whole household.",
+   "_note": "summary was missing for the actual informer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1117,
+   "summary": "Remonstrates against the unjustifiable southern war and cries at the palace gate that the perfectly inhumane attacking the perfectly humane must fail - overheard, denounced by Chi Lu, and executed with his whole family. His two young sons refuse to flee their chess board: 'when the nest is pulled down, are the eggs left unbroken?'",
+   "_note": "old summary was sound but missed the sons' famous last line"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3659,
+   "summary": "Invoked in the mutual flattery Chi Lu reports as sedition: 'Confucius is not dead, because Kong Rong is he.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3788,
+   "summary": "The treasured disciple of Confucius, 'risen again' in Kong Rong's answering compliment to Mi Heng - repeated to Cao Cao as evidence of intrigue.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 86,
+   "summary": "Frees the bound Xiahou Dun, rewards the two who warned him, and raises five hundred thousand troops in five paired divisions to sweep the south. He answers Kong Rong's remonstrance with a gag order and then a family execution; accepts Jingzhou by letter with a promise of 'perpetual tenure' - and marches his van into Zhuge Liang's burning, flooding Xinye.",
+   "_note": "old summary imported ch41's murders of Lady Cai and Liu Cong and the admiral appointments"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 68,
+   "summary": "Bars the true heir from his father's deathbed with smooth arguments about duty, forges the testament with Lady Cai the moment Liu Biao dies, sends Li Gui to execution for saying so aloud, and shares Jingzhou's military authority among the Cai clan.",
+   "_note": "old summary imported the ch41 admiral appointment; ch40 is the coup itself"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 61,
+   "summary": "Seals the dying lord behind closed doors, forges the testament that puts her fourteen-year-old son over the rightful heir, buries Liu Biao without telling his son or his sworn ally - and steps from behind the screen at the surrender council to end the debate: 'why refer to me when three such gentlemen coincide?'",
+   "_note": "old summary imported her ch41 murder; ch40 is the coup and the screen scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1323,
+   "summary": "Fourteen, cunning enough to see the trap of his own elevation ('if my brother and uncle come with an army, what explanation can I offer?'), but not strong enough to resist it: his one flash of spirit against surrendering his unfairly gained heritage is talked down by Fu Xuan, Kuai Yue, and Wang Can, and his mother's voice from behind the screen decides it.",
+   "_note": "old summary imported his ch41 murder"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3267,
+   "summary": "Lady Cai's other confidant, trusted with the outer gates while the deathbed is sealed and the testament forged.",
+   "_note": "old summary imported the ch41 co-admiral appointment"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3789,
+   "summary": "The one honest voice at Liu Zong's accession: send mourning letters, call the true heir, invite Liu Bei - and, when Cai Mao snarls, the open accusation: 'you and your party have fabricated this testament.' He is dragged to execution still abusing the usurpers.",
+   "_note": "summary was missing for a man executed on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3790,
+   "summary": "The secretary who first proposes the unthinkable: offer the whole region to Cao Cao and trust him to treat the young master liberally - the plan Kuai Yue and Wang Can talk Liu Zong into.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2215,
+   "summary": "The lean little scholar with the perfect memory - Cai Yong once rose before a room of dignitaries to greet him as a youth - who ends the surrender debate with a resume of Cao Cao's victims: Lü Bu at Xiapi, Yuan Shao at Guandu, Mao Dun at White Wolf Hills. 'How do you compare with Cao Cao?' - 'Inferior.' - then do not delay.",
+   "_note": "old summary: 'named in passing in the literary roll' - his biography and speech decide the surrender"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1547,
+   "summary": "First name on Wang Can's list of Cao Cao's destroyed enemies - 'he took Lü Bu at Xiapi.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3761,
+   "summary": "Cited by Wang Can among the firmly established men Cao Cao has crushed - 'destroyed Mao Dun at White Wolf Hills.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1436,
+   "summary": "Entrusted with Jingzhou City's defense (with Deng Yi) when the Cai clan moves the young lord to Xiangyang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 369,
+   "summary": "Given joint charge of Jingzhou City's defense with Liu Xin during the Cai clan's relocation to Xiangyang.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1313,
+   "summary": "Dying, he begs Liu Bei to administer the region and guard his orphans - his true testament names Liu Qi heir under Liu Bei's guardianship. The Cai faction seals his doors, turns his elder son away from the deathbed, and he dies with piercing shrieks, calling for the boy who was never let in.",
+   "_note": "old summary had the outcome but not the sealed doors and the denied farewell"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1395,
+   "summary": "Rides from Jiangxia to his father's sickbed and is turned away at the gate by Cai Mao's smooth cruelty - duty forbids leaving his post. He learns of the death by his own spies and sends Yi Ji begging his uncle to help him claim the inheritance.",
+   "_note": "old summary said he 'flees to Jiangxia' this chapter - he was already there; his ch40 is the denied deathbed visit"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2888,
+   "summary": "Arrives as Liu Qi's messenger with the letter asking Liu Bei's help - then hears the worse news of the surrender, proposes seizing Liu Zong at the mourning ceremonies, and is sent back to see to Jiangxia's defenses.",
+   "_note": "old summary had him defecting with Liu Bei; he is Liu Qi's envoy here"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2030,
+   "summary": "Carries Liu Zong's secret surrender letter to Wancheng and rides home rewarded - into Guan Yu's patrol at the ferry. Made to tell everything twice, he is spared by a disgusted Liu Bei: 'there is nothing to be gained by killing you. You may go.'",
+   "_note": "old summary stopped at the delivery; the capture broke the secret"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1311,
+   "summary": "Refuses twice - Zhuge Liang's urging to seize failing Jingzhou ('I would rather perish than do what is wrong') and Yi Ji's plan to grab Liu Zong at the mourning - after promising the dying Liu Biao to guard his orphans. He releases the captured envoy, evacuates every soul of Xinye to Fancheng by boat, and watches the fire plan from a hilltop, drinking under umbrellas in Xu Chu's furious view.",
+   "_note": "old summary compressed the deathbed pledge and the Song Zhong release"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2535,
+   "summary": "Presents himself at the capital in bonds craving death for Bowang - loosed, he blames Zhuge Liang's fire, is reminded a veteran should have known better, and marches again as co-commander of the third division.",
+   "_note": "old summary was a bare campaign mention; the bound return opens the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 123,
+   "summary": "Waves Xu Chu past the flag ruse - 'those troops are only make-believe' - beds his hundred thousand down in the deserted city, dismisses the first fire report as careless sparks, and leads the scorched survivors into the White River shallows just before Guan Yu's dam breaks.",
+   "_note": "old summary had the drowning but not the chain of dismissed warnings"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 100,
+   "summary": "Co-commander of the first division with Cao Ren: it is he who reads the empty city as flight and orders it occupied for the night - the decision that puts the army inside Zhuge Liang's tinderbox.",
+   "_note": "old summary was a bare 'pursues Liu Bei south'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2624,
+   "summary": "Leads the three thousand mailed van: spooked by the shifting red and blue flags at Magpie Tail Slope, sent forward anyway, he finds the wood empty - and on the hilltop above, Liu Bei and Zhuge Liang drinking under umbrellas while logs and stones bounce him back down the slope.",
+   "_note": "old summary was a bare campaign mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 1158,
+   "summary": "Publicly rewarded for the warning Xiahou Dun ignored at Bowang, and paired with Yu Jin over the fourth division of the southern host.",
+   "_note": "old summary was a bare campaign mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2953,
+   "summary": "Shares the reward for the ignored Bowang warning and the command of the fourth division.",
+   "_note": "old summary was a bare campaign mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2755,
+   "summary": "Left in command of the capital for the great campaign - but not before saving the mourner Zhi Xi from Cao Cao's anger: 'you should not slay a righteous man who came to mourn over his friend's corpse.'",
+   "_note": "old summary was a bare 'running Xuchang'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 704,
+   "summary": "His river patrol nets Song Zhong and the secret of the surrender; then, posted upstream with a thousand men and sandbags, he dams the White River and waits for the glow of burning Xinye - at the fourth watch the shouting of watering soldiers below is his signal to break the dam.",
+   "_note": "old summary had the flood but not the capture that exposed the surrender"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3106,
+   "summary": "Proposes killing the envoy and storming Xiangyang to finish the Cai tribe - overruled - then takes his thousand men to the slow water at Boling Ferry, where the half-drowned fugitives find him waiting: 'you Cao Cao brigands! Come and receive your fate!'",
+   "_note": "old summary was a vague 'harries the pursuit column'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 3334,
+   "summary": "Commands the four gate parties: fire arrows over the walls when the evening wind rises, the east gate left open as the one door of the trap - and his own company waiting beyond it to slaughter the escapers.",
+   "_note": "old summary was a bare 'commands part of the ambush'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 40,
+   "target_id": 2102,
+   "summary": "Directs the boat-lift that empties Xinye - every inhabitant, none excepted - across to Fancheng ahead of the fire.",
+   "_note": "old summary was a bare 'with Liu Bei'"}
+]
