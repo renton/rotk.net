@@ -8,15 +8,28 @@
 {% block page_content %}
 <div class="page-header mt-3 mb-3 d-flex justify-content-between align-items-end flex-wrap gap-2">
     <div>
-        <h1 class="mb-0">{{ province.name }} — location placement</h1>
+        <h1 class="mb-0">{{ province.name }} — location placement
+            {% if pmap.label %}<span class="text-muted fs-4">({{ pmap.label }})</span>{% endif %}
+        </h1>
         <p class="text-muted small mb-0">
             Pick a location on the right, then place it on the map:
             points click once, lines are drawn freehand, regions are
             clicked out corner by corner.
         </p>
     </div>
-    <a href="{{ url_for('admin.province_maps') }}"
-       class="btn btn-sm btn-outline-secondary">&larr; Back to province maps</a>
+    <div class="d-flex align-items-center gap-2">
+        {% if siblings|length > 1 %}
+        {# This province has several maps — quick switcher. #}
+        <div class="btn-group btn-group-sm" role="group" aria-label="Maps of this province">
+            {% for s in siblings %}
+            <a href="{{ url_for('admin.province_map_editor', map_id=s.id) }}"
+               class="btn {{ 'btn-primary' if s.id == pmap.id else 'btn-outline-primary' }}">{{ s.display_label }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <a href="{{ url_for('admin.province_maps') }}"
+           class="btn btn-sm btn-outline-secondary">&larr; Back to province maps</a>
+    </div>
 </div>
 
 <div class="row g-3">

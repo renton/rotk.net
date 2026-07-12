@@ -6,10 +6,10 @@
 <div class="page-header mb-4">
     <h1>Province Maps</h1>
     <p class="text-muted mb-0">
-        One map image per Province, with hand-placed overlays for its
-        child locations. Upload an image first — <em>Edit locations</em>
-        unlocks once a map exists. Placement style per location comes
-        from its <a href="{{ url_for('admin.location_types') }}">location
+        Map images per Province — a province can have several (label
+        them, e.g. "North part" / "South part"), each with its own
+        hand-placed location overlays. Placement style per location
+        comes from its <a href="{{ url_for('admin.location_types') }}">location
         type</a>'s placement type (point / line / region).
     </p>
 </div>
@@ -17,71 +17,77 @@
 <table class="table table-sm align-middle">
     <thead>
         <tr>
-            <th>Province</th>
-            <th style="width: 12rem;">Image</th>
-            <th style="width: 10rem;">Points added</th>
-            <th>Attribution</th>
-            <th style="width: 16rem;">Actions</th>
+            <th style="width: 14rem;">Province</th>
+            <th>Maps</th>
         </tr>
     </thead>
     <tbody>
         {% for prov in provinces %}
-        {% set row = maps_by_loc.get(prov.id) %}
-        {% set placed = placement_counts.get(row.id, 0) if row else 0 %}
+        {% set rows = maps_by_loc.get(prov.id, []) %}
         {% set children = child_counts.get(prov.id, 0) %}
-        <tr{% if not row %} class="table-light"{% endif %}>
-            <td><strong>{{ prov.name }}</strong>
+        <tr{% if not rows %} class="table-light"{% endif %}>
+            <td>
+                <strong>{{ prov.name }}</strong>
                 {% if prov.chinese_name %}<span class="text-muted small ms-1">{{ prov.chinese_name }}</span>{% endif %}
+                <div class="text-muted small">{{ children }} child location{{ '' if children == 1 else 's' }}</div>
+                <button type="button"
+                        class="btn btn-sm btn-outline-primary mt-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#provmap-modal"
+                        data-mode="create"
+                        data-province="{{ prov.name }}"
+                        data-action="{{ url_for('admin.province_map_create', location_id=prov.id) }}">+ Add map</button>
             </td>
             <td>
-                {% if row %}
-                <a href="{{ url_for('static', filename=row.static_path) }}" target="_blank">
-                    <img src="{{ url_for('static', filename=row.static_path) }}"
-                         alt="Map of {{ prov.name }}"
-                         style="max-height: 70px; max-width: 150px;" loading="lazy">
-                </a>
-                {% else %}
-                <span class="text-muted">&mdash;</span>
+                {% if not rows %}
+                <span class="text-muted fst-italic">No maps yet.</span>
                 {% endif %}
-            </td>
-            <td>
-                {% if row %}
-                {{ placed }} placed / {{ children }} child location{{ '' if children == 1 else 's' }}
-                {% else %}
-                <span class="text-muted">&mdash;</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if row and (row.source_site or row.source_url) %}
-                    {% if row.source_url %}
-                    <a href="{{ row.source_url }}" target="_blank" rel="noopener">{{ row.source_site or row.source_url }}</a>
-                    {% else %}{{ row.source_site }}{% endif %}
-                {% else %}<span class="text-muted">&mdash;</span>{% endif %}
-            </td>
-            <td>
-                <div class="d-flex gap-2">
-                    <button type="button"
-                            class="btn btn-sm btn-outline-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#provmap-modal"
-                            data-province="{{ prov.name }}"
-                            data-action="{{ url_for('admin.province_maps_upload', location_id=prov.id) }}"
-                            data-has-image="{{ '1' if row else '' }}"
-                            data-source-site="{{ row.source_site if row else '' }}"
-                            data-source-url="{{ row.source_url if row else '' }}">{{ 'Edit image' if row else 'Upload' }}</button>
-                    {% if row %}
-                    <a href="{{ url_for('admin.province_map_editor', location_id=prov.id) }}"
-                       class="btn btn-sm btn-outline-success">Edit locations</a>
-                    {% else %}
-                    <button type="button" class="btn btn-sm btn-outline-success"
-                            disabled aria-disabled="true"
-                            title="Upload a map image first">Edit locations</button>
-                    {% endif %}
+                {% for row in rows %}
+                {% set placed = placement_counts.get(row.id, 0) %}
+                <div class="d-flex align-items-center gap-3 py-1 {% if not loop.last %}border-bottom{% endif %}">
+                    <a href="{{ url_for('static', filename=row.static_path) }}" target="_blank">
+                        <img src="{{ url_for('static', filename=row.static_path) }}"
+                             alt="Map of {{ prov.name }} — {{ row.display_label }}"
+                             style="max-height: 60px; max-width: 120px;" loading="lazy">
+                    </a>
+                    <div class="flex-grow-1">
+                        <strong>{{ row.display_label }}</strong>
+                        <div class="small text-muted">
+                            {{ placed }} placed
+                            {% if row.source_site or row.source_url %}
+                            &middot;
+                            {% if row.source_url %}
+                            <a href="{{ row.source_url }}" target="_blank" rel="noopener">{{ row.source_site or row.source_url }}</a>
+                            {% else %}{{ row.source_site }}{% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#provmap-modal"
+                                data-mode="update"
+                                data-province="{{ prov.name }}"
+                                data-label="{{ row.label }}"
+                                data-action="{{ url_for('admin.province_map_update', map_id=row.id) }}"
+                                data-source-site="{{ row.source_site }}"
+                                data-source-url="{{ row.source_url }}">Edit image</button>
+                        <a href="{{ url_for('admin.province_map_editor', map_id=row.id) }}"
+                           class="btn btn-sm btn-outline-success">Edit locations</a>
+                        <form method="POST"
+                              action="{{ url_for('admin.province_map_delete', map_id=row.id) }}">
+                            {{ csrf_form.hidden_tag() }}
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    data-confirm="Delete map {{ row.display_label|e }} of {{ prov.name|e }}? Its {{ placed }} placement(s) are deleted too.">Delete</button>
+                        </form>
+                    </div>
                 </div>
+                {% endfor %}
             </td>
         </tr>
         {% else %}
-        <tr><td colspan="5" class="text-muted">
+        <tr><td colspan="2" class="text-muted">
             No Province-type locations found. Seed location types and
             import the admin divisions first.
         </td></tr>
@@ -89,7 +95,7 @@
     </tbody>
 </table>
 
-{# Shared upload/edit modal — populated per-row by admin_province_maps.js #}
+{# Shared create/update modal — populated per-row by admin_province_maps.js #}
 <div class="modal fade" id="provmap-modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -100,6 +106,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="provmap-modal-label" class="form-label">Label</label>
+                        <input type="text" name="label" id="provmap-modal-label"
+                               class="form-control" maxlength="120"
+                               placeholder='e.g. "North part" — optional for a single map'>
+                    </div>
                     <div class="mb-3">
                         <label for="provmap-modal-file" class="form-label">Image file</label>
                         <input type="file" name="image_file" id="provmap-modal-file"
@@ -132,5 +144,6 @@
 
 {% block scripts %}
 {{ super() }}
+<script src="{{ url_for('static', filename='js/admin_confirm.js') }}"></script>
 <script src="{{ url_for('static', filename='js/admin_province_maps.js') }}"></script>
 {% endblock %}

@@ -1,5 +1,10 @@
 """ProvinceMap system — model constraints, LocationType.point_type,
-admin list/upload, and the placement editor endpoints."""
+admin list/create/update/delete, and the placement editor endpoints.
+Provinces may carry SEVERAL maps (labelled), each with independent
+placements."""
+import io
+import os
+
 import pytest
 from sqlalchemy.exc import IntegrityError
 
@@ -7,6 +12,8 @@ from app import db
 from app.models import (Location, LocationType, ProvinceMap,
                         ProvinceMapPlacement)
 from tests import factories
+
+PNG = b'\x89PNG\r\n\x1a\n' + b'\x00' * 64
 
 
 def make_province(db_session, name='Testzhou'):
@@ -18,15 +25,37 @@ def make_province(db_session, name='Testzhou'):
     return factories.make_location(name=name, location_type_id=lt.id), lt
 
 
+@pytest.fixture(autouse=True)
+def _clean_provincemap_files(app):
+    """File writes don't roll back with the DB savepoint — clean up."""
+    from app.models.province_map import PROVINCEMAP_DIR
+    maps_dir = os.path.join(app.static_folder, PROVINCEMAP_DIR)
+    os.makedirs(maps_dir, exist_ok=True)
+    before = set(os.listdir(maps_dir))
+    yield
+    for name in set(os.listdir(maps_dir)) - before:
+        os.remove(os.path.join(maps_dir, name))
+
+
+def create_map(client, prov, data_bytes=PNG, filename='map.png', label=''):
+    return client.post(
+        f'/admin/province-maps/{prov.id}/create',
+        data={'source_site': '', 'source_url': '', 'label': label,
+              'image_file': (io.BytesIO(data_bytes), filename)},
+        content_type='multipart/form-data',
+        follow_redirects=True,
+    )
+
+
 class TestModels:
-    def test_one_map_per_province(self, db_session):
+    def test_multiple_maps_per_province_allowed(self, db_session):
         prov, _ = make_province(db_session)
-        db_session.add(ProvinceMap(location_id=prov.id, filename='a.png'))
+        db_session.add(ProvinceMap(location_id=prov.id, filename='a.png',
+                                   label='North part'))
+        db_session.add(ProvinceMap(location_id=prov.id, filename='b.png',
+                                   label='South part'))
         db_session.flush()
-        db_session.add(ProvinceMap(location_id=prov.id, filename='b.png'))
-        with pytest.raises(IntegrityError):
-            db_session.flush()
-        db_session.rollback()
+        assert ProvinceMap.query.filter_by(location_id=prov.id).count() == 2
 
     def test_one_placement_per_location_per_map(self, db_session):
         prov, _ = make_province(db_session)
@@ -44,6 +73,22 @@ class TestModels:
         with pytest.raises(IntegrityError):
             db_session.flush()
         db_session.rollback()
+
+    def test_same_location_placeable_on_sibling_maps(self, db_session):
+        prov, _ = make_province(db_session)
+        child = factories.make_location(name='Spanning', parent_id=prov.id)
+        m1 = ProvinceMap(location_id=prov.id, filename='a.png')
+        m2 = ProvinceMap(location_id=prov.id, filename='b.png')
+        db_session.add_all([m1, m2])
+        db_session.flush()
+        db_session.add(ProvinceMapPlacement(
+            province_map_id=m1.id, location_id=child.id,
+            kind='point', geometry=[1, 1]))
+        db_session.add(ProvinceMapPlacement(
+            province_map_id=m2.id, location_id=child.id,
+            kind='point', geometry=[9, 9]))
+        db_session.flush()
+        assert ProvinceMapPlacement.query.count() == 2
 
     def test_geometry_roundtrips_jsonb(self, db_session):
         prov, _ = make_province(db_session)
@@ -73,6 +118,12 @@ class TestModels:
         db_session.delete(m)
         db_session.flush()
         assert ProvinceMapPlacement.query.count() == 0
+
+    def test_display_label(self, db_session):
+        assert ProvinceMap(location_id=1, filename='x.png',
+                           label='North').display_label == 'North'
+        assert ProvinceMap(location_id=1, filename='x.png',
+                           label='').display_label == 'Map'
 
     def test_static_path(self, db_session):
         m = ProvinceMap(location_id=1, filename='42.png')
@@ -123,38 +174,10 @@ class TestLocationTypePointType:
         assert b'freehand stroke' in resp.data
 
 
-import io
-import os
-
-PNG = b'\x89PNG\r\n\x1a\n' + b'\x00' * 64
-
-
-@pytest.fixture(autouse=True)
-def _clean_provincemap_files(app):
-    """File writes don't roll back with the DB savepoint — clean up."""
-    from app.models.province_map import PROVINCEMAP_DIR
-    maps_dir = os.path.join(app.static_folder, PROVINCEMAP_DIR)
-    os.makedirs(maps_dir, exist_ok=True)
-    before = set(os.listdir(maps_dir))
-    yield
-    for name in set(os.listdir(maps_dir)) - before:
-        os.remove(os.path.join(maps_dir, name))
-
-
-def upload_map(client, prov, data_bytes=PNG, filename='map.png'):
-    return client.post(
-        f'/admin/province-maps/{prov.id}/upload',
-        data={'source_site': '', 'source_url': '',
-              'image_file': (io.BytesIO(data_bytes), filename)},
-        content_type='multipart/form-data',
-        follow_redirects=True,
-    )
-
-
 class TestListPage:
     def test_lists_only_provinces(self, admin_client, db_session):
         client, _ = admin_client
-        prov, lt = make_province(db_session, name='Listed Province')
+        make_province(db_session, name='Listed Province')
         factories.make_location(name='Not A Province')
         db_session.flush()
         resp = client.get('/admin/province-maps')
@@ -162,51 +185,99 @@ class TestListPage:
         assert b'Listed Province' in resp.data
         assert b'Not A Province' not in resp.data
 
-    def test_edit_locations_disabled_without_map(self, admin_client,
-                                                 db_session):
+    def test_no_maps_state(self, admin_client, db_session):
         client, _ = admin_client
-        prov, _ = make_province(db_session, name='Unmapped Province')
+        make_province(db_session, name='Unmapped Province')
         db_session.flush()
         resp = client.get('/admin/province-maps')
-        assert b'Upload a map image first' in resp.data
-        assert f'/admin/province-maps/{prov.id}/editor'.encode() \
-            not in resp.data
+        assert b'No maps yet.' in resp.data
+        assert b'+ Add map' in resp.data
+        assert b'Edit locations' not in resp.data
 
-    def test_upload_enables_editor_and_counts(self, admin_client,
+    def test_multiple_maps_listed_with_labels(self, admin_client,
                                               db_session, app):
         client, _ = admin_client
-        prov, _ = make_province(db_session, name='Mapped Province')
-        child = factories.make_location(name='Mapped Child',
-                                        parent_id=prov.id)
+        prov, _ = make_province(db_session, name='Split Province')
+        factories.make_location(name='Split Child', parent_id=prov.id)
         db_session.commit()
-        resp = upload_map(client, prov)
-        assert b'uploaded' in resp.data
-        m = ProvinceMap.query.filter_by(location_id=prov.id).one()
-        assert m.filename == f'{prov.id}.png'
-        assert os.path.exists(os.path.join(
-            app.static_folder, 'provincemaps', m.filename))
+        assert b'Added map' in create_map(client, prov,
+                                          label='North part').data
+        create_map(client, prov, label='South part')
+        maps = ProvinceMap.query.filter_by(location_id=prov.id).all()
+        assert len(maps) == 2
+        for m in maps:
+            assert m.filename == f'{prov.id}_{m.id}.png'
+            assert os.path.exists(os.path.join(
+                app.static_folder, 'provincemaps', m.filename))
         resp = client.get('/admin/province-maps')
-        assert f'/admin/province-maps/{prov.id}/editor'.encode() in resp.data
-        assert b'0 placed / 1 child location' in resp.data
+        assert b'North part' in resp.data
+        assert b'South part' in resp.data
+        assert resp.data.count(b'Edit locations') == 2
+        assert b'1 child location' in resp.data
 
-    def test_upload_rejects_garbage(self, admin_client, db_session):
+    def test_create_requires_file(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, _ = make_province(db_session, name='Fileless Province')
+        db_session.commit()
+        resp = client.post(
+            f'/admin/province-maps/{prov.id}/create',
+            data={'source_site': '', 'source_url': '', 'label': 'x'},
+            content_type='multipart/form-data', follow_redirects=True)
+        assert b'Choose an image file' in resp.data
+        assert ProvinceMap.query.count() == 0
+
+    def test_create_rejects_garbage(self, admin_client, db_session):
         client, _ = admin_client
         prov, _ = make_province(db_session, name='Garbage Province')
         db_session.commit()
-        resp = upload_map(client, prov, b'<?php nope', 'map.png')
+        resp = create_map(client, prov, b'<?php nope', 'map.png')
         assert b'look like a real image' in resp.data
         assert ProvinceMap.query.count() == 0
 
-    def test_upload_rejects_non_province(self, admin_client, db_session):
+    def test_create_rejects_non_province(self, admin_client, db_session):
         client, _ = admin_client
         loc = factories.make_location(name='Plain Loc')
         db_session.commit()
         resp = client.post(
-            f'/admin/province-maps/{loc.id}/upload',
-            data={'source_site': '', 'source_url': '',
+            f'/admin/province-maps/{loc.id}/create',
+            data={'label': '', 'source_site': '', 'source_url': '',
                   'image_file': (io.BytesIO(PNG), 'map.png')},
             content_type='multipart/form-data')
         assert resp.status_code == 404
+
+    def test_update_label_without_file(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, _ = make_province(db_session, name='Update Province')
+        db_session.commit()
+        create_map(client, prov, label='Old Label')
+        m = ProvinceMap.query.one()
+        resp = client.post(
+            f'/admin/province-maps/map/{m.id}/update',
+            data={'label': 'New Label', 'source_site': 'Somewhere',
+                  'source_url': ''},
+            content_type='multipart/form-data', follow_redirects=True)
+        assert resp.status_code == 200
+        db_session.expire_all()
+        assert m.label == 'New Label'
+        assert m.source_site == 'Somewhere'
+
+    def test_delete_map_removes_file_and_placements(self, admin_client,
+                                                    db_session, app):
+        client, _ = admin_client
+        prov, _ = make_province(db_session, name='Delete Province')
+        child = factories.make_location(parent_id=prov.id)
+        db_session.commit()
+        create_map(client, prov)
+        m = ProvinceMap.query.one()
+        client.post(f'/admin/province-maps/map/{m.id}/placements/{child.id}',
+                    json={'kind': 'point', 'geometry': [1, 1]})
+        path = os.path.join(app.static_folder, 'provincemaps', m.filename)
+        assert os.path.exists(path)
+        client.post(f'/admin/province-maps/map/{m.id}/delete',
+                    follow_redirects=True)
+        assert ProvinceMap.query.count() == 0
+        assert ProvinceMapPlacement.query.count() == 0
+        assert not os.path.exists(path)
 
     def test_gating(self, client, user_client, db_session):
         assert client.get('/admin/province-maps').status_code == 302
@@ -230,51 +301,72 @@ class TestEditor:
                                          parent_id=prov.id,
                                          location_type_id=lt_region.id)
         db_session.commit()
-        upload_map(client, prov)
-        return prov, county, river, region
+        create_map(client, prov)
+        pmap = ProvinceMap.query.filter_by(location_id=prov.id).one()
+        return prov, pmap, county, river, region
 
-    def test_editor_404_without_map(self, admin_client, db_session):
+    def test_editor_404_for_unknown_map(self, admin_client, db_session):
         client, _ = admin_client
-        prov, _ = make_province(db_session, name='No Map Province')
-        db_session.commit()
         assert client.get(
-            f'/admin/province-maps/{prov.id}/editor').status_code == 404
+            '/admin/province-maps/editor/424242').status_code == 404
 
     def test_editor_payload(self, admin_client, db_session):
         client, _ = admin_client
-        prov, county, river, region = self._setup(client, db_session)
-        resp = client.get(f'/admin/province-maps/{prov.id}/editor')
+        prov, pmap, county, river, region = self._setup(client, db_session)
+        resp = client.get(f'/admin/province-maps/editor/{pmap.id}')
         assert resp.status_code == 200
         assert b'id="pme-payload"' in resp.data
         assert b'Editor County' in resp.data
         assert b'"point_type": "line"' in resp.data
         assert b'js/province_map_editor.js' in resp.data
-        # Popup link template for the on-map click tooltips.
         assert b'location_edit_url_template' in resp.data
+
+    def test_editor_sibling_switcher(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, pmap, *_ = self._setup(client, db_session)
+        create_map(client, prov, label='South part')
+        other = ProvinceMap.query.filter_by(
+            location_id=prov.id, label='South part').one()
+        resp = client.get(f'/admin/province-maps/editor/{pmap.id}')
+        assert f'/admin/province-maps/editor/{other.id}'.encode() in resp.data
+        assert b'South part' in resp.data
 
     def test_place_point_line_region(self, admin_client, db_session):
         client, _ = admin_client
-        prov, county, river, region = self._setup(client, db_session)
-        r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{county.id}',
-            json={'kind': 'point', 'geometry': [100.5, 200.25]})
+        prov, pmap, county, river, region = self._setup(client, db_session)
+        base = f'/admin/province-maps/map/{pmap.id}/placements'
+        r = client.post(f'{base}/{county.id}',
+                        json={'kind': 'point', 'geometry': [100.5, 200.25]})
         assert r.status_code == 200 and r.get_json()['created'] is True
-        r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{river.id}',
-            json={'kind': 'line',
-                  'geometry': [[1, 2], [3, 4], [5, 6]]})
+        r = client.post(f'{base}/{river.id}',
+                        json={'kind': 'line',
+                              'geometry': [[1, 2], [3, 4], [5, 6]]})
         assert r.status_code == 200
-        r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{region.id}',
-            json={'kind': 'region',
-                  'geometry': [[0, 0], [10, 0], [10, 10]]})
+        r = client.post(f'{base}/{region.id}',
+                        json={'kind': 'region',
+                              'geometry': [[0, 0], [10, 0], [10, 10]]})
         assert r.status_code == 200
         assert ProvinceMapPlacement.query.count() == 3
 
+    def test_placements_independent_per_map(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, pmap, county, *_ = self._setup(client, db_session)
+        create_map(client, prov, label='South part')
+        other = ProvinceMap.query.filter_by(
+            location_id=prov.id, label='South part').one()
+        client.post(f'/admin/province-maps/map/{pmap.id}/placements/{county.id}',
+                    json={'kind': 'point', 'geometry': [1, 1]})
+        client.post(f'/admin/province-maps/map/{other.id}/placements/{county.id}',
+                    json={'kind': 'point', 'geometry': [9, 9]})
+        rows = ProvinceMapPlacement.query.order_by(
+            ProvinceMapPlacement.province_map_id).all()
+        assert len(rows) == 2
+        assert {r.province_map_id for r in rows} == {pmap.id, other.id}
+
     def test_place_upserts(self, admin_client, db_session):
         client, _ = admin_client
-        prov, county, *_ = self._setup(client, db_session)
-        url = f'/admin/province-maps/{prov.id}/placements/{county.id}'
+        prov, pmap, county, *_ = self._setup(client, db_session)
+        url = f'/admin/province-maps/map/{pmap.id}/placements/{county.id}'
         client.post(url, json={'kind': 'point', 'geometry': [1, 1]})
         r = client.post(url, json={'kind': 'point', 'geometry': [9, 9]})
         assert r.get_json()['created'] is False
@@ -283,16 +375,16 @@ class TestEditor:
 
     def test_kind_must_match_type(self, admin_client, db_session):
         client, _ = admin_client
-        prov, county, river, _ = self._setup(client, db_session)
+        prov, pmap, county, river, _ = self._setup(client, db_session)
         r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{river.id}',
+            f'/admin/province-maps/map/{pmap.id}/placements/{river.id}',
             json={'kind': 'point', 'geometry': [1, 1]})
         assert r.status_code == 400
         assert 'does not match' in r.get_json()['error']
 
     def test_geometry_shape_validated(self, admin_client, db_session):
         client, _ = admin_client
-        prov, county, river, region = self._setup(client, db_session)
+        prov, pmap, county, river, region = self._setup(client, db_session)
         bad = [
             (county, {'kind': 'point', 'geometry': [1]}),
             (county, {'kind': 'point', 'geometry': 'nope'}),
@@ -301,32 +393,27 @@ class TestEditor:
         ]
         for loc, body in bad:
             r = client.post(
-                f'/admin/province-maps/{prov.id}/placements/{loc.id}',
+                f'/admin/province-maps/map/{pmap.id}/placements/{loc.id}',
                 json=body)
             assert r.status_code == 400, (loc.name, body)
 
     def test_foreign_child_rejected(self, admin_client, db_session):
         client, _ = admin_client
-        prov, *_ = self._setup(client, db_session)
+        prov, pmap, *_ = self._setup(client, db_session)
         outsider = factories.make_location(name='Outsider Loc')
         db_session.commit()
         r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{outsider.id}',
+            f'/admin/province-maps/map/{pmap.id}/placements/{outsider.id}',
             json={'kind': 'point', 'geometry': [1, 1]})
         assert r.status_code == 400
 
     def test_delete_placement(self, admin_client, db_session):
         client, _ = admin_client
-        prov, county, *_ = self._setup(client, db_session)
-        client.post(f'/admin/province-maps/{prov.id}/placements/{county.id}',
-                    json={'kind': 'point', 'geometry': [1, 1]})
-        r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{county.id}/delete',
-            json={})
+        prov, pmap, county, *_ = self._setup(client, db_session)
+        base = f'/admin/province-maps/map/{pmap.id}/placements/{county.id}'
+        client.post(base, json={'kind': 'point', 'geometry': [1, 1]})
+        r = client.post(f'{base}/delete', json={})
         assert r.status_code == 200
         assert ProvinceMapPlacement.query.count() == 0
-        # Deleting again → 404.
-        r = client.post(
-            f'/admin/province-maps/{prov.id}/placements/{county.id}/delete',
-            json={})
+        r = client.post(f'{base}/delete', json={})
         assert r.status_code == 404

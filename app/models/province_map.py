@@ -1,7 +1,8 @@
 """Per-province map images with hand-placed location overlays.
 
-A ProvinceMap is one uploaded image for a Province-type Location
-(`location_id` UNIQUE). ProvinceMapPlacement rows pin the province's
+A ProvinceMap is one uploaded image for a Province-type Location. A
+province may have SEVERAL maps (e.g. "North part" / "South part",
+distinguished by `label`), each with its own independent placements. ProvinceMapPlacement rows pin the province's
 child locations onto that image with geometry in IMAGE-PIXEL
 coordinates — the admin editor (/admin/province-maps/<id>/editor)
 writes them, kind driven by the child's LocationType.point_type:
@@ -28,8 +29,10 @@ class ProvinceMap(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location_id = db.Column(
         db.Integer, db.ForeignKey('location.id', ondelete='CASCADE'),
-        nullable=False, unique=True)
+        nullable=False, index=True)
     filename = db.Column(db.String(255), nullable=False)
+    # Distinguishes multiple maps of one province ("North part", ...).
+    label = db.Column(db.String(120), nullable=False, default='')
     source_site = db.Column(db.String(255), nullable=False, default='')
     source_url = db.Column(db.String(2048), nullable=False, default='')
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
@@ -47,8 +50,13 @@ class ProvinceMap(db.Model):
     def static_path(self):
         return f'{PROVINCEMAP_DIR}/{self.filename}'
 
+    @property
+    def display_label(self):
+        return self.label or 'Map'
+
     def __repr__(self):
-        return f'<ProvinceMap location={self.location_id} {self.filename}>'
+        return (f'<ProvinceMap location={self.location_id} '
+                f'{self.label!r} {self.filename}>')
 
 
 class ProvinceMapPlacement(db.Model):
