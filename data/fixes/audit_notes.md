@@ -68,7 +68,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch44 — 37 ops (Liang Da 'Tai'-in-'Zhou Tai' false assoc removed [tracker item], Xi Shi sex=female, Ji Fa bare-'Wu' keyword restricted, two-Qiaos ode cast summaries, Zhou Yu four-points + murder thought, Cheng Pu sulk-and-convert, order-of-battle pairs, Boyi/Shuqi parable)
 - [x] ch45 — 28 ops (Shi Kuang wrong-person removal [ancient musician vs Shi Xie's general], Qi Commandery/County bare-'Qi'-in-'Liu Qi' false assocs, Cai Xun's death by Gan Ning's arrow, Zhou Yu's two murder attempts + envoy beheading, Jiang Gan staging, persuader-roll summaries)
 - [x] ch46 — 18 ops (Cai He/Cai Zhong false-deserter summaries, Huang Gai's plan-was-his-idea fix, Zhou Yu 'deceived him for once', Lu Su split-loyalty note, fog-poem figures Li Lou/King Yu, Jiang Gan ch47 spillover)
-- [ ] ch47
+- [x] ch47 — 14 ops (TWO wrong-person swaps: Sun Zi 2133→Sun Tzu 3594, Wu Qi 2480→ancient Wu Qi 3834; Kan Ze no-date riposte, Gan Ning playacting fix, Cai brothers turned letter-boxes, Pang Tong chain scheme + shore encounter)
 - [ ] ch48
 - [ ] ch49
 - [ ] ch50
@@ -244,6 +244,12 @@ From ch3_audit.json (5):
 - Dong Zhuo [444] ↔ Dong Min [429] Sibling
 
 ## Report-only findings (need manual action, no apply-fixes op exists)
+
+From ch47 (out-of-range note):
+- **Wu Qi [2480, 吳祺 Eastern Wu politician] also wrongly carries the
+  ancient general's mentions in ch84/94/103/104** — same 吳起-vs-吳祺
+  confusion the ch47 fix swaps; those chapters are outside this batch,
+  swap to [3834] via admin UI or a later fix file.
 
 From ch45:
 - **The ancient music master Shi Kuang (師曠) has no Character row** —

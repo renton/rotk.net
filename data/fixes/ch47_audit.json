@@ -1,0 +1,69 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 47,
+   "target_id": 2133,
+   "_note": "WRONG PERSON: ch47's 'Sun Zi's classic The Art of War' / 'Sun Zi the Famed Strategist' is the ancient Sun Tzu [3594], not this Wei official Sun Zi [孫資, Yanlong]"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 47,
+   "target_id": 3594, "keywords": "Sun Zi",
+   "summary": "The Famed Strategist: Jiang Gan finds Pang Tong crooning over his 'Art of War' by lamplight, and Pang Tong's flattery of the camp invokes him - Sun Zi reappeared could do no better.",
+   "_note": "replaces the wrong-person association above; prose spells him Sun Zi"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 47,
+   "target_id": 2480,
+   "_note": "WRONG PERSON: 'Wu Qi the Great General' is the Warring States general [3834, 吳起 of Chu], not this Eastern Wu politician [吳祺]; 3834 already exists with ch57/ch60 associations"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 47,
+   "target_id": 3834, "keywords": "Wu Qi",
+   "summary": "The Great General of the Warring States, paired with Sun Zi in Pang Tong's calculated flattery of Cao Cao's land camp - 'Wu Qi come to life again could not do better.'",
+   "_note": "replaces the wrong-person association above"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 1111,
+   "summary": "Borrowed books as a poor boy and never forgot a page: now he punts to the north shore as an old fisherman, hands over the letter - and laughs on the way to his own beheading. When Cao Cao springs the trap question ('why does the letter name no time?'), his scorn is the answer: a renegade cannot timetable his chance, 'and you know nothing of common sense.' Cao Cao ends up bowing. He refuses gold, sails home, and stage-manages the Gan Ning scene that flips the Cai brothers inside out.",
+   "_note": "old summary was sound; the no-date riposte and the Gan Ning follow-up complete it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 972,
+   "summary": "Slips off his sick couch to salute the friend who will carry his letter, and receives Cao Cao's answer in the flesh of his beaten back: 'if it had not been for your persuasive tongue, then had I undergone this suffering in vain.'",
+   "_note": "old summary was a bare 'waits for the signal'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 596,
+   "summary": "Plays the insulted man for the Cai brothers' benefit - table-smacking, teeth-gritting - then draws his sword on cue when they 'discover' the treason: the fright that makes the spies confess their own mission and become Zhou Yu's unwitting letter-boxes.",
+   "_note": "old summary garbled the scene ('Cai Mao's two nephews'); the Cai brothers are the spies being played"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 3767,
+   "summary": "Probes Gan Ning and Kan Ze, is terrified into revealing his own pretend-desertion - 'let us tell you something quite secret!' - and writes to Cao Cao vouching for the very defections Zhou Yu invented.",
+   "_note": "summary was missing on the ch47 row"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 3768,
+   "summary": "Co-signs the secret letter telling Cao Cao that Gan Ning is ripe for treason - the false spies now certifying the false defectors.",
+   "_note": "summary was missing on the ch47 row"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 1056,
+   "summary": "Volunteers to redeem his first failure and is played again, note for note: coldly accused, packed off to a hut in the Western Hills, he wanders at night to a lamplit cabin where the Young Phoenix sits reading Sun Zi - exactly as arranged. He smuggles the great man to Cao Cao's camp, proud of his catch, and delivers the man who will chain the fleet for the fire.",
+   "_note": "old summary was sound; tightened to the staging"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 1739,
+   "summary": "Waits in the cabin Zhou Yu chose, lets Jiang Gan 'discover' him, and plays the neglected genius all the way into Cao Cao's confidence: flatters the land camp with Sun Zi and Wu Qi, diagnoses the seasickness - and prescribes the chains. Thirty and fifty ships bolted stem to stem, boards across, 'even horses could move about on them.' He begs a protection paper for his 'family by the river bank', warns Cao Cao to attack only after he is gone - and walks into a stranger on the shore who names every ruse aloud.",
+   "_note": "old summary had the scheme; the exit encounter is the cliffhanger"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 3466,
+   "summary": "Chuckles at the second coming of Jiang Gan - 'success depends upon this man' - stages the anger, the exile hut, and the lamplit cabin, and lets his gullible schoolmate deliver Pang Tong to Cao Cao like a prize of his own finding.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 1523,
+   "summary": "The original sponsor: he had recommended Pang Tong to Zhou Yu and carried the Young Phoenix's first counsel - fire, but only if the ships are fastened together - the sentence the whole chapter exists to deliver.",
+   "_note": "old summary was a bare 'with Zhou Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 47,
+   "target_id": 86,
+   "summary": "Reads the surrender letter twice, springs his no-date trap - and is argued into a bow by a laughing prisoner. Half-convinced by the Cai brothers' corroborating letter, he sends Jiang Gan back for certainty and receives instead the Young Phoenix, whose chain-the-ships prescription he adopts on the spot, blacksmiths forging night and day. Every safeguard he takes delivers him deeper into the fire plan.",
+   "_note": "old summary was sound; the interrogation collapse deserved the detail"}
+]
