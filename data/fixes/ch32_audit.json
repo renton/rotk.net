@@ -1,0 +1,211 @@
+[
+  {"op": "add_relationship", "character1_id": 1107, "character2_id": 3755,
+   "type": 1, "_note": "'direct Ju Gu, son of Ju Shou, to maintain Handan'"},
+
+  {"op": "add_relationship", "character1_id": 2608, "character2_id": 2607,
+   "type": 5, "_note": "'I have one Xin Pi, Xin Ping's younger brother'"},
+
+  {"op": "add_relationship", "character1_id": 1573, "character2_id": 1565,
+   "type": 5, "_note": "'Two brothers named Lu Xiang and Lu Kuang volunteered'"},
+
+  {"op": "add_relationship", "character1_id": 1925, "character2_id": 1926,
+   "type": 10, "_note": "'Shen Pei's nephew Shen Rong, one of the gate wardens'"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 32,
+   "target_id": 69,
+   "_note": "FALSE POSITIVE: Xu Province is never mentioned in ch32 - no 'Xuzhou', no 'Xu Province'; every standalone 'Xu' in the prose is the surname of Xu Huang or Xu Chu, which the bare-'Xu' global alias matched during association building"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 32,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "You Province's empty keywords fall back to the bare 'You' alias, which pills six capitalized dialogue 'You's ('You poisoned my father...'); the one real mention is 'Youzhou' in the four-regions title"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3754,
+   "summary": "Yuan Tan's Leader of the Van in the renewed fratricide: he rides out railing at Yuan Shang and falls to Lü Kuang within a few bouts.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3755,
+   "summary": "Ju Shou's son, holding Handan as Yuan Shang's distant auxiliary: he gives battle, is beaten by Zhang Liao in three encounters, and is shot from the saddle as he flees - the bowstring twang that breaks his force.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1565,
+   "summary": "Volunteers with his brother Lü Xiang to lead Yuan Shang's van, kills Yuan Tan's champion Cen Bi - then bows in submission on the Pingyuan road, is ennobled by Cao Cao, talks Ma Yan and Zhang Zi into defecting too, and hands Cao Cao the secret generals' seals Yuan Tan sends.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1573,
+   "summary": "The other Lü brother of Yuan Shang's van: surrenders with Lü Kuang on the Pingyuan road ('do not surrender to me but to the Prime Minister'), takes Cao Cao's lordship, turns Ma Yan and Zhang Zi, and betrays Yuan Tan's secret seals.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1569,
+   "summary": "Objects with Man Chong in council that the army came to fight Liu Biao, not to bail out Yuan Tan - the caution Xun You's grand-strategy speech overrides.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3635,
+   "summary": "Declares Yuan Shang successor with Shen Pei at the deathbed - then draws the fatal lot to serve Yuan Tan as pledge, finds him suspiciously healthy, tries to resign, and is kept as a hostage until the withheld reinforcements give Yuan Tan his excuse: Peng Ji is put to death.",
+   "_note": "summary was missing for a character who dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3753,
+   "summary": "Yuan Tan's champion at Liyang, slain by Xu Huang within a few bouts - the duel that opens the rout.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2905,
+   "summary": "Imperial Protector of Yuzhou (the prose spells him Yin Ku), sent to Cao Cao's camp with the beaten Yuan Shang's offer of surrender - Cao Cao feigns consent and raids the camp that same night.",
+   "_note": "summary was missing; this politician [陰夔] is the right Yin Kui here, unlike ch31's astrologer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3032,
+   "summary": "Sent with Li Dian to waylay the five thousand reinforcements Yuan Shang grudged his brother - the half legion is destroyed to a man.",
+   "_note": "summary was missing (prose spells him Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3757,
+   "summary": "Van Leader, then rear guard, of Yuan Shang's Pingyuan expedition (the prose spells him Zhang Zi); talked into defection by the Lü brothers, he ends the chapter seizing his old master's supply line for Cao Cao.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1925,
+   "summary": "Writes the dying Yuan Shao's testament and rules Yejun for Yuan Shang: counters Feng Li's tunnel by entombing the sappers, but cannot counter the flood, the famine, or his own vengeance - eighty of the Xin family beheaded on the wall buys his nephew's betrayal of the west gate. Captured by Xu Huang, whipped by Xin Pi, he refuses Cao Cao to his face and kneels for the sword facing north: 'Alive, I have served the Yuans; dead, I will be their ghost.' Cao Cao buries him with honor.",
+   "_note": "old summary ended at 'will hold the city to the bitter end' - the bitter end happens this chapter, and his north-facing death is one of the book's famous scenes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2346,
+   "summary": "Arrives from Qingzhou into Yuan Tan's confidence and hears the banquet-assassination plot: 'brothers are as one's limbs - how can you cut off a hand at the moment of conflict?' Dismissed in anger for calling Guo Tu a mischief-maker.",
+   "_note": "old summary had him refusing to abandon Yuan Shang - he serves Yuan TAN, and his ch32 role is the rejected plea against fratricide"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 553,
+   "summary": "Commander of the East Gate, punished by Shen Pei for drinking through his watch: he deserts, sells the besiegers the tunnel route under the Pearly Gate - and dies in that tunnel when Shen Pei, guessing the plan from the dark quiet outside, seals the mouth with stones.",
+   "_note": "old summary: 'named in passing' - his treason and poetic death are a full episode"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1197,
+   "summary": "Yuan Shang's civil officer smuggled into Yejun disguised in Cao Cao colours: he syncs the signal-fires with Shen Pei and designs the white-flag 'populace surrender' that screens the sortie - the ruse Cao Cao reads at a glance.",
+   "_note": "old summary: 'minor figure named in passing' - he authors the chapter's central stratagem"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1627,
+   "summary": "Proposes the West Hills by-road to relieve Yejun and rides rear guard - then is talked over to Cao Cao by the Lü brothers mid-campaign and sent to seize Yuan Shang's own supply line.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2904,
+   "summary": "Commander of Wuan, posted at Maocheng to secure the Shangdang road: his defense collapses and Xu Chu kills him; his soldiers simply join the winners.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2044,
+   "summary": "The general left with Shen Pei to hold Jizhou City when Yuan Shang marches to his brother's relief at Liyang.",
+   "_note": "old summary: 'minor figure named in passing' - one real posting"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1926,
+   "summary": "Warden of a Yejun gate and dear friend of Xin Pi: the beheading of Xin Pi's eighty relatives on the wall drives him to shoot a betrayal offer over the parapet on an arrow, and next day he opens the west gate to Cao Cao's army - earning his uncle's last contempt: 'he was always unprincipled.'",
+   "_note": "old summary was a bare 'with Shen Pei at the defense'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2607,
+   "summary": "Magistrate of Pingyuan sent as Yuan Tan's envoy: his 'autumn gale sweeps the fallen leaves' analysis turns Cao Cao's army back north. For it, Shen Pei beheads all eighty of his kinsfolk on the wall of Yejun; Xin Pi rides first through the betrayed gate, horsewhips the captured murderer, and begs the Prime Minister for his death.",
+   "_note": "old summary jumped to his later Wei career and skipped the massacre that defines his chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2608,
+   "summary": "Warns Yuan Tan away from the deathbed city - 'Shen Pei and Peng Ji have already laid their plans; if you go, you will meet with some misfortune' - and stays at his side through the feud; his younger brother Xin Pi becomes Yuan Tan's envoy.",
+   "_note": "old summary was a bare label"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 756,
+   "summary": "Yuan Tan's whole campaign is Guo Tu's: the reconnaissance visit to the new lord, the demand that cost Peng Ji his life, the banquet-assassination plot Wang Xiu is dismissed for opposing, the Xin Pi embassy that invites Cao Cao north - and the secret generals' seals for the Lü brothers, which go straight into Cao Cao's hands.",
+   "_note": "old summary was a bare 'with Yuan Tan in the feud'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3005,
+   "summary": "Named heir at the wordless deathbed, he matches his mother's cruelty by slaughtering the mutilated concubines' families - then loses everything he inherited: reinforcements grudged, his brother driven to Pingyuan but Yejun besieged behind him, his relief column betrayed by four defecting commanders, his camp raided the night after his surrender offer, and his seals and robes hung on spears before the walls. He flees to the Zhongshan Mountains with nothing.",
+   "_note": "old summary said he 'takes Jizhou and Yejun' - Yejun was already his capital, and this chapter is the losing of it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3011,
+   "summary": "Kept from the deathbed by Guo Tu's caution, he executes the hostage Peng Ji over the withheld reinforcements, tries the banquet-assassination, loses twice, and is besieged in Pingyuan - whence Xin Pi's embassy buys him Cao Cao's intervention, a promised daughter in marriage, and secretly engraved seals for would-be friends at court. The seals go straight to Cao Cao, who 'thenceforward planned Yuan Tan's doom'.",
+   "_note": "old summary had the appeal to Cao Cao but none of the treacheries that justify the doom"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3013,
+   "summary": "Brings his Youzhou legions to the ox-horn stand at Liyang, loses with the rest in Cao Cao's four-army attack, and marches home when the enemy withdraws - out of the feud until his brother's flight finds him.",
+   "_note": "old summary's 'allies with Yuan Shang' anticipates ch33; his ch32 part is the Liyang relief"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 604,
+   "summary": "Marches his Bingzhou legions to the family stand at Liyang, camps ten miles out 'making a show of great force', and takes them home again when Cao Cao turns for Jingzhou.",
+   "_note": "old summary called him 'nominally neutral' - he fought in the Liyang defense before withdrawing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 86,
+   "summary": "Breaks the four Yuan armies at Liyang, then takes Guo Jia's patience counsel and feints at Jingzhou until Xin Pi's embassy calls him back north. Yin Kai and Ju Gu swept aside, he besieges Yejun: tunnels foiled, helmet-crest shot away at the drawbridge, he doubles the diggers by night and drowns the city with the River Zhang. He honors the defiant Shen Pei with a north-side burial, spares Chen Lin for his genius, promises Yuan Tan a daughter - and, pocketing the betrayed secret seals, 'thenceforward planned Yuan Tan's doom'.",
+   "_note": "old summary said the siege 'begins' and Shen Pei 'holds out' - Yejun falls in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 121,
+   "summary": "Eighteen, born under a day-long purple halo, a skilled swordsman and writer since age eight: when Yejun falls he brushes aside the guards at the Yuan family door, strides in sword in hand, and finds two women weeping in each other's arms - the chapter ends with the blade raised over them.",
+   "_note": "old summary imported the Lady Zhen marriage from ch33; ch32 stops at the cliffhanger"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 3166,
+   "summary": "Breaks Yuan Shang in three bouts at Liyang - the defeat whose news kills Yuan Shao - then shoots Ju Gu out of the saddle at Handan, springs the ambush on the white-flag sortie with Xu Huang, and raids Yuan Shang's camp the night after the false surrender.",
+   "_note": "old summary was a bare 'with Cao Cao in the Hebei campaign'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2637,
+   "summary": "Kills Yuan Tan's champion Wang Zhao at Liyang, shares the white-flag ambush and the night raid with Zhang Liao - and personally captures Shen Pei dashing out on the southeast of the fallen city.",
+   "_note": "old summary was a bare 'with Cao Cao in the Hebei campaign'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2624,
+   "summary": "Kills Yin Kai at Maocheng, opening the Shangdang road on Cao Cao's sweep toward Yejun.",
+   "_note": "old summary was a bare 'with Cao Cao in the Hebei campaign'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1158,
+   "summary": "Sent with Yue Jin to waylay the five thousand grudging reinforcements Yuan Shang spared his brother - the destruction that makes Yuan Tan execute Peng Ji.",
+   "_note": "old summary was a bare 'with Cao Cao in the Hebei campaign'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 100,
+   "summary": "Left holding Guandu during the Jingzhou feint, then sent ahead against Yejun - his siege lines are already drawn when Cao Cao's main army arrives.",
+   "_note": "old summary was a bare 'with Cao Cao in the Hebei campaign'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 2754,
+   "summary": "Twice the campaign's hinge: his council speech ('let them fight till they are weakened') converts Yuan Tan's dubious surrender into grand strategy, his 'Heaven's thunder' goad launches the northern march, and the flooding of Yejun by the diverted River Zhang is his suggestion.",
+   "_note": "old summary was a bare 'advises Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 309,
+   "summary": "The one dissenting voice on Yuan Tan's offer - 'he has been forced into this by his brother's pressure; put no trust in him.'",
+   "_note": "old summary was a bare 'advises Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1048,
+   "summary": "Left behind as Governor of Liyang when the army feints south toward Jingzhou.",
+   "_note": "old summary was a bare 'advises Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1638,
+   "summary": "Protests with Lü Qian that the army marched on Jingzhou for a purpose and should not be diverted to rescue Yuan Tan - overruled by Xun You.",
+   "_note": "old summary was a bare 'among Cao Cao's officials'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1311,
+   "summary": "Sent out by Liu Biao to make the first resistance at the Xiping front; when Cao Cao suddenly decamps north he smells a ruse, lets the retreat go unmolested, and takes himself back to Jingzhou.",
+   "_note": "old summary had him idle in Jingzhou; he commands the Xiping front"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 32,
+   "target_id": 1313,
+   "summary": "The target of Cao Cao's southern feint: he puts Liu Bei out front at Xiping and never has to fight - Xun You's council verdict ('quietly content between the Zhang and the Han, no ambition to enlarge his borders') tells the reader why the north comes first.",
+   "_note": "old summary sent Liu Bei 'back to Xinye', which ch32 never mentions"}
+]

@@ -53,7 +53,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch29 — 29 ops (17 missing summaries incl. Yu Ji the haunting saint, Hua Xin envoy/governor fix, Guo Jia's prophecy, Qiao-sister marriages: Sun Ce↔Da Qiao, Zhou Yu↔Xiao Qiao)
 - [x] ch30 — 22 ops (12 missing summaries, Jia Xu's invented council quote fixed, Wuchao raid roster corrected, catapult 'Rumblers' restored, Han Meng/Chunyu Qiong fates fixed)
 - [x] ch31 — 44 ops (Yin Kui wrong-person fix: politician 2905 removed, astrologer 2906 added; Liu Bang added as 'Founder of Han'; 5 Yuan-family relationships; Gao Lan/Liu Pi/Shi Huan on-page deaths; Tian Feng suicide-sequence fix; bare-'You' keyword restriction; 6 missing + ~25 thin/wrong summaries)
-- [ ] ch32
+- [x] ch32 — 44 ops (Xu Province false-positive assoc removed, bare-'You' restriction, 10 missing summaries incl. Peng Ji's death arc and the Lü brothers, Shen Pei's north-facing execution, Wang Xiu wrong-master fix, Feng Li/Li Mu/Ma Yan/Yin Kai 'minor' fixes, Cao Pi ch33 spillover pulled back, 4 relationships)
 - [ ] ch33
 - [ ] ch34
 - [ ] ch35
@@ -105,6 +105,12 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch32_audit.json (4):
+- Ju Shou [1107] → Ju Gu [3755] Parent/Child
+- Xin Ping [2608] ↔ Xin Pi [2607] Sibling
+- Lü Xiang [1573] ↔ Lü Kuang [1565] Sibling
+- Shen Pei [1925] → Shen Rong [1926] Pibling/Nibling
 
 From ch31_audit.json (5):
 - Yuan Shao [3006] → Yuan Xi [3013] + → Yuan Shang [3005] Parent/Child
