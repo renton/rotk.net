@@ -63,7 +63,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch39 — 33 ops (Su Fei was PARDONED not executed, Huang Zu killed by Gan Ning not captured by Lü Meng, Xu Shu's tiger-with-wings warning restored, Sima Yi wolf-gaze anecdote removed (not in text), Cao Cao/Xiahou Dun ch40 spillovers pulled back, Guan Ping fire-detail fix, Ling Tong banquet feud, 4 Sima-family relationships)
 - [x] ch40 — 33 ops (Zhi Xi mourner/Chi Lu informer conflation untangled, ch41 spillovers pulled from Cao Cao/Cai Mao/Lady Cai/Liu Cong/Zhang Yun (murders + admiral posts), Li Gui/Fu Xuan/Wang Can surrender-council cast, Kong Rong's sons' eggs line, Liu Qi denied-deathbed fix, burn-Xinye roster)
 - [x] ch41 — 42 ops (Zhang Zi [3794] dup-of-Zhang Yi [3757] association swapped, Xu Shu was the double-crossing envoy not silent, Wei Yan fled TO Han Xuan, Wang Wei's loyal death, Yu Jin the executioner of Liu Cong/Lady Cai, Xu Chu invented Changban duel removed, 8 missing summaries for Zhao Yun's victims, Liu Shan ch42 spillover, Zhong brothers Sibling)
-- [ ] ch42
+- [x] ch42 — 22 ops (Liu Xin surrendered-not-murdered fix, Yan Province false assoc removed (Zhang Fei 'of Yan' = ancient state), Xiahou Jie + Zhong brothers deaths, Zhang Fei bridge blunder + rebuke, Zhuge Liang stage-management, Han Song freed)
 - [ ] ch43
 - [ ] ch44
 - [ ] ch45

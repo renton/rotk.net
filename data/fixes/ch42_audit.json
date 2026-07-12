@@ -1,0 +1,110 @@
+[
+  {"op": "remove_association", "target": "location", "chapter_num": 42,
+   "target_id": 63,
+   "_note": "FALSE POSITIVE: the only 'Yan' in ch42 is 'I am Zhang Fei of Yan' - the ancient northern state around Zhuo, not Yan Province (Yanzhou) in the east; no row exists for the old state"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3799,
+   "summary": "The staff officer beside Cao Cao at the bridge: at Zhang Fei's third thunderous challenge he reels from his horse, dead of sheer terror - the casualty that turns awe into a general rout.",
+   "_note": "summary was missing for the man the chapter is famous for"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3797,
+   "summary": "Leads the last ambush flourishing his battle-ax - and is unhorsed by Zhao Zilong almost at the first touch.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3798,
+   "summary": "Presses the pursuit so close his halberd-play reflects in Zhao Zilong's armor - who wheels without warning, breast to breast, and the Blue Blade shears through helmet and skull: 'a corpse with only half a head.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3334,
+   "summary": "Cuts down both Zhong brothers - the second with the wheel-about slash that leaves half a head - crosses the bridge past Zhang Fei, and lays the sleeping child in his lord's hands with 'death is too light a punishment' on his lips. When Liu Bei flings the baby aside ('to preserve that suckling I very nearly lost a great general!'), he snatches him up weeping: 'were I ground to powder, I could not prove my gratitude.'",
+   "_note": "old summary had the presentation; the Zhong kills and both halves of the throwing scene complete it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3106,
+   "summary": "Alone on Long Slope Bridge, serpent spear in hand: three bellows of 'I am Zhang Fei of Yan! Who dares fight with me?' kill Xiahou Jie outright and stampede Cao Cao's whole vanguard. Then the blunder - he demolishes the bridge, and Liu Bei reads it instantly: 'brave as you are, you are no strategist' - a standing bridge said ambush; a broken one says fear.",
+   "_note": "old summary had the feat but not the bridge blunder and rebuke"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 86,
+   "summary": "Recalls Guan Yu's old warning about Zhang Fei and flees the bellow so fast he loses his headdress, hair streaming, until Zhang Liao and Xu Chu catch his bridle. Recovering, he reads the broken bridge as fear, throws three floating bridges over by night, and hunts 'the fish in the kettle' - until Guan Yu's ambush smells like Zhuge Liang again and he swerves off to take Jiangling and Jingzhou City instead, marshalling eight hundred thirty thousand troops (called a million) and baiting Sun Quan with a joint 'hunting party' at Jiangxia.",
+   "_note": "old summary had only the bridge halt; the panic flight, the pursuit, and the pivot to Jingzhou are the chapter's spine"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3166,
+   "summary": "Catches the fleeing Cao Cao's bridle with Xu Chu and talks the panic out of him: 'after all, Zhang Fei is but one man.'",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 2624,
+   "summary": "Seizes the runaway Prime Minister's bridle with Zhang Liao when the bellow-panic carries him west, hatless and streaming-haired.",
+   "_note": "old summary was a bare 'bodyguard'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 1158,
+   "summary": "Warns that the invitingly broken bridge smells of Zhuge Liang's wiles - overruled: 'Zhang Fei is just a bold warrior, and there is no guile about him.'",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 2439,
+   "summary": "Chases the spent Zhao Zilong right up to Long Slope Bridge - and stops dead at the sight of Zhang Fei's glare and the dust of a phantom army in the trees.",
+   "_note": "old summary was a bare 'with Cao Cao after the surrender'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3032,
+   "summary": "One of the eight generals who line the west bank at the bridge, none daring to be first across into what might be Zhuge Liang's trap.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 704,
+   "summary": "Springs from the hills on the Hanjin road with ten thousand Jiangxia troops - 'I have waited here a long time!' - and the pursuit dissolves at the sight of Red Hare. Aboard the boats he asks after his 'sister' Lady Mi, sighs over the hunting day at Xutian when his advice went unheeded, and takes post at Xiakou with five thousand men.",
+   "_note": "old summary was a bare 'rejoins Liu Bei with reinforcements'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 1311,
+   "summary": "Flings his rescued son to the ground to honor the man who saved him, schools Zhang Fei on why the broken bridge invites pursuit, and is cornered against the Great River - saved by Guan Yu's ambush, Liu Qi's fleet, and Zhuge Liang's boats in turn. At Jiangxia he plays his part in the coaching: know nothing of Cao Cao's numbers, and let Lu Su beg for the man who does.",
+   "_note": "old summary compressed the rescues and missed the baby-throwing and the coached ignorance"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 1395,
+   "summary": "Sweeps up the river in a silver helmet at the head of his Jiangxia fleet - 'are you all right, my uncle? I am very guilty' - the first of the two rescues; he then hosts the refugee court and gently amends the Xiakou plan so his uncle rests at Jiangxia first.",
+   "_note": "old summary's succession framing missed the rescue that is his actual scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 3529,
+   "summary": "His dispositions unfold like clockwork: Guan Yu pre-placed at Hanjin, Liu Qi's fleet sent to the crossing, his own boats mustered from Xiakou. When Lu Su's sail appears he laughs 'It is done!' - coaches Liu Bei into strategic ignorance, dangles the fictitious refuge with Wu Ju until Lu Su begs him to come south, and boards the little boat to 'set north and south at each other's throats.'",
+   "_note": "old summary had only the agreement to go; the stage-management is the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 2467,
+   "summary": "Governor of Changwu and 'old friend' - the invented refuge Zhuge Liang dangles so Lu Su will bid higher with Sun Quan's hospitality.",
+   "_note": "old summary: 'minor figure named in passing' - he is the bluff in the negotiation"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 1436,
+   "summary": "Co-commander of Jingzhou City with Deng Yi: hearing of Liu Zong's murder, they lead the people out and submit to Cao Cao rather than attempt a hopeless defense.",
+   "_note": "old summary confused him with the murdered Liu Zong - this Liu Xin surrenders the city and lives"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 369,
+   "summary": "Surrenders Jingzhou City with Liu Xin when news of Liu Zong's fate makes resistance pointless; rewarded by the occupier.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 804,
+   "summary": "Freed from Liu Biao's old imprisonment when Cao Cao takes Jingzhou City, and raised to Director of Ambassadorial Receptions.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 1323,
+   "summary": "His murder echoes on: the news of their young lord's death is what moves Liu Xin and Deng Yi to surrender Jingzhou City without a fight.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 42,
+   "target_id": 2754,
+   "summary": "Designs the trap inside the invitation: ask Sun Quan to a grand joint 'hunting party' at Jiangxia, seize Liu Bei together, split Jingzhou - and count on fear to bring the south to heel.",
+   "_note": "old summary was a bare 'with Cao Cao'"}
+]
