@@ -54,7 +54,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch30 — 22 ops (12 missing summaries, Jia Xu's invented council quote fixed, Wuchao raid roster corrected, catapult 'Rumblers' restored, Han Meng/Chunyu Qiong fates fixed)
 - [x] ch31 — 44 ops (Yin Kui wrong-person fix: politician 2905 removed, astrologer 2906 added; Liu Bang added as 'Founder of Han'; 5 Yuan-family relationships; Gao Lan/Liu Pi/Shi Huan on-page deaths; Tian Feng suicide-sequence fix; bare-'You' keyword restriction; 6 missing + ~25 thin/wrong summaries)
 - [x] ch32 — 44 ops (Xu Province false-positive assoc removed, bare-'You' restriction, 10 missing summaries incl. Peng Ji's death arc and the Lü brothers, Shen Pei's north-facing execution, Wang Xiu wrong-master fix, Feng Li/Li Mu/Ma Yan/Yin Kai 'minor' fixes, Cao Pi ch33 spillover pulled back, 4 relationships)
-- [ ] ch33
+- [x] ch33 — 46 ops (Battle of Ye event added to ch32, Xu Province + Bronze Bird Tower false assocs removed, Wuhuan Chu keywords fixed from bare 'Chu', Mao Dun/Xin Ping/Guo Tu on-page deaths, Yuan Tan died at Nanpi not Pingyuan, Gao Gan killed by Wang Yan at Shanglu, Wang Xiu mourner scene, 3 relationships incl. Cao Pi↔Lady Zhen)
 - [ ] ch34
 - [ ] ch35
 - [ ] ch36
@@ -105,6 +105,11 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch33_audit.json (3):
+- Gongsun Du [650] → Gongsun Kang [657] Parent/Child
+- Yuan Xi [3013] ↔ Lady Zhen [3345] Husband/Wife
+- Cao Pi [121] ↔ Lady Zhen [3345] Husband/Wife
 
 From ch32_audit.json (4):
 - Ju Shou [1107] → Ju Gu [3755] Parent/Child
@@ -201,6 +206,11 @@ From ch3_audit.json (5):
 - Dong Zhuo [444] ↔ Dong Min [429] Sibling
 
 ## Report-only findings (need manual action, no apply-fixes op exists)
+
+From ch33:
+- **Peng An has no Character row** — Yuan Tan's champion, slain by Xu
+  Huang in a few bouts before Nanpi (ch33 ¶44). Create + associate to
+  ch33 if wanted.
 
 From ch1:
 - "Yuan Mountains" (ch1 ¶6 omen scene) has no Location row — create via

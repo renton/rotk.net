@@ -1,0 +1,221 @@
+[
+  {"op": "add_relationship", "character1_id": 650, "character2_id": 657,
+   "type": 1, "_note": "'The Governor of Liaodong was a son of Gongsun Du the Warlike, the General of Han'"},
+
+  {"op": "add_relationship", "character1_id": 3013, "character2_id": 3345,
+   "type": 3, "_note": "'this is the wife of Yuan Xi... She was of the Zhen family' - left behind when he went to Youzhou"},
+
+  {"op": "add_relationship", "character1_id": 121, "character2_id": 3345,
+   "type": 3, "_note": "'And he told Cao Pi to take Lady Zhen to wife'"},
+
+  {"op": "add_association", "target": "event", "chapter_num": 32,
+   "target_id": 23, "keywords": "",
+   "_note": "the Battle/Siege of Ye is fought and won in ch32 (tunnels, River Zhang flood, west gate betrayal); the event was only associated to ch33, which merely opens in the conquered city"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 33,
+   "target_id": 69,
+   "_note": "FALSE POSITIVE again: no Xuzhou/Xu Province in ch33 - all 13 standalone 'Xu' tokens are the surnames of Xu Chu, Xu Huang, and Xu You"},
+
+  {"op": "remove_association", "target": "location", "chapter_num": 33,
+   "target_id": 1741,
+   "_note": "the Bronze Bird Tower is never mentioned in ch33 - the chapter ends on the golden-light cliffhanger; the bird is dug up and the tower planned in ch34, where the location belongs"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 33,
+   "target_id": 2, "keywords": "Youzhou",
+   "_note": "current keywords include bare 'You', which pills ~9 capitalized dialogue 'You's ('You are a lot of blockheads...'); Youzhou occurs 6 times"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3759, "keywords": "Wuhuan Chu",
+   "summary": "The new Imperial Protector of Youzhou (the prose calls him Wuhuan Chu): he swears his subordinates by blood-oath to join Cao Cao, lets the defiant Han Heng walk out alive on principle, and rides out to submit - rewarded as General Who Guards the North.",
+   "_note": "summary was missing; keyword was bare 'Chu', which double-counts the Chu in Xu Chu and Jiao Chu - the prose always writes 'Wuhuan Chu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3761,
+   "summary": "King of the Wuhuan, shelterer of the fugitive Yuan brothers: caught at White Wolf Hills with ten thousand unformed cavalry, he is slain by Zhang Liao in the four-point charge.",
+   "_note": "summary was missing for a king who dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3760,
+   "summary": "Khan of the Xiongnu: Gao Gan kneels to beg his help against Cao Cao and is sent away - 'I have no quarrel with Cao Cao. Why then should he invade my land?'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3712,
+   "summary": "Han founder's strategist, cited in Guo Jia's elegy - 'as Chen Ping's, his strokes were most incisive.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3762,
+   "summary": "The Yue statesman of the elegy for Guo Jia - 'like Fan Li's, his plans were quite decisive.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3758,
+   "summary": "Yuan Xi's general who lays down arms with Jiao Chu at Nanpi, takes Cao Cao's lordship, and is given joint command of the three-route attack on his old master's Youzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3757,
+   "summary": "One of the six ex-Yuan generals (the prose spells him Zhang Zi) sent under Jiao Chu and Zhang Neng to force the surrender of Youzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1565,
+   "summary": "Plays the false deserter at Huguan Pass with his brother: 'we find Cao Cao so false... we want to return to help our old master.' Gao Gan gives them ten thousand men to lead - straight into the ambush that costs him Bingzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1573,
+   "summary": "The other half of the whispered-orders ruse at Huguan Pass: stripped of armor to look harmless, he talks Gao Gan into a night attack on Cao Cao's camp and leads him into the ambush.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3032,
+   "summary": "His storm of arrows at the Nanpi moat kills the fleeing Guo Tu; then he marches on Bingzhou with Li Dian and Zhang Yan and occupies Huguan Pass behind the tricked Gao Gan.",
+   "_note": "summary was missing (prose spells him Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3011,
+   "summary": "Ravages four commanderies, absorbs his beaten brother's troops, and defies the summons - so Cao Cao breaks off the betrothal and comes north. Nanpi besieged, his surrender rebuffed, he drives armed peasants ahead of his soldiers as a screen and is cut down in the melee by Cao Hong. His exposed head is guarded against mourners.",
+   "_note": "old summary placed his death in 'the Pingyuan campaign' - he abandoned Pingyuan and died in battle at Nanpi"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 100,
+   "summary": "Bursts through the press at Nanpi and kills Yuan Tan face to face; later speaks for the officers against chasing the Yuans into the Sea of Sand - the safety counsel Cao Cao rewards even while ignoring it.",
+   "_note": "old summary said he rides Yuan Tan down 'in the Pingyuan campaign' - the kill is at Nanpi, and his remonstrance scene was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 604,
+   "summary": "Holds Huguan Pass until the Lü brothers' false desertion lures him into a night attack and ambush; the pass lost behind him, he kneels in vain before the Xiongnu Khan, turns south for Liu Biao, and is caught and beheaded at Shanglu by Governor Wang Yan.",
+   "_note": "old summary had him 'killed at Bingzhou' - he escaped Bingzhou and died fleeing south, by Wang Yan's hand"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2352,
+   "summary": "Governor of Shanglu who captures and executes the fleeing Gao Gan, sends the head to Cao Cao, and is rewarded with lordship.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2346,
+   "summary": "Weeps in mourning dress beneath Yuan Tan's exposed head in open defiance of the death order: 'if I could bury his body, I would not mind death.' Cao Cao spares him, buries Yuan Tan properly, gives the mourner office - and admires him again when he keeps loyal silence about how to attack Yuan Shang.",
+   "_note": "old summary: 'named in passing' - his defiant mourning is one of the chapter's moral set pieces"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 790,
+   "summary": "The one man at Wuhuan Chu's blood-oath who refuses: he dashes his sword to the ground - 'I have failed in my duty, but I refuse the crowning act of treachery.' The Protector lets his conscience walk free.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1081,
+   "summary": "Yuan Xi's general who yields with Zhang Neng at Nanpi, takes a lordship, and jointly commands the three-route expedition that takes his old master's Youzhou.",
+   "_note": "old summary called him a 'Wuhuan officer named in passing' - he is a Yuan defector with a command"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2608,
+   "summary": "Sent to arrange Yuan Tan's surrender, he refuses Cao Cao's invitation to stay - 'the lord's sadness is the servant's shame' - and comes home to be accused of treachery by the master he would not desert. The unmerited reproach chokes him with such anger that he swoons and dies.",
+   "_note": "old summary was 'Xin Pi's brother' - he dies on stage of a broken heart"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2607,
+   "summary": "Referenced in Cao Cao's rebuff of the surrender embassy - 'your brother Xin Pi is in my employ; you had better remain here also' - the offer Xin Ping fatally refuses.",
+   "_note": "old summary restated his ch32 defection; in ch33 he is only invoked"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 756,
+   "summary": "Author of Nanpi's last atrocity - peasants with swords forced into their hands, driven out the four gates as a human screen - and its first casualty of the rout: Yue Jin's arrow storm drops him into the corpse-filled moat.",
+   "_note": "old summary was 'killed with Yuan Tan'; the peasant-screen plan and the manner of death matter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 336,
+   "summary": "The Dongwu worthy who stayed home sick rather than serve unheeded: summoned by Cao Cao, who greets him with tax arithmetic about three hundred thousand households, he answers that the people 'have been stripped naked' and asks how taxation before relief can win them. Cao Cao takes the rebuke and treats him the better for it.",
+   "_note": "old summary omitted the rebuke that is his whole scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2175,
+   "summary": "One of Yuan Shao's old generals who knows the flooded borderland: he routes the army back through Lulong and over Baitan Pass to fall on Liucheng unprepared, guiding the van himself. Offered the lordship of Liucheng, he refuses in tears - 'how can I accept a rank for betraying Lulong?' - and takes only a Court Counselor's office.",
+   "_note": "old summary made him a 'mountain-dwelling scholar'; the prose calls him one of Yuan Shao's old generals, and his refusal of the lordship was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3166,
+   "summary": "Second in the desert column behind the guide Tian Chou: at White Wolf Hills he takes Cao Cao's own ensign of command, leads the four-point charge with Xu Chu, Yu Jin, and Xu Huang - and personally slays King Mao Dun.",
+   "_note": "old summary was a bare 'with Cao Cao'; he kills the enemy king"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2637,
+   "summary": "Kills Yuan Tan's champion Peng An in a few bouts before Nanpi, and charges as one of the four points at White Wolf Hills.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2953,
+   "summary": "One of the four generals of the White Wolf Hills charge that shatters King Mao Dun's ten thousand cavalry.",
+   "_note": "old summary was a bare mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1158,
+   "summary": "Marches on Bingzhou with Yue Jin and Zhang Yan, and holds the recaptured Huguan Pass shut behind the ambushed Gao Gan.",
+   "_note": "old summary was a bare mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1627,
+   "summary": "One of the six ex-Yuan generals reinforcing the three-route expedition against Youzhou.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3242,
+   "summary": "The Black Hills Brigand leader arrives at fallen Nanpi with one hundred thousand troops and submits, becoming General Who Pacifies the North - then marches with Li Dian and Yue Jin against Gao Gan's Bingzhou.",
+   "_note": "old summary had the surrender but not the title or the Bingzhou command"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2535,
+   "summary": "Heads the delegation urging a pre-emptive strike on contumacious Liaodong - and is told, smiling, to wait a few days for the two heads to arrive by post.",
+   "_note": "old summary was a bare campaign mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 2754,
+   "summary": "Designs the false-desertion ruse that takes Huguan Pass, and stands beside Cao Cao on the Jizhou tower when the golden light bursts from the earth - 'surely a treasure is buried there.'",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 309,
+   "summary": "Voices the next move once the north is won: 'it is time to settle the south' - the thought Cao Cao admits has long occupied him.",
+   "_note": "old summary was a bare 'advises Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1311,
+   "summary": "Counsels Liu Biao against helping Yuan Tan - nothing to gain, and a loophole handed to Cao Cao - and proposes answering both brothers as a gracious peacemaker instead; the letters end Yuan Tan's southern hopes.",
+   "_note": "old summary had him idle at Xinye, which ch33 never mentions; he authors Jingzhou's policy this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1313,
+   "summary": "Writes the two peacemaker letters on Liu Bei's advice - scolding Yuan Tan for crooking the knee to the enemy and warning Yuan Shang about the hound and the hare - while committing Jingzhou to defense and nothing more.",
+   "_note": "old summary: 'named in passing' - the letters are his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 1299,
+   "summary": "Names herself to the sword-bearing Cao Pi - 'thy handmaid is the widow of the late Yuan Shao' - and buys the household's safety by presenting Lady Zhen to him; Cao Cao treats the widow generously with gold, silks, and food.",
+   "_note": "old summary was a bare 'survives the fall of Yejun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3006,
+   "summary": "Cao Cao sacrifices at his tomb, bows, laments, and retells their young men's conversation about holding the north - 'these words seem as if spoken only yesterday, and now he is gone' - then remits the region's taxes and provides for his widow.",
+   "_note": "old summary: 'named in passing in the recap' - the tomb scene is a set piece"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3005,
+   "summary": "Flees Zhongshan to Yuan Xi, then with him past Youzhou into the Wuhuan State and finally Liaodong - plotting on the road to murder Gongsun Kang and take his country. The host strikes first: asked for cushions in the freezing hall, he hears 'when your heads take that long, long journey, will there be any cushions?' - and the hidden swordsmen finish the Yuan line. The heads travel to Yezhou in a small wooden box.",
+   "_note": "old summary missed the brothers' own murder plot and the cushions scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 3013,
+   "summary": "Abandons Youzhou without a fight and shares his brother's whole flight - Wuhuan State, White Wolf rout, Liaodong - and his brother's plan to murder their host; beheaded beside him by Gongsun Kang's hidden ax-men as they sit.",
+   "_note": "old summary compressed the flight; the plot against Gongsun Kang was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 653,
+   "summary": "Counsels Gongsun Kang at the Liaodong council: sheltering the homeless Yuans is 'the dove stealing the magpie's nest' - kill them and send the heads; but first spy out whether Cao Cao means to attack, and save them alive only if he does.",
+   "_note": "old summary called him Gongsun Kang's uncle, which the prose does not state; his council speech was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 33,
+   "target_id": 737,
+   "summary": "Overrides the officers on the Wuhuan expedition - 'the peoples of the desert will not be prepared against us' - then, dying of the desert climate in his cart, gives the celerity doctrine that wins White Wolf Hills. Left at Yezhou, he dies at thirty-eight, leaving the sealed testament that delivers the Yuan brothers' heads without a march: wait, and Gongsun Kang's fear will do the work.",
+   "_note": "old summary said he died at 37; the prose gives thirty-eight, and his deathbed celerity counsel was missing"}
+]
