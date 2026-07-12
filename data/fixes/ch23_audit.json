@@ -1,0 +1,121 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3719,
+   "summary": "The Court Physician of Luoyang, sent by the Emperor to the 'ailing' Dong Cheng. Reading the grief behind the illness, he bites off a finger to pledge himself and claims Cao Cao's life 'lies in these hands' - the headache tea. Betrayed by Quin Quington, he pours the poison anyway, refuses to taste it, is tortured through beatings and revivals without naming a soul, and - fingers severed, unbowed - bows toward the palace and dashes his head against the steps.",
+   "_note": "summary was missing for the chapter's martyr"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3720,
+   "summary": "Dong Cheng's servant, caught whispering with the concubine Yun Ying: forty canes and a dungeon. He breaks out by night, carries the conspiracy to Cao Cao's palace - names, meetings, the bitten finger - and stands as the living witness against his master.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3721,
+   "summary": "The concubine caught whispering with Quin Quington in the garden; spared death at the lady's plea, whipped forty canes - the household grievance that unravels the belt-decree plot.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3706,
+   "summary": "Named by the informer among the secret meeters; seized and imprisoned with Wang Zifu, Wu Shi, and Wu Zilan, and made to watch Ji Ping's torture without breaking.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3707,
+   "summary": "Named by the informer and imprisoned with the other three signatories; sits 'on a rug full of needles' through Ji Ping's interrogation.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 1434,
+   "summary": "Sends his Court Physician to the 'ailing' State Uncle - unknowingly arming the plot - and ends the chapter with Cao Cao's advisers convened to discuss his dethronement.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3712,
+   "summary": "Han-founding strategist cited in Cao Cao's boast: Xun Yu, Xun You, Guo Jia, and Cheng Yu are 'superior to Xiao He and Chen Ping'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3705,
+   "summary": "The Han founder's great chancellor, cited in Cao Cao's boast about his own advisers.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3713,
+   "summary": "Han restoration general cited by Cao Cao: his fighters outshine 'Cen Peng and Ma Wu'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3714,
+   "summary": "Han restoration general in Cao Cao's boast, outshone (he claims) by Zhang Liao and Xu Chu.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3659,
+   "summary": "Mi Heng's measuring stick: he claims Confucius's virtue for himself, and casts Cao Cao as Yang Huo, the man who belittled the sage.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3715,
+   "summary": "Paired with Confucius in Mi Heng's boast - and in his accusation: making a famous scholar a drummer boy is 'Zang Cang vilifying Mencius'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3716,
+   "summary": "The belittler of Confucius, the role Mi Heng assigns Cao Cao in his six-fouls tirade.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3717,
+   "summary": "The vilifier of Mencius, the second insult in Mi Heng's drummer-boy protest.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3718,
+   "summary": "The Shang minister revealed to his king in a dream - Kong Rong's allusion when he pleads that Mi Heng's rudeness is mere misdemeanor.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3643,
+   "summary": "Cited in Mi Heng's boast that he could make his prince the rival of Kings Yao and Shun.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3644,
+   "summary": "Cited with Shun in Mi Heng's boast of what a properly-employed genius could make of a prince.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3656,
+   "summary": "Claimed by Cao Cao as one of his secretaries - and rated by Mi Heng as 'a fair armorer'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3032,
+   "summary": "Claimed by Cao Cao among the bravest of the brave - and rated by Mi Heng as 'a fair reader of elegy'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 3233,
+   "summary": "Torn between suitors, he watches Jia Xu rip up Yuan Shao's letter and dismiss his envoy - 'he cannot even tolerate his own brother' - then submits at Xuchang, where Cao Cao takes his hand and begs him to forget 'that little fault of mine'. Made General Who Possesses Prowess.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 1453,
+   "summary": "Sent as envoy to Xiangyang, he wins Jia Xu first and through him Zhang Xiu - the embassy that turns Wancheng's old enemy into Cao Cao's general.",
+   "_note": "old summary had him merely advising at court; he is the envoy"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 410,
+   "summary": "Recruits the volunteer Ji Ping - who bites off a finger over the girdle decree - then wrecks everything by flogging the servant Quin Quington over a garden dalliance. Summoned to watch Ji Ping's torture, he brazens it out until the search of his bedroom turns up the decree and the signed pledge; he and his whole household are arrested.",
+   "_note": "old summary stopped at the recruitment"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 2385,
+   "summary": "Named by the informer, imprisoned, and paraded before Ji Ping's torture; his and the others' evidence is the lever Cao Cao uses against Dong Cheng.",
+   "_note": "old summary was a bare conspirator mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 23,
+   "target_id": 2499,
+   "summary": "Named by the informer and imprisoned with Wang Zifu, Chong Ji, and Wu Shi as the plot collapses.",
+   "_note": "old summary was a bare conspirator mention"}
+]
