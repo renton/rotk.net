@@ -26,7 +26,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch2 — 75 ops (Zhang Bao 'Zhang Ba' spelling, Liu Xian [3601] dup removal, Liang Da 'Tai' alias fix, 17 relationships, ~35 summary rewrites)
 - [x] ch3 — 37 ops (Massacre of the Eunuchs event added to ch3, Shang/Taishan Commandery false-positive removals, 5 relationships incl. both Lü Bu adoptions, ~27 summary rewrites)
 - [x] ch4 — 17 ops (Empress Dong added to ch4, Qiao keyword, 3 relationships, 12 summary rewrites) + data/fixes/sex_audit.json (73 ops: every Empress/Lady/Consort + Diao Chan/Qiaos/Cai Yan/Sun Ren had sex=male)
-- [ ] ch5
+- [x] ch5 — 29 ops (Yue Jing spelling, Li Feng 'Anguo'-in-'Wu Anguo' false positive removed, Hu Zhen junk keyword, Qiao/Julu keywords, 7 relationships incl. Cao/Xiahou clan web, ~18 summary rewrites)
 - [ ] ch6
 - [ ] ch7
 - [ ] ch8
@@ -106,6 +106,12 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch5_audit.json (7):
+- Bao Xin [20] ↔ Bao Zhong [3618] Sibling
+- Xiahou Ying [3616] → Xiahou Dun [2535] Ancestor/Descendant
+- Xiahou Dun [2535] ↔ Xiahou Yuan [2556] Cousin
+- Cao Cao [86] ↔ Cao Ren [123], ↔ Cao Hong [100], ↔ Xiahou Dun [2535], ↔ Xiahou Yuan [2556] Cousin
+
 From ch4_audit.json (3):
 - Lü Boshe [1546] ↔ Cao Song [130] Sworn Brother
 - Liu Bian [1312] → Consort Tang [2148] Husband/Wife
@@ -143,6 +149,12 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch5:
+- "Liangdong" (Sun Jian's fallback camp, ¶60) has no Location row.
+- Li Feng's [1160] keyword set includes 'Anguo' (likely his courtesy
+  name) — it false-matches "Wu Anguo"; only ch5 affected (Wu Anguo
+  appears nowhere else).
 
 From ch4 (and the sex sweep):
 - **data/fixes/sex_audit.json** fixes sex=female on 73 characters (every

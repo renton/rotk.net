@@ -1,0 +1,128 @@
+[
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 3032, "keywords": "Yue Jin,Yue Jing",
+   "_note": "prose spells him 'Yue Jing from Yangping' (para 10) - current keywords never match"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 5,
+   "target_id": 1160,
+   "_note": "Li Feng is NOT in ch5 - his keyword 'Anguo' matched inside 'Wu Anguo' (Kong Rong's champion, a different man)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 923, "keywords": "Hu Zhen,Wencai",
+   "summary": "Hua Xiong's subordinate at Sishui Pass, sent out with five thousand against Sun Jian's van; Cheng Pu kills him on the spot with a lance-thrust through the throat.",
+   "_note": "keywords contained a junk token 'Wencai ?'; old summary had him routed by the Three Brothers - he dies to Cheng Pu in para 60"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 5,
+   "target_id": 1160, "keywords": "Qiao",
+   "_note": "prose says 'toward Qiao' / 'Xiahou Dun from Qiao' - fallback 'Qiao County' never matches (same fix as ch4)"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 5,
+   "target_id": 905, "keywords": "Julu",
+   "_note": "para 10 'Li Dian from Julu' - fallback 'Julu Commandery' never matches"},
+
+  {"op": "add_relationship", "character1_id": 20, "character2_id": 3618,
+   "type": 5, "_note": "Bao Zhong is Bao Xin's brother (para 54 'his brother, Bao Zhong')"},
+
+  {"op": "add_relationship", "character1_id": 3616, "character2_id": 2535,
+   "type": 18, "_note": "Xiahou Dun 'was descended from Xiahou Ying of old' (para 10)"},
+
+  {"op": "add_relationship", "character1_id": 2535, "character2_id": 2556,
+   "type": 7, "_note": "Xiahou Yuan is Xiahou Dun's cousin (para 10 'accompanied by his cousin Xiahou Yuan')"},
+
+  {"op": "add_relationship", "character1_id": 86, "character2_id": 123,
+   "type": 7, "_note": "Cao Ren is one of 'Cao Cao's two cousins' (para 11)"},
+
+  {"op": "add_relationship", "character1_id": 86, "character2_id": 100,
+   "type": 7, "_note": "Cao Hong is the other of 'Cao Cao's two cousins' (para 11)"},
+
+  {"op": "add_relationship", "character1_id": 86, "character2_id": 2535,
+   "type": 7, "_note": "para 10: the Xiahous 'were brothers of Cao Cao by birth, since Cao Cao's father was originally of the Xiahou family' - recorded as Cousin (closest type)"},
+
+  {"op": "add_relationship", "character1_id": 86, "character2_id": 2556,
+   "type": 7, "_note": "same clan tie as Xiahou Dun (para 10)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 214,
+   "summary": "Opens the chapter standing over the sleeping Cao Cao, sword drawn - then reflects that killing the man he followed for righteousness' sake would itself be unrighteous, and rides away east to Dongjun before sunrise.",
+   "_note": "old summary said he was 'named in passing' and still loyal - he abandons Cao Cao in the first paragraph"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 295,
+   "summary": "First-named of Sun Jian's four generals, wielding the iron-spined snake-headed lance; in the first assault on Sishui Pass he kills Hua Xiong's subordinate Hu Zhen with a thrust through the throat.",
+   "_note": "old summary: 'serves under Sun Jian' - he gets the campaign's first duel kill"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 785,
+   "summary": "One of Sun Jian's four generals, a heavy-saber man of Lingzhi; survives the burning night camp and finds his chief again after the rout.",
+   "_note": "old summary was a bare 'serves under Sun Jian'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 972,
+   "summary": "One of Sun Jian's four generals, the iron-whip wielder of Lingling; survives the night rout at Sishui and regroups with Cheng Pu and Han Dang around their chief.",
+   "_note": "old summary was a bare 'serves under Sun Jian'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 787,
+   "summary": "Imperial Protector of Jizhou among the confederate lords. His boast that his warrior Pan Feng could slay Hua Xiong ends with Pan Feng dead within minutes.",
+   "_note": "old summary invented a grain-logistics role (that's Yuan Shu)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 1218,
+   "summary": "Marches with Hua Xiong to Sishui Pass, devises the midnight front-and-rear attack on the starving van, fires Sun Jian's camp, and shares in the slaughter that kills Zu Mao.",
+   "_note": "old summary left him at Dong Zhuo's court; he's Hua Xiong's co-commander in the field"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 3623,
+   "summary": "Kong Rong's champion with the iron mace; trades ten even bouts with Lü Bu before the trident halberd shatters his wrist - he drops the mace and is saved by the eight lords' combined advance.",
+   "_note": "old summary said he lost his hand and was rescued by comrades; the prose says broken wrist, rescued by all eight armies"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 2275,
+   "summary": "Governor of Henei who proposes electing a chief lord and swearing obedience. First of the eight commanders to reach Tiger Trap Pass, he sends Fang Yue against Lü Bu, watches him die in five bouts, and is wounded in the rout before Qiao Mao and Yuan Yi pull him out.",
+   "_note": "old summary omitted the election proposal and his own wounding"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 664,
+   "summary": "Recruits Liu Bei into the coalition on the march through Pingyuan and presents the Three Brothers at Yuan Shao's tent. At Tiger Trap Pass he takes on Lü Bu himself, breaks, and flees - Red Hare closing on his back - until Zhang Fei's roar saves his life.",
+   "_note": "old summary omitted that Lü Bu nearly kills him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 444,
+   "summary": "Sends Hua Xiong to hold Sishui Pass, and after Guan Yu kills him, takes Li Ru's advice to act in person: Li Jue and Guo Si slaughter Imperial Guardian Yuan Wei's whole household, fifty thousand troops screen Sishui, and Dong Zhuo himself leads a hundred and fifty thousand with Lü Bu to Tiger Trap Pass, his black gauze umbrella visible from the walls.",
+   "_note": "old summary understated his half of the chapter (Yuan clan massacre, the two-army advance)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 1204,
+   "summary": "Relays the emergency to Dong Zhuo and, after Hua Xiong's death, argues that with Yuan Shao heading the coalition and his uncle Yuan Wei inside the capital, the Yuans must be exterminated and the Prime Minister must take the field himself - both of which Dong Zhuo does.",
+   "_note": "old summary credited him with the Changan retreat advice - that comes in ch6"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 1185,
+   "summary": "With Guo Si, surrounds Imperial Guardian Yuan Wei's residence and slaughters every soul, hanging Yuan Wei's head at the gate; the pair then hold River Si Pass with fifty thousand troops, under orders not to seek battle.",
+   "_note": "old summary was a bare 'among Dong Zhuo's named generals'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 753,
+   "summary": "With Li Jue, carries out the massacre of Yuan Wei's household and then holds River Si Pass with fifty thousand troops while Dong Zhuo marches to Tiger Trap.",
+   "_note": "old summary was a bare 'among Dong Zhuo's named generals'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 1311,
+   "summary": "Joins the coalition from Pingyuan under Gongsun Zan's wing and is seated last among the lords for his imperial blood. At Tiger Trap Pass he rides in with his twin swords to complete the three-against-one melee against Lü Bu - the triangle of steeds that finally makes the halberd waver.",
+   "_note": "old summary had him only watching; he fights in the chapter's climax"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 3106,
+   "summary": "Saves Gongsun Zan's life with a roar of 'Stay, O twice bastard!' as Red Hare closes in, then trades fifty even bouts with Lü Bu before his brothers join the famous three-against-one melee. When Lü Bu escapes, Zhang Fei spots Dong Zhuo's umbrella and charges the Pass itself - 'seize the chiefest rebel and pluck up the evil by the roots!'",
+   "_note": "old summary omitted the Gongsun Zan save and the closing charge"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 86,
+   "summary": "Raises the 'Loyalty and Honor' banner at Qiao on Wei Hong's money, gathers the Xiahous, Cao Ren, Cao Hong, Yue Jing, and Li Dian, and issues the manifesto that summons the lords. In the tent he engineers Yuan Shao's election, twice shields the unknown archer Guan Yu from Yuan Shu's contempt, pours the wine that comes back still warm, and sends secret gifts to the Three Brothers that night.",
+   "_note": "old summary ended at the manifesto; his tent diplomacy shapes the whole chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 5,
+   "target_id": 3006,
+   "summary": "Elected chief lord and sworn on the three-story altar, smearing the sacrificial blood. He names his brother Yuan Shu commissary chief, sends Sun Jian as van leader, laments that Yan Liang and Wen Chou are absent while Hua Xiong kills champion after champion, and sneers at sending 'a mere archer' - then watches Guan Yu return before the wine cools.",
+   "_note": "old summary was vague about his tent-scene role"}
+]
