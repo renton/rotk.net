@@ -209,11 +209,16 @@ class TestListPage:
             assert m.filename == f'{prov.id}_{m.id}.png'
             assert os.path.exists(os.path.join(
                 app.static_folder, 'provincemaps', m.filename))
+        # Descendant counting is deep: add a grandchild too.
+        split_child = Location.query.filter_by(name='Split Child').one()
+        factories.make_location(name='Split Grandchild',
+                                parent_id=split_child.id)
+        db_session.commit()
         resp = client.get('/admin/province-maps')
         assert b'North part' in resp.data
         assert b'South part' in resp.data
         assert resp.data.count(b'Edit locations') == 2
-        assert b'1 child location' in resp.data
+        assert b'2 child locations' in resp.data
 
     def test_create_requires_file(self, admin_client, db_session):
         client, _ = admin_client
@@ -320,6 +325,24 @@ class TestEditor:
         assert b'"point_type": "line"' in resp.data
         assert b'js/province_map_editor.js' in resp.data
         assert b'location_edit_url_template' in resp.data
+
+    def test_deep_descendants_included(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, pmap, county, *_ = self._setup(client, db_session)
+        # river inside a commandery inside the province — 3 levels deep.
+        commandery = factories.make_location(name='Deep Commandery',
+                                             parent_id=prov.id)
+        deep_river = factories.make_location(name='Deep Nested River',
+                                             parent_id=commandery.id)
+        db_session.commit()
+        resp = client.get(f'/admin/province-maps/editor/{pmap.id}')
+        assert b'Deep Nested River' in resp.data
+        assert b'Deep Commandery' in resp.data   # crumb + own row
+        # And it's placeable.
+        r = client.post(
+            f'/admin/province-maps/map/{pmap.id}/placements/{deep_river.id}',
+            json={'kind': 'point', 'geometry': [5, 5]})
+        assert r.status_code == 200
 
     def test_editor_sibling_switcher(self, admin_client, db_session):
         client, _ = admin_client

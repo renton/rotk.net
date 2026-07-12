@@ -3035,13 +3035,11 @@ def province_maps():
         .group_by(ProvinceMapPlacement.province_map_id)
         .all()
     )
-    child_counts = dict(
-        db.session.query(Location.parent_id, func.count(Location.id))
-        .filter(Location.parent_id.in_([p.id for p in provinces] or [0]),
-                Location.is_deleted.is_(False))
-        .group_by(Location.parent_id)
-        .all()
-    )
+    # Count ALL descendants per province (the editor places the whole
+    # subtree, not just direct children).
+    child_counts = {
+        p.id: len(_province_descendants(p.id)[0]) for p in provinces
+    }
 
     return render_template(
         'admin/province_maps.html',
@@ -3065,6 +3063,42 @@ def _province_or_404(location_id):
     if prov is None:
         abort(404)
     return prov
+
+
+def _province_descendants(province_id):
+    """All active locations anywhere UNDER a province in the parent
+    hierarchy (commandery -> county -> river...), not just direct
+    children. One query + BFS over an in-memory parent map (cheap at
+    ~1k locations; cycle-safe). Returns (locations, crumbs) where
+    crumbs[id] is the ancestry path INSIDE the province, e.g.
+    "Wei Commandery › Ye County"."""
+    rows = (
+        Location.query
+        .filter(Location.is_deleted.is_(False))
+        .options(selectinload(Location.location_type))
+        .all()
+    )
+    by_parent = {}
+    by_id = {}
+    for loc in rows:
+        by_id[loc.id] = loc
+        by_parent.setdefault(loc.parent_id, []).append(loc)
+
+    found = []
+    crumbs = {}
+    seen = {province_id}
+    queue = [(child, []) for child in by_parent.get(province_id, [])]
+    while queue:
+        loc, path = queue.pop()
+        if loc.id in seen:
+            continue
+        seen.add(loc.id)
+        found.append(loc)
+        crumbs[loc.id] = ' › '.join(p.name for p in path)
+        queue.extend((child, path + [loc])
+                     for child in by_parent.get(loc.id, []))
+    found.sort(key=lambda l: l.name)
+    return found, crumbs
 
 
 def _validate_map_upload(file):
@@ -3228,14 +3262,7 @@ def province_map_editor(map_id):
         .order_by(ProvinceMap.label, ProvinceMap.id)
         .all()
     )
-    children = (
-        Location.query
-        .filter(Location.parent_id == prov.id,
-                Location.is_deleted.is_(False))
-        .options(selectinload(Location.location_type))
-        .order_by(Location.name)
-        .all()
-    )
+    children, crumbs = _province_descendants(prov.id)
     placements = {
         p.location_id: {'kind': p.kind, 'geometry': p.geometry}
         for p in ProvinceMapPlacement.query.filter_by(
@@ -3271,6 +3298,7 @@ def province_map_editor(map_id):
         pmap=pmap,
         siblings=siblings,
         children=children,
+        crumbs=crumbs,
         payload=payload,
         csrf_form=_CsrfOnlyForm(),
     )
@@ -3305,8 +3333,10 @@ def province_map_place(map_id, child_id):
         return jsonify(error='Bad CSRF token.'), 400
     pmap = ProvinceMap.query.get_or_404(map_id)
     child = Location.query.get_or_404(child_id)
-    if child.parent_id != pmap.location_id or child.is_deleted:
-        return jsonify(error='Location is not a child of this province.'), 400
+    descendants, _ = _province_descendants(pmap.location_id)
+    if child.is_deleted or child.id not in {d.id for d in descendants}:
+        return jsonify(error='Location is not a descendant of this '
+                             'province.'), 400
 
     data = request.get_json(silent=True) or {}
     kind = data.get('kind')

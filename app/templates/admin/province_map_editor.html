@@ -74,6 +74,9 @@
                     </span>
                     <span class="flex-grow-1">
                         {{ c.name }}
+                        {% if crumbs.get(c.id) %}
+                        <div class="small text-muted">{{ crumbs[c.id] }}</div>
+                        {% endif %}
                         {% if c.location_type %}
                         <div>{{ macros.badge_widget(c.location_type) }}
                             <span class="small text-muted fst-italic">{{ c.location_type.point_type }}</span>
