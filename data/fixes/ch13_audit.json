@@ -1,0 +1,217 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 13,
+   "target_id": 831,
+   "_note": "Empress He died in ch4; the Empress of ch13 (Emperor Xian's consort, carried over the river by her brother Fu De) is Empress Fu (Fu Shou)"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 13,
+   "target_id": 578, "keywords": "Empress",
+   "summary": "Emperor Xian's empress, dragged through the whole flight: hostage in Li Jue's camp, shivering beside her husband at the Yellow River bank, lowered down the cliff wrapped in salvaged silk and carried into the boat on her brother Fu De's back.",
+   "_note": "takes over the 'Empress' needle freed by removing Empress He"},
+
+  {"op": "add_relationship", "character1_id": 565, "character2_id": 578,
+   "type": 5, "_note": "Fu De is 'the Empress' brother' (para 159)"},
+
+  {"op": "add_relationship", "character1_id": 753, "character2_id": 3666,
+   "type": 3, "_note": "Lady Qiong is Guo Si's wife - her staged jealousy starts the Changan civil war"},
+
+  {"op": "add_relationship", "character1_id": 2803, "character2_id": 3667,
+   "type": 3, "_note": "Lady Kai is Yang Biao's wife - the agent who plants the rumor"},
+
+  {"op": "add_relationship", "character1_id": 1185, "character2_id": 1229,
+   "type": 10, "_note": "Li Xian is 'a nephew of Li Jue' (para 54)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3670,
+   "summary": "Guo Si's general at the Xinfeng rescue; rides out hurling abuse and falls to the first blow of Xu Huang's battle-ax.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3668,
+   "summary": "The legendary archer of Youqiong, cited by Huangfu Li: proud of his skill, he governed alone and perished - the precedent held up to Li Jue.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3667,
+   "summary": "Yang Biao's wife and the plot's instrument: visiting Lady Qiong, she confides a rumor of a liaison between Guo Si and Li Jue's wife - the seed that grows into the poisoned-dog test and open war between the two rebels.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3666,
+   "summary": "Guo Si's jealous wife. Primed by Lady Kai's rumor, she poisons a gift of delicacies from Li Jue's palace and proves it on a dog, then doses her wine-sick husband with an emetic and blames his colleague - convincing Guo Si that Li Jue means to kill him.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3671,
+   "summary": "White Wave brigand summoned by secret edict to save the throne. He cuts clinging courtiers from the ferry cable at the Yellow River, is made General Who Conquers the North, then shows his colors: tyrannizes the ragged court at Anyi, ennobles convicts and sorcerers, opposes the return to Luoyang - and finally sells the Emperor to Li Jue and Guo Si, springing the Gu Hills night ambush himself in their name.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1434,
+   "summary": "The chapter is his calvary: hostage at Meiwo on putrid meat and rotten grain, begging five carts of rice and being refused, talked past the Baling Bridge guards on his own majesty, lowered down the riverbank in silk, fed coarse millet in a peasant hut, and housed at Anyi behind a thorn fence while brigands stamp wooden seals for their cronies.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3577,
+   "summary": "Named in the chapter's long lament: the Hans 'renewed their vigor with Liu Xiu', twelve rulers before him and twelve after - the arc now guttering at Changan.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1547,
+   "summary": "Chased from Dingtao, he takes Chen Gong's advice and throws himself on Liu Bei's hospitality at Xuzhou - and nearly accepts the proffered seal until he catches Guan Yu and Zhang Fei glaring. His 'good younger brother' familiarity ignites Zhang Fei's three-hundred-bout challenge, and he removes to Xiaopei as Liu Bei's uneasy guest.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3669,
+   "summary": "General of the Tiger Army ordered to arrest the denouncer Huangfu Li; honoring the man's rectitude, he returns to report him 'not found'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3674,
+   "summary": "Governor of Hedong who, with Zhang Yang of Henei, sends food and clothing to the starving court at Anyi.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2816,
+   "summary": "Checks Li Jue's sword over the envoy Huangfu Li, then plots with Song Guo to seize his witch-crazed master - betrayed, he flees to Xian. He returns to save the imperial cavalcade at Xinfeng with Xu Huang's ax, and from then on he and Dong Cheng are the Emperor's shield: the river crossing, the bullock cart to Dayang, the desperate double game with the White Wave chiefs.",
+   "_note": "old 'summary' was an admin note about a duplicate record (see 2815) - flagged in audit_notes.md"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3134,
+   "summary": "Marches down from Shanxi with a large army and forces both Li Jue and Guo Si to accept peace, then memorializes for the Emperor's move east to Hongnong - rewarded as Commander of the Flying Cavalry and, briefly, the court's best-provisioned protector.",
+   "_note": "old 'summary' was the bare note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 704,
+   "summary": "His glare, beside Zhang Fei's, is what stops Lü Bu's hand on the offered seal of Xuzhou; afterwards he keeps hauling his younger brother back from the three-hundred-bout duel.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3106,
+   "summary": "Bristles at Lü Bu from the first - 'what sort of a man are you that dares call our brother younger brother?' - and twice tries to force the three-hundred-bout duel, until Lü Bu prudently removes to Xiaopei.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1311,
+   "summary": "Receives the fugitive Lü Bu with full honors over Mi Zhu's objection and - to his brothers' horror - offers him the seal of Xuzhou outright. When the guest-host friction turns dangerous he lodges Lü Bu at Xiaopei, keeping both his honor and his province.",
+   "_note": "old summary: 'named in passing - Xuzhou stable'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1682,
+   "summary": "Protests flatly against receiving Lü Bu - 'a cruel, bloodthirsty beast' - and is overruled by Liu Bei's good heart.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 214,
+   "summary": "Steers Lü Bu away from a rematch with Cao Cao and toward Liu Bei's Xuzhou, then smooths the seal scene with 'the strong guest does not oppress his host'.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 86,
+   "summary": "Rewarded for pacifying the Shandong region with the title General Who Exhibits Firm Virtue and the lordship of Feiting; at court, Yang Biao and Zhu Jun privately name him to the Emperor as the man who could cleanse the government.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 565,
+   "summary": "The Empress's brother: at the Yellow River he produces ten rolls of silk from dead soldiers to lower the imperial couple down the bank, and carries his sister into the boat on his back.",
+   "_note": "old summary made him a captain in Li Jue's army - wrong man entirely"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 894,
+   "summary": "One of the three White Wave chiefs summoned by secret edict; killed in an attack during the fighting retreat north.",
+   "_note": "old summary made him Li Jue's lieutenant - he's a White Wave leader on the loyal side"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 909,
+   "summary": "Counselor who tries to hush Huangfu Li's public denunciation of Li Jue - and gets a lecture on the code of minister and prince for his trouble.",
+   "_note": "old summary made him a lieutenant in the fighting"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1229,
+   "summary": "Li Jue's nephew: surrounds the Palace, packs the Emperor and Empress into carriages under guard, and serves as their gaoler at Meiwo while famine thins the attendants.",
+   "_note": "old summary called him a White Wave commander - he's the abduction's executor"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1001,
+   "summary": "The persuasive Xiliang man sent to reconcile the factions: Guo Si agrees, Li Jue refuses - nearly killing him over the Hou Yi parable - so Huangfu Li denounces Li Jue publicly, seeds desertion through the homesick Xiliang ranks, and escapes arrest because the officer sent for him reveres him too much.",
+   "_note": "old summary called him Huangfu Song's relative (not in prose) and understated his sabotage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1048,
+   "summary": "Pledges himself secretly to the weeping Emperor, talks the Qiang tribesmen into deserting Li Jue, and has the covetous rebel lulled with a Regent Marshal title - dismantling him from inside while restraining his witch-mania.",
+   "_note": "old summary was vaguer; his quiet demolition of Li Jue is the mechanism"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2848,
+   "summary": "Counsels the Emperor to swallow Li Jue's putrid rations - 'you may not provoke him' - vouches for Jia Xu's loyalty, and fronts the challenge at Baling Bridge: 'the Imperial Chariot is passing, and who dares stop it?'",
+   "_note": "old summary was a bare escort mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2840,
+   "summary": "Guo Si's general who stays his master's sword when Yang Biao shames him over the captive ministers.",
+   "_note": "old summary had him as a captive minister; he's Guo Si's restraining officer"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2803,
+   "summary": "Designs the whole estrangement: knowing Lady Qiong's jealousy, he sends his own wife to plant the liaison rumor that sets Li Jue and Guo Si at each other's throats. He rides between the duelling generals to broker peace, is thrown into Guo Si's stockade with sixty officials, and swoons weeping with Zhu Jun over their helpless Emperor.",
+   "_note": "old summary omitted that the jealousy scheme is his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3494,
+   "summary": "Named to the Emperor (with Yang Biao) as backing Cao Cao's recall; seized among the sixty peace-party officials by Guo Si, he goes home after his release, falls seriously ill, and dies.",
+   "_note": "old summary missed his death"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2016,
+   "summary": "Yang Feng's fellow plotter against the witch-besotted Li Jue - he was to explode the signal bomb inside the camp. Overheard, seized, and put to death before the night came.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 3569,
+   "summary": "Assigned with Jia Xu to conduct the Emperor and Empress's carriages when Li Xian empties the Palace for Li Jue.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 753,
+   "summary": "Convinced by his wife's poisoned-dog theatre that Li Jue means to kill him, he arms his guards and Changan burns: he plunders the Palace and carries off its women, holds Yang Biao and sixty officials hostage, duels Li Jue in single combat between the armies, scatters clothing and valuables to break the White Wave ranks, and joins his old partner again to hunt the fleeing Emperor.",
+   "_note": "old summary's 'poisoned bean' garbled the trick; this follows the prose"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1185,
+   "summary": "Made Regent Marshal, he abducts the Emperor to Meiwo behind his nephew's spears, feeds the court putrid meat, and trusts witches over Jia Xu until his Qiang allies desert and his own Yang Feng turns. Bested diplomatically, he accepts Zhang Ji's peace - then reunites with Guo Si to hunt the Emperor toward Hongnong, wasting everything they pass.",
+   "_note": "old summary blamed 'rival concubines'; the quarrel is the staged jealousy plot"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 410,
+   "summary": "The 'State Uncle': gallops out of the southeast to break Guo Si's encirclement at Huaying and pledges with Yang Feng to kill both rebels. From there he shares every mile of the flight - Dongjian, the river crossing, Anyi - and pushes the court's return to Luoyang over Li Yue's objection, racing the convoy toward the Gu Hills as the betrayed ambush lights the mountainside.",
+   "_note": "old summary had him reaching Luoyang's ruins - that's ch14; ch13 ends at Gu Hills"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2637,
+   "summary": "Debuts under Yang Feng's banner: a battle-ax on a fleet bay who fells Guo Si's general Cui Yong with a single blow at Xinfeng, is presented to the grateful Emperor, and holds the line again at Huaying when Guo Si's rings close.",
+   "_note": "old summary had him cleaving Li Jue's vanguard; his named kill is Cui Yong of Guo Si's army"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 1925,
+   "summary": "Warns Yuan Shao that Lü Bu is 'a savage beast' who will come for Jizhou after Yanzhou - the advice that sends Yan Liang south with fifty thousand and pushes Lü Bu toward Xuzhou.",
+   "_note": "old summary had him passively watching Changan"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 2779,
+   "summary": "Dispatched by Yuan Shao with fifty thousand troops to destroy Lü Bu - the threat that makes Xuzhou the fugitive's only door.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 807,
+   "summary": "White Wave chief who answers the secret edict, made General Who Conquers the East - then joins Li Yue in packing the court with convict-officials as the Anyi camp rots.",
+   "_note": "old summary stopped at 'joins Yang Feng'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 484,
+   "summary": "Commander at Huaying who supplies the fleeing court with clothing and food for the night.",
+   "_note": "old summary made him Imperial Protector of Liang Province"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 13,
+   "target_id": 799,
+   "summary": "Volunteers to walk into the rebel camps - 'the rebels have confidence in my words' - and persuades Li Jue and Guo Si to release the captive officials and Palace people.",
+   "_note": "old summary was a bare envoy mention"}
+]

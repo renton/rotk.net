@@ -34,7 +34,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch10 — 25 ops (7 missing summaries filled, Nanyang false assoc removed, Cao Song↔Cao De sibling, Bian Rang/Fan Chou/Li Meng/Wang Fang/Liu Dai/Yu Jin summary corrections)
 - [x] ch11 — 35 ops (8 missing summaries incl. Lü Bu's, Guan Hai kill credited to Guan Yu not Taishi Ci, Zhao Yun Beihai/Xuzhou mixup, Zhang Miao↔Zhang Chao + Confucius→Kong Rong relationships)
 - [x] ch12 — 27 ops (Battle of Yan Province event added, 6 missing summaries, He Man kill credited to Cao Hong, Xue Lan/Zhang Miao fate fixes, Dian Wei/Xiahou Yuan rescue details)
-- [ ] ch13
+- [x] ch13 — 45 ops (Empress He→Empress Fu wrong-person fix, 11 missing summaries, 2 admin-note 'summaries' replaced, 4 relationships incl. Guo Si/Yang Biao marriages, ~25 summary corrections)
 - [ ] ch14
 - [ ] ch15
 - [ ] ch16
@@ -106,6 +106,11 @@ From ch2_audit.json (17):
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
 
+From ch13_audit.json (4):
+- Fu De [565] ↔ Fu Shou/Empress Fu [578] Sibling
+- Guo Si [753] → Lady Qiong [3666] Husband/Wife; Yang Biao [2803] → Lady Kai [3667] Husband/Wife
+- Li Jue [1185] → Li Xian [1229] Pibling/Nibling
+
 From ch11_audit.json (2):
 - Zhang Miao [3174] ↔ Zhang Chao [3082] Sibling
 - Confucius [3659] → Kong Rong [1117] Ancestor/Descendant
@@ -169,6 +174,15 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch13:
+- **Duplicate Yang Feng rows**: [2816] (associated to ch13) carried the
+  literal summary "(duplicate record; same person - see 2815)". Merge /
+  soft-delete one. Same for **Zhang Ji [3134]** whose summary was
+  "(duplicate record)" — find its twin (likely another 張濟/張既 row).
+- Empress He [831] was associated to ch13 via bare 'Empress' keyword —
+  she died in ch4; ch13's empress is Fu Shou [578]. Fixed in the file.
+- Dongjian, Dayang, Shanbei (flight waypoints) have no Location rows.
 
 From ch10:
 - **Duplicate Liu Xiu rows**: ch6 associates Liu Xiu [3577], ch10
