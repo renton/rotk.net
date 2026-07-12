@@ -1,0 +1,140 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 51,
+   "target_id": 1263,
+   "_note": "FALSE POSITIVE (Liang Da cleanup, flagged in tracker): no 'Liang Da' in ch51 - his 'Tai' keyword matched inside 'Zhou Tai'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 1711,
+   "summary": "Sallies out with five hundred veterans against Cao Ren's better judgment and is surrounded by Ding Feng's feigned retreat - rescued by his chief's own charge. He repays it with interest: three days of taunts at the southern gates, the rush that nearly captures the wounded Zhou Yu, and the van of the doomed night raid.",
+   "_note": "old summary KILLED him - he survives the whole chapter and leads the night-raid van"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 224,
+   "summary": "The brain in Nanjun: counsels the urgent relief of Yiling, applauds Cao Cao's god-like foresight from the tower as Zhou Yu gallops into the trap, springs the crossbow shower with a watchman's rattle - and, left holding the city during the night raid, loses it to Zhao Zilong, his military seal stolen to forge the orders that empty Jingzhou and Xiangyang.",
+   "_note": "old summary: 'named in passing' - his captured seal is the hinge of Zhuge Liang's three-city sweep"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 123,
+   "summary": "Rescues Niu Jin twice from the melee with his own horsemen, opens Cao Cao's guide-letter when Yiling falls - and plays its script: the emptied city, the wide gates, the crossbow ambush that puts a poisoned bolt in Zhou Yu's side. Then he swallows the counter-ruse whole: 'deserters' report Zhou Yu dead, the night raid marches into four ambushes, and he flees past Ling Tong and Gan Ning to Xiangyang - which Zhuge Liang's forged dispatches have already emptied.",
+   "_note": "old summary compressed the guide-letter trap and the double-deception"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 3466,
+   "summary": "Promises Liu Bei the leavings - 'if we do not take it, then, Sir, you may have it' - and pays for the words: Jiang Qin's repulse, the Yiling detour, and a poisoned crossbow bolt in the left side inside Cao Ren's emptied city. He fakes his own death from the sickbed, springs the four-sided ambush on the night raid - and rides to Nanjun's wall to find Zhao Zilong on it. Two more couriers finish the tale: Jingzhou and Xiangyang both gone to forged orders. His wound bursts open with the cry.",
+   "_note": "old summary was sound; the wager and the feigned-death ruse (his own, from the sickbed) deserved detail"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 1523,
+   "summary": "Rides to Youkou at Zhou Yu's side, stammers when Liu Bei names him witness to the 'you may have it' wager - the reluctance of the one man who sees the trap his commander is talking himself into.",
+   "_note": "old summary anticipated ch52's borrowing negotiation; ch51 is the wager witness"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 1311,
+   "summary": "Camps at Youkou with congratulations and gifts - and plays his coached line: Cao Ren may be too much for the South Land, so 'should you not take it, then we will occupy it.' The wager witnessed, he waits while the armies bleed each other, doubting aloud until Zhuge Liang whispers the design; by chapter's end Nanjun, Jingzhou, and Xiangyang all fly his banners.",
+   "_note": "old summary was sound; the coached wager scene added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 3529,
+   "summary": "Coaches Liu Bei's every word of the wager, then harvests Zhou Yu's victory whole: as the night raid breaks, Zhao Zilong takes emptied Nanjun; Chen Jiao's captured seal forges the orders that march the Jingzhou garrison and Xiahou Dun's Xiangyang force off to 'rescue' Cao Ren - and Zhang Fei and Guan Yu walk into both cities. Three cities without one southern casualty avenged.",
+   "_note": "old summary was sound; the seal mechanism was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 3334,
+   "summary": "Welcomes Zhou Yu's embassy with a display of bold soldiery, then executes the whisper: slips into Nanjun behind the night raid and answers the returning victor from the wall - 'Pardon, General! I had orders from the Directing Instructor to take this city.'",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 3106,
+   "summary": "Occupies Jingzhou City the moment its guards march out to 'rescue Cao Ren' on Zhuge Liang's forged commission.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 704,
+   "summary": "Seizes Xiangyang after forged dispatches under Chen Jiao's seal draw Xiahou Dun's garrison away - the third city of the bloodless sweep, and the atonement Liu Bei promised for Huarong.",
+   "_note": "old summary was sound; the atonement frame added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 2535,
+   "summary": "Holding Xiangyang, he receives dispatches in due form - Cao Ren in danger, march at once - and leads his garrison out of the city Guan Yu then walks into.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 596,
+   "summary": "Proposes striking Yiling first to break the ox-horn, takes the city from Cao Hong in twenty bouts - and is promptly besieged in his own conquest until Zhou Yu's relief arrives; in the final rout he mauls Cao Ren's flight to Xiangyang.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 3456,
+   "summary": "Bursts alone through the siege lines into Yiling to tell Gan Ning relief is coming, then duels Cao Ren himself before the walls and drives him off in ten passes.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 1064,
+   "summary": "Leads the first assault on Nanjun with five thousand veterans and is beaten by Cao Ren's rescue charges - saved from his furious commander's execution order only by the other officers.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 382,
+   "summary": "Feigns defeat to draw Niu Jin's five hundred into the encirclement, and later drags the bolt-struck Zhou Yu from under Niu Jin's rush at the risk of his own life.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 2660,
+   "summary": "Beaten back by Cao Ren's rescue charge in the first battle, he redeems it at the trench - hauling the wounded Zhou Yu to safety with Ding Feng under the arrow shower.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 785,
+   "summary": "Duels Cao Hong nearly forty bouts before the walls of Nanjun and drives him off; in the night ambush he closes the east side with Jiang Qin.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 295,
+   "summary": "Commands the second wing at Nanjun and the camp through Zhou Yu's convalescence - hiding the daily insults from the wounded man, counselling withdrawal, and playing chief mourner in the feigned-death ruse.",
+   "_note": "old summary was a bare 'deputy'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 3784,
+   "summary": "Holds the river camp alone on a ten-day pledge while Zhou Yu relieves Yiling, rescues Cheng Pu's collapsing line under the walls - and bars Cao Ren's flight at the fifth watch after the night raid.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 1566,
+   "summary": "Argues Gan Ning must be saved, proposes leaving Ling Tong to hold the camp, and lays the felled-tree barricade on the bye road - the trap that dismounts Cao Hong's fleeing officers and nets five hundred horses.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 100,
+   "summary": "Loses Yiling to Gan Ning in twenty bouts, flees the relief battle on foot over Lü Meng's barricades, urges opening Cao Cao's guide-letter - and duels Han Dang forty bouts in the scripted flight that baits Zhou Yu into the city.",
+   "_note": "old summary was a bare 'commands part of the defence'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 90,
+   "summary": "Marches with Niu Jin by secret ways to besiege Gan Ning in captured Yiling, and commands the rear in the fatal night raid.",
+   "_note": "old summary was a bare 'commands part of the forces'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 258,
+   "summary": "Closes the north side of the night-raid ambush with Lü Meng.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 1723,
+   "summary": "Sent out against Cao Ren's taunting line in the staged scene where Zhou Yu 'dies' - and closes the west side of the night ambush with Zhou Tai.",
+   "_note": "old summary was a bare 'with Zhou Yu at Nanjun'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 86,
+   "summary": "Present through his guide-letter: the sealed plan left with Cao Ren scripts the emptied city and crossbow trap that wounds Zhou Yu - Chen Jiao applauds his god-like perspicacity from the tower - though even it cannot foresee Zhuge Liang harvesting all three cities.",
+   "_note": "old summary invented a too-late relief from Xuchang; his ch51 presence is the guide-letter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 2105,
+   "summary": "Invoked once: the disheartened officers propose retiring to the South Land to seek his opinion while their commander lies wounded.",
+   "_note": "old summary invented a Hefei push not in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 51,
+   "target_id": 2102,
+   "summary": "Carries Liu Bei's congratulations and gifts to Zhou Yu's victory camp - the visit that tips Zhou Yu off to the camp at Youkou and its meaning.",
+   "_note": "old summary was a bare 'with Liu Bei'"}
+]

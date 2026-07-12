@@ -72,7 +72,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch48 — 29 ops (Liang Da 'Tai' false assoc removed [tracker item], Liu Fu + Li Tong dup-note summaries replaced, Jiao Chu/Zhang Neng on-page deaths, Liu Fu spearing scene, Cao Cao's two-Qiaos boast, fleet order-of-battle, Zhou Yu's collapse trigger, 3 relationships: Liu Fu→Liu Xi + Duke Qiao→both Qiaos)
 - [x] ch49 — 31 ops (Liang Da 'Tai' false assoc removed [tracker item], Cai He flag-sacrifice + Cai Zhong camouflage deaths, Kan Ze stayed-in-camp fix, Huang Gai's fall by Zhang Liao's arrow, full six-prong + fire-squadron deployment summaries, Guan Yu written pledge + deliberate-gift reading)
 - [x] ch50 — 29 ops (Zhang Zi [3794] dup swap again, Yang Youji wrong-archer removal [Yu Gong story], Cai Zhong/Ma Yan/Zhang Zi on-page deaths by Gan Ning, three-laughs ambush cast, Guo Jia lament, 47-not-27 survivors + Jiangling-not-Nanjun fixes, Hefei posting)
-- [ ] ch51
+- [x] ch51 — 28 ops (Liang Da 'Tai' false assoc removed [tracker item - last in-range], Niu Jin NOT killed fix, Chen Jiao's stolen seal, Cao Cao guide-letter not Xuchang relief, Sun Quan invented Hefei push removed, wager + feigned-death + three-city sweep summaries)
 - [ ] ch52
 - [ ] ch53
 - [ ] ch54
