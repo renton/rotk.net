@@ -1,0 +1,208 @@
+[
+  {"op": "add_relationship", "character1_id": 3797, "character2_id": 3798,
+   "type": 5, "_note": "'two other bodies of troops under two brothers, Zhong Jin and Zhong Shen'"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 41,
+   "target_id": 3794,
+   "_note": "DUPLICATE ROW: 'Zhang Zi' [3794] is the same surrendered Yuan general as Zhang Yi [3757], whose ch32/ch33 keywords are already 'Zhang Zi' (the B-T spelling); ch41's four ex-Yuan ambushers are Ma Yan, Zhang Zi, Jiao Chu, Zhang Neng - the same quartet from ch33"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 41,
+   "target_id": 3757, "keywords": "Zhang Zi",
+   "summary": "One of the four ex-Yuan generals (with Ma Yan behind, Jiao Chu and Zhang Neng in front) who hem in Zhao Zilong - and are beaten off by the captured Blue Blade sword.",
+   "_note": "replaces the duplicate-row association above"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2661,
+   "summary": "Sent as Cao Cao's surrender envoy on Liu Ye's cynical logic that shame guarantees his return: he uses the embassy to warn his old lord instead - the assault is coming from every side, the White River is being dammed - repeats his vow never to plan for Cao Cao, and carries back a bare refusal.",
+   "_note": "old summary had him 'silent with Cao Cao' - he is the envoy who double-crosses the mission"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1453,
+   "summary": "Counsels winning hearts before walls: summon Liu Bei to surrender first, and Jingzhou may come without fighting - and names Xu Shu as the messenger.",
+   "_note": "old summary was a bare 'with Cao Cao at Changban'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2418,
+   "summary": "The date-brown giant of Yiyang bursts onto the page cutting down Xiangyang's gate guards and dropping the bridge - 'come in, Uncle Liu Bei, and slay these traitors!' Liu Bei refuses to enter over a fight, Wen Ping battles him through the middle of the day until his men are gone, and he rides off alone to Changsha to shelter with Governor Han Xuan.",
+   "_note": "old summary had him defecting FROM Han Xuan - Han Xuan is the Changsha governor he flees TO after the gate incident"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 808,
+   "summary": "Governor of Changsha, with whom the fugitive Wei Yan finds asylum after the Xiangyang gate fight.",
+   "_note": "old summary made him Wei Yan's old commander at Xiangyang - he is the refuge at Changsha"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2439,
+   "summary": "Gallops up to fight the gate-opening Wei Yan through half a day of carnage; later, blocking Liu Bei's midnight flight, he is shamed off the field by one sentence - 'Turncoat! Can you still look humans in the face?' Arriving last to Cao Cao's muster out of shame for his lost master, his tears win him the Governorship of Jiangxia and a lordship.",
+   "_note": "old summary's 'defects soon after' misses that the defection, the shaming, and the reward all happen in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2336,
+   "summary": "Urges Liu Zong to ambush the unsuspecting Cao Cao and take the empire - called mad by Cai Mao for it - and is the only friend who follows the deposed boy north: he dies trying to save mother and son from Yu Jin's execution squad.",
+   "_note": "old summary: 'named in passing' - he gives the boldest counsel and dies the most loyal death"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 68,
+   "summary": "Orders arrows shot down on the refugees begging at Xiangyang's walls, then flatters his way through Cao Cao's inventory questions and comes away Supreme Admiral of the Naval Force and Lord Who Controls the South - useful, as Cao Cao privately tells Xun You, only until the north learns war by water.",
+   "_note": "old summary was a bare 'nominal admiral'; the tower arrows and the cynical appointment scene are ch41's"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3267,
+   "summary": "Shares the fighting tower and the arrow order at Xiangyang, and the naval spoils at Fancheng: Vice-Admiral and Lord Who Brings Obedience - held, like his partner, on Cao Cao's sufferance.",
+   "_note": "old summary was a bare 'nominal co-admiral'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1131,
+   "summary": "Restores the peace when Cai Mao moves to kill Wang Wei, and is singled out at the occupation - 'I do not rejoice so much at gaining Jingzhou as at meeting you' - with the Governorship of Jiangling and the Lordship of Fancheng.",
+   "_note": "old summary was a bare 'with Cao Cao after the surrender'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1323,
+   "summary": "Too frightened to answer Cao Cao's summons, then stripped anyway: seal and commission surrendered, an unwanted Imperial Protectorship of distant Qingzhou forced on him, and on the road north - only Wang Wei beside him - Yu Jin's riders deliver Cao Cao's real reward to him and his mother.",
+   "_note": "summary was missing; he is murdered on stage this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 61,
+   "summary": "Throws her arms about her son and weeps as Yu Jin's soldiers close in - the end of the woman who forged a testament to rule Jingzhou, murdered beside Liu Zong on the road to his exile posting.",
+   "_note": "old summary said she was 'murdered earlier' - the execution happens in this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2953,
+   "summary": "Chosen for the errand Cao Cao wants deniable: he overtakes Liu Zong's little party, announces the death order aloud, cuts down the loyal Wang Wei, finishes mother and son, and rides back to a rich reward.",
+   "_note": "old summary had him commanding pursuit troops - he is the executioner"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 86,
+   "summary": "Sends Xu Shu to demand surrender knowing shame will bring him back, buys Cai Mao and Zhang Yun with admiralties he privately calls disposable, ennobles the Kuai faction, exiles Liu Zong to Qingzhou and has Yu Jin murder him and his mother on the road - then flings five thousand picked horsemen after the crawling exodus. Watching the lone white rider from Prospect Mountain: 'a very tiger of a leader! I must get him alive' - the no-arrows order that saves Zhao Zilong and Liu Shan both.",
+   "_note": "old summary had only the hilltop scene (and called the blood-soaked white robe 'red-coated')"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 704,
+   "summary": "Readies the boats that empty Fancheng, hastens the weeping crowds across, and is sent ahead with Sun Qian and five hundred troops to beg relief from Liu Qi at Jiangxia - off-stage when Changban breaks.",
+   "_note": "old summary sent him to Xiakou; the mission is to Liu Qi at Jiangxia"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3529,
+   "summary": "Burns the boats behind the Fancheng crossing, points the march at defensible Jiangling, and - when no word comes back from Guan Yu - rides for Jiangxia himself with Liu Feng and five hundred troops. His own family he has already spirited to the Three Gorges, to Cao Cao's fruitless disgust.",
+   "_note": "old summary's river-crossing coordination and Wu-alliance advice belong to later chapters"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1336,
+   "summary": "Accompanies Zhuge Liang on the second embassy to Jiangxia when Guan Yu's mission goes silent.",
+   "_note": "old summary had him commanding part of the column; he leaves with Zhuge Liang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1395,
+   "summary": "The silent hope of the march: two embassies - Guan Yu's, then Zhuge Liang's own - ride for his Jiangxia garrison while the exodus crawls toward Jiangling.",
+   "_note": "old summary had his rescue boats arriving this chapter; that relief comes in ch42"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1311,
+   "summary": "Marches at the people's pace - three or four miles a day, a hundred thousand souls - weeping at the crossing until he must be held back from the river, praying at Liu Biao's tomb, refusing twice to abandon the crowd ('the success of every great enterprise depends upon humanity'). Overtaken at the fourth watch by the picked horsemen, he loses wives, son, and officers in the dark - and still stakes his own judgment on the loyalty of the vanished Zhao Zilong.",
+   "_note": "old summary had him safely across the river by chapter's end - ch41 ends with him separated from everyone and Zhao Zilong still fighting"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1053,
+   "summary": "Reads the whirlwind omen - 'a calamity is threatening this very night; leave the people and flee' - and is refused. Wounded and horseless in the rout, he is found lying in the grass by Zhao Zilong, remounted, and sent ahead with the message that clears the searcher's name at the bridge.",
+   "_note": "old summary was a bare 'with Liu Bei on the exodus'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1682,
+   "summary": "Taken in the rout and paraded bound on a horse as Chunyu Dao's trophy - until Zhao Zilong's spear frees him; he conducts the rescued Lady Gan to the bridge and on to Liu Bei.",
+   "_note": "old summary was a bare 'with Liu Bei on the exodus'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1678,
+   "summary": "Staggers in with an arrow still in his face crying that Zhao Zilong has gone over to Cao Cao - the report Liu Bei refuses and Zhang Fei almost acts on.",
+   "_note": "old summary was a bare 'with Liu Bei on the exodus'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3791,
+   "summary": "Cao Ren's general, riding to his chief with the bound Mi Zhu as proof of his prowess - Zhao Zilong's spear thrust ends the parade.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3792,
+   "summary": "Cao Cao's sword-bearer, off plundering on the authority of his office with the Blue Blade on his back - unhorsed and slain at Zhao Zilong's first pass, arming the enemy with the keenest sword in the army.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3793,
+   "summary": "Cao Hong's general with the double-edged, three-pointed blade - disposed of by Zhao Zilong in a very few bouts on the ride out.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3758,
+   "summary": "One of the four ex-Yuan generals who close on the child-carrying Zhao Zilong - scattered like the rest by the Blue Blade.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1627,
+   "summary": "Closes on Zhao Zilong from behind with Zhang Zi in the four-general trap - and is beaten off by the captured Blue Blade.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1081,
+   "summary": "Bars Zhao Zilong's road in front with Zhang Neng - the Blue Blade goes through armor 'as though it were mud' and the four generals scatter.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3797,
+   "summary": "The ax-wielding half of the brother pair who spring on the blood-soaked Zhao Zilong at the rise of the hills - 'quickly dismount and be bound!' - the chapter's cliffhanger.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3798,
+   "summary": "The halberd-bearing brother of Zhong Jin, second half of the last ambush between Zhao Zilong and safety.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3790,
+   "summary": "Ennobled among Kuai Yue's adherents when Cao Cao pays out the price of the surrender he proposed.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 72,
+   "summary": "Recalled by Liu Bei in Zhao Zilong's defense: remember how Guan Yu had to slay Cai Yang before Zhang Fei's doubts were eased.",
+   "_note": "old summary had the long-dead Cai Yang 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2624,
+   "summary": "Opens the chapter running from Zhang Fei at the flooded river - 'a fight with such a warrior was not to Xu Chu's taste.'",
+   "_note": "old summary invented a Changban duel with Zhao Yun; his one scene is the flight from Zhang Fei"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 123,
+   "summary": "Rallies the flood-battered remnants at Xinye; it is his troops, under Chunyu Dao, who parade the captured Mi Zhu.",
+   "_note": "old summary was a bare 'with Cao Cao at Changban'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 100,
+   "summary": "Carries the news of the Xinye disaster to Cao Cao, and at Changban gallops down from the hill to demand the lone rider's name - carrying back 'Zhao Zilong of Changshan' and earning the no-arrows order.",
+   "_note": "old summary was a bare 'with Cao Cao at Changban'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 2102,
+   "summary": "Proclaims the evacuation of Fancheng to the people, then rides with Guan Yu's five hundred to beg Liu Qi's relief at Jiangxia.",
+   "_note": "old summary was a bare 'with Liu Bei on the exodus'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 592,
+   "summary": "Found barefoot with her hair down among the walking fugitives; Zhao Zilong weeps in the sand before her, frees Mi Zhu in time to give her his horse, and sends her to the bridge - the first of the two mothers recovered.",
+   "_note": "old summary's 'brought safely across the river' is not in the text; the rescue detail is"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 1401,
+   "summary": "The infant of Changban: thrown to the ground by his dying mother so Zhao Zilong must take him, carried inside the loosened breastplate through the whole slaughter - and when horse and rider crash into a pit with Zhang He's spear poised, the light that flashes out of the pit and lifts them clear is read as his imperial destiny.",
+   "_note": "old summary's hurled-to-the-ground-by-his-father scene is ch42's; ch41 is the ride itself"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3106,
+   "summary": "Cuts his brother out of the night attack and fights till dawn, half-believes the slander against Zhao Zilong ('if I run against him, I will kill him!') - then takes twenty riders to Long Slope Bridge, ties tree branches to their horses' tails to raise an army's dust in the wood, and plants himself on the bridge, spear set, facing west.",
+   "_note": "old summary had the bridge but not the rescue, the suspicion, or the dust ruse"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 41,
+   "target_id": 3120,
+   "summary": "The one antagonist Zhao Zilong cannot quickly beat - ten even bouts force the burdened rider to flee - and he has his spear poised over the pit-fallen fugitive when the flash of light lifts horse and man out; the apparition frightens him off the pursuit.",
+   "_note": "old summary missed the pit and the apparition that ends his chase"}
+]

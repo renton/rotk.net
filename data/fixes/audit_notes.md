@@ -62,7 +62,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch38 — 34 ops (Lady Xu's revenge untangled: Bian Hong killed by his co-conspirators, her plot took Gui Lan/Dai Yuan; Sun Yi + Zhang Wen dup-note summaries replaced; Lü Meng/Ling Tong missing summaries; Sun Quan deathbed injunction fixed to prose; Su Fei patron-of-Gan-Ning nuance; 6 relationships incl. Lady Wu→Sun Ce/Sun Quan + Sun Yi↔Lady Xu)
 - [x] ch39 — 33 ops (Su Fei was PARDONED not executed, Huang Zu killed by Gan Ning not captured by Lü Meng, Xu Shu's tiger-with-wings warning restored, Sima Yi wolf-gaze anecdote removed (not in text), Cao Cao/Xiahou Dun ch40 spillovers pulled back, Guan Ping fire-detail fix, Ling Tong banquet feud, 4 Sima-family relationships)
 - [x] ch40 — 33 ops (Zhi Xi mourner/Chi Lu informer conflation untangled, ch41 spillovers pulled from Cao Cao/Cai Mao/Lady Cai/Liu Cong/Zhang Yun (murders + admiral posts), Li Gui/Fu Xuan/Wang Can surrender-council cast, Kong Rong's sons' eggs line, Liu Qi denied-deathbed fix, burn-Xinye roster)
-- [ ] ch41
+- [x] ch41 — 42 ops (Zhang Zi [3794] dup-of-Zhang Yi [3757] association swapped, Xu Shu was the double-crossing envoy not silent, Wei Yan fled TO Han Xuan, Wang Wei's loyal death, Yu Jin the executioner of Liu Cong/Lady Cai, Xu Chu invented Changban duel removed, 8 missing summaries for Zhao Yun's victims, Liu Shan ch42 spillover, Zhong brothers Sibling)
 - [ ] ch42
 - [ ] ch43
 - [ ] ch44
@@ -105,6 +105,9 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch41_audit.json (1):
+- Zhong Jin [3797] ↔ Zhong Shen [3798] Sibling
 
 From ch39_audit.json (4):
 - Sima Fang [1991] → Sima Yi [2008] + → Sima Lang [1996] Parent/Child
@@ -237,6 +240,12 @@ From ch3_audit.json (5):
 - Dong Zhuo [444] ↔ Dong Min [429] Sibling
 
 ## Report-only findings (need manual action, no apply-fixes op exists)
+
+From ch41:
+- **Zhang Zi [3794] duplicates Zhang Yi [3757]** — same surrendered Yuan
+  general (B-T spells him "Zhang Zi"; 3757's ch32/33 keywords already use
+  that spelling). ch41_audit swaps the association to 3757; soft-delete
+  3794 via the admin UI after applying.
 
 From ch38:
 - **Sun Yi [2121] and Zhang Wen [3219] carried "(duplicate record)" as
