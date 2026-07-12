@@ -71,7 +71,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch47 — 14 ops (TWO wrong-person swaps: Sun Zi 2133→Sun Tzu 3594, Wu Qi 2480→ancient Wu Qi 3834; Kan Ze no-date riposte, Gan Ning playacting fix, Cai brothers turned letter-boxes, Pang Tong chain scheme + shore encounter)
 - [x] ch48 — 29 ops (Liang Da 'Tai' false assoc removed [tracker item], Liu Fu + Li Tong dup-note summaries replaced, Jiao Chu/Zhang Neng on-page deaths, Liu Fu spearing scene, Cao Cao's two-Qiaos boast, fleet order-of-battle, Zhou Yu's collapse trigger, 3 relationships: Liu Fu→Liu Xi + Duke Qiao→both Qiaos)
 - [x] ch49 — 31 ops (Liang Da 'Tai' false assoc removed [tracker item], Cai He flag-sacrifice + Cai Zhong camouflage deaths, Kan Ze stayed-in-camp fix, Huang Gai's fall by Zhang Liao's arrow, full six-prong + fire-squadron deployment summaries, Guan Yu written pledge + deliberate-gift reading)
-- [ ] ch50
+- [x] ch50 — 29 ops (Zhang Zi [3794] dup swap again, Yang Youji wrong-archer removal [Yu Gong story], Cai Zhong/Ma Yan/Zhang Zi on-page deaths by Gan Ning, three-laughs ambush cast, Guo Jia lament, 47-not-27 survivors + Jiangling-not-Nanjun fixes, Hefei posting)
 - [ ] ch51
 - [ ] ch52
 - [ ] ch53
@@ -254,6 +254,12 @@ From ch47 (out-of-range note):
   ancient general's mentions in ch84/94/103/104** — same 吳起-vs-吳祺
   confusion the ch47 fix swaps; those chapters are outside this batch,
   swap to [3834] via admin UI or a later fix file.
+
+From ch50:
+- **The archer Yu Gong (of the Mencius Zi Zhuo story) has no Character
+  row** — Cao Cao cites him at Huarong; Yang Youji [3686] was wrongly
+  associated (different ancient archer, empty keywords). The fix file
+  removes the wrong association; create Yu Gong + associate if wanted.
 
 From ch45:
 - **The ancient music master Shi Kuang (師曠) has no Character row** —

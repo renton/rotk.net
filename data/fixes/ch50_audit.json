@@ -1,0 +1,144 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 50,
+   "target_id": 3794,
+   "_note": "DUPLICATE ROW (same as ch41): 'Zhang Zi' [3794] duplicates Zhang Yi [3757], the ex-Yuan general whose ch32/33 keywords already use the 'Zhang Zi' spelling"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 50,
+   "target_id": 3757, "keywords": "Zhang Zi",
+   "summary": "Holding a hilltop camp with Ma Yan and three thousand northern soldiers, he gives Cao Cao his one fresh force of the night - and dies within the hour, cut from the saddle by Gan Ning's fearsome sword as he clears the road.",
+   "_note": "replaces the duplicate-row association; he dies on stage"},
+
+  {"op": "remove_association", "target": "character", "chapter_num": 50,
+   "target_id": 3686,
+   "_note": "WRONG PERSON: ch50's archer parable is 'Yu Gong, the archer, when he released his master Zi Zhuo' (the Mencius story) - Yang Youji is a DIFFERENT ancient archer who is not in this chapter; the row's empty keywords never tagged anything anyway. No Yu Gong row exists - flagged in audit_notes.md"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3822,
+   "summary": "Zi Zhuo, the master whom the archer Yu Gong refused to slay with his own teaching - Cao Cao's parable, begged from the saddle, for why Guan Yu should not use old kindness to kill his benefactor.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3768,
+   "summary": "Forced to guide Gan Ning into the innermost camp - and slain with one slash the moment his usefulness ends, the second Cai brother spent by Zhou Yu's counter-espionage.",
+   "_note": "summary was missing; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 1627,
+   "summary": "The ex-Yuan general whose hilltop camp of three thousand gives the fugitive Cao Cao a moment's security - sent ahead to clear the road, he is cut down by Gan Ning.",
+   "_note": "old summary: 'minor figure named in passing' - he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 596,
+   "summary": "Uses Cai Zhong as a guide and then as a corpse, fires the jungle signal - and in the night's fighting kills both Ma Yan and Zhang Zi as they try to clear Cao Cao's road.",
+   "_note": "old summary was a bare 'commands the pursuit'; four named kills anchor it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 785,
+   "summary": "Hears a voice calling his familiar name from the water, hauls Huang Gai out clinging to the rudder, bites the arrow-shaft out of the wound himself, binds it with a torn flag, and sends his friend back in his own fighting robe.",
+   "_note": "old summary compressed the rescue's detail"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 972,
+   "summary": "Saved from the winter river by Han Dang's ear for his voice - the arrowhead cut out with a dagger, the wound bound with a flag - proof, says the narrator, of his natural affinity for water.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 1566,
+   "summary": "Fires the grass in ten places on Gan Ning's signal, then chases Cao Cao out of the Black Forest - 'Cao Cao, stop!' - held off by Zhang Liao's rearguard.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3784,
+   "summary": "Bursts from a gorge with torches in the fugitives' path - the shout that tears Cao Cao's 'liver and gall from within' - until Xu Huang beats him back.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 2637,
+   "summary": "Rescues Cao Cao from Ling Tong's gorge ambush, engages Zhao Zilong with Zhang He at the first laugh, swings a work-gang whip over the road-builders in the mire, and stands with Xu Chu and Zhang Liao against Zhang Fei at the second.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 2624,
+   "summary": "Rides bare-backed against Zhang Fei at the Hulu Valley - the melee that buys Cao Cao's third escape - and drives the road-gang through the mire at sword's point.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3166,
+   "summary": "Guides the flight into the Black Forest road, holds off Lü Meng, fights Zhang Fei at the second ambush - and at Huarong is recognized and released by Guan Yu, whose magnanimity he is still praising when he rejoins his master. Cao Cao posts him to hold all-important Hefei, with Li Dian and Yue Jin as aids.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'; his release and the Hefei posting matter for ch53"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3334,
+   "summary": "Answers the first laugh: 'I am Zhao Zilong, and long have I been waiting here!' - routs the column but lets Cao Cao ride into the smoke, taking only the banners, exactly as instructed.",
+   "_note": "old summary was sound; the banners-not-pursuit detail is the instruction fulfilled"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3106,
+   "summary": "Answers the second laugh at the Hulu Valley cooking fires - 'whither would you flee, O rebel?' - taking on Xu Chu, Zhang Liao, and Xu Huang at once while the half-dressed army stampedes.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 704,
+   "summary": "Answers the third laugh with five hundred swordsmen across the Huarong throat - and cannot strike: Cao Cao bows from the saddle, invokes the five passes he forgave and the archer who spared Zi Zhuo, and the mountain of goodness turns his horse aside. He shouts once more for form's sake, pities the kneeling soldiers, frees Zhang Liao too - and walks into headquarters empty-handed to ask for death.",
+   "_note": "old summary was sound; the second shout and the pity for the soldiers complete the scene"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 309,
+   "summary": "Reads Guan Yu for his master at the fatal moment - 'haughty to the proud but kindly to the humble... remind him of your old kindness, and we shall escape this evil.' The one counsel of the whole campaign Cao Cao takes in time.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 86,
+   "summary": "The three laughs: at the Black Forest ('if they had only set an ambush there') - Zhao Zilong; at the Hulu Valley cooking fires - Zhang Fei; on the Huarong bye-road, chosen because the smoke columns must be Zhuge Liang's bluff - Guan Yu. He begs passage on Cheng Yu's advice, invoking old kindness and the archer's parable, and crosses the valley with twenty-seven riders. Safe at Jiangling he weeps not for the army but for Guo Jia - 'had he been alive, he would not have let me suffer this loss' - shaming every living adviser, and leaves Cao Ren a sealed plan against the coming siege.",
+   "_note": "old summary said 'reaches Nanjun with 27 survivors' - the prose says forty-seven horsemen out of the valley and the reunion is at Jiangling; the sealed plan was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 123,
+   "summary": "Meets the forty-seven survivors outside Jiangling - 'I thought I would never see you again' - pours the wine of consolation, and receives the region's defense along with a sealed plan to open only when hard-pressed.",
+   "_note": "old summary said Nanjun; the text's reunion and charge are at Jiangling"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 737,
+   "summary": "The absent adviser Cao Cao mourns in the hour of safety, beating his breast - 'alas for Guo Jia! I grieve for Guo Jia!' - a lament aimed squarely at the silent, shamed advisers around him.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 100,
+   "summary": "Given charge of Yiling and Jiangling by Cao Ren as the defense is reorganized.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 2535,
+   "summary": "Assigned to hold Xiangyang in Cao Cao's departing dispositions.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 1158,
+   "summary": "Escorts the advisers through the fire with Xu Chu to rejoin Cao Cao - and is named one of Zhang Liao's two aids for the Hefei command.",
+   "_note": "old summary was a bare 'with Cao Cao in the flight'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3032,
+   "summary": "Named with Li Dian as Zhang Liao's aid for the all-important Hefei garrison.",
+   "_note": "summary was missing (prose spells him Yue Jing)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 2142,
+   "summary": "Sees Lu Xun's answering signal and joins him against the fugitives - the junction that closes the Hefei road.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 1530,
+   "summary": "Gives the answering signal that brings Taishi Ci down, and joins the pursuit that turns Cao Cao toward Yiling.",
+   "_note": "old summary was a bare 'commands part of the pursuit'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 3529,
+   "summary": "Congratulates Guan Yu with a cup of wine for 'removing the empire's worst foe' - the gentlest possible spring of the trap - then hears the confession he predicted and orders the execution the written pledge demands, staging the mercy that will rebalance the brothers.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 50,
+   "target_id": 2105,
+   "summary": "Bars the Hefei road in person: seeing the fires that mean victory, he signals Lu Xun and closes the trap's northern jaw.",
+   "_note": "old summary was a bare 'with the reserves'"}
+]
