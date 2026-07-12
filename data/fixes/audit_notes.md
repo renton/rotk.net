@@ -70,7 +70,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch46 — 18 ops (Cai He/Cai Zhong false-deserter summaries, Huang Gai's plan-was-his-idea fix, Zhou Yu 'deceived him for once', Lu Su split-loyalty note, fog-poem figures Li Lou/King Yu, Jiang Gan ch47 spillover)
 - [x] ch47 — 14 ops (TWO wrong-person swaps: Sun Zi 2133→Sun Tzu 3594, Wu Qi 2480→ancient Wu Qi 3834; Kan Ze no-date riposte, Gan Ning playacting fix, Cai brothers turned letter-boxes, Pang Tong chain scheme + shore encounter)
 - [x] ch48 — 29 ops (Liang Da 'Tai' false assoc removed [tracker item], Liu Fu + Li Tong dup-note summaries replaced, Jiao Chu/Zhang Neng on-page deaths, Liu Fu spearing scene, Cao Cao's two-Qiaos boast, fleet order-of-battle, Zhou Yu's collapse trigger, 3 relationships: Liu Fu→Liu Xi + Duke Qiao→both Qiaos)
-- [ ] ch49
+- [x] ch49 — 31 ops (Liang Da 'Tai' false assoc removed [tracker item], Cai He flag-sacrifice + Cai Zhong camouflage deaths, Kan Ze stayed-in-camp fix, Huang Gai's fall by Zhang Liao's arrow, full six-prong + fire-squadron deployment summaries, Guan Yu written pledge + deliberate-gift reading)
 - [ ] ch50
 - [ ] ch51
 - [ ] ch52

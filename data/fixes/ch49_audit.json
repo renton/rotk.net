@@ -1,0 +1,155 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 49,
+   "target_id": 1263,
+   "_note": "FALSE POSITIVE (Liang Da cleanup, flagged in tracker): no 'Liang Da' in ch49 - his 'Tai' keyword matched inside 'Zhou Tai' and 'Taishi Ci'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3767,
+   "summary": "Kept back in camp 'for another purpose': bound at dusk, told his head will serve as the sacrifice to the flag, he betrays Kan Ze and Gan Ning with his last breath - 'under my directions!' laughs Zhou Yu - and is beheaded on the river bank before the fire fleet sails.",
+   "_note": "summary was missing; he dies on stage as the flag sacrifice"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3768,
+   "summary": "Marched along the south bank under Gan Ning's hand, his borrowed Cao Cao flags disguising the column bound for the Black Forest - a spy spent as camouflage.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3529,
+   "summary": "Writes Zhou Yu's diagnosis in sixteen characters - 'all are in your wish, but wind from the east' - and prescribes himself: the nine-span Altar of the Seven Stars, three ascents a day, and at the third watch the southeast wind rises. He is already gone when the assassins reach the altar, Zhao Zilong's boat carrying him home to issue the night's dispositions: Zhao Zilong to the Black Forest, Zhang Fei to Hulu Valley, Liu Qi to Wuchang - and Guan Yu, bound by a written pledge, to the Huarong Road where the stars say Cao Cao must pass and must not die.",
+   "_note": "old summary was sound; the deployment session is half the chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3466,
+   "summary": "Tests the 'physician' and bares his secret when the sixteen characters name it; builds the altar - and the moment the flags stream northwest, decides its builder must die: 'his methods are beyond the ken of god or devil.' The assassins miss by a boat-length. He sacrifices Cai He to the black standard, unrolls the six-pronged deployment and the four fire squadrons, and sends Huang Gai's twenty tinder-ships into the wind.",
+   "_note": "old summary was sound; the assassination order deserved its sequence"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 972,
+   "summary": "Sails third in the line under 'Van Leader Huang Gai', twenty ships of oiled reeds and saltpeter behind dragon-toothed flags; a mile out he waves his sword and the fleet becomes fiery arrows. He hunts Cao Cao himself through the burning water - and Zhang Liao's unheard arrow takes him in the shoulder and drops him into the river.",
+   "_note": "old summary ended at the ignition; his pursuit of Cao Cao and his fall complete it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3166,
+   "summary": "Hauls Cao Cao off the burning flagship into a small boat - and, as Huang Gai closes blade in hand, looses the arrow the gale swallows: the shot that saves Cao Cao and drops the Van Leader into the river.",
+   "_note": "old summary had the rescue but not the arrow"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 2439,
+   "summary": "Volunteers to stop the oncoming 'grain ships' and takes an arrow in the left arm for it - the first casualty of the fire fleet's approach.",
+   "_note": "old summary was a bare 'caught in the fire'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 309,
+   "summary": "Reads the fire fleet at a glance - grain ships would ride deep, 'but these are light and float easily' - the warning that comes one mile too late.",
+   "_note": "old summary was a bare 'with Cao Cao in the burning fleet'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 86,
+   "summary": "Laughs at the solstice wind, reads Huang Gai's final letter with joy, and watches the whole south come up under sail - 'Heaven is on my side today.' Cheng Yu's draught-line warning arrives a mile too late: the chained fleet becomes one flame, and the master of a million men is rowed ashore in a small boat, howling, saved by Zhang Liao's arm and arrow.",
+   "_note": "old summary was sound; tightened to the night itself"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1523,
+   "summary": "Ferries Zhuge Liang to the sickbed for the sixteen-character diagnosis, is sent down from the altar before the praying starts, and twice more holds Zhou Yu's dagger-hand: 'at least wait till Cao Cao is done with.'",
+   "_note": "old summary was a bare 'at the post-battle council'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 382,
+   "summary": "Rides overland with a hundred archers to behead the wind-caller - finds only fluttering flags and guards: 'he has just gone down.' On the bank he talks his comrade out of the hopeless chase: Zhuge Liang is too clever, and the boatman is the hero of Dangyang.",
+   "_note": "old summary was sound; kept tight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 2660,
+   "summary": "Takes the river route of the assassination, crowds sail after the fugitive boat - and watches Zhao Zilong's single arrow cut his halyard, the sail collapsing into the water as the quarry runs before the wind.",
+   "_note": "old summary was a bare 'rides with Ding Feng'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3334,
+   "summary": "Waits at the sand spit exactly as arranged, warns the pursuers off with one exhibition shot - the arrow that severs Xu Sheng's sail-rope - then lands to take his own assignment: three thousand men in the Black Forest jungle, to fire the road behind Cao Cao's passing.",
+   "_note": "old summary had the extraction; the ambush assignment was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 704,
+   "summary": "Left conspicuously without orders until he demands his share - then given Huarong with the poison in it named aloud: his old debt to Cao Cao. He signs the death-pledge, is taught the smoke trick ('he will take it as a subterfuge and risk going that way'), and marches with Guan Ping, Zhou Cang, and five hundred swordsmen - while Zhuge Liang privately tells Liu Bei the stars forbid Cao Cao's death and Guan Yu has been handed a kindness to repay.",
+   "_note": "old summary was sound; the deliberate-gift reading was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 698,
+   "summary": "One of the two companions Guan Yu takes to the Huarong ambush with the five hundred swordsmen.",
+   "_note": "old summary was a bare 'with Guan Yu'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3736,
+   "summary": "Marches to Huarong at Guan Yu's side with Guan Ping and the five hundred swordsmen.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3106,
+   "summary": "Sent with three thousand across the river to the Hulu Valley: wait for the rain to stop and the cooking smoke to rise, then fire the hillside on the refreshing army.",
+   "_note": "old summary said Yiling road generically; the Hulu Valley smoke-timing is the assignment"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1311,
+   "summary": "Waits at Xiakou scanning the river until the single sail appears; then takes his own strange assignment - sit calmly in a high tower at Fankou and watch Zhou Yu's great scheme burn - voicing the one doubt Zhuge Liang confirms: Guan Yu will let Cao Cao pass, and is meant to.",
+   "_note": "old summary anticipated the Jingzhou grab; ch49's orders are the night's ambushes"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1395,
+   "summary": "Sails to Xiakou to check on the campaign and receives his post: hold the Wuchang approaches and capture what flees there, but never leave the city without the best of reasons.",
+   "_note": "old summary was a bare 'at Jiangxia'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 596,
+   "summary": "Ordered along the south bank flying Cao Cao's flags with the doomed Cai Zhong as cover, to bury himself deep in the enemy lines by the Black Forest and torch the grain depot at the signal.",
+   "_note": "old summary was a bare 'takes the lead in pursuing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1566,
+   "summary": "Takes three thousand men into the Black Forest behind Gan Ning, the support for the depot fire.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 3784,
+   "summary": "Leads three thousand to the borders of Yiling, to strike the moment the Black Forest signal shows.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 2142,
+   "summary": "Sent with two thousand to Huangzhou to cut Cao Cao's line to Hefei - watching for the red flag that means Sun Quan himself is up.",
+   "_note": "old summary was a bare 'at Hefei'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 435,
+   "summary": "Marches on Hanyang to fall on the enemy along the River Han under the white-flag signal, with Pan Zhang's three thousand behind him.",
+   "_note": "old summary was a bare command mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1723,
+   "summary": "Commands the sixth division, supporting Dong Xi's Hanyang strike.",
+   "_note": "old summary was a bare command mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1530,
+   "summary": "Made Leader of the Van by Sun Quan's own mandate, ordered to Qichun with his lord in support.",
+   "_note": "old summary was a bare command mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1111,
+   "summary": "Named by the dying Cai He as a fellow plotter - 'under my directions!' answers Zhou Yu - and left among the advisers guarding the camp as the fleet sails.",
+   "_note": "old summary put him on the fire-ships; he stays with Lu Su in camp"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 2105,
+   "summary": "Anchors thirty miles off awaiting the word, backs Lu Xun's van toward Qichun, and holds the red-flag reinforcement signal Taishi Ci watches for.",
+   "_note": "old summary was a bare 'with the reserves'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 1336,
+   "summary": "Assigned with Mi Zhu and Mi Fang to sweep the river in three squadrons, collecting beaten soldiers and abandoned weapons.",
+   "_note": "old summary said 'ambush detachment'; his job is the salvage sweep"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 49,
+   "target_id": 295,
+   "summary": "Boards the flagship beside Zhou Yu to direct the four fire-squadron fleets, deeply impressed by the ordering of the grand attack.",
+   "_note": "old summary was a bare command mention"}
+]
