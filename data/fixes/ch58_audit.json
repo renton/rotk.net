@@ -1,0 +1,189 @@
+[
+  {"op": "add_relationship", "character1_id": 3410, "character2_id": 3841,
+   "type": 5, "_note": "'The commander of the west gate was Zhong Jing, brother of Zhong Yao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 239,
+   "summary": "Opens the chapter with the wedge plan: strike Sun Quan, whose ally covets the west and will not come - 'the South Land will be yours for the taking.' The three-hundred-thousand-man expedition it launches dies at the news of Changan.",
+   "_note": "old summary was the admin note '(duplicate record)'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1224,
+   "summary": "Third champion sent against Ma Chao at Tong Pass - and the only one who does not get to flee: he goes out of the saddle at the first blow.",
+   "_note": "old summary was the admin note '(duplicate record)'; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 381,
+   "summary": "Magistrate of Weinan, watching from a hilltop as Ma Chao's arrows rake the drifting boat: he drives his camp's cattle and horses loose over the hillside, and the born Qiang herdsmen abandon the kill to chase livestock. Cao Cao makes him a Commander: 'I should have been a prisoner but for your happy thought.'",
+   "_note": "old summary garbled him into 'gives up his beard-trimming horse' - his feat is the cattle stampede that saves Cao Cao"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1619,
+   "summary": "His execution echoes through the chapter that avenges it: Pang De reads it in a dream of tigers on snow, Ma Dai reports it weeping, and Liu Bei's letter turns the grief into strategy - 'you cannot let the same sky cover you and your father's murderer.'",
+   "_note": "old summary re-narrated the ch57 execution as happening here - ch58 opens after it, with the news arriving west"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1620,
+   "summary": "Reported dead in Ma Dai's account - 'Ma Tie fell in the battlefield' - the first grief in the tally that raises Xiliang.",
+   "_note": "old summary implied an on-page death; ch58 carries only the report"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1623,
+   "summary": "Named in Ma Dai's report among the dead - executed in the market place beside his father.",
+   "_note": "old summary implied an on-page death; ch58 carries only the report"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3836,
+   "summary": "Named in Ma Dai's report as Ma Teng's fellow plotter in the assassination that miscarried.",
+   "_note": "summary was missing on the ch58 row"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1599,
+   "summary": "Dreams of tigers on a snowy plain the night the news rides in; Liu Bei's letter and Han Sui's loyalty turn grief into two hundred thousand men. He takes Changan, takes Tong Pass, routs three champions in succession - and hunts Cao Cao personally: the red robe discarded, the beard sawn off, the spear-thrust that hits a tree instead of the fugitive, the arrows raking the boat at the ferry. 'The fame of Ma Chao rose even to the sky.'",
+   "_note": "old summary was sound; the dream and the tree-thrust added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 805,
+   "summary": "Shows his nephew-by-oath Cao Cao's bribe letter - the Lordship of Xiliang for Ma Chao in chains - and beheads the messenger instead: 'your father and I were sworn brothers.' He brings eight divisions to the revenge war, quotes the strike-at-half-crossing maxim at the ferry, and is dragged from the pit-trap battle by Pang De.",
+   "_note": "old summary was a bare 'joins the vengeance army'; the refused bribe defines him here"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1725,
+   "summary": "Reads the tiger dream right, wins Changan with patience - lift the siege, let the starving city open its gates, then take the west gate by night, cutting down Zhong Jing at the gateway. In the pit-trap disaster he leaps clear, kills Cao Yong, takes the dead man's horse, and carries Han Sui out of the wreck.",
+   "_note": "old summary was a bare debut mention; the Changan coup and the pit rescue are his"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1601,
+   "summary": "Arrives in Xiliang weeping with the news of the three deaths, rides as Ma Chao's support through the campaign, and leads the fifteen-thousand-man van that opens the Changan operation.",
+   "_note": "old summary was a bare 'rides at his side'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3410,
+   "summary": "Governor of Changan: warns Cao Cao, holds the famous walls through ten days of siege - and loses the city to Pang De's night coup through the west gate his own brother commanded. He falls back on Tong Pass with the evil news.",
+   "_note": "old summary was sound; the brother detail added"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3841,
+   "summary": "Zhong Yao's brother, commander of Changan's west gate: investigating a torch in the night, he meets Pang De's sword in the gateway - the death that opens the city.",
+   "_note": "summary was missing; he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 86,
+   "summary": "Drops the southern expedition when Changan falls, and nearly drops everything else: railed at by a son avenging his father, he tears off the telltale red robe, saws off his own beard, and wraps a flag-corner round his jaw to flee. Saved three times - Cao Hong's fifty bouts, Xu Chu's back and saddle-shield on the river, Ding Fei's cattle - he then digs in and smiles at every report of Qiang reinforcements: 'wait till I have defeated them, and I will explain.'",
+   "_note": "old summary conflated Cao Hong's two feats; the mysterious gladness at reinforcements is the chapter's hook"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 100,
+   "summary": "Loses Tong Pass on the ninth day of a ten-day charge - baited out by loose horses and staged naps - and is nearly executed for it; then redeems everything at the hillside: 'do not hurt my lord!' - fifty bouts against Ma Chao that buy Cao Cao's life. 'Had I not spared Cao Hong, I should have fallen today.'",
+   "_note": "old summary's 'holds the river bank six days' garbled both feats - he lost the Pass on day nine and saved Cao Cao in a duel"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 2637,
+   "summary": "Cannot curb Cao Hong through nine days of insults and is scolded for it - then supplies the campaign's master stroke: cross the Yellow River at Cattail Ferry, seize the west bank, and cut the Xiliang army's rear. He marches with four thousand men and Zhu Ling to the hidden gullies.",
+   "_note": "old summary was a bare 'with Cao Cao at Tong Pass'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3495,
+   "summary": "Crosses with Xu Huang to the west-bank gullies, half of the force that will close the trap behind the Xiliang army.",
+   "_note": "old summary was a bare 'with Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 2624,
+   "summary": "Drags his master down the bank, leaps aboard with Cao Cao on his back, chops off the clinging hands that would swamp the boat - then poles with one hand, steers with his knees, and holds a saddle over Cao Cao's head against Ma Chao's arrows. His double armor comes ashore stuck full of shafts. Han Sui names him for the enemy: Tiger Lust.",
+   "_note": "old summary was sound; the full boat scene deserved it"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 2556,
+   "summary": "Commands the right camp at Tong Pass, arrives with thirty horsemen to end Cao Hong's failing duel - and cuts down the scout leader Cheng Yi in the night ambush.",
+   "_note": "old summary was a bare 'with Cao Cao at Tong Pass'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 2953,
+   "summary": "First champion against the avenger: ten bouts with Ma Chao and he flees.",
+   "_note": "old summary was a bare 'with Cao Cao at Tong Pass'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3120,
+   "summary": "Second against Ma Chao: twenty passes, then flight - the prelude to Li Tong's death.",
+   "_note": "old summary was a bare 'with Cao Cao at Tong Pass'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 123,
+   "summary": "Warns that the short-tempered Cao Hong cannot hold a pass and is sent to reinforce him; he rescues Cao Hong from Pang De's pursuit, holds the camps through the defeat, and counsels the stockade-first approach to the Pass.",
+   "_note": "old summary was a bare 'ordered to hold Tong Pass'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 150,
+   "summary": "Cao Ren's general, cut down by the unhorsed Pang De - who takes his horse and rides on slaying.",
+   "_note": "old summary: 'minor figure named in passing' - he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 307,
+   "summary": "One of Han Sui's eight commanders: leads the night scouting party into Cao Cao's ambush and falls to Xiahou Yuan's blade.",
+   "_note": "old summary: 'minor figure named in passing' - he dies on stage"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 308,
+   "summary": "One of the eight Xiliang division commanders - reported missing with Zhang Han after the pit-trap battle on the River Wei.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3840,
+   "summary": "Eighth of Han Sui's division commanders (the prose spells him Zhang Han) - missing with Cheng Yin after the pit-trap defeat.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 2849,
+   "summary": "First-named of Han Sui's eight division commanders in the muster of the revenge army.",
+   "_note": "old summary was a bare 'Han Sui officer'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 889,
+   "summary": "One of Han Sui's eight division commanders in the two-hundred-thousand-man march on Changan.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1279,
+   "summary": "One of the eight Xiliang division commanders under Han Sui.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1187,
+   "summary": "One of the eight Xiliang division commanders in the revenge muster.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1621,
+   "summary": "One of Han Sui's eight division commanders - the Ma clansman among them.",
+   "_note": "old summary was a bare 'clan officer'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1311,
+   "summary": "His letter raises the west: recalling the Girdle Edict he shared with Ma Teng, he calls Ma Chao to attack from one side while Jingzhou blocks the retreat - 'you cannot let the same sky cover you and your father's murderer.' The letter is Zhuge Liang's device to abort Cao Cao's southern expedition without moving a man.",
+   "_note": "old summary was a bare 'named in passing' - his quoted letter launches the war"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3529,
+   "summary": "Answers the southern alarm with one sentence - 'I can prevent Cao Cao from even daring to look southeast' - and does it by post: the letter that points the grieving Ma Chao at Tong Pass. Three hundred thousand men turn around without a battle.",
+   "_note": "old summary was a bare 'named in passing' - the deflection is his design"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 2105,
+   "summary": "Target of the aborted expedition: Zhang Zhao's counsel routes the crisis through Lu Su's friendship to Liu Bei - and Zhuge Liang's letter makes the whole threat evaporate.",
+   "_note": "old summary was a bare 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 3272,
+   "summary": "Advises the appeal that saves the south: have Lu Su write to Liu Bei - marriage and friendship guarantee the answer.",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 1523,
+   "summary": "Writes the appeal to his friend at Jingzhou and receives Zhuge Liang's serene reply: 'lay aside all anxiety... if the northern army approach, they will be forced backward at once.'",
+   "_note": "old summary was a bare 'with Sun Quan'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 58,
+   "target_id": 376,
+   "summary": "Named by Han Sui identifying the boat-hero: the Tiger Guard was commanded by Dian Wei and Xu Chu, 'and as Dian Wei is dead, the man you saw must have been Xu Chu.'",
+   "_note": "old summary was a bare 'long dead'"}
+]
