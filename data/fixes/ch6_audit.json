@@ -1,0 +1,177 @@
+[
+  {"op": "add_association", "target": "event", "chapter_num": 6,
+   "target_id": 3, "keywords": "",
+   "_note": "the Campaign against Dong Zhuo continues through ch6 (burning of Luoyang, Xingyang ambush, occupation of the capital) but the event was only associated to ch5"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 6,
+   "target_id": 1160, "keywords": "Qiao",
+   "_note": "para 91 'my force at Qiao to keep Chenggao' - fallback 'Qiao County' never matches (same fix as ch4/ch5)"},
+
+  {"op": "update_association", "target": "location", "chapter_num": 6,
+   "target_id": 1186, "keywords": "Yiyang",
+   "_note": "para 70 'got possession of it at Yiyang' - fallback 'Yiyang County' never matches"},
+
+  {"op": "add_association", "target": "location", "chapter_num": 6,
+   "target_id": 1656, "keywords": "Great River",
+   "_note": "para 71 'go home to the south of the Great River' - Yangtze River [1656] already has the alias"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 68,
+   "summary": "One of Liu Biao's two commanders sent with ten thousand troops to bar Sun Jian's road home and demand the seal. Huang Gai's iron whip catches him on the breastplate over the heart and he turns and flees - then joins the second ambush behind the hills.",
+   "_note": "old summary said he was struck off his horse; the prose has him fleeing after the whip blow"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 172,
+   "summary": "One of the Eight Wise Ones, Liu Biao's famous youthful companions - the man from Nanyang in the catalogue.",
+   "_note": "old summary confused him with the 'three famous helpers' (the Kuais and Cai Mao)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 259,
+   "summary": "One of the Eight Wise Ones, Liu Biao's famous youthful companions - the first-listed, from Runan.",
+   "_note": "old summary gave him a relocation protest that belongs to Yang Biao / Huang Wan / Xun Shuang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 295,
+   "summary": "Recognizes the jade seal from the well as the Imperial Hereditary Seal and recites its whole lineage - Bian He's stone, Li Si's engraving, the broken corner mended with gold. He urges Sun Jian to leave for the south at once and aim at the imperial dignity itself.",
+   "_note": "old summary missed his seal-lore scene, the chapter's pivot"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 444,
+   "summary": "Takes Li Ru's prophecy as mandate and moves the capital: demotes Yang Biao, Huang Wan, and Xun Shuang to commoners for protesting, executes Zhou Bi and Wu Qiong at the gate, plunders and murders Luoyang's rich as 'traitors', drives millions of inhabitants west, and burns the whole city - palaces, temples, houses - while Lü Bu rifles the imperial tombs. Then he plants the Yingyang ambush that shatters Cao Cao's pursuit.",
+   "_note": "old summary omitted the executions/demotions and the ambush order"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3632,
+   "summary": "One of the Eight Wise Ones, Liu Biao's famous youthful companions - the man from Bohai.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3631,
+   "summary": "One of the Eight Wise Ones, Liu Biao's famous youthful companions - the second Runan man in the catalogue.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 664,
+   "summary": "Declares Yuan Shao 'an incapable' as the coalition rots, breaks camp north, and posts Liu Bei in command of Pingyuan on the way home.",
+   "_note": "old summary tied his exit to the seal discovery; the prose gives disgust with Yuan Shao as the reason"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 753,
+   "summary": "With Li Jue, herds Luoyang's millions west between soldier columns - the fugitives plundered and the women defiled - then swings in on Cao Cao's flank in the running fight near Yingyang.",
+   "_note": "old summary was a bare 'covers the retreat'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 785,
+   "summary": "Steps forward, hand on hilt, behind Sun Jian when the seal accusation nearly turns Yuan Shao's assembly into a bloodbath.",
+   "_note": "old summary was a bare 'serves in the breakthrough'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 972,
+   "summary": "Answers Kuai Yue's blockade for Sun Jian: a few bouts with Cai Mao, then the iron whip lands on the breastplate over the heart and Cai Mao flees, letting Sun Jian's column punch through. Also stands ready behind his lord in the seal confrontation.",
+   "_note": "old summary said he cut Cai Mao down; Cai Mao survives and reappears in the ambush"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 985,
+   "summary": "Grand Commander who protests the move to Changan - reminding Dong Zhuo the Red Eyebrows left it broken tiles - and is stripped of office and reduced to a commoner.",
+   "_note": "old summary said he was killed; he is demoted, not executed"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1123,
+   "summary": "One of the Eight Wise Ones, Liu Biao's famous youthful companions - the man from Luting.",
+   "_note": "old summary invented a relocation role"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3630,
+   "summary": "The Emperor's mother in the Wang Mang era, who hurled the seal at the rebels Wang Xun and Su Xian - breaking the corner that was afterwards mended with gold.",
+   "_note": "old summary was a bare lineage mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1185,
+   "summary": "Sent up to Sun Jian's camp as marriage envoy - Dong Zhuo's daughter for Sun Jian's son - and chased out with threats of being ground to powder. Later shares with Guo Si the driving of Luoyang's population west.",
+   "_note": "old summary missed the marriage-alliance embassy entirely"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1204,
+   "summary": "Turns the street-children's couplet 'a Han on the west, a Han on the east' into the argument for abandoning Luoyang; advises confiscating the rich householders' property as 'rebels'; and designs the layered Yingyang ambush - let the pursuers pass, then close behind them - that breaks Cao Cao.",
+   "_note": "old summary had only the prophecy"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1311,
+   "summary": "Takes Tiger Trap Pass with his brothers when Zhao Cen abandons River Si, then follows Gongsun Zan out of the dissolving coalition and is left in command at Pingyuan.",
+   "_note": "old summary had him only watching the collapse"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1325,
+   "summary": "Imperial Protector of Yanzhou who asks the Governor of Dongjun, Qiao Mao, for grain, is refused - and storms his camp, kills him, and absorbs his army. The coalition's first open cannibalism.",
+   "_note": "old summary said he merely declined to march west; he murders a fellow coalition lord"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1434,
+   "summary": "Carried west in Dong Zhuo's column with the whole court as Luoyang burns behind him; the Imperial Hereditary Seal, lost in the eunuch chaos, is missing from his regalia - waiting in a well for Sun Jian.",
+   "_note": "old summary called Dong Zhuo his uncle - no kinship exists"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1547,
+   "summary": "Sent to rifle the tombs of emperors and consorts for their jewels, then commands the rearguard at Yingyang, trading blows with Xiahou Dun until Li Ru and Guo Si's flanking columns crush Cao Cao's pursuit.",
+   "_note": "old summary omitted the tomb desecration and the duel"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 1797,
+   "summary": "Governor of Dongjun; refuses Liu Dai's request for grain and is killed when Liu Dai storms his camp - his army absorbed by his murderer.",
+   "_note": "old summary said he refused to follow Cao Cao west; he is murdered by a fellow lord"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2430,
+   "summary": "Draws steel behind Yuan Shao when the seal confrontation with Sun Jian brings every sword in the assembly out of its scabbard.",
+   "_note": "old summary was generic coalition filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2779,
+   "summary": "Draws steel behind Yuan Shao in the seal standoff with Sun Jian, mirroring Cheng Pu, Huang Gai, and Han Dang on the other side.",
+   "_note": "old summary was generic coalition filler"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2481,
+   "summary": "Commander of the City Gates who begs Dong Zhuo not to move the capital - and is taken outside the city with Zhou Bi and executed, Dong Zhuo linking them to the 'traitor' Yuan Shao they had once defended.",
+   "_note": "old summary had him merely 'in Dong Zhuo's circle'; he is executed this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3426,
+   "summary": "Chair of the Secretariat who begs Dong Zhuo not to move the capital - executed outside the city with Wu Qiong, paying for having once persuaded Dong Zhuo to pardon Yuan Shao.",
+   "_note": "old summary had him merely 'in Dong Zhuo's circle'; he is executed this chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2535,
+   "summary": "Duels Lü Bu at the Yingyang rearguard action, and next dawn spears Xu Rong dead when the governor fords the river after the fleeing Cao Cao - avenging the ambush.",
+   "_note": "old summary omitted that he kills Xu Rong"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2655,
+   "summary": "Governor of Yingyang who springs Li Ru's ambush on Cao Cao's midnight camp, puts an arrow in Cao Cao's shoulder, and hunts him across the river - until Xiahou Dun's spear thrust ends him at dawn.",
+   "_note": "old summary omitted his death"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2743,
+   "summary": "Minister of Works who protests the uprooting of the people to Changan and is stripped of office and reduced to a commoner with Yang Biao and Huang Wan.",
+   "_note": "old summary said he was forced to migrate; he is demoted for protesting"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 2803,
+   "summary": "Minister of the Interior who warns that abandoning the ancestral temples and tombs will alarm the people - and is stripped of office and reduced to a commoner for it.",
+   "_note": "old summary said he was forced west with the court; he is demoted for protesting"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3008,
+   "summary": "Confronted in his own camp by Sun Jian over the withheld grain that caused the Sishui defeat; confused and frightened, he executes the slandering counselor to placate the tiger of the east.",
+   "_note": "old summary was generic coalition filler; his scene is the grain reckoning"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3106,
+   "summary": "Opens the chapter charging Tiger Trap Pass alone under a rain of stones and arrows, and later occupies the Pass with his brothers when Dong Zhuo's army abandons it.",
+   "_note": "old summary was a bare 'with Liu Bei in Gongsun Zan's camp'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 6,
+   "target_id": 3617,
+   "summary": "Dong Zhuo's general holding River Si Pass; abandons the position when Luoyang is evacuated, letting Sun Jian occupy it unopposed.",
+   "_note": "old summary placed him in Liu Biao's Jingzhou circle - wrong side entirely"}
+]

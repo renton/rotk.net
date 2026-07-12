@@ -27,7 +27,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch3 — 37 ops (Massacre of the Eunuchs event added to ch3, Shang/Taishan Commandery false-positive removals, 5 relationships incl. both Lü Bu adoptions, ~27 summary rewrites)
 - [x] ch4 — 17 ops (Empress Dong added to ch4, Qiao keyword, 3 relationships, 12 summary rewrites) + data/fixes/sex_audit.json (73 ops: every Empress/Lady/Consort + Diao Chan/Qiaos/Cai Yan/Sun Ren had sex=male)
 - [x] ch5 — 29 ops (Yue Jing spelling, Li Feng 'Anguo'-in-'Wu Anguo' false positive removed, Hu Zhen junk keyword, Qiao/Julu keywords, 7 relationships incl. Cao/Xiahou clan web, ~18 summary rewrites)
-- [ ] ch6
+- [x] ch6 — 36 ops (Campaign vs Dong Zhuo event added, Qiao/Yiyang/Great River keywords, ~32 summary rewrites — many had wrong fates: demoted-not-killed, executed ministers, murdered Qiao Mao, Eight Wise Ones mixups)
 - [ ] ch7
 - [ ] ch8
 - [ ] ch9
@@ -149,6 +149,16 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch6:
+- Liu Xie's ch6 keyword 'Emperor' also matches "the First Emperor" (Qin
+  Shi Huang) 4× and "the Emperor's mother" in the seal-lore flashback
+  (¶69–70) — needs per-snippet MatchExclusions via
+  /admin/chapter-associations; a keyword change would lose the many
+  legit "the Emperor" mentions.
+- "Fan Chong" (Red Eyebrows leader, ¶19) has no Character row — minor.
+- Kuai Liang ↔ Kuai Yue sibling relationship deferred until a chapter
+  whose prose states it.
 
 From ch5:
 - "Liangdong" (Sun Jian's fallback camp, ¶60) has no Location row.
