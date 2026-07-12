@@ -45,7 +45,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch21 — 31 ops (9 missing summaries, Zhao Yun premature-rejoin fix, Lu Zhao wrong-side fix, Yuan Shu's on-page death, Guan Yu's ruse credited, Yuan Shu→Yuan Yin nephew)
 - [x] ch22 — 21 ops (bare You/Ji/Yan keyword fixes, 6 missing summaries, Zhao Yan manifesto assoc added, Xun Yu's takedown, Tian Feng premature jailing, Chunyu Qiong ch30 spillover)
 - [x] ch23 — 24 ops (19 missing summaries incl. Ji Ping the martyr-physician and the whole Mi Heng diatribe cast, Zhang Xiu dup-note replaced, Liu Ye envoy credit)
-- [ ] ch24
+- [x] ch24 — 21 ops (3 missing summaries, Sun Qian/Jian Yong/Mi Zhu flight mixups, Tian Feng not yet jailed, scabies-refusal added to Yuan Shao, 3 relationships incl. Dong Cheng↔Consort Dong)
 - [ ] ch25
 - [ ] ch26
 - [ ] ch27
@@ -105,6 +105,11 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch24_audit.json (3):
+- Dong Cheng [410] ↔ Consort Dong [402] Sibling
+- Liu Xie [1434] → Consort Dong [402] Husband/Wife
+- Yuan Shao [3006] → Yuan Tan [3011] Parent/Child
 
 From ch21_audit.json (1):
 - Yuan Shu [3008] → Yuan Yin [3021] Pibling/Nibling

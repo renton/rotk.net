@@ -1,0 +1,100 @@
+[
+  {"op": "add_relationship", "character1_id": 410, "character2_id": 402,
+   "type": 5, "_note": "'The Emperor's consort was a sister of Dong Cheng'"},
+
+  {"op": "add_relationship", "character1_id": 1434, "character2_id": 402,
+   "type": 3, "_note": "Consort Dong is Emperor Xian's consort, five months pregnant with his child"},
+
+  {"op": "add_relationship", "character1_id": 3006, "character2_id": 3011,
+   "type": 1, "_note": "Yuan Tan is 'Yuan Shao's eldest son'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 578,
+   "summary": "Sits with the Emperor and Consort Dong wondering why the decree has borne no fruit - when Cao Cao bursts in armed. She can only join the lament as the pregnant consort is led to the white cord.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 1434,
+   "summary": "Caught pretending Dong Cheng means Dong Zhuo, he watches his plot's ruin: he begs immurement for the pregnant Consort Dong until her confinement and is refused - 'do not hate me in the Nine Golden Springs' - while Cao Cao calls the imperial tears childish. His palace is then sealed behind three thousand of Cao Cao's own guards.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 3032,
+   "summary": "Holds the southwest point of the eight-point ambush and falls on Zhang Fei's rear while he duels Xu Huang.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 86,
+   "summary": "Dissuaded from deposing the Emperor by Cheng Yu, he settles for extermination: the five conspirators' households - seven hundred souls - die at the gates, and he personally has the pregnant Consort Dong strangled before the imperial couple. Then, over Cheng Yu's caution, he takes two hundred thousand men east, reads the broken banner as a night-raid warning, snares Zhang Fei and Liu Bei in an eight-point ambush, and takes Xuzhou - turning last toward Guan Yu in Xiapi, whom he wants alive and willing.",
+   "_note": "old summary bundled ch23's exposure into ch24"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 2176,
+   "summary": "Begs Yuan Shao to take empty Xuchang while Cao Cao is committed east - and watches the unrepeatable chance die of a child's scabies. He strikes the ground with his staff: 'everything is spoiled by the illness of a child!'",
+   "_note": "old summary had him counseling from a cell - he is not imprisoned yet"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 3006,
+   "summary": "Found disheveled and weeping - not for the realm but for his favorite youngest son's scabies - he waves away the chance to seize Xuchang and sends Sun Qian home with a promise of refuge instead. That promise he keeps royally: he meets the beaten Liu Bei ten miles outside Yejun.",
+   "_note": "old summary had only the welcome; the refused opportunity is the chapter's hinge"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 3011,
+   "summary": "Governor of Qingzhou; opens his gates to the beaten fugitive, entertains him, writes to his father, and escorts Liu Bei as far as the Pingyuan boundary.",
+   "_note": "old summary garbled the geography"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 3106,
+   "summary": "Author of the night-raid plan - Liu Bei praises the strategist he's becoming - and its chief victim: the lights flash, eight ambush points close, his ex-Cao Cao soldiers desert back to their old master, and he cuts free with barely a dozen riders for the Mangdang Hills.",
+   "_note": "old summary had only the flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 1053,
+   "summary": "Flees fallen Xuzhou with Mi Zhu when Chen Deng surrenders the city.",
+   "_note": "old summary put him at Liu Bei's side; Liu Bei escaped alone to the north"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 1682,
+   "summary": "Flees Xuzhou with Jian Yong as Chen Deng hands the city to Cao Cao.",
+   "_note": "old summary sent him to Jizhou with Sun Qian - the prose only records the flight"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 2102,
+   "summary": "Carries the appeal north through Tian Feng's introduction, hears Yuan Shao plead his son's scabies, and brings back the empty promise; he is then left holding Xiaopei during the doomed night raid.",
+   "_note": "old summary had him fleeing with Mi Zhu; he is the envoy and Xiaopei's caretaker"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 207,
+   "summary": "Surrenders Xuzhou to Cao Cao after a short defense once Mi Zhu and Jian Yong flee.",
+   "_note": "old summary buried his role among 'surrendered officials' - he hands over the city"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 309,
+   "summary": "Talks Cao Cao out of deposing the Emperor - civil war would follow - then argues against attacking Liu Bei with Yuan Shao at Guandu; overruled twice, he ends the chapter promising a scheme to entangle Guan Yu into Cao Cao's service.",
+   "_note": "old summary was a bare strategy mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 737,
+   "summary": "Reads Yuan Shao as too dilatory and jealousy-riddled to move - 'you could settle the east in one battle' - and later warns that any envoy sent to talk Guan Yu around will suffer for it.",
+   "_note": "old summary was a bare 'advises Cao Cao'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 2755,
+   "summary": "On the march, reads the tornado-snapped blue-and-red banner: a night raid is coming. The eight-point ambush that ruins Liu Bei follows his interpretation; at Xuzhou he urges taking Xiapi fast, before Yuan Shao can.",
+   "_note": "old summary left him in Xuchang; he interprets the omen in camp"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 1647,
+   "summary": "Reports the same broken-banner omen and reads it the same way - the confirmation that convinces Cao Cao providence has betrayed the raid.",
+   "_note": "old summary had him coordinating from Xuchang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 100,
+   "summary": "Given command of the three thousand hand-picked 'Imperial Guards' - Cao Cao's men - who seal the palace after Consort Dong's murder.",
+   "_note": "old summary was a bare 'serves at Xuzhou'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 24,
+   "target_id": 3166,
+   "summary": "Holds a point of the eight-point ambush, then steps forward at the council: he knows Guan Yu slightly, and volunteers to talk the defender of Xiapi into surrender.",
+   "_note": "old summary was a bare assault mention"}
+]
