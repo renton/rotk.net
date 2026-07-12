@@ -27,6 +27,8 @@ from app.models.year_map import YearMap
 
 from app.models.relationship import Relationship, RelationshipType
 
+from app.models.province_map import ProvinceMap, ProvinceMapPlacement
+
 # Importing the `audit` module registers ORM event listeners that stamp
 # created_by / last_edited_by on every model with those columns. Must
 # happen after the models above are imported so mapper config is settled.

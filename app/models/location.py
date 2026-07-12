@@ -49,6 +49,12 @@ class LocationType(AbstractTag):
     Seeded via `flask seed-location-types` (idempotent)."""
     locations = db.relationship('Location', back_populates='location_type')
 
+    # Placement style used by the province-map editor for locations of
+    # this type: 'point' (single coordinate), 'line' (freehand stroke —
+    # rivers, walls), 'region' (clicked-out polygon). Fixed choice list
+    # lives in app.models.province_map.POINT_TYPES.
+    point_type = db.Column(db.String(10), nullable=False, default='point')
+
     def __repr__(self):
         return f'<LocationType {self.name}>'
 
