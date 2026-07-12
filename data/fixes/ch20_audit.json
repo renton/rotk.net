@@ -1,0 +1,171 @@
+[
+  {"op": "remove_association", "target": "character", "chapter_num": 20,
+   "target_id": 1351,
+   "_note": "wrong person: ch20's one 'Liu Hong' is Liu Bei's father in the genealogy reading ('the son of Liu Hong, grandson of Liu Xiong'), not Emperor Ling; the summary text placed on this row described Emperor Xian and is moved to Liu Xie [1434]"},
+
+  {"op": "add_association", "target": "character", "chapter_num": 20,
+   "target_id": 3849, "keywords": "Liu Hong",
+   "summary": "Named in the Books of the Genealogies as Liu Bei's father - 'Liu Hong, who held no office or rank' - the last link in the chain from Emperor Jing that makes Liu Bei the Imperial Uncle.",
+   "_note": "Liu Hong [3849] is the father-of-Liu-Bei row created after the ch1 audit"},
+
+  {"op": "add_relationship", "character1_id": 579, "character2_id": 578,
+   "type": 1, "_note": "Fu Wan is 'the father of the Empress' (Empress Fu)"},
+
+  {"op": "add_relationship", "character1_id": 3701, "character2_id": 3849,
+   "type": 1, "_note": "genealogy: 'Xiong begot Liu Hong' - Liu Xiong is Liu Bei's grandfather"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 1434,
+   "summary": "Recognizes Liu Bei as his uncle from the genealogies, hoping for a shield against Cao Cao. Humiliated at the Xutian hunt when Cao Cao shoots with the imperial bow, takes the crowd's 'wan shui' for himself, and keeps the bow - he bites his own finger to write the belt decree in blood, and hands it to Dong Cheng sewn inside the girdle: 'destroy this evil faction and restore the prerogatives of the Throne.'",
+   "_note": "summary was missing (its content had been misfiled on Liu Hong [1351])"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 578,
+   "summary": "Hears her weeping husband out after the hunt and asks the question that starts the conspiracy - 'in a whole court full of nobles, is there not one who will save his country?' - then sews the blood decree into the purple lining of the jade girdle with her own hands.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3706,
+   "summary": "Commander and intimate of Dong Cheng; arrives mid-plot, declares he'd rather die a Han ghost than fawn on a traitor, and signs the silk pledge.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3707,
+   "summary": "Court Counselor in Dong Cheng's circle; swears he would slay Cao Cao if anyone would back him, and signs the silk pledge.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3642,
+   "summary": "Invoked in Kong Rong's rescue of Yang Biao: had the child Emperor Cheng executed Duke Chao, who would have believed Duke Zhou the regent innocent?",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3703,
+   "summary": "Duke Chao of the Zhou, the hypothetical victim in Kong Rong's retort that saves Yang Biao's life.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3702,
+   "summary": "The child Emperor Cheng of Zhou, cited by Kong Rong: a regent cannot execute great ministers and keep his innocence believed.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3575,
+   "summary": "His portrait presides over the Temple of Ancestors scene: the minor official of Sishang who slew the white serpent, crushed Qin in three years and Chu in five - the ancestor whose 'weakling descendant' whispers for help beneath the painting.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3585,
+   "summary": "Prince Sheng of Zhongshan, seventh son of Emperor Jing - the head of the sixteen-generation chain the secretary reads out to make Liu Bei the Emperor's uncle.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3586,
+   "summary": "Emperor Jing, 'the Filial Emperor' who begot fourteen sons - the fountainhead of the genealogy that ennobles Liu Bei.",
+   "_note": "summary was missing; NOTE this row duplicates Liu Qi [3590] (Emperor Jing) used in ch1 - flagged in audit_notes.md"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3701,
+   "summary": "Liu Bei's grandfather in the genealogy - 'Hui begot Liu Xiong, Governor of Zhuo; Xiong begot Liu Hong'.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 1547,
+   "summary": "Dead offstage: his family is packed off to the capital as the victors leave Xuzhou.",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3705,
+   "summary": "Xiao He, Lord of Cuo, whose portrait hangs beside Zhang Liang's - the Emperor's pointed hint to Dong Cheng: 'you, like these two, must stand by me.'",
+   "_note": "summary was missing"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3655, "keywords": "Zhang Liang",
+   "summary": "Zhang Liang, Lord of Liu, in the gallery of Worthy Ministers - half of the Emperor's whispered charge to Dong Cheng to be his founding-era helper.",
+   "_note": "summary AND keywords were missing (empty keywords string)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 188,
+   "summary": "General of the Flying Cavalry given temporary command of Xuzhou while Liu Bei is kept close at the capital.",
+   "_note": "old summary implied Liu Bei had departed; he is retained at Xuchang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 185,
+   "summary": "The one Taishan chief who stays obdurate when Zang Ba and the rest submit to Cao Cao.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3042,
+   "summary": "Won over by Zhang Liao's mission; submits and brings his old colleagues Sun Guan, Wu Dun, and Yin Li with him - all given posts to prove their conversion.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 2071,
+   "summary": "Follows Zang Ba into submission and receives a post of responsibility.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 2457,
+   "summary": "Follows Zang Ba into submission and receives a post of responsibility.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 2907,
+   "summary": "Follows Zang Ba into submission and receives a post of responsibility.",
+   "_note": "old summary: 'named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3166,
+   "summary": "Spared at the White Gate's aftermath through Liu Bei's arm and Guan Yu's knees, he yields formally when Cao Cao unties him by hand - made Imperial Commander with a lordship, and immediately wins Zang Ba and the Taishan chiefs over as his first service.",
+   "_note": "old summary was a bare 'now in Cao Cao's service'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 1117,
+   "summary": "Saves Yang Biao from the trumped-up Yuan-intrigue charge with the Duke Zhou retort - if the regent kills great ministers, who believes him innocent? Cao Cao backs down to banishment.",
+   "_note": "old summary was a vague recap mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 2803,
+   "summary": "Arrested on Cao Cao's invented charge of intriguing with the Yuans - feared as their relative - and saved from death only by Kong Rong's protest; stripped of office and banished to his country estate.",
+   "_note": "old summary made him a belt-decree signatory - he is Cao Cao's victim in this chapter, not a conspirator"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 3325,
+   "summary": "Court Counselor who impeaches Cao Cao for stripping Yang Biao without a decree - and is arrested and executed for it, the stroke that silences the court.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 309,
+   "summary": "Urges Cao Cao to convert prestige into position - 'why not take the place of Chief of the Feudatory Princes?' - prompting the hunt staged to test the court's temper.",
+   "_note": "old summary was a bare 'with Cao Cao at the hunt'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 2385,
+   "summary": "Walks in on the sleeping Dong Cheng, palms the blood decree from under his sleeve, and 'threatens' to inform Cao Cao - the joke that becomes the pledge: he signs second and fetches Wu Zilan.",
+   "_note": "old summary was a bare co-signatory mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 579,
+   "summary": "The Empress's father, who steps in on the weeping imperial pair and designs the whole device: a gifted robe and jade girdle with a secret decree in the lining, carried out under the noses of Cao Cao's palace creatures to Dong Cheng.",
+   "_note": "old summary was vague; the girdle scheme is his invention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 1619,
+   "summary": "Storming past the 'indisposed' excuse - he saw Dong Cheng leave the palace in robe and girdle - he goads the plotters into trusting him ('not one of them is any good... no one to save the country'), reads the decree with his hair on end, signs in smeared blood, and closes the chapter with his finger on the officials' list: the Liu of the imperial clan.",
+   "_note": "old summary had him signing after Liu Bei - Liu Bei hasn't joined yet; Ma Teng is the one who names him"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 1311,
+   "summary": "Certified the Emperor's uncle by the Books of the Genealogies and made General of the Left Army, Lord of Yicheng. He drops a hare with his first arrow at Xutian, then saves everything by waving back Guan Yu's drawn blade when Cao Cao usurps the imperial cheers - 'when you throw stones at a rat, beware of the vase.' Ma Teng's finger lands on his name as the chapter ends.",
+   "_note": "old summary had him already recruited into the conspiracy - that happens next chapter"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 410,
+   "summary": "Summoned to the Temple of Ancestors, gifted the robe and jade girdle under the portraits of Zhang Liang and Xiao He, and stopped at the Donghua Gate by Cao Cao - who tries the robe on, jokes about intrigue, and hands it back. A candle snuff burns the girdle's lining open that night: the blood decree. He gathers Wang Zifu, Chong Ji, Wu Shi, Wu Zilan, and Ma Teng onto the silk pledge.",
+   "_note": "old summary had the decree in the robe's seam; it's in the girdle, found by accident"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 20,
+   "target_id": 2755,
+   "summary": "Warns Cao Cao that an Emperor with a recognized uncle is no gain for him - answered with the logic of the puppet: 'I control the decrees of the Throne; he will be all the more ready to obey.'",
+   "_note": "old summary was a bare 'in Xuchang'"}
+]

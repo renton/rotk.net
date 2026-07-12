@@ -41,7 +41,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch17 — 45 ops (Ji Chang 'Xiahou' junk keyword, 13 missing summaries incl. Wang Hou's borrowed head, Ji Ling/Zhang Xun/Lei Xu not killed, Duan Wei/Wu Xi kill credits, Dian Wei→Dian Man)
 - [x] ch18 — 43 ops (You Province bare-'You' keyword fix, 8 missing summaries, Taishan bandits mislabeled as Lü Bu's eight generals, Jia Xu's double victory, 4 relationships incl. Liu Bei's marriages)
 - [x] ch19 — 28 ops (6 missing summaries incl. Lü Bu's end and Liu An, Hou Cheng steals Red Hare not the halberd, Taishan chiefs at Xiao Pass, Zhang Yang assassination subplot, Chen Deng's triple-cross)
-- [ ] ch20
+- [x] ch20 — 35 ops (Liu Hong wrong-person fix #2: Emperor Ling removed, Liu Bei's father [3849] added; Emperor Xian summary restored to Liu Xie; Yang Biao victim-not-conspirator; 14 missing summaries; Fu Wan→Empress Fu + Liu Xiong→Liu Hong relationships)
 - [ ] ch21
 - [ ] ch22
 - [ ] ch23
@@ -105,6 +105,10 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch20_audit.json (2):
+- Fu Wan [579] → Fu Shou/Empress Fu [578] Parent/Child
+- Liu Xiong [3701] → Liu Hong [3849] Parent/Child
 
 From ch18_audit.json (4):
 - Liu Bei [1311] → Lady Mi [1677] + → Lady Gan [592] Husband/Wife
@@ -194,6 +198,12 @@ From ch2:
   inline-tags (the massacre itself is ch3; ch2 is the plotting). Left
   associated on purpose — sidebar context. ch3_audit.json adds it to
   ch3 too.
+
+From ch20:
+- **Duplicate Emperor Jing rows**: ch1 used Liu Qi [3590]; ch20
+  associates Liu Qi [3586] (kw 'Emperor Jing') — same emperor, two
+  rows. The applied ch1 relationship (3590 → Liu Sheng) sits on the
+  other row. Merge via admin UI.
 
 From ch15:
 - Yan Yu [2794] carried the literal summary "(duplicate record)" — find
