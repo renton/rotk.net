@@ -59,6 +59,20 @@
             <div class="small text-muted fw-bold mb-2">
                 {{ children|length }} location{{ '' if children|length == 1 else 's' }} in {{ province.name }}
             </div>
+            {# Client-side type filter (province_map_editor.js). Options
+               are the distinct types actually present in this list. #}
+            {% set type_names = children | map(attribute='location_type')
+                                         | select | map(attribute='name')
+                                         | unique | sort | list %}
+            {% if type_names %}
+            <select id="pme-type-filter" class="form-select form-select-sm mb-2">
+                <option value="">All types</option>
+                {% for tn in type_names %}
+                <option value="{{ tn }}">{{ tn }}</option>
+                {% endfor %}
+                <option value="__none__">(no type)</option>
+            </select>
+            {% endif %}
             {% if not children %}
             <p class="text-muted small mb-0">
                 No child locations — set this province as a parent on
@@ -68,7 +82,8 @@
             <ul class="list-group list-group-flush" id="pme-location-list">
                 {% for c in children %}
                 <li class="list-group-item px-1 d-flex align-items-center gap-2"
-                    id="pme-row-{{ c.id }}" data-location-id="{{ c.id }}">
+                    id="pme-row-{{ c.id }}" data-location-id="{{ c.id }}"
+                    data-type-name="{{ c.location_type.name if c.location_type else '__none__' }}">
                     <span class="pme-status text-muted" title="placement status">
                         <i class="fa-solid fa-circle" style="font-size: 0.55em;"></i>
                     </span>

@@ -326,6 +326,16 @@ class TestEditor:
         assert b'js/province_map_editor.js' in resp.data
         assert b'location_edit_url_template' in resp.data
 
+    def test_editor_type_filter_markup(self, admin_client, db_session):
+        client, _ = admin_client
+        prov, pmap, *_ = self._setup(client, db_session)
+        resp = client.get(f'/admin/province-maps/editor/{pmap.id}')
+        assert b'id="pme-type-filter"' in resp.data
+        assert b'>All types<' in resp.data
+        assert b'>Editor River<' in resp.data     # distinct type option
+        assert b'data-type-name="Editor River"' in resp.data
+        assert b'(no type)' in resp.data
+
     def test_editor_list_shows_aliases(self, admin_client, db_session):
         client, _ = admin_client
         prov, pmap, *_ = self._setup(client, db_session)

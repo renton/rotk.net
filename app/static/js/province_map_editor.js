@@ -290,6 +290,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // ---- location-type filter ------------------------------------------------
+  var typeFilter = document.getElementById('pme-type-filter');
+  if (typeFilter) {
+    typeFilter.addEventListener('change', function () {
+      var want = typeFilter.value;
+      document.querySelectorAll('#pme-location-list > li').forEach(function (row) {
+        var t = row.getAttribute('data-type-name');
+        row.classList.toggle('d-none', !!want && t !== want);
+      });
+    });
+  }
+
   // ---- boot ---------------------------------------------------------------
   function boot(theMap) {
     map = theMap;
