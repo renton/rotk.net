@@ -311,6 +311,7 @@
                       <div class="d-flex align-items-center gap-2 mb-0">
                         <h6 class="mb-0">
                           <a href="{{ url_for('main.character_view', id=character.id) }}"
+                             target="_blank" rel="noopener"
                              class="text-decoration-none text-reset">{{ character.name }}</a>
                           {% if character.is_fictional %}
                           <i class="fa-solid fa-book text-muted ms-1"
