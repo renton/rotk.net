@@ -30,7 +30,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch6 — 36 ops (Campaign vs Dong Zhuo event added, Qiao/Yiyang/Great River keywords, ~32 summary rewrites — many had wrong fates: demoted-not-killed, executed ministers, murdered Qiao Mao, Eight Wise Ones mixups)
 - [x] ch7 — 33 ops (South Land/Great River assocs, 11 relationships incl. the whole Sun family roll + Liu Biao↔Lady Cai + Kuai brothers, ~20 summary rewrites)
 - [x] ch8 — 13 ops (Diao Chan age 16→21 + concubine relationship, Dong Huang nephew, Imperial Rector self-title fix, Great River assoc, sage-citation fixes)
-- [ ] ch9
+- [x] ch9 — 20 ops (Luoyang assoc removed, Lü Bu–Diao Chan relationship, 18 summary fixes incl. Li Su executed by Lü Bu, plotters vs purge-victims mixups, gate-opening fifth column)
 - [ ] ch10
 - [ ] ch11
 - [ ] ch12
@@ -105,6 +105,9 @@ From ch2_audit.json (17):
 - Dong Chong [411] ↔ Empress Dong [403] Sibling
 - Sun Tzu [3594] → Sun Jian [2081] Ancestor/Descendant
 - Xu Chang [2623] → Xu Hao [3597] Parent/Child
+
+From ch9_audit.json (1):
+- Lü Bu [1547] → Diao Chan [3641] Husband/Wife
 
 From ch8_audit.json (2):
 - Dong Zhuo [444] → Dong Huang [422] Pibling/Nibling

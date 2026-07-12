@@ -1,0 +1,98 @@
+[
+  {"op": "remove_association", "target": "location", "chapter_num": 9,
+   "target_id": 1256,
+   "_note": "Luoyang is never mentioned in ch9 (the action is all Meiwo/Changan) - association never matches anything"},
+
+  {"op": "add_relationship", "character1_id": 1547, "character2_id": 3641,
+   "type": 3, "_note": "after Dong Zhuo's death 'Lu Bu's first deed was to take Diao Chan into his charge' - she is his from ch9 on (the marriage Wang Yun promised)"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3651,
+   "summary": "Minister who dies in the fighting when Li Jue and Guo Si's ruffians sack Changan.",
+   "_note": "old summary: 'minor reference figure' - he's listed among the officials killed in the sack"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3440,
+   "summary": "Minister who dies in the fighting during the sack of Changan.",
+   "_note": "old summary: 'minor courtier named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3653,
+   "summary": "Imperial Commander who dies in the fighting during the sack of Changan.",
+   "_note": "old summary: 'minor figure named in passing'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1982,
+   "summary": "Co-conspirator in Wang Yun's plot: proposes luring Dong Zhuo from Meiwo with a faked imperial summons while Lü Bu waits in ambush inside the palace gates - the plan exactly as executed.",
+   "_note": "old summary said he was killed in the purge; in ch9 he devises the lure"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 985,
+   "summary": "Co-conspirator in Wang Yun's plot who raises the key question - who dares carry the false decree to Meiwo? - answered with Li Su.",
+   "_note": "old summary said he died alongside Wang Yun; ch9's casualty list doesn't include him - he's a plotter here"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3646,
+   "summary": "Cited in Li Ru's 'plucked tassel' story: the King of Chu who ignored the liberty taken with his queen and was later saved in battle by the very culprit - Li Ru's argument for giving Diao Chan to Lü Bu.",
+   "_note": "old summary called it a moralising aside on tyranny; it's Li Ru's persuasion piece"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3647,
+   "summary": "The officer of the plucked-tassel story: betrayed by the tassel in the queen's hand, spared by King Zhuang - and later the man who cut the king free from Qin's soldiers.",
+   "_note": "old summary: 'rhetorical reference figure'"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3648,
+   "summary": "Emperor Wu, cited by Wang Yun as the cautionary precedent: he spared Sima Qian to write the annals and got 'slanderous stories' handed down - Wang Yun's excuse for strangling Cai Yong.",
+   "_note": "old summary called it an aside on imperial tyranny; it's Wang Yun's justification"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3649,
+   "summary": "The Grand Historian, cited by Wang Yun as the reason to refuse mercy: sparing a historian's pen once filled the record with slander - so Cai Yong must die.",
+   "_note": "old summary was vaguely right; this pins the actual argument"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3650,
+   "summary": "Han-founding general cited by Li Jue as the model for his baiting tactics against Lü Bu - strike, withdraw, strike the rear - 'after the manner of Peng Yue when he fought against Chu'.",
+   "_note": "old summary was a bare rhetorical mention"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1004,
+   "summary": "One of the three commanders (with Lü Bu and Li Su) sent with fifty thousand troops to destroy Meiwo, free its captive women, and confiscate Dong Zhuo's hoard.",
+   "_note": "old summary had him passively 'caught in the city'; he commands the Meiwo expedition"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1193,
+   "summary": "Dong Zhuo remnant inside Changan who, with Wang Fang, secretly opens the city gate to Li Jue and Guo Si's besiegers - the betrayal that dooms the capital.",
+   "_note": "old summary put him among the Xiliang officers outside; he's the fifth column inside"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 2232,
+   "summary": "Dong Zhuo remnant inside Changan who helps Li Meng open the gate to the besiegers.",
+   "_note": "old summary put him among the Xiliang officers outside; he's the fifth column inside"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1218,
+   "summary": "Carries the false abdication decree to Meiwo, silkily interpreting every evil omen on the road - broken wheel, snapped reins, black mist - as signs of coming glory, then hacks off Dong Zhuo's head after the halberd strike. Sent against Niu Fu, he is routed in a night attack, and Lü Bu executes him for 'sullying my reputation as a warrior'.",
+   "_note": "old summary said he was killed 'when his role becomes inconvenient' - Lü Bu executes him for the defeat"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1709,
+   "summary": "Dong Zhuo's son-in-law, marching five thousand troops from Xiliang to avenge him as Van Leader of the horde. He surprises Li Su by night but is overwhelmed by Lü Bu - and while deserting with the camp's valuables is murdered mid-river by his own confidant Hu Chier, who carries the head to Lü Bu.",
+   "_note": "old summary had him commanding Meiwo; he joins the march from Xiliang"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1609,
+   "summary": "Intercedes secretly for Cai Yong - 'it is inadvisable to put to death a man renowned for rectitude' - and, refused, warns his colleagues that destroying the state's mainstay and nullifying its laws is to hasten destruction.",
+   "_note": "old summary said he was 'recalled to Changan'; his scene is the failed intercession"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 3008,
+   "summary": "The refuge Lü Bu flees to when Changan falls and his family is abandoned to the flames.",
+   "_note": "old summary invented a catalogue of regional reactions"},
+
+  {"op": "update_association", "target": "character", "chapter_num": 9,
+   "target_id": 1547,
+   "summary": "Won over by Wang Yun's needling - 'your name is Lü Bu; his is Dong Zhuo' - he swears by his own blood, spears his 'father' through the throat at the palace gate, then takes Diao Chan at Meiwo and exterminates the Dong clan. He executes Li Su for losing to Niu Fu and Hu Chier for treachery, is baited ragged by Li Jue and Guo Si's alternating attacks, and when the capital's gates are opened from within, flees to Yuan Shu - abandoning his family to the flames.",
+   "_note": "old summary claimed he took Dong Zhuo's seal (not in prose) and stopped at the killing; his whole collapse follows"}
+]
