@@ -78,7 +78,7 @@ Parent/Child op (ch1 did this for Cao Teng→Cao Song).
 - [x] ch54 — 21 ops (Lady Gan DIES fix, Sun Ren bride summary + Liu Bei↔Sun Ren marriage + Sun Quan↔Sun Ren sibling, Wu Guotai sex=female + dup-of-3808 flag, Qiao Gong dup-of-3818 flag, IOU guarantor scene, three silken bags, boulder omen)
 - [x] ch55 — 24 ops (Liang Da 'Tai' false assoc removed [FINAL in-range tracker item], Zhao Yun opens bags 2 AND 3, Zhou Yu taunting-verses fix [soldiers' jeer], luxury-trap letter, Lady Sun's two voice-confrontations, inkstone + sword-order scenes, Wu Guotai New Year permission)
 - [x] ch56 — 38 ops (Ji Chang 'Xiahou' junk keyword AGAIN [ch17 bug recurrence], Chen Lin memorial-vs-ode fix, Hua Xin marooned-envoy fix, Gu Yong/Cheng Yu scheme authorship, archery contest six-shot cast, apologia figures, borrowed-road double-fooling of Lu Su)
-- [x] ch57 — 53 ops (Zhou Yu's death + threnody cast, Ma Dai escaped-in-disguise fix, Ma Xiu/Ma Tie executed fixes, Huang Kui plot chain summaries, Li Chunxiang sex=female, Zhou Xun/Zhou Yin are Zhou Yu's SONS, 9 relationships: Ma family tree + Huang Kui household + Zhou Yu's sons)
+- [x] ch57 — 54 ops (Zhou Yu's death + threnody cast, Ma Dai escaped-in-disguise fix, Ma Xiu/Ma Tie executed fixes, Huang Kui plot chain summaries, Li Chunxiang sex=female, Zhou Xun/Zhou Yin are Zhou Yu's SONS, 9 relationships: Ma family tree + Huang Kui household + Zhou Yu's sons)
 - [ ] ch58
 - [x] ch59 — 15 ops (done earlier)
 
