@@ -100,13 +100,16 @@
     });
     panel.style.display = 'block';
 
-    // Scroll the freshly-shown panel into view within the sticky sidebar
-    // so the user lands on the character info even when the click came
-    // from the Chapter Characters list further down the column. Defer
-    // until after the accordion finishes expanding (otherwise the
-    // target's final position is wrong and the scroll lands short).
+    // Scroll the sidebar (only) so the Character Info section sits at the
+    // top of the sticky panel — clicking from the Chapter Characters list
+    // further down the column would otherwise land short and clip the
+    // character's name. Target the section header so nothing above the
+    // panel is cut off. Double-scroll to settle after the accordion's
+    // open transition shifts layout.
+    var charHeader = document.getElementById('sidebar-character-info');
     var doScrollPanel = function () {
-      panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      scrollSidebarTo(charHeader || panel);
+      setTimeout(function () { scrollSidebarTo(charHeader || panel); }, 420);
     };
 
     var collapseElement = document.getElementById('collapseOne');
