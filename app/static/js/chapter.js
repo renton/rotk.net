@@ -139,12 +139,11 @@
   });
 
   // Event / location inline refs open the matching sidebar accordion,
-  // briefly highlight the specific row, and (on desktop only) scroll
-  // the page so the row is in view. We skip scrollIntoView on mobile
-  // — the sidebar stacks under the prose there, and scrolling would
-  // yank the user away from the paragraph they were reading. On
-  // desktop the sidebar sits next to the prose, so the page scroll
-  // brings the row into view without losing the reader's place.
+  // briefly highlight the specific row, and (on desktop only) scroll the
+  // RIGHT SIDEBAR — never the main page — so the row lands at the top of
+  // the sticky panel. We skip scrolling on mobile: the sidebar stacks
+  // under the prose there, so any scroll would move the page and yank the
+  // reader off their paragraph.
   // Persistent "last clicked" marker — makes the target findable even
   // if the scroll lands imperfectly. One at a time across the sidebar.
   function markSelected(item) {
@@ -152,6 +151,20 @@
       el.classList.remove('sidebar-selected');
     });
     item.classList.add('sidebar-selected');
+  }
+
+  // Scroll ONLY the sticky right sidebar (its own overflow container) so
+  // `el` sits near the top of the sidebar viewport. Uses the sidebar's
+  // own scrollTo — the window is never touched. No-op on mobile, where
+  // the sidebar is in normal flow and scrolling would move the page.
+  var SIDEBAR_TOP_PAD = 6;
+  function scrollSidebarTo(el) {
+    if (isMobile() || !el) return;
+    var sidebar = document.querySelector('.chapter-sidebar');
+    if (!sidebar || !sidebar.scrollTo) return;
+    var delta = el.getBoundingClientRect().top -
+                sidebar.getBoundingClientRect().top - SIDEBAR_TOP_PAD;
+    sidebar.scrollTo({ top: sidebar.scrollTop + delta, behavior: 'smooth' });
   }
 
   function showAccordionItem(collapseId, itemId) {
@@ -168,19 +181,12 @@
     void item.offsetWidth;
     item.classList.add('sidebar-flash');
 
-    var scrollToItem = function () {
-      if (isMobile()) return;
-      // block: 'center' ALWAYS positions the row mid-viewport.
-      // ('nearest' was a silent no-op whenever any ancestor scroll
-      // container technically contained the row — the "doesn't scroll
-      // to the right spot" bug.)
-      item.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    };
-    // The sidebar accordions share data-bs-parent, so opening this
-    // panel simultaneously CLOSES a sibling — layout keeps shifting
-    // after shown.bs.collapse fires for the opening panel alone. A
-    // second corrective scroll after Bootstrap's 350ms transition has
-    // fully settled re-targets the row wherever it ended up.
+    // Scroll the sidebar (only) so the row lands at the top of the panel.
+    var scrollToItem = function () { scrollSidebarTo(item); };
+    // Opening/closing accordion panels keeps shifting layout after
+    // shown.bs.collapse fires for the opening panel alone. A second
+    // corrective scroll after Bootstrap's ~350ms transition has fully
+    // settled re-targets the row wherever it ended up.
     var scrollTwice = function () {
       scrollToItem();
       setTimeout(scrollToItem, 420);
@@ -205,25 +211,20 @@
   // location; non-geo locations fall back to the old Locations-
   // accordion behaviour.
   //
-  // We deliberately use block:'start' against the accordion-header
-  // (#sidebar-map) rather than block:'nearest' against the map div:
-  // 'nearest' is a no-op whenever any ancestor scroll container
-  // already shows the target, which is most of the time given the
-  // sidebar's max-height:100vh layout. 'start' guarantees the user
-  // sees the "Map" heading at the top of the sidebar viewport every
-  // click, which is the requested UX.
+  // Scrolls the sidebar (only) so the Province Map heading (#sidebar-map)
+  // sits at the top of the sticky panel — the main page never moves.
   function showLocationOnMap(locationId) {
     var mapApi = window.rotkChapterProvinceMap;
     if (!mapApi) return false;
     // Returns false when the location has no province-map placement —
     // let the caller fall back to the Locations accordion.
     if (!mapApi.showLocation(parseInt(locationId, 10))) return false;
-    if (isMobile()) return true;
     var mapAccordion = document.getElementById('collapseMap');
     var mapHeader = document.getElementById('sidebar-map');
     if (!mapAccordion || !mapHeader) return true;
     var doScroll = function () {
-      mapHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      scrollSidebarTo(mapHeader);
+      setTimeout(function () { scrollSidebarTo(mapHeader); }, 420);
     };
     if (mapAccordion.classList.contains('show')) {
       doScroll();
