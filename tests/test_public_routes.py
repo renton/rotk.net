@@ -29,6 +29,13 @@ class TestIndexAndBasics:
     def test_map_page_renders(self, client, db_session):
         assert client.get('/map').status_code == 200
 
+    def test_root_favicon_served(self, client, db_session):
+        # Root /favicon.ico must not 404 — otherwise the tab flashes a
+        # default icon on load before the <link> favicon resolves.
+        resp = client.get('/favicon.ico')
+        assert resp.status_code == 200
+        assert resp.data  # real icon bytes, not an empty/404 body
+
 
 class TestChapterRender:
     def test_character_pill_rendered(self, client, db_session):

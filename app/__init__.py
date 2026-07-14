@@ -111,6 +111,14 @@ def create_app(config_name):
     limiter.limit("120/minute")(api_blueprint)
     app.register_blueprint(api_blueprint, url_prefix='/api/v1')
 
+    # Browsers auto-request /favicon.ico at the site root (before they parse
+    # the <head> icon links), so without a route here that request 404s and
+    # the tab briefly shows a default icon until the <link> favicon loads.
+    # Serve the real icon straight from static to kill that flash.
+    @app.route('/favicon.ico')
+    def favicon():
+        return app.send_static_file('favicon.ico')
+
     # Importing edit_log registers SQLAlchemy Mapper event listeners that
     # write to the Edit audit table on every ORM insert/update/delete.
     # Side-effect-only import; nothing in here is called by name.
