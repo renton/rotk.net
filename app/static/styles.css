@@ -329,9 +329,7 @@ p.quote {
    Province-map placement editor.
    ------------------------------------------------------------------ */
 .pme-marker {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    position: relative;
     width: 22px;
     height: 22px;
     font-size: 18px;
@@ -339,12 +337,17 @@ p.quote {
     color: #c0392b;
     text-shadow: 0 0 3px #fff, 0 0 5px #fff;
 }
-/* Fill the box and center the glyph, so an FA icon whose advance width
-   is narrower/off-center than its box still sits dead-center. */
+/* Pin the glyph's bottom edge flush with the box bottom (= the marker's
+   anchor point), horizontally centered. Absolute positioning is
+   deterministic where flex align-items wasn't — the 18px glyph's base
+   stays glued to the anchor so it doesn't appear to shift on zoom. */
 .pme-marker i {
-    display: block;
-    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     text-align: center;
+    line-height: 1;
 }
 .pme-marker.pme-pulse i,
 .pme-pulse {
