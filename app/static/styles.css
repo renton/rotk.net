@@ -332,9 +332,19 @@ p.quote {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 22px;
+    height: 22px;
     font-size: 18px;
+    line-height: 1;
     color: #c0392b;
     text-shadow: 0 0 3px #fff, 0 0 5px #fff;
+}
+/* Fill the box and center the glyph, so an FA icon whose advance width
+   is narrower/off-center than its box still sits dead-center. */
+.pme-marker i {
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 .pme-marker.pme-pulse i,
 .pme-pulse {
