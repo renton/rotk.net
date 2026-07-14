@@ -3298,6 +3298,20 @@ def province_map_editor(map_id):
         (c for c in children
          if c.location_type and c.location_type.name == 'Commandery'),
         key=lambda c: c.name)
+    # How many chapters each descendant is tagged in — a cheap proxy for
+    # "matters in the book", so the admin can prioritise placing pins for
+    # locations that actually appear. One grouped query, not N+1.
+    from app.models.location import chapter_location
+    child_ids = [c.id for c in children]
+    mention_counts = {}
+    if child_ids:
+        rows = (
+            db.session.query(chapter_location.c.location_id, func.count())
+            .filter(chapter_location.c.location_id.in_(child_ids))
+            .group_by(chapter_location.c.location_id)
+            .all()
+        )
+        mention_counts = {lid: n for lid, n in rows}
     placements = {
         p.location_id: {'kind': p.kind, 'geometry': p.geometry}
         for p in ProvinceMapPlacement.query.filter_by(
@@ -3322,6 +3336,7 @@ def province_map_editor(map_id):
                          if c.location_type else ''),
                 'point_type': (c.location_type.point_type
                                if c.location_type else 'point'),
+                'mentions': mention_counts.get(c.id, 0),
             }
             for c in children
         ],
@@ -3336,6 +3351,7 @@ def province_map_editor(map_id):
         crumbs=crumbs,
         commandery_of=commandery_of,
         commanderies=commanderies,
+        mention_counts=mention_counts,
         payload=payload,
         csrf_form=_CsrfOnlyForm(),
     )

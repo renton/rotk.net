@@ -110,6 +110,18 @@
                         </div>
                         {% endif %}
                     </span>
+                    {% set mc = mention_counts.get(c.id, 0) %}
+                    {% if mc %}
+                    <span class="badge rounded-pill bg-secondary flex-shrink-0"
+                          title="Appears in {{ mc }} chapter{{ '' if mc == 1 else 's' }}">
+                        <i class="fa-solid fa-book"></i> {{ mc }}
+                    </span>
+                    {% else %}
+                    <span class="text-muted small flex-shrink-0"
+                          title="Not tagged in any chapter">
+                        <i class="fa-solid fa-book"></i> 0
+                    </span>
+                    {% endif %}
                     <div class="btn-group btn-group-sm">
                         <button type="button" class="btn btn-outline-primary pme-select"
                                 data-location-id="{{ c.id }}">Select</button>
