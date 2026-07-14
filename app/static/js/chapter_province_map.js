@@ -44,8 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // "contain" fit, which leaves the map looking small in the narrow
   // sidebar. Focusing a location zooms in only modestly from there so the
   // surrounding area stays visible.
-  var POINT_FOCUS_DELTA = 1.0;   // zoom levels in from the cover view for a pin
-  var SHAPE_FOCUS_PAD = 1.0;     // extra fitBounds padding for a line/region
+  var POINT_FOCUS_DELTA = 0.5;   // zoom levels in from the cover view for a pin
+  var SHAPE_FOCUS_PAD = 1.5;     // extra fitBounds padding for a line/region
+  var HIGHLIGHT_STYLE = { color: '#f39c12', weight: 5 };
 
   function toLatLng(xy) { return [xy[1], xy[0]]; }   // [x,y] -> [lat=y, lng=x]
 
@@ -193,12 +194,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function pulse(layer) {
+  // The last-focused placement stays highlighted (golden) until another
+  // is chosen, so the reader keeps a visual anchor after the pan settles.
+  var activeLayer = null;
+
+  function clearHighlight() {
+    if (!activeLayer) return;
+    if (activeLayer.setStyle) {
+      activeLayer.setStyle(STYLE);
+    } else if (activeLayer._icon) {
+      activeLayer._icon.classList.remove('pm-marker-active');
+    }
+    activeLayer = null;
+  }
+
+  function highlight(layer) {
     if (!layer) return;
+    clearHighlight();
+    activeLayer = layer;
     if (layer.setStyle) {
-      layer.setStyle({ color: '#f39c12', weight: 6 });
-      setTimeout(function () { layer.setStyle(STYLE); }, 1200);
+      // Brief thick flash, then settle into the persistent highlight.
+      layer.setStyle({ color: '#f39c12', weight: 7 });
+      setTimeout(function () {
+        if (activeLayer === layer) layer.setStyle(HIGHLIGHT_STYLE);
+      }, 600);
     } else if (layer._icon) {
+      layer._icon.classList.add('pm-marker-active');
       layer._icon.classList.add('pme-pulse');
       setTimeout(function () {
         if (layer._icon) layer._icon.classList.remove('pme-pulse');
@@ -232,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var layer = LAYERS[locId];
       if (!layer) return;
       focusLayer(layer, mapEl);
-      pulse(layer);
+      highlight(layer);
       if (layer.openPopup) layer.openPopup();
     }, 220);
   }
