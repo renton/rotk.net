@@ -234,11 +234,29 @@
     return true;
   }
 
+  // A Locations-list row that carries a province-map pin behaves exactly
+  // like clicking that location in the prose: open the Province Map
+  // accordion, pan/highlight the pin, and scroll the sidebar up to the
+  // map. Shared by the click + keyboard handlers below.
+  function activateLocationPinRow(row) {
+    if (!row) return;
+    var rid = row.getAttribute('data-on-province-map');
+    if (rid && showLocationOnMap(rid)) markSelected(row);
+  }
+
   document.addEventListener('click', function (event) {
     var ev = event.target.closest('.event-ref');
     if (ev) {
       var eid = ev.getAttribute('data-event-id');
       showAccordionItem('collapseEvents', eid ? 'event-item-' + eid : null);
+      return;
+    }
+    // Locations-list row with a map pin — same treatment as a prose click.
+    var pinRow = event.target.closest('li[data-on-province-map]');
+    if (pinRow) {
+      // Let inner controls (edit pencil, URL links) work normally.
+      if (event.target.closest('a, button')) return;
+      activateLocationPinRow(pinRow);
       return;
     }
     var loc = event.target.closest('.location-ref');
@@ -259,6 +277,16 @@
       }
       showAccordionItem('collapseLocations', 'location-item-' + lid);
     }
+  });
+
+  // Keyboard activation for the role="button" Locations-list rows.
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    var row = event.target.closest &&
+              event.target.closest('li[data-on-province-map]');
+    if (!row) return;
+    event.preventDefault();
+    activateLocationPinRow(row);
   });
 
   // Hover-to-open for .character-ref. Desktop only — on touch / mobile

@@ -293,20 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // ---- Locations-list rows (this wiring used to live in chapter_map.js) ---
-  document.querySelectorAll('[data-on-province-map]').forEach(function (row) {
-    var id = parseInt(row.getAttribute('data-on-province-map'), 10);
-    if (!id) return;
-    var fire = function (evt) {
-      var tag = (evt.target && evt.target.tagName) || '';
-      if (tag === 'A' || tag === 'BUTTON' ||
-          (evt.target.closest && evt.target.closest('a,button'))) return;
-      evt.preventDefault();
-      window.rotkChapterProvinceMap.showLocation(id);
-    };
-    row.addEventListener('click', fire);
-    row.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') fire(e);
-    });
-  });
+  // Locations-list row clicks are handled in chapter.js (so they share
+  // the prose click's sidebar-scroll-to-map behaviour) — they call
+  // rotkChapterProvinceMap.showLocation() through showLocationOnMap().
 });
