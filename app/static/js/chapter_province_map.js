@@ -61,7 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
       className: 'pme-marker',
       html: '<i class="' + (icon || 'fa-solid fa-location-dot') + '"></i>',
       iconSize: [22, 22],
-      iconAnchor: [11, 11]
+      // Bottom-center: the icon's base sits on the coordinate (stays put
+      // on zoom), matching the placement editor.
+      iconAnchor: [11, 22]
     });
   }
 

@@ -61,7 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
       className: 'pme-marker',
       html: '<i class="' + cls + '"></i>',
       iconSize: [22, 22],
-      iconAnchor: [11, 11]
+      // Bottom-center: the icon's base sits on the coordinate (stays put
+      // on zoom), instead of the middle floating over it.
+      iconAnchor: [11, 22]
     });
   }
 
