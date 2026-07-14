@@ -213,9 +213,11 @@
   // sees the "Map" heading at the top of the sidebar viewport every
   // click, which is the requested UX.
   function showLocationOnMap(locationId) {
-    var mapApi = window.rotkChapterMap;
+    var mapApi = window.rotkChapterProvinceMap;
     if (!mapApi) return false;
-    mapApi.showLocation(parseInt(locationId, 10));
+    // Returns false when the location has no province-map placement —
+    // let the caller fall back to the Locations accordion.
+    if (!mapApi.showLocation(parseInt(locationId, 10))) return false;
     if (isMobile()) return true;
     var mapAccordion = document.getElementById('collapseMap');
     var mapHeader = document.getElementById('sidebar-map');
@@ -242,12 +244,12 @@
     if (loc) {
       var lid = loc.getAttribute('data-location-id');
       if (!lid) return;
-      // Geo-positioned locations get the map treatment; others (no
-      // lat/lng AND no geojson) have no pin to show, so fall back to
-      // the Locations accordion + row-flash like before.
+      // Locations placed on a province map get the map treatment;
+      // others have no pin to show, so fall back to the Locations
+      // accordion + row-flash like before.
       var item = document.getElementById('location-item-' + lid);
-      var hasGeo = item && item.hasAttribute('data-show-on-map');
-      if (hasGeo && showLocationOnMap(lid)) {
+      var onMap = item && item.hasAttribute('data-on-province-map');
+      if (onMap && showLocationOnMap(lid)) {
         // The map takes the scroll, but the Locations list still marks
         // this row as the last-clicked location so it's findable when
         // the reader opens that accordion.

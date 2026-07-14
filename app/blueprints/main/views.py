@@ -36,6 +36,134 @@ def _chapter_years(date_str):
     return list(range(first, last + 1))
 
 
+def _province_of(loc, ancestry_by_loc_id):
+    """The Province-type Location for `loc`: itself if it IS a province,
+    else the nearest Province ancestor from its parent chain, else None."""
+    lt = loc.location_type
+    if lt and lt.name == 'Province':
+        return loc
+    for anc in ancestry_by_loc_id.get(loc.id, []):
+        if anc.location_type and anc.location_type.name == 'Province':
+            return anc
+    return None
+
+
+def _chapter_province_maps(chapter_locations, ancestry_by_loc_id):
+    """Build the chapter-sidebar province-map panel payload.
+
+    Walks each chapter location up to its Province ancestor, collects
+    every mentioned province that has at least one ProvinceMap, and for
+    each map attaches the ProvinceMapPlacement overlays for the chapter's
+    OWN locations (pins only for places actually mentioned here).
+
+    Returns (payload, mapped_location_ids):
+      payload = [
+        {province_id, province_name, maps: [
+          {map_id, label, image_url, source_site, source_url,
+           placements: [{location_id, name, kind, geometry, icon, type_name}]}
+        ]}
+      ]  (provinces sorted by name; maps by label,id)
+      mapped_location_ids = set of location ids actually drawn as a pin
+        (drives the "click to show on map" affordance in the template/JS).
+    """
+    from collections import defaultdict
+    from sqlalchemy import or_
+    from app.models import ProvinceMap, ProvinceMapPlacement
+
+    loc_ids = [loc.id for loc in chapter_locations]
+    if not loc_ids:
+        return [], set()
+
+    # Placements for THIS chapter's locations, across every map they sit on.
+    placements = (
+        ProvinceMapPlacement.query
+        .filter(ProvinceMapPlacement.location_id.in_(loc_ids))
+        .options(
+            selectinload(ProvinceMapPlacement.location)
+            .selectinload(Location.location_type)
+        )
+        .all()
+    )
+    placed_by_map = defaultdict(list)
+    for p in placements:
+        placed_by_map[p.province_map_id].append(p)
+    pinned_map_ids = set(placed_by_map)
+
+    # Provinces mentioned via the parent walk (or the location itself).
+    province_ids = set()
+    for loc in chapter_locations:
+        prov = _province_of(loc, ancestry_by_loc_id)
+        if prov is not None:
+            province_ids.add(prov.id)
+
+    if not province_ids and not pinned_map_ids:
+        return [], set()
+
+    # Union: every mentioned province's maps AND any map that owns a pin
+    # (the latter guards against a placement whose province wasn't reached
+    # by the parent walk due to a data gap).
+    maps = (
+        ProvinceMap.query
+        .filter(or_(
+            ProvinceMap.location_id.in_(province_ids or {-1}),
+            ProvinceMap.id.in_(pinned_map_ids or {-1}),
+        ))
+        .order_by(ProvinceMap.label, ProvinceMap.id)
+        .all()
+    )
+    if not maps:
+        return [], set()
+
+    maps_by_prov = defaultdict(list)
+    for m in maps:
+        maps_by_prov[m.location_id].append(m)
+
+    prov_rows = {
+        p.id: p for p in
+        Location.query.filter(Location.id.in_(list(maps_by_prov))).all()
+    }
+
+    payload = []
+    mapped_location_ids = set()
+    for prov_id, prov_maps in maps_by_prov.items():
+        prov = prov_rows.get(prov_id)
+        if prov is None or prov.is_deleted:
+            continue
+        maps_out = []
+        for m in prov_maps:
+            pins = []
+            for p in placed_by_map.get(m.id, []):
+                loc = p.location
+                if loc is None or loc.is_deleted:
+                    continue
+                lt = loc.location_type
+                pins.append({
+                    'location_id': loc.id,
+                    'name': loc.name or '',
+                    'kind': p.kind,
+                    'geometry': p.geometry,
+                    'icon': (lt.icon if lt else '') or '',
+                    'type_name': (lt.name if lt else '') or '',
+                })
+                mapped_location_ids.add(loc.id)
+            maps_out.append({
+                'map_id': m.id,
+                'label': m.label or '',
+                'image_url': url_for('static', filename=m.static_path),
+                'source_site': m.source_site or '',
+                'source_url': m.source_url or '',
+                'placements': pins,
+            })
+        payload.append({
+            'province_id': prov_id,
+            'province_name': prov.name or '',
+            'maps': maps_out,
+        })
+
+    payload.sort(key=lambda d: d['province_name'])
+    return payload, mapped_location_ids
+
+
 def _normalize_csv(s):
     """Normalise a comma-delimited keyword list: strip whitespace around
     each entry, drop empties, rejoin with bare commas (no spaces). Keeps
@@ -769,30 +897,13 @@ def chapter(chapter_num):
         Chapter.query.filter(Chapter.chapter_num == chapter.chapter_num + 1).first()
     )
 
-    # Map payload for the chapter sidebar's mini-map — same item
-    # shape as the /map view (so map_base.js renders both identically).
-    # Locations without lat/lng AND without geojson are omitted; they
-    # still appear in the Locations accordion but can't be placed.
-    chapter_map_items = []
-    for loc in chapter_locations:
-        has_point = loc.latitude is not None and loc.longitude is not None
-        has_geo = bool(loc.geojson)   # see /map view comment
-        if not has_point and not has_geo:
-            continue
-        lt = loc.location_type
-        chapter_map_items.append({
-            'id':            loc.id,
-            'name':          loc.name or '',
-            'chinese_name':  loc.chinese_name or '',
-            'type_name':     (lt.name if lt else '') or '',
-            'icon':          (lt.icon if lt else '') or '',
-            'bg_colour':     (lt.bg_colour if lt else '') or '#6c757d',
-            'font_colour':   (lt.font_colour if lt else '') or '#ffffff',
-            'border_colour': (lt.border_colour if lt else '') or '#6c757d',
-            'latitude':      loc.latitude if has_point else None,
-            'longitude':     loc.longitude if has_point else None,
-            'geojson':       loc.geojson if (has_geo and not has_point) else None,
-        })
+    # Province-map panel payload for the chapter sidebar: one tab per
+    # unique province the chapter's locations belong to (that has a
+    # ProvinceMap), each map carrying the placement overlays for THIS
+    # chapter's locations. `mapped_location_ids` drives the "click to
+    # show on map" affordance on the Locations list + inline refs.
+    chapter_province_maps, mapped_location_ids = _chapter_province_maps(
+        chapter_locations, ancestry_by_loc_id)
 
     # Per-(chapter, character) editorial summaries — shown in the
     # Characters accordion when set.
@@ -878,7 +989,8 @@ def chapter(chapter_num):
         ancestry_by_loc_id=ancestry_by_loc_id,
         prev_chapter=prev_chapter,
         next_chapter=next_chapter,
-        chapter_map_items=chapter_map_items,
+        chapter_province_maps=chapter_province_maps,
+        mapped_location_ids=mapped_location_ids,
         chapter_year_maps=chapter_year_maps,
         char_summary_by_id=char_summary_by_id,
         relationships_by_char_id=relationships_by_char_id,

@@ -15,8 +15,8 @@ import itertools
 from app import db
 from app.models import (
     Annotation, Chapter, ChapterHiddenSnippet, Character, Event, EventType,
-    Faction, Location, LocationType, MatchExclusion, Role, Tag, Url, UrlType,
-    User,
+    Faction, Location, LocationType, MatchExclusion, ProvinceMap,
+    ProvinceMapPlacement, Role, Tag, Url, UrlType, User,
 )
 from app.models.character import Portrait
 
@@ -103,6 +103,25 @@ def make_location(session=None, **kw):
     defaults = dict(name=f'Location{n}', aliases='')
     defaults.update(kw)
     return _flush(Location(**defaults), session)
+
+
+def make_province_map(session=None, *, location, **kw):
+    n = _n()
+    defaults = dict(location_id=location.id, filename=f'pm{n}.png', label='')
+    defaults.update(kw)
+    return _flush(ProvinceMap(**defaults), session)
+
+
+def make_province_map_placement(session=None, *, province_map, location,
+                                kind='point', geometry=None, **kw):
+    defaults = dict(
+        province_map_id=province_map.id,
+        location_id=location.id,
+        kind=kind,
+        geometry=geometry if geometry is not None else [10, 20],
+    )
+    defaults.update(kw)
+    return _flush(ProvinceMapPlacement(**defaults), session)
 
 
 def make_event_type(session=None, **kw):
