@@ -39,6 +39,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ---- render helpers -----------------------------------------------------
   var STYLE = { color: '#c0392b', weight: 3 };
+  // How the map is framed. On first reveal we "cover" the container (fill
+  // it, cropping the longer axis) rather than image_panzoom's default
+  // "contain" fit, which leaves the map looking small in the narrow
+  // sidebar. Focusing a location zooms in only modestly from there so the
+  // surrounding area stays visible.
+  var POINT_FOCUS_DELTA = 1.0;   // zoom levels in from the cover view for a pin
+  var SHAPE_FOCUS_PAD = 1.0;     // extra fitBounds padding for a line/region
 
   function toLatLng(xy) { return [xy[1], xy[0]]; }   // [x,y] -> [lat=y, lng=x]
 
@@ -100,12 +107,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // ---- inner map switcher (provinces with several maps) -------------------
-  function ensureFitted(mapEl) {
+  // ---- framing ------------------------------------------------------------
+  // Fill the container with the map image (cover, not contain), centred.
+  // Runs once per viewer on first reveal; later reveals just re-measure so
+  // a reader's manual zoom/pan is preserved.
+  function frameContainer(mapEl) {
     var lmap = mapEl && mapEl._panzoomMap;
-    if (!lmap) return;
+    var b = mapEl && mapEl._panzoomBounds;
+    if (!lmap || !b) return;
     lmap.invalidateSize();
-    if (mapEl._panzoomBounds) lmap.fitBounds(mapEl._panzoomBounds);
+    var size = lmap.getSize();
+    if (!size.x || !size.y) return;         // still hidden — try again later
+    var imgH = b[1][0], imgW = b[1][1];
+    // CRS.Simple: screen px = map units * 2^zoom, so the zoom that makes the
+    // image fill an axis is log2(containerPx / imagePx). Cover = the larger.
+    var zW = Math.log(size.x / imgW) / Math.LN2;
+    var zH = Math.log(size.y / imgH) / Math.LN2;
+    var cover = Math.max(zW, zH);
+    var maxZ = lmap.getMaxZoom();
+    if (cover > maxZ) cover = maxZ;
+    lmap.setView([imgH / 2, imgW / 2], cover, { animate: false });
+    mapEl._pmCoverZoom = cover;
+    mapEl._pmFramed = true;
+  }
+
+  // Cover-frame the visible viewer(s) inside a revealed container (first
+  // time only); otherwise just re-measure.
+  function frameVisibleIn(container) {
+    if (!container || !container.querySelectorAll) return;
+    container.querySelectorAll('.image-panzoom[data-pm-map-id]')
+      .forEach(function (el) {
+        if (el.offsetParent === null) return;   // hidden (d-none / collapsed)
+        if (el._pmFramed) {
+          if (el._panzoomMap) el._panzoomMap.invalidateSize();
+        } else {
+          frameContainer(el);
+        }
+      });
   }
 
   // Reveal the given map within a province pane; hide the rest. Returns
@@ -128,20 +166,30 @@ document.addEventListener('DOMContentLoaded', function () {
     sel.addEventListener('change', function () {
       var provinceId = parseInt(sel.getAttribute('data-province-id'), 10);
       var viewer = showMapWrap(provinceId, parseInt(sel.value, 10));
-      if (viewer) ensureFitted(viewer);
+      if (!viewer) return;
+      if (viewer._pmFramed) {
+        if (viewer._panzoomMap) viewer._panzoomMap.invalidateSize();
+      } else {
+        frameContainer(viewer);
+      }
     });
   });
 
-  // ---- pan + pulse --------------------------------------------------------
-  function panTo(layer, mapEl) {
+  // ---- focus (pan + modest zoom, keeping surroundings in view) ------------
+  function focusLayer(layer, mapEl) {
     var lmap = mapEl && mapEl._panzoomMap;
     if (!lmap || !layer) return;
     if (layer.getBounds) {
       var b = layer.getBounds();
-      if (b && b.isValid()) { lmap.fitBounds(b.pad(0.5)); return; }
+      if (b && b.isValid()) { lmap.fitBounds(b.pad(SHAPE_FOCUS_PAD)); return; }
     }
     if (layer.getLatLng) {
-      lmap.setView(layer.getLatLng(), Math.max(lmap.getZoom(), 1));
+      // Zoom in only a little from the province cover view so the reader
+      // still sees the surrounding area.
+      var base = (mapEl._pmCoverZoom !== undefined)
+        ? mapEl._pmCoverZoom : lmap.getZoom();
+      var z = Math.min(lmap.getMaxZoom(), base + POINT_FOCUS_DELTA);
+      lmap.setView(layer.getLatLng(), z);
     }
   }
 
@@ -177,10 +225,13 @@ document.addEventListener('DOMContentLoaded', function () {
       '.image-panzoom[data-pm-map-id="' + p.mapId + '"]');
     // Give the tab / wrap reveal a moment to lay out before measuring.
     setTimeout(function () {
-      ensureFitted(mapEl);
+      // Establish the cover baseline (and _pmCoverZoom) if this viewer
+      // hasn't been shown yet, so the focus zoom is relative to it.
+      if (mapEl && !mapEl._pmFramed) frameContainer(mapEl);
+      else if (mapEl && mapEl._panzoomMap) mapEl._panzoomMap.invalidateSize();
       var layer = LAYERS[locId];
       if (!layer) return;
-      panTo(layer, mapEl);
+      focusLayer(layer, mapEl);
       pulse(layer);
       if (layer.openPopup) layer.openPopup();
     }, 220);
@@ -206,6 +257,20 @@ document.addEventListener('DOMContentLoaded', function () {
       return true;
     }
   };
+
+  // ---- cover-frame each viewer the first time it's revealed --------------
+  // image_panzoom.js registers its own shown.bs.* handlers first (it loads
+  // before us) and does its contain-fit; ours runs after and overrides to
+  // the cover framing.
+  document.addEventListener('shown.bs.collapse', function (e) {
+    if (e.target && e.target.id === 'collapseMap') frameVisibleIn(e.target);
+  });
+  document.addEventListener('shown.bs.tab', function (e) {
+    var sel = e.target.getAttribute('data-bs-target');
+    if (sel && sel.indexOf('#pm-pane-') === 0) {
+      frameVisibleIn(document.querySelector(sel));
+    }
+  });
 
   // ---- Locations-list rows (this wiring used to live in chapter_map.js) ---
   document.querySelectorAll('[data-on-province-map]').forEach(function (row) {
