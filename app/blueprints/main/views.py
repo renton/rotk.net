@@ -1752,11 +1752,18 @@ def merge_faction(id):
        listings).
     2. Every character whose primary_faction is `source` gets switched
        to `target`. Other characters' primaries are not touched.
-    3. `source.is_hidden` flips to True so it disappears from listings.
+    3. Every OTHER reference to source is repointed onto target so
+       nothing dangles on the hidden row: event_faction (sided
+       belligerents), faction_leader, year_map_faction, polymorphic Url
+       and TagAssociation (target_type='faction'). Each carries a
+       composite unique key, so de-dup then repoint (as merge_location
+       does) rather than a blind UPDATE that would collide when source
+       and target share a row.
+    4. `source.is_hidden` flips to True so it disappears from listings.
 
     The action isn't undoable from the UI — flip is_hidden back in the DB
     if you need to recover (the M2M membership added to characters stays
-    either way)."""
+    either way; the repointed refs in step 3 do NOT come back)."""
     merge_form = MergeFactionForm()
     if not merge_form.validate_on_submit():
         abort(400)
@@ -1789,6 +1796,71 @@ def merge_faction(id):
             synchronize_session='fetch',
         )
     )
+
+    # ----- Repoint every OTHER reference onto target ---------------
+    from sqlalchemy import text
+    params = {'source_id': source.id, 'target_id': target.id}
+
+    # event_faction — sided belligerents; unique (event_id, faction_id, side)
+    db.session.execute(text("""
+        UPDATE event_faction SET faction_id = :target_id
+        WHERE faction_id = :source_id
+          AND NOT EXISTS (
+              SELECT 1 FROM event_faction e2
+              WHERE e2.faction_id = :target_id
+                AND e2.event_id = event_faction.event_id
+                AND e2.side = event_faction.side
+          )
+    """), params)
+    db.session.execute(text(
+        "DELETE FROM event_faction WHERE faction_id = :source_id"), params)
+
+    # faction_leader — unique (faction_id, character_id)
+    db.session.execute(text("""
+        UPDATE faction_leader SET faction_id = :target_id
+        WHERE faction_id = :source_id
+          AND NOT EXISTS (
+              SELECT 1 FROM faction_leader f2
+              WHERE f2.faction_id = :target_id
+                AND f2.character_id = faction_leader.character_id
+          )
+    """), params)
+    db.session.execute(text(
+        "DELETE FROM faction_leader WHERE faction_id = :source_id"), params)
+
+    # year_map_faction — unique (year_map_id, faction_id)
+    db.session.execute(text("""
+        UPDATE year_map_faction SET faction_id = :target_id
+        WHERE faction_id = :source_id
+          AND NOT EXISTS (
+              SELECT 1 FROM year_map_faction y2
+              WHERE y2.faction_id = :target_id
+                AND y2.year_map_id = year_map_faction.year_map_id
+          )
+    """), params)
+    db.session.execute(text(
+        "DELETE FROM year_map_faction WHERE faction_id = :source_id"), params)
+
+    # polymorphic Url — no unique key on target_id, blind repoint
+    db.session.execute(text("""
+        UPDATE url SET target_id = :target_id
+        WHERE target_type = 'faction' AND target_id = :source_id
+    """), params)
+
+    # polymorphic TagAssociation — unique (tag_id, target_type, target_id)
+    db.session.execute(text("""
+        UPDATE tag_association SET target_id = :target_id
+        WHERE target_type = 'faction' AND target_id = :source_id
+          AND NOT EXISTS (
+              SELECT 1 FROM tag_association t2
+              WHERE t2.target_type = 'faction'
+                AND t2.target_id = :target_id
+                AND t2.tag_id = tag_association.tag_id
+          )
+    """), params)
+    db.session.execute(text(
+        "DELETE FROM tag_association "
+        "WHERE target_type = 'faction' AND target_id = :source_id"), params)
 
     source.is_hidden = True
     db.session.commit()

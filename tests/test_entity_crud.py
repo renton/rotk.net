@@ -3,7 +3,8 @@ events, URLs, tag-shaped types)."""
 import sqlalchemy as sa
 
 from app.models import (
-    Character, Event, EventType, Faction, Location, Role, Tag, Url, UrlType,
+    Character, Event, EventType, Faction, Location, Role, Tag,
+    TagAssociation, Url, UrlType, YearMap,
 )
 from tests import factories
 
@@ -113,6 +114,90 @@ class TestFactionCrud:
         assert c2.primary_faction_id == dst.id
         assert dst in c2.factions.all()
         assert Faction.query.get(src.id).is_hidden is True
+
+    def _merge_faction(self, client, src, dst):
+        return client.post(f'/factions/{src.id}/merge', data={
+            'target_faction_id': str(dst.id),
+        }, follow_redirects=True)
+
+    def test_merge_faction_moves_leaders(self, admin_client, db_session):
+        client, _ = admin_client
+        src = factories.make_faction(name='LeaderSrc')
+        dst = factories.make_faction(name='LeaderDst')
+        boss = factories.make_character(name='TheBoss')
+        src.leaders.append(boss)
+        db_session.flush()
+        self._merge_faction(client, src, dst)
+        db_session.expire_all()
+        assert boss in Faction.query.get(dst.id).leaders
+        assert Faction.query.get(src.id).leaders == []
+
+    def test_merge_faction_moves_sided_event_belligerents(self, admin_client,
+                                                          db_session):
+        client, _ = admin_client
+        src = factories.make_faction(name='EvSrc')
+        dst = factories.make_faction(name='EvDst')
+        ev = factories.make_event(name='SomeBattle')
+        db_session.flush()
+        db_session.execute(sa.text(
+            'INSERT INTO event_faction (event_id, faction_id, side) '
+            'VALUES (:e, :f, 2)'), {'e': ev.id, 'f': src.id})
+        db_session.flush()
+        self._merge_faction(client, src, dst)
+        db_session.expire_all()
+        rows = db_session.execute(sa.text(
+            'SELECT faction_id, side FROM event_faction '
+            'WHERE event_id = :e'), {'e': ev.id}).all()
+        assert (dst.id, 2) in rows
+        assert not any(fid == src.id for fid, _ in rows)
+
+    def test_merge_faction_moves_year_map_membership(self, admin_client,
+                                                     db_session):
+        client, _ = admin_client
+        src = factories.make_faction(name='YmSrc')
+        dst = factories.make_faction(name='YmDst')
+        ym = YearMap(year=277, filename='y.png')
+        db_session.add(ym)
+        db_session.flush()
+        ym.factions.append(src)
+        db_session.flush()
+        self._merge_faction(client, src, dst)
+        db_session.expire_all()
+        assert dst in YearMap.query.get(ym.id).factions
+
+    def test_merge_faction_moves_urls_and_tags(self, admin_client, db_session):
+        client, _ = admin_client
+        src = factories.make_faction(name='UrlTagSrc')
+        dst = factories.make_faction(name='UrlTagDst')
+        u = factories.make_url(target_type='faction', target_id=src.id)
+        tag = factories.make_tag(name='FactionTag')
+        ta = TagAssociation(tag_id=tag.id, target_type='faction',
+                            target_id=src.id)
+        db_session.add(ta)
+        db_session.flush()
+        self._merge_faction(client, src, dst)
+        db_session.expire_all()
+        assert Url.query.get(u.id).target_id == dst.id
+        assert TagAssociation.query.get(ta.id).target_id == dst.id
+
+    def test_merge_faction_tag_dedups_when_both_tagged(self, admin_client,
+                                                       db_session):
+        client, _ = admin_client
+        src = factories.make_faction(name='DupSrc')
+        dst = factories.make_faction(name='DupDst')
+        tag = factories.make_tag(name='SharedFactionTag')
+        db_session.add_all([
+            TagAssociation(tag_id=tag.id, target_type='faction',
+                           target_id=src.id),
+            TagAssociation(tag_id=tag.id, target_type='faction',
+                           target_id=dst.id),
+        ])
+        db_session.flush()
+        self._merge_faction(client, src, dst)
+        db_session.expire_all()
+        rows = TagAssociation.query.filter_by(
+            tag_id=tag.id, target_type='faction').all()
+        assert [r.target_id for r in rows] == [dst.id]
 
 
 class TestRoleCrud:
