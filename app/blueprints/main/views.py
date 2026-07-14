@@ -2124,8 +2124,19 @@ def merge_location(id):
       - chapter_location M2M (with per-link `keywords` merged)
       - event.location_id
       - location.parent_id (children re-parented)
-      - polymorphic Url rows         (target_type='location')
-      - polymorphic MatchExclusion   (target_type='location')
+      - polymorphic Url rows          (target_type='location')
+      - polymorphic MatchExclusion    (target_type='location')
+      - polymorphic TagAssociation    (target_type='location')
+      - annotation_location M2M
+      - province_map.location_id + province_map_placement.location_id
+
+    The M2M / uniquely-constrained refs (annotation_location,
+    tag_association, province_map_placement) use the same
+    de-dup-then-repoint pattern as chapter_location so a row linked to
+    BOTH source and target doesn't collide on its unique key. Because
+    the merge only *soft*-deletes source, the FK `ON DELETE CASCADE` on
+    the province-map tables never fires, so those refs must be moved
+    explicitly or they dangle on the hidden row.
 
     Target also inherits source's name + chinese_name + every alias on
     source (added to target.aliases CSV, deduped). location_type, lat,
@@ -2250,6 +2261,59 @@ def merge_location(id):
         UPDATE match_exclusion SET target_id = :target_id
         WHERE target_type = 'location' AND target_id = :source_id
     """), params)
+    # TagAssociation is polymorphic like Url/MatchExclusion, but carries a
+    # UniqueConstraint(tag_id, target_type, target_id): repoint only the
+    # tags target doesn't already have, then drop the (now-duplicate) rest.
+    db.session.execute(text("""
+        UPDATE tag_association SET target_id = :target_id
+        WHERE target_type = 'location' AND target_id = :source_id
+          AND NOT EXISTS (
+              SELECT 1 FROM tag_association t2
+              WHERE t2.target_type = 'location'
+                AND t2.target_id = :target_id
+                AND t2.tag_id = tag_association.tag_id
+          )
+    """), params)
+    db.session.execute(text("""
+        DELETE FROM tag_association
+        WHERE target_type = 'location' AND target_id = :source_id
+    """), params)
+
+    # ----- annotation_location M2M (composite PK) ------------------
+    # Same de-dup-then-repoint as chapter_location: move source's links
+    # only for annotations not already linked to target, drop leftovers.
+    db.session.execute(text("""
+        UPDATE annotation_location SET location_id = :target_id
+        WHERE location_id = :source_id
+          AND annotation_id NOT IN (
+              SELECT annotation_id FROM annotation_location
+              WHERE location_id = :target_id
+          )
+    """), params)
+    db.session.execute(text(
+        "DELETE FROM annotation_location WHERE location_id = :source_id"
+    ), params)
+
+    # ----- Province maps + per-child placements --------------------
+    # Soft-delete never fires the FK ON DELETE CASCADE, so move these
+    # explicitly. A province may own several maps -> plain repoint.
+    # Placements carry UniqueConstraint(province_map_id, location_id).
+    db.session.execute(text(
+        "UPDATE province_map SET location_id = :target_id "
+        "WHERE location_id = :source_id"
+    ), params)
+    db.session.execute(text("""
+        UPDATE province_map_placement SET location_id = :target_id
+        WHERE location_id = :source_id
+          AND NOT EXISTS (
+              SELECT 1 FROM province_map_placement p2
+              WHERE p2.location_id = :target_id
+                AND p2.province_map_id = province_map_placement.province_map_id
+          )
+    """), params)
+    db.session.execute(text(
+        "DELETE FROM province_map_placement WHERE location_id = :source_id"
+    ), params)
 
     # ----- Aliases (target absorbs source's name + chinese + aliases) ---
     aliases_existing = [a.strip() for a in (target.aliases or '').split(',') if a.strip()]

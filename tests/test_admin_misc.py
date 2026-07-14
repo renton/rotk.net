@@ -3,7 +3,8 @@ location-types, location merge, edit-log relationship diffs."""
 import sqlalchemy as sa
 
 from app.models import (
-    Edit, Event, Location, LocationType, MatchExclusion, Url, User,
+    Annotation, Edit, Event, Location, LocationType, MatchExclusion,
+    ProvinceMap, ProvinceMapPlacement, Tag, TagAssociation, Url, User,
 )
 from tests import factories
 
@@ -186,6 +187,71 @@ class TestMergeLocation:
         db_session.expire_all()
         assert Location.query.get(src.id).is_deleted is True
         assert 'GoneName' in (Location.query.get(dst.id).aliases or '')
+
+    def test_tag_association_moves(self, admin_client, db_session):
+        client, _ = admin_client
+        src = factories.make_location(name='TaggedPlace')
+        dst = factories.make_location(name='TaggedTarget')
+        tag = factories.make_tag(name='SomeTag')
+        ta = TagAssociation(tag_id=tag.id, target_type='location',
+                            target_id=src.id)
+        db_session.add(ta)
+        db_session.flush()
+        self._merge(client, src, dst)
+        db_session.expire_all()
+        assert TagAssociation.query.get(ta.id).target_id == dst.id
+
+    def test_tag_association_dedups_when_both_tagged(self, admin_client,
+                                                     db_session):
+        # Same tag on source AND target must not collide on the
+        # (tag_id, target_type, target_id) unique constraint.
+        client, _ = admin_client
+        src = factories.make_location(name='DupTagSrc')
+        dst = factories.make_location(name='DupTagDst')
+        tag = factories.make_tag(name='SharedTag')
+        db_session.add_all([
+            TagAssociation(tag_id=tag.id, target_type='location',
+                           target_id=src.id),
+            TagAssociation(tag_id=tag.id, target_type='location',
+                           target_id=dst.id),
+        ])
+        db_session.flush()
+        self._merge(client, src, dst)
+        db_session.expire_all()
+        rows = TagAssociation.query.filter_by(
+            tag_id=tag.id, target_type='location').all()
+        assert [r.target_id for r in rows] == [dst.id]
+
+    def test_annotation_location_ref_moves(self, admin_client, db_session):
+        client, _ = admin_client
+        ch = factories.make_chapter()
+        src = factories.make_location(name='AnnoPlace')
+        dst = factories.make_location(name='AnnoTarget')
+        anno = factories.make_annotation(chapter=ch, section_text='para')
+        anno.locations.append(src)
+        db_session.flush()
+        self._merge(client, src, dst)
+        db_session.expire_all()
+        loc_ids = [l.id for l in Annotation.query.get(anno.id).locations]
+        assert dst.id in loc_ids and src.id not in loc_ids
+
+    def test_province_map_and_placement_move(self, admin_client, db_session):
+        client, _ = admin_client
+        src = factories.make_location(name='MapProvince')
+        dst = factories.make_location(name='MapTarget')
+        child = factories.make_location(name='PlacedChild')
+        pm = ProvinceMap(location_id=src.id, filename='m.png')
+        db_session.add(pm)
+        db_session.flush()
+        # source is placed as a child on its own map
+        pl = ProvinceMapPlacement(province_map_id=pm.id, location_id=src.id,
+                                  kind='point', geometry=[1, 2])
+        db_session.add(pl)
+        db_session.flush()
+        self._merge(client, src, dst)
+        db_session.expire_all()
+        assert ProvinceMap.query.get(pm.id).location_id == dst.id
+        assert ProvinceMapPlacement.query.get(pl.id).location_id == dst.id
 
 
 class TestEditLogRelationships:
