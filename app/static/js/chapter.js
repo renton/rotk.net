@@ -153,6 +153,16 @@
     item.classList.add('sidebar-selected');
   }
 
+  // CSS animates a yellow-fade-out via the .sidebar-flash class. Re-trigger
+  // by removing + re-adding (with a reflow in between) so clicking the same
+  // item again flashes it again.
+  function flashItem(item) {
+    if (!item) return;
+    item.classList.remove('sidebar-flash');
+    void item.offsetWidth;
+    item.classList.add('sidebar-flash');
+  }
+
   // Scroll ONLY the sticky right sidebar (its own overflow container) so
   // `el` sits near the top of the sidebar viewport. Uses the sidebar's
   // own scrollTo — the window is never touched. No-op on mobile, where
@@ -173,13 +183,7 @@
     if (!item) return;
 
     markSelected(item);
-
-    // CSS animates a yellow-fade-out via the .sidebar-flash class.
-    // Re-trigger by removing + re-adding (with a reflow in between) so
-    // a second click on the same item flashes again.
-    item.classList.remove('sidebar-flash');
-    void item.offsetWidth;
-    item.classList.add('sidebar-flash');
+    flashItem(item);
 
     // Scroll the sidebar (only) so the row lands at the top of the panel.
     var scrollToItem = function () { scrollSidebarTo(item); };
@@ -241,7 +245,10 @@
   function activateLocationPinRow(row) {
     if (!row) return;
     var rid = row.getAttribute('data-on-province-map');
-    if (rid && showLocationOnMap(rid)) markSelected(row);
+    if (rid && showLocationOnMap(rid)) {
+      markSelected(row);
+      flashItem(row);
+    }
   }
 
   document.addEventListener('click', function (event) {
@@ -269,10 +276,11 @@
       var item = document.getElementById('location-item-' + lid);
       var onMap = item && item.hasAttribute('data-on-province-map');
       if (onMap && showLocationOnMap(lid)) {
-        // The map takes the scroll, but the Locations list still marks
-        // this row as the last-clicked location so it's findable when
-        // the reader opens that accordion.
+        // The map takes the scroll, but the Locations list still marks +
+        // flashes this row so it's findable when the reader opens that
+        // accordion.
         markSelected(item);
+        flashItem(item);
         return;
       }
       showAccordionItem('collapseLocations', 'location-item-' + lid);
