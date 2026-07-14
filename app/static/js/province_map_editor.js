@@ -63,7 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
       iconSize: [22, 22],
       // Bottom-center: the icon's base sits on the coordinate (stays put
       // on zoom), instead of the middle floating over it.
-      iconAnchor: [11, 22]
+      iconAnchor: [11, 22],
+      // Open the popup above the glyph (which now sits entirely above the
+      // anchor point) so it doesn't cover the icon.
+      popupAnchor: [0, -24]
     });
   }
 
