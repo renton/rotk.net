@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var btnCancel = document.getElementById('pme-cancel');
 
   var HINTS = {
-    point: 'Click the map to set the point (click again to move it).',
+    point: 'Click the map to set the point, then drag the marker to fine-tune (or click elsewhere to move it).',
     line: 'Press and drag to draw the line; release to finish. Drawing again replaces it.',
     region: 'Click each corner of the region — at least three. Save when the polygon looks right.'
   };
@@ -90,7 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var style = preview ? PREVIEW_STYLE : STYLE;
     var layer;
     if (kind === 'point') {
-      layer = L.marker(toLatLng(geometry), { icon: iconFor(loc) });
+      // Preview point markers are draggable so the placement can be
+      // nudged after the initial click (dragend syncs mode.geometry —
+      // wired in redrawPreview). Saved markers stay fixed.
+      layer = L.marker(toLatLng(geometry),
+                       { icon: iconFor(loc), draggable: !!preview });
     } else if (kind === 'line') {
       layer = L.polyline(geometry.map(toLatLng), style);
     } else {
@@ -134,6 +138,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (mode.layer) { map.removeLayer(mode.layer); mode.layer = null; }
     if (!mode.geometry) { updateSaveEnabled(); return; }
     mode.layer = layerFor(mode.loc, mode.kind, mode.geometry, true);
+    // Drag-to-reposition for point placements: committing the new
+    // position on release. A plain map click still lands in onMapClick
+    // and replaces the point wholesale.
+    if (mode.kind === 'point' && mode.layer.on) {
+      mode.layer.on('dragend', function () {
+        mode.geometry = toXY(mode.layer.getLatLng());
+        updateSaveEnabled();
+      });
+    }
     mode.layer.addTo(map);
     updateSaveEnabled();
   }
