@@ -29,14 +29,21 @@
   // --- build the gradient string for a fuzzy lifeline ---
   //
   // Item extent: [birth_lo, death_hi]. Solid section: [birth_hi, death_lo].
-  // Anything outside the solid section fades toward the bar's bg colour
-  // with reduced alpha at the extremes. If birth_lo == birth_hi (sharp
-  // birth) the left edge is full alpha; same for death on the right.
+  // An end only fades when its date is actually UNCERTAIN — a circa /
+  // trailing-? qualifier, a decade, or an explicit year range, all of
+  // which parse to spans wider than one year. A precisely-known date
+  // (bare year, month, day, season) spans at most one calendar year by
+  // construction, so those ends render solid right to the edge.
+  const SHARP_END_MAX_YEARS = 1.001;   // bare year == exactly 1.0
+
   function lifelineGradient(b_lo, b_hi, d_lo, d_hi, bg) {
     const span = d_hi - b_lo;
     if (span <= 0) return bg;
-    const solidStart = (b_hi - b_lo) / span;   // 0..1
-    const solidEnd   = (d_lo - b_lo) / span;   // 0..1
+    const birthSharp = (b_hi - b_lo) <= SHARP_END_MAX_YEARS;
+    const deathSharp = (d_hi - d_lo) <= SHARP_END_MAX_YEARS;
+    if (birthSharp && deathSharp) return bg;
+    const solidStart = birthSharp ? 0 : (b_hi - b_lo) / span;   // 0..1
+    const solidEnd   = deathSharp ? 1 : (d_lo - b_lo) / span;   // 0..1
     const c = hexToRgb(bg);
     const solid   = `rgba(${c.r}, ${c.g}, ${c.b}, 1)`;
     const faded   = `rgba(${c.r}, ${c.g}, ${c.b}, 0)`;
