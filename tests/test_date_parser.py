@@ -7,7 +7,7 @@ for them. Approximate float positions use pytest.approx.
 """
 import pytest
 
-from tools.date_parser import parse_date_range
+from tools.date_parser import parse_date_range, parse_date_range_detailed
 
 
 approx = lambda pair: pytest.approx(pair, abs=0.01)
@@ -57,21 +57,34 @@ class TestSinglePoints:
 
 
 class TestQualifiers:
-    def test_circa_pads(self):
-        assert parse_date_range('c. 211') == (208.0, 215.0)
-        assert parse_date_range('c.208') == (205.0, 212.0)
+    def test_circa_keeps_literal_span(self):
+        # Circa no longer pads the span — the literal dates stand and
+        # the fuzziness travels as the `uncertain` flag instead
+        # (renderers fade the edge rather than inventing years).
+        assert parse_date_range('c. 211') == (211.0, 212.0)
+        assert parse_date_range('c.208') == (208.0, 209.0)
+
+    def test_circa_sets_uncertain_flag(self):
+        assert parse_date_range_detailed('c. 211') == (211.0, 212.0, True)
+        assert parse_date_range_detailed('approx 168') == (168.0, 169.0, True)
+        assert parse_date_range_detailed('208') == (208.0, 209.0, False)
 
     def test_early_late(self):
+        # early/mid/late still TIGHTEN the span (position, not
+        # uncertainty) and don't set the flag.
         lo, hi = parse_date_range('early 190')
         assert lo == 190.0 and hi == approx(190.0 + 1 / 3.0)
+        assert parse_date_range_detailed('early 190')[2] is False
 
-    def test_trailing_question_mark_is_circa(self):
-        # "220?" — uncertain year (db shape)
-        assert parse_date_range('220?') == (217.0, 224.0)
+    def test_trailing_question_mark_is_uncertain(self):
+        # "220?" — literal year, uncertain flag (db shape)
+        assert parse_date_range('220?') == (220.0, 221.0)
+        assert parse_date_range_detailed('220?')[2] is True
 
     def test_bare_question_mark_unparseable(self):
-        # "?" placeholder must stay None, not become a padded nothing
+        # "?" placeholder must stay None
         assert parse_date_range('?') is None
+        assert parse_date_range_detailed('?') is None
 
 
 class TestDecades:
@@ -104,10 +117,13 @@ class TestRanges:
         assert 215.9 < lo < 216.0 and 216.3 < hi < 216.4
 
     def test_month_to_month_same_year_shared(self):
-        # "c. August – December 219" — left borrows the year AND circa pads
-        lo, hi = parse_date_range('c. August – December 219')
-        assert lo == approx(219.0 + 212 / 365.0 - 3.0)
-        assert hi == approx(220.0 + 3.0)
+        # "c. August – December 219" — left borrows the year; circa
+        # keeps the literal span but flags it uncertain
+        lo, hi, uncertain = parse_date_range_detailed(
+            'c. August – December 219')
+        assert lo == approx(219.0 + 212 / 365.0)
+        assert hi == approx(220.0)
+        assert uncertain is True
 
     def test_year_to_day(self):
         lo, hi = parse_date_range('198 - 7 February 199')

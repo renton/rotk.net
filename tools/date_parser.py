@@ -11,8 +11,10 @@ Pair semantics:
   month, so downstream renderers can always treat the result as a range.
 - For a single instant ("February 3, 168"), the span covers that day.
 - For a range ("168-172"), the span covers the full range inclusively.
-- For a fuzzy qualifier ("circa 168", "220?"), the span is widened
-  beyond the literal year to express the uncertainty.
+- A fuzzy qualifier ("circa 168", "220?") does NOT widen the span — the
+  span stays literal, and the fuzziness is reported separately as the
+  `uncertain` flag by `parse_date_range_detailed` (renderers show it as
+  a faded edge, not as fake extra years).
 
 Grammar (informal): the input is at most `SIDE sep SIDE`, where `sep`
 is a dash / "to" / slash, and each SIDE is `POINT` or `POINT or POINT`
@@ -105,11 +107,19 @@ def _day_span(astro_year, month, day):
     return (start, end)
 
 
+# Qualifiers that mark the whole date as approximate. They do NOT
+# change the parsed span — the literal dates stand — they just set the
+# `uncertain` flag so renderers can fade the edges.
+_UNCERTAIN_QUALIFIERS = (
+    'circa', 'c', 'ca', 'approx', 'approximately', 'around', '~', '?')
+
+
 def _apply_qualifier(span, qualifier):
-    """Tighten or widen a span based on a leading qualifier word.
+    """Tighten a span based on a leading qualifier word.
 
     early/mid/late shrink to the first/middle/last third of the span.
-    circa / approx / ~ / ? pad outward by ~3 years on each side."""
+    The circa family is handled separately (uncertain flag, no span
+    change)."""
     if not qualifier:
         return span
     q = qualifier.lower().strip().rstrip('.')
@@ -121,9 +131,6 @@ def _apply_qualifier(span, qualifier):
         return (lo + width / 3.0, lo + 2.0 * width / 3.0)
     if q in ('late',):
         return (lo + 2.0 * width / 3.0, hi)
-    if q in ('circa', 'c', 'ca', 'approx', 'approximately', 'around', '~', '?'):
-        pad = 3.0
-        return (lo - pad, hi + pad)
     return span
 
 
@@ -291,6 +298,18 @@ def parse_date_range(s):
     output uniformly without special-casing point dates.
 
     Empty / whitespace / None all return None."""
+    detailed = parse_date_range_detailed(s)
+    if detailed is None:
+        return None
+    return (detailed[0], detailed[1])
+
+
+def parse_date_range_detailed(s):
+    """Like parse_date_range, but returns `(year_min, year_max,
+    uncertain)` — `uncertain` is True when the string carries a
+    circa-family qualifier ("c. 211", "approx 168", "220?"). The span
+    itself stays literal either way; uncertainty is a presentation
+    signal (faded edges), not extra years."""
     if not s:
         return None
     text = str(s).strip()
@@ -305,17 +324,21 @@ def parse_date_range(s):
     text = _WS.sub(' ', text).strip()
 
     qualifier = None
+    uncertain = False
     m = _QUALIFIER_RE.match(text)
     if m:
         qualifier = m.group(1)
         text = text[m.end():].strip()
-    # Trailing "?" ("220?") marks uncertainty — same padding as circa.
-    # Only when something else remains: a bare "?" stays unparseable.
+        if qualifier.lower().strip().rstrip('.') in _UNCERTAIN_QUALIFIERS:
+            uncertain = True
+            qualifier = None      # no span change for the circa family
+    # Trailing "?" ("220?") marks uncertainty too. Only when something
+    # else remains: a bare "?" stays unparseable.
     if text.endswith('?'):
         stripped = text.rstrip('?').strip()
         if stripped:
             text = stripped
-            qualifier = qualifier or '?'
+            uncertain = True
 
     if not text:
         return None
@@ -325,8 +348,8 @@ def parse_date_range(s):
     if m:
         era = m.group(1) or m.group(3)
         astro = _to_astro_year(int(m.group(2)), _era_to_sign(era))
-        span = (float(astro), float(astro + 10))
-        return _apply_qualifier(span, qualifier)
+        span = _apply_qualifier((float(astro), float(astro + 10)), qualifier)
+        return (span[0], span[1], uncertain)
 
     # Try RANGE: exactly two SIDEs around one separator. A dash may also
     # be the year-range inside a single side ("168-172" splits fine too:
@@ -365,4 +388,5 @@ def parse_date_range(s):
 
     if span is None:
         return None
-    return _apply_qualifier(span, qualifier)
+    span = _apply_qualifier(span, qualifier)
+    return (span[0], span[1], uncertain)

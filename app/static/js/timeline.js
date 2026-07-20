@@ -29,21 +29,31 @@
   // --- build the gradient string for a fuzzy lifeline ---
   //
   // Item extent: [birth_lo, death_hi]. Solid section: [birth_hi, death_lo].
-  // An end only fades when its date is actually UNCERTAIN — a circa /
-  // trailing-? qualifier, a decade, or an explicit year range, all of
-  // which parse to spans wider than one year. A precisely-known date
-  // (bare year, month, day, season) spans at most one calendar year by
-  // construction, so those ends render solid right to the edge.
-  const SHARP_END_MAX_YEARS = 1.001;   // bare year == exactly 1.0
+  // An end fades when its date is actually UNCERTAIN — either its span
+  // is wider than one year (a decade, an explicit range, or a
+  // synthesized single-ended reach), or the server flagged it as
+  // circa-family ("c. 155", "220?"). A circa date keeps its LITERAL
+  // span (no fake padding years), so a flagged narrow end fades over a
+  // fixed visual width inward from the edge instead. Precisely-known
+  // dates (bare year, month, day, season) render solid to the edge.
+  const SHARP_END_MAX_YEARS = 1.001;      // bare year == exactly 1.0
+  const UNCERTAIN_FADE_YEARS = 5.0;       // visual fade for flagged ends
 
-  function lifelineGradient(b_lo, b_hi, d_lo, d_hi, bg) {
+  function lifelineGradient(b_lo, b_hi, d_lo, d_hi, bg,
+                            birthUncertain, deathUncertain) {
     const span = d_hi - b_lo;
     if (span <= 0) return bg;
-    const birthSharp = (b_hi - b_lo) <= SHARP_END_MAX_YEARS;
-    const deathSharp = (d_hi - d_lo) <= SHARP_END_MAX_YEARS;
-    if (birthSharp && deathSharp) return bg;
-    const solidStart = birthSharp ? 0 : (b_hi - b_lo) / span;   // 0..1
-    const solidEnd   = deathSharp ? 1 : (d_lo - b_lo) / span;   // 0..1
+    let leftFade = (b_hi - b_lo) > SHARP_END_MAX_YEARS ? (b_hi - b_lo) : 0;
+    let rightFade = (d_hi - d_lo) > SHARP_END_MAX_YEARS ? (d_hi - d_lo) : 0;
+    if (birthUncertain) {
+      leftFade = Math.max(leftFade, Math.min(UNCERTAIN_FADE_YEARS, span / 3));
+    }
+    if (deathUncertain) {
+      rightFade = Math.max(rightFade, Math.min(UNCERTAIN_FADE_YEARS, span / 3));
+    }
+    if (leftFade <= 0 && rightFade <= 0) return bg;
+    const solidStart = leftFade / span;         // 0..1
+    const solidEnd   = 1 - rightFade / span;    // 0..1
     const c = hexToRgb(bg);
     const solid   = `rgba(${c.r}, ${c.g}, ${c.b}, 1)`;
     const faded   = `rgba(${c.r}, ${c.g}, ${c.b}, 0)`;
@@ -137,20 +147,35 @@
   // render as a circular pip at the midpoint; multi-year events
   // render as a coloured bar across the span with the icon pinned
   // to the left edge.
+  // Uncertain ("circa") range bars fade at both ends — the bar spans
+  // the literal dates; the fade is the "hazy" cue.
+  function uncertainBarGradient(bg) {
+    const c = hexToRgb(bg);
+    const solid = `rgba(${c.r}, ${c.g}, ${c.b}, 1)`;
+    const faded = `rgba(${c.r}, ${c.g}, ${c.b}, 0.15)`;
+    return `linear-gradient(to right, ${faded} 0%, ${solid} 20%, ` +
+           `${solid} 80%, ${faded} 100%)`;
+  }
+
   eventsData.forEach(e => {
     const icon = e.icon || 'fa-solid fa-flag';
     const ranged = isRangeSpan(e.year_lo, e.year_hi);
+    const background = (ranged && e.uncertain)
+      ? uncertainBarGradient(e.bg_colour)
+      : e.bg_colour;
     const base = {
       id: `ev-${e.id}`,
       group: '__events__',
       kind: 'event',
       content: `<i class="${escapeAttr(icon)}" aria-hidden="true"></i>`,
-      className: 'tl-event',
+      // Uncertain point badges can't fade an end — a dashed border is
+      // the circa cue instead (.tl-uncertain in timeline.css).
+      className: 'tl-event' + (e.uncertain && !ranged ? ' tl-uncertain' : ''),
       // Inverted-pill look: badge background = event-type colour,
       // icon glyph painted in the type's font_colour (defaults to
       // white, which reads well on any non-white bg).
       style:
-        `background: ${e.bg_colour};` +
+        `background: ${background};` +
         `border-color: ${e.border_colour};` +
         `color: ${e.font_colour};`,
       _filterText: e.name.toLowerCase(),
@@ -186,7 +211,8 @@
     });
 
     const gradient = lifelineGradient(
-      ch.birth_lo, ch.birth_hi, ch.death_lo, ch.death_hi, ch.bg_colour
+      ch.birth_lo, ch.birth_hi, ch.death_lo, ch.death_hi, ch.bg_colour,
+      ch.birth_uncertain, ch.death_uncertain
     );
     items.add({
       id: `li-${ch.id}`,

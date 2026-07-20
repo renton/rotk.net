@@ -260,3 +260,10 @@
 .timeline-detail-meta dd {
     margin: 0;
 }
+
+/* Circa / "?" point badges — no bar end to fade, so a dashed border is
+   the uncertainty cue (range bars fade via their background gradient;
+   see uncertainBarGradient in timeline.js). */
+.vis-item.tl-uncertain {
+    border-style: dashed;
+}

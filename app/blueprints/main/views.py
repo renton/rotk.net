@@ -289,12 +289,14 @@ def timeline():
     def _timeline_title(s):
         return _br_re.sub(' ', s or '').strip()
 
+    from tools.date_parser import parse_date_range_detailed
+
     chapter_items = []
     for c in Chapter.query.order_by(Chapter.chapter_num).all():
-        span = parse_date_range(c.date)
+        span = parse_date_range_detailed(c.date)
         if span is None:
             continue
-        lo, hi = span
+        lo, hi, uncertain = span
         chapter_items.append({
             'id': c.id,
             'num': c.chapter_num,
@@ -302,6 +304,7 @@ def timeline():
             'date_str': c.date,
             'year_lo': lo,
             'year_hi': hi,
+            'uncertain': uncertain,
         })
 
     # --- Events ---
@@ -389,10 +392,10 @@ def timeline():
             factions_by_event.setdefault(ev_id, {1: [], 2: []})[side].append(chip)
 
     for e in events:
-        span = parse_date_range(e.date)
+        span = parse_date_range_detailed(e.date)
         if span is None:
             continue
-        lo, hi = span
+        lo, hi, uncertain = span
         # Optional event-type colour + icon for the marker.
         et = getattr(e, 'event_type', None)
         ev_factions = factions_by_event.get(e.id, {1: [], 2: []})
@@ -402,6 +405,7 @@ def timeline():
             'date_str': e.date,
             'year_lo': lo,
             'year_hi': hi,
+            'uncertain': uncertain,
             'type_name': (et.name if et else '') or '',
             'icon': (et.icon if et else '') or '',
             'bg_colour':     _visible_colour(et.bg_colour     if et else None),
@@ -439,12 +443,14 @@ def timeline():
     ESTIMATED_REACH_YEARS = 30.0
     ESTIMATED_FADE_YEARS = 15.0
     for ch in chars:
-        b = parse_date_range(ch.birth_date)
-        d = parse_date_range(ch.death_date)
+        b = parse_date_range_detailed(ch.birth_date)
+        d = parse_date_range_detailed(ch.death_date)
         if b is None and d is None:
             continue
         birth_estimated = b is None
         death_estimated = d is None
+        birth_uncertain = bool(b and b[2])
+        death_uncertain = bool(d and d[2])
         if birth_estimated:
             b = (d[0] - ESTIMATED_REACH_YEARS,
                  d[0] - (ESTIMATED_REACH_YEARS - ESTIMATED_FADE_YEARS))
@@ -471,6 +477,8 @@ def timeline():
             'death_hi': d[1],
             'birth_estimated': birth_estimated,
             'death_estimated': death_estimated,
+            'birth_uncertain': birth_uncertain,
+            'death_uncertain': death_uncertain,
             'faction_id': faction_id,
             'faction_name': faction_name,
             'bg_colour': (f.bg_colour if f else '') or '#6c757d',

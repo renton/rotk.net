@@ -76,13 +76,17 @@ def urls_for(obj):
 
 
 def date_span(date_str):
-    """Free-form date string → {'raw', 'year_lo', 'year_hi'} (parsed via
-    tools.date_parser; lo/hi None when unparseable)."""
-    span = parse_date_range(date_str)
+    """Free-form date string → {'raw', 'year_lo', 'year_hi',
+    'uncertain'} (parsed via tools.date_parser; lo/hi None when
+    unparseable). `uncertain` marks circa-family qualifiers — the span
+    is the literal date either way."""
+    from tools.date_parser import parse_date_range_detailed
+    span = parse_date_range_detailed(date_str)
     return {
         'raw': date_str or '',
         'year_lo': span[0] if span else None,
         'year_hi': span[1] if span else None,
+        'uncertain': bool(span[2]) if span else False,
     }
 
 
