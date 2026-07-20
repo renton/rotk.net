@@ -431,13 +431,13 @@ def timeline():
     # bar still renders — stretching ESTIMATED_REACH_YEARS in the
     # unknown direction, with the far ESTIMATED_FADE_YEARS of that
     # reach rendered as the uncertainty fade. Synthesizing the missing
-    # end as a 20-year-wide span makes the client's existing gradient
-    # logic produce exactly that (solid for the near 20 years, fading
-    # out over the far 20) with no special-casing in timeline.js; the
-    # *_estimated flags keep the detail panel honest about which end is
-    # real data.
-    ESTIMATED_REACH_YEARS = 40.0
-    ESTIMATED_FADE_YEARS = 20.0
+    # end as a (REACH - FADE)-wide span makes the client's existing
+    # gradient logic produce exactly that (solid for the near years,
+    # fading out over the far ones) with no special-casing in
+    # timeline.js; the *_estimated flags keep the detail panel honest
+    # about which end is real data.
+    ESTIMATED_REACH_YEARS = 30.0
+    ESTIMATED_FADE_YEARS = 15.0
     for ch in chars:
         b = parse_date_range(ch.birth_date)
         d = parse_date_range(ch.death_date)

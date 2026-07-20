@@ -54,8 +54,8 @@ class TestTimeline:
         return {c['name']: c for c in json.loads(m.group(1))}
 
     def test_single_ended_lifeline_estimated(self, client, db_session):
-        # Death-only characters get a synthesized 40-year reach before
-        # the death (far 20 = fade), flagged birth_estimated so the
+        # Death-only characters get a synthesized 30-year reach before
+        # the death (far 15 = fade), flagged birth_estimated so the
         # detail panel shows "unknown" instead of the fake span.
         factories.make_character(name='DeathOnly Guy', death_date='220')
         resp = client.get('/timeline')
@@ -63,19 +63,19 @@ class TestTimeline:
         row = self._characters_payload(resp)['DeathOnly Guy']
         assert row['birth_estimated'] is True
         assert row['death_estimated'] is False
-        # bar reaches back 40 years from death_lo (220 - 40 = 180),
-        # solid from 200 (220 - 20)
-        assert row['birth_lo'] == 180.0
-        assert row['birth_hi'] == 200.0
+        # bar reaches back 30 years from death_lo (220 - 30 = 190),
+        # solid from 205 (220 - 15)
+        assert row['birth_lo'] == 190.0
+        assert row['birth_hi'] == 205.0
 
     def test_birth_only_lifeline_estimated(self, client, db_session):
         factories.make_character(name='BirthOnly Guy', birth_date='150')
         resp = client.get('/timeline')
         row = self._characters_payload(resp)['BirthOnly Guy']
         assert row['death_estimated'] is True
-        # birth_hi = 151 (bare-year span end): solid to 171, fade to 191
-        assert row['death_lo'] == 171.0
-        assert row['death_hi'] == 191.0
+        # birth_hi = 151 (bare-year span end): solid to 166, fade to 181
+        assert row['death_lo'] == 166.0
+        assert row['death_hi'] == 181.0
 
     def test_both_ends_known_not_estimated(self, client, db_session):
         factories.make_character(name='FullSpan Guy',
