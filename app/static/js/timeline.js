@@ -469,8 +469,16 @@
         `</h5>` +
         `<dl class="timeline-detail-meta">` +
           `<dt>Faction</dt><dd>${escapeHtml(d.faction_name || '—')}</dd>` +
-          `<dt>Born</dt><dd>${escapeHtml(d.birth_str || '—')} <span class="text-muted">(${fmtRange(d.birth_lo, d.birth_hi)})</span></dd>` +
-          `<dt>Died</dt><dd>${escapeHtml(d.death_str || '—')} <span class="text-muted">(${fmtRange(d.death_lo, d.death_hi)})</span></dd>` +
+          `<dt>Born</dt><dd>${
+            d.birth_estimated
+              ? '<span class="text-muted fst-italic">unknown (bar estimated)</span>'
+              : `${escapeHtml(d.birth_str || '—')} <span class="text-muted">(${fmtRange(d.birth_lo, d.birth_hi)})</span>`
+          }</dd>` +
+          `<dt>Died</dt><dd>${
+            d.death_estimated
+              ? '<span class="text-muted fst-italic">unknown (bar estimated)</span>'
+              : `${escapeHtml(d.death_str || '—')} <span class="text-muted">(${fmtRange(d.death_lo, d.death_hi)})</span>`
+          }</dd>` +
         `</dl>`;
     } else {
       return false;

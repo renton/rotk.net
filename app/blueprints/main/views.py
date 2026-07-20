@@ -427,16 +427,30 @@ def timeline():
         .order_by(Character.name)
         .all()
     )
+    # Single-ended lifelines: when only one of birth/death parses, the
+    # bar still renders — stretching ESTIMATED_REACH_YEARS in the
+    # unknown direction, with the far ESTIMATED_FADE_YEARS of that
+    # reach rendered as the uncertainty fade. Synthesizing the missing
+    # end as a 20-year-wide span makes the client's existing gradient
+    # logic produce exactly that (solid for the near 20 years, fading
+    # out over the far 20) with no special-casing in timeline.js; the
+    # *_estimated flags keep the detail panel honest about which end is
+    # real data.
+    ESTIMATED_REACH_YEARS = 40.0
+    ESTIMATED_FADE_YEARS = 20.0
     for ch in chars:
         b = parse_date_range(ch.birth_date)
         d = parse_date_range(ch.death_date)
         if b is None and d is None:
             continue
-        # Single-ended lifelines aren't supported in v1 — without one
-        # end the bar would either extend off-screen or guess a
-        # lifespan, both confusing. Skip until we have a UI for it.
-        if b is None or d is None:
-            continue
+        birth_estimated = b is None
+        death_estimated = d is None
+        if birth_estimated:
+            b = (d[0] - ESTIMATED_REACH_YEARS,
+                 d[0] - (ESTIMATED_REACH_YEARS - ESTIMATED_FADE_YEARS))
+        if death_estimated:
+            d = (b[1] + (ESTIMATED_REACH_YEARS - ESTIMATED_FADE_YEARS),
+                 b[1] + ESTIMATED_REACH_YEARS)
         f = ch.primary_faction
         faction_id = f.id if f else 0
         faction_name = f.name if f else 'Unaffiliated'
@@ -455,6 +469,8 @@ def timeline():
             'birth_hi': b[1],
             'death_lo': d[0],
             'death_hi': d[1],
+            'birth_estimated': birth_estimated,
+            'death_estimated': death_estimated,
             'faction_id': faction_id,
             'faction_name': faction_name,
             'bg_colour': (f.bg_colour if f else '') or '#6c757d',

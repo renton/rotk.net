@@ -43,6 +43,50 @@ class TestTimeline:
         factories.make_chapter(date='208 AD')
         assert client.get('/timeline').status_code == 200
 
+    @staticmethod
+    def _characters_payload(resp):
+        import json
+        import re
+        m = re.search(
+            r'<script id="timeline-characters"[^>]*>(.*?)</script>',
+            resp.data.decode(), re.DOTALL)
+        assert m, 'timeline-characters payload missing from page'
+        return {c['name']: c for c in json.loads(m.group(1))}
+
+    def test_single_ended_lifeline_estimated(self, client, db_session):
+        # Death-only characters get a synthesized 40-year reach before
+        # the death (far 20 = fade), flagged birth_estimated so the
+        # detail panel shows "unknown" instead of the fake span.
+        factories.make_character(name='DeathOnly Guy', death_date='220')
+        resp = client.get('/timeline')
+        assert resp.status_code == 200
+        row = self._characters_payload(resp)['DeathOnly Guy']
+        assert row['birth_estimated'] is True
+        assert row['death_estimated'] is False
+        # bar reaches back 40 years from death_lo (220 - 40 = 180),
+        # solid from 200 (220 - 20)
+        assert row['birth_lo'] == 180.0
+        assert row['birth_hi'] == 200.0
+
+    def test_birth_only_lifeline_estimated(self, client, db_session):
+        factories.make_character(name='BirthOnly Guy', birth_date='150')
+        resp = client.get('/timeline')
+        row = self._characters_payload(resp)['BirthOnly Guy']
+        assert row['death_estimated'] is True
+        # birth_hi = 151 (bare-year span end): solid to 171, fade to 191
+        assert row['death_lo'] == 171.0
+        assert row['death_hi'] == 191.0
+
+    def test_both_ends_known_not_estimated(self, client, db_session):
+        factories.make_character(name='FullSpan Guy',
+                                 birth_date='155', death_date='220')
+        resp = client.get('/timeline')
+        row = self._characters_payload(resp)['FullSpan Guy']
+        assert row['birth_estimated'] is False
+        assert row['death_estimated'] is False
+        assert row['birth_lo'] == 155.0
+        assert row['death_hi'] == 221.0
+
 
 class TestParseDateRange:
     def test_single_year_ad(self):
