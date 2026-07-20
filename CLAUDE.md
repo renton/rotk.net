@@ -280,7 +280,9 @@ for the run commands). Layout:
   endpoints do.
 - Pure-function suites (no DB): `test_needle_pattern`,
   `test_annotation_canonical`, `test_hidden_snippets_pure`,
-  `test_ref_builders`. DB suites: `test_models`, `test_associations`,
+  `test_ref_builders`, `test_date_parser` (pins every date-string shape
+  found in the prod DB — runnable locally via `pytest --noconftest`).
+  DB suites: `test_models`, `test_associations`,
   `test_parser_db`. HTTP suites: `test_auth`, `test_public_routes`,
   `test_association_admin`, `test_chapter_edit_annotations`,
   `test_entity_crud`, `test_year_maps` (admin CRUD + chapter-page
